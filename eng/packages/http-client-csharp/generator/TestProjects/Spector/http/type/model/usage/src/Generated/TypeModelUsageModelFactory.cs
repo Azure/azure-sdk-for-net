@@ -7,7 +7,7 @@
 
 namespace _Type.Model.Usage
 {
-    public static partial class TypeModelUsageModelFactory
+    public static partial class _TypeModelUsageModelFactory
     {
         public static InputRecord InputRecord(string requiredProp = default) => throw null;
 

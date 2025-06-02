@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace _Type.Property.ValueTypes
 {
-    public static partial class TypePropertyValueTypesModelFactory
+    public static partial class _TypePropertyValueTypesModelFactory
     {
         public static BooleanProperty BooleanProperty(bool @property = default) => throw null;
 

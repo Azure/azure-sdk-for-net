@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace _Type.Property.AdditionalProperties
 {
-    public static partial class TypePropertyAdditionalPropertiesModelFactory
+    public static partial class _TypePropertyAdditionalPropertiesModelFactory
     {
         public static ExtendsUnknownAdditionalProperties ExtendsUnknownAdditionalProperties(string name = default, IDictionary<string, BinaryData> additionalProperties = default) => throw null;
 

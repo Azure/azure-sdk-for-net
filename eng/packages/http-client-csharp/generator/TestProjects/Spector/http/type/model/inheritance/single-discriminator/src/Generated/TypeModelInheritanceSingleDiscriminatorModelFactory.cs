@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    public static partial class TypeModelInheritanceSingleDiscriminatorModelFactory
+    public static partial class _TypeModelInheritanceSingleDiscriminatorModelFactory
     {
         public static Bird Bird(string kind = default, int wingspan = default) => throw null;
 

@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace _Type.Dictionary
 {
-    public static partial class TypeDictionaryModelFactory
+    public static partial class _TypeDictionaryModelFactory
     {
         public static InnerModel InnerModel(string @property = default, IDictionary<string, InnerModel> children = default) => throw null;
     }

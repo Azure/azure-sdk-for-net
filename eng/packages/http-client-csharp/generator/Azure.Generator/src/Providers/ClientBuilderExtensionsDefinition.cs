@@ -42,7 +42,7 @@ namespace Azure.Generator.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Public | TypeSignatureModifiers.Static | TypeSignatureModifiers.Partial;
 
-        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"IAzureClientBuilder\"/>.";
+        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"IAzureClientBuilder{{TClient, TOptions}}\"/>.";
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -63,7 +63,7 @@ namespace Azure.Generator.Providers
                     tConfiguration);
                 var methodName = $"Add{client.Name}";
                 FormattableString methodDescription =
-                    $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"IAzureClientBuilder\"/>.";
+                    $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"IAzureClientBuilder{{TClient, TOptions}}\"/>.";
                 var methodModifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Static |
                                       MethodSignatureModifiers.Extension;
                 var methodReturnType = new CSharpType(typeof(IAzureClientBuilder<,>), client.Type,
@@ -81,8 +81,8 @@ namespace Azure.Generator.Providers
                         continue;
                     }
 
-                    var authParameter = constructor.Signature.Parameters.Last();
-                    var isTokenCredential = authParameter.Type.Equals(typeof(TokenCredential));
+                    var authParameter = constructor.Signature.Parameters.LastOrDefault();
+                    var isTokenCredential = authParameter?.Type.Equals(typeof(TokenCredential)) == true;
                     var parameters = new List<ParameterProvider>(constructor.Signature.Parameters.Count + 1);
                     parameters.Add(builderParameter);
                     parameters.AddRange(isTokenCredential ? constructor.Signature.Parameters.SkipLast(1) : constructor.Signature.Parameters);

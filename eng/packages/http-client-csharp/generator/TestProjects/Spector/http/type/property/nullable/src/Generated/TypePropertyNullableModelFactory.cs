@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace _Type.Property.Nullable
 {
-    public static partial class TypePropertyNullableModelFactory
+    public static partial class _TypePropertyNullableModelFactory
     {
         public static StringProperty StringProperty(string requiredProperty = default, string nullableProperty = default) => throw null;
 

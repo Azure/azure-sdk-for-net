@@ -7,7 +7,7 @@
 
 namespace _Type.Model.Inheritance.NotDiscriminated
 {
-    public static partial class TypeModelInheritanceNotDiscriminatedModelFactory
+    public static partial class _TypeModelInheritanceNotDiscriminatedModelFactory
     {
         public static Siamese Siamese(string name = default, int age = default, bool smart = default) => throw null;
 

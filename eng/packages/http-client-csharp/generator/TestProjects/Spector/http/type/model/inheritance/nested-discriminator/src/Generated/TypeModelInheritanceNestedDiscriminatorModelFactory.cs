@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
-    public static partial class TypeModelInheritanceNestedDiscriminatorModelFactory
+    public static partial class _TypeModelInheritanceNestedDiscriminatorModelFactory
     {
         public static Fish Fish(string kind = default, int age = default) => throw null;
 
