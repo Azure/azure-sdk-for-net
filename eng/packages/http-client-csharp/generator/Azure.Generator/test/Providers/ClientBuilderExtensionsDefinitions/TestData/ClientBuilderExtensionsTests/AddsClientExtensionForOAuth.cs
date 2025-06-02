@@ -13,7 +13,7 @@ using Samples;
 namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder"/>. </summary>
-    public static partial class TestClientBuilderExtensions
+    public static partial class SamplesClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="TestClient"/> client with the specified <see cref="IAzureClientBuilder"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>

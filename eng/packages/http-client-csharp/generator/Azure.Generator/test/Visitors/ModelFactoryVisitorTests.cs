@@ -25,7 +25,7 @@ namespace Azure.Generator.Tests.Visitors
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
             Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("MessagingSomeServiceFactory", modelFactory!.Type.Name);
+            Assert.AreEqual("MessagingSomeServiceModelFactory", modelFactory!.Type.Name);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace Azure.Generator.Tests.Visitors
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
             Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("SomeServiceFactory", modelFactory!.Type.Name);
+            Assert.AreEqual("SomeServiceModelFactory", modelFactory!.Type.Name);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace Azure.Generator.Tests.Visitors
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
             Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("SamplesFactory", modelFactory!.Type.Name);
+            Assert.AreEqual("SamplesModelFactory", modelFactory!.Type.Name);
         }
 
         private class TestModelFactoryVisitor : ModelFactoryVisitor

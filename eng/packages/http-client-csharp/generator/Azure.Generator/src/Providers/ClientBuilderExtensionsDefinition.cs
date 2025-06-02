@@ -35,7 +35,7 @@ namespace Azure.Generator.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override string BuildName() => $"{_resourceProviderName}BuilderExtensions";
+        protected override string BuildName() => $"{_resourceProviderName}ClientBuilderExtensions";
 
         protected override string BuildNamespace() => "Microsoft.Extensions.Azure";
 
