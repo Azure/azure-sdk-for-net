@@ -53,5 +53,6 @@ public class AzureClientGenerator : ScmCodeModelGenerator
         AddVisitor(new DistributedTracingVisitor());
         AddVisitor(new PipelinePropertyVisitor());
         AddVisitor(new LroVisitor());
+        AddVisitor(new ModelFactoryVisitor());
     }
 }
