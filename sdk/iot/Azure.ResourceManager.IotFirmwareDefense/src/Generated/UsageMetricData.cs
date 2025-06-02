@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
     /// <summary>
     /// A class representing the UsageMetric data model.
     /// The object representing how many firmwares the user has uploaded to the workspace.
-    /// Serialized Name: UsageMetric
     /// </summary>
     public partial class UsageMetricData : ResourceData
     {
@@ -62,10 +61,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties">
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: UsageMetric.properties
-        /// </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UsageMetricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageMetricProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -73,10 +69,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The resource-specific properties for this resource.
-        /// Serialized Name: UsageMetric.properties
-        /// </summary>
+        /// <summary> The resource-specific properties for this resource. </summary>
         public UsageMetricProperties Properties { get; set; }
     }
 }

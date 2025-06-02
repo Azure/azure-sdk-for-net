@@ -186,6 +186,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Sets the permissions of the storage resource.
+        /// This is intended to be called on the destination resource item with the source resource item passed-in.
         /// </summary>
         /// <returns></returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
