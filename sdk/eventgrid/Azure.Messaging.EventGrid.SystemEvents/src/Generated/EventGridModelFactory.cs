@@ -1337,10 +1337,10 @@ namespace Azure.Messaging.EventGrid
         /// <param name="metadata"> The thread metadata. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <returns> A new <see cref="SystemEvents.AcsChatThreadPropertiesUpdatedPerUserEventData"/> instance for mocking. </returns>
-        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, string> metadata = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static AcsChatThreadPropertiesUpdatedPerUserEventData AcsChatThreadPropertiesUpdatedPerUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier = null, string transactionId = null, string threadId = null, DateTimeOffset? createTime = null, long? version = null, CommunicationIdentifierModel editedByCommunicationIdentifier = null, DateTimeOffset? editTime = null, IReadOnlyDictionary<string, string> metadata = null, IReadOnlyDictionary<string, object> properties = null)
         {
             metadata ??= new Dictionary<string, string>();
-            properties ??= new Dictionary<string, BinaryData>();
+            properties ??= new Dictionary<string, object>();
 
             return new AcsChatThreadPropertiesUpdatedPerUserEventData(
                 recipientCommunicationIdentifier,
