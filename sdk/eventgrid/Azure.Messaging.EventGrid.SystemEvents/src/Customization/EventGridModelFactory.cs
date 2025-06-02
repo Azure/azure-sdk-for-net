@@ -15,7 +15,7 @@ using AcsRouterJobStatus = Azure.Messaging.EventGrid.Models.AcsRouterJobStatus;
 namespace Azure.Messaging.EventGrid
 {
 #pragma warning disable CA1054 // URI-like parameters should not be strings
-    [CodeGenType("MessagingEventGridModelFactory")]
+    [CodeGenType("MessagingEventGridSystemEventsModelFactory")]
     public static partial class EventGridModelFactory
     {
         /// <summary> Initializes new instance of MediaJobError class. </summary>

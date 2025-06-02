@@ -8,12 +8,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Messaging.EventGrid.SystemEvents;
 
-namespace Azure.Messaging.EventGrid
+namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class EventGridModelFactory
+    public static partial class MessagingEventGridSystemEventsModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
         /// <param name="title"> API definition title. </param>
@@ -4446,10 +4445,10 @@ namespace Azure.Messaging.EventGrid
         /// <param name="resourceTags"> the tags on the resource for which the event is being emitted. </param>
         /// <param name="properties"> properties in the payload of the resource for which the event is being emitted. </param>
         /// <returns> A new <see cref="SystemEvents.ResourceNotificationsResourceUpdatedDetails"/> instance for mocking. </returns>
-        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, IReadOnlyDictionary<string, string> resourceTags = null, IReadOnlyDictionary<string, BinaryData> properties = null)
+        public static ResourceNotificationsResourceUpdatedDetails ResourceNotificationsResourceUpdatedDetails(string id = null, string name = null, string resourceType = null, string location = null, IReadOnlyDictionary<string, string> resourceTags = null, IReadOnlyDictionary<string, object> properties = null)
         {
             resourceTags ??= new Dictionary<string, string>();
-            properties ??= new Dictionary<string, BinaryData>();
+            properties ??= new Dictionary<string, object>();
 
             return new ResourceNotificationsResourceUpdatedDetails(
                 id,
