@@ -104,8 +104,8 @@ stages:
                 dependsOn: TagRepository
 
                 pool:
-                  name: azsdk-pool-mms-ubuntu-2004-general
-                  image: azsdk-pool-mms-ubuntu-2004-1espt
+                  name: azsdk-pool
+                  image: ubuntu-24.04
                   os: linux
 
                 templateContext:
@@ -287,8 +287,8 @@ stages:
         environment: none
 
         pool:
-          name: $(LINUXPOOL)
-          image: $(LINUXVMIMAGE)
+          name: azsdk-pool
+          image: ubuntu-24.04
           os: linux
 
         templateContext:
