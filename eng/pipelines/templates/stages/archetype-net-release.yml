@@ -123,6 +123,7 @@ stages:
                         - task: 1ES.PublishNuget@1
                           displayName: Publish ${{artifact.name}} package to NuGet.org
                           inputs:
+                            useDotNetTask: true
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             nuGetFeedType: external
@@ -131,6 +132,7 @@ stages:
                         - task: 1ES.PublishNuget@1
                           displayName: Publish to DevOps Feed
                           inputs:
+                            useDotNetTask: true
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             publishVstsFeed: ${{ parameters.DevOpsFeedID }}
@@ -318,6 +320,7 @@ stages:
                   - task: 1ES.PublishNuget@1
                     displayName: 'Publish to DevOps Feed'
                     inputs:
+                      useDotNetTask: true
                       packageParentPath: '$(Pipeline.Workspace)'
                       packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                       publishVstsFeed: $(DevOpsFeedID)
