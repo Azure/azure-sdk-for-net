@@ -256,40 +256,6 @@ public abstract class BinaryContent : IDisposable
         return new MultipartFormDataPartBinaryContent(name, new ModelBinaryContent<T>(model, options ?? ModelWriteWireOptions));
     }
 
-    ///// <summary>
-    ///// Creates an instance of <see cref="BinaryContent"/>.
-    ///// </summary>
-    ///// <param name="stream"></param>
-    ///// <param name="filename"></param>
-    ///// <returns></returns>
-    //public static BinaryContent CreateFromFile(Stream stream, string? filename = default)
-    //{
-    //    Argument.AssertNotNull(stream, nameof(stream));
-
-    //    return new FileBinaryContent(stream)
-    //    {
-    //        Filename = filename,
-    //        ContentType = "application/octet-stream"
-    //    };
-    //}
-
-    ///// <summary>
-    ///// Creates an instance of <see cref="BinaryContent"/>.
-    ///// </summary>
-    ///// <param name="content"></param>
-    ///// <param name="filename"></param>
-    ///// <returns></returns>
-    //public static BinaryContent CreateFromFile(BinaryData content, string? filename = default)
-    //{
-    //    Argument.AssertNotNull(content, nameof(content));
-
-    //    return new FileBinaryContent(content)
-    //    {
-    //        Filename = filename,
-    //        ContentType = "application/octet-stream"
-    //    };
-    //}
-
     /// <summary>
     /// Creates an instance of <see cref="BinaryContent"/> that contains the
     /// the provided <see cref="BinaryContent"/> as multi-part form data.
@@ -301,6 +267,21 @@ public abstract class BinaryContent : IDisposable
         Argument.AssertNotNull(parts, nameof(parts));
 
         return new MultiPartFormDataBinaryContent(parts);
+    }
+
+    /// <summary>
+    /// Creates an instance of <see cref="BinaryContent"/> that contains the
+    /// the provided <see cref="BinaryContent"/> as multi-part form data.
+    /// </summary>
+    /// <param name="boundary"></param>
+    /// <param name="parts"></param>
+    /// <returns></returns>
+    public static BinaryContent CreateMultipartFormDataContent(string boundary, IEnumerable<BinaryContent> parts)
+    {
+        Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
+        Argument.AssertNotNull(parts, nameof(parts));
+
+        return new MultiPartFormDataBinaryContent(boundary, parts);
     }
 
     /// <summary>
@@ -516,10 +497,14 @@ public abstract class BinaryContent : IDisposable
         private const string BoundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz";
 
         public MultiPartFormDataBinaryContent(IEnumerable<BinaryContent> parts)
+            : this(CreateBoundary(), parts) { }
+
+        public MultiPartFormDataBinaryContent(string boundary, IEnumerable<BinaryContent> parts)
         {
+            Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
             Argument.AssertNotNull(parts, nameof(parts));
 
-            _multipartContent = new MultipartFormDataContent(CreateBoundary());
+            _multipartContent = new MultipartFormDataContent(boundary);
 
             foreach (BinaryContent part in parts)
             {

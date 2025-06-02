@@ -22,8 +22,23 @@ namespace System.ClientModel
     public abstract partial class BinaryContent : System.IDisposable
     {
         protected BinaryContent() { }
+        public virtual string? ContentType { get { throw null; } set { } }
         public static System.ClientModel.BinaryContent Create(System.BinaryData value) { throw null; }
         public static System.ClientModel.BinaryContent Create(System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataContent(System.Collections.Generic.IEnumerable<System.ClientModel.BinaryContent> parts) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataContent(string boundary, System.Collections.Generic.IEnumerable<System.ClientModel.BinaryContent> parts) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, System.BinaryData content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, bool content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, byte[] content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, System.ClientModel.FileBinaryContent content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, decimal content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, double content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, int content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, long content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, System.IO.Stream stream) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, float content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, string content) { throw null; }
+        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart<T>(string name, T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public static System.ClientModel.BinaryContent Create<T>(T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }
         public abstract void Dispose();
         public abstract bool TryComputeLength(out long length);
@@ -65,6 +80,18 @@ namespace System.ClientModel
         protected ContinuationToken(System.BinaryData bytes) { }
         public static System.ClientModel.ContinuationToken FromBytes(System.BinaryData bytes) { throw null; }
         public virtual System.BinaryData ToBytes() { throw null; }
+    }
+    public sealed partial class FileBinaryContent : System.ClientModel.BinaryContent
+    {
+        public FileBinaryContent(System.BinaryData data) { }
+        public FileBinaryContent(System.IO.Stream stream) { }
+        public FileBinaryContent(string path) { }
+        public override string? ContentType { get { throw null; } set { } }
+        public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace System.ClientModel.Primitives
