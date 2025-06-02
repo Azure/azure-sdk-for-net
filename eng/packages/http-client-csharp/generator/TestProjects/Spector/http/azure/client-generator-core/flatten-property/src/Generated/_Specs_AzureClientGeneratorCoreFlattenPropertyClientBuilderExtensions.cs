@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using _Specs_.Azure.ClientGenerator.Core.FlattenProperty;
@@ -13,7 +14,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class _Specs_AzureClientGeneratorCoreFlattenPropertyClientBuilderExtensions
     {
-        public static IAzureClientBuilder<FlattenPropertyClient, FlattenPropertyClientOptions> AddFlattenPropertyClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<FlattenPropertyClient, FlattenPropertyClientOptions> AddFlattenPropertyClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
