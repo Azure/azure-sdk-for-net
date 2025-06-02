@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using Parameters.Path;
@@ -13,7 +14,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class ParametersPathClientBuilderExtensions
     {
-        public static IAzureClientBuilder<PathClient, PathClientOptions> AddPathClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<PathClient, PathClientOptions> AddPathClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

@@ -76,16 +76,18 @@ namespace Azure.Generator.Providers
                         continue;
                     }
 
-                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Equals(client.ClientOptionsParameter.Type) == true)
+                    // only add overloads for the full constructors that include the client options parameter
+                    if (constructor.Signature.Parameters.LastOrDefault()?.Type.Equals(client.ClientOptionsParameter.Type) != true)
                     {
                         continue;
                     }
 
-                    var authParameter = constructor.Signature.Parameters.LastOrDefault();
+                    // get the second to last parameter, which is the location of the auth credential parameter if there is one
+                    var authParameter = constructor.Signature.Parameters[^2];
                     var isTokenCredential = authParameter?.Type.Equals(typeof(TokenCredential)) == true;
                     var parameters = new List<ParameterProvider>(constructor.Signature.Parameters.Count + 1);
                     parameters.Add(builderParameter);
-                    parameters.AddRange(isTokenCredential ? constructor.Signature.Parameters.SkipLast(1) : constructor.Signature.Parameters);
+                    parameters.AddRange(isTokenCredential ? constructor.Signature.Parameters.SkipLast(2) : constructor.Signature.Parameters.SkipLast(1));
                     var method = new MethodProvider(
                         new MethodSignature(
                             methodName,
@@ -146,15 +148,15 @@ namespace Azure.Generator.Providers
 
         private static FuncExpression BuildFuncExpression(ClientProvider client, ConstructorSignature constructorSignature, bool isTokenCredential)
         {
-            var options = new VariableExpression(client.ClientOptions!.Type, "options");
+            var options = constructorSignature.Parameters.Last();
             var token = new VariableExpression(typeof(TokenCredential), "credential");
 
             ValueExpression[] ctorArgs = isTokenCredential ?
-                [.. constructorSignature.Parameters.SkipLast(1), token, options] :
-                [.. constructorSignature.Parameters, options];
+                [.. constructorSignature.Parameters.SkipLast(2), token, options] :
+                [.. constructorSignature.Parameters];
 
             return new FuncExpression(
-                isTokenCredential ? [options.Declaration, token.Declaration] : [options.Declaration],
+                isTokenCredential ? [options.AsExpression().Declaration, token.Declaration] : [options.AsExpression().Declaration],
                 New.Instance(client.Type, ctorArgs));
         }
 

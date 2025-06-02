@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 using _Type.Model.Inheritance.NestedDiscriminator;
@@ -13,7 +14,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class TypeModelInheritanceNestedDiscriminatorClientBuilderExtensions
     {
-        public static IAzureClientBuilder<NestedDiscriminatorClient, NestedDiscriminatorClientOptions> AddNestedDiscriminatorClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<NestedDiscriminatorClient, NestedDiscriminatorClientOptions> AddNestedDiscriminatorClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

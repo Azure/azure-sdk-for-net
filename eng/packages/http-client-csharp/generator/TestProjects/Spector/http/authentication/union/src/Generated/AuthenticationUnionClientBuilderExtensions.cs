@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Authentication.Union;
 using Azure;
@@ -14,10 +15,10 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationUnionClientBuilderExtensions
     {
-        public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential)
+        public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
-        public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<UnionClient, UnionClientOptions> AddUnionClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

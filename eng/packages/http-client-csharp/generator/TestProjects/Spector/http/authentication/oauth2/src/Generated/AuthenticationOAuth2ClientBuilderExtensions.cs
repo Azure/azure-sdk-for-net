@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Authentication.OAuth2;
 using Azure.Core.Extensions;
@@ -13,7 +14,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationOAuth2ClientBuilderExtensions
     {
-        public static IAzureClientBuilder<OAuth2Client, OAuth2ClientOptions> AddOAuth2Client<TBuilder>(this TBuilder builder)
+        public static IAzureClientBuilder<OAuth2Client, OAuth2ClientOptions> AddOAuth2Client<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]

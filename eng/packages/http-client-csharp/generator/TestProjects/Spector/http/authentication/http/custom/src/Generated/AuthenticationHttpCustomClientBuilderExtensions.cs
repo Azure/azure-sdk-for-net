@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Diagnostics.CodeAnalysis;
 using Authentication.Http.Custom;
 using Azure;
@@ -14,7 +15,7 @@ namespace Microsoft.Extensions.Azure
 {
     public static partial class AuthenticationHttpCustomClientBuilderExtensions
     {
-        public static IAzureClientBuilder<CustomClient, CustomClientOptions> AddCustomClient<TBuilder>(this TBuilder builder, AzureKeyCredential credential)
+        public static IAzureClientBuilder<CustomClient, CustomClientOptions> AddCustomClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
 
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
