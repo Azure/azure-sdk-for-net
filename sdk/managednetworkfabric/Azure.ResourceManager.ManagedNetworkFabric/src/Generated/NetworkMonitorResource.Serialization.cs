@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkMonitorResource : IJsonModel<NetworkMonitorData>
     {
+        private static NetworkMonitorData s_dataDeserializationInstance;
+        private static NetworkMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkMonitorData>)Data).Write(writer, options);
 
-        NetworkMonitorData IJsonModel<NetworkMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkMonitorData>)Data).Create(ref reader, options);
+        NetworkMonitorData IJsonModel<NetworkMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkMonitorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<NetworkMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkMonitorData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
         NetworkMonitorData IPersistableModel<NetworkMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkMonitorData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
 
-        string IPersistableModel<NetworkMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkMonitorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
