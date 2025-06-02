@@ -299,7 +299,7 @@ stages:
                 publishVstsFeed: $(DevOpsFeedID)
 
         steps:
-          - checkout: none
+          - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           - download: current
             displayName: Download ${{parameters.ArtifactName}}-signed
             artifact: ${{parameters.ArtifactName}}-signed
