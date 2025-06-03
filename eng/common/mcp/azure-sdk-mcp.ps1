@@ -6,6 +6,7 @@ param(
     [string]$Version, # Default to latest
     [string]$InstallDirectory = (Join-Path $HOME ".azure-sdk-mcp" "azsdk"),
     [string]$Repository = 'Azure/azure-sdk-tools',
+    [string]$RunDirectory = (Resolve-Path (Join-Path $PSScriptRoot .. .. ..)),
     [switch]$Run,
     [switch]$UpdateVsCodeConfig,
     [switch]$Clean
@@ -56,5 +57,5 @@ $exe = Install-Standalone-Tool `
     -Repository $Repository
 
 if ($Run) {
-    Start-Process -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait
+    Start-Process -WorkingDirectory $RunDirectory -FilePath $exe -ArgumentList 'start' -NoNewWindow -Wait
 }
