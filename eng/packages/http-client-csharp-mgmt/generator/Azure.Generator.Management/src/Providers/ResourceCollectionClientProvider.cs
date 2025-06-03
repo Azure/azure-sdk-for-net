@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 using Azure.Core;
+
+using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -148,7 +150,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_create!.Operation, isAsync);
+                var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_create!.Operation, isAsync);
                 result.Add(BuildOperationMethod(_create, convenienceMethod, isAsync));
             }
 
@@ -157,7 +159,7 @@ namespace Azure.Generator.Management.Providers
 
         private MethodProvider BuildGetAllMethod(bool isAsync)
         {
-            var convenienceMethod = GetCorrespondingConvenienceMethod(_getAll!.Operation, isAsync);
+            var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_getAll!.Operation, isAsync);
             return new GetAllOperationMethodProvider(this, _getAll, convenienceMethod, isAsync);
         }
 
@@ -171,7 +173,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 result.Add(BuildOperationMethod(_get, convenienceMethod, isAsync));
             }
 
@@ -188,7 +190,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var existsMethodProvider = new ExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
                 result.Add(existsMethodProvider);
             }
@@ -206,7 +208,7 @@ namespace Azure.Generator.Management.Providers
 
             foreach (var isAsync in new List<bool> { true, false})
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(_get!.Operation, isAsync);
+                var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(_get!.Operation, isAsync);
                 var getIfExistsMethodProvider = new GetIfExistsOperationMethodProvider(this, _get, convenienceMethod, isAsync);
                 result.Add(getIfExistsMethodProvider);
             }

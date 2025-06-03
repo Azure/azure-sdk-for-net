@@ -7,6 +7,7 @@ using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
@@ -16,17 +17,38 @@ namespace Azure.Generator.Management
 {
     /// <inheritdoc/>
     public class ManagementOutputLibrary : AzureOutputLibrary
-    {
-        private ManagementLongRunningOperationProvider? _armOperation;
+    {   private ManagementLongRunningOperationProvider? _armOperation;
         internal ManagementLongRunningOperationProvider ArmOperation => _armOperation ??= new ManagementLongRunningOperationProvider(false);
 
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
+        // TODO: replace this with CSharpType to TypeProvider mapping
+        private HashSet<CSharpType>? _resourceTypes;
+        private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
+
+        private HashSet<CSharpType> BuildResourceModels()
+        {
+            var resourceTypes = new HashSet<CSharpType>();
+
+            foreach (var model in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (ManagementClientGenerator.Instance.InputLibrary.IsResourceModel(model))
+                {
+                    var modelProvider = ManagementClientGenerator.Instance.TypeFactory.CreateModel(model);
+                    if (modelProvider is not null)
+                    {
+                        resourceTypes.Add(modelProvider.Type);
+                    }
+                }
+            }
+            return resourceTypes;
+        }
+
         private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var resources = new List<ResourceClientProvider>();
-            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.AllClients)
+            foreach (var client in ManagementClientGenerator.Instance.InputLibrary.InputNamespace.Clients)
             {
                 var resource = BuildResource(client);
                 if (resource is not null)
@@ -106,5 +128,7 @@ namespace Azure.Generator.Management
                 .. resources.Select(r => r.Source),
                 .. resources.SelectMany(r => r.SerializationProviders)];
         }
+
+        internal bool IsResourceModelType(CSharpType type) => ResourceTypes.Contains(type);
     }
 }

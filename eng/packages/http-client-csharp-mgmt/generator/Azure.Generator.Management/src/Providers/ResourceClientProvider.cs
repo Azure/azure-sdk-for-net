@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
@@ -236,7 +237,7 @@ namespace Azure.Generator.Management.Providers
             var operationMethods = new List<MethodProvider>();
             foreach (var method in _resourceServiceMethods)
             {
-                var convenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, false);
+                var convenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, false);
                 // exclude the List operations for resource, they will be in ResourceCollection
                 var returnType = convenienceMethod.Signature.ReturnType!;
                 if ((returnType.IsFrameworkType && returnType.IsList) || (method is InputPagingServiceMethod pagingMethod && pagingMethod.PagingMetadata.ItemPropertySegments.Any() == true))
