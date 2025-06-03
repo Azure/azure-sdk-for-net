@@ -26,6 +26,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private const string CommunicationUserValue = "communicationUser";
         private const string PhoneNumberValue = "phoneNumber";
         private const string MicrosoftTeamsUserValue = "microsoftTeamsUser";
+        private const string MicrosoftTeamsAppValue = "microsoftTeamsApp";
 
         /// <summary> Unknown. </summary>
         public static AcsCommunicationIdentifierKind Unknown { get; } = new AcsCommunicationIdentifierKind(UnknownValue);
@@ -35,6 +36,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public static AcsCommunicationIdentifierKind PhoneNumber { get; } = new AcsCommunicationIdentifierKind(PhoneNumberValue);
         /// <summary> Microsoft Teams User. </summary>
         public static AcsCommunicationIdentifierKind MicrosoftTeamsUser { get; } = new AcsCommunicationIdentifierKind(MicrosoftTeamsUserValue);
+        /// <summary> Microsoft Teams App. </summary>
+        public static AcsCommunicationIdentifierKind MicrosoftTeamsApp { get; } = new AcsCommunicationIdentifierKind(MicrosoftTeamsAppValue);
         /// <summary> Determines if two <see cref="AcsCommunicationIdentifierKind"/> values are the same. </summary>
         public static bool operator ==(AcsCommunicationIdentifierKind left, AcsCommunicationIdentifierKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AcsCommunicationIdentifierKind"/> values are not the same. </summary>

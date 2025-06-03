@@ -39,7 +39,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             TranscriptionState = transcriptionState;
             Bitrate = bitrate;
             IncomingBitrate = incomingBitrate;
-            IngestDriftValue = ingestDriftValueInternal == Constants.MediaEvents.NotApplicable ? null : int.Parse(ingestDriftValueInternal, CultureInfo.InvariantCulture);
+            IngestDriftValue = ingestDriftValueInternal is Constants.MediaEvents.NotApplicable or null ? null : int.Parse(ingestDriftValueInternal, CultureInfo.InvariantCulture);
             LastFragmentArrivalTime = lastFragmentArrivalTime;
             LastTimestamp = lastTimestamp;
             Timescale = timescale;

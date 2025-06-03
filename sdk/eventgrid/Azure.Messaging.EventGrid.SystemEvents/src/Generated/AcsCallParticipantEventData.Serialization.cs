@@ -9,15 +9,17 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsCallParticipantEventProperties : IUtf8JsonSerializable, IJsonModel<AcsCallParticipantEventProperties>
+    [JsonConverter(typeof(AcsCallParticipantEventDataConverter))]
+    public partial class AcsCallParticipantEventData : IUtf8JsonSerializable, IJsonModel<AcsCallParticipantEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsCallParticipantEventProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsCallParticipantEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AcsCallParticipantEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AcsCallParticipantEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +30,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcsCallParticipantEventProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -57,19 +59,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
         }
 
-        AcsCallParticipantEventProperties IJsonModel<AcsCallParticipantEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AcsCallParticipantEventData IJsonModel<AcsCallParticipantEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AcsCallParticipantEventProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAcsCallParticipantEventProperties(document.RootElement, options);
+            return DeserializeAcsCallParticipantEventData(document.RootElement, options);
         }
 
-        internal static AcsCallParticipantEventProperties DeserializeAcsCallParticipantEventProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AcsCallParticipantEventData DeserializeAcsCallParticipantEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -173,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsCallParticipantEventProperties(
+            return new AcsCallParticipantEventData(
                 startedBy,
                 serverCallId,
                 group,
@@ -188,43 +190,43 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 userAgent);
         }
 
-        BinaryData IPersistableModel<AcsCallParticipantEventProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AcsCallParticipantEventData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AcsCallParticipantEventProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AcsCallParticipantEventProperties IPersistableModel<AcsCallParticipantEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AcsCallParticipantEventData IPersistableModel<AcsCallParticipantEventData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AcsCallParticipantEventData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeAcsCallParticipantEventProperties(document.RootElement, options);
+                        return DeserializeAcsCallParticipantEventData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AcsCallParticipantEventProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AcsCallParticipantEventData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AcsCallParticipantEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AcsCallParticipantEventData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsCallParticipantEventProperties FromResponse(Response response)
+        internal static new AcsCallParticipantEventData FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAcsCallParticipantEventProperties(document.RootElement);
+            return DeserializeAcsCallParticipantEventData(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
@@ -233,6 +235,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsCallParticipantEventDataConverter : JsonConverter<AcsCallParticipantEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsCallParticipantEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsCallParticipantEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsCallParticipantEventData(document.RootElement);
+            }
         }
     }
 }

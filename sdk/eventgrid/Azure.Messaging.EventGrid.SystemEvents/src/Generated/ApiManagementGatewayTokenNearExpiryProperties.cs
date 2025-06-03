@@ -46,27 +46,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
-        /// <param name="expiredAtUtc"> Timestamp when the gateway token will expire. </param>
-        internal ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset expiredAtUtc)
-        {
-            ExpiredAtUtc = expiredAtUtc;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
-        /// <param name="expiredAtUtc"> Timestamp when the gateway token will expire. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset expiredAtUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ExpiredAtUtc = expiredAtUtc;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/> for deserialization. </summary>
         internal ApiManagementGatewayTokenNearExpiryProperties()
         {
         }
 
+        /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryProperties"/>. </summary>
+        /// <param name="expiresOn"> Timestamp when the gateway token will expire. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApiManagementGatewayTokenNearExpiryProperties(DateTimeOffset? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ExpiresOn = expiresOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Timestamp when the gateway token will expire. </summary>
-        public DateTimeOffset ExpiredAtUtc { get; }
+        public DateTimeOffset? ExpiresOn { get; }
     }
 }

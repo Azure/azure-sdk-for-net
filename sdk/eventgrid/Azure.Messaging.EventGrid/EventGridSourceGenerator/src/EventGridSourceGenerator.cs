@@ -68,10 +68,8 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
                 return;
             }
 
-            var isSystemEventsLibrary = compilation.AssemblyName == "Azure.Messaging.EventGrid.SystemEvents";
-
-            context.AddSource("SystemEventNames.cs", SourceText.From(ConstructSystemEventNames(systemEventNodes, isSystemEventsLibrary), Encoding.UTF8));
-            context.AddSource("SystemEventExtensions.cs", SourceText.From(ConstructSystemEventExtensions(systemEventNodes, isSystemEventsLibrary), Encoding.UTF8));
+            context.AddSource("SystemEventNames.cs", SourceText.From(ConstructSystemEventNames(systemEventNodes), Encoding.UTF8));
+            context.AddSource("SystemEventExtensions.cs", SourceText.From(ConstructSystemEventExtensions(systemEventNodes), Encoding.UTF8));
         }
 
         private static List<SystemEventNode> GetSystemEventNodes(Compilation compilation, ImmutableArray<ClassDeclarationSyntax> classes)
@@ -153,7 +151,7 @@ namespace Azure.EventGrid.Messaging.SourceGeneration
             return match.Success ? match.Value : null;
         }
 
-        private static string ConstructSystemEventNames(List<SystemEventNode> systemEvents, bool isSystemEventsLibrary)
+        private static string ConstructSystemEventNames(List<SystemEventNode> systemEvents)
         {
             var sourceBuilder = new StringBuilder(
 $@"// Copyright (c) Microsoft Corporation. All rights reserved.
@@ -183,9 +181,7 @@ namespace Azure.Messaging.EventGrid
                 // Add the ref docs for each constant
                 sourceBuilder.AppendIndentedLine(2, "/// <summary>");
                 sourceBuilder.AppendIndentedLine(2,
-                    !isSystemEventsLibrary
-                        ? "/// The value of the Event Type stored in <see cref=\"EventGridEvent.EventType\"/> and <see cref=\"CloudEvent.Type\"/> "
-                        : "/// The value of the Event Type stored in <see cref=\"CloudEvent.Type\"/> ");
+                    "/// The value of the Event Type stored in <see cref=\"CloudEvent.Type\"/> ");
 
                 sourceBuilder.AppendIndentedLine(2, $"/// for the <see cref=\"{sysEvent.EventName}\"/> system event.");
                 sourceBuilder.AppendIndentedLine(2, "/// </summary>");
@@ -199,7 +195,7 @@ namespace Azure.Messaging.EventGrid
             return sourceBuilder.ToString();
         }
 
-        private static string ConstructSystemEventExtensions(List<SystemEventNode> systemEvents, bool isSystemEventsLibrary)
+        private static string ConstructSystemEventExtensions(List<SystemEventNode> systemEvents)
         {
             var sourceBuilder = new StringBuilder(
                 $@"// Copyright (c) Microsoft Corporation. All rights reserved.
@@ -211,7 +207,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Messaging.EventGrid.SystemEvents;
-{(isSystemEventsLibrary ? "using System.ClientModel.Primitives;" : string.Empty)}
+using System.ClientModel.Primitives;
 
 namespace Azure.Messaging.EventGrid
 {{
@@ -227,7 +223,7 @@ namespace Azure.Messaging.EventGrid
                 sourceBuilder.AppendIndentedLine(3,
                     $"if (eventTypeSpan.Equals(SystemEventNames.{sysEvent.EventConstantName}.AsSpan(), StringComparison.OrdinalIgnoreCase))");
                 sourceBuilder.AppendIndentedLine(4,
-                    $"return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data{(isSystemEventsLibrary ? ", null" : string.Empty)});");
+                    $"return {sysEvent.EventName}.{sysEvent.DeserializeMethod}(data, null);");
             }
             sourceBuilder.AppendIndentedLine(3, "return null;");
             sourceBuilder.AppendIndentedLine(2, "}");

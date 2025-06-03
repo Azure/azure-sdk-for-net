@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal static class MediaEvents
         {
-            internal const string NotApplicable = "NotApplicable";
+            internal const string NotApplicable = "n/a";
         }
     }
 }

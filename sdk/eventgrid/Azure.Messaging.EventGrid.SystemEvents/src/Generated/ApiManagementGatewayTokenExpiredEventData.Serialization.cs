@@ -37,9 +37,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("gatewayInfo"u8);
-            writer.WriteObjectValue(GatewayInfo, options);
+            writer.WriteObjectValue(Gateway, options);
             writer.WritePropertyName("tokenInfo"u8);
-            writer.WriteObjectValue(TokenInfo, options);
+            writer.WriteObjectValue(Token, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

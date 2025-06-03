@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void MappingContainsAllSystemEvents()
         {
-            foreach (var systemEvent in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
+            foreach (var systemEvent in Assembly.GetAssembly(typeof(EventGridModelFactory)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
             {
                 // skip types that have no public constructors, e.g. base types
                 if (systemEvent.GetConstructors().Length == 0)
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void EventPropertiesCasedCorrectly()
         {
-            foreach (Type systemEvent in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
+            foreach (Type systemEvent in Assembly.GetAssembly(typeof(EventGridModelFactory)).GetTypes().Where(t => t.Name.EndsWith("EventData")))
             {
                 if (s_etagCasingExlusions.Contains(systemEvent.Name))
                 {
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventGrid.Tests
         [Test]
         public void ModelsAreInCorrectNamespace()
         {
-            foreach (Type model in Assembly.GetAssembly(typeof(EventGridEvent)).GetTypes())
+            foreach (Type model in Assembly.GetAssembly(typeof(EventGridModelFactory)).GetTypes())
             {
                 if (model.IsPublic && model.Namespace == "Azure.Messaging.EventGrid.Models"
                     && model.GetCustomAttribute<EditorBrowsableAttribute>() == null)

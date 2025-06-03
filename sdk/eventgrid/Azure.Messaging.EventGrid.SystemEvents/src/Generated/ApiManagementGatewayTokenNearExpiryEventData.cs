@@ -46,26 +46,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryEventData"/>. </summary>
-        /// <param name="gatewayInfo"> Information related to a given self-hosted gateway deployment. </param>
-        /// <param name="tokenInfo"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="gatewayInfo"/> or <paramref name="tokenInfo"/> is null. </exception>
-        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo, ApiManagementGatewayTokenNearExpiryProperties tokenInfo)
+        /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
+        /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="gateway"/> or <paramref name="token"/> is null. </exception>
+        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway, ApiManagementGatewayTokenNearExpiryProperties token)
         {
-            Argument.AssertNotNull(gatewayInfo, nameof(gatewayInfo));
-            Argument.AssertNotNull(tokenInfo, nameof(tokenInfo));
+            Argument.AssertNotNull(gateway, nameof(gateway));
+            Argument.AssertNotNull(token, nameof(token));
 
-            GatewayInfo = gatewayInfo;
-            TokenInfo = tokenInfo;
+            Gateway = gateway;
+            Token = token;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiManagementGatewayTokenNearExpiryEventData"/>. </summary>
-        /// <param name="gatewayInfo"> Information related to a given self-hosted gateway deployment. </param>
-        /// <param name="tokenInfo"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
+        /// <param name="gateway"> Information related to a given self-hosted gateway deployment. </param>
+        /// <param name="token"> Information related to a an expired gateway token for a self-hosted gateway deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gatewayInfo, ApiManagementGatewayTokenNearExpiryProperties tokenInfo, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiManagementGatewayTokenNearExpiryEventData(ApiManagementGatewayProperties gateway, ApiManagementGatewayTokenNearExpiryProperties token, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GatewayInfo = gatewayInfo;
-            TokenInfo = tokenInfo;
+            Gateway = gateway;
+            Token = token;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -75,8 +75,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> Information related to a given self-hosted gateway deployment. </summary>
-        public ApiManagementGatewayProperties GatewayInfo { get; }
+        public ApiManagementGatewayProperties Gateway { get; }
         /// <summary> Information related to a an expired gateway token for a self-hosted gateway deployment. </summary>
-        public ApiManagementGatewayTokenNearExpiryProperties TokenInfo { get; }
+        public ApiManagementGatewayTokenNearExpiryProperties Token { get; }
     }
 }

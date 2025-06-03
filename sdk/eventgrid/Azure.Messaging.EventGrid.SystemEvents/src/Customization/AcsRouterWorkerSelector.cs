@@ -47,5 +47,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
         }
+
+        /// <summary> Router Job Worker Selector Value. </summary>
+        public object LabelValue { get; }
+
+        internal double? TtlSeconds { get; }
+
+        /// <summary> Router Job Worker Selector TTL. </summary>
+        public TimeSpan? TimeToLive => TtlSeconds.HasValue ? TimeSpan.FromSeconds(TtlSeconds.Value) : null;
     }
 }

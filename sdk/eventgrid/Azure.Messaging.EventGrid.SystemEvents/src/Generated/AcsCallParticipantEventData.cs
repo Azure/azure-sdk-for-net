@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all participant events. </summary>
-    public partial class AcsCallParticipantEventProperties : AcsCallingEventProperties
+    public partial class AcsCallParticipantEventData : AcsCallingEventProperties
     {
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="correlationId"> The correlationId of calling event. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startedBy"/>, <paramref name="serverCallId"/> or <paramref name="correlationId"/> is null. </exception>
-        internal AcsCallParticipantEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, string correlationId) : base(startedBy, serverCallId, correlationId)
+        internal AcsCallParticipantEventData(AcsCallParticipantProperties startedBy, string serverCallId, string correlationId) : base(startedBy, serverCallId, correlationId)
         {
             Argument.AssertNotNull(startedBy, nameof(startedBy));
             Argument.AssertNotNull(serverCallId, nameof(serverCallId));
             Argument.AssertNotNull(correlationId, nameof(correlationId));
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventData"/>. </summary>
         /// <param name="startedBy"> The call participant who initiated the call. </param>
         /// <param name="serverCallId"> The call id of the server. </param>
         /// <param name="group"> The group metadata. </param>
@@ -38,7 +38,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="displayName"> The display name of the participant. </param>
         /// <param name="participantId"> The id of the participant. </param>
         /// <param name="userAgent"> The user agent of the participant. </param>
-        internal AcsCallParticipantEventProperties(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> serializedAdditionalRawData, AcsCallParticipantProperties user, string displayName, string participantId, string userAgent) : base(startedBy, serverCallId, group, room, isTwoParty, correlationId, isRoomsCall, serializedAdditionalRawData)
+        internal AcsCallParticipantEventData(AcsCallParticipantProperties startedBy, string serverCallId, AcsCallGroupProperties group, AcsCallRoomProperties room, bool? isTwoParty, string correlationId, bool? isRoomsCall, IDictionary<string, BinaryData> serializedAdditionalRawData, AcsCallParticipantProperties user, string displayName, string participantId, string userAgent) : base(startedBy, serverCallId, group, room, isTwoParty, correlationId, isRoomsCall, serializedAdditionalRawData)
         {
             User = user;
             DisplayName = displayName;
@@ -46,8 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             UserAgent = userAgent;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventProperties"/> for deserialization. </summary>
-        internal AcsCallParticipantEventProperties()
+        /// <summary> Initializes a new instance of <see cref="AcsCallParticipantEventData"/> for deserialization. </summary>
+        internal AcsCallParticipantEventData()
         {
         }
 

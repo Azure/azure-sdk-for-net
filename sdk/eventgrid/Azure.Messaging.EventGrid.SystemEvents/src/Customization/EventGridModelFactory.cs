@@ -1318,6 +1318,15 @@ namespace Azure.Messaging.EventGrid
         {
             return AcsMessageMediaContent(mimeType, mediaId, fileName, caption, default);
         }
+
+        /// <summary> Initializes new instance of SubscriptionValidationResponse class. </summary>
+        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
+        /// <returns> A new <see cref="SystemEvents.SubscriptionValidationResponse"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SubscriptionValidationResponse SubscriptionValidationResponse(string validationResponse = default)
+        {
+            return new(validationResponse);
+        }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings
 }

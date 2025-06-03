@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            IReadOnlyDictionary<string, BinaryData> body = default;
+            object body = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -68,19 +68,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("body"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    body = dictionary;
+                    body = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(TaskName);
             }
             writer.WritePropertyName("summaryReportBlobUrl"u8);
-            writer.WriteStringValue(SummaryReportBlobUrl.AbsoluteUri);
+            writer.WriteStringValue(SummaryReportBlobUri.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
