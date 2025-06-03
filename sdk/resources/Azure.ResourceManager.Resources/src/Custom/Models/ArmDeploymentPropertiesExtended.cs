@@ -26,13 +26,17 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary>
         /// Array of provisioned resources.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("outputResources")]
         public IReadOnlyList<SubResource> OutputResources
             => OutputResourceDetails.Select(d => ResourceManagerModelFactory.SubResource(d.Id != null ? new ResourceIdentifier(d.Id) : null)).ToArray();
 
         /// <summary>
         /// Array of validated resources.
         /// </summary>
-        public IReadOnlyList<SubResource> ValidatedResource
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("validatedResources")]
+        public IReadOnlyList<SubResource> ValidatedResources
             => ValidatedResourceDetails.Select(d => ResourceManagerModelFactory.SubResource(d.Id != null ? new ResourceIdentifier(d.Id) : null)).ToArray();
     }
 }
