@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="tags"> Deployment tags. </param>
         /// <param name="identity"> The Managed Identity configuration for a deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentContent(AzureLocation? location, ArmDeploymentProperties properties, IDictionary<string, string> tags, DeploymentIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentContent(AzureLocation? location, ArmDeploymentProperties properties, IDictionary<string, string> tags, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Properties = properties;
@@ -86,8 +87,5 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Deployment tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary> The Managed Identity configuration for a deployment. </summary>
-        [WirePath("identity")]
-        public DeploymentIdentity Identity { get; set; }
     }
 }

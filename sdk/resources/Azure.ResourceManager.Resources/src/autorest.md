@@ -22,8 +22,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug:
-#  show-serialized-names: true
+mgmt-debug:
+ show-serialized-names: true
 
 rename-mapping:
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
