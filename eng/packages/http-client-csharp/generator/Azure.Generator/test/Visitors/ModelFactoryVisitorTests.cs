@@ -25,7 +25,7 @@ namespace Azure.Generator.Tests.Visitors
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().SingleOrDefault();
 
             Assert.IsNotNull(modelFactory);
-            Assert.AreEqual("MessagingSomeServiceModelFactory", modelFactory!.Type.Name);
+            Assert.AreEqual("SomeServiceModelFactory", modelFactory!.Type.Name);
         }
 
         [Test]
