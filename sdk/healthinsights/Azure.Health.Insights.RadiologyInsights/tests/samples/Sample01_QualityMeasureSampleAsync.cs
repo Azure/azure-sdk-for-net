@@ -59,8 +59,8 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 {
                     Console.WriteLine("Quality Measure Inference found:");
 
-                    Console.WriteLine("   Quality Measure Denominator: ", qualityMeasureInference.QualityMeasureDenominator);
-                    Console.WriteLine("   Compliance Type: ", qualityMeasureInference.ComplianceType);
+                    Console.WriteLine($"   Quality Measure Denominator: {qualityMeasureInference.QualityMeasureDenominator}");
+                    Console.WriteLine($"   Compliance Type: {qualityMeasureInference.ComplianceType}");
 
                     IReadOnlyList<string> qualityCriterias = qualityMeasureInference.QualityCriteria;
 
