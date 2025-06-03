@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Job finished event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobFinished event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaJobFinishedEventData : MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaJobFinishedEventData"/>. </summary>

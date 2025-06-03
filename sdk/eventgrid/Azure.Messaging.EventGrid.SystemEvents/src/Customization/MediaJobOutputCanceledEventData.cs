@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Job output canceled event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.JobOutputCanceled event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaJobOutputCanceledEventData : MediaJobOutputStateChangeEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaJobOutputCanceledEventData"/>. </summary>
