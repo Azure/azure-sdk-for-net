@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Providers;
+using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Microsoft.TypeSpec.Generator.Input;
@@ -22,15 +23,18 @@ namespace Azure.Generator.Management
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
-        private (IReadOnlyList<ResourceClientProvider> Resources, IReadOnlyList<ResourceCollectionClientProvider> Collection) BuildResources()
+        private IReadOnlyList<ResourceClientProvider> BuildResources()
         {
             var resources = new List<ResourceClientProvider>();
-            var collections = new List<ResourceCollectionClientProvider>();
             foreach (var client in ManagementClientGenerator.Instance.InputLibrary.AllClients)
             {
-                BuildResourceCore(resources, collections, client);
+                var resource = BuildResource(client);
+                if (resource is not null)
+                {
+                    resources.Add(resource);
+                }
             }
-            return (resources, collections);
+            return resources;
         }
 
         private static readonly IReadOnlyDictionary<ResourceScope, Type> _scopeToTypes = new Dictionary<ResourceScope, Type>
@@ -77,27 +81,21 @@ namespace Azure.Generator.Management
             return [.. mockableResources, extensionProvider];
         }
 
-        private static void BuildResourceCore(List<ResourceClientProvider> resources, List<ResourceCollectionClientProvider> collections, InputClient client)
+        // TODO -- in a near future we might need to change the input, because in real typespec, there is no guarantee that one client corresponds to one resource.
+        private static ResourceClientProvider? BuildResource(InputClient client)
         {
             // A resource client should contain the decorator "Azure.ResourceManager.@resourceMetadata"
             var resourceMetadata = ManagementClientGenerator.Instance.InputLibrary.GetResourceMetadata(client);
-            if (resourceMetadata is not null)
-            {
-                var resource = ResourceClientProvider.Create(client, resourceMetadata);
-                ManagementClientGenerator.Instance.AddTypeToKeep(resource.Name);
-                resources.Add(resource);
-                if (resource.ResourceCollection is not null)
-                {
-                    ManagementClientGenerator.Instance.AddTypeToKeep(resource.ResourceCollection.Name);
-                    collections.Add(resource.ResourceCollection);
-                }
-            }
+            return resourceMetadata is not null ?
+                ResourceClientProvider.Create(client, resourceMetadata) :
+                null;
         }
 
         /// <inheritdoc/>
         protected override TypeProvider[] BuildTypeProviders()
         {
-            var (resources, collections) = BuildResources();
+            var resources = BuildResources();
+            var collections = resources.Select(r => r.ResourceCollection).WhereNotNull();
             var extensions = BuildExtensions(resources);
             return [
                 .. base.BuildTypeProviders().Where(t => t is not InheritableSystemObjectModelProvider),

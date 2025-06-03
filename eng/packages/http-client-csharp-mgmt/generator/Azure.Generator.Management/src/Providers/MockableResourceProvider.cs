@@ -20,8 +20,6 @@ namespace Azure.Generator.Management.Providers
     {
         private protected readonly IReadOnlyList<ResourceClientProvider> _resources;
 
-        private const string IdProperty = "Id";
-
         // TODO -- in the future we need to update this to include the operations this mockable resource should include.
         public MockableResourceProvider(CSharpType armCoreType, IReadOnlyList<ResourceClientProvider> resources)
         {

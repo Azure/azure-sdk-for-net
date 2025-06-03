@@ -19,9 +19,6 @@ namespace Azure.Generator.Management.Providers
 {
     internal class ExtensionProvider : TypeProvider
     {
-        private const string GetCachedClient = "GetCachedClient";
-        private const string IdProperty = "Id";
-
         private readonly IReadOnlyList<MockableResourceProvider> _mockableResources;
         public ExtensionProvider(IReadOnlyList<MockableResourceProvider> mockableResources)
         {
@@ -71,17 +68,13 @@ namespace Azure.Generator.Management.Providers
                 mockableResource.Type,
                 null,
                 [parameter]);
-            var clientVar = new CodeWriterDeclaration("client");
-            var lambda = new FuncExpression([clientVar],
-                New.Instance(mockableResource.Type,
-                    coreType.Equals(typeof(ArmClient)) ?
-                        [new VariableExpression(mockableResource.Type, clientVar), Static<ResourceIdentifier>().As<ResourceIdentifier>().Root()] :
-                        // if the core type is not ArmClient, we need to pass the client and the resource identifier
-                        [new VariableExpression(mockableResource.Type, clientVar), parameter.Property(IdProperty)]
-                ));
+            var resource = parameter.As<ArmResource>();
             var statements = new List<MethodBodyStatement>
             {
-                Return(parameter.Invoke(GetCachedClient, lambda))
+                Return(resource.GetCachedClient(
+                    new CodeWriterDeclaration("client"),
+                    client => New.Instance(mockableResource.Type,
+                                    coreType.Equals(typeof(ArmClient)) ? [client, ResourceIdentifierSnippets.Root()] : [client, resource.Id()]))),
             };
             return new MethodProvider(methodSignature, statements, this);
         }
