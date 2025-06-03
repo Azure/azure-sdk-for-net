@@ -36,8 +36,8 @@ namespace MgmtTypeSpec
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal FooCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", FooResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(FooResource.ResourceType, out string fooApiVersion);
+            _fooClientDiagnostics = new ClientDiagnostics("MgmtTypeSpec", ResourceGroupResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceGroupResource.ResourceType, out string fooApiVersion);
             _fooRestClient = new Foos(_fooClientDiagnostics, Pipeline, Endpoint, fooApiVersion);
             ValidateResourceId(id);
         }
@@ -46,9 +46,9 @@ namespace MgmtTypeSpec
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id != ResourceGroupResource.ResourceType)
+            if (id.ResourceType != ResourceGroupResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, FooResource.ResourceType), id);
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), id);
             }
         }
 
@@ -206,11 +206,17 @@ namespace MgmtTypeSpec
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual AsyncPageable<FooResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary> List Foo resources by resource group. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default) => throw new NotImplementedException();
+        public virtual Pageable<FooResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            throw new NotImplementedException();
+        }
 
         /// <summary> Checks to see if the resource exists in azure. </summary>
         /// <param name="fooName"> The name of the Foo. </param>

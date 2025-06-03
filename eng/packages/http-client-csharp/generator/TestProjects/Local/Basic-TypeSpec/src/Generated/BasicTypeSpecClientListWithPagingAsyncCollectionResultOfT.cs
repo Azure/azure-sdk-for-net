@@ -22,7 +22,7 @@ namespace BasicTypeSpec
         /// <summary> Initializes a new instance of BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT(BasicTypeSpecClient client, RequestContext context)
+        public BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
@@ -34,21 +34,12 @@ namespace BasicTypeSpec
         /// <returns> The pages of BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            do
-            {
-                Response response = await GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
-                if (response is null)
-                {
-                    yield break;
-                }
-                PageThingModel responseWithType = (PageThingModel)response;
-                continuationToken = null;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Items, continuationToken, response);
-            }
-            while (!string.IsNullOrEmpty(continuationToken));
+            Response response = await GetNextResponse(pageSizeHint, null).ConfigureAwait(false);
+            PageThingModel responseWithType = (PageThingModel)response;
+            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Items, null, response);
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
@@ -58,7 +49,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

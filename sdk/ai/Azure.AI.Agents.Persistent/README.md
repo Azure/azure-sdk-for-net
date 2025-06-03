@@ -72,6 +72,8 @@ var projectEndpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 PersistentAgentsClient projectClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
+**Note:** Support for project connection string and hub-based projects has been discontinued. We recommend creating a new Azure AI Foundry resource utilizing project endpoint. If this is not possible, please pin the version of `Azure.AI.Agents.Persistent` to version `1.0.0-beta.2` or earlier.
+
 ## Examples
 
 ### Agents

@@ -73,6 +73,26 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         protected override Task<Stream> OpenReadAsync(ShareFileClient objectClient)
             => objectClient.OpenReadAsync();
 
+        private bool StreamsAreEqual(Stream s1, Stream s2)
+        {
+            if (s1.Length != s2.Length)
+                return false;
+
+            s1.Position = 0;
+            s2.Position = 0;
+
+            int byte1, byte2;
+            do
+            {
+                byte1 = s1.ReadByte();
+                byte2 = s2.ReadByte();
+                if (byte1 != byte2)
+                    return false;
+            } while (byte1 != -1);
+
+            return true;
+        }
+
         [RecordedTest]
         public async Task ShareFileToLocalFile_NfsHardLink()
         {
@@ -132,6 +152,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using Stream sourceStream = await hardlinkClient.OpenReadAsync();
             using Stream destinationStream = File.OpenRead(destinationResource.Uri.LocalPath);
             Assert.AreEqual(sourceStream.Length, destinationStream.Length);
+            Assert.IsTrue(StreamsAreEqual(sourceStream, destinationStream));
         }
 
         [RecordedTest]

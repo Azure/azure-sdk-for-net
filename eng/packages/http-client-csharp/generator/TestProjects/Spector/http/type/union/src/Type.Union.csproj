@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Type.Union client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Type.Union</AssemblyTitle>
+    <Description>This is the Type.Union client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Type.Union</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>_Type.Union</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
