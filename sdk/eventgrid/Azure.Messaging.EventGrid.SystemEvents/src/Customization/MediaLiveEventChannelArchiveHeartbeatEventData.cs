@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Channel Archive heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventChannelArchiveHeartbeat event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventChannelArchiveHeartbeatEventData"/>. </summary>

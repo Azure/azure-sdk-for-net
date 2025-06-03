@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The event data for a Job output asset. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaJobOutputAsset : MediaJobOutput
     {
         /// <summary> Initializes a new instance of <see cref="MediaJobOutputAsset"/>. </summary>

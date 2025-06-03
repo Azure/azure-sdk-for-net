@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Globalization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Ingest heartbeat event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIngestHeartbeat event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventIngestHeartbeatEventData"/>. </summary>

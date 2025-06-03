@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.Media.JobStateChange event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaJobStateChangeEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaJobStateChangeEventData"/>. </summary>
