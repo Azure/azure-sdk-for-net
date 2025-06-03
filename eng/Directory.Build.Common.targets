@@ -89,7 +89,7 @@
 
   <!-- Add Client SDK Tools -->
   <ItemGroup>
-    <PackageReference Condition="'$(IsClientLibrary)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
+    <PackageReference Condition="'$(IncludeAutorestDependency)' == 'true'" Include="Microsoft.Azure.AutoRest.CSharp" PrivateAssets="All" />
 
     <PackageReference Condition="'$(GenerateAPIListing)' == 'true'" Include="Microsoft.DotNet.GenAPI" PrivateAssets="All" />
 
@@ -172,7 +172,7 @@
 
   <Import Project="CodeCoverage.targets" Condition="'$(CollectCoverage)' == 'true'" />
 
-  <Import Project="CodeGeneration.targets" Condition="'$(TemporaryUsePreviousGeneratorVersion)' == 'true'" />
+  <Import Project="CodeGeneration.targets" Condition="'$(IncludeAutorestDependency)' != 'true'" />
 
   <Import Project="Azure.Management.Test.targets" Condition="'$(IsMgmtLibrary)' == 'true' and '$(IsTestProject)' == 'true'" />
 

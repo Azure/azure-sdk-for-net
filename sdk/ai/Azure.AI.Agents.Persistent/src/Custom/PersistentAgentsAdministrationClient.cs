@@ -128,7 +128,7 @@ namespace Azure.AI.Agents.Persistent
         /// <summary> Initializes a new instance of RunsClient. </summary>
         internal virtual ThreadRuns GetThreadRunsClient()
         {
-            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedThreadRuns;
+            return Volatile.Read(ref _cachedThreadRuns) ?? Interlocked.CompareExchange(ref _cachedThreadRuns, new ThreadRuns(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion, GetThreadRunStepsClient()), null) ?? _cachedThreadRuns;
         }
 
         /// <summary> Initializes a new instance of RunStepsClient. </summary>

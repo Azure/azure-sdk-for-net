@@ -30,6 +30,7 @@ namespace Azure.Generator.Primitives
         private const string AzureLocationId = "Azure.Core.azureLocation";
         private const string ArmIdId = "Azure.Core.armResourceIdentifier";
         private const string AzureError = "Azure.Core.Foundations.Error";
+        private const string EmbeddingVector = "Azure.Core.EmbeddingVector";
 
         private static MethodBodyStatement SerializeTypeWithImplicitOperatorToString(ValueExpression value, ScopedApi<Utf8JsonWriter> writer, ScopedApi<ModelReaderWriterOptions> options, SerializationFormat format)
             => writer.WriteStringValue(value);
@@ -51,7 +52,7 @@ namespace Azure.Generator.Primitives
             SerializationFormat format)
             => Static(typeof(JsonSerializer)).Invoke(nameof(JsonSerializer.Deserialize), arguments: [element.GetRawText()], typeArguments: [valueType], callAsAsync: false);
 
-        private static readonly IReadOnlyDictionary<string, CSharpType> _idToTypes = new Dictionary<string, CSharpType>
+        private static readonly IReadOnlyDictionary<string, Type> _idToTypes = new Dictionary<string, Type>
         {
             [UuidId] = typeof(Guid),
             [IPv4AddressId] = typeof(IPAddress),
@@ -60,6 +61,7 @@ namespace Azure.Generator.Primitives
             [AzureLocationId] = typeof(AzureLocation),
             [ArmIdId] = typeof(ResourceIdentifier),
             [AzureError] = typeof(ResponseError),
+            [EmbeddingVector] = typeof(ReadOnlyMemory<>)
         };
 
         private static readonly IReadOnlyDictionary<Type, SerializationExpression> _typeToSerializationExpression = new Dictionary<Type, SerializationExpression>
@@ -82,7 +84,7 @@ namespace Azure.Generator.Primitives
             [typeof(ResponseError)] = DeserializeResponseError,
         };
 
-        public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out CSharpType type) => _idToTypes.TryGetValue(id, out type);
+        public static bool TryGetKnownType(string id, [MaybeNullWhen(false)] out Type type) => _idToTypes.TryGetValue(id, out type);
 
         public static bool TryGetJsonSerializationExpression(Type type, [MaybeNullWhen(false)] out SerializationExpression expression) => _typeToSerializationExpression.TryGetValue(type, out expression);
 

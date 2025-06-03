@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Type.Model.Inheritance.NestedDiscriminator client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Type.Model.Inheritance.NestedDiscriminator</AssemblyTitle>
+    <Description>This is the Type.Model.Inheritance.NestedDiscriminator client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Type.Model.Inheritance.NestedDiscriminator</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>_Type.Model.Inheritance.NestedDiscriminator</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>

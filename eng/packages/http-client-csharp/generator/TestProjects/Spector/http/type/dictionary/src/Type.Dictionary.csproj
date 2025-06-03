@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Type.Dictionary client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Type.Dictionary</AssemblyTitle>
+    <Description>This is the Type.Dictionary client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Type.Dictionary</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>_Type.Dictionary</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../sdk/core/Azure.Core/src/Shared/DiagnosticScope.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../sdk/core/Azure.Core/src/Shared/HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
     <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../sdk/core/Azure.Core/src/Shared/TrimmingAttribute.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(MSBuildThisFileDirectory)../../../../../../../../../../sdk/core/Azure.Core/src/Shared/NoValueResponseOfT.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>

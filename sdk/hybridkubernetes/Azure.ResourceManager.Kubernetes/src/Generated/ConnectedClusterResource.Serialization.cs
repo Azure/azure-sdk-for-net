@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Kubernetes
 {
     public partial class ConnectedClusterResource : IJsonModel<ConnectedClusterData>
     {
+        private static ConnectedClusterData s_dataDeserializationInstance;
+        private static ConnectedClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ConnectedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterData>)Data).Write(writer, options);
 
-        ConnectedClusterData IJsonModel<ConnectedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterData>)Data).Create(ref reader, options);
+        ConnectedClusterData IJsonModel<ConnectedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ConnectedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterData>(Data, options, AzureResourceManagerKubernetesContext.Default);
 
         ConnectedClusterData IPersistableModel<ConnectedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterData>(data, options, AzureResourceManagerKubernetesContext.Default);
 
-        string IPersistableModel<ConnectedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

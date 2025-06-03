@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class PartnerNamespacePrivateLinkResource : IJsonModel<EventGridPrivateLinkResourceData>
     {
+        private static EventGridPrivateLinkResourceData s_dataDeserializationInstance;
+        private static EventGridPrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<EventGridPrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateLinkResourceData>)Data).Write(writer, options);
 
-        EventGridPrivateLinkResourceData IJsonModel<EventGridPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateLinkResourceData>)Data).Create(ref reader, options);
+        EventGridPrivateLinkResourceData IJsonModel<EventGridPrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<EventGridPrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridPrivateLinkResourceData>(Data, options, AzureResourceManagerEventGridContext.Default);
 
         EventGridPrivateLinkResourceData IPersistableModel<EventGridPrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridPrivateLinkResourceData>(data, options, AzureResourceManagerEventGridContext.Default);
 
-        string IPersistableModel<EventGridPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridPrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridPrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridPrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

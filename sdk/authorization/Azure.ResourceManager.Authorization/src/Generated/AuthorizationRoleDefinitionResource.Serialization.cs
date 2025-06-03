@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class AuthorizationRoleDefinitionResource : IJsonModel<AuthorizationRoleDefinitionData>
     {
+        private static AuthorizationRoleDefinitionData s_dataDeserializationInstance;
+        private static AuthorizationRoleDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AuthorizationRoleDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationRoleDefinitionData>)Data).Write(writer, options);
 
-        AuthorizationRoleDefinitionData IJsonModel<AuthorizationRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationRoleDefinitionData>)Data).Create(ref reader, options);
+        AuthorizationRoleDefinitionData IJsonModel<AuthorizationRoleDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AuthorizationRoleDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<AuthorizationRoleDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AuthorizationRoleDefinitionData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
 
         AuthorizationRoleDefinitionData IPersistableModel<AuthorizationRoleDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AuthorizationRoleDefinitionData>(data, options, AzureResourceManagerAuthorizationContext.Default);
 
-        string IPersistableModel<AuthorizationRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationRoleDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AuthorizationRoleDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AuthorizationRoleDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

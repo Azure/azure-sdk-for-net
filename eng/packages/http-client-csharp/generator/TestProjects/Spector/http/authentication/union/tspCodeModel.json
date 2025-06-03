@@ -3,6 +3,7 @@
  "name": "Authentication.Union",
  "apiVersions": [],
  "enums": [],
+ "constants": [],
  "models": [],
  "clients": [
   {

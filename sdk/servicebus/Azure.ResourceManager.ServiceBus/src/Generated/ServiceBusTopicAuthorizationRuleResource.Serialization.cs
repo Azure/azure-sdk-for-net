@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ServiceBus
 {
     public partial class ServiceBusTopicAuthorizationRuleResource : IJsonModel<ServiceBusAuthorizationRuleData>
     {
+        private static ServiceBusAuthorizationRuleData s_dataDeserializationInstance;
+        private static ServiceBusAuthorizationRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ServiceBusAuthorizationRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusAuthorizationRuleData>)Data).Write(writer, options);
 
-        ServiceBusAuthorizationRuleData IJsonModel<ServiceBusAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusAuthorizationRuleData>)Data).Create(ref reader, options);
+        ServiceBusAuthorizationRuleData IJsonModel<ServiceBusAuthorizationRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceBusAuthorizationRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ServiceBusAuthorizationRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceBusAuthorizationRuleData>(Data, options, AzureResourceManagerServiceBusContext.Default);
 
         ServiceBusAuthorizationRuleData IPersistableModel<ServiceBusAuthorizationRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceBusAuthorizationRuleData>(data, options, AzureResourceManagerServiceBusContext.Default);
 
-        string IPersistableModel<ServiceBusAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusAuthorizationRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceBusAuthorizationRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceBusAuthorizationRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

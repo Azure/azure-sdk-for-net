@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.EdgeZones
 {
     public partial class ExtendedZoneResource : IJsonModel<ExtendedZoneData>
     {
+        private static ExtendedZoneData s_dataDeserializationInstance;
+        private static ExtendedZoneData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ExtendedZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedZoneData>)Data).Write(writer, options);
 
-        ExtendedZoneData IJsonModel<ExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedZoneData>)Data).Create(ref reader, options);
+        ExtendedZoneData IJsonModel<ExtendedZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtendedZoneData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ExtendedZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtendedZoneData>(Data, options, AzureResourceManagerEdgeZonesContext.Default);
 
         ExtendedZoneData IPersistableModel<ExtendedZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtendedZoneData>(data, options, AzureResourceManagerEdgeZonesContext.Default);
 
-        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedZoneData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ExtendedZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtendedZoneData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

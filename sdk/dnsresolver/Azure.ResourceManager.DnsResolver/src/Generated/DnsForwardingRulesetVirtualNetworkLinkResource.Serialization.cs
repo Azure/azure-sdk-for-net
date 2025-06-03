@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsForwardingRulesetVirtualNetworkLinkResource : IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>
     {
+        private static DnsForwardingRulesetVirtualNetworkLinkData s_dataDeserializationInstance;
+        private static DnsForwardingRulesetVirtualNetworkLinkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>)Data).Write(writer, options);
 
-        DnsForwardingRulesetVirtualNetworkLinkData IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>)Data).Create(ref reader, options);
+        DnsForwardingRulesetVirtualNetworkLinkData IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsForwardingRulesetVirtualNetworkLinkData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsForwardingRulesetVirtualNetworkLinkData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
 
         DnsForwardingRulesetVirtualNetworkLinkData IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(data, options, AzureResourceManagerDnsResolverContext.Default);
 
-        string IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsForwardingRulesetVirtualNetworkLinkData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

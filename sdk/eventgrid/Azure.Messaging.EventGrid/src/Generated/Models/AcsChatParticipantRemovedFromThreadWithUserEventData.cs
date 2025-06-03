@@ -13,8 +13,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatParticipantRemovedFromThreadWithUserEventData : AcsChatThreadEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>
-        internal AcsChatParticipantRemovedFromThreadWithUserEventData()
+        /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
+        /// <param name="participantRemoved"> The details of the user who was removed. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="removedByCommunicationIdentifier"/> or <paramref name="participantRemoved"/> is null. </exception>
+        internal AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved)
         {
+            Argument.AssertNotNull(removedByCommunicationIdentifier, nameof(removedByCommunicationIdentifier));
+            Argument.AssertNotNull(participantRemoved, nameof(participantRemoved));
+
+            RemovedByCommunicationIdentifier = removedByCommunicationIdentifier;
+            ParticipantRemoved = participantRemoved;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>

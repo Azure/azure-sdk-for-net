@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevCenter
 {
     public partial class ProjectDevBoxDefinitionResource : IJsonModel<DevBoxDefinitionData>
     {
+        private static DevBoxDefinitionData s_dataDeserializationInstance;
+        private static DevBoxDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevBoxDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevBoxDefinitionData>)Data).Write(writer, options);
 
-        DevBoxDefinitionData IJsonModel<DevBoxDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevBoxDefinitionData>)Data).Create(ref reader, options);
+        DevBoxDefinitionData IJsonModel<DevBoxDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevBoxDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DevBoxDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevBoxDefinitionData>(Data, options, AzureResourceManagerDevCenterContext.Default);
 
         DevBoxDefinitionData IPersistableModel<DevBoxDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevBoxDefinitionData>(data, options, AzureResourceManagerDevCenterContext.Default);
 
-        string IPersistableModel<DevBoxDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevBoxDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevBoxDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevBoxDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

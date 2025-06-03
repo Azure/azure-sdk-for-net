@@ -31,10 +31,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("recordingStorageInfo"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     recordingStorageInfo = AcsRecordingStorageInfoProperties.DeserializeAcsRecordingStorageInfoProperties(property.Value);
                     continue;
                 }

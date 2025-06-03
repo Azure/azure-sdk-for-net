@@ -104,7 +104,10 @@ extends:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             DependsOn:
               - Build
-            Artifacts: ${{ parameters.Artifacts }}
+            Artifacts:
+              - ${{ each artifact in parameters.Artifacts }}:
+                 - ${{ if ne(artifact.createReleaseStage, 'false') }}:
+                    - ${{ artifact }}
             ${{ if eq(parameters.ServiceDirectory, 'template') }}:
               TestPipeline: true
             ArtifactName: packages
