@@ -18,6 +18,7 @@ namespace Azure.Generator.Management
         private ManagementLongRunningOperationProvider? _genericArmOperation;
         internal ManagementLongRunningOperationProvider GenericArmOperation => _genericArmOperation ??= new ManagementLongRunningOperationProvider(true);
 
+        // TODO: replace this with CSharpType to TypeProvider mapping
         private HashSet<CSharpType>? _resourceTypes;
         private HashSet<CSharpType> ResourceTypes => _resourceTypes ??= BuildResourceModels();
 
