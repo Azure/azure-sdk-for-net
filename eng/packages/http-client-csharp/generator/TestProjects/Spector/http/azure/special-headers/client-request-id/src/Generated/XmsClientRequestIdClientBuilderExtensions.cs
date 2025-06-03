@@ -12,7 +12,7 @@ using Azure.SpecialHeaders.XmsClientRequestId;
 
 namespace Microsoft.Extensions.Azure
 {
-    public static partial class SpecialHeadersXmsClientRequestIdClientBuilderExtensions
+    public static partial class XmsClientRequestIdClientBuilderExtensions
     {
         public static IAzureClientBuilder<XmsClientRequestIdClient, XmsClientRequestIdClientOptions> AddXmsClientRequestIdClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilder => throw null;
