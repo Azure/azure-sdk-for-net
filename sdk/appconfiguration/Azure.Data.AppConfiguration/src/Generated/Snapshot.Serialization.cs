@@ -15,7 +15,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary></summary>
-    public partial class Snapshot : IJsonModel<Snapshot>
+    internal partial class Snapshot : IJsonModel<Snapshot>
     {
         /// <summary> Initializes a new instance of <see cref="Snapshot"/> for deserialization. </summary>
         internal Snapshot()
