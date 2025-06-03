@@ -1275,6 +1275,7 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmDeploymentExtensionDefinition> Extensions { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentMode? Mode { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmResourceReference> OutputResourceDetails { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> OutputResources { get { throw null; } }
         public System.BinaryData Outputs { get { throw null; } }
         public System.BinaryData Parameters { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink ParametersLink { get { throw null; } }
@@ -1283,6 +1284,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string TemplateHash { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink TemplateLink { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ValidatedResource { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.ArmResourceReference> ValidatedResourceDetails { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ValidationLevel? ValidationLevel { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

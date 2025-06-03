@@ -3,8 +3,11 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -19,5 +22,17 @@ namespace Azure.ResourceManager.Resources.Models
             [EditorBrowsable(EditorBrowsableState.Never)]
             set => DebugSetting.DetailLevel = value;
         }
+
+        /// <summary>
+        /// Array of provisioned resources.
+        /// </summary>
+        public IReadOnlyList<SubResource> OutputResources
+            => OutputResourceDetails.Select(d => ResourceManagerModelFactory.SubResource(d.Id != null ? new ResourceIdentifier(d.Id) : null)).ToArray();
+
+        /// <summary>
+        /// Array of validated resources.
+        /// </summary>
+        public IReadOnlyList<SubResource> ValidatedResource
+            => ValidatedResourceDetails.Select(d => ResourceManagerModelFactory.SubResource(d.Id != null ? new ResourceIdentifier(d.Id) : null)).ToArray();
     }
 }

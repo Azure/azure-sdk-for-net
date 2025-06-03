@@ -34,6 +34,7 @@ rename-mapping:
   ArmDeploymentPropertiesExtended.outputResources: OutputResourceDetails
   ArmDeploymentPropertiesExtended.validatedResources: ValidatedResourceDetails
   ResourceReference: ArmResourceReference
+  ResourceReference.id: -|arm-id
   DeploymentExtensionDefinition: ArmDeploymentExtensionDefinition
   DeploymentExtensionConfigItem: ArmDeploymentExtensionConfigItem
   DeploymentExternalInput: ArmDeploymentExternalInput
