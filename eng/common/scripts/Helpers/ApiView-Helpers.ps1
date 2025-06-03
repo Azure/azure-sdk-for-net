@@ -214,12 +214,12 @@ function Set-ApiViewCommentForPR {
 
   try {
     $existingComment = Get-GitHubIssueComments -RepoOwner $RepoOwner -RepoName $RepoName -IssueNumber $PrNumber -AuthToken $AuthToken
-    $existingAPIViewComment = $existingComment | Where-Object { 
+    $existingAPIViewComment = $existingComment | Where-Object {
       $_.body.StartsWith("**API Change Check**", [StringComparison]::OrdinalIgnoreCase) -or $_.body.StartsWith("## API Change Check", [StringComparison]::OrdinalIgnoreCase) }
   } catch {
     LogWarning "Failed to get comments from Pull Request: $PrNumber in repo: $repoFullName"
   }
-  
+
   try {
     if ($existingAPIViewComment) {
       LogDebug "Updating existing APIView comment..."
@@ -251,7 +251,7 @@ function Create-API-Review {
   )
   $specGenSDKContent = Get-Content -Path $SpecGenSDKArtifactPath -Raw | ConvertFrom-Json
   $language = ($specGenSDKContent.language -split "-")[-1]
-  
+
   foreach ($requestData in $specGenSDKContent.apiViewRequestData) {
     $requestUri = [System.UriBuilder]$apiviewEndpoint
     $requestParam = [System.Web.HttpUtility]::ParseQueryString('')
@@ -263,7 +263,7 @@ function Create-API-Review {
     $requestParam.Add('packageName', $requestData.packageName)
     $requestParam.Add('filePath', $requestData.filePath)
     if ($language -ieq "python") {
-      $requestParam.Add('codeFile', Split-Path -Path $requestData.filePath -Leaf)
+      $requestParam.Add('codeFile', (Split-Path -Path $requestData.filePath -Leaf))
     }
     $requestParam.Add('language', $language)
     $requestUri.query = $requestParam.toString()
