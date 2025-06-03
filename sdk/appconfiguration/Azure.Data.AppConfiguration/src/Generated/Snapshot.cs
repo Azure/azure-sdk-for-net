@@ -12,7 +12,7 @@ using System.Linq;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
-    public partial class Snapshot
+    internal partial class Snapshot
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
