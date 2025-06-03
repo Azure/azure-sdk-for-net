@@ -82,7 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             CommunicationIdentifierModel communicationIdentifier = default;
-            AcsCallParticipantRoleKind? role = default;
+            AcsCallParticipantKind? role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    role = new AcsCallParticipantRoleKind(property.Value.GetString());
+                    role = new AcsCallParticipantKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
