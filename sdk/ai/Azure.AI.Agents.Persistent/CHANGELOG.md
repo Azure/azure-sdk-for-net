@@ -9,6 +9,9 @@
 ### Bugs Fixed
 - Fixed uploading files with non ASCII symbols in names.
 
+### Sample updates
+- The Azure function sample was simplified.
+
 ### Other Changes
 
 ## 1.1.0-beta.1 (2025-05-21)
