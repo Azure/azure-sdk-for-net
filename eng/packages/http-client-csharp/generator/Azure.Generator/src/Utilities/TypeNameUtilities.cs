@@ -8,7 +8,6 @@ namespace Azure.Generator.Utilities
     internal static class TypeNameUtilities
     {
         private const string AzurePackageNamespacePrefix = "Azure.";
-        private const string AzureMgmtPackageNamespacePrefix = "Azure.ResourceManager.";
 
         /// <summary>
         /// Returns the name of the RP from the package name using the following:
@@ -22,9 +21,10 @@ namespace Azure.Generator.Utilities
             var segments = packageName.Split('.');
             if (packageName.StartsWith(AzurePackageNamespacePrefix))
             {
-                if (packageName.StartsWith(AzureMgmtPackageNamespacePrefix))
+                if (segments.Length > 2)
                 {
-                    return string.Join("", segments.Skip(2)); // skips "Azure" and "ResourceManager"
+                    // skips "Azure" and the following segment
+                    return string.Join("", segments.Skip(2));
                 }
 
                 return string.Join("", segments.Skip(1));
