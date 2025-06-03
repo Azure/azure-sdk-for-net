@@ -57,7 +57,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         protected override void CompareModels(AvailabilitySetData model, AvailabilitySetData model2, string format)
             => CompareAvailabilitySetData(model, model2, format);
 
-        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format)
+        internal static void CompareAvailabilitySetData(AvailabilitySetData model, AvailabilitySetData model2, string format, bool nameAlwaysExists = false)
         {
             if (model is null)
             {
@@ -67,7 +67,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
 
             Assert.AreEqual(format == "W" ? null : model.Id, model2.Id);
             Assert.AreEqual(model.Location, model2.Location);
-            Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
+            if (nameAlwaysExists)
+            {
+                Assert.AreEqual(model.Name, model2.Name);
+            }
+            else
+            {
+                Assert.AreEqual(format == "W" ? null : model.Name, model2.Name);
+            }
             Assert.AreEqual(model.PlatformFaultDomainCount, model2.PlatformFaultDomainCount);
             Assert.AreEqual(model.PlatformUpdateDomainCount, model2.PlatformUpdateDomainCount);
             if (format == "J")

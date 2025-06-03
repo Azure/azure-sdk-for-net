@@ -5,6 +5,7 @@ using System.ClientModel.Internal;
 using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -32,9 +33,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        options ??= ModelReaderWriterOptions.Json;
-
-        return WritePersistable(model, options);
+        return WritePersistable(model, GetOptions(options));
     }
 
     /// <summary>
@@ -53,13 +52,11 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        options ??= ModelReaderWriterOptions.Json;
-
         //temp blocking this for symetry of functionality on read/write with no context.
         //will be allowed after https://github.com/Azure/azure-sdk-for-net/issues/48294
         if (model is IPersistableModel<object> iModel)
         {
-            return WritePersistable(iModel, options);
+            return WritePersistable(iModel, GetOptions(options));
         }
         else
         {
@@ -89,7 +86,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        return WritePersistableOrEnumerable(model, options, context);
+        return WritePersistableOrEnumerable(model, GetOptions(options), context);
     }
 
     /// <summary>
@@ -114,7 +111,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(model));
         }
 
-        return WritePersistableOrEnumerable(model, options, context);
+        return WritePersistableOrEnumerable(model, GetOptions(options), context);
     }
 
     private static BinaryData WritePersistableOrEnumerable<T>(T model, ModelReaderWriterOptions options, ModelReaderWriterContext context)
@@ -154,7 +151,7 @@ public static class ModelReaderWriter
         }
         else
         {
-            return model.Write(options);
+            return options.ResolveProxy(model).Write(options);
         }
     }
 
@@ -173,7 +170,7 @@ public static class ModelReaderWriter
         ModelReaderWriterOptions? options = default)
         where T : IPersistableModel<T>
     {
-        return ReadInternal<T>(data, options ??= ModelReaderWriterOptions.Json, s_reflectionContext.Value);
+        return ReadInternal<T>(data, GetOptions(options), s_reflectionContext.Value);
     }
 
     /// <summary>
@@ -199,7 +196,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(context));
         }
 
-        return ReadInternal<T>(data, options, context);
+        return ReadInternal<T>(data, GetOptions(options), context);
     }
 
     /// <summary>
@@ -219,7 +216,7 @@ public static class ModelReaderWriter
         [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType,
         ModelReaderWriterOptions? options = default)
     {
-        return ReadInternal(data, returnType, options ??= ModelReaderWriterOptions.Json, s_reflectionContext.Value);
+        return ReadInternal(data, returnType, GetOptions(options), s_reflectionContext.Value);
     }
 
     /// <summary>
@@ -247,7 +244,7 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(context));
         }
 
-        return ReadInternal(data, returnType, options, context);
+        return ReadInternal(data, returnType, GetOptions(options), context);
     }
 
     private static T? ReadInternal<T>(BinaryData data, ModelReaderWriterOptions options, ModelReaderWriterContext context)
@@ -277,7 +274,15 @@ public static class ModelReaderWriter
         }
         else if (returnObj is IPersistableModel<object> persistableModel)
         {
-            return persistableModel.Create(data, options);
+            if (ShouldWriteAsJson(persistableModel, options, out IJsonModel<object>? jsonModel))
+            {
+                Utf8JsonReader reader = new(data);
+                return options.ResolveProxy(jsonModel).Create(ref reader, options);
+            }
+            else
+            {
+                return options.ResolveProxy(persistableModel).Create(data, options);
+            }
         }
         else
         {
@@ -305,4 +310,16 @@ public static class ModelReaderWriter
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
         => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
+
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private static ModelReaderWriterOptions GetOptions(ModelReaderWriterOptions? options)
+    {
+        if (options is null)
+            return ModelReaderWriterOptions.Json;
+
+        if (options.IsCoreOwned)
+            return options;
+
+        return options.HasProxies ? new ModelReaderWriterOptions(options) : options;
+    }
 }
