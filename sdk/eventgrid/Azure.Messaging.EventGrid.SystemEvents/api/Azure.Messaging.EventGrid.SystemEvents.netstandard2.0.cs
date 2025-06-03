@@ -4250,6 +4250,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         internal MediaJobCancelingEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobError
     {
         internal MediaJobError() { }
@@ -4259,6 +4260,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Message { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobRetry? Retry { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum MediaJobErrorCategory
     {
         Service = 0,
@@ -4268,6 +4270,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         Content = 4,
         Account = 5,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum MediaJobErrorCode
     {
         ServiceError = 0,
@@ -4281,22 +4284,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         ContentUnsupported = 8,
         IdentityUnsupported = 9,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobErrorDetail
     {
         internal MediaJobErrorDetail() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobErroredEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobErroredEventData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobFinishedEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobFinishedEventData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput> Outputs { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutput
     {
         internal MediaJobOutput() { }
@@ -4305,31 +4312,38 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public long Progress { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState State { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputAsset : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput
     {
         internal MediaJobOutputAsset() { }
         public string AssetName { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputCanceledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputCanceledEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputCancelingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputCancelingEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputErroredEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputErroredEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputFinishedEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputFinishedEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputProcessingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputProcessingEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputProgressEventData
     {
         internal MediaJobOutputProgressEventData() { }
@@ -4337,10 +4351,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Label { get { throw null; } }
         public long? Progress { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputScheduledEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobOutputStateChangeEventData
     {
         internal MediaJobOutputStateChangeEventData() { }
@@ -4348,19 +4364,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobOutput Output { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState? PreviousState { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobProcessingEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobProcessingEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum MediaJobRetry
     {
         DoNotRetry = 0,
         MayRetry = 1,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobScheduledEventData : Azure.Messaging.EventGrid.SystemEvents.MediaJobStateChangeEventData
     {
         internal MediaJobScheduledEventData() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum MediaJobState
     {
         Canceled = 0,
@@ -4371,6 +4391,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         Queued = 5,
         Scheduled = 6,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaJobStateChangeEventData
     {
         internal MediaJobStateChangeEventData() { }
@@ -4378,12 +4399,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState? PreviousState { get { throw null; } }
         public Azure.Messaging.EventGrid.SystemEvents.MediaJobState? State { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventChannelArchiveHeartbeatEventData
     {
         internal MediaLiveEventChannelArchiveHeartbeatEventData() { }
         public System.TimeSpan? ChannelLatency { get { throw null; } }
         public string LatencyResultCode { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventConnectionRejectedEventData
     {
         internal MediaLiveEventConnectionRejectedEventData() { }
@@ -4393,6 +4416,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ResultCode { get { throw null; } }
         public string StreamId { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventEncoderConnectedEventData
     {
         internal MediaLiveEventEncoderConnectedEventData() { }
@@ -4401,6 +4425,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string IngestUrl { get { throw null; } }
         public string StreamId { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventEncoderDisconnectedEventData
     {
         internal MediaLiveEventEncoderDisconnectedEventData() { }
@@ -4410,6 +4435,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ResultCode { get { throw null; } }
         public string StreamId { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventIncomingDataChunkDroppedEventData
     {
         internal MediaLiveEventIncomingDataChunkDroppedEventData() { }
@@ -4420,6 +4446,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string TrackName { get { throw null; } }
         public string TrackType { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
         internal MediaLiveEventIncomingStreamReceivedEventData() { }
@@ -4433,6 +4460,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string TrackName { get { throw null; } }
         public string TrackType { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventIncomingStreamsOutOfSyncEventData
     {
         internal MediaLiveEventIncomingStreamsOutOfSyncEventData() { }
@@ -4443,6 +4471,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string TypeOfStreamWithMaxLastTimestamp { get { throw null; } }
         public string TypeOfStreamWithMinLastTimestamp { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventIncomingVideoStreamsOutOfSyncEventData
     {
         internal MediaLiveEventIncomingVideoStreamsOutOfSyncEventData() { }
@@ -4452,6 +4481,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string SecondTimestamp { get { throw null; } }
         public string Timescale { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
         internal MediaLiveEventIngestHeartbeatEventData() { }
@@ -4472,6 +4502,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string TranscriptionState { get { throw null; } }
         public bool? UnexpectedBitrate { get { throw null; } }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class MediaLiveEventTrackDiscontinuityDetectedEventData
     {
         internal MediaLiveEventTrackDiscontinuityDetectedEventData() { }
