@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0 (2025-06-02)
+## 1.4.0 (2025-06-04)
 
 ### Features Added
 - Introduced support for `Azure.Core.TokenCredential` with `EntraCommunicationTokenCredentialOptions`, allowing an Entra user with a Teams license to use Teams Phone Extensibility features through the Azure Communication Services resource.
