@@ -38,6 +38,11 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WriteStringValue(ResourceId);
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
+            if (Optional.IsDefined(AssignedAoaiResource))
+            {
+                writer.WritePropertyName("assignedAoaiResource"u8);
+                writer.WriteObjectValue(AssignedAoaiResource, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -77,6 +82,7 @@ namespace Azure.AI.Language.Text.Authoring
             }
             string resourceId = default;
             string region = default;
+            DataGenerationConnectionInfo assignedAoaiResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,13 +97,22 @@ namespace Azure.AI.Language.Text.Authoring
                     region = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("assignedAoaiResource"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    assignedAoaiResource = DataGenerationConnectionInfo.DeserializeDataGenerationConnectionInfo(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TextAuthoringDeploymentResource(resourceId, region, serializedAdditionalRawData);
+            return new TextAuthoringDeploymentResource(resourceId, region, assignedAoaiResource, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TextAuthoringDeploymentResource>.Write(ModelReaderWriterOptions options)
