@@ -15,7 +15,7 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary></summary>
-    public partial class KeyValueFilter : IJsonModel<KeyValueFilter>
+    internal partial class KeyValueFilter : IJsonModel<KeyValueFilter>
     {
         /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/> for deserialization. </summary>
         internal KeyValueFilter()

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -1217,44 +1216,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Creates a key-value snapshot. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the key-value snapshot to create. </param>
-        /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
-        /// <param name="entity"> The key-value snapshot to create. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="accept"/> or <paramref name="entity"/> is null. </exception>
-        public virtual Operation<Snapshot> CreateSnapshot(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, string accept, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(entity, nameof(entity));
-
-            Operation<BinaryData> result = CreateSnapshot(waitUntil, name, contentType.ToSerialString(), accept, entity, syncToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (Snapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
-        }
-
-        /// <summary> Creates a key-value snapshot. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the key-value snapshot to create. </param>
-        /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
-        /// <param name="entity"> The key-value snapshot to create. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="accept"/> or <paramref name="entity"/> is null. </exception>
-        public virtual async Task<Operation<Snapshot>> CreateSnapshotAsync(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, string accept, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(accept, nameof(accept));
-            Argument.AssertNotNull(entity, nameof(entity));
-
-            Operation<BinaryData> result = await CreateSnapshotAsync(waitUntil, name, contentType.ToSerialString(), accept, entity, syncToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (Snapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync");
         }
 
         /// <summary>

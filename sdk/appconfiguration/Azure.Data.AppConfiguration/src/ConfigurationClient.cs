@@ -50,9 +50,8 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(CancellationToken))]
-    // WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, string accept, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default
-    [CodeGenSuppress("CreateSnapshot", typeof(WaitUntil), typeof(string), typeof(CreateSnapshotRequestContentType), typeof(string), typeof(Snapshot), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateSnapshotAsync", typeof(WaitUntil), typeof(string), typeof(CreateSnapshotRequestContentType), typeof(string), typeof(Snapshot), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSnapshot", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(string), typeof(Snapshot), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSnapshotAsync", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(string), typeof(Snapshot), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("PutLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("PutLockAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("DeleteLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
