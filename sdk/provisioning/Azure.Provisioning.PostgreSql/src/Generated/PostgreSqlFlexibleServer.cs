@@ -230,16 +230,6 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
     private PostgreSqlFlexibleServerStorage? _storage;
 
     /// <summary>
-    /// Max storage allowed for a server.
-    /// </summary>
-    public BicepValue<int> StorageSizeInGB 
-    {
-        get { Initialize(); return _storageSizeInGB!; }
-        set { Initialize(); _storageSizeInGB!.Assign(value); }
-    }
-    private BicepValue<int>? _storageSizeInGB;
-
-    /// <summary>
     /// Gets or sets the Tags.
     /// </summary>
     public BicepDictionary<string> Tags 
@@ -354,7 +344,6 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         _sku = DefineModelProperty<PostgreSqlFlexibleServerSku>("Sku", ["sku"]);
         _sourceServerResourceId = DefineProperty<ResourceIdentifier>("SourceServerResourceId", ["properties", "sourceServerResourceId"]);
         _storage = DefineModelProperty<PostgreSqlFlexibleServerStorage>("Storage", ["properties", "storage"]);
-        _storageSizeInGB = DefineProperty<int>("StorageSizeInGB", ["properties", "storage", "storageSizeGB"]);
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _version = DefineProperty<PostgreSqlFlexibleServerVersion>("Version", ["properties", "version"]);
         _fullyQualifiedDomainName = DefineProperty<string>("FullyQualifiedDomainName", ["properties", "fullyQualifiedDomainName"], isOutput: true);

@@ -16,6 +16,7 @@ public class PostgreSqlSpecification() :
     {
         // Remove misfires
         RemoveProperty<PostgreSqlServerSecurityAlertPolicyResource>("SecurityAlertPolicyName");
+        RemoveProperty<PostgreSqlFlexibleServerResource>("StorageSizeInGB");
 
         // Patch properties
         CustomizeProperty<PostgreSqlFlexibleServerActiveDirectoryAdministratorResource>("Name", p => { p.IsReadOnly = false; p.IsRequired = true; });
