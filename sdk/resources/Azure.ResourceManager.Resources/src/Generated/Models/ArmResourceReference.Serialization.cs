@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceReference : IUtf8JsonSerializable, IJsonModel<ResourceReference>
+    public partial class ArmResourceReference : IUtf8JsonSerializable, IJsonModel<ArmResourceReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmResourceReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceReference)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceReference)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Id))
@@ -84,19 +84,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        ResourceReference IJsonModel<ResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmResourceReference IJsonModel<ArmResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceReference)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceReference(document.RootElement, options);
+            return DeserializeArmResourceReference(document.RootElement, options);
         }
 
-        internal static ResourceReference DeserializeResourceReference(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArmResourceReference DeserializeArmResourceReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Resources.Models
                 return null;
             }
             string id = default;
-            DeploymentExtensionDefinition extension = default;
+            ArmDeploymentExtensionDefinition extension = default;
             string resourceType = default;
             BinaryData identifiers = default;
             string apiVersion = default;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    extension = DeploymentExtensionDefinition.DeserializeDeploymentExtensionDefinition(property.Value, options);
+                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ResourceReference(
+            return new ArmResourceReference(
                 id,
                 extension,
                 resourceType,
@@ -275,9 +275,9 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ResourceReference>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArmResourceReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -286,26 +286,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceReference)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ResourceReference IPersistableModel<ResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArmResourceReference IPersistableModel<ArmResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeResourceReference(document.RootElement, options);
+                        return DeserializeArmResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceReference)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

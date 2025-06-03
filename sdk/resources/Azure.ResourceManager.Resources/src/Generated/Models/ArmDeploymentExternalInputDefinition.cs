@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The DeploymentExtensionConfigItem. </summary>
-    public partial class DeploymentExtensionConfigItem
+    /// <summary> Deployment external input definition for parameterization. </summary>
+    public partial class ArmDeploymentExternalInputDefinition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,37 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionConfigItem"/>. </summary>
-        public DeploymentExtensionConfigItem()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInputDefinition"/>. </summary>
+        /// <param name="kind"> The kind of external input. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
+        public ArmDeploymentExternalInputDefinition(string kind)
         {
+            Argument.AssertNotNull(kind, nameof(kind));
+
+            Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionConfigItem"/>. </summary>
-        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
-        /// <param name="value"> The value of the extension config property. </param>
-        /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInputDefinition"/>. </summary>
+        /// <param name="kind"> The kind of external input. </param>
+        /// <param name="config"> Configuration for the external input. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentExternalInputDefinition(string kind, BinaryData config, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExtensionConfigPropertyType = extensionConfigPropertyType;
-            Value = value;
-            KeyVaultReference = keyVaultReference;
+            Kind = kind;
+            Config = config;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The value type of the extension config property. </summary>
-        [WirePath("type")]
-        public ExtensionConfigPropertyType? ExtensionConfigPropertyType { get; }
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInputDefinition"/> for deserialization. </summary>
+        internal ArmDeploymentExternalInputDefinition()
+        {
+        }
+
+        /// <summary> The kind of external input. </summary>
+        [WirePath("kind")]
+        public string Kind { get; }
         /// <summary>
-        /// The value of the extension config property.
+        /// Configuration for the external input.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -96,10 +104,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("value")]
-        public BinaryData Value { get; set; }
-        /// <summary> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </summary>
-        [WirePath("keyVaultReference")]
-        public KeyVaultParameterReference KeyVaultReference { get; set; }
+        [WirePath("config")]
+        public BinaryData Config { get; set; }
     }
 }

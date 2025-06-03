@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
             string id = default;
             string resourceName = default;
             ResourceType? resourceType = default;
-            DeploymentExtensionDefinition extension = default;
+            ArmDeploymentExtensionDefinition extension = default;
             BinaryData identifiers = default;
             string apiVersion = default;
             string symbolicName = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    extension = DeploymentExtensionDefinition.DeserializeDeploymentExtensionDefinition(property.Value, options);
+                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identifiers"u8))

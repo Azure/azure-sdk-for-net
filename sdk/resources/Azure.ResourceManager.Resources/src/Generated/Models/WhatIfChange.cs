@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, DeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, ArmDeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             DeploymentId = deploymentId;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Resources.Models
         public BinaryData Identifiers { get; }
         /// <summary> The extension the resource was deployed with. </summary>
         [WirePath("extension")]
-        public DeploymentExtensionDefinition Extension { get; }
+        public ArmDeploymentExtensionDefinition Extension { get; }
         /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
         [WirePath("changeType")]
         public WhatIfChangeType ChangeType { get; }

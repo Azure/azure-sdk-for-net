@@ -22,8 +22,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-mgmt-debug:
- show-serialized-names: true
+# mgmt-debug:
+#  show-serialized-names: true
 
 rename-mapping:
   DecompileOperationSuccessResponse: DecompileOperationSuccessResult
@@ -31,6 +31,13 @@ rename-mapping:
   DataBoundary: DataBoundaryRegion
   DataBoundaryDefinition: DataBoundary
   DefaultName: DataBoundaryName
+  ArmDeploymentPropertiesExtended.outputResources: OutputResourceDetails
+  ArmDeploymentPropertiesExtended.validatedResources: ValidatedResourceDetails
+  ResourceReference: ArmResourceReference
+  DeploymentExtensionDefinition: ArmDeploymentExtensionDefinition
+  DeploymentExtensionConfigItem: ArmDeploymentExtensionConfigItem
+  DeploymentExternalInput: ArmDeploymentExternalInput
+  DeploymentExternalInputDefinition: ArmDeploymentExternalInputDefinition
 
 patch-initializer-customization:
   ArmDeploymentContent:

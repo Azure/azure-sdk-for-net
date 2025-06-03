@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Deployment external input definition for parameterization. </summary>
-    public partial class DeploymentExternalInputDefinition
+    /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
+    public partial class ArmDeploymentExtensionConfigItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,29 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInputDefinition"/>. </summary>
-        /// <param name="kind"> The kind of external input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
-        public DeploymentExternalInputDefinition(string kind)
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
+        public ArmDeploymentExtensionConfigItem()
         {
-            Argument.AssertNotNull(kind, nameof(kind));
-
-            Kind = kind;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInputDefinition"/>. </summary>
-        /// <param name="kind"> The kind of external input. </param>
-        /// <param name="config"> Configuration for the external input. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
+        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
+        /// <param name="value"> The value of the extension config property. </param>
+        /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExternalInputDefinition(string kind, BinaryData config, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Kind = kind;
-            Config = config;
+            ExtensionConfigPropertyType = extensionConfigPropertyType;
+            Value = value;
+            KeyVaultReference = keyVaultReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInputDefinition"/> for deserialization. </summary>
-        internal DeploymentExternalInputDefinition()
-        {
-        }
-
-        /// <summary> The kind of external input. </summary>
-        [WirePath("kind")]
-        public string Kind { get; }
+        /// <summary> The value type of the extension config property. </summary>
+        [WirePath("type")]
+        public ExtensionConfigPropertyType? ExtensionConfigPropertyType { get; }
         /// <summary>
-        /// Configuration for the external input.
+        /// The value of the extension config property.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -104,7 +96,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("config")]
-        public BinaryData Config { get; set; }
+        [WirePath("value")]
+        public BinaryData Value { get; set; }
+        /// <summary> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </summary>
+        [WirePath("keyVaultReference")]
+        public KeyVaultParameterReference KeyVaultReference { get; set; }
     }
 }

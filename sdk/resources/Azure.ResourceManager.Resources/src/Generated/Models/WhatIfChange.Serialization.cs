@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
             string deploymentId = default;
             string symbolicName = default;
             BinaryData identifiers = default;
-            DeploymentExtensionDefinition extension = default;
+            ArmDeploymentExtensionDefinition extension = default;
             WhatIfChangeType changeType = default;
             string unsupportedReason = default;
             BinaryData before = default;
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    extension = DeploymentExtensionDefinition.DeserializeDeploymentExtensionDefinition(property.Value, options);
+                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("changeType"u8))

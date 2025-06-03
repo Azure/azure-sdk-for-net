@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class DeploymentExtensionConfigItem : IUtf8JsonSerializable, IJsonModel<DeploymentExtensionConfigItem>
+    public partial class ArmDeploymentExtensionConfigItem : IUtf8JsonSerializable, IJsonModel<ArmDeploymentExtensionConfigItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentExtensionConfigItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmDeploymentExtensionConfigItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeploymentExtensionConfigItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmDeploymentExtensionConfigItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(ExtensionConfigPropertyType))
@@ -74,19 +74,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        DeploymentExtensionConfigItem IJsonModel<DeploymentExtensionConfigItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmDeploymentExtensionConfigItem IJsonModel<ArmDeploymentExtensionConfigItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentExtensionConfigItem(document.RootElement, options);
+            return DeserializeArmDeploymentExtensionConfigItem(document.RootElement, options);
         }
 
-        internal static DeploymentExtensionConfigItem DeserializeDeploymentExtensionConfigItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArmDeploymentExtensionConfigItem DeserializeArmDeploymentExtensionConfigItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentExtensionConfigItem(type, value, keyVaultReference, serializedAdditionalRawData);
+            return new ArmDeploymentExtensionConfigItem(type, value, keyVaultReference, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -197,9 +197,9 @@ namespace Azure.ResourceManager.Resources.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DeploymentExtensionConfigItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArmDeploymentExtensionConfigItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -208,26 +208,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeploymentExtensionConfigItem IPersistableModel<DeploymentExtensionConfigItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArmDeploymentExtensionConfigItem IPersistableModel<ArmDeploymentExtensionConfigItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentExtensionConfigItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDeploymentExtensionConfigItem(document.RootElement, options);
+                        return DeserializeArmDeploymentExtensionConfigItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentExtensionConfigItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentExtensionConfigItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeploymentExtensionConfigItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmDeploymentExtensionConfigItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

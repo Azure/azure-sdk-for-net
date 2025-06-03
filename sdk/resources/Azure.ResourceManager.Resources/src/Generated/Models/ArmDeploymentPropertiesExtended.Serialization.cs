@@ -140,21 +140,21 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResources))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResourceDetails))
             {
                 writer.WritePropertyName("outputResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in OutputResources)
+                foreach (var item in OutputResourceDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResources))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResourceDetails))
             {
                 writer.WritePropertyName("validatedResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidatedResources)
+                foreach (var item in ValidatedResourceDetails)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -227,13 +227,13 @@ namespace Azure.ResourceManager.Resources.Models
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
             ArmDeploymentParametersLink parametersLink = default;
-            IReadOnlyList<DeploymentExtensionDefinition> extensions = default;
+            IReadOnlyList<ArmDeploymentExtensionDefinition> extensions = default;
             ArmDeploymentMode? mode = default;
             DebugSetting debugSetting = default;
             ErrorDeploymentExtended onErrorDeployment = default;
             string templateHash = default;
-            IReadOnlyList<ResourceReference> outputResources = default;
-            IReadOnlyList<ResourceReference> validatedResources = default;
+            IReadOnlyList<ArmResourceReference> outputResources = default;
+            IReadOnlyList<ArmResourceReference> validatedResources = default;
             ResponseError error = default;
             IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             ValidationLevel? validationLevel = default;
@@ -343,10 +343,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<DeploymentExtensionDefinition> array = new List<DeploymentExtensionDefinition>();
+                    List<ArmDeploymentExtensionDefinition> array = new List<ArmDeploymentExtensionDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentExtensionDefinition.DeserializeDeploymentExtensionDefinition(item, options));
+                        array.Add(ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(item, options));
                     }
                     extensions = array;
                     continue;
@@ -389,10 +389,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<ArmResourceReference> array = new List<ArmResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(ArmResourceReference.DeserializeArmResourceReference(item, options));
                     }
                     outputResources = array;
                     continue;
@@ -403,10 +403,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ResourceReference> array = new List<ResourceReference>();
+                    List<ArmResourceReference> array = new List<ArmResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceReference.DeserializeResourceReference(item, options));
+                        array.Add(ArmResourceReference.DeserializeArmResourceReference(item, options));
                     }
                     validatedResources = array;
                     continue;
@@ -460,13 +460,13 @@ namespace Azure.ResourceManager.Resources.Models
                 templateLink,
                 parameters,
                 parametersLink,
-                extensions ?? new ChangeTrackingList<DeploymentExtensionDefinition>(),
+                extensions ?? new ChangeTrackingList<ArmDeploymentExtensionDefinition>(),
                 mode,
                 debugSetting,
                 onErrorDeployment,
                 templateHash,
-                outputResources ?? new ChangeTrackingList<ResourceReference>(),
-                validatedResources ?? new ChangeTrackingList<ResourceReference>(),
+                outputResources ?? new ChangeTrackingList<ArmResourceReference>(),
+                validatedResources ?? new ChangeTrackingList<ArmResourceReference>(),
                 error,
                 diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(),
                 validationLevel,
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputResources), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputResourceDetails), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  outputResources: ");
@@ -762,13 +762,13 @@ namespace Azure.ResourceManager.Resources.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(OutputResources))
+                if (Optional.IsCollectionDefined(OutputResourceDetails))
                 {
-                    if (OutputResources.Any())
+                    if (OutputResourceDetails.Any())
                     {
                         builder.Append("  outputResources: ");
                         builder.AppendLine("[");
-                        foreach (var item in OutputResources)
+                        foreach (var item in OutputResourceDetails)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  outputResources: ");
                         }
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResources), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResourceDetails), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  validatedResources: ");
@@ -785,13 +785,13 @@ namespace Azure.ResourceManager.Resources.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(ValidatedResources))
+                if (Optional.IsCollectionDefined(ValidatedResourceDetails))
                 {
-                    if (ValidatedResources.Any())
+                    if (ValidatedResourceDetails.Any())
                     {
                         builder.Append("  validatedResources: ");
                         builder.AppendLine("[");
-                        foreach (var item in ValidatedResources)
+                        foreach (var item in ValidatedResourceDetails)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  validatedResources: ");
                         }

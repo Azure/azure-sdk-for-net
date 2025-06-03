@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Deployment external input for parameterization. </summary>
-    public partial class DeploymentExternalInput
+    public partial class ArmDeploymentExternalInput
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInput"/>. </summary>
         /// <param name="value"> External input value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeploymentExternalInput(BinaryData value)
+        public ArmDeploymentExternalInput(BinaryData value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
             Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInput"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInput"/>. </summary>
         /// <param name="value"> External input value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExternalInput(BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentExternalInput(BinaryData value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExternalInput"/> for deserialization. </summary>
-        internal DeploymentExternalInput()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExternalInput"/> for deserialization. </summary>
+        internal ArmDeploymentExternalInput()
         {
         }
 

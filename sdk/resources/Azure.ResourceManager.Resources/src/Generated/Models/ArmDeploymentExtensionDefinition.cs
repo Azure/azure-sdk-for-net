@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> The DeploymentExtensionDefinition. </summary>
-    public partial class DeploymentExtensionDefinition
+    /// <summary> The ArmDeploymentExtensionDefinition. </summary>
+    public partial class ArmDeploymentExtensionDefinition
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionDefinition"/>. </summary>
-        internal DeploymentExtensionDefinition()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionDefinition"/>. </summary>
+        internal ArmDeploymentExtensionDefinition()
         {
-            Config = new ChangeTrackingDictionary<string, DeploymentExtensionConfigItem>();
+            Config = new ChangeTrackingDictionary<string, ArmDeploymentExtensionConfigItem>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeploymentExtensionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionDefinition"/>. </summary>
         /// <param name="alias"> The alias of the extension as defined in the deployment template. </param>
         /// <param name="name"> The extension name. </param>
         /// <param name="version"> The extension version. </param>
         /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </param>
         /// <param name="config"> The extension configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentExtensionDefinition(string @alias, string name, string version, string configId, IReadOnlyDictionary<string, DeploymentExtensionConfigItem> config, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentExtensionDefinition(string @alias, string name, string version, string configId, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Alias = @alias;
             Name = name;
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.Resources.Models
         public string ConfigId { get; }
         /// <summary> The extension configuration. </summary>
         [WirePath("config")]
-        public IReadOnlyDictionary<string, DeploymentExtensionConfigItem> Config { get; }
+        public IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> Config { get; }
     }
 }

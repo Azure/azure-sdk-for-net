@@ -49,9 +49,9 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="mode"> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </param>
         public ArmDeploymentProperties(ArmDeploymentMode mode)
         {
-            ExternalInputs = new ChangeTrackingDictionary<string, DeploymentExternalInput>();
-            ExternalInputDefinitions = new ChangeTrackingDictionary<string, DeploymentExternalInputDefinition>();
-            ExtensionConfigs = new ChangeTrackingDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+            ExternalInputs = new ChangeTrackingDictionary<string, ArmDeploymentExternalInput>();
+            ExternalInputDefinitions = new ChangeTrackingDictionary<string, ArmDeploymentExternalInputDefinition>();
+            ExtensionConfigs = new ChangeTrackingDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
             Mode = mode;
         }
 
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="expressionEvaluation"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, IDictionary<string, DeploymentExternalInput> externalInputs, IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluation, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentProperties(BinaryData template, ArmDeploymentTemplateLink templateLink, BinaryData parameters, IDictionary<string, ArmDeploymentExternalInput> externalInputs, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions, ArmDeploymentParametersLink parametersLink, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs, ArmDeploymentMode mode, DebugSetting debugSetting, ErrorDeployment errorDeployment, ExpressionEvaluationOptions expressionEvaluation, ValidationLevel? validationLevel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Template = template;
             TemplateLink = templateLink;
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.Resources.Models
         public BinaryData Parameters { get; set; }
         /// <summary> External input values, used by external tooling for parameter evaluation. </summary>
         [WirePath("externalInputs")]
-        public IDictionary<string, DeploymentExternalInput> ExternalInputs { get; }
+        public IDictionary<string, ArmDeploymentExternalInput> ExternalInputs { get; }
         /// <summary> External input definitions, used by external tooling to define expected external input values. </summary>
         [WirePath("externalInputDefinitions")]
-        public IDictionary<string, DeploymentExternalInputDefinition> ExternalInputDefinitions { get; }
+        public IDictionary<string, ArmDeploymentExternalInputDefinition> ExternalInputDefinitions { get; }
         /// <summary> The URI of parameters file. You use this element to link to an existing parameters file. Use either the parametersLink property or the parameters property, but not both. </summary>
         [WirePath("parametersLink")]
         public ArmDeploymentParametersLink ParametersLink { get; set; }
         /// <summary> The configurations to use for deployment extensions. The keys of this object are deployment extension aliases as defined in the deployment template. </summary>
         [WirePath("extensionConfigs")]
-        public IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> ExtensionConfigs { get; }
+        public IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> ExtensionConfigs { get; }
         /// <summary> The mode that is used to deploy resources. This value can be either Incremental or Complete. In Incremental mode, resources are deployed without deleting existing resources that are not included in the template. In Complete mode, resources are deployed and existing resources in the resource group that are not included in the template are deleted. Be careful when using Complete mode as you may unintentionally delete resources. </summary>
         [WirePath("mode")]
         public ArmDeploymentMode Mode { get; }

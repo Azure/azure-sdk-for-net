@@ -243,11 +243,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="expressionEvaluationScope"> Specifies whether template expressions are evaluated within the scope of the parent template or nested template. Only applicable to nested templates. If not specified, default value is outer. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentProperties"/> instance for mocking. </returns>
-        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, IDictionary<string, DeploymentExternalInput> externalInputs = null, IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions = null, ArmDeploymentParametersLink parametersLink = null, IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null)
+        public static ArmDeploymentProperties ArmDeploymentProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, IDictionary<string, ArmDeploymentExternalInput> externalInputs = null, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = null, ArmDeploymentParametersLink parametersLink = null, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null)
         {
-            externalInputs ??= new Dictionary<string, DeploymentExternalInput>();
-            externalInputDefinitions ??= new Dictionary<string, DeploymentExternalInputDefinition>();
-            extensionConfigs ??= new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+            externalInputs ??= new Dictionary<string, ArmDeploymentExternalInput>();
+            externalInputDefinitions ??= new Dictionary<string, ArmDeploymentExternalInputDefinition>();
+            extensionConfigs ??= new Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
 
             return new ArmDeploymentProperties(
                 template,
@@ -265,23 +265,23 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentExternalInputDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentExternalInputDefinition"/>. </summary>
         /// <param name="kind"> The kind of external input. </param>
         /// <param name="config"> Configuration for the external input. </param>
-        /// <returns> A new <see cref="Models.DeploymentExternalInputDefinition"/> instance for mocking. </returns>
-        public static DeploymentExternalInputDefinition DeploymentExternalInputDefinition(string kind = null, BinaryData config = null)
+        /// <returns> A new <see cref="Models.ArmDeploymentExternalInputDefinition"/> instance for mocking. </returns>
+        public static ArmDeploymentExternalInputDefinition ArmDeploymentExternalInputDefinition(string kind = null, BinaryData config = null)
         {
-            return new DeploymentExternalInputDefinition(kind, config, serializedAdditionalRawData: null);
+            return new ArmDeploymentExternalInputDefinition(kind, config, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentExtensionConfigItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentExtensionConfigItem"/>. </summary>
         /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
         /// <param name="value"> The value of the extension config property. </param>
         /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
-        /// <returns> A new <see cref="Models.DeploymentExtensionConfigItem"/> instance for mocking. </returns>
-        public static DeploymentExtensionConfigItem DeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = null, BinaryData value = null, KeyVaultParameterReference keyVaultReference = null)
+        /// <returns> A new <see cref="Models.ArmDeploymentExtensionConfigItem"/> instance for mocking. </returns>
+        public static ArmDeploymentExtensionConfigItem ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType = null, BinaryData value = null, KeyVaultParameterReference keyVaultReference = null)
         {
-            return new DeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, serializedAdditionalRawData: null);
+            return new ArmDeploymentExtensionConfigItem(extensionConfigPropertyType, value, keyVaultReference, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Resources.ArmDeploymentData"/>. </summary>
@@ -324,19 +324,19 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
         /// <param name="errorDeployment"> The deployment on error behavior. </param>
         /// <param name="templateHash"> The hash produced for the template. </param>
-        /// <param name="outputResources"> Array of provisioned resources. </param>
-        /// <param name="validatedResources"> Array of validated resources. </param>
+        /// <param name="outputResourceDetails"> Array of provisioned resources. </param>
+        /// <param name="validatedResourceDetails"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentPropertiesExtended"/> instance for mocking. </returns>
-        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = null, string correlationId = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, BinaryData outputs = null, IEnumerable<ResourceProviderData> providers = null, IEnumerable<ArmDependency> dependencies = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, IEnumerable<DeploymentExtensionDefinition> extensions = null, ArmDeploymentMode? mode = null, string debugSettingDetailLevel = null, ErrorDeploymentExtended errorDeployment = null, string templateHash = null, IEnumerable<ResourceReference> outputResources = null, IEnumerable<ResourceReference> validatedResources = null, ResponseError error = null, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = null, ValidationLevel? validationLevel = null)
+        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = null, string correlationId = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, BinaryData outputs = null, IEnumerable<ResourceProviderData> providers = null, IEnumerable<ArmDependency> dependencies = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, IEnumerable<ArmDeploymentExtensionDefinition> extensions = null, ArmDeploymentMode? mode = null, string debugSettingDetailLevel = null, ErrorDeploymentExtended errorDeployment = null, string templateHash = null, IEnumerable<ArmResourceReference> outputResourceDetails = null, IEnumerable<ArmResourceReference> validatedResourceDetails = null, ResponseError error = null, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = null, ValidationLevel? validationLevel = null)
         {
             providers ??= new List<ResourceProviderData>();
             dependencies ??= new List<ArmDependency>();
-            extensions ??= new List<DeploymentExtensionDefinition>();
-            outputResources ??= new List<ResourceReference>();
-            validatedResources ??= new List<ResourceReference>();
+            extensions ??= new List<ArmDeploymentExtensionDefinition>();
+            outputResourceDetails ??= new List<ArmResourceReference>();
+            validatedResourceDetails ??= new List<ArmResourceReference>();
             diagnostics ??= new List<DeploymentDiagnosticsDefinition>();
 
             return new ArmDeploymentPropertiesExtended(
@@ -355,8 +355,8 @@ namespace Azure.ResourceManager.Resources.Models
                 debugSettingDetailLevel != null ? new DebugSetting(debugSettingDetailLevel, serializedAdditionalRawData: null) : null,
                 errorDeployment,
                 templateHash,
-                outputResources?.ToList(),
-                validatedResources?.ToList(),
+                outputResourceDetails?.ToList(),
+                validatedResourceDetails?.ToList(),
                 error,
                 diagnostics?.ToList(),
                 validationLevel,
@@ -386,18 +386,18 @@ namespace Azure.ResourceManager.Resources.Models
             return new BasicArmDependency(id, resourceType, resourceName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentExtensionDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentExtensionDefinition"/>. </summary>
         /// <param name="alias"> The alias of the extension as defined in the deployment template. </param>
         /// <param name="name"> The extension name. </param>
         /// <param name="version"> The extension version. </param>
         /// <param name="configId"> The extension configuration ID. It uniquely identifies a deployment control plane within an extension. </param>
         /// <param name="config"> The extension configuration. </param>
-        /// <returns> A new <see cref="Models.DeploymentExtensionDefinition"/> instance for mocking. </returns>
-        public static DeploymentExtensionDefinition DeploymentExtensionDefinition(string @alias = null, string name = null, string version = null, string configId = null, IReadOnlyDictionary<string, DeploymentExtensionConfigItem> config = null)
+        /// <returns> A new <see cref="Models.ArmDeploymentExtensionDefinition"/> instance for mocking. </returns>
+        public static ArmDeploymentExtensionDefinition ArmDeploymentExtensionDefinition(string @alias = null, string name = null, string version = null, string configId = null, IReadOnlyDictionary<string, ArmDeploymentExtensionConfigItem> config = null)
         {
-            config ??= new Dictionary<string, DeploymentExtensionConfigItem>();
+            config ??= new Dictionary<string, ArmDeploymentExtensionConfigItem>();
 
-            return new DeploymentExtensionDefinition(
+            return new ArmDeploymentExtensionDefinition(
                 @alias,
                 name,
                 version,
@@ -416,16 +416,16 @@ namespace Azure.ResourceManager.Resources.Models
             return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ArmResourceReference"/>. </summary>
         /// <param name="id"> The fully qualified Azure resource ID. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
-        /// <returns> A new <see cref="Models.ResourceReference"/> instance for mocking. </returns>
-        public static ResourceReference ResourceReference(string id = null, DeploymentExtensionDefinition extension = null, string resourceType = null, BinaryData identifiers = null, string apiVersion = null)
+        /// <returns> A new <see cref="Models.ArmResourceReference"/> instance for mocking. </returns>
+        public static ArmResourceReference ArmResourceReference(string id = null, ArmDeploymentExtensionDefinition extension = null, string resourceType = null, BinaryData identifiers = null, string apiVersion = null)
         {
-            return new ResourceReference(
+            return new ArmResourceReference(
                 id,
                 extension,
                 resourceType,
@@ -506,11 +506,11 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="whatIfResultFormat"> Optional What-If operation settings. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentWhatIfProperties"/> instance for mocking. </returns>
-        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, IDictionary<string, DeploymentExternalInput> externalInputs = null, IDictionary<string, DeploymentExternalInputDefinition> externalInputDefinitions = null, ArmDeploymentParametersLink parametersLink = null, IDictionary<string, IDictionary<string, DeploymentExtensionConfigItem>> extensionConfigs = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null, WhatIfResultFormat? whatIfResultFormat = null)
+        public static ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(BinaryData template = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, IDictionary<string, ArmDeploymentExternalInput> externalInputs = null, IDictionary<string, ArmDeploymentExternalInputDefinition> externalInputDefinitions = null, ArmDeploymentParametersLink parametersLink = null, IDictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>> extensionConfigs = null, ArmDeploymentMode mode = default, string debugSettingDetailLevel = null, ErrorDeployment errorDeployment = null, ExpressionEvaluationScope? expressionEvaluationScope = null, ValidationLevel? validationLevel = null, WhatIfResultFormat? whatIfResultFormat = null)
         {
-            externalInputs ??= new Dictionary<string, DeploymentExternalInput>();
-            externalInputDefinitions ??= new Dictionary<string, DeploymentExternalInputDefinition>();
-            extensionConfigs ??= new Dictionary<string, IDictionary<string, DeploymentExtensionConfigItem>>();
+            externalInputs ??= new Dictionary<string, ArmDeploymentExternalInput>();
+            externalInputDefinitions ??= new Dictionary<string, ArmDeploymentExternalInputDefinition>();
+            extensionConfigs ??= new Dictionary<string, IDictionary<string, ArmDeploymentExtensionConfigItem>>();
 
             return new ArmDeploymentWhatIfProperties(
                 template,
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
         /// <returns> A new <see cref="Models.WhatIfChange"/> instance for mocking. </returns>
-        public static WhatIfChange WhatIfChange(string resourceId = null, string deploymentId = null, string symbolicName = null, BinaryData identifiers = null, DeploymentExtensionDefinition extension = null, WhatIfChangeType changeType = default, string unsupportedReason = null, BinaryData before = null, BinaryData after = null, IEnumerable<WhatIfPropertyChange> delta = null)
+        public static WhatIfChange WhatIfChange(string resourceId = null, string deploymentId = null, string symbolicName = null, BinaryData identifiers = null, ArmDeploymentExtensionDefinition extension = null, WhatIfChangeType changeType = default, string unsupportedReason = null, BinaryData before = null, BinaryData after = null, IEnumerable<WhatIfPropertyChange> delta = null)
         {
             delta ??= new List<WhatIfPropertyChange>();
 
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
         /// <returns> A new <see cref="Models.TargetResource"/> instance for mocking. </returns>
-        public static TargetResource TargetResource(string id = null, string resourceName = null, ResourceType? resourceType = null, DeploymentExtensionDefinition extension = null, BinaryData identifiers = null, string apiVersion = null, string symbolicName = null)
+        public static TargetResource TargetResource(string id = null, string resourceName = null, ResourceType? resourceType = null, ArmDeploymentExtensionDefinition extension = null, BinaryData identifiers = null, string apiVersion = null, string symbolicName = null)
         {
             return new TargetResource(
                 id,

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResource(string id, string resourceName, ResourceType? resourceType, DeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceName = resourceName;
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Resources.Models
         public ResourceType? ResourceType { get; }
         /// <summary> The extension the resource was deployed with. </summary>
         [WirePath("extension")]
-        public DeploymentExtensionDefinition Extension { get; }
+        public ArmDeploymentExtensionDefinition Extension { get; }
         /// <summary>
         /// The extensible resource identifiers.
         /// <para>

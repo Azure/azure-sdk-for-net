@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> The resource Id model. </summary>
-    public partial class ResourceReference
+    public partial class ArmResourceReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceReference"/>. </summary>
-        internal ResourceReference()
+        /// <summary> Initializes a new instance of <see cref="ArmResourceReference"/>. </summary>
+        internal ArmResourceReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceReference"/>. </summary>
         /// <param name="id"> The fully qualified Azure resource ID. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceReference(string id, DeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmResourceReference(string id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             Extension = extension;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Resources.Models
         public string Id { get; }
         /// <summary> The extension the resource was deployed with. </summary>
         [WirePath("extension")]
-        public DeploymentExtensionDefinition Extension { get; }
+        public ArmDeploymentExtensionDefinition Extension { get; }
         /// <summary> The resource type. </summary>
         [WirePath("resourceType")]
         public string ResourceType { get; }
