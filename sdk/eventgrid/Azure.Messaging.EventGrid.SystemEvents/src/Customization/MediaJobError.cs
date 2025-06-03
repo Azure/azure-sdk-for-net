@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Details of JobOutput errors. </summary>\
+    /// <summary> Details of JobOutput errors. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaJobError
     {
