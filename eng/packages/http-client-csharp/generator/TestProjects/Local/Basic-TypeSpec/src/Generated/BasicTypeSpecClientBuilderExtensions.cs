@@ -16,7 +16,7 @@ namespace Microsoft.Extensions.Azure
     /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient, TOptions}"/>. </summary>
     public static partial class BasicTypeSpecClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient, TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="credential"> A credential used to authenticate to the service. </param>
@@ -30,7 +30,7 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<BasicTypeSpecClient, BasicTypeSpecClientOptions>(options => new BasicTypeSpecClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient, TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
@@ -42,7 +42,7 @@ namespace Microsoft.Extensions.Azure
             return builder.RegisterClientFactory<BasicTypeSpecClient, BasicTypeSpecClientOptions>((options, credential) => new BasicTypeSpecClient(endpoint, credential, options));
         }
 
-        /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient, TOptions}"/>. </summary>
+        /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
