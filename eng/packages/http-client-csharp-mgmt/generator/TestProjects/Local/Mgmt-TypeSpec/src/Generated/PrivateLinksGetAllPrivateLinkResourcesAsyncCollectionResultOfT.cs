@@ -30,7 +30,7 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
-        public PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinks client, Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
+        public PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT(PrivateLinks client, Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
@@ -47,31 +47,32 @@ namespace MgmtTypeSpec
         /// <returns> The pages of PrivateLinksGetAllPrivateLinkResourcesAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<PrivateLinkResourceData>> AsPages(string continuationToken, int? pageSizeHint)
         {
+            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
             do
             {
-                Response response = await GetNextResponse(pageSizeHint, continuationToken).ConfigureAwait(false);
+                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
                 PrivateLinkResourceListResult responseWithType = (PrivateLinkResourceListResult)response;
-                continuationToken = responseWithType.NextLink.AbsoluteUri;
-                yield return Page<PrivateLinkResourceData>.FromValues((IReadOnlyList<PrivateLinkResourceData>)responseWithType.Value, continuationToken, response);
+                nextPage = responseWithType.NextLink;
+                yield return Page<PrivateLinkResourceData>.FromValues((IReadOnlyList<PrivateLinkResourceData>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
-            while (!string.IsNullOrEmpty(continuationToken));
+            while (nextPage != null);
         }
 
-        /// <summary> Get response from next link. </summary>
+        /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
+        /// <param name="nextLink"> The next link to use for the next page of results. </param>
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetAllPrivateLinkResourcesRequest(_nextPage, _subscriptionId, _resourceGroupName, _context);
+            HttpMessage message = _client.CreateGetAllPrivateLinkResourcesRequest(nextLink, _subscriptionId, _resourceGroupName, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("PrivateLinks.GetAllPrivateLinkResources");
             scope.Start();
             try
             {
-                await _client.Pipeline.SendAsync(message, _context.CancellationToken).ConfigureAwait(false);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

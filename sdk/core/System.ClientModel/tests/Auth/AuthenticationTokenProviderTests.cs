@@ -3,6 +3,7 @@
 
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -25,12 +26,31 @@ public class AuthenticationTokenProviderTests
         client.Get();
     }
 
+    [Test]
+    public void SupportsNoServiceLevelAuth()
+    {
+        // usage for TokenProvider2 abstract type
+        AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
+        var client = new NoAuthClient(new Uri("http://localhost"), provider);
+        client.Get();
+    }
+
     public class FooClient
     {
         // Generated from the TypeSpec spec.
-        private readonly Dictionary<string, object>[] flows = [
+
+        private static readonly string readScope = "read";
+        private readonly Dictionary<string, object>[] serviceFlows = [
             new Dictionary<string, object> {
                 { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope" } },
+                { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
+                { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
+            }
+        ];
+
+        private readonly Dictionary<string, object>[] getOperationsFlows = [
+            new Dictionary<string, object> {
+                { GetTokenOptions.ScopesPropertyName, new string[] { "baselineScope", readScope } },
                 { GetTokenOptions.TokenUrlPropertyName , "https://myauthserver.com/token"},
                 { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
             }
@@ -39,7 +59,6 @@ public class AuthenticationTokenProviderTests
         private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
 
         private ClientPipeline _pipeline;
-        private static readonly string[] readScope = ["read"];
 
         public FooClient(Uri uri, ApiKeyCredential credential)
         {
@@ -62,7 +81,7 @@ public class AuthenticationTokenProviderTests
             });
             ClientPipeline pipeline = ClientPipeline.Create(options,
             perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
-            perTryPolicies: [new BearerTokenPolicy(credential, flows)],
+            perTryPolicies: [new BearerTokenPolicy(credential, serviceFlows)],
             beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
             _pipeline = pipeline;
         }
@@ -71,11 +90,58 @@ public class AuthenticationTokenProviderTests
         {
             var message = _pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
-            message.SetProperty(typeof(GetTokenOptions), new GetTokenOptions(readScope, _emptyProperties));
+            message.SetProperty(typeof(GetTokenOptions), getOperationsFlows);
 
             PipelineRequest request = message.Request;
             request.Method = "GET";
             request.Uri = new Uri("https://localhost/foo");
+            _pipeline.Send(message);
+            return ClientResult.FromResponse(message.Response!);
+        }
+    }
+
+    public class NoAuthClient
+    {
+        private readonly IReadOnlyDictionary<string, object> _emptyProperties = new Dictionary<string, object>();
+
+        private ClientPipeline _pipeline;
+
+        public NoAuthClient(Uri uri, ApiKeyCredential credential)
+        {
+            var options = new ClientPipelineOptions();
+            options.Transport = new MockPipelineTransport("foo", m => new MockPipelineResponse(200));
+            ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: [ApiKeyAuthenticationPolicy.CreateBasicAuthorizationPolicy(credential)],
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+            _pipeline = pipeline;
+        }
+
+        public NoAuthClient(Uri uri, AuthenticationTokenProvider credential)
+        {
+            var options = new ClientPipelineOptions();
+            options.Transport = new MockPipelineTransport("foo",
+            m =>
+            {
+                // Assert that the request has no authentication headers
+                Assert.IsFalse(m.Request.Headers.TryGetValue("Authorization", out _), "Request should not have an Authorization header.");
+                return new MockPipelineResponse(200);
+            });
+            ClientPipeline pipeline = ClientPipeline.Create(options,
+            perCallPolicies: ReadOnlySpan<PipelinePolicy>.Empty,
+            perTryPolicies: [new BearerTokenPolicy(credential, [_emptyProperties])],
+            beforeTransportPolicies: ReadOnlySpan<PipelinePolicy>.Empty);
+            _pipeline = pipeline;
+        }
+
+        public ClientResult Get()
+        {
+            var message = _pipeline.CreateMessage();
+            message.ResponseClassifier = PipelineMessageClassifier.Create([200]);
+
+            PipelineRequest request = message.Request;
+            request.Method = "GET";
+            request.Uri = new Uri("https://localhost/noAuth");
             _pipeline.Send(message);
             return ClientResult.FromResponse(message.Response!);
         }
@@ -148,8 +214,9 @@ public class AuthenticationTokenProviderTests
                 properties.TryGetValue(GetTokenOptions.TokenUrlPropertyName, out var tokenUri) && tokenUri is string tokenUriValue &&
                 properties.TryGetValue(GetTokenOptions.RefreshUrlPropertyName, out var refreshUri) && refreshUri is string refreshUriValue)
             {
-                return new GetTokenOptions(scopeArray, new Dictionary<string, object>
+                return new GetTokenOptions(new Dictionary<string, object>
                 {
+                    { GetTokenOptions.ScopesPropertyName, new ReadOnlyMemory<string>(scopeArray) },
                     { GetTokenOptions.TokenUrlPropertyName, tokenUriValue },
                     { GetTokenOptions.RefreshUrlPropertyName, refreshUriValue }
                 });
@@ -169,12 +236,13 @@ public class AuthenticationTokenProviderTests
             var authBytes = System.Text.Encoding.ASCII.GetBytes($"{_clientId}:{_clientSecret}");
             var authHeader = Convert.ToBase64String(authBytes);
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", authHeader);
+            var scopes = ExtractScopes(properties.Properties);
 
             // Create form content
             var formContent = new FormUrlEncodedContent(
             [
                 new KeyValuePair<string, string>("grant_type", "client_credentials"),
-                new KeyValuePair<string, string>("scope", string.Join(" ", properties.Scopes.Span.ToArray()))
+                new KeyValuePair<string, string>("scope", string.Join(" ", scopes.ToArray()))
             ]);
 
             request.Content = formContent;
@@ -200,6 +268,24 @@ public class AuthenticationTokenProviderTests
             DateTimeOffset refreshOn = now.AddSeconds(expiresIn * 0.85);
 
             return new AuthenticationToken(accessToken!, tokenType!, expiresOn, refreshOn);
+        }
+
+        private static ReadOnlyMemory<string> ExtractScopes(IReadOnlyDictionary<string, object> properties)
+        {
+            if (!properties.TryGetValue(GetTokenOptions.ScopesPropertyName, out var scopesValue) || scopesValue is null)
+            {
+                return ReadOnlyMemory<string>.Empty;
+            }
+
+            return scopesValue switch
+            {
+                ReadOnlyMemory<string> memory => memory,
+                Memory<string> memory => memory,
+                string[] array => new ReadOnlyMemory<string>(array),
+                ICollection<string> collection => new ReadOnlyMemory<string>([.. collection]),
+                IEnumerable<string> enumerable => new ReadOnlyMemory<string>([.. enumerable]),
+                _ => ReadOnlyMemory<string>.Empty
+            };
         }
     }
 
