@@ -331,7 +331,6 @@ directive:
       $.WhatIfChange.properties.changeType['x-ms-enum'].name = 'WhatIfChangeType';
       $.WhatIfPropertyChange.properties.propertyChangeType['x-ms-enum'].name = 'WhatIfPropertyChangeType';
       $.ResourceReference.properties.id["x-ms-format"] = "arm-id";
-      $.ResourceReference.properties.resourceType["x-ms-format"] = "resource-type";
   - from: dataBoundaries.json
     where: $.definitions
     transform: >
