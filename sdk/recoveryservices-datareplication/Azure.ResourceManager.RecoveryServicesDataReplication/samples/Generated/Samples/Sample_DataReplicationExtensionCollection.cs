@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             string replicationExtensionName = "g16yjJ";
             DataReplicationExtensionData data = new DataReplicationExtensionData
             {
-                Properties = new DataReplicationExtensionProperties(null),
+                Properties = new DataReplicationExtensionProperties(new UnknownDataReplicationExtensionCustomProperties()),
             };
             ArmOperation<DataReplicationExtensionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, replicationExtensionName, data);
             DataReplicationExtensionResource result = lro.Value;

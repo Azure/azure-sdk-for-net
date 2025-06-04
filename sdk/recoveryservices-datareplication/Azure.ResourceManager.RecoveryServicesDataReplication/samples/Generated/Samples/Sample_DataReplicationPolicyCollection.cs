@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             string policyName = "fafqwc";
             DataReplicationPolicyData data = new DataReplicationPolicyData
             {
-                Properties = new DataReplicationPolicyProperties(null),
+                Properties = new DataReplicationPolicyProperties(new UnknownDataReplicationPolicyCustomProperties()),
             };
             ArmOperation<DataReplicationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyName, data);
             DataReplicationPolicyResource result = lro.Value;

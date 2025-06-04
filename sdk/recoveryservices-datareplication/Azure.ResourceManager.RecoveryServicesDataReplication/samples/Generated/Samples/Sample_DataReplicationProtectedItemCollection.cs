@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             string protectedItemName = "d";
             DataReplicationProtectedItemData data = new DataReplicationProtectedItemData
             {
-                Properties = new DataReplicationProtectedItemProperties("tjoeiynplt", "jwxdo", null),
+                Properties = new DataReplicationProtectedItemProperties("tjoeiynplt", "jwxdo", new UnknownDataReplicationProtectedItemCustomProperties()),
             };
             ArmOperation<DataReplicationProtectedItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, protectedItemName, data);
             DataReplicationProtectedItemResource result = lro.Value;

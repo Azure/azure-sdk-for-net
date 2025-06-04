@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // invoke the operation
             DataReplicationPolicyData data = new DataReplicationPolicyData
             {
-                Properties = new DataReplicationPolicyProperties(null),
+                Properties = new DataReplicationPolicyProperties(new UnknownDataReplicationPolicyCustomProperties()),
             };
             ArmOperation<DataReplicationPolicyResource> lro = await dataReplicationPolicy.UpdateAsync(WaitUntil.Completed, data);
             DataReplicationPolicyResource result = lro.Value;

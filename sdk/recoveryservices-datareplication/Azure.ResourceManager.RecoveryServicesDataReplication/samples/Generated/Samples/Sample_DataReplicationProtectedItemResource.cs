@@ -97,7 +97,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationProtectedItemResource dataReplicationProtectedItem = client.GetDataReplicationProtectedItemResource(dataReplicationProtectedItemResourceId);
 
             // invoke the operation
-            DataReplicationProtectedItemPatch patch = new DataReplicationProtectedItemPatch();
+            DataReplicationProtectedItemPatch patch = new DataReplicationProtectedItemPatch
+            {
+                CustomProperties = new UnknownDataReplicationProtectedItemCustomPropertiesUpdate(),
+            };
             ArmOperation<DataReplicationProtectedItemResource> lro = await dataReplicationProtectedItem.UpdateAsync(WaitUntil.Completed, patch);
             DataReplicationProtectedItemResource result = lro.Value;
 
@@ -130,7 +133,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationProtectedItemResource dataReplicationProtectedItem = client.GetDataReplicationProtectedItemResource(dataReplicationProtectedItemResourceId);
 
             // invoke the operation
-            PlannedFailover body = new PlannedFailover(new PlannedFailoverProperties(null));
+            PlannedFailover body = new PlannedFailover(new PlannedFailoverProperties(new UnknownPlannedFailoverCustomProperties()));
             ArmOperation<PlannedFailover> lro = await dataReplicationProtectedItem.PlannedFailoverAsync(WaitUntil.Completed, body);
             PlannedFailover result = lro.Value;
 
