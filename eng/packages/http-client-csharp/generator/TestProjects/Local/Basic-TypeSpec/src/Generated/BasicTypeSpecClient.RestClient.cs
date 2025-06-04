@@ -290,13 +290,18 @@ namespace BasicTypeSpec
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
-                uri.AppendPath("/link", false);
+                uri.Reset(nextPage);
+                request.Uri = uri;
             }
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
+            else
+            {
+                uri.Reset(_endpoint);
+                uri.AppendPath("/link", false);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
+            }
             return message;
         }
 

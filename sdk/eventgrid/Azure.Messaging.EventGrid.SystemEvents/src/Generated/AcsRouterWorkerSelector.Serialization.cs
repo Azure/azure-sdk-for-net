@@ -39,22 +39,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(LabelOperator))
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("labelOperator"u8);
-                writer.WriteStringValue(LabelOperator.Value.ToString());
+                writer.WriteStringValue(Operator.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LabelValue);
-#else
-            using (JsonDocument document = JsonDocument.Parse(LabelValue, ModelSerializationExtensions.JsonDocumentOptions))
-            {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
-#endif
+            writer.WriteObjectValue<object>(LabelValue, options);
             writer.WritePropertyName("ttlSeconds"u8);
-            writer.WriteNumberValue(TimeToLive);
+            writer.WriteNumberValue(TtlSeconds.Value);
             if (Optional.IsDefined(SelectorState))
             {
                 writer.WritePropertyName("state"u8);
@@ -104,8 +97,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string key = default;
             AcsRouterLabelOperator? labelOperator = default;
-            BinaryData value = default;
-            double ttlSeconds = default;
+            object value = default;
+            double? ttlSeconds = default;
             AcsRouterWorkerSelectorState? state = default;
             DateTimeOffset? expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -128,7 +121,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = BinaryData.FromString(property.Value.GetRawText());
+                    value = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("ttlSeconds"u8))

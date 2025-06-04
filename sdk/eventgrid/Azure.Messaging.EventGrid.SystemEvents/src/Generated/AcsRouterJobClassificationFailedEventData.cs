@@ -22,7 +22,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));
 
-            Errors = new ChangeTrackingList<AcsRouterCommunicationError>();
+            ErrorsInternal = new ChangeTrackingList<AcsRouterCommunicationError>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/>. </summary>
@@ -34,11 +34,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
-        /// <param name="errors"> Router Job Classification Failed Errors. </param>
-        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errors) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        /// <param name="errorsInternal"> Router Job Classification Failed Errors. </param>
+        internal AcsRouterJobClassificationFailedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, string classificationPolicyId, IReadOnlyList<AcsRouterCommunicationError> errorsInternal) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
         {
             ClassificationPolicyId = classificationPolicyId;
-            Errors = errors;
+            ErrorsInternal = errorsInternal;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassificationFailedEventData"/> for deserialization. </summary>
@@ -48,7 +48,5 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Router Job Classification Policy Id. </summary>
         public string ClassificationPolicyId { get; }
-        /// <summary> Router Job Classification Failed Errors. </summary>
-        public IReadOnlyList<AcsRouterCommunicationError> Errors { get; }
     }
 }

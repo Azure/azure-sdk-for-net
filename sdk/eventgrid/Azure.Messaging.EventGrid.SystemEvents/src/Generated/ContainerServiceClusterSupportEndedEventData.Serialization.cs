@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ContainerServiceClusterSupportEndedEventDataConverter))]
     public partial class ContainerServiceClusterSupportEndedEventData : IUtf8JsonSerializable, IJsonModel<ContainerServiceClusterSupportEndedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceClusterSupportEndedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -121,6 +123,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ContainerServiceClusterSupportEndedEventDataConverter : JsonConverter<ContainerServiceClusterSupportEndedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ContainerServiceClusterSupportEndedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ContainerServiceClusterSupportEndedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeContainerServiceClusterSupportEndedEventData(document.RootElement);
+            }
         }
     }
 }
