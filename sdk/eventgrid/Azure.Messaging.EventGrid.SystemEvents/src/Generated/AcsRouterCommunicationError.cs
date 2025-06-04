@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Communication Error. </summary>
-    public partial class AcsRouterCommunicationError
+    internal partial class AcsRouterCommunicationError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

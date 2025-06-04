@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsUserDisconnectedEventDataConverter))]
     public partial class AcsUserDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<AcsUserDisconnectedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsUserDisconnectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -137,6 +139,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsUserDisconnectedEventDataConverter : JsonConverter<AcsUserDisconnectedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsUserDisconnectedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsUserDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsUserDisconnectedEventData(document.RootElement);
+            }
         }
     }
 }
