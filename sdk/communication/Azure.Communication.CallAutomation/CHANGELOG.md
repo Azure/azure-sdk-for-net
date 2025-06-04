@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0 (2025-06-02)
+## 1.4.0 (2025-06-04)
 
 ### Features Added
 
@@ -8,6 +8,8 @@
 - Audio and DTMF streaming capabilities
 - Integration of ConnectAPI for seamless streaming and transcription
 - Improved media streaming with bidirectional functionality, allowing audio formats in both directions, currently supporting sample rates of 24kHz and 16kHz
+- Support for custom speech models has been integrated into transcription
+- A confidence level for recognized speech has been introduced, ranging from 0.0 to 1.0 when available
 
 ## 1.5.0-beta.1 (2025-05-16)
 
