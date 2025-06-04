@@ -66,6 +66,7 @@ namespace Azure.Health.Deidentification
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
             }
             else
             {
@@ -96,6 +97,7 @@ namespace Azure.Health.Deidentification
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
             }
             else
             {

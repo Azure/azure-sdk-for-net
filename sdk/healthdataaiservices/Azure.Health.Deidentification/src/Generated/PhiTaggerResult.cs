@@ -27,13 +27,10 @@ namespace Azure.Health.Deidentification
         /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PhiTaggerResult(IList<PhiEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Entities = entities;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> List of entities detected in the input. </summary>
-        public IList<PhiEntity> Entities { get; }
     }
 }

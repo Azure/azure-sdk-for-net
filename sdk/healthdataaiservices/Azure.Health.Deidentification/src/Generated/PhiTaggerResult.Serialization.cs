@@ -89,7 +89,7 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            IList<PhiEntity> entities = default;
+            IReadOnlyList<PhiEntity> entities = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {

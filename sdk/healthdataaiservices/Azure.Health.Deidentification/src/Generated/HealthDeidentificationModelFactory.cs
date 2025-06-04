@@ -13,7 +13,7 @@ using Azure;
 namespace Azure.Health.Deidentification
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class DeidentificationModelFactory
+    public static partial class HealthDeidentificationModelFactory
     {
         /// <summary> A job containing a batch of documents to de-identify. </summary>
         /// <param name="jobName"> The name of a job. </param>
