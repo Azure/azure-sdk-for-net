@@ -42,7 +42,7 @@ namespace Azure.Generator.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Public | TypeSignatureModifiers.Static | TypeSignatureModifiers.Partial;
 
-        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"IAzureClientBuilder{{TClient, TOptions}}\"/>.";
+        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"{typeof(IAzureClientBuilder<,>)}\"/>.";
 
         protected override MethodProvider[] BuildMethods()
         {

@@ -13,7 +13,7 @@ using BasicTypeSpec;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient, TOptions}"/>. </summary>
+    /// <summary> Extension methods to add clients to <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
     public static partial class BasicTypeSpecClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="BasicTypeSpecClient"/> client with the specified <see cref="IAzureClientBuilder{TClient,TOptions}"/>. </summary>
