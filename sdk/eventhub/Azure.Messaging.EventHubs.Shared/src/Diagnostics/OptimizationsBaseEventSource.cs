@@ -25,7 +25,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -57,7 +57,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -94,7 +94,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -136,7 +136,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -183,7 +183,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -235,7 +235,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -292,7 +292,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -327,7 +327,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -367,7 +367,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -403,7 +403,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        int arg3,
@@ -433,7 +433,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        int arg3,
@@ -471,7 +471,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        int arg3,
@@ -502,7 +502,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        int arg3,
@@ -537,7 +537,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        int arg1,
                                        string arg2,
                                        string arg3)
@@ -563,7 +563,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        int arg3,
@@ -593,7 +593,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -655,7 +655,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        long arg3,
@@ -685,7 +685,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        long arg3,
@@ -719,7 +719,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -760,7 +760,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        int arg3,
@@ -794,7 +794,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -834,7 +834,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -885,7 +885,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
@@ -930,7 +930,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
-        private unsafe void WriteEvent(int eventId,
+        public unsafe void WriteEvent(int eventId,
                                        string arg1,
                                        string arg2,
                                        string arg3,
