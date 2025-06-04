@@ -62,22 +62,27 @@ namespace Azure.Health.Deidentification
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/jobs", false);
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (maxpagesize != null)
+                {
+                    uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                }
+                if (continuationToken != null)
+                {
+                    uri.AppendQuery("continuationToken", continuationToken, true);
+                }
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
@@ -87,24 +92,29 @@ namespace Azure.Health.Deidentification
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/jobs/", false);
                 uri.AppendPath(jobName, true);
                 uri.AppendPath("/documents", false);
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (maxpagesize != null)
+                {
+                    uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
+                }
+                if (continuationToken != null)
+                {
+                    uri.AppendQuery("continuationToken", continuationToken, true);
+                }
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (maxpagesize != null)
-            {
-                uri.AppendQuery("maxpagesize", TypeFormatters.ConvertToString(maxpagesize, null), true);
-            }
-            if (continuationToken != null)
-            {
-                uri.AppendQuery("continuationToken", continuationToken, true);
-            }
-            request.Uri = uri;
-            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 

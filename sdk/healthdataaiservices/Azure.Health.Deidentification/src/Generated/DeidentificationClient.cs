@@ -30,26 +30,26 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of DeidentificationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
-        public DeidentificationClient(Uri endpoint, TokenCredential tokenCredential) : this(endpoint, tokenCredential, new DeidentificationClientOptions())
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeidentificationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new DeidentificationClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of DeidentificationClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
-        public DeidentificationClient(Uri endpoint, TokenCredential tokenCredential, DeidentificationClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public DeidentificationClient(Uri endpoint, TokenCredential credential, DeidentificationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new DeidentificationClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = tokenCredential;
+            _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             _apiVersion = options.Version;
             ClientDiagnostics = new ClientDiagnostics(options, true);

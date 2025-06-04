@@ -26,7 +26,7 @@ namespace Azure.Health.Deidentification
         /// <param name="value"> The value. </param>
         /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T? value, string name)
-            where T : struct 
+            where T : struct
         {
             if (!value.HasValue)
             {
@@ -88,7 +88,7 @@ namespace Azure.Health.Deidentification
         /// <param name="value"> The value. </param>
         /// <param name="name"> The name. </param>
         public static void AssertNotDefault<T>(ref T value, string name)
-            where T : struct, IEquatable<T> 
+            where T : struct, IEquatable<T>
         {
             if (value.Equals(default))
             {
@@ -101,7 +101,7 @@ namespace Azure.Health.Deidentification
         /// <param name="maximum"> The maximum value. </param>
         /// <param name="name"> The name. </param>
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
-            where T : notnull, IComparable<T> 
+            where T : notnull, IComparable<T>
         {
             if (minimum.CompareTo(value) > 0)
             {
@@ -127,7 +127,7 @@ namespace Azure.Health.Deidentification
         /// <param name="value"> The value. </param>
         /// <param name="name"> The name. </param>
         public static T CheckNotNull<T>(T value, string name)
-            where T : class 
+            where T : class
         {
             AssertNotNull(value, name);
             return value;
