@@ -658,25 +658,25 @@
 # ServiceOwners:                                                   @omziv @anatse @raronen @ischrei @danhadari @azmonapplicationinsights
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore/               @rajkumar-rangaraj @harsimar
 
 # PRLabel: %Monitor - Distro
-/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.sln                       @rajkumar-rangaraj @harsimar
 
 # ServiceLabel: %Monitor - Distro
-# ServiceOwners:                                                   @rajkumar-rangaraj 
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj 
 
 # ServiceLabel: %Monitor - Exporter
-# ServiceOwners:                                                   @rajkumar-rangaraj
+# ServiceOwners:                                                   @rajkumar-rangaraj @harsimar
 
 # PRLabel: %Monitor - LiveMetrics
-/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17
+/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/              @rajkumar-rangaraj @xiang17 @harsimar
 
 # ServiceLabel: %Monitor - LiveMetrics
-# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17
+# ServiceOwners:                                                   @rajkumar-rangaraj @xiang17 @harsimar
 
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
