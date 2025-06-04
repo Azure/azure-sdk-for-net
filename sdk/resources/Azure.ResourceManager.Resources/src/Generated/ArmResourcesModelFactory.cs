@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
         /// <returns> A new <see cref="Models.ArmResourceReference"/> instance for mocking. </returns>
-        public static ArmResourceReference ArmResourceReference(string id = null, ArmDeploymentExtensionDefinition extension = null, string resourceType = null, BinaryData identifiers = null, string apiVersion = null)
+        public static ArmResourceReference ArmResourceReference(ResourceIdentifier id = null, ArmDeploymentExtensionDefinition extension = null, ResourceType? resourceType = null, BinaryData identifiers = null, string apiVersion = null)
         {
             return new ArmResourceReference(
                 id,

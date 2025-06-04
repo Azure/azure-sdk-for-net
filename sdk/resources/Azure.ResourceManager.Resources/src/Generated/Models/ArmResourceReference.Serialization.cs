@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType);
+                writer.WriteStringValue(ResourceType.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Identifiers))
             {
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            string id = default;
+            ResourceIdentifier id = default;
             ArmDeploymentExtensionDefinition extension = default;
-            string resourceType = default;
+            ResourceType? resourceType = default;
             BinaryData identifiers = default;
             string apiVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -115,7 +115,11 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -129,7 +133,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (property.NameEquals("resourceType"u8))
                 {
-                    resourceType = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identifiers"u8))
@@ -183,15 +191,7 @@ namespace Azure.ResourceManager.Resources.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
@@ -221,15 +221,7 @@ namespace Azure.ResourceManager.Resources.Models
                 if (Optional.IsDefined(ResourceType))
                 {
                     builder.Append("  resourceType: ");
-                    if (ResourceType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceType}'");
-                    }
+                    builder.AppendLine($"'{ResourceType.Value.ToString()}'");
                 }
             }
 
