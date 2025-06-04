@@ -1,15 +1,9 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.0-beta.2 (2025-06-04)
 
 ### Bugs Fixed
 - Fixed uploading files with non ASCII symbols in names.
-
-### Other Changes
 
 ## 1.1.0-beta.1 (2025-05-21)
 
