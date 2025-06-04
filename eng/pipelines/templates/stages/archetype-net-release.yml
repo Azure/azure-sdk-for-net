@@ -123,7 +123,6 @@ stages:
                         - task: 1ES.PublishNuget@1
                           displayName: Publish ${{artifact.name}} package to NuGet.org
                           inputs:
-                            useDotNetTask: true
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)//${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             nuGetFeedType: external
@@ -132,7 +131,6 @@ stages:
                         - task: 1ES.PublishNuget@1
                           displayName: Publish to DevOps Feed
                           inputs:
-                            useDotNetTask: true
                             packageParentPath: '$(Pipeline.Workspace)'
                             packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                             publishVstsFeed: ${{ parameters.DevOpsFeedID }}
@@ -294,9 +292,9 @@ stages:
           os: windows
 
         templateContext:
-          type: releaseJob 
+          type: releaseJob
           isProduction: true
-          inputs: 
+          inputs:
             - input: pipelineArtifact
               artifactName: ${{parameters.ArtifactName}}-signed
               targetPath: $(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed
@@ -323,7 +321,7 @@ stages:
                       packageParentPath: '$(Pipeline.Workspace)'
                       packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                       publishVstsFeed: $(DevOpsFeedID)
-                
+
       - job: PublishDocsToNightlyBranch
         dependsOn: PublishPackages
         condition: and(succeeded(), or(eq(variables['SetDevVersion'], 'true'), and(eq(variables['Build.Reason'],'Schedule'), eq(variables['System.TeamProject'], 'internal'))))
