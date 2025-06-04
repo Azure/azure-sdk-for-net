@@ -21,6 +21,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="lastTrainedOn"> Represents the project last training datetime. </param>
         /// <param name="lastDeployedOn"> Represents the project last deployment datetime. </param>
         /// <param name="projectKind"> The project kind. </param>
+        /// <param name="storageAccountResourceId"> The project storage account resource ID. </param>
         /// <param name="storageInputContainerName"> The storage container name. </param>
         /// <param name="settings"> The project settings. </param>
         /// <param name="projectName"> The new project name. </param>
@@ -28,7 +29,7 @@ namespace Azure.AI.Language.Text.Authoring
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <returns> A new <see cref="Authoring.TextAuthoringProjectMetadata"/> instance for mocking. </returns>
-        public static TextAuthoringProjectMetadata TextAuthoringProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, TextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        public static TextAuthoringProjectMetadata TextAuthoringProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, TextAuthoringProjectKind projectKind = default, string storageAccountResourceId = null, string storageInputContainerName = null, TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
         {
             return new TextAuthoringProjectMetadata(
                 createdOn,
@@ -36,6 +37,7 @@ namespace Azure.AI.Language.Text.Authoring
                 lastTrainedOn,
                 lastDeployedOn,
                 projectKind,
+                storageAccountResourceId,
                 storageInputContainerName,
                 settings,
                 projectName,
@@ -69,13 +71,14 @@ namespace Azure.AI.Language.Text.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringDeploymentResource"/>. </summary>
-        /// <param name="resourceId"> Represents the Azure resource Id. </param>
-        /// <param name="region"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentResource"/> instance for mocking. </returns>
-        public static TextAuthoringDeploymentResource TextAuthoringDeploymentResource(string resourceId = null, string region = null)
+        /// <summary> Initializes a new instance of <see cref="Authoring.DataGenerationConnectionInfo"/>. </summary>
+        /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure Open AI. </param>
+        /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
+        /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
+        /// <returns> A new <see cref="Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
+        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
         {
-            return new TextAuthoringDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
+            return new DataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedTrainedModel"/>. </summary>
@@ -395,16 +398,6 @@ namespace Azure.AI.Language.Text.Authoring
             return new TextAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.DataGenerationConnectionInfo"/>. </summary>
-        /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure Open AI. </param>
-        /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
-        /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <returns> A new <see cref="Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
-        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
-        {
-            return new DataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringUnassignDeploymentResourcesState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
@@ -532,13 +525,13 @@ namespace Azure.AI.Language.Text.Authoring
 
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/>. </summary>
         /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <param name="assignedResources"> Represents the resources to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
         /// <returns> A new <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
-        public static TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        public static TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<TextAuthoringDeploymentResource> assignedResources = null)
         {
-            assignedResourceIds ??= new List<string>();
+            assignedResources ??= new List<TextAuthoringDeploymentResource>();
 
-            return new TextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
+            return new TextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResources?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedModelState"/>. </summary>
