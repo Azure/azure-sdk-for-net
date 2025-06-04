@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed uploading files with non ASCII symbols in names.
 
 ### Other Changes
 

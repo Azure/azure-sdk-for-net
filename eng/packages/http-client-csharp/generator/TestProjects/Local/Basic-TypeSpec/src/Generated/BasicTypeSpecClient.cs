@@ -34,52 +34,52 @@ namespace BasicTypeSpec
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential) : this(endpoint, keyCredential, new BasicTypeSpecClientOptions())
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new BasicTypeSpecClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, TokenCredential tokenCredential) : this(endpoint, tokenCredential, new BasicTypeSpecClientOptions())
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new BasicTypeSpecClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential keyCredential, BasicTypeSpecClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(Uri endpoint, AzureKeyCredential credential, BasicTypeSpecClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(keyCredential, nameof(keyCredential));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new BasicTypeSpecClientOptions();
 
             _endpoint = endpoint;
-            _keyCredential = keyCredential;
+            _keyCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) });
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
 
         /// <summary> Initializes a new instance of BasicTypeSpecClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
+        /// <param name="credential"> A credential used to authenticate to the service. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
-        public BasicTypeSpecClient(Uri endpoint, TokenCredential tokenCredential, BasicTypeSpecClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public BasicTypeSpecClient(Uri endpoint, TokenCredential credential, BasicTypeSpecClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(tokenCredential, nameof(tokenCredential));
+            Argument.AssertNotNull(credential, nameof(credential));
 
             options ??= new BasicTypeSpecClientOptions();
 
             _endpoint = endpoint;
-            _tokenCredential = tokenCredential;
+            _tokenCredential = credential;
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
