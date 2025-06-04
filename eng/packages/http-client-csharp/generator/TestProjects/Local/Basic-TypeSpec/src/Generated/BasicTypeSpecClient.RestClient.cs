@@ -294,6 +294,7 @@ namespace BasicTypeSpec
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
+                request.Headers.SetValue("Accept", "application/json");
             }
             else
             {
