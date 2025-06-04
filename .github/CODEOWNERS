@@ -46,7 +46,7 @@
 /sdk/template/                                                     @hallipr @weshaggard @benbp @jsquire
 
 # Smoke tests
-/common/SmokeTests/                                                @schaabs @tg-msft @jsquire
+/common/SmokeTests/                                                @jsquire @m-redding
 
 #########
 # SDK
@@ -63,8 +63,11 @@
 # ServiceLabel: %Azure.Core
 # AzureSdkOwners:                                                  @m-redding
 
+# ServiceLabel: %System.ClientModel
+# AzureSdkOwners:                                                  @m-redding
+
 # PRLabel: %Azure.Identity
-/sdk/identity/                                                     @schaabs @christothes @JonathanCrd @Azure/azure-sdk-write-identity
+/sdk/identity/                                                     @christothes @JonathanCrd @Azure/azure-sdk-write-identity
 
 # ServiceLabel: %Azure.Identity
 # AzureSdkOwners:                                                  @christothes @JonathanCrd
@@ -135,10 +138,9 @@
 # ServiceOwners:                                                   @miaojiang
 
 # PRLabel: %App Configuration
-/sdk/appconfiguration/                                             @jorgerangel-msft @jsquire
+/sdk/appconfiguration/                                             @shenmuxiaosen @avanigupta
 
 # ServiceLabel: %App Configuration
-# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @shenmuxiaosen @avanigupta
 
 # ServiceLabel: %App Services
@@ -229,20 +231,20 @@
 # ServiceOwners:                                                   @dipidoo @longli0 @ShaoAnLin @lulululululu @leareai @Han-msft
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/documentintelligence/                                         @kinelski @joseharriaga
+/sdk/documentintelligence/                                         @joseharriaga
 
 # PRLabel: %Cognitive - Form Recognizer
-/sdk/formrecognizer/                                               @kinelski @joseharriaga
+/sdk/formrecognizer/                                               @joseharriaga
 
 # ServiceLabel: %Cognitive - Form Recognizer
-# AzureSdkOwners:                                                  @kinelski
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @ctstone @vkurpad
 
 # PRLabel: %Cognitive - Metrics Advisor
-/sdk/metricsadvisor/                                               @kinelski
+/sdk/metricsadvisor/                                               @jsquire
 
 # ServiceLabel: %Cognitive - Metrics Advisor
-# AzureSdkOwners:                                                  @kinelski
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @bowgong
 
 # PRLabel: %Cognitive - Anomaly Detector
@@ -399,7 +401,7 @@
 /sdk/containerregistry/                                            @Azure/azsdk-acr
 
 # ServiceLabel: %Container Registry
-# AzureSdkOwners:                                                  @annelo-msft
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @toddysm @yugangw-MSFT
 
 # ServiceLabel: %Container Service
@@ -534,7 +536,7 @@
 # ServiceOwners:                                                   @mconnew
 
 # ServiceLabel: %Functions
-# AzureSdkOwners:                                                  @JoshLove-msft
+# AzureSdkOwners:                                                  @jsquire
 # ServiceOwners:                                                   @ahmedelnably @fabiocav
 
 # ServiceLabel: %Graph.Microsoft
@@ -574,10 +576,10 @@
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
 
 # PRLabel: %KeyVault
-/sdk/keyvault/                                                     @schaabs @JonathanCrd @jsquire @christothes
+/sdk/keyvault/                                                     @jorgerangel-msft @jsquire @christothes
 
 # ServiceLabel: %KeyVault
-# AzureSdkOwners:                                                  @JonathanCrd
+# AzureSdkOwners:                                                  @jorgerangel-msft
 # ServiceOwners:                                                   @cheathamb36 @chen-karen @lgonsoulin
 
 # ServiceLabel: %Kubernetes Configuration
@@ -590,10 +592,10 @@
 # ServiceOwners:                                                   @Tanmayeekamath
 
 # PRLabel: %Load Test Service
-/sdk/loadtestservice/                                              @prativen @mitsha-microsoft @ninallam
+/sdk/loadtestservice/                                              @azure/testing-services
 
 # ServiceLabel: %Load Test Service
-# ServiceOwners:                                                   @prativen @mitsha-microsoft @ninallam
+# ServiceOwners:                                                   @azure/testing-services
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
@@ -638,20 +640,18 @@
 # ServiceOwners:                                                   @kpiteira
 
 # PRLabel: %Monitor
-/sdk/monitor/*                                                     @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/*                                                     @Azure/azure-sdk-write-monitor-data-plane
 
 # PRLabel: %Monitor
-/sdk/monitor/Azure.Monitor.Ingestion/                              @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Ingestion/                              @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor
-# AzureSdkOwners:                                                  @nisha-bhatia
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA
 
 # PRLabel: %Monitor - Query
-/sdk/monitor/Azure.Monitor.Query/                                  @nisha-bhatia @JoshLove-msft @Azure/azure-sdk-write-monitor-data-plane
+/sdk/monitor/Azure.Monitor.Query/                                  @Azure/azure-sdk-write-monitor-data-plane
 
 # ServiceLabel: %Monitor - Query
-# AzureSdkOwners:                                                  @nisha-bhatia
 # ServiceOwners:                                                   @SameergMS @dadunl @AzMonEssential @AzmonAlerts @AzmonActionG @AzmonLogA @ToddKingMSFT
 
 # ServiceLabel: %Monitor - ApplicationInsights
@@ -787,7 +787,7 @@
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # PRLabel: %Provisioning
-/sdk/provisioning/                                                 @ArthurMa1978 @ArcturusZhang
+/sdk/provisioning/                                                 @ArthurMa1978 @m-nash @ArcturusZhang
 
 # ServiceLabel: %Provisioning
 # AzureSdkOwners:                                                  @ArthurMa1978
@@ -829,7 +829,7 @@
 # ServiceOwners:                                                   @amirkeren
 
 # PRLabel: %Search
-/sdk/search/                                                       @ShivangiReja @kinelski @Azure/azsdk-search
+/sdk/search/                                                       @ShivangiReja @Azure/azsdk-search
 
 # ServiceLabel: %Search
 # AzureSdkOwners:                                                  @ShivangiReja
@@ -880,10 +880,10 @@
 # ServiceOwners:                                                   @azureSQLGitHub
 
 # PRLabel: %Storage
-/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
+/sdk/storage*/                                                     @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
-/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @schaabs @tg-msft @jalauzon-msft @nickliu-msft
+/sdk/storage/Azure.Storage.*/                                      @seanmcc-msft @amnguye @jaschrep-msft @jalauzon-msft @nickliu-msft
 
 # PRLabel: %Storage
 /sdk/storage/Microsoft.Azure.WebJobs.*/                            @seanmcc-msft @amnguye @jaschrep-msft @tg-msft @fabiocav @mathewc @jalauzon-msft @nickliu-msft
@@ -1058,6 +1058,12 @@
 # PRLabel: %Network - CDN
 /sdk/cdn/Azure.ResourceManager.*/                                  @ArcturusZhang @ArthurMa1978 @Ptnan7
 
+# PRLabel: %Network - DNS Private Resolver
+/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
+
+# ServiceLabel: %Network - DNS Private Resolver %Mgmt
+# ServiceOwners:                                                   @jamesvoongms @jotrivet
+
 # PRLabel: %Network - Front Door
 /sdk/frontdoor/Azure.ResourceManager.*/                            @ArcturusZhang @ArthurMa1978 @Ptnan7
 
@@ -1174,18 +1180,19 @@
 /eng/common/pipelines/codeowners-linter.yml                        @jsquire
 /sdk/eventhub/tests.data.yml                                       @serkantkaraca @sjkwak
 /sdk/servicebus/tests.data.yml                                     @shankarsama @EldertGrootenboer
+/eng/pipelines/docindex.yml                                        @danieljurek @hallipr @weshaggard @benbp
 
 # Add owners for package dependency changes
-/eng/Packages.Data.props                                           @JoshLove-msft @christothes @annelo-msft @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978 @jorgerangel-msft
+/eng/Packages.Data.props                                           @JoshLove-msft @christothes @KrzysztofCwalina @tg-msft @jsquire @m-nash @ArthurMa1978 @jorgerangel-msft
 
 # Add owners for emitter version changes
-/eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
-/eng/http-client-csharp-emitter-package-lock.json                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @nisha-bhatia
+/eng/http-client-csharp-emitter-package.json                       @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
+/eng/http-client-csharp-emitter-package-lock.json                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
 
 # ######## Code Generation ########
 
 #PRLabel: %CodeGen %Client
-/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire @nisha-bhatia
+/eng/packages/http-client-csharp/                                  @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang @jsquire
 
 #PRLabel: %CodeGen %Mgmt
 /eng/packages/http-client-csharp-mgmt/                             @JoshLove-msft @m-nash @jorgerangel-msft @live1206 @ArcturusZhang
