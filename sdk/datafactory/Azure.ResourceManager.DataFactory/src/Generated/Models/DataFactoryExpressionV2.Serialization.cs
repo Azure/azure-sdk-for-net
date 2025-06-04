@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
+                JsonSerializer.Serialize(writer, Value);
             }
             if (Optional.IsCollectionDefined(Operators))
             {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             DataFactoryExpressionV2Type? type = default;
-            string value = default;
+            DataFactoryElement<string> value = default;
             IList<DataFactoryElement<string>> operators = default;
             IList<DataFactoryExpressionV2> operands = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,7 +126,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    value = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("operators"u8))
