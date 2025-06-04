@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterWorkerOfferAcceptedEventDataConverter))]
     public partial class AcsRouterWorkerOfferAcceptedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterWorkerOfferAcceptedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterWorkerOfferAcceptedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -276,6 +278,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterWorkerOfferAcceptedEventDataConverter : JsonConverter<AcsRouterWorkerOfferAcceptedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterWorkerOfferAcceptedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterWorkerOfferAcceptedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterWorkerOfferAcceptedEventData(document.RootElement);
+            }
         }
     }
 }

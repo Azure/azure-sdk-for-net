@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Specifies whether the Share uses NFS or SMB protocol.
         /// By default this value is set to SMB.
         /// This is intended to be set on the source and destination Share.
-        /// Applies to copy, upload, and download transfers. Protocol validation only applies to Share-to-Share copy transfers.
+        /// For Share-to-Share copy transfers, the protocol is validated and must be correctly set to process the transfer and preserve the proper properties and permissions.
         ///
         /// Note: Only NFS -> NFS and SMB -> SMB transfers are currently supported.
         /// For NFS Share-to-Share Copy and Download transfers, Hard links will be copied as regular files and Symbolic links are skipped.

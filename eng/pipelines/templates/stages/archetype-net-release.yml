@@ -105,8 +105,8 @@ stages:
 
                 pool:
                   name: azsdk-pool
-                  image: ubuntu-24.04
-                  os: linux
+                  image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
+                  os: windows
 
                 templateContext:
                   type: releaseJob  # Required, this indicates this deployment job is a release job
@@ -290,8 +290,8 @@ stages:
 
         pool:
           name: azsdk-pool
-          image: ubuntu-24.04
-          os: linux
+          image: windows-2022 # Nuget publish requires .NET framework on windows to handle the auth
+          os: windows
 
         templateContext:
           type: releaseJob 
@@ -320,7 +320,6 @@ stages:
                   - task: 1ES.PublishNuget@1
                     displayName: 'Publish to DevOps Feed'
                     inputs:
-                      useDotNetTask: true
                       packageParentPath: '$(Pipeline.Workspace)'
                       packagesToPush: '$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.nupkg;!$(Pipeline.Workspace)/${{parameters.ArtifactName}}-signed/${{artifact.name}}/*.symbols.nupkg'
                       publishVstsFeed: $(DevOpsFeedID)

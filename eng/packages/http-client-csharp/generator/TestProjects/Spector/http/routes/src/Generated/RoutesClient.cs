@@ -10,6 +10,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
+using Routes._PathParameters;
+using Routes._QueryParameters;
 
 namespace Routes
 {
