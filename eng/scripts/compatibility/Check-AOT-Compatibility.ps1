@@ -80,7 +80,7 @@ $actualWarningCount = 0
 
 foreach ($line in $($publishOutput -split "`r`n"))
 {
-    if ($line -like "*analysis warning IL*")
+    if ($line -like "*warning IL*")
     {
         $actualWarningCount += 1
     }

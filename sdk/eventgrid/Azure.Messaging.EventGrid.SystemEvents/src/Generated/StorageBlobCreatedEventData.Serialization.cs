@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageBlobCreatedEventDataConverter))]
     public partial class StorageBlobCreatedEventData : IUtf8JsonSerializable, IJsonModel<StorageBlobCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageBlobCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -92,25 +94,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Identity);
             }
             writer.WritePropertyName("storageDiagnostics"u8);
-            writer.WriteStartObject();
-            foreach (var item in StorageDiagnostics)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue<object>(StorageDiagnostics, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -160,7 +144,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string url = default;
             string sequencer = default;
             string identity = default;
-            IReadOnlyDictionary<string, BinaryData> storageDiagnostics = default;
+            object storageDiagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -235,19 +219,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("storageDiagnostics"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    storageDiagnostics = dictionary;
+                    storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
@@ -280,7 +252,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageBlobCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -318,6 +290,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class StorageBlobCreatedEventDataConverter : JsonConverter<StorageBlobCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageBlobCreatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override StorageBlobCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageBlobCreatedEventData(document.RootElement);
+            }
         }
     }
 }

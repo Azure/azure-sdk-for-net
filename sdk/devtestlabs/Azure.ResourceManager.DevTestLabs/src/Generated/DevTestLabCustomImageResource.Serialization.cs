@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabCustomImageResource : IJsonModel<DevTestLabCustomImageData>
     {
+        private static DevTestLabCustomImageData s_dataDeserializationInstance;
+        private static DevTestLabCustomImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DevTestLabCustomImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCustomImageData>)Data).Write(writer, options);
 
-        DevTestLabCustomImageData IJsonModel<DevTestLabCustomImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCustomImageData>)Data).Create(ref reader, options);
+        DevTestLabCustomImageData IJsonModel<DevTestLabCustomImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCustomImageData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<DevTestLabCustomImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabCustomImageData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        DevTestLabCustomImageData IPersistableModel<DevTestLabCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabCustomImageData>(data, options);
+        DevTestLabCustomImageData IPersistableModel<DevTestLabCustomImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabCustomImageData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
 
-        string IPersistableModel<DevTestLabCustomImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabCustomImageData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabCustomImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabCustomImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

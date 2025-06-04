@@ -1,14 +1,16 @@
 # Release History
 
-## 12.23.0-beta.1 (Unreleased)
+## 12.24.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for service version 2025-11-05.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+- Added `QueueProperties.ApproximateMessagesCountLong` to replace `QueueProperties.ApproximateMessagesCount`.  This property will correctly handle approximate message counts greater than max int.
 
-### Breaking Changes
+## 12.23.0-beta.1 (2025-05-06)
 
-### Bugs Fixed
-
-### Other Changes
+### Features Added
+- Added support for service version 2025-07-05.
 
 ## 12.22.0 (2025-03-11)
 
@@ -19,7 +21,6 @@
 ### Bugs Fixed
 - Fixed bug where a `QueueServiceClient`, `QueueClient` created with a connection string with an account name specified (e.g. "AccountName=..;"), the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
 - Fixed bug where a `QueueServiceClient`, `QueueClient` created with a `StorageSharedKeyCredential`, the account name was not populated on the Storage Clients if the account name was not also specified in the endpoint. (#42925)
-
 
 ## 12.22.0-beta.1 (2025-02-11)
 

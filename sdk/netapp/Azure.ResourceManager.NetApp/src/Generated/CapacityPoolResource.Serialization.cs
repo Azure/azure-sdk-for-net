@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class CapacityPoolResource : IJsonModel<CapacityPoolData>
     {
+        private static CapacityPoolData s_dataDeserializationInstance;
+        private static CapacityPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CapacityPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CapacityPoolData>)Data).Write(writer, options);
 
-        CapacityPoolData IJsonModel<CapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityPoolData>)Data).Create(ref reader, options);
+        CapacityPoolData IJsonModel<CapacityPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityPoolData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CapacityPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityPoolData>(Data, options, AzureResourceManagerNetAppContext.Default);
 
-        CapacityPoolData IPersistableModel<CapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityPoolData>(data, options);
+        CapacityPoolData IPersistableModel<CapacityPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityPoolData>(data, options, AzureResourceManagerNetAppContext.Default);
 
-        string IPersistableModel<CapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityPoolData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CapacityPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

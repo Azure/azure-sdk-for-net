@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiCenterApiDefinitionAddedEventDataConverter))]
     public partial class ApiCenterApiDefinitionAddedEventData : IUtf8JsonSerializable, IJsonModel<ApiCenterApiDefinitionAddedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterApiDefinitionAddedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -125,7 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApiCenterApiDefinitionAddedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -163,6 +165,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiCenterApiDefinitionAddedEventDataConverter : JsonConverter<ApiCenterApiDefinitionAddedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiCenterApiDefinitionAddedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiCenterApiDefinitionAddedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiCenterApiDefinitionAddedEventData(document.RootElement);
+            }
         }
     }
 }

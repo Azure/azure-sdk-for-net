@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
+
 ### Other Changes
 
 ## 7.19.0 (2025-04-08)
@@ -21,6 +23,8 @@
 - Added jitter to the lock renewal timer to reduce the likelihood of lock renewal collisions when using the `ServiceBusProcessor` or the `ServiceBusSessionProcessor`.
 
 - Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 7.18.4 (2025-02-11)
 

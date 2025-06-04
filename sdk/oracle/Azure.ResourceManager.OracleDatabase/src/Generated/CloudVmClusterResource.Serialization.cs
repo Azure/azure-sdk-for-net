@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class CloudVmClusterResource : IJsonModel<CloudVmClusterData>
     {
+        private static CloudVmClusterData s_dataDeserializationInstance;
+        private static CloudVmClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CloudVmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterData>)Data).Write(writer, options);
 
-        CloudVmClusterData IJsonModel<CloudVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterData>)Data).Create(ref reader, options);
+        CloudVmClusterData IJsonModel<CloudVmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudVmClusterData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<CloudVmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudVmClusterData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        CloudVmClusterData IPersistableModel<CloudVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterData>(data, options);
+        CloudVmClusterData IPersistableModel<CloudVmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudVmClusterData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
 
-        string IPersistableModel<CloudVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudVmClusterData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CloudVmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudVmClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

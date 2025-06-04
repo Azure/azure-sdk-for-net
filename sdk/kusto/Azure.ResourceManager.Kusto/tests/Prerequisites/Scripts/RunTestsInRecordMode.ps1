@@ -3,4 +3,4 @@
 $Env:AZURE_TEST_MODE = "Record"
 
 dotnet build
-dotnet test -f net6.0
+dotnet test -f net8.0

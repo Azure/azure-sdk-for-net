@@ -35,6 +35,10 @@ parameters:
     displayName: "Regenerate clients"
     type: boolean
     default: false
+  - name: PublishNugetPackages
+    displayName: "Publish NuGet package artifacts"
+    type: boolean
+    default: false
 
 variables:
   - template: /eng/pipelines/templates/variables/image.yml
@@ -53,6 +57,7 @@ extends:
       ${{ if eq(variables['Build.Reason'], 'Manual') }}:
         ShouldPublish: ${{ parameters.ShouldPublish }}
         ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
+        HasNugetPackages: ${{ parameters.PublishNugetPackages }}
         ${{ if startswith(variables['Build.SourceBranch'], 'refs/pull/') }}:  # PR ref's can't be published to public, even in a manual run
           PublishPublic: false
           PublishDependsOnTest: false
@@ -64,6 +69,7 @@ extends:
         ShouldRegenerate: true
         PublishDependsOnTest: false
         PublishPublic: ${{ and(eq(variables['Build.Reason'], 'IndividualCI'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}
+        HasNugetPackages: true
       RegenerationJobCount: 5
       MinimumPerJob: 10
       OnlyGenerateTypespec: true

@@ -49,7 +49,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
 
         private static ClientProvider CreateMockClientProvider()
         {
-            var client = InputFactory.Client("TestClient", operations: [InputFactory.Operation("foo")]);
+            var client = InputFactory.Client("TestClient", methods: [InputFactory.BasicServiceMethod("foo", InputFactory.Operation("foo"))]);
             MockHelpers.LoadMockPlugin(clientResponseApi: AzureClientResponseProvider.Instance);
             var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(client)!;
             return clientProvider;

@@ -46,39 +46,18 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             if (options.Format != "W" && Optional.IsDefined(TargetFailedOn))
             {
-                if (TargetFailedOn != null)
-                {
-                    writer.WritePropertyName("targetFailedTime"u8);
-                    writer.WriteStringValue(TargetFailedOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("targetFailedTime");
-                }
+                writer.WritePropertyName("targetFailedTime"u8);
+                writer.WriteStringValue(TargetFailedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TargetCompletedOn))
             {
-                if (TargetCompletedOn != null)
-                {
-                    writer.WritePropertyName("targetCompletedTime"u8);
-                    writer.WriteStringValue(TargetCompletedOn.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("targetCompletedTime");
-                }
+                writer.WritePropertyName("targetCompletedTime"u8);
+                writer.WriteStringValue(TargetCompletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
-                if (Error != null)
-                {
-                    writer.WritePropertyName("error"u8);
-                    writer.WriteObjectValue(Error, options);
-                }
-                else
-                {
-                    writer.WriteNull("error");
-                }
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -140,7 +119,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetFailedTime = null;
                         continue;
                     }
                     targetFailedTime = property.Value.GetDateTimeOffset("O");
@@ -150,7 +128,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        targetCompletedTime = null;
                         continue;
                     }
                     targetCompletedTime = property.Value.GetDateTimeOffset("O");
@@ -160,7 +137,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        error = null;
                         continue;
                     }
                     error = ExperimentExecutionActionTargetDetailsError.DeserializeExperimentExecutionActionTargetDetailsError(property.Value, options);
@@ -188,7 +164,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExperimentExecutionActionTargetDetailsProperties)} does not support writing '{options.Format}' format.");
             }

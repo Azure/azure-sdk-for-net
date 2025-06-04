@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Parameters.BodyOptionality.Models;
+using Parameters.BodyOptionality._OptionalExplicit;
 
 namespace Parameters.BodyOptionality
 {
@@ -21,7 +21,7 @@ namespace Parameters.BodyOptionality
 
         public BodyOptionalityClient(Uri endpoint, BodyOptionalityClientOptions options) => throw null;
 
-        public HttpPipeline Pipeline => throw null;
+        public virtual HttpPipeline Pipeline => throw null;
 
         public virtual Response RequiredExplicit(RequestContent content, RequestContext context = null) => throw null;
 

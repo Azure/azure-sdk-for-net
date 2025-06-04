@@ -6,7 +6,7 @@ parameters:
 
 steps:
   - pwsh: |
-      $apiChangeDetectRequestUrl = "https://apiview.dev/PullRequest/DetectApiChanges"
+      $apiChangeDetectRequestUrl = "https://apiview.dev/api/PullRequests/CreateAPIRevisionIfAPIHasChanges"
       echo "##vso[task.setvariable variable=ApiChangeDetectRequestUrl]$apiChangeDetectRequestUrl"
     displayName: "Set API change detect request URL"
     condition: and(${{ parameters.Condition}}, eq(variables['ApiChangeDetectRequestUrl'], ''))
@@ -24,5 +24,5 @@ steps:
         -ArtifactName ${{ parameters.ArtifactName }}
         -DevopsProject $(System.TeamProject)
       pwsh: true
-    displayName: Detect API changes
+    displayName: Create APIView if API has changes
     condition: and(${{ parameters.Condition }}, succeededOrFailed(), eq(variables['Build.Reason'],'PullRequest'))

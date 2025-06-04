@@ -648,7 +648,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         [Test]
         public async Task DeleteMessagesForCountPassesTheCurrentDate()
         {
-            var expectedCount = 2000;
+            var expectedCount = 400;
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             var mockTransportReceiver = new Mock<TransportReceiver>();
 
@@ -696,8 +696,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
         {
             using var cancellationSource = new CancellationTokenSource();
 
-            var requestedCount = 2500;
-            var expectedCount = 2000;
+            var requestedCount = 500;
+            var expectedCount = 400;
             var expectedDate = new DateTimeOffset(2015, 10, 27, 0, 0, 0, 0, TimeSpan.Zero);
             var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
             var mockTransportReceiver = new Mock<TransportReceiver>();

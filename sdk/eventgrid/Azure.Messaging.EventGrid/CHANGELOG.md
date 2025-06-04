@@ -1,14 +1,25 @@
 # Release History
 
-## 4.31.0-beta.1 (Unreleased)
+## 5.0.0-beta.1 (2025-06-03)
 
 ### Features Added
 
+- Added a dependency on the `Azure.Messaging.EventGrid.SystemEvents` package.
+The system events are now referenced via type-forwarding.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Various system events have been updated to reflect the actual service behavior.
+There are no binary breaks or compilation breaks, but there are behavior breaking changes. For instance,
+some properties that were previously incorrectly marked as optional, have been marked as required.
 
-### Other Changes
+## 4.31.0 (2025-05-19)
+
+### Features Added
+
+- Added new communication events.
+- Added new API management events.
+- Add `EdgeSolutionVersionPublishedEventData` Edge event.
 
 ## 4.30.0 (2025-02-14)
 

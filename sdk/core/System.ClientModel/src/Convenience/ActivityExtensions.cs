@@ -69,7 +69,7 @@ public static class ActivityExtensions
     /// to implement distributed tracing.</remarks>
     /// <param name="activity">The activity to mark as failed.</param>
     /// <param name="exception">The <see cref="Exception"/> encountered during the operation.</param>
-    public static Activity MarkFailed(this Activity activity, Exception? exception)
+    public static Activity MarkClientActivityFailed(this Activity activity, Exception? exception)
     {
         // See: https://opentelemetry.io/docs/specs/semconv/general/recording-errors/
 

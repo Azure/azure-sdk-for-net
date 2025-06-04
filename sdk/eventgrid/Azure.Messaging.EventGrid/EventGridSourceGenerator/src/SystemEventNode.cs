@@ -3,27 +3,34 @@
 
 namespace Azure.EventGrid.Messaging.SourceGeneration
 {
-    internal class SystemEventNode
+    internal sealed class SystemEventNode
     {
-        public string EventName { get; set; }
-
-        public string EventConstantName
+        public SystemEventNode(string eventName, string eventType, string deserializeMethod)
         {
-            get
-            {
-                // special case a few events that don't follow the pattern
-                return EventName switch
-                {
-                    "ServiceBusDeadletterMessagesAvailableWithNoListenersEventData" => "ServiceBusDeadletterMessagesAvailableWithNoListener",
-                    "SubscriptionDeletedEventData" => "EventGridSubscriptionDeleted",
-                    "SubscriptionValidationEventData" => "EventGridSubscriptionValidation",
-                    _ => EventName?.Replace("EventData", ""),
-                };
-            }
+            EventName = eventName;
+            EventType = eventType;
+            DeserializeMethod = deserializeMethod;
+            EventConstantName = Convert(EventName);
         }
 
-        public string EventType { get; set; }
+        private static string Convert(string eventName)
+        {
+            // special case a few events that don't follow the pattern
+            return eventName switch
+            {
+                "ServiceBusDeadletterMessagesAvailableWithNoListenersEventData" => "ServiceBusDeadletterMessagesAvailableWithNoListener",
+                "SubscriptionDeletedEventData" => "EventGridSubscriptionDeleted",
+                "SubscriptionValidationEventData" => "EventGridSubscriptionValidation",
+                _ => eventName?.Replace("EventData", ""),
+            };
+        }
 
-        public string DeserializeMethod { get; set; }
+        public string EventName { get; }
+
+        public string EventConstantName { get; }
+
+        public string EventType { get; }
+
+        public string DeserializeMethod { get; }
     }
 }

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(EventHubCaptureFileCreatedEventDataConverter))]
     public partial class EventHubCaptureFileCreatedEventData : IUtf8JsonSerializable, IJsonModel<EventHubCaptureFileCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubCaptureFileCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,21 +36,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Fileurl))
-            {
-                writer.WritePropertyName("fileUrl"u8);
-                writer.WriteStringValue(Fileurl);
-            }
-            if (Optional.IsDefined(FileType))
-            {
-                writer.WritePropertyName("fileType"u8);
-                writer.WriteStringValue(FileType);
-            }
-            if (Optional.IsDefined(PartitionId))
-            {
-                writer.WritePropertyName("partitionId"u8);
-                writer.WriteStringValue(PartitionId);
-            }
+            writer.WritePropertyName("fileUrl"u8);
+            writer.WriteStringValue(Fileurl);
+            writer.WritePropertyName("fileType"u8);
+            writer.WriteStringValue(FileType);
+            writer.WritePropertyName("partitionId"u8);
+            writer.WriteStringValue(PartitionId);
             if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
@@ -224,7 +217,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -262,6 +255,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, EventHubCaptureFileCreatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override EventHubCaptureFileCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
+            }
         }
     }
 }
