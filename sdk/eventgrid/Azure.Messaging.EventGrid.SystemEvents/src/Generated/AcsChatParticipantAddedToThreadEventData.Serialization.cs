@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsChatParticipantAddedToThreadEventDataConverter))]
     public partial class AcsChatParticipantAddedToThreadEventData : IUtf8JsonSerializable, IJsonModel<AcsChatParticipantAddedToThreadEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatParticipantAddedToThreadEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -180,6 +182,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsChatParticipantAddedToThreadEventDataConverter : JsonConverter<AcsChatParticipantAddedToThreadEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatParticipantAddedToThreadEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsChatParticipantAddedToThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatParticipantAddedToThreadEventData(document.RootElement);
+            }
         }
     }
 }

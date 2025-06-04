@@ -208,10 +208,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             PersistentAgentsClient client = GetClient();
             PersistentAgent agent = await GetAgent(client, AGENT_NAME);
             AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 2);
-            int cntBefore = (await pgThreads.ToListAsync()).Count;
             // This test may take a long time if the number of threads is big.
             // The code below may e used to clean up the threads.
-            //AsyncPageable<PersistentAgentThread> pgThreads = client.Threads.GetThreadsAsync(limit: 100);
+            //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
             //List<PersistentAgentThread> del = await pgThreads.ToListAsync();
             //foreach (PersistentAgentThread thr in del)
             //{
@@ -219,8 +218,9 @@ namespace Azure.AI.Agents.Persistent.Tests
             //    await Delay(5);
             //}
             //pgThreads = client.Threads.GetThreadsAsync(limit: 100);
-            //int cntBefore = (await pgThreads.ToListAsync()).Count;
+            //Assert.AreEqual(0, (await pgThreads.ToListAsync()).Count);
             // End of cleanup code.
+            int cntBefore = (await pgThreads.ToListAsync()).Count;
             PersistentAgentThread thr1 = await client.Threads.CreateThreadAsync();
             PersistentAgentThread thr2 = await client.Threads.CreateThreadAsync();
             PersistentAgentThread thr3 = await client.Threads.CreateThreadAsync();

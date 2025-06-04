@@ -51,7 +51,6 @@ function IsSpecDir {
 }
 
 $failingSpecs = @(
-    Join-Path 'http' 'payload' 'pageable'
     Join-Path 'http' 'payload' 'xml'
     Join-Path 'http' 'server' 'path' 'multiple'
     Join-Path 'http' 'server' 'versions' 'versioned'
@@ -77,9 +76,6 @@ $failingSpecs = @(
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'path'
     Join-Path 'http' 'azure' 'client-generator-core' 'api-version' 'query'
     Join-Path 'http' 'azure' 'core' 'basic'
-    Join-Path 'http' 'azure' 'core' 'lro' 'rpc'
-    Join-Path 'http' 'azure' 'core' 'lro' 'standard'
-    Join-Path 'http' 'azure' 'core' 'model'
     Join-Path 'http' 'azure' 'core' 'page'
     Join-Path 'http' 'azure' 'core' 'scalar'
     Join-Path 'http' 'azure' 'core' 'traits'

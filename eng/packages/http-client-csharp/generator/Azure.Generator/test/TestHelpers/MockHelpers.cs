@@ -35,7 +35,8 @@ namespace Azure.Generator.Tests.TestHelpers
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
             HttpMessageApi? httpMessageApi = null,
-            string? configurationJson = null)
+            string? configurationJson = null,
+            string? inputNamespace = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -44,7 +45,7 @@ namespace Azure.Generator.Tests.TestHelpers
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
-                "Samples",
+                inputNamespace ?? "Samples",
                 inputNsApiVersions,
                 inputNsLiterals,
                 inputNsEnums,
@@ -81,7 +82,7 @@ namespace Azure.Generator.Tests.TestHelpers
                 mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
             }
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             var configureMethod = typeof(CodeModelGenerator).GetMethod(
                 "Configure",

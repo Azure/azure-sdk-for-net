@@ -263,9 +263,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         ChannelAffinity = testChannelAffinities,
                         PauseOnStart = false,
                         PostProcessingOptions = new PostProcessingOptions(
-                            new TranscriptionSettings(true),
-                            new SummarizationSettings(true),
-                            "https://somecognitiveurl"
+                            new TranscriptionSettings(true)
                         )
                     })
                 },
@@ -310,9 +308,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                        ChannelAffinity = testChannelAffinities,
                        PauseOnStart = false,
                        PostProcessingOptions = new PostProcessingOptions(
-                            new TranscriptionSettings(true),
-                            new SummarizationSettings(true),
-                            "https://somecognitiveurl"
+                            new TranscriptionSettings(true)
                         ),
                        AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test"),}
                    }).ConfigureAwait(false),

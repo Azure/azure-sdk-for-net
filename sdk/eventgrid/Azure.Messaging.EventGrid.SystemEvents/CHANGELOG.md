@@ -1,5 +1,17 @@
 # Release History
 
+## 1.0.0-beta.5 (2025-06-04)
+
+### Other Changes
+
+- Reshipping due to issue with symbols publishing in previous version.
+
+## 1.0.0-beta.4 (2025-06-03)
+
+### Features Added
+- Added backcompat models.
+- Mark media events as `EditorBrowsableState.Never` as the service has been deprecated.
+
 ## 1.0.0-beta.3 (2025-05-19)
 
 ### Features Added

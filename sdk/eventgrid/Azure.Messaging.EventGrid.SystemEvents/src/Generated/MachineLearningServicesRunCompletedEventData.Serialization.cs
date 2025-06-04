@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MachineLearningServicesRunCompletedEventDataConverter))]
     public partial class MachineLearningServicesRunCompletedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesRunCompletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesRunCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -42,51 +44,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(RunId);
             writer.WritePropertyName("runType"u8);
             writer.WriteStringValue(RunType);
-            if (Optional.IsCollectionDefined(RunTags))
+            if (Optional.IsDefined(RunTags))
             {
                 writer.WritePropertyName("runTags"u8);
-                writer.WriteStartObject();
-                foreach (var item in RunTags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<object>(RunTags, options);
             }
-            if (Optional.IsCollectionDefined(RunProperties))
+            if (Optional.IsDefined(RunProperties))
             {
                 writer.WritePropertyName("runProperties"u8);
-                writer.WriteStartObject();
-                foreach (var item in RunProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<object>(RunProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,8 +95,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string experimentName = default;
             string runId = default;
             string runType = default;
-            IReadOnlyDictionary<string, BinaryData> runTags = default;
-            IReadOnlyDictionary<string, BinaryData> runProperties = default;
+            object runTags = default;
+            object runProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,19 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    runTags = dictionary;
+                    runTags = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("runProperties"u8))
@@ -182,19 +136,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    runProperties = dictionary;
+                    runProperties = property.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,8 +150,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 experimentName,
                 runId,
                 runType,
-                runTags ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                runProperties ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                runTags,
+                runProperties,
                 serializedAdditionalRawData);
         }
 
@@ -258,6 +200,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class MachineLearningServicesRunCompletedEventDataConverter : JsonConverter<MachineLearningServicesRunCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunCompletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override MachineLearningServicesRunCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesRunCompletedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -1,19 +1,31 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.2 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed uploading files with non ASCII symbols in names.
 
 ### Other Changes
+
+## 1.1.0-beta.1 (2025-05-21)
+
+### Features Added
+- Set API version to 2025-05-15-preview.
+- Added Bing Custom search tool.
+- Added Sharepoint grounding tool.
+- Added Microsoft Fabric tool.
 
 ## 1.0.0 (2025-05-15)
 
 ### Features Added
 - First stable release of Azure AI Agents Persistent client library.
+
+### Breaking Changes
+- Support for project connection string and hub-based projects has been discontinued. We recommend creating a new Azure AI Foundry resource utilizing project endpoint. If this is not possible, please pin the version of `Azure.AI.Agents.Persistent` to version `1.0.0-beta.2` or earlier.
 
 ## 1.0.0-beta.2 (2025-05-14)
 

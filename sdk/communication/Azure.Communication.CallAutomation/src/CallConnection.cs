@@ -284,7 +284,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                 options.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()),
+                options.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.CustomCallingContext?.TeamsPhoneCallDetails)),
                 OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
                 Transferee = options.Transferee == default ? null : CommunicationIdentifierSerializer.Serialize(options.Transferee),
                 OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
@@ -387,8 +388,8 @@ namespace Azure.Communication.CallAutomation
             {
                 CustomCallingContext = new CustomCallingContextInternal(
                     options.ParticipantToAdd.CustomCallingContext?.VoipHeaders ?? new ChangeTrackingDictionary<string, string>(),
-                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>()
-                    ),
+                    options.ParticipantToAdd.CustomCallingContext?.SipHeaders ?? new ChangeTrackingDictionary<string, string>(),
+                    CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(options.ParticipantToAdd.CustomCallingContext?.TeamsPhoneCallDetails)),
                 SourceCallerIdNumber = options.ParticipantToAdd.SourceCallerIdNumber == null
                     ? null
                     : new PhoneNumberIdentifierModel(options.ParticipantToAdd.SourceCallerIdNumber.PhoneNumber),

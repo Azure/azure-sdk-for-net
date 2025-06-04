@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionData"/>. </summary>
         public NamespaceTopicEventSubscriptionData()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NamespaceTopicEventSubscriptionData"/>. </summary>
@@ -66,14 +67,16 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="eventDeliverySchema"> The event delivery schema for the event subscription. </param>
         /// <param name="filtersConfiguration"> Information about the filter for the event subscription. </param>
         /// <param name="expireOn"> Expiration time of the event subscription. </param>
+        /// <param name="tags"> Tags relating to Event Subscription resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceTopicEventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionProvisioningState? provisioningState, DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration, DateTimeOffset? expireOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NamespaceTopicEventSubscriptionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SubscriptionProvisioningState? provisioningState, DeliveryConfiguration deliveryConfiguration, DeliverySchema? eventDeliverySchema, FiltersConfiguration filtersConfiguration, DateTimeOffset? expireOn, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             DeliveryConfiguration = deliveryConfiguration;
             EventDeliverySchema = eventDeliverySchema;
             FiltersConfiguration = filtersConfiguration;
             ExpireOn = expireOn;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -92,5 +95,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> Expiration time of the event subscription. </summary>
         [WirePath("properties.expirationTimeUtc")]
         public DateTimeOffset? ExpireOn { get; set; }
+        /// <summary> Tags relating to Event Subscription resource. </summary>
+        [WirePath("properties.tags")]
+        public IDictionary<string, string> Tags { get; }
     }
 }
