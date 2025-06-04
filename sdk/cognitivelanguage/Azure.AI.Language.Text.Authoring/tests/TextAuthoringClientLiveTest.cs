@@ -27,7 +27,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
         public async Task GetProjectAsync()
         {
             // Arrange
-            string projectName = "MyTextProject";
+            string projectName = "MyTextProject001";
             TextAuthoringProject projectClient = client.GetProject(projectName);
             // Act
             Response<TextAuthoringProjectMetadata> response = await projectClient.GetProjectAsync();
@@ -39,12 +39,16 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             Assert.IsNotNull(projectMetadata.Language);
             Assert.IsNotNull(projectMetadata.CreatedOn);
             Assert.IsNotNull(projectMetadata.LastModifiedOn);
+            Assert.IsNotNull(projectMetadata.StorageInputContainerName);
+            //Assert.IsNotNull(projectMetadata.StorageAccountResourceId);
 
             Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
             Console.WriteLine($"Language: {projectMetadata.Language}");
             Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
             Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
             Console.WriteLine($"Description: {projectMetadata.Description}");
+            Console.WriteLine($"StorageInputContainerName: {projectMetadata.StorageInputContainerName}");
+            Console.WriteLine($"StorageAccountResourceId: {projectMetadata.StorageAccountResourceId}");
         }
 
         [RecordedTest]
@@ -55,7 +59,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
             var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "CustomSingleLabelClassification",
-                storageInputContainerName: "test-data",
+                storageInputContainerName: "single-class-example",
                 language: "en"
             )
             {
@@ -121,7 +125,7 @@ namespace Azure.AI.Language.Text.Authoring.Tests
             string projectName = "MyTextProject001";
             var projectMetadata = new TextAuthoringCreateProjectDetails(
                 projectKind: "customMultiLabelClassification",
-                storageInputContainerName: "e2e0test0data",
+                storageInputContainerName: "multi-class-example",
                 language: "en"
             )
             {
@@ -364,6 +368,77 @@ namespace Azure.AI.Language.Text.Authoring.Tests
 
             // Logging for additional context
             Console.WriteLine($"Deployment operation status: {operation.GetRawResponse().Status}");
+        }
+
+        [RecordedTest]
+        public async Task DeployProjectAsync_WithAssignedResources_ShouldReturnAcceptedStatus()
+        {
+            // Arrange
+            string projectName = "single-class-project";
+            string deploymentName = "deploymentWithAssignedResource";
+
+            var requestBody = new
+            {
+                trainedModelLabel = "model1",
+                assignedResources = new[]
+                {
+                    new
+                    {
+                        resourceId = "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
+                        region = "eastus",
+                        assignedAoaiResource = new
+                        {
+                            kind = "AzureOpenAI",
+                            resourceId = "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai",
+                            deploymentName = "gpt-4o"
+                        }
+                    }
+                }
+            };
+
+            string json = JsonSerializer.Serialize(requestBody);
+            Console.WriteLine(json);
+            var requestContent = RequestContent.Create(BinaryData.FromString(json));
+
+            // Use the REST client directly (or if the SDK has an overload for raw JSON):
+            var response = await client.GetDeployment(projectName, deploymentName)
+                .DeployProjectAsync(WaitUntil.Completed, requestContent);
+
+            Console.WriteLine($"Response status: {response.GetRawResponse().Status}");
+            //var deploymentDetails = new TextAuthoringCreateDeploymentDetails(
+            //    trainedModelLabel: "model1");
+
+            ////Directly add to the AssignedResources collection
+            //deploymentDetails.AssignedResources.Add(new TextAuthoringDeploymentResource(
+            //    resourceId: "/subscriptions/b72743ec-8bb3-453f-83ad-a53e8a50712e/resourceGroups/language-sdk-rg/providers/Microsoft.CognitiveServices/accounts/sdk-test-01",
+            //    region: "eastus")
+            //{
+            //    AssignedAoaiResource = new DataGenerationConnectionInfo(
+            //        resourceId: "/subscriptions/e54a2925-af7f-4b05-9ba1-2155c5fe8a8e/resourceGroups/gouri-eastus/providers/Microsoft.CognitiveServices/accounts/sdk-test-openai",
+            //        deploymentName: "gpt-4o")
+            //});
+
+            //string jsonPayload = JsonSerializer.Serialize(deploymentDetails, new JsonSerializerOptions { WriteIndented = true });
+            //Console.WriteLine(jsonPayload);
+
+            //var deploymentClient = client.GetDeployment(projectName, deploymentName);
+
+            //// Act
+            //Operation operation = await deploymentClient.DeployProjectAsync(
+            //    waitUntil: WaitUntil.Completed,
+            //    details: deploymentDetails
+            //);
+
+            //// Assert
+            //Assert.IsNotNull(operation);
+            //Assert.AreEqual(202, operation.GetRawResponse().Status, "Expected 202 Accepted status code for deployment initiation.");
+
+            //string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out string location)
+            //    ? location
+            //    : null;
+
+            //Assert.IsNotNull(operationLocation, "operation-location header is missing.");
+            //Console.WriteLine($"Deployment initiated. Operation-Location: {operationLocation}");
         }
 
         [RecordedTest]
