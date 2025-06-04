@@ -31,30 +31,36 @@ namespace Azure.Data.AppConfiguration
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", accept);
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/keys", false);
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (name != null)
+                {
+                    uri.AppendQuery("name", name, true);
+                }
+                if (after != null)
+                {
+                    uri.AppendQuery("After", after, true);
+                }
+                request.Uri = uri;
+                if (syncToken != null)
+                {
+                    request.Headers.SetValue("Sync-Token", syncToken);
+                }
+                if (acceptDatetime != null)
+                {
+                    request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                request.Headers.SetValue("Accept", accept);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (name != null)
-            {
-                uri.AppendQuery("name", name, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-            }
-            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
@@ -88,63 +94,69 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetKeyValuesRequest(Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsRequest(Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", accept);
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/kv", false);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (key != null)
-            {
-                uri.AppendQuery("key", key, true);
-            }
-            if (label != null)
-            {
-                uri.AppendQuery("label", label, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (@select != null && !(@select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
-            }
-            if (snapshot != null)
-            {
-                uri.AppendQuery("snapshot", snapshot, true);
-            }
-            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in tags)
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (key != null)
                 {
-                    uri.AppendQuery("tags", @param, true);
+                    uri.AppendQuery("key", key, true);
                 }
+                if (label != null)
+                {
+                    uri.AppendQuery("label", label, true);
+                }
+                if (after != null)
+                {
+                    uri.AppendQuery("After", after, true);
+                }
+                if (@select != null && !(@select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
+                {
+                    uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                }
+                if (snapshot != null)
+                {
+                    uri.AppendQuery("snapshot", snapshot, true);
+                }
+                if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+                {
+                    foreach (var @param in tags)
+                    {
+                        uri.AppendQuery("tags", @param, true);
+                    }
+                }
+                request.Uri = uri;
+                if (syncToken != null)
+                {
+                    request.Headers.SetValue("Sync-Token", syncToken);
+                }
+                if (acceptDatetime != null)
+                {
+                    request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                if (ifMatch != null)
+                {
+                    request.Headers.SetValue("If-Match", ifMatch);
+                }
+                if (ifNoneMatch != null)
+                {
+                    request.Headers.SetValue("If-None-Match", ifNoneMatch);
+                }
+                request.Headers.SetValue("Accept", accept);
             }
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-            }
-            if (ifMatch != null)
-            {
-                request.Headers.SetValue("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.SetValue("If-None-Match", ifNoneMatch);
-            }
-            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
@@ -205,7 +217,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetKeyValueRequest(string key, string accept, string label, IEnumerable<KeyValueFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string accept, string label, IEnumerable<KeyValueFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -251,7 +263,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreatePutKeyValueRequest(string key, string contentType, string accept, RequestContent content, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateSetConfigurationSettingRequest(string key, string contentType, string accept, RequestContent content, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -284,7 +296,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteKeyValueRequest(string key, string accept, string label, string syncToken, string ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string accept, string label, string syncToken, string ifMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
             Request request = message.Request;
@@ -363,34 +375,40 @@ namespace Azure.Data.AppConfiguration
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", accept);
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/snapshots", false);
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (name != null)
+                {
+                    uri.AppendQuery("name", name, true);
+                }
+                if (after != null)
+                {
+                    uri.AppendQuery("After", after, true);
+                }
+                if (@select != null && !(@select is ChangeTrackingList<SnapshotFields> changeTrackingList && changeTrackingList.IsUndefined))
+                {
+                    uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                }
+                if (status != null && !(status is ChangeTrackingList<ConfigurationSnapshotStatus> changeTrackingList0 && changeTrackingList0.IsUndefined))
+                {
+                    uri.AppendQueryDelimited("status", status, ",", null, true);
+                }
+                request.Uri = uri;
+                if (syncToken != null)
+                {
+                    request.Headers.SetValue("Sync-Token", syncToken);
+                }
+                request.Headers.SetValue("Accept", accept);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (name != null)
-            {
-                uri.AppendQuery("name", name, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (@select != null && !(@select is ChangeTrackingList<SnapshotFields> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
-            }
-            if (status != null && !(status is ChangeTrackingList<ConfigurationSnapshotStatus> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                uri.AppendQueryDelimited("status", status, ",", null, true);
-            }
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
@@ -483,7 +501,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateUpdateSnapshotRequest(string name, string contentType, string accept, RequestContent content, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, string contentType, string accept, RequestContent content, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -545,34 +563,40 @@ namespace Azure.Data.AppConfiguration
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", accept);
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/labels", false);
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (name != null)
+                {
+                    uri.AppendQuery("name", name, true);
+                }
+                if (after != null)
+                {
+                    uri.AppendQuery("After", after, true);
+                }
+                if (@select != null && !(@select is ChangeTrackingList<LabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+                {
+                    uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                }
+                request.Uri = uri;
+                if (syncToken != null)
+                {
+                    request.Headers.SetValue("Sync-Token", syncToken);
+                }
+                if (acceptDatetime != null)
+                {
+                    request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                request.Headers.SetValue("Accept", accept);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (name != null)
-            {
-                uri.AppendQuery("name", name, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (@select != null && !(@select is ChangeTrackingList<LabelFields> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
-            }
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-            }
-            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
@@ -610,7 +634,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreatePutLockRequest(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -641,7 +665,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateDeleteLockRequest(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -678,45 +702,51 @@ namespace Azure.Data.AppConfiguration
             Request request = message.Request;
             request.Method = RequestMethod.Get;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(nextPage ?? _endpoint);
-            if (nextPage == null)
+            if (nextPage != null)
             {
+                uri.Reset(nextPage);
+                request.Uri = uri;
+                request.Headers.SetValue("Accept", accept);
+            }
+            else
+            {
+                uri.Reset(_endpoint);
                 uri.AppendPath("/revisions", false);
-            }
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (key != null)
-            {
-                uri.AppendQuery("key", key, true);
-            }
-            if (label != null)
-            {
-                uri.AppendQuery("label", label, true);
-            }
-            if (after != null)
-            {
-                uri.AppendQuery("After", after, true);
-            }
-            if (@select != null && !(@select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("$Select", @select, ",", null, true);
-            }
-            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
-            {
-                foreach (var @param in tags)
+                uri.AppendQuery("api-version", _apiVersion, true);
+                if (key != null)
                 {
-                    uri.AppendQuery("tags", @param, true);
+                    uri.AppendQuery("key", key, true);
                 }
+                if (label != null)
+                {
+                    uri.AppendQuery("label", label, true);
+                }
+                if (after != null)
+                {
+                    uri.AppendQuery("After", after, true);
+                }
+                if (@select != null && !(@select is ChangeTrackingList<KeyValueFields> changeTrackingList && changeTrackingList.IsUndefined))
+                {
+                    uri.AppendQueryDelimited("$Select", @select, ",", null, true);
+                }
+                if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+                {
+                    foreach (var @param in tags)
+                    {
+                        uri.AppendQuery("tags", @param, true);
+                    }
+                }
+                request.Uri = uri;
+                if (syncToken != null)
+                {
+                    request.Headers.SetValue("Sync-Token", syncToken);
+                }
+                if (acceptDatetime != null)
+                {
+                    request.Headers.SetValue("Accept-Datetime", acceptDatetime);
+                }
+                request.Headers.SetValue("Accept", accept);
             }
-            request.Uri = uri;
-            if (syncToken != null)
-            {
-                request.Headers.SetValue("Sync-Token", syncToken);
-            }
-            if (acceptDatetime != null)
-            {
-                request.Headers.SetValue("Accept-Datetime", acceptDatetime);
-            }
-            request.Headers.SetValue("Accept", accept);
             return message;
         }
 
