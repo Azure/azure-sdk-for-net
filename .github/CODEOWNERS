@@ -667,7 +667,7 @@
 # ServiceOwners:                                                   @rajkumar-rangaraj @harsimar
 
 # PRLabel: %Monitor - Exporter
-/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj 
+/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/                 @rajkumar-rangaraj @harsimar
 
 # ServiceLabel: %Monitor - Exporter
 # ServiceOwners:                                                   @rajkumar-rangaraj @harsimar
