@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.0.0 (2025-06-06)
+
+This release is the first stable release of the Azure API Center library.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag to 'package-2024-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/2d701c73fb5ee44f95b97b6c3eaf8c4aeb051e73/specification/apicenter/resource-manager/readme.md.
 
 ## 1.0.0-beta.3 (2025-03-11)
 

@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> The response of a Service list operation. </summary>
-    internal partial class ApiCenterServiceListResult
+    /// <summary> The API specification source entity properties. </summary>
+    public partial class ApiSpecImportContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,29 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
-        /// <param name="value"> The Service items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ApiCenterServiceListResult(IEnumerable<ApiCenterServiceData> value)
+        /// <summary> Initializes a new instance of <see cref="ApiSpecImportContent"/>. </summary>
+        public ApiSpecImportContent()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
-        /// <param name="value"> The Service items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="ApiSpecImportContent"/>. </summary>
+        /// <param name="value"> Value of the API specification source. </param>
+        /// <param name="format"> Format of the API specification source. </param>
+        /// <param name="specification"> API specification details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiSpecImportContent(string value, ApiSpecImportSourceFormat? format, ApiSpecImportRequestSpecification specification, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
-            NextLink = nextLink;
+            Format = format;
+            Specification = specification;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/> for deserialization. </summary>
-        internal ApiCenterServiceListResult()
-        {
-        }
-
-        /// <summary> The Service items on this page. </summary>
-        public IReadOnlyList<ApiCenterServiceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Value of the API specification source. </summary>
+        public string Value { get; set; }
+        /// <summary> Format of the API specification source. </summary>
+        public ApiSpecImportSourceFormat? Format { get; set; }
+        /// <summary> API specification details. </summary>
+        public ApiSpecImportRequestSpecification Specification { get; set; }
     }
 }
