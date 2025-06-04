@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.DependencyMap.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.DependencyMap.Samples
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
             string sourceName = "sourceTest1";
             DependencyMapDiscoverySourceData data = new DependencyMapDiscoverySourceData(new AzureLocation("y"))
             {
+                Properties = new UnknownDependencyMapDiscoverySourceProperties(new ResourceIdentifier("wzlrkzumplzjmixbqv")),
                 Tags = { },
             };
             ArmOperation<DependencyMapDiscoverySourceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sourceName, data);
