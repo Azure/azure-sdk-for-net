@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using Azure.Core.Buffers;
 using Azure.Core.Serialization;
 using Azure.Core.Pipeline;
+using System.ClientModel.Primitives;
+using System.Globalization;
 
 namespace Azure.Core
 {
@@ -92,6 +94,179 @@ namespace Azure.Core
         /// <param name="content">The <see cref="DynamicData"/> to use.</param>
         /// <returns>An instance of <see cref="RequestContent"/> that wraps a <see cref="DynamicData"/>.</returns>
         public static RequestContent Create(DynamicData content) => new DynamicDataContent(content);
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, BinaryData content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new MultipartFormDataPartRequestContent(name, new MemoryContent(content.ToMemory()));
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, string content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new MultipartFormDataPartRequestContent(name, Create(s_UTF8NoBomEncoding.GetBytes(content)));
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, int content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            return CreateMultipartFormDataPart(name, value);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, long content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            return CreateMultipartFormDataPart(name, value);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, float content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            return CreateMultipartFormDataPart(name, value);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, double content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            return CreateMultipartFormDataPart(name, value);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, decimal content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            string value = content.ToString("G", CultureInfo.InvariantCulture);
+            return CreateMultipartFormDataPart(name, value);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, bool content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            string value = content ? "true" : "false";
+            return CreateMultipartFormDataPart(name, value);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, byte[] content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new MultipartFormDataPartRequestContent(name, new ArrayContent(content, 0, content.Length));
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/>.
+        /// </summary>
+        /// <param name="name">The name of the part.</param>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataPart(string name, FileRequestContent content)
+        {
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(content, nameof(content));
+
+            return new MultipartFormDataPartRequestContent(name, content);
+        }
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that contains the
+        /// the provided <see cref="RequestContent"/> as multi-part form data.
+        /// </summary>
+        /// <param name="parts"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataContent(IEnumerable<RequestContent> parts)
+        {
+            Argument.AssertNotNull(parts, nameof(parts));
+
+            return new MultiPartFormDataRequestContent(parts);
+        }
+
+        /// <summary>
+        /// Creates an instance of <see cref="RequestContent"/> that contains the
+        /// the provided <see cref="RequestContent"/> as multi-part form data.
+        /// </summary>
+        /// <param name="boundary"></param>
+        /// <param name="parts"></param>
+        /// <returns></returns>
+        public static RequestContent CreateMultipartFormDataContent(string boundary, IEnumerable<RequestContent> parts)
+        {
+            Argument.AssertNotNullOrEmpty(boundary, nameof(boundary));
+            Argument.AssertNotNull(parts, nameof(parts));
+
+            return new MultiPartFormDataRequestContent(boundary, parts);
+        }
 
         /// <summary>
         /// Creates an instance of <see cref="RequestContent"/> that wraps a serialized version of an object.
@@ -407,7 +582,7 @@ namespace Azure.Core
                 }
 
                 string? filename = content.Content is FileRequestContent fileContent ? fileContent.Filename : null;
-                Add(httpContent, content.Name!, filename);
+                Add(httpContent, content.Name, filename);
             }
 
             private void Add(HttpContent content, string name, string? fileName = default)
@@ -517,11 +692,19 @@ namespace Azure.Core
 
 #if NET6_0_OR_GREATER
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                    => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+                    => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
                 protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                     => _content.WriteTo(stream, cancellationToken);
 #endif
+                protected override void Dispose(bool disposing)
+                {
+                    base.Dispose(disposing);
+                    if (disposing)
+                    {
+                        _content.Dispose();
+                    }
+                }
             }
         }
 

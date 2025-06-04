@@ -13,6 +13,9 @@ using Azure.Core;
 using NUnit.Framework;
 using Payload.MultiPart;
 using File = System.IO.File;
+using Payload.MultiPart.Models;
+using System.Collections.Generic;
+using System.ClientModel.Primitives;
 
 namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 {
@@ -24,7 +27,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task Basic() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add("123", "id");
 
             await using var imageStream = File.OpenRead(SampleJpgPath);
@@ -38,7 +41,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task JsonPart() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add("{\"city\":\"X\"}", "address");
 
             await using var imageStream = File.OpenRead(SampleJpgPath);
@@ -52,7 +55,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task CheckFileNameAndContentType() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add("123", "id");
 
             await using var imageStream = File.OpenRead(SampleJpgPath);
@@ -66,7 +69,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task FileArrayAndBasic() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add("123", "id");
             content.Add("{\"city\":\"X\"}", "address", contentType: "application/json");
 
@@ -86,9 +89,67 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         });
 
         [SpectorTest]
+        public Task FileArrayAndBasicProtocol() => Test(async (host) =>
+        {
+            List<RequestContent> parts = new List<RequestContent>();
+            parts.Add(RequestContent.CreateMultipartFormDataPart("id", "123"));
+            parts.Add(RequestContent.CreateMultipartFormDataPart("address", ModelReaderWriter.Write(new Address("X"))));
+
+            await using var imageStream1 = File.OpenRead(SampleJpgPath);
+            parts.Add(RequestContent.CreateMultipartFormDataPart("profileImage", new FileRequestContent(imageStream1) { Filename = "profileImage.jpg" }));
+
+            await using var imageStream2 = File.OpenRead(SamplePngPath);
+            await using var imageStream3 = File.OpenRead(SamplePngPath);
+            parts.Add(RequestContent.CreateMultipartFormDataPart("pictures", new FileRequestContent(imageStream2) { Filename = "sample.png" }));
+            parts.Add(RequestContent.CreateMultipartFormDataPart("pictures", new FileRequestContent(imageStream3) { Filename = "sample.png" }));
+
+
+            using RequestContent content = RequestContent.CreateMultipartFormDataContent(parts);
+            var response = await new MultiPartClient(host, null).GetFormDataClient().FileArrayAndBasicAsync(content, content.ContentType);
+
+            Assert.AreEqual(204, response.Status);
+            // Assert all streams are disposed
+            Assert.IsFalse(imageStream1.CanRead);
+            Assert.IsFalse(imageStream2.CanRead);
+            Assert.IsFalse(imageStream3.CanRead);
+        });
+
+        [SpectorTest]
+        public Task FileArrayAndBasicConv() => Test(async (host) =>
+        {
+            var id = "123";
+            Address address = new Address("X");
+
+            await using var imageStream1 = File.OpenRead(SampleJpgPath);
+            var profileImage = new FileRequestContent(imageStream1)
+            {
+                Filename = "profileImage.jpg",
+            };
+
+            await using var imageStream2 = File.OpenRead(SamplePngPath);
+            await using var imageStream3 = File.OpenRead(SamplePngPath);
+            var pictures = new List<FileRequestContent>()
+            {
+                new(imageStream2) { Filename = "sample.png" },
+                new(imageStream3) { Filename = "sample.png" },
+            };
+
+            var request = new ComplexPartsRequest(id, address, profileImage, pictures);
+
+            var response = await new MultiPartClient(host, null).GetFormDataClient().FileArrayAndBasicAsync(request);
+
+            Assert.AreEqual(204, response.Status);
+
+            // Assert all streams are disposed
+            Assert.IsFalse(imageStream1.CanRead);
+            Assert.IsFalse(imageStream2.CanRead);
+            Assert.IsFalse(imageStream3.CanRead);
+        });
+
+        [SpectorTest]
         public Task HttpPartsImageJpegContentType() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             await using var imageStream = File.OpenRead(SampleJpgPath);
             content.Add(imageStream, "profileImage", "hello.jpg", "image/jpg");
 
@@ -103,7 +164,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task HttpPartsOptionalContentType() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent contentWithNoContentType = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent contentWithNoContentType = new MultiPartFormDataRequestContent();
             await using var imageStream1 = File.OpenRead(SampleJpgPath);
             contentWithNoContentType.Add(imageStream1, "profileImage", "hello.jpg");
 
@@ -114,7 +175,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
             Assert.AreEqual(204, response.Status);
 
-            using MultiPartFormDataBinaryContent contentWithContentType = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent contentWithContentType = new MultiPartFormDataRequestContent();
             await using var imageStream2 = File.OpenRead(SampleJpgPath);
             contentWithContentType.Add(imageStream2, "profileImage", "hello.jpg", "application/octet-stream");
 
@@ -129,7 +190,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task HttpPartsRequiredContentType() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             await using var imageStream = File.OpenRead(SampleJpgPath);
             content.Add(imageStream, "profileImage", "hello.jpg", "application/octet-stream");
 
@@ -144,7 +205,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task HttpPartsJsonArrayAndFileArray() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add("123", "id");
             content.Add("{\"city\":\"X\"}", "address", contentType: "application/json");
 
@@ -168,7 +229,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task HttpPartsNonStringFloat() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add(0.5f, "temperature");
             var response = await new MultiPartClient(host, null).GetFormDataClient()
                 .GetFormDataHttpPartsClient()
@@ -180,7 +241,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task BinaryArrayParts() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             content.Add("123", "id");
             await using var imageStream1 = File.OpenRead(SamplePngPath);
             content.Add(imageStream1, "pictures", "pictures", "application/octet-stream");
@@ -196,7 +257,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
         [SpectorTest]
         public Task AnonymousModel() => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             await using var imageStream = File.OpenRead(SampleJpgPath);
             content.Add(imageStream, "profileImage", "profileImage", "application/octet-stream");
 
@@ -215,7 +276,7 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
 
         private Task MultiBinaryParts(bool hasPicture) => Test(async (host) =>
         {
-            using MultiPartFormDataBinaryContent content = new MultiPartFormDataBinaryContent();
+            using MultiPartFormDataRequestContent content = new MultiPartFormDataRequestContent();
             await using var imageStream1 = File.OpenRead(SampleJpgPath);
             content.Add(imageStream1, "profileImage", "profileImage", "application/octet-stream");
             await using var imageStream2 = File.OpenRead(SamplePngPath);
@@ -227,18 +288,18 @@ namespace TestProjects.Spector.Tests.Http.Payload.Multipart
             Assert.AreEqual(204, response.Status);
         });
 
-        internal partial class MultiPartFormDataBinaryContent : RequestContent
+        internal partial class MultiPartFormDataRequestContent : RequestContent
         {
             private readonly MultipartFormDataContent _multipartContent;
             private static readonly Random _random = new Random();
             private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-            public MultiPartFormDataBinaryContent()
+            public MultiPartFormDataRequestContent()
             {
                 _multipartContent = new MultipartFormDataContent(CreateBoundary());
             }
 
-            public string? ContentType
+            public override string? ContentType
             {
                 get
                 {

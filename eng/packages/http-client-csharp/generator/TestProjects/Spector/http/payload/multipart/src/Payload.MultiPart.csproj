@@ -21,6 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Azure.Core" VersionOverride="1.47.1-alpha.20250604.1" />
   </ItemGroup>
 </Project>

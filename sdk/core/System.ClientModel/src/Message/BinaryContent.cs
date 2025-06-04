@@ -78,20 +78,6 @@ public abstract class BinaryContent : IDisposable
     /// Creates an instance of <see cref="BinaryContent"/>.
     /// </summary>
     /// <param name="name">The name of the part.</param>
-    /// <param name="stream"></param>
-    /// <returns></returns>
-    public static BinaryContent CreateMultipartFormDataPart(string name, Stream stream)
-    {
-        Argument.AssertNotNullOrEmpty(name, nameof(name));
-        Argument.AssertNotNull(stream, nameof(stream));
-
-        return new MultipartFormDataPartBinaryContent(name, new StreamBinaryContent(stream));
-    }
-
-    /// <summary>
-    /// Creates an instance of <see cref="BinaryContent"/>.
-    /// </summary>
-    /// <param name="name">The name of the part.</param>
     /// <param name="content"></param>
     /// <returns></returns>
     public static BinaryContent CreateMultipartFormDataPart(string name, BinaryData content)
@@ -646,11 +632,19 @@ public abstract class BinaryContent : IDisposable
 
 #if NET6_0_OR_GREATER
             protected override async Task SerializeToStreamAsync(Stream stream, TransportContext? context, CancellationToken cancellationToken)
-                => await _content!.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+                => await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
 
             protected override void SerializeToStream(Stream stream, TransportContext? context, CancellationToken cancellationToken)
                 => _content.WriteTo(stream, cancellationToken);
 #endif
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                if (disposing)
+                {
+                    _content.Dispose();
+                }
+            }
         }
     }
 

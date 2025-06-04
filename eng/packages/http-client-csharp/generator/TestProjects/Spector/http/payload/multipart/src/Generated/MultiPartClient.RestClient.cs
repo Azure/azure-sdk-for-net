@@ -5,12 +5,10 @@
 
 #nullable disable
 
-using Azure.Core;
-
 namespace Payload.MultiPart
 {
-    /// <summary> Client options for <see cref="MultiPartClient"/>. </summary>
-    public partial class MultiPartClientOptions : ClientOptions
+    /// <summary></summary>
+    public partial class MultiPartClient
     {
     }
 }

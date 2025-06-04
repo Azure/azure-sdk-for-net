@@ -156,21 +156,4 @@ internal class BinaryContentTests : SyncAsyncTestBase
 
         Assert.Throws<ArgumentException>(() => { BinaryContent.Create(stream); });
     }
-
-    [Test]
-    public void MultipleBinaryContentCanBeCreatedWithParts()
-    {
-        // binary data part
-        BinaryData foo = BinaryData.FromString("foo");
-        int size = 100;
-        // stream part
-        byte[] sourceArray = new byte[size];
-        new Random(100).NextBytes(sourceArray);
-        MemoryStream source = new(sourceArray);
-        using BinaryContent streamContent = BinaryContent.CreateMultipartFormDataPart("bar", source);
-        using BinaryContent fooContent = BinaryContent.CreateMultipartFormDataPart("foo", foo);
-
-        // create the mpfd content
-        using BinaryContent content = BinaryContent.CreateMultipartFormDataContent([streamContent, fooContent]);
-    }
 }

@@ -35,7 +35,6 @@ namespace System.ClientModel
         public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, double content) { throw null; }
         public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, int content) { throw null; }
         public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, long content) { throw null; }
-        public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, System.IO.Stream stream) { throw null; }
         public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, float content) { throw null; }
         public static System.ClientModel.BinaryContent CreateMultipartFormDataPart(string name, string content) { throw null; }
         public static System.ClientModel.BinaryContent CreateMultipartFormDataPart<T>(string name, T model, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null) where T : System.ClientModel.Primitives.IPersistableModel<T> { throw null; }

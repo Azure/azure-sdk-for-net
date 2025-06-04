@@ -466,6 +466,18 @@ namespace Azure.Core
         public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
         public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
     }
+    public sealed partial class FileRequestContent : Azure.Core.RequestContent
+    {
+        public FileRequestContent(System.BinaryData data) { }
+        public FileRequestContent(System.IO.Stream stream) { }
+        public FileRequestContent(string path) { }
+        public override string? ContentType { get { throw null; } set { } }
+        public string? Filename { get { throw null; } set { } }
+        public override void Dispose() { }
+        public override bool TryComputeLength(out long length) { throw null; }
+        public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
+        public override System.Threading.Tasks.Task WriteToAsync(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HttpHeader : System.IEquatable<Azure.Core.HttpHeader>
     {
@@ -583,6 +595,7 @@ namespace Azure.Core
     public abstract partial class RequestContent : System.IDisposable
     {
         protected RequestContent() { }
+        public virtual string? ContentType { get { throw null; } set { } }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
@@ -594,6 +607,18 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataContent(System.Collections.Generic.IEnumerable<Azure.Core.RequestContent> parts) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataContent(string boundary, System.Collections.Generic.IEnumerable<Azure.Core.RequestContent> parts) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, Azure.Core.FileRequestContent content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, System.BinaryData content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, bool content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, byte[] content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, decimal content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, double content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, int content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, long content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, float content) { throw null; }
+        public static Azure.Core.RequestContent CreateMultipartFormDataPart(string name, string content) { throw null; }
         public abstract void Dispose();
         public static implicit operator Azure.Core.RequestContent (Azure.Core.Serialization.DynamicData content) { throw null; }
         public static implicit operator Azure.Core.RequestContent (System.BinaryData content) { throw null; }
