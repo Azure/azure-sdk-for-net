@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The name of the condition for the delivery rule. </summary>
+    /// <summary>
+    /// The name of the condition for the delivery rule.
+    /// Serialized Name: MatchVariable
+    /// </summary>
     internal readonly partial struct MatchVariable : IEquatable<MatchVariable>
     {
         private readonly string _value;
@@ -42,49 +45,106 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string HostNameValue = "HostName";
         private const string SslProtocolValue = "SslProtocol";
 
-        /// <summary> RemoteAddress. </summary>
+        /// <summary>
+        /// RemoteAddress
+        /// Serialized Name: MatchVariable.RemoteAddress
+        /// </summary>
         public static MatchVariable RemoteAddress { get; } = new MatchVariable(RemoteAddressValue);
-        /// <summary> RequestMethod. </summary>
+        /// <summary>
+        /// RequestMethod
+        /// Serialized Name: MatchVariable.RequestMethod
+        /// </summary>
         public static MatchVariable RequestMethod { get; } = new MatchVariable(RequestMethodValue);
-        /// <summary> QueryString. </summary>
+        /// <summary>
+        /// QueryString
+        /// Serialized Name: MatchVariable.QueryString
+        /// </summary>
         public static MatchVariable QueryString { get; } = new MatchVariable(QueryStringValue);
-        /// <summary> PostArgs. </summary>
+        /// <summary>
+        /// PostArgs
+        /// Serialized Name: MatchVariable.PostArgs
+        /// </summary>
         public static MatchVariable PostArgs { get; } = new MatchVariable(PostArgsValue);
-        /// <summary> RequestUri. </summary>
+        /// <summary>
+        /// RequestUri
+        /// Serialized Name: MatchVariable.RequestUri
+        /// </summary>
         public static MatchVariable RequestUri { get; } = new MatchVariable(RequestUriValue);
-        /// <summary> RequestHeader. </summary>
+        /// <summary>
+        /// RequestHeader
+        /// Serialized Name: MatchVariable.RequestHeader
+        /// </summary>
         public static MatchVariable RequestHeader { get; } = new MatchVariable(RequestHeaderValue);
-        /// <summary> RequestBody. </summary>
+        /// <summary>
+        /// RequestBody
+        /// Serialized Name: MatchVariable.RequestBody
+        /// </summary>
         public static MatchVariable RequestBody { get; } = new MatchVariable(RequestBodyValue);
-        /// <summary> RequestScheme. </summary>
+        /// <summary>
+        /// RequestScheme
+        /// Serialized Name: MatchVariable.RequestScheme
+        /// </summary>
         public static MatchVariable RequestScheme { get; } = new MatchVariable(RequestSchemeValue);
-        /// <summary> UrlPath. </summary>
+        /// <summary>
+        /// UrlPath
+        /// Serialized Name: MatchVariable.UrlPath
+        /// </summary>
         public static MatchVariable UriPath { get; } = new MatchVariable(UriPathValue);
-        /// <summary> UrlFileExtension. </summary>
+        /// <summary>
+        /// UrlFileExtension
+        /// Serialized Name: MatchVariable.UrlFileExtension
+        /// </summary>
         public static MatchVariable UriFileExtension { get; } = new MatchVariable(UriFileExtensionValue);
-        /// <summary> UrlFileName. </summary>
+        /// <summary>
+        /// UrlFileName
+        /// Serialized Name: MatchVariable.UrlFileName
+        /// </summary>
         public static MatchVariable UriFileName { get; } = new MatchVariable(UriFileNameValue);
-        /// <summary> HttpVersion. </summary>
+        /// <summary>
+        /// HttpVersion
+        /// Serialized Name: MatchVariable.HttpVersion
+        /// </summary>
         public static MatchVariable HttpVersion { get; } = new MatchVariable(HttpVersionValue);
-        /// <summary> Cookies. </summary>
+        /// <summary>
+        /// Cookies
+        /// Serialized Name: MatchVariable.Cookies
+        /// </summary>
         public static MatchVariable Cookies { get; } = new MatchVariable(CookiesValue);
-        /// <summary> IsDevice. </summary>
+        /// <summary>
+        /// IsDevice
+        /// Serialized Name: MatchVariable.IsDevice
+        /// </summary>
         public static MatchVariable IsDevice { get; } = new MatchVariable(IsDeviceValue);
-        /// <summary> SocketAddr. </summary>
+        /// <summary>
+        /// SocketAddr
+        /// Serialized Name: MatchVariable.SocketAddr
+        /// </summary>
         public static MatchVariable SocketAddr { get; } = new MatchVariable(SocketAddrValue);
-        /// <summary> ClientPort. </summary>
+        /// <summary>
+        /// ClientPort
+        /// Serialized Name: MatchVariable.ClientPort
+        /// </summary>
         public static MatchVariable ClientPort { get; } = new MatchVariable(ClientPortValue);
-        /// <summary> ServerPort. </summary>
+        /// <summary>
+        /// ServerPort
+        /// Serialized Name: MatchVariable.ServerPort
+        /// </summary>
         public static MatchVariable ServerPort { get; } = new MatchVariable(ServerPortValue);
-        /// <summary> HostName. </summary>
+        /// <summary>
+        /// HostName
+        /// Serialized Name: MatchVariable.HostName
+        /// </summary>
         public static MatchVariable HostName { get; } = new MatchVariable(HostNameValue);
-        /// <summary> SslProtocol. </summary>
+        /// <summary>
+        /// SslProtocol
+        /// Serialized Name: MatchVariable.SslProtocol
+        /// </summary>
         public static MatchVariable SslProtocol { get; } = new MatchVariable(SslProtocolValue);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are the same. </summary>
         public static bool operator ==(MatchVariable left, MatchVariable right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MatchVariable"/> values are not the same. </summary>
         public static bool operator !=(MatchVariable left, MatchVariable right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MatchVariable"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MatchVariable"/>. </summary>
         public static implicit operator MatchVariable(string value) => new MatchVariable(value);
 
         /// <inheritdoc />
@@ -95,7 +155,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -36,6 +36,33 @@ namespace Azure.ResourceManager.WorkloadMonitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -95,7 +122,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -130,13 +157,37 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors/", false);
+            uri.AppendPath(monitorId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string expand)
@@ -196,7 +247,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorData.DeserializeHealthMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -234,7 +285,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorData.DeserializeHealthMonitorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -243,6 +294,43 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStateChangesRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors/", false);
+            uri.AppendPath(monitorId, true);
+            uri.AppendPath("/history", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (startTimestampUtc != null)
+            {
+                uri.AppendQuery("startTimestampUtc", startTimestampUtc.Value, "O", true);
+            }
+            if (endTimestampUtc != null)
+            {
+                uri.AppendQuery("endTimestampUtc", endTimestampUtc.Value, "O", true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListStateChangesRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
@@ -318,7 +406,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -357,13 +445,39 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetStateChangeRequestUri(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(providerName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceCollectionName, true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.WorkloadMonitor/monitors/", false);
+            uri.AppendPath(monitorId, true);
+            uri.AppendPath("/history/", false);
+            uri.AppendPath(timestampUnix, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetStateChangeRequest(string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string timestampUnix, string expand)
@@ -427,7 +541,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -467,7 +581,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorStateChangeData.DeserializeHealthMonitorStateChangeData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -476,6 +590,14 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string filter, string expand)
@@ -520,7 +642,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -557,13 +679,21 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorList.DeserializeHealthMonitorList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListStateChangesNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListStateChangesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string providerName, string resourceCollectionName, string resourceName, string monitorId, string filter, string expand, DateTimeOffset? startTimestampUtc, DateTimeOffset? endTimestampUtc)
@@ -612,7 +742,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -653,7 +783,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case 200:
                     {
                         HealthMonitorStateChangeList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthMonitorStateChangeList.DeserializeHealthMonitorStateChangeList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

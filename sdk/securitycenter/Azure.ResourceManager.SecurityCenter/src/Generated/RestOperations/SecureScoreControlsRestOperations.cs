@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySecureScoreRequestUri(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/secureScores/", false);
+            uri.AppendPath(secureScoreName, true);
+            uri.AppendPath("/secureScoreControls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListBySecureScoreRequest(string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
         {
             var message = _pipeline.CreateMessage();
@@ -78,7 +95,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -106,13 +123,28 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/secureScoreControls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, SecurityScoreODataExpand? expand)
@@ -153,7 +185,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -179,13 +211,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySecureScoreNextPageRequestUri(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySecureScoreNextPageRequest(string nextLink, string subscriptionId, string secureScoreName, SecurityScoreODataExpand? expand)
@@ -223,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,13 +293,21 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, SecurityScoreODataExpand? expand)
@@ -295,7 +343,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +371,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         SecureScoreControlList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SecureScoreControlList.DeserializeSecureScoreControlList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

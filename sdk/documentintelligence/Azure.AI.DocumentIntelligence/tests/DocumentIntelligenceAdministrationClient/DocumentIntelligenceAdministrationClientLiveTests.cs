@@ -15,12 +15,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/40054")]
-        public async Task DocumentIntelligenceAdministrationClientCanAuthenticateWithTokenCredential()
+        public async Task DocumentIntelligenceAdministrationClientCanAuthenticateWithApiKey()
         {
-            var client = CreateDocumentIntelligenceAdministrationClient(useTokenCredential: true);
+            var client = CreateDocumentIntelligenceAdministrationClient(useApiKey: true);
 
-            Response<ResourceDetails> response = await client.GetResourceInfoAsync();
+            Response<DocumentIntelligenceResourceDetails> response = await client.GetResourceDetailsAsync();
             Response rawResponse = response.GetRawResponse();
 
             Assert.That(rawResponse.Status, Is.EqualTo(200));

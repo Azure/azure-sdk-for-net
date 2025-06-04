@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Certificate resource specific properties. </summary>
+        [WirePath("properties")]
         public ContainerAppCertificateProperties Properties { get; set; }
     }
 }

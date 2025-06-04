@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System.Threading;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -9,17 +9,17 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for a change in the Transfer Status
     /// </summary>
-    public class TransferItemCompletedEventArgs : DataTransferEventArgs
+    public class TransferItemCompletedEventArgs : TransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="StorageResourceItem"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResourceItem SourceResource { get; }
+        public StorageResourceItem Source { get; }
 
         /// <summary>
         /// Gets the <see cref="StorageResourceItem"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResourceItem DestinationResource { get; }
+        public StorageResourceItem Destination { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransferItemFailedEventArgs"/>.
@@ -54,8 +54,8 @@ namespace Azure.Storage.DataMovement
         {
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
-            SourceResource = sourceResource;
-            DestinationResource = destinationResource;
+            Source = sourceResource;
+            Destination = destinationResource;
         }
     }
 }

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> A user explicitly assigned to a personal compute instance. </summary>
+        [WirePath("assignedUser")]
         public MachineLearningComputeInstanceAssignedUser AssignedUser { get; set; }
     }
 }

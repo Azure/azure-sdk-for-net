@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="version"> Version of the system - if relevant. </param>
         /// <param name="code"> Symbol in syntax defined by the system. </param>
         /// <param name="display"> Representation defined by the system. </param>
-        internal FhirR4Coding(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string system, string version, string code, string display) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4Coding(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string system, string version, string code, string display) : base(id, extension, serializedAdditionalRawData)
         {
             System = system;
             Version = version;

@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.EdgeZones
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -69,7 +80,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -94,13 +105,25 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string extendedZoneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones/", false);
+            uri.AppendPath(extendedZoneName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string extendedZoneName)
@@ -139,7 +162,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +191,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -177,6 +200,19 @@ namespace Azure.ResourceManager.EdgeZones
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegisterRequestUri(string subscriptionId, string extendedZoneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones/", false);
+            uri.AppendPath(extendedZoneName, true);
+            uri.AppendPath("/register", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegisterRequest(string subscriptionId, string extendedZoneName)
@@ -216,7 +252,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -243,13 +279,26 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUnregisterRequestUri(string subscriptionId, string extendedZoneName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.EdgeZones/extendedZones/", false);
+            uri.AppendPath(extendedZoneName, true);
+            uri.AppendPath("/unregister", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUnregisterRequest(string subscriptionId, string extendedZoneName)
@@ -289,7 +338,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -316,13 +365,21 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneData.DeserializeExtendedZoneData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
@@ -357,7 +414,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -384,7 +441,7 @@ namespace Azure.ResourceManager.EdgeZones
                 case 200:
                     {
                         ExtendedZoneListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ExtendedZoneListResult.DeserializeExtendedZoneListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

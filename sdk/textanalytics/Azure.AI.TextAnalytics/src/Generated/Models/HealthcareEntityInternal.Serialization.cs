@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Assertion))
             {
                 writer.WritePropertyName("assertion"u8);
-                writer.WriteObjectValue<HealthcareEntityAssertion>(Assertion);
+                writer.WriteObjectValue(Assertion);
             }
             if (Optional.IsDefined(Name))
             {
@@ -47,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue<EntityDataSource>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -146,15 +146,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static HealthcareEntityInternal FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHealthcareEntityInternal(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<HealthcareEntityInternal>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -1,9 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
-using System;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
@@ -12,7 +10,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
     internal class DefaultAzureMonitorOptions : IConfigureOptions<AzureMonitorOptions>
     {
         private const string AzureMonitorSectionFromConfig = "AzureMonitor";
-        private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
         private readonly IConfiguration? _configuration;
 
         /// <summary>
@@ -33,7 +30,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                     _configuration.GetSection(AzureMonitorSectionFromConfig).Bind(options);
 
                     // IConfiguration can read from EnvironmentVariables or InMemoryCollection if configured to do so.
-                    var connectionStringFromIConfig = _configuration[ConnectionStringEnvironmentVariable];
+                    var connectionStringFromIConfig = _configuration[EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING];
                     if (!string.IsNullOrEmpty(connectionStringFromIConfig))
                     {
                         options.ConnectionString = connectionStringFromIConfig;
@@ -41,7 +38,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
                 }
 
                 // Environment Variable should take precedence.
-                var connectionStringFromEnvVar = Environment.GetEnvironmentVariable(ConnectionStringEnvironmentVariable);
+                var connectionStringFromEnvVar = Environment.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_CONNECTION_STRING);
                 if (!string.IsNullOrEmpty(connectionStringFromEnvVar))
                 {
                     options.ConnectionString = connectionStringFromEnvVar;

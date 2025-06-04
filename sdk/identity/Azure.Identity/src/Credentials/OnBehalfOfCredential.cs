@@ -26,7 +26,7 @@ namespace Azure.Identity
         internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
-        /// Protected constructor for mocking.
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         protected OnBehalfOfCredential()
         { }
@@ -84,6 +84,30 @@ namespace Azure.Identity
             string userAssertion,
             OnBehalfOfCredentialOptions options)
             : this(tenantId, clientId, clientSecret, userAssertion, options, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified client assertion.
+        /// </summary>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientAssertionCallback">An asynchronous callback returning a valid client assertion used to authenticate the service principal.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, Func<CancellationToken, Task<string>> clientAssertionCallback, string userAssertion, OnBehalfOfCredentialOptions options = null)
+            : this(tenantId, clientId, null, clientAssertionCallback, userAssertion, options, null, null)
+        { }
+
+        /// <summary>
+        /// Creates an instance of the <see cref="OnBehalfOfCredential"/> with the details needed to authenticate against Microsoft Entra ID with the specified client assertion.
+        /// </summary>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal</param>
+        /// <param name="clientAssertionCallback">A synchronous callback returning a valid client assertion used to authenticate the service principal.</param>
+        /// <param name="userAssertion">The access token that will be used by <see cref="OnBehalfOfCredential"/> as the user assertion when requesting On-Behalf-Of tokens.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
+        public OnBehalfOfCredential(string tenantId, string clientId, Func<string> clientAssertionCallback, string userAssertion, OnBehalfOfCredentialOptions options = null)
+            : this(tenantId, clientId, clientAssertionCallback, null, userAssertion, options, null, null)
         { }
 
         internal OnBehalfOfCredential(
@@ -156,27 +180,58 @@ namespace Azure.Identity
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
         }
 
+        internal OnBehalfOfCredential(
+            string tenantId,
+            string clientId,
+            Func<string> clientAssertionCallback,
+            Func<CancellationToken, Task<string>> clientAssertionCallbackAsync,
+            string userAssertion,
+            OnBehalfOfCredentialOptions options,
+            CredentialPipeline pipeline,
+            MsalConfidentialClient client)
+        {
+            Argument.AssertNotNull(clientId, nameof(clientId));
+
+            options ??= new OnBehalfOfCredentialOptions();
+            _pipeline = pipeline ?? CredentialPipeline.GetInstance(options);
+            _tenantId = Validations.ValidateTenantId(tenantId, nameof(tenantId));
+            _clientId = clientId;
+            _userAssertion = new UserAssertion(userAssertion);
+            Client = client switch
+            {
+                not null => client,
+                _ when clientAssertionCallback is not null => new MsalConfidentialClient(_pipeline, _tenantId, _clientId, clientAssertionCallback, options),
+                _ when clientAssertionCallbackAsync is not null => new MsalConfidentialClient(_pipeline, _tenantId, _clientId, clientAssertionCallbackAsync, options),
+                _ => throw new ArgumentNullException($"nameof(clientAssertionCallback)")
+            };
+
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
+            AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds(options?.AdditionallyAllowedTenants);
+        }
+
         /// <summary>
-        /// Authenticates with Microsoft Entra ID and returns an access token if successful.
-        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is
-        /// handled automatically. Where possible, reuse credential instances to optimize cache
-        /// effectiveness.
+        /// Authenticates with Microsoft Entra ID and returns an access token if successful. Acquired tokens are
+        /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance.
+        /// Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, false, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Authenticates with Microsoft Entra ID and returns an access token if successful.
-        /// Acquired tokens are cached by the credential instance. Token lifetime and refreshing is
-        /// handled automatically. Where possible, reuse credential instances to optimize cache
-        /// effectiveness.
+        /// Authenticates with Microsoft Entra ID and returns an access token if successful. Acquired tokens are
+        /// <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential instance.
+        /// Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) =>
             GetTokenInternalAsync(requestContext, true, cancellationToken);
 
@@ -192,7 +247,7 @@ namespace Azure.Identity
                     .AcquireTokenOnBehalfOfAsync(requestContext.Scopes, tenantId, _userAssertion, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
                     .ConfigureAwait(false);
 
-                return new AccessToken(result.AccessToken, result.ExpiresOn);
+                return result.ToAccessToken();
             }
             catch (Exception e)
             {

@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <Description>Contains the core functionality for defining Azure infrastructure with dotnet code.</Description>
-    <Version>0.2.0-beta.2</Version>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net461;net472;net6.0</TargetFrameworks>
+    <Version>1.0.1</Version>
+    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+    <LangVersion>12</LangVersion>
+
+    <!-- Disable warning CS1591: Missing XML comment for publicly visible type or member -->
+    <!-- Disable warning AZC0012: Single word class names -->
+    <!-- Disable warning IDE0130: Namespace does not match folder structure-->
+    <NoWarn>CS1591;AZC0012;IDE0130;$(NoWarn)</NoWarn>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Azure.ResourceManager.Authorization" />
-    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
-  </ItemGroup>
-
 </Project>

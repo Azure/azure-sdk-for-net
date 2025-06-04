@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.StandbyPool.Tests
     public class StandbyVirtualMachinePoolCollectionTests : StandbyVirtualMachinePoolTestBase
     {
         public StandbyVirtualMachinePoolCollectionTests(bool isAsync)
-            : base(isAsync) //, RecordedTestMode.Record)
+            : base(isAsync, RecordedTestMode.Playback)
         {
         }
 

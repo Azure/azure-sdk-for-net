@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> Alias of StartMenuItem. </summary>
+        [WirePath("properties.appAlias")]
         public string AppAlias { get; set; }
         /// <summary> Path to the file of StartMenuItem. </summary>
+        [WirePath("properties.filePath")]
         public string FilePath { get; set; }
         /// <summary> Command line arguments for StartMenuItem. </summary>
+        [WirePath("properties.commandLineArguments")]
         public string CommandLineArguments { get; set; }
         /// <summary> Path to the icon. </summary>
+        [WirePath("properties.iconPath")]
         public string IconPath { get; set; }
         /// <summary> Index of the icon. </summary>
+        [WirePath("properties.iconIndex")]
         public int? IconIndex { get; set; }
     }
 }

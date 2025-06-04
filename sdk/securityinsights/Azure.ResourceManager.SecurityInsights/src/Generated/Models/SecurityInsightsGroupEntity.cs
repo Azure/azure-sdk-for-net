@@ -74,14 +74,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.additionalData")]
         public IReadOnlyDictionary<string, BinaryData> AdditionalData { get; }
         /// <summary> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; }
         /// <summary> The group distinguished name. </summary>
+        [WirePath("properties.distinguishedName")]
         public string DistinguishedName { get; }
         /// <summary> A single-value attribute that is the unique identifier for the object, assigned by active directory. </summary>
+        [WirePath("properties.objectGuid")]
         public Guid? ObjectGuid { get; }
         /// <summary> The SID attribute is a single-value attribute that specifies the security identifier (SID) of the group. </summary>
+        [WirePath("properties.sid")]
         public string Sid { get; }
     }
 }

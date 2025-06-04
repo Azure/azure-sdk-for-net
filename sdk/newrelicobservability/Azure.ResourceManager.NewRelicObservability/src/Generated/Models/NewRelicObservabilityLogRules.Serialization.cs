@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +17,18 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     public partial class NewRelicObservabilityLogRules : IUtf8JsonSerializable, IJsonModel<NewRelicObservabilityLogRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityLogRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicObservabilityLogRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NewRelicObservabilityLogRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityLogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +36,6 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 throw new FormatException($"The model {nameof(NewRelicObservabilityLogRules)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
@@ -47,7 +57,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue<NewRelicObservabilityFilteringTag>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,14 +69,13 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NewRelicObservabilityLogRules IJsonModel<NewRelicObservabilityLogRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +92,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
 
         internal static NewRelicObservabilityLogRules DeserializeNewRelicObservabilityLogRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,6 +156,89 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             return new NewRelicObservabilityLogRules(sendAadLogs, sendSubscriptionLogs, sendActivityLogs, filteringTags ?? new ChangeTrackingList<NewRelicObservabilityFilteringTag>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendAadLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sendAadLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendAadLogs))
+                {
+                    builder.Append("  sendAadLogs: ");
+                    builder.AppendLine($"'{SendAadLogs.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendSubscriptionLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sendSubscriptionLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendSubscriptionLogs))
+                {
+                    builder.Append("  sendSubscriptionLogs: ");
+                    builder.AppendLine($"'{SendSubscriptionLogs.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SendActivityLogs), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  sendActivityLogs: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SendActivityLogs))
+                {
+                    builder.Append("  sendActivityLogs: ");
+                    builder.AppendLine($"'{SendActivityLogs.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FilteringTags), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  filteringTags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FilteringTags))
+                {
+                    if (FilteringTags.Any())
+                    {
+                        builder.Append("  filteringTags: ");
+                        builder.AppendLine("[");
+                        foreach (var item in FilteringTags)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  filteringTags: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<NewRelicObservabilityLogRules>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicObservabilityLogRules>)this).GetFormatFromOptions(options) : options.Format;
@@ -154,7 +246,9 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNewRelicObservabilityContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(NewRelicObservabilityLogRules)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +262,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNewRelicObservabilityLogRules(document.RootElement, options);
                     }
                 default:

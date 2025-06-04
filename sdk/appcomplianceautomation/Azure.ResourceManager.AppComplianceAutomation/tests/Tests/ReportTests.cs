@@ -46,28 +46,38 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Tests.Tests
             TenantCollection tenantCollection = Client.GetTenants();
             var tenants = await tenantCollection.GetAllAsync().ToEnumerableAsync();
             var tenant = tenants.FirstOrDefault();
-            ReportResourceCollection reports = tenant.GetReportResources();
+            AppComplianceReportCollection reports = tenant.GetAppComplianceReports();
 
-            // create report
-            List<ResourceMetadata> resources = new List<ResourceMetadata>();
+            // Create report
+            // Create report: prepare data
+            List<ReportResourceMetadata> resources = new List<ReportResourceMetadata>();
             Dictionary<string, string> tags = new Dictionary<string, string>();
-            resources.Add(new ResourceMetadata(
-                "/subscriptions/f744fbde-a95f-437e-8fcf-38f9324e3d9c/resourceGroups/sdk-test/providers/Microsoft.Storage/storageAccounts/sdkteststorageaccount",
+            resources.Add(new ReportResourceMetadata(
+                new ResourceIdentifier("/subscriptions/120b982f-6bd3-4b60-98d2-a7b7ecd6c78e/resourcegroups/sdk-test/providers/Microsoft.Storage/storageAccounts/appcompliancetestsa"),
                 "microsoft.storage/storageaccounts",
                 "StorageV2",
-                "sdkteststorageaccount",
-                tags ,null));
+                ReportResourceOrigin.Azure,
+                "appcompliancetestsa",
+                null));
             DateTime univDateTime = new DateTime(2022, 01, 01, 0, 0, 0, DateTimeKind.Utc);
-            ReportProperties properties = new ReportProperties("GMT Standard Time", new DateTimeOffset(univDateTime), resources);
-            ArmOperation<ReportResource> response = await reports.CreateOrUpdateAsync(WaitUntil.Completed, reportName, new ReportResourceData(properties));
+            // Create report: send request
+            ArmOperation<AppComplianceReportResource> response = await reports.CreateOrUpdateAsync(WaitUntil.Completed, reportName,
+                new AppComplianceReportData(new AppComplianceReportProperties(new DateTimeOffset(univDateTime), "GMT Standard Time", resources)));
+            // Create report: verify result
+            AppComplianceReportResource reportResource = response.Value;
+            Assert.AreEqual(reportResource.Data.Name, reportName);
 
-            // get report
-            Response<ReportResource> getResponse = await reports.GetAsync(reportName);
-            ReportResource report = getResponse.Value;
+            // Get report
+            // Get report: send request
+            Response<AppComplianceReportResource> getResponse = await reports.GetAsync(reportName);
+            // Get report: verify result
+            AppComplianceReportResource report = getResponse.Value;
             Assert.AreEqual(report.Data.Name, reportName);
 
-            // delete report
+            // Delete report
+            // Delete report: send request
             var operation = await report.DeleteAsync(WaitUntil.Completed);
+            // Delete report: verify result
             Assert.IsTrue(operation.HasCompleted);
         }
     }

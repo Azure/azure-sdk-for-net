@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Nginx.Models
 {
     public partial class NginxDeploymentProperties : IUtf8JsonSerializable, IJsonModel<NginxDeploymentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NginxDeploymentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NginxDeploymentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NginxDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -36,15 +44,10 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("nginxVersion"u8);
                 writer.WriteStringValue(NginxVersion);
             }
-            if (Optional.IsDefined(ManagedResourceGroup))
-            {
-                writer.WritePropertyName("managedResourceGroup"u8);
-                writer.WriteStringValue(ManagedResourceGroup);
-            }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<NginxNetworkProfile>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
@@ -59,17 +62,32 @@ namespace Azure.ResourceManager.Nginx.Models
             if (Optional.IsDefined(Logging))
             {
                 writer.WritePropertyName("logging"u8);
-                writer.WriteObjectValue<NginxLogging>(Logging, options);
+                writer.WriteObjectValue(Logging, options);
             }
             if (Optional.IsDefined(ScalingProperties))
             {
                 writer.WritePropertyName("scalingProperties"u8);
-                writer.WriteObjectValue<NginxDeploymentScalingProperties>(ScalingProperties, options);
+                writer.WriteObjectValue(ScalingProperties, options);
+            }
+            if (Optional.IsDefined(AutoUpgradeProfile))
+            {
+                writer.WritePropertyName("autoUpgradeProfile"u8);
+                writer.WriteObjectValue(AutoUpgradeProfile, options);
             }
             if (Optional.IsDefined(UserProfile))
             {
                 writer.WritePropertyName("userProfile"u8);
-                writer.WriteObjectValue<NginxDeploymentUserProfile>(UserProfile, options);
+                writer.WriteObjectValue(UserProfile, options);
+            }
+            if (Optional.IsDefined(NginxAppProtect))
+            {
+                writer.WritePropertyName("nginxAppProtect"u8);
+                writer.WriteObjectValue(NginxAppProtect, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataplaneApiEndpoint))
+            {
+                writer.WritePropertyName("dataplaneApiEndpoint"u8);
+                writer.WriteStringValue(DataplaneApiEndpoint);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,14 +97,13 @@ namespace Azure.ResourceManager.Nginx.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NginxDeploymentProperties IJsonModel<NginxDeploymentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -103,7 +120,7 @@ namespace Azure.ResourceManager.Nginx.Models
 
         internal static NginxDeploymentProperties DeserializeNginxDeploymentProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -111,13 +128,15 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             NginxProvisioningState? provisioningState = default;
             string nginxVersion = default;
-            string managedResourceGroup = default;
             NginxNetworkProfile networkProfile = default;
             string ipAddress = default;
             bool? enableDiagnosticsSupport = default;
             NginxLogging logging = default;
             NginxDeploymentScalingProperties scalingProperties = default;
+            AutoUpgradeProfile autoUpgradeProfile = default;
             NginxDeploymentUserProfile userProfile = default;
+            NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = default;
+            string dataplaneApiEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,11 +153,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 if (property.NameEquals("nginxVersion"u8))
                 {
                     nginxVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("managedResourceGroup"u8))
-                {
-                    managedResourceGroup = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -182,6 +196,15 @@ namespace Azure.ResourceManager.Nginx.Models
                     scalingProperties = NginxDeploymentScalingProperties.DeserializeNginxDeploymentScalingProperties(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("autoUpgradeProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    autoUpgradeProfile = AutoUpgradeProfile.DeserializeAutoUpgradeProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("userProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -189,6 +212,20 @@ namespace Azure.ResourceManager.Nginx.Models
                         continue;
                     }
                     userProfile = NginxDeploymentUserProfile.DeserializeNginxDeploymentUserProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("nginxAppProtect"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nginxAppProtect = NginxDeploymentPropertiesNginxAppProtect.DeserializeNginxDeploymentPropertiesNginxAppProtect(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("dataplaneApiEndpoint"u8))
+                {
+                    dataplaneApiEndpoint = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,13 +237,15 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentProperties(
                 provisioningState,
                 nginxVersion,
-                managedResourceGroup,
                 networkProfile,
                 ipAddress,
                 enableDiagnosticsSupport,
                 logging,
                 scalingProperties,
+                autoUpgradeProfile,
                 userProfile,
+                nginxAppProtect,
+                dataplaneApiEndpoint,
                 serializedAdditionalRawData);
         }
 
@@ -217,7 +256,7 @@ namespace Azure.ResourceManager.Nginx.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
@@ -231,7 +270,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxDeploymentProperties(document.RootElement, options);
                     }
                 default:

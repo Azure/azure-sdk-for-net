@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     public partial class ServerInstanceProperties : IUtf8JsonSerializable, IJsonModel<ServerInstanceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerInstanceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerInstanceProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerInstanceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
@@ -59,12 +67,12 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(ConfigurationData))
             {
                 writer.WritePropertyName("configurationData"u8);
-                writer.WriteObjectValue<ConfigurationDetail>(ConfigurationData, options);
+                writer.WriteObjectValue(ConfigurationData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PerformanceData))
             {
                 writer.WritePropertyName("performanceData"u8);
-                writer.WriteObjectValue<PerformanceDetail>(PerformanceData, options);
+                writer.WriteObjectValue(PerformanceData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -74,7 +82,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue<SapMigrateError>(Errors, options);
+                writer.WriteObjectValue(Errors, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,14 +92,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServerInstanceProperties IJsonModel<ServerInstanceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -108,7 +115,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         internal static ServerInstanceProperties DeserializeServerInstanceProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -229,7 +236,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServerInstanceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -243,7 +250,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServerInstanceProperties(document.RootElement, options);
                     }
                 default:

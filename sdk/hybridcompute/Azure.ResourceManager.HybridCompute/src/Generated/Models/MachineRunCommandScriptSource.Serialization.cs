@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.HybridCompute.Models
 {
     public partial class MachineRunCommandScriptSource : IUtf8JsonSerializable, IJsonModel<MachineRunCommandScriptSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandScriptSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineRunCommandScriptSource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MachineRunCommandScriptSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandScriptSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +35,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 throw new FormatException($"The model {nameof(MachineRunCommandScriptSource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             if (Optional.IsDefined(ScriptUriManagedIdentity))
             {
                 writer.WritePropertyName("scriptUriManagedIdentity"u8);
-                writer.WriteObjectValue<RunCommandManagedIdentity>(ScriptUriManagedIdentity, options);
+                writer.WriteObjectValue(ScriptUriManagedIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,14 +63,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MachineRunCommandScriptSource IJsonModel<MachineRunCommandScriptSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -78,7 +86,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         internal static MachineRunCommandScriptSource DeserializeMachineRunCommandScriptSource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,6 +137,97 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineRunCommandScriptSource(script, scriptUri, commandId, scriptUriManagedIdentity, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Script), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  script: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Script))
+                {
+                    builder.Append("  script: ");
+                    if (Script.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Script}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Script}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptUri), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scriptUri: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptUri))
+                {
+                    builder.Append("  scriptUri: ");
+                    builder.AppendLine($"'{ScriptUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommandId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  commandId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CommandId))
+                {
+                    builder.Append("  commandId: ");
+                    if (CommandId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommandId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommandId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScriptUriManagedIdentity), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  scriptUriManagedIdentity: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScriptUriManagedIdentity))
+                {
+                    builder.Append("  scriptUriManagedIdentity: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, ScriptUriManagedIdentity, options, 2, false, "  scriptUriManagedIdentity: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MachineRunCommandScriptSource>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandScriptSource>)this).GetFormatFromOptions(options) : options.Format;
@@ -136,7 +235,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridComputeContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MachineRunCommandScriptSource)} does not support writing '{options.Format}' format.");
             }
@@ -150,7 +251,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineRunCommandScriptSource(document.RootElement, options);
                     }
                 default:

@@ -57,7 +57,7 @@ namespace Azure.Analytics.Purview.DataMap
         public static bool operator ==(TypeCategory left, TypeCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="TypeCategory"/> values are not the same. </summary>
         public static bool operator !=(TypeCategory left, TypeCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="TypeCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="TypeCategory"/>. </summary>
         public static implicit operator TypeCategory(string value) => new TypeCategory(value);
 
         /// <inheritdoc />
@@ -68,7 +68,7 @@ namespace Azure.Analytics.Purview.DataMap
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

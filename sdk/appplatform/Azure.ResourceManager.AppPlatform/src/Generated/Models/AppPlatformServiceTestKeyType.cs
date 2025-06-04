@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
         public static bool operator ==(AppPlatformServiceTestKeyType left, AppPlatformServiceTestKeyType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AppPlatformServiceTestKeyType"/> values are not the same. </summary>
         public static bool operator !=(AppPlatformServiceTestKeyType left, AppPlatformServiceTestKeyType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AppPlatformServiceTestKeyType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AppPlatformServiceTestKeyType"/>. </summary>
         public static implicit operator AppPlatformServiceTestKeyType(string value) => new AppPlatformServiceTestKeyType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

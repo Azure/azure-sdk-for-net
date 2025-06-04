@@ -185,15 +185,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new SalesforceSink FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSalesforceSink(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SalesforceSink>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SalesforceSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SalesforceSink>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SalesforceSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

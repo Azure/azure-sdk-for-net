@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of the token for which credentials have to be generated. </summary>
+        [WirePath("tokenId")]
         public ResourceIdentifier TokenId { get; set; }
         /// <summary> The expiry date of the generated credentials after which the credentials become invalid. </summary>
+        [WirePath("expiry")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Specifies name of the password which should be regenerated if any -- password1 or password2. </summary>
+        [WirePath("name")]
         public ContainerRegistryTokenPasswordName? Name { get; set; }
     }
 }

@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.PostgreSql.Models
 {
     public partial class PostgreSqlPerformanceTierProperties : IUtf8JsonSerializable, IJsonModel<PostgreSqlPerformanceTierProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPerformanceTierProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlPerformanceTierProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PostgreSqlPerformanceTierProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlPerformanceTierProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 throw new FormatException($"The model {nameof(PostgreSqlPerformanceTierProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
@@ -69,7 +77,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceLevelObjectives)
                 {
-                    writer.WriteObjectValue<PostgreSqlPerformanceTierServiceLevelObjectives>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,14 +89,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PostgreSqlPerformanceTierProperties IJsonModel<PostgreSqlPerformanceTierProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
 
         internal static PostgreSqlPerformanceTierProperties DeserializePostgreSqlPerformanceTierProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -226,15 +233,16 @@ namespace Azure.ResourceManager.PostgreSql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     if (Id.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -248,101 +256,108 @@ namespace Azure.ResourceManager.PostgreSql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxBackupRetentionDays), out propertyOverride);
-            if (Optional.IsDefined(MaxBackupRetentionDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxBackupRetentionDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxBackupRetentionDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxBackupRetentionDays: ");
                     builder.AppendLine($"{MaxBackupRetentionDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinBackupRetentionDays), out propertyOverride);
-            if (Optional.IsDefined(MinBackupRetentionDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minBackupRetentionDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinBackupRetentionDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minBackupRetentionDays: ");
                     builder.AppendLine($"{MinBackupRetentionDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxStorageInMB), out propertyOverride);
-            if (Optional.IsDefined(MaxStorageInMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxStorageMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxStorageInMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxStorageMB: ");
                     builder.AppendLine($"{MaxStorageInMB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinLargeStorageInMB), out propertyOverride);
-            if (Optional.IsDefined(MinLargeStorageInMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minLargeStorageMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinLargeStorageInMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minLargeStorageMB: ");
                     builder.AppendLine($"{MinLargeStorageInMB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxLargeStorageInMB), out propertyOverride);
-            if (Optional.IsDefined(MaxLargeStorageInMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  maxLargeStorageMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxLargeStorageInMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  maxLargeStorageMB: ");
                     builder.AppendLine($"{MaxLargeStorageInMB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinStorageInMB), out propertyOverride);
-            if (Optional.IsDefined(MinStorageInMB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  minStorageMB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MinStorageInMB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  minStorageMB: ");
                     builder.AppendLine($"{MinStorageInMB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceLevelObjectives), out propertyOverride);
-            if (Optional.IsCollectionDefined(ServiceLevelObjectives) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ServiceLevelObjectives.Any() || hasPropertyOverride)
+                builder.Append("  serviceLevelObjectives: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ServiceLevelObjectives))
                 {
-                    builder.Append("  serviceLevelObjectives: ");
-                    if (hasPropertyOverride)
+                    if (ServiceLevelObjectives.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  serviceLevelObjectives: ");
                         builder.AppendLine("[");
                         foreach (var item in ServiceLevelObjectives)
                         {
@@ -364,7 +379,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPostgreSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -380,7 +395,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePostgreSqlPerformanceTierProperties(document.RootElement, options);
                     }
                 default:

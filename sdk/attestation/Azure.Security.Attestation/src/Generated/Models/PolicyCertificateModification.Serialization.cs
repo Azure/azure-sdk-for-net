@@ -52,15 +52,15 @@ namespace Azure.Security.Attestation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static PolicyCertificateModification FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePolicyCertificateModification(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PolicyCertificateModification>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Security.Attestation
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificateModification model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<PolicyCertificateModification>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override PolicyCertificateModification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

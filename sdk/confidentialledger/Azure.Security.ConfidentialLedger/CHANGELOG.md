@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.1-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,17 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.4.1-beta.2 (2025-04-23)
+
+### Features Added
+- Added user defined functions feature.
+- Added tags parameter for CreateLedgerEntry endpoint.
+
+## 1.4.1-beta.1 (2025-01-27)
+
+### Features Added
+- Added the ability to list users and roles.
 
 ## 1.3.0 (2023-12-05)
 

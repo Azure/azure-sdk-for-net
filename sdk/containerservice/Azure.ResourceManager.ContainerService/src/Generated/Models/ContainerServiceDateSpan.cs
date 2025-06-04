@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The start date of the date span. </summary>
+        [WirePath("start")]
         public DateTimeOffset Start { get; set; }
         /// <summary> The end date of the date span. </summary>
+        [WirePath("end")]
         public DateTimeOffset End { get; set; }
     }
 }

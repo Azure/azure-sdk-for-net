@@ -20,7 +20,7 @@ namespace Azure.Health.Insights.ClinicalMatching.Samples
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_ShortVersion()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -48,7 +48,7 @@ id = "<id>",
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -76,15 +76,15 @@ id = "<id>",
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -92,15 +92,15 @@ new PatientRecord("<id>")
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_ShortVersion_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
             });
-            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -108,7 +108,7 @@ new PatientRecord("<id>")
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_AllParameters()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -142,7 +142,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -335,7 +335,7 @@ radius = 123.45,
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_AllParameters_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
@@ -369,7 +369,7 @@ type = "note",
 clinicalType = "consultation",
 id = "<id>",
 language = "<language>",
-createdDateTime = "2022-05-10T14:57:31.2311892-04:00",
+createdDateTime = "2022-05-10T18:57:31.2311892Z",
 content = new
 {
 sourceType = "inline",
@@ -562,11 +562,11 @@ radius = 123.45,
         [Ignore("Only validating compilation of examples")]
         public void Example_ClinicalMatchingClient_MatchTrials_AllParameters_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -584,7 +584,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })
@@ -645,7 +645,7 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
                     IncludeEvidence = true,
                 },
             };
-            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = client.MatchTrials(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
 
@@ -653,11 +653,11 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
         [Ignore("Only validating compilation of examples")]
         public async Task Example_ClinicalMatchingClient_MatchTrials_AllParameters_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ClinicalMatchingClient client = new ClinicalMatchingClient(endpoint, credential);
 
-            TrialMatcherData trialMatcherData = new TrialMatcherData(new PatientRecord[]
+            TrialMatcherData body = new TrialMatcherData(new PatientRecord[]
             {
 new PatientRecord("<id>")
 {
@@ -675,7 +675,7 @@ Data = {new PatientDocument(DocumentType.Note, "<id>", new DocumentContent(Docum
 {
 ClinicalType = ClinicalDocumentType.Consultation,
 Language = "<language>",
-CreatedDateTime = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+CreatedDateTime = DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 }},
 }
             })
@@ -736,7 +736,7 @@ FacilityAreas = {new GeographicArea(GeoJsonType.Feature, new AreaGeometry(GeoJso
                     IncludeEvidence = true,
                 },
             };
-            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, trialMatcherData);
+            Operation<TrialMatcherResults> operation = await client.MatchTrialsAsync(WaitUntil.Completed, body);
             TrialMatcherResults responseData = operation.Value;
         }
     }

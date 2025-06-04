@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Purview.Models
 {
     public partial class PurviewUsageName : IUtf8JsonSerializable, IJsonModel<PurviewUsageName>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewUsageName>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PurviewUsageName>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PurviewUsageName>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,33 +34,7 @@ namespace Azure.ResourceManager.Purview.Models
                 throw new FormatException($"The model {nameof(PurviewUsageName)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(LocalizedValue))
-            {
-                writer.WritePropertyName("localizedValue"u8);
-                writer.WriteStringValue(LocalizedValue);
-            }
-            if (Optional.IsDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStringValue(Value);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         PurviewUsageName IJsonModel<PurviewUsageName>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +51,7 @@ namespace Azure.ResourceManager.Purview.Models
 
         internal static PurviewUsageName DeserializePurviewUsageName(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -106,7 +89,7 @@ namespace Azure.ResourceManager.Purview.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PurviewUsageName)} does not support writing '{options.Format}' format.");
             }
@@ -120,7 +103,7 @@ namespace Azure.ResourceManager.Purview.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePurviewUsageName(document.RootElement, options);
                     }
                 default:

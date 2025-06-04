@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The boolean filter value. </summary>
+        [WirePath("value")]
         public bool? Value { get; set; }
     }
 }

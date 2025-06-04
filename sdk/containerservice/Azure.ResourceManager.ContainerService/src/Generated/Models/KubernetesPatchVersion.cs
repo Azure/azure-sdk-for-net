@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Possible upgrade path for given patch version. </summary>
+        [WirePath("upgrades")]
         public IReadOnlyList<string> Upgrades { get; }
     }
 }

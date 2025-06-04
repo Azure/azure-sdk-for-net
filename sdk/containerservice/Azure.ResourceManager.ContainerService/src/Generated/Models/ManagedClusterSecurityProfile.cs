@@ -66,12 +66,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Microsoft Defender settings for the security profile. </summary>
+        [WirePath("defender")]
         public ManagedClusterSecurityProfileDefender Defender { get; set; }
         /// <summary> Azure Key Vault [key management service](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/) settings for the security profile. </summary>
+        [WirePath("azureKeyVaultKms")]
         public ManagedClusterSecurityProfileKeyVaultKms AzureKeyVaultKms { get; set; }
         /// <summary> Workload identity settings for the security profile. Workload identity enables Kubernetes applications to access Azure cloud resources securely with Azure AD. See https://aka.ms/aks/wi for more details. </summary>
         internal ManagedClusterSecurityProfileWorkloadIdentity WorkloadIdentity { get; set; }
         /// <summary> Whether to enable workload identity. </summary>
+        [WirePath("workloadIdentity.enabled")]
         public bool? IsWorkloadIdentityEnabled
         {
             get => WorkloadIdentity is null ? default : WorkloadIdentity.IsWorkloadIdentityEnabled;
@@ -84,6 +87,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Image Cleaner settings for the security profile. </summary>
+        [WirePath("imageCleaner")]
         public ManagedClusterSecurityProfileImageCleaner ImageCleaner { get; set; }
     }
 }

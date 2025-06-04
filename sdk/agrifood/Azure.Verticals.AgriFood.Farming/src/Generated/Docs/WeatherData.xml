@@ -7,7 +7,7 @@ This sample shows how to call GetWeatherDataAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -29,7 +29,7 @@ This sample shows how to call GetWeatherDataAsync with all request content and p
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -127,7 +127,7 @@ This sample shows how to call GetWeatherData and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -149,7 +149,7 @@ This sample shows how to call GetWeatherData with all request content and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
 using RequestContent content = RequestContent.Create(new
 {

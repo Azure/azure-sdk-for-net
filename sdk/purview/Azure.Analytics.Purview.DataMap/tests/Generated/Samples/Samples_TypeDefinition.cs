@@ -19,27 +19,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataById_ShortVersion()
+        public void Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = client.GetBusinessMetadataById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataById_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetBusinessMetadataByIdAsync("<guid>", null);
+            Response response = client.GetBusinessMetadataById("d8757510-c866-61ba-486f-1afca09f43b8", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -47,171 +33,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataById_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetBusinessMetadataById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetBusinessMetadataByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetBusinessMetadataByName("<name>", null);
+            Response response = await client.GetBusinessMetadataByIdAsync("d8757510-c866-61ba-486f-1afca09f43b8", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -219,185 +47,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetBusinessMetadataByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataById("d8757510-c866-61ba-486f-1afca09f43b8");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetBusinessMetadataById_TypeGetBusinessMetadataDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("<name>");
+            Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByIdAsync("d8757510-c866-61ba-486f-1afca09f43b8");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataByName_ShortVersion_Convenience_Async()
+        public void Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetBusinessMetadataByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetBusinessMetadataByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetBusinessMetadataByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetBusinessMetadataByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetClassificationById("<guid>", null);
+            Response response = client.GetBusinessMetadataByName("Business_Metadata_Type_Name", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -405,191 +83,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationById_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetClassificationByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationById_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasClassificationDef> response = client.GetClassificationById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetClassificationById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetClassificationByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasClassificationDef> response = client.GetClassificationById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetClassificationByName("<name>", null);
+            Response response = await client.GetBusinessMetadataByNameAsync("Business_Metadata_Type_Name", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -597,191 +97,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetClassificationByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Response<AtlasBusinessMetadataDef> response = client.GetBusinessMetadataByName("Business_Metadata_Type_Name");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetBusinessMetadataByName_TypeGetBusinessMetadataDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasClassificationDef> response = client.GetClassificationByName("<name>");
+            Response<AtlasBusinessMetadataDef> response = await client.GetBusinessMetadataByNameAsync("Business_Metadata_Type_Name");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationByName_ShortVersion_Convenience_Async()
+        public void Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetClassificationByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetClassificationByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetClassificationByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasClassificationDef> response = client.GetClassificationByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetClassificationByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEntityById("<guid>", null);
+            Response response = client.GetClassificationById("e79878fa-adba-4ee5-adc5-328d8841cd49", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -789,221 +133,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityById_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetEntityByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityById_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEntityDef> response = client.GetEntityById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEntityById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetEntityByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEntityDef> response = client.GetEntityById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEntityByName("<name>", null);
+            Response response = await client.GetClassificationByIdAsync("e79878fa-adba-4ee5-adc5-328d8841cd49", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1011,221 +147,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetEntityByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            Response<AtlasClassificationDef> response = client.GetClassificationById("e79878fa-adba-4ee5-adc5-328d8841cd49");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetClassificationById_TypeGetClassificationDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasEntityDef> response = client.GetEntityByName("<name>");
+            Response<AtlasClassificationDef> response = await client.GetClassificationByIdAsync("e79878fa-adba-4ee5-adc5-328d8841cd49");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityByName_ShortVersion_Convenience_Async()
+        public void Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEntityByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetEntityByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEntityByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEntityDef> response = client.GetEntityByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEntityByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEnumById("<guid>", null);
+            Response response = client.GetClassificationByName("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1233,165 +183,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumById_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetEnumByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumById_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = client.GetEnumById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEnumById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetEnumByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = client.GetEnumById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEnumByName("<name>", null);
+            Response response = await client.GetClassificationByNameAsync("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1399,13 +197,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetEnumByNameAsync("<name>", null);
+            Response<AtlasClassificationDef> response = client.GetClassificationByName("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetClassificationByName_TypeGetClassificationDefByName_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasClassificationDef> response = await client.GetClassificationByNameAsync("MICROSOFT.GOVERNMENT.CANADA.SOCIAL_INSURANCE_NUMBER");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetEntityById("4bc54c37-98a8-4de8-9ee8-182610859d43", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1413,151 +233,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasEnumDef> response = client.GetEnumByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumByName_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetEnumByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetEnumByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetEnumByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = client.GetEnumByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetEnumByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetRelationshipById("<guid>", null);
+            Response response = await client.GetEntityByIdAsync("4bc54c37-98a8-4de8-9ee8-182610859d43", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1565,13 +247,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipById_ShortVersion_Async()
+        public void Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetRelationshipByIdAsync("<guid>", null);
+            Response<AtlasEntityDef> response = client.GetEntityById("4bc54c37-98a8-4de8-9ee8-182610859d43");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetEntityById_TypeGetEntityDefByGuid_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasEntityDef> response = await client.GetEntityByIdAsync("4bc54c37-98a8-4de8-9ee8-182610859d43");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetEntityByName("DataSet", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1579,199 +283,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipById_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasRelationshipDef> response = client.GetRelationshipById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetRelationshipById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetRelationshipByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasRelationshipDef> response = client.GetRelationshipById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetRelationshipByName("<name>", null);
+            Response response = await client.GetEntityByNameAsync("DataSet", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1779,13 +297,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetRelationshipByNameAsync("<name>", null);
+            Response<AtlasEntityDef> response = client.GetEntityByName("DataSet");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetEntityByName_TypeGetEntityDefByName_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasEntityDef> response = await client.GetEntityByNameAsync("DataSet");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetEnumById("644ab9c7-893a-4a4d-8e0a-591a6556d1a0", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1793,199 +333,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasRelationshipDef> response = client.GetRelationshipByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipByName_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetRelationshipByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetRelationshipByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetRelationshipByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasRelationshipDef> response = client.GetRelationshipByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetRelationshipByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetStructById("<guid>", null);
+            Response response = await client.GetEnumByIdAsync("644ab9c7-893a-4a4d-8e0a-591a6556d1a0", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -1993,13 +347,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructById_ShortVersion_Async()
+        public void Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetStructByIdAsync("<guid>", null);
+            Response<AtlasEnumDef> response = client.GetEnumById("644ab9c7-893a-4a4d-8e0a-591a6556d1a0");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetEnumById_TypeGetEnumDefByGuid_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasEnumDef> response = await client.GetEnumByIdAsync("644ab9c7-893a-4a4d-8e0a-591a6556d1a0");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetEnumByName("hive_principal_type", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2007,171 +383,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructById_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasStructDef> response = client.GetStructById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasStructDef> response = await client.GetStructByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetStructById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetStructByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasStructDef> response = client.GetStructById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasStructDef> response = await client.GetStructByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetStructByName("<name>", null);
+            Response response = await client.GetEnumByNameAsync("hive_principal_type", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2179,13 +397,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetStructByNameAsync("<name>", null);
+            Response<AtlasEnumDef> response = client.GetEnumByName("hive_principal_type");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetEnumByName_TypeGetEnumDefByName_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasEnumDef> response = await client.GetEnumByNameAsync("hive_principal_type");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetRelationshipById("695edde1-2782-4a3c-841b-0b3aba25fe45", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2193,171 +433,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasStructDef> response = client.GetStructByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructByName_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasStructDef> response = await client.GetStructByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetStructByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetStructByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetStructByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasStructDef> response = client.GetStructByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetStructByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasStructDef> response = await client.GetStructByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetById("<guid>", null);
+            Response response = await client.GetRelationshipByIdAsync("695edde1-2782-4a3c-841b-0b3aba25fe45", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2365,13 +447,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetById_ShortVersion_Async()
+        public void Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetByIdAsync("<guid>", null);
+            Response<AtlasRelationshipDef> response = client.GetRelationshipById("695edde1-2782-4a3c-841b-0b3aba25fe45");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetRelationshipById_TypeGetRelationshipDefByGuid_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasRelationshipDef> response = await client.GetRelationshipByIdAsync("695edde1-2782-4a3c-841b-0b3aba25fe45");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetRelationshipByName("storm_topology_nodes", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2379,245 +483,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetById_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasTypeDef> response = client.GetById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetById_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasTypeDef> response = await client.GetByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetById_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.GetByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasTypeDef> response = client.GetById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasTypeDef> response = await client.GetByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetByName("<name>", null);
+            Response response = await client.GetRelationshipByNameAsync("storm_topology_nodes", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2625,13 +497,35 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetByName_ShortVersion_Async()
+        public void Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetByNameAsync("<name>", null);
+            Response<AtlasRelationshipDef> response = client.GetRelationshipByName("storm_topology_nodes");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetRelationshipByName_TypeGetRelationshipDefByName_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasRelationshipDef> response = await client.GetRelationshipByNameAsync("storm_topology_nodes");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetStructById("f1571b6e-ad08-4040-a9a7-c30ed935d437", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2639,297 +533,225 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetByName_ShortVersion_Convenience()
+        public async Task Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasTypeDef> response = client.GetByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetByName_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response<AtlasTypeDef> response = await client.GetByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetByName("<name>", null);
+            Response response = await client.GetStructByIdAsync("f1571b6e-ad08-4040-a9a7-c30ed935d437", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetByName_AllParameters_Async()
+        public void Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetByNameAsync("<name>", null);
+            Response<AtlasStructDef> response = client.GetStructById("f1571b6e-ad08-4040-a9a7-c30ed935d437");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetStructById_TypeGetStructDefByGuid_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasStructDef> response = await client.GetStructByIdAsync("f1571b6e-ad08-4040-a9a7-c30ed935d437");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetStructByName_TypeGetStructDefByName()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetStructByName("hive_order", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetByName_AllParameters_Convenience()
+        public async Task Example_TypeDefinition_GetStructByName_TypeGetStructDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasTypeDef> response = client.GetByName("<name>");
+            Response response = await client.GetStructByNameAsync("hive_order", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetByName_AllParameters_Convenience_Async()
+        public void Example_TypeDefinition_GetStructByName_TypeGetStructDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response<AtlasTypeDef> response = await client.GetByNameAsync("<name>");
+            Response<AtlasStructDef> response = client.GetStructByName("hive_order");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_Delete_ShortVersion()
+        public async Task Example_TypeDefinition_GetStructByName_TypeGetStructDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = client.Delete("<name>");
+            Response<AtlasStructDef> response = await client.GetStructByNameAsync("hive_order");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetById_TypeGetByGuid()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetById("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetById_TypeGetByGuid_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = await client.GetByIdAsync("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetById_TypeGetByGuid_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasTypeDef> response = client.GetById("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetById_TypeGetByGuid_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasTypeDef> response = await client.GetByIdAsync("0ddc2fcf-ad17-4d06-984a-ffb2ffb2a941");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetByName_TypeGetByName()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.GetByName("glossary_term_status_value", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetByName_TypeGetByName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = await client.GetByNameAsync("glossary_term_status_value", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetByName_TypeGetByName_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasTypeDef> response = client.GetByName("glossary_term_status_value");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetByName_TypeGetByName_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response<AtlasTypeDef> response = await client.GetByNameAsync("glossary_term_status_value");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_Delete_TypeDelete()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+
+            Response response = client.Delete("hive_order");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_Delete_ShortVersion_Async()
+        public async Task Example_TypeDefinition_Delete_TypeDelete_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.DeleteAsync("<name>");
+            Response response = await client.DeleteAsync("hive_order");
 
             Console.WriteLine(response.Status);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_Delete_AllParameters()
+        public void Example_TypeDefinition_GetTypeDefinition_TypeList()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = client.Delete("<name>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_Delete_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = await client.DeleteAsync("<name>");
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTypeDefinition_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            Response response = client.GetTypeDefinition(null, null, null);
+            Response response = client.GetTypeDefinition(true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2937,13 +759,13 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTypeDefinition_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetTypeDefinition_TypeList_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = await client.GetTypeDefinitionAsync(null, null, null);
+            Response response = await client.GetTypeDefinitionAsync(true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -2951,749 +773,165 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTypeDefinition_ShortVersion_Convenience()
+        public void Example_TypeDefinition_GetTypeDefinition_TypeList_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
             Response<AtlasTypesDef> response = client.GetTypeDefinition();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTypeDefinition_ShortVersion_Convenience_Async()
+        public async Task Example_TypeDefinition_GetTypeDefinition_TypeList_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
             Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTypeDefinition_AllParameters()
+        public void Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = client.GetTypeDefinition(true, "PRIMITIVE", null);
+            Response response = client.GetTypeDefinition(null, "ENUM", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTypeDefinition_AllParameters_Async()
+        public async Task Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = await client.GetTypeDefinitionAsync(true, "PRIMITIVE", null);
+            Response response = await client.GetTypeDefinitionAsync(null, "ENUM", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTypeDefinition_AllParameters_Convenience()
+        public void Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response<AtlasTypesDef> response = client.GetTypeDefinition(includeTermTemplate: true, type: TypeCategory.Primitive);
+            Response<AtlasTypesDef> response = client.GetTypeDefinition();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTypeDefinition_AllParameters_Convenience_Async()
+        public async Task Example_TypeDefinition_GetTypeDefinition_TypeListEnumDefs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync(includeTermTemplate: true, type: TypeCategory.Primitive);
+            Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchCreate_ShortVersion()
+        public void Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+            Response response = client.GetTypeDefinition(null, "TERM_TEMPLATE", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+            Response response = await client.GetTypeDefinitionAsync(null, "TERM_TEMPLATE", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+            Response<AtlasTypesDef> response = client.GetTypeDefinition();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TypeDefinition_GetTypeDefinition_TypeListTermTemplateDefs_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
+
+            Response<AtlasTypesDef> response = await client.GetTypeDefinitionAsync();
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TypeDefinition_BatchCreate_TypeBulkCreate()
+        {
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
+                entityDefs = new object[]
+            {
+new
+{
+name = "azure_sql_server_example",
+superTypes = new object[]
+{
+"azure_resource"
+},
+typeVersion = "1.0",
+attributeDefs = new object[]
+{
+new
+{
+name = "databases",
+typeName = "array<azure_sql_db>",
+cardinality = "SET",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+}
+},
+}
+            },
+                relationshipDefs = Array.Empty<object>(),
+            });
             Response response = client.BatchCreate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3702,13 +940,43 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchCreate_ShortVersion_Async()
+        public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreate_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
+                entityDefs = new object[]
+            {
+new
+{
+name = "azure_sql_server_example",
+superTypes = new object[]
+{
+"azure_resource"
+},
+typeVersion = "1.0",
+attributeDefs = new object[]
+{
+new
+{
+name = "databases",
+typeName = "array<azure_sql_db>",
+cardinality = "SET",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+}
+},
+}
+            },
+                relationshipDefs = Array.Empty<object>(),
+            });
             Response response = await client.BatchCreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -3717,345 +985,107 @@ namespace Azure.Analytics.Purview.DataMap.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchCreate_ShortVersion_Convenience()
+        public void Example_TypeDefinition_BatchCreate_TypeBulkCreate_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef
+            {
+                ClassificationDefs = { },
+                EntityDefs = {new AtlasEntityDef
+{
+Name = "azure_sql_server_example",
+TypeVersion = "1.0",
+AttributeDefs = {new AtlasAttributeDef
+{
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
+IsOptional = true,
+IsUnique = false,
+Name = "databases",
+TypeName = "array<azure_sql_db>",
+}},
+SuperTypes = {"azure_resource"},
+}},
+                EnumDefs = { },
+                RelationshipDefs = { },
+                StructDefs = { },
+            };
+            Response<AtlasTypesDef> response = client.BatchCreate(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchCreate_ShortVersion_Convenience_Async()
+        public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+            AtlasTypesDef body = new AtlasTypesDef
+            {
+                ClassificationDefs = { },
+                EntityDefs = {new AtlasEntityDef
+{
+Name = "azure_sql_server_example",
+TypeVersion = "1.0",
+AttributeDefs = {new AtlasAttributeDef
+{
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
+IsOptional = true,
+IsUnique = false,
+Name = "databases",
+TypeName = "array<azure_sql_db>",
+}},
+SuperTypes = {"azure_resource"},
+}},
+                EnumDefs = { },
+                RelationshipDefs = { },
+                StructDefs = { },
+            };
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchCreate_AllParameters()
+        public void Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
+                entityDefs = Array.Empty<object>(),
+                relationshipDefs = Array.Empty<object>(),
                 businessMetadataDefs = new object[]
             {
 new
 {
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-dateFormatter = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-calendar = 123.45F,
-lenient = true,
-numberFormat = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-currency = "<currency>",
-groupingUsed = true,
-maximumFractionDigits = 1234,
-maximumIntegerDigits = 1234,
-minimumFractionDigits = 1234,
-minimumIntegerDigits = 1234,
-parseIntegerOnly = true,
-roundingMode = "UP",
-},
-timeZone = new Dictionary<string, object>
-{
-["dstSavings"] = 1234,
-["id"] = "<id>",
-["availableIds"] = new object[]
-{
-"<availableIds>"
-},
-["default"] = null,
-["displayName"] = "<displayName>",
-["rawOffset"] = 1234
-},
-},
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
+name = "myBizMetadata1",
+description = "",
 attributeDefs = new object[]
 {
 new
 {
-cardinality = "SINGLE",
-constraints = new object[]
-{
-new Dictionary<string, object>
-{
-["params"] = new
-{
-key = new object(),
-},
-["type"] = "<type>"
-}
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
+name = "bizAttr1",
+typeName = "string",
 isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-}
-},
-}
-            },
-                classificationDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-entityTypes = new object[]
-{
-"<entityTypes>"
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-}
-            },
-                entityDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-relationshipAttributeDefs = new object[]
-{
-new
-{
 cardinality = "SINGLE",
-constraints = new object[]
-{
-null
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
+isUnique = false,
 isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
 options = new
 {
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-isLegacyAttribute = true,
-relationshipTypeName = "<relationshipTypeName>",
-}
+maxStrLength = "50",
+applicableEntityTypes = "[\"Path\"]",
 },
 }
-            },
-                enumDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-defaultValue = "<defaultValue>",
-elementDefs = new object[]
-{
-new
-{
-description = "<description>",
-ordinal = 1234,
-value = "<value>",
-}
-},
-}
-            },
-                relationshipDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-endDef1 = new
-{
-cardinality = "SINGLE",
-description = "<description>",
-isContainer = true,
-isLegacyAttribute = true,
-name = "<name>",
-type = "<type>",
-},
-relationshipCategory = "ASSOCIATION",
-relationshipLabel = "<relationshipLabel>",
-}
-            },
-                structDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-                termTemplateDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
 },
 }
             },
@@ -4063,658 +1093,46 @@ null
             Response response = client.BatchCreate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchCreate_AllParameters_Async()
+        public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
+                entityDefs = Array.Empty<object>(),
+                relationshipDefs = Array.Empty<object>(),
                 businessMetadataDefs = new object[]
             {
 new
 {
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-dateFormatter = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-calendar = 123.45F,
-lenient = true,
-numberFormat = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-currency = "<currency>",
-groupingUsed = true,
-maximumFractionDigits = 1234,
-maximumIntegerDigits = 1234,
-minimumFractionDigits = 1234,
-minimumIntegerDigits = 1234,
-parseIntegerOnly = true,
-roundingMode = "UP",
-},
-timeZone = new Dictionary<string, object>
-{
-["dstSavings"] = 1234,
-["id"] = "<id>",
-["availableIds"] = new object[]
-{
-"<availableIds>"
-},
-["default"] = null,
-["displayName"] = "<displayName>",
-["rawOffset"] = 1234
-},
-},
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
+name = "myBizMetadata1",
+description = "",
 attributeDefs = new object[]
 {
 new
 {
-cardinality = "SINGLE",
-constraints = new object[]
-{
-new Dictionary<string, object>
-{
-["params"] = new
-{
-key = new object(),
-},
-["type"] = "<type>"
-}
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
+name = "bizAttr1",
+typeName = "string",
 isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-}
-},
-}
-            },
-                classificationDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-entityTypes = new object[]
-{
-"<entityTypes>"
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-}
-            },
-                entityDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-relationshipAttributeDefs = new object[]
-{
-new
-{
 cardinality = "SINGLE",
-constraints = new object[]
-{
-null
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
+isUnique = false,
 isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
 options = new
 {
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-isLegacyAttribute = true,
-relationshipTypeName = "<relationshipTypeName>",
-}
+maxStrLength = "50",
+applicableEntityTypes = "[\"Path\"]",
 },
 }
-            },
-                enumDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-defaultValue = "<defaultValue>",
-elementDefs = new object[]
-{
-new
-{
-description = "<description>",
-ordinal = 1234,
-value = "<value>",
-}
-},
-}
-            },
-                relationshipDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-endDef1 = new
-{
-cardinality = "SINGLE",
-description = "<description>",
-isContainer = true,
-isLegacyAttribute = true,
-name = "<name>",
-type = "<type>",
-},
-relationshipCategory = "ASSOCIATION",
-relationshipLabel = "<relationshipLabel>",
-}
-            },
-                structDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-                termTemplateDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
 },
 }
             },
@@ -4722,880 +1140,229 @@ null
             Response response = await client.BatchCreateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
+            Console.WriteLine(result.ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchCreate_AllParameters_Convenience()
+        public void Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Calendar = 123.45F,
-DateInstance = default,
-DateTimeInstance = default,
-Instance = default,
-Lenient = true,
-NumberFormat = new AtlasNumberFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Currency = "<currency>",
-CurrencyInstance = default,
-GroupingUsed = true,
-Instance = default,
-IntegerInstance = default,
-MaximumFractionDigits = 1234,
-MaximumIntegerDigits = 1234,
-MinimumFractionDigits = 1234,
-MinimumIntegerDigits = 1234,
-NumberInstance = default,
-ParseIntegerOnly = true,
-PercentInstance = default,
-RoundingMode = RoundingMode.Up,
-},
-TimeInstance = default,
-TimeZone = new AtlasTimeZone
-{
-DstSavings = 1234,
-Id = "<id>",
-AvailableIds = {"<availableIds>"},
-Default = default,
-DisplayName = "<displayName>",
-RawOffset = 1234,
-},
-},
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
+Description = "",
+Name = "myBizMetadata1",
 AttributeDefs = {new AtlasAttributeDef
 {
 Cardinality = CardinalityValue.Single,
-Constraints = {new AtlasConstraintDef
-{
-Params =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-Type = "<type>",
-}},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
 IsIndexable = true,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
+IsUnique = false,
+Name = "bizAttr1",
 Options =
 {
-["key"] = "<options>"
+["maxStrLength"] = "50",
+["applicableEntityTypes"] = "[\"Path\"]"
 },
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
+TypeName = "string",
 }},
 }},
-                ClassificationDefs = {new AtlasClassificationDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EntityTypes = {"<entityTypes>"},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-RelationshipAttributeDefs = {new AtlasRelationshipAttributeDef
-{
-Cardinality = CardinalityValue.Single,
-Constraints = {default},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
-IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-IsLegacyAttribute = true,
-RelationshipTypeName = "<relationshipTypeName>",
-}},
-}},
-                EnumDefs = {new AtlasEnumDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-DefaultValue = "<defaultValue>",
-ElementDefs = {new AtlasEnumElementDef
-{
-Description = "<description>",
-Ordinal = 1234,
-Value = "<value>",
-}},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EndDef1 = new AtlasRelationshipEndDef
-{
-Cardinality = CardinalityValue.Single,
-Description = "<description>",
-IsContainer = true,
-IsLegacyAttribute = true,
-Name = "<name>",
-Type = "<type>",
-},
-EndDef2 = default,
-RelationshipCategory = RelationshipCategory.Association,
-RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
+                ClassificationDefs = { },
+                EntityDefs = { },
+                EnumDefs = { },
+                RelationshipDefs = { },
+                StructDefs = { },
             };
-            Response<AtlasTypesDef> response = client.BatchCreate(atlasTypesDef);
+            Response<AtlasTypesDef> response = client.BatchCreate(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchCreate_AllParameters_Convenience_Async()
+        public async Task Example_TypeDefinition_BatchCreate_TypeBulkCreateBusinessMetadataDefs_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
                 BusinessMetadataDefs = {new AtlasBusinessMetadataDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Calendar = 123.45F,
-DateInstance = default,
-DateTimeInstance = default,
-Instance = default,
-Lenient = true,
-NumberFormat = new AtlasNumberFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Currency = "<currency>",
-CurrencyInstance = default,
-GroupingUsed = true,
-Instance = default,
-IntegerInstance = default,
-MaximumFractionDigits = 1234,
-MaximumIntegerDigits = 1234,
-MinimumFractionDigits = 1234,
-MinimumIntegerDigits = 1234,
-NumberInstance = default,
-ParseIntegerOnly = true,
-PercentInstance = default,
-RoundingMode = RoundingMode.Up,
-},
-TimeInstance = default,
-TimeZone = new AtlasTimeZone
-{
-DstSavings = 1234,
-Id = "<id>",
-AvailableIds = {"<availableIds>"},
-Default = default,
-DisplayName = "<displayName>",
-RawOffset = 1234,
-},
-},
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
+Description = "",
+Name = "myBizMetadata1",
 AttributeDefs = {new AtlasAttributeDef
 {
 Cardinality = CardinalityValue.Single,
-Constraints = {new AtlasConstraintDef
-{
-Params =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-Type = "<type>",
-}},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
 IsIndexable = true,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
+IsUnique = false,
+Name = "bizAttr1",
 Options =
 {
-["key"] = "<options>"
+["maxStrLength"] = "50",
+["applicableEntityTypes"] = "[\"Path\"]"
 },
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
+TypeName = "string",
 }},
 }},
-                ClassificationDefs = {new AtlasClassificationDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EntityTypes = {"<entityTypes>"},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-RelationshipAttributeDefs = {new AtlasRelationshipAttributeDef
-{
-Cardinality = CardinalityValue.Single,
-Constraints = {default},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
-IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-IsLegacyAttribute = true,
-RelationshipTypeName = "<relationshipTypeName>",
-}},
-}},
-                EnumDefs = {new AtlasEnumDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-DefaultValue = "<defaultValue>",
-ElementDefs = {new AtlasEnumElementDef
-{
-Description = "<description>",
-Ordinal = 1234,
-Value = "<value>",
-}},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EndDef1 = new AtlasRelationshipEndDef
-{
-Cardinality = CardinalityValue.Single,
-Description = "<description>",
-IsContainer = true,
-IsLegacyAttribute = true,
-Name = "<name>",
-Type = "<type>",
-},
-EndDef2 = default,
-RelationshipCategory = RelationshipCategory.Association,
-RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
+                ClassificationDefs = { },
+                EntityDefs = { },
+                EnumDefs = { },
+                RelationshipDefs = { },
+                StructDefs = { },
             };
-            Response<AtlasTypesDef> response = await client.BatchCreateAsync(atlasTypesDef);
+            Response<AtlasTypesDef> response = await client.BatchCreateAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchUpdate_ShortVersion()
+        public void Example_TypeDefinition_BatchUpdate_TypeBulkUpdate()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
+                entityDefs = new object[]
+            {
+new
+{
+name = "azure_sql_server",
+superTypes = new object[]
+{
+"azure_resource"
+},
+typeVersion = "1.0",
+attributeDefs = new object[]
+{
+new
+{
+name = "databases",
+typeName = "array<azure_sql_db>",
+cardinality = "SET",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+}
+},
+},
+new
+{
+name = "azure_sql_db",
+superTypes = new object[]
+{
+"azure_resource"
+},
+typeVersion = "1.0",
+attributeDefs = new object[]
+{
+new
+{
+name = "server",
+typeName = "azure_sql_server",
+cardinality = "SINGLE",
+constraints = new object[]
+{
+new Dictionary<string, object>
+{
+["type"] = "inverseRef",
+["params"] = new
+{
+attribute = "databases",
+}
+}
+},
+isIndexable = false,
+isOptional = false,
+isUnique = false,
+},
+new
+{
+name = "schemas",
+typeName = "array<azure_sql_schema>",
+cardinality = "SET",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+},
+new
+{
+name = "collation",
+typeName = "string",
+cardinality = "SINGLE",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+},
+new
+{
+name = "compatibilityLevel",
+typeName = "int",
+cardinality = "SINGLE",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+}
+},
+}
+            },
+                relationshipDefs = new object[]
+            {
+new
+{
+name = "azure_sql_server_databases",
+typeVersion = "1.0",
+relationshipCategory = "COMPOSITION",
+endDef1 = new
+{
+type = "azure_sql_server",
+name = "databases",
+isContainer = true,
+cardinality = "SET",
+isLegacyAttribute = true,
+},
+endDef2 = new
+{
+type = "azure_sql_db",
+name = "server",
+isContainer = false,
+cardinality = "SINGLE",
+isLegacyAttribute = true,
+},
+},
+new
+{
+name = "azure_sql_db_schemas",
+typeVersion = "1.0",
+relationshipCategory = "COMPOSITION",
+endDef1 = new
+{
+type = "azure_sql_db",
+name = "schemas",
+isContainer = true,
+cardinality = "SET",
+isLegacyAttribute = true,
+},
+endDef2 = new
+{
+type = "azure_sql_schema",
+name = "db",
+isContainer = false,
+cardinality = "SINGLE",
+isLegacyAttribute = true,
+},
+}
+            },
+            });
             Response response = client.BatchUpdate(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5604,13 +1371,148 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchUpdate_ShortVersion_Async()
+        public async Task Example_TypeDefinition_BatchUpdate_TypeBulkUpdate_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            using RequestContent content = RequestContent.Create(new object());
+            using RequestContent content = RequestContent.Create(new
+            {
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
+                entityDefs = new object[]
+            {
+new
+{
+name = "azure_sql_server",
+superTypes = new object[]
+{
+"azure_resource"
+},
+typeVersion = "1.0",
+attributeDefs = new object[]
+{
+new
+{
+name = "databases",
+typeName = "array<azure_sql_db>",
+cardinality = "SET",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+}
+},
+},
+new
+{
+name = "azure_sql_db",
+superTypes = new object[]
+{
+"azure_resource"
+},
+typeVersion = "1.0",
+attributeDefs = new object[]
+{
+new
+{
+name = "server",
+typeName = "azure_sql_server",
+cardinality = "SINGLE",
+constraints = new object[]
+{
+new Dictionary<string, object>
+{
+["type"] = "inverseRef",
+["params"] = new
+{
+attribute = "databases",
+}
+}
+},
+isIndexable = false,
+isOptional = false,
+isUnique = false,
+},
+new
+{
+name = "schemas",
+typeName = "array<azure_sql_schema>",
+cardinality = "SET",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+},
+new
+{
+name = "collation",
+typeName = "string",
+cardinality = "SINGLE",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+},
+new
+{
+name = "compatibilityLevel",
+typeName = "int",
+cardinality = "SINGLE",
+isIndexable = false,
+isOptional = true,
+isUnique = false,
+}
+},
+}
+            },
+                relationshipDefs = new object[]
+            {
+new
+{
+name = "azure_sql_server_databases",
+typeVersion = "1.0",
+relationshipCategory = "COMPOSITION",
+endDef1 = new
+{
+type = "azure_sql_server",
+name = "databases",
+isContainer = true,
+cardinality = "SET",
+isLegacyAttribute = true,
+},
+endDef2 = new
+{
+type = "azure_sql_db",
+name = "server",
+isContainer = false,
+cardinality = "SINGLE",
+isLegacyAttribute = true,
+},
+},
+new
+{
+name = "azure_sql_db_schemas",
+typeVersion = "1.0",
+relationshipCategory = "COMPOSITION",
+endDef1 = new
+{
+type = "azure_sql_db",
+name = "schemas",
+isContainer = true,
+cardinality = "SET",
+isLegacyAttribute = true,
+},
+endDef2 = new
+{
+type = "azure_sql_schema",
+name = "db",
+isContainer = false,
+cardinality = "SINGLE",
+isLegacyAttribute = true,
+},
+}
+            },
+            });
             Response response = await client.BatchUpdateAsync(content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
@@ -5619,1410 +1521,33 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchUpdate_ShortVersion_Convenience()
+        public void Example_TypeDefinition_BatchUpdate_TypeBulkUpdate_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchUpdate_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchUpdate_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            using RequestContent content = RequestContent.Create(new
+            AtlasTypesDef body = new AtlasTypesDef
             {
-                businessMetadataDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-dateFormatter = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-calendar = 123.45F,
-lenient = true,
-numberFormat = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-currency = "<currency>",
-groupingUsed = true,
-maximumFractionDigits = 1234,
-maximumIntegerDigits = 1234,
-minimumFractionDigits = 1234,
-minimumIntegerDigits = 1234,
-parseIntegerOnly = true,
-roundingMode = "UP",
-},
-timeZone = new Dictionary<string, object>
-{
-["dstSavings"] = 1234,
-["id"] = "<id>",
-["availableIds"] = new object[]
-{
-"<availableIds>"
-},
-["default"] = null,
-["displayName"] = "<displayName>",
-["rawOffset"] = 1234
-},
-},
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-new
-{
-cardinality = "SINGLE",
-constraints = new object[]
-{
-new Dictionary<string, object>
-{
-["params"] = new
-{
-key = new object(),
-},
-["type"] = "<type>"
-}
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-}
-},
-}
-            },
-                classificationDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-entityTypes = new object[]
-{
-"<entityTypes>"
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-}
-            },
-                entityDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-relationshipAttributeDefs = new object[]
-{
-new
-{
-cardinality = "SINGLE",
-constraints = new object[]
-{
-null
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-isLegacyAttribute = true,
-relationshipTypeName = "<relationshipTypeName>",
-}
-},
-}
-            },
-                enumDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-defaultValue = "<defaultValue>",
-elementDefs = new object[]
-{
-new
-{
-description = "<description>",
-ordinal = 1234,
-value = "<value>",
-}
-},
-}
-            },
-                relationshipDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-endDef1 = new
-{
-cardinality = "SINGLE",
-description = "<description>",
-isContainer = true,
-isLegacyAttribute = true,
-name = "<name>",
-type = "<type>",
-},
-relationshipCategory = "ASSOCIATION",
-relationshipLabel = "<relationshipLabel>",
-}
-            },
-                structDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-                termTemplateDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-            });
-            Response response = client.BatchUpdate(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchUpdate_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                businessMetadataDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-dateFormatter = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-calendar = 123.45F,
-lenient = true,
-numberFormat = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-currency = "<currency>",
-groupingUsed = true,
-maximumFractionDigits = 1234,
-maximumIntegerDigits = 1234,
-minimumFractionDigits = 1234,
-minimumIntegerDigits = 1234,
-parseIntegerOnly = true,
-roundingMode = "UP",
-},
-timeZone = new Dictionary<string, object>
-{
-["dstSavings"] = 1234,
-["id"] = "<id>",
-["availableIds"] = new object[]
-{
-"<availableIds>"
-},
-["default"] = null,
-["displayName"] = "<displayName>",
-["rawOffset"] = 1234
-},
-},
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-new
-{
-cardinality = "SINGLE",
-constraints = new object[]
-{
-new Dictionary<string, object>
-{
-["params"] = new
-{
-key = new object(),
-},
-["type"] = "<type>"
-}
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-}
-},
-}
-            },
-                classificationDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-entityTypes = new object[]
-{
-"<entityTypes>"
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-}
-            },
-                entityDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-relationshipAttributeDefs = new object[]
-{
-new
-{
-cardinality = "SINGLE",
-constraints = new object[]
-{
-null
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-isLegacyAttribute = true,
-relationshipTypeName = "<relationshipTypeName>",
-}
-},
-}
-            },
-                enumDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-defaultValue = "<defaultValue>",
-elementDefs = new object[]
-{
-new
-{
-description = "<description>",
-ordinal = 1234,
-value = "<value>",
-}
-},
-}
-            },
-                relationshipDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-endDef1 = new
-{
-cardinality = "SINGLE",
-description = "<description>",
-isContainer = true,
-isLegacyAttribute = true,
-name = "<name>",
-type = "<type>",
-},
-relationshipCategory = "ASSOCIATION",
-relationshipLabel = "<relationshipLabel>",
-}
-            },
-                structDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-                termTemplateDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-            });
-            Response response = await client.BatchUpdateAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("businessMetadataDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("entityTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("classificationDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("subTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("superTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("entityDefs")[0].GetProperty("relationshipAttributeDefs")[0].GetProperty("relationshipTypeName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("ordinal").ToString());
-            Console.WriteLine(result.GetProperty("enumDefs")[0].GetProperty("elementDefs")[0].GetProperty("value").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef1").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isContainer").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("isLegacyAttribute").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("endDef2").GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipCategory").ToString());
-            Console.WriteLine(result.GetProperty("relationshipDefs")[0].GetProperty("relationshipLabel").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("structDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("termTemplateDefs")[0].GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchUpdate_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
-            {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Calendar = 123.45F,
-DateInstance = default,
-DateTimeInstance = default,
-Instance = default,
-Lenient = true,
-NumberFormat = new AtlasNumberFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Currency = "<currency>",
-CurrencyInstance = default,
-GroupingUsed = true,
-Instance = default,
-IntegerInstance = default,
-MaximumFractionDigits = 1234,
-MaximumIntegerDigits = 1234,
-MinimumFractionDigits = 1234,
-MinimumIntegerDigits = 1234,
-NumberInstance = default,
-ParseIntegerOnly = true,
-PercentInstance = default,
-RoundingMode = RoundingMode.Up,
-},
-TimeInstance = default,
-TimeZone = new AtlasTimeZone
-{
-DstSavings = 1234,
-Id = "<id>",
-AvailableIds = {"<availableIds>"},
-Default = default,
-DisplayName = "<displayName>",
-RawOffset = 1234,
-},
-},
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
+                ClassificationDefs = { },
+                EntityDefs = {new AtlasEntityDef
+{
+Name = "azure_sql_server",
+TypeVersion = "1.0",
+AttributeDefs = {new AtlasAttributeDef
+{
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
+IsOptional = true,
+IsUnique = false,
+Name = "databases",
+TypeName = "array<azure_sql_db>",
+}},
+SuperTypes = {"azure_resource"},
+}, new AtlasEntityDef
+{
+Name = "azure_sql_db",
+TypeVersion = "1.0",
 AttributeDefs = {new AtlasAttributeDef
 {
 Cardinality = CardinalityValue.Single,
@@ -7030,264 +1555,120 @@ Constraints = {new AtlasConstraintDef
 {
 Params =
 {
-["key"] = BinaryData.FromObjectAsJson(new object())
+["attribute"] = BinaryData.FromObjectAsJson("databases")
 },
-Type = "<type>",
+Type = "inverseRef",
 }},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
+IsIndexable = false,
+IsOptional = false,
+IsUnique = false,
+Name = "server",
+TypeName = "azure_sql_server",
+}, new AtlasAttributeDef
+{
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-}},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EntityTypes = {"<entityTypes>"},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-RelationshipAttributeDefs = {new AtlasRelationshipAttributeDef
+IsUnique = false,
+Name = "schemas",
+TypeName = "array<azure_sql_schema>",
+}, new AtlasAttributeDef
 {
 Cardinality = CardinalityValue.Single,
-Constraints = {default},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
+IsIndexable = false,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
+IsUnique = false,
+Name = "collation",
+TypeName = "string",
+}, new AtlasAttributeDef
 {
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-IsLegacyAttribute = true,
-RelationshipTypeName = "<relationshipTypeName>",
+Cardinality = CardinalityValue.Single,
+IsIndexable = false,
+IsOptional = true,
+IsUnique = false,
+Name = "compatibilityLevel",
+TypeName = "int",
 }},
+SuperTypes = {"azure_resource"},
 }},
-                EnumDefs = {new AtlasEnumDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-DefaultValue = "<defaultValue>",
-ElementDefs = {new AtlasEnumElementDef
-{
-Description = "<description>",
-Ordinal = 1234,
-Value = "<value>",
-}},
-}},
+                EnumDefs = { },
                 RelationshipDefs = {new AtlasRelationshipDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
+Name = "azure_sql_server_databases",
+TypeVersion = "1.0",
 EndDef1 = new AtlasRelationshipEndDef
 {
-Cardinality = CardinalityValue.Single,
-Description = "<description>",
+Cardinality = CardinalityValue.Set,
 IsContainer = true,
 IsLegacyAttribute = true,
-Name = "<name>",
-Type = "<type>",
+Name = "databases",
+Type = "azure_sql_server",
 },
-EndDef2 = default,
-RelationshipCategory = RelationshipCategory.Association,
-RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+EndDef2 = new AtlasRelationshipEndDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
+Cardinality = CardinalityValue.Single,
+IsContainer = false,
+IsLegacyAttribute = true,
+Name = "server",
+Type = "azure_sql_db",
 },
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+RelationshipCategory = RelationshipCategory.Composition,
+}, new AtlasRelationshipDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
+Name = "azure_sql_db_schemas",
+TypeVersion = "1.0",
+EndDef1 = new AtlasRelationshipEndDef
 {
-["key"] = "<options>"
+Cardinality = CardinalityValue.Set,
+IsContainer = true,
+IsLegacyAttribute = true,
+Name = "schemas",
+Type = "azure_sql_db",
 },
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
+EndDef2 = new AtlasRelationshipEndDef
+{
+Cardinality = CardinalityValue.Single,
+IsContainer = false,
+IsLegacyAttribute = true,
+Name = "db",
+Type = "azure_sql_schema",
+},
+RelationshipCategory = RelationshipCategory.Composition,
 }},
+                StructDefs = { },
             };
-            Response<AtlasTypesDef> response = client.BatchUpdate(atlasTypesDef);
+            Response<AtlasTypesDef> response = client.BatchUpdate(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchUpdate_AllParameters_Convenience_Async()
+        public async Task Example_TypeDefinition_BatchUpdate_TypeBulkUpdate_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
+                ClassificationDefs = { },
+                EntityDefs = {new AtlasEntityDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
+Name = "azure_sql_server",
+TypeVersion = "1.0",
+AttributeDefs = {new AtlasAttributeDef
 {
-AvailableLocales = {"<availableLocales>"},
-Calendar = 123.45F,
-DateInstance = default,
-DateTimeInstance = default,
-Instance = default,
-Lenient = true,
-NumberFormat = new AtlasNumberFormat
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
+IsOptional = true,
+IsUnique = false,
+Name = "databases",
+TypeName = "array<azure_sql_db>",
+}},
+SuperTypes = {"azure_resource"},
+}, new AtlasEntityDef
 {
-AvailableLocales = {"<availableLocales>"},
-Currency = "<currency>",
-CurrencyInstance = default,
-GroupingUsed = true,
-Instance = default,
-IntegerInstance = default,
-MaximumFractionDigits = 1234,
-MaximumIntegerDigits = 1234,
-MinimumFractionDigits = 1234,
-MinimumIntegerDigits = 1234,
-NumberInstance = default,
-ParseIntegerOnly = true,
-PercentInstance = default,
-RoundingMode = RoundingMode.Up,
-},
-TimeInstance = default,
-TimeZone = new AtlasTimeZone
-{
-DstSavings = 1234,
-Id = "<id>",
-AvailableIds = {"<availableIds>"},
-Default = default,
-DisplayName = "<displayName>",
-RawOffset = 1234,
-},
-},
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
+Name = "azure_sql_db",
+TypeVersion = "1.0",
 AttributeDefs = {new AtlasAttributeDef
 {
 Cardinality = CardinalityValue.Single,
@@ -7295,572 +1676,129 @@ Constraints = {new AtlasConstraintDef
 {
 Params =
 {
-["key"] = BinaryData.FromObjectAsJson(new object())
+["attribute"] = BinaryData.FromObjectAsJson("databases")
 },
-Type = "<type>",
+Type = "inverseRef",
 }},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
+IsIndexable = false,
+IsOptional = false,
+IsUnique = false,
+Name = "server",
+TypeName = "azure_sql_server",
+}, new AtlasAttributeDef
+{
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-}},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EntityTypes = {"<entityTypes>"},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-}},
-                EntityDefs = {new AtlasEntityDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-RelationshipAttributeDefs = {new AtlasRelationshipAttributeDef
+IsUnique = false,
+Name = "schemas",
+TypeName = "array<azure_sql_schema>",
+}, new AtlasAttributeDef
 {
 Cardinality = CardinalityValue.Single,
-Constraints = {default},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
+IsIndexable = false,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
+IsUnique = false,
+Name = "collation",
+TypeName = "string",
+}, new AtlasAttributeDef
 {
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-IsLegacyAttribute = true,
-RelationshipTypeName = "<relationshipTypeName>",
+Cardinality = CardinalityValue.Single,
+IsIndexable = false,
+IsOptional = true,
+IsUnique = false,
+Name = "compatibilityLevel",
+TypeName = "int",
 }},
+SuperTypes = {"azure_resource"},
 }},
-                EnumDefs = {new AtlasEnumDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-DefaultValue = "<defaultValue>",
-ElementDefs = {new AtlasEnumElementDef
-{
-Description = "<description>",
-Ordinal = 1234,
-Value = "<value>",
-}},
-}},
+                EnumDefs = { },
                 RelationshipDefs = {new AtlasRelationshipDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
+Name = "azure_sql_server_databases",
+TypeVersion = "1.0",
 EndDef1 = new AtlasRelationshipEndDef
 {
-Cardinality = CardinalityValue.Single,
-Description = "<description>",
+Cardinality = CardinalityValue.Set,
 IsContainer = true,
 IsLegacyAttribute = true,
-Name = "<name>",
-Type = "<type>",
+Name = "databases",
+Type = "azure_sql_server",
 },
-EndDef2 = default,
-RelationshipCategory = RelationshipCategory.Association,
-RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
+EndDef2 = new AtlasRelationshipEndDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
+Cardinality = CardinalityValue.Single,
+IsContainer = false,
+IsLegacyAttribute = true,
+Name = "server",
+Type = "azure_sql_db",
 },
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
+RelationshipCategory = RelationshipCategory.Composition,
+}, new AtlasRelationshipDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
+Name = "azure_sql_db_schemas",
+TypeVersion = "1.0",
+EndDef1 = new AtlasRelationshipEndDef
 {
-["key"] = "<options>"
+Cardinality = CardinalityValue.Set,
+IsContainer = true,
+IsLegacyAttribute = true,
+Name = "schemas",
+Type = "azure_sql_db",
 },
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
+EndDef2 = new AtlasRelationshipEndDef
+{
+Cardinality = CardinalityValue.Single,
+IsContainer = false,
+IsLegacyAttribute = true,
+Name = "db",
+Type = "azure_sql_schema",
+},
+RelationshipCategory = RelationshipCategory.Composition,
 }},
+                StructDefs = { },
             };
-            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(atlasTypesDef);
+            Response<AtlasTypesDef> response = await client.BatchUpdateAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchDelete_ShortVersion()
+        public void Example_TypeDefinition_BatchDelete_TypeBulkDelete()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = client.BatchDelete(content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchDelete_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            using RequestContent content = RequestContent.Create(new object());
-            Response response = await client.BatchDeleteAsync(content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchDelete_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response response = client.BatchDelete(atlasTypesDef);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchDelete_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
-
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef();
-            Response response = await client.BatchDeleteAsync(atlasTypesDef);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchDelete_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-dateFormatter = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-calendar = 123.45F,
-lenient = true,
-numberFormat = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-currency = "<currency>",
-groupingUsed = true,
-maximumFractionDigits = 1234,
-maximumIntegerDigits = 1234,
-minimumFractionDigits = 1234,
-minimumIntegerDigits = 1234,
-parseIntegerOnly = true,
-roundingMode = "UP",
-},
-timeZone = new Dictionary<string, object>
-{
-["dstSavings"] = 1234,
-["id"] = "<id>",
-["availableIds"] = new object[]
-{
-"<availableIds>"
-},
-["default"] = null,
-["displayName"] = "<displayName>",
-["rawOffset"] = 1234
-},
-},
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-new
-{
-cardinality = "SINGLE",
-constraints = new object[]
-{
-new Dictionary<string, object>
-{
-["params"] = new
-{
-key = new object(),
-},
-["type"] = "<type>"
-}
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-}
-},
-}
-            },
-                classificationDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-entityTypes = new object[]
-{
-"<entityTypes>"
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-}
-            },
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
                 entityDefs = new object[]
             {
 new
 {
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
+name = "azure_sql_server_example",
 superTypes = new object[]
 {
-"<superTypes>"
+"azure_resource"
 },
-relationshipAttributeDefs = new object[]
+typeVersion = "1.0",
+attributeDefs = new object[]
 {
 new
 {
-cardinality = "SINGLE",
-constraints = new object[]
-{
-null
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
+name = "databases",
+typeName = "array<azure_sql_db>",
+cardinality = "SET",
+isIndexable = false,
 isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-isLegacyAttribute = true,
-relationshipTypeName = "<relationshipTypeName>",
+isUnique = false,
 }
 },
 }
             },
-                enumDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-defaultValue = "<defaultValue>",
-elementDefs = new object[]
-{
-new
-{
-description = "<description>",
-ordinal = 1234,
-value = "<value>",
-}
-},
-}
-            },
-                relationshipDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-endDef1 = new
-{
-cardinality = "SINGLE",
-description = "<description>",
-isContainer = true,
-isLegacyAttribute = true,
-name = "<name>",
-type = "<type>",
-},
-relationshipCategory = "ASSOCIATION",
-relationshipLabel = "<relationshipLabel>",
-}
-            },
-                structDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-                termTemplateDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
+                relationshipDefs = Array.Empty<object>(),
             });
             Response response = client.BatchDelete(content);
 
@@ -7869,324 +1807,42 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchDelete_AllParameters_Async()
+        public async Task Example_TypeDefinition_BatchDelete_TypeBulkDelete_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
             using RequestContent content = RequestContent.Create(new
             {
-                businessMetadataDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-dateFormatter = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-calendar = 123.45F,
-lenient = true,
-numberFormat = new
-{
-availableLocales = new object[]
-{
-"<availableLocales>"
-},
-currency = "<currency>",
-groupingUsed = true,
-maximumFractionDigits = 1234,
-maximumIntegerDigits = 1234,
-minimumFractionDigits = 1234,
-minimumIntegerDigits = 1234,
-parseIntegerOnly = true,
-roundingMode = "UP",
-},
-timeZone = new Dictionary<string, object>
-{
-["dstSavings"] = 1234,
-["id"] = "<id>",
-["availableIds"] = new object[]
-{
-"<availableIds>"
-},
-["default"] = null,
-["displayName"] = "<displayName>",
-["rawOffset"] = 1234
-},
-},
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-new
-{
-cardinality = "SINGLE",
-constraints = new object[]
-{
-new Dictionary<string, object>
-{
-["params"] = new
-{
-key = new object(),
-},
-["type"] = "<type>"
-}
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
-isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-}
-},
-}
-            },
-                classificationDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-entityTypes = new object[]
-{
-"<entityTypes>"
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
-superTypes = new object[]
-{
-"<superTypes>"
-},
-}
-            },
+                enumDefs = Array.Empty<object>(),
+                structDefs = Array.Empty<object>(),
+                classificationDefs = Array.Empty<object>(),
                 entityDefs = new object[]
             {
 new
 {
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-subTypes = new object[]
-{
-"<subTypes>"
-},
+name = "azure_sql_server_example",
 superTypes = new object[]
 {
-"<superTypes>"
+"azure_resource"
 },
-relationshipAttributeDefs = new object[]
+typeVersion = "1.0",
+attributeDefs = new object[]
 {
 new
 {
-cardinality = "SINGLE",
-constraints = new object[]
-{
-null
-},
-defaultValue = "<defaultValue>",
-description = "<description>",
-includeInNotification = true,
-isIndexable = true,
+name = "databases",
+typeName = "array<azure_sql_db>",
+cardinality = "SET",
+isIndexable = false,
 isOptional = true,
-isUnique = true,
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-typeName = "<typeName>",
-valuesMaxCount = 1234,
-valuesMinCount = 1234,
-isLegacyAttribute = true,
-relationshipTypeName = "<relationshipTypeName>",
+isUnique = false,
 }
 },
 }
             },
-                enumDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-defaultValue = "<defaultValue>",
-elementDefs = new object[]
-{
-new
-{
-description = "<description>",
-ordinal = 1234,
-value = "<value>",
-}
-},
-}
-            },
-                relationshipDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-endDef1 = new
-{
-cardinality = "SINGLE",
-description = "<description>",
-isContainer = true,
-isLegacyAttribute = true,
-name = "<name>",
-type = "<type>",
-},
-relationshipCategory = "ASSOCIATION",
-relationshipLabel = "<relationshipLabel>",
-}
-            },
-                structDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
-                termTemplateDefs = new object[]
-            {
-new
-{
-category = "PRIMITIVE",
-createTime = 1234L,
-createdBy = "<createdBy>",
-description = "<description>",
-guid = "<guid>",
-name = "<name>",
-options = new
-{
-key = "<options>",
-},
-serviceType = "<serviceType>",
-typeVersion = "<typeVersion>",
-updateTime = 1234L,
-updatedBy = "<updatedBy>",
-version = 1234L,
-lastModifiedTS = "<lastModifiedTS>",
-attributeDefs = new object[]
-{
-null
-},
-}
-            },
+                relationshipDefs = Array.Empty<object>(),
             });
             Response response = await client.BatchDeleteAsync(content);
 
@@ -8195,543 +1851,79 @@ null
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_BatchDelete_AllParameters_Convenience()
+        public void Example_TypeDefinition_BatchDelete_TypeBulkDelete_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Calendar = 123.45F,
-DateInstance = default,
-DateTimeInstance = default,
-Instance = default,
-Lenient = true,
-NumberFormat = new AtlasNumberFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Currency = "<currency>",
-CurrencyInstance = default,
-GroupingUsed = true,
-Instance = default,
-IntegerInstance = default,
-MaximumFractionDigits = 1234,
-MaximumIntegerDigits = 1234,
-MinimumFractionDigits = 1234,
-MinimumIntegerDigits = 1234,
-NumberInstance = default,
-ParseIntegerOnly = true,
-PercentInstance = default,
-RoundingMode = RoundingMode.Up,
-},
-TimeInstance = default,
-TimeZone = new AtlasTimeZone
-{
-DstSavings = 1234,
-Id = "<id>",
-AvailableIds = {"<availableIds>"},
-Default = default,
-DisplayName = "<displayName>",
-RawOffset = 1234,
-},
-},
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {new AtlasAttributeDef
-{
-Cardinality = CardinalityValue.Single,
-Constraints = {new AtlasConstraintDef
-{
-Params =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-Type = "<type>",
-}},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
-IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-}},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EntityTypes = {"<entityTypes>"},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-}},
+                ClassificationDefs = { },
                 EntityDefs = {new AtlasEntityDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
+Name = "azure_sql_server_example",
+TypeVersion = "1.0",
+AttributeDefs = {new AtlasAttributeDef
 {
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-RelationshipAttributeDefs = {new AtlasRelationshipAttributeDef
-{
-Cardinality = CardinalityValue.Single,
-Constraints = {default},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-IsLegacyAttribute = true,
-RelationshipTypeName = "<relationshipTypeName>",
+IsUnique = false,
+Name = "databases",
+TypeName = "array<azure_sql_db>",
 }},
+SuperTypes = {"azure_resource"},
 }},
-                EnumDefs = {new AtlasEnumDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-DefaultValue = "<defaultValue>",
-ElementDefs = {new AtlasEnumElementDef
-{
-Description = "<description>",
-Ordinal = 1234,
-Value = "<value>",
-}},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EndDef1 = new AtlasRelationshipEndDef
-{
-Cardinality = CardinalityValue.Single,
-Description = "<description>",
-IsContainer = true,
-IsLegacyAttribute = true,
-Name = "<name>",
-Type = "<type>",
-},
-EndDef2 = default,
-RelationshipCategory = RelationshipCategory.Association,
-RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
+                EnumDefs = { },
+                RelationshipDefs = { },
+                StructDefs = { },
             };
-            Response response = client.BatchDelete(atlasTypesDef);
+            Response response = client.BatchDelete(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_BatchDelete_AllParameters_Convenience_Async()
+        public async Task Example_TypeDefinition_BatchDelete_TypeBulkDelete_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            AtlasTypesDef atlasTypesDef = new AtlasTypesDef
+            AtlasTypesDef body = new AtlasTypesDef
             {
-                BusinessMetadataDefs = {new AtlasBusinessMetadataDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = new AtlasDateFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Calendar = 123.45F,
-DateInstance = default,
-DateTimeInstance = default,
-Instance = default,
-Lenient = true,
-NumberFormat = new AtlasNumberFormat
-{
-AvailableLocales = {"<availableLocales>"},
-Currency = "<currency>",
-CurrencyInstance = default,
-GroupingUsed = true,
-Instance = default,
-IntegerInstance = default,
-MaximumFractionDigits = 1234,
-MaximumIntegerDigits = 1234,
-MinimumFractionDigits = 1234,
-MinimumIntegerDigits = 1234,
-NumberInstance = default,
-ParseIntegerOnly = true,
-PercentInstance = default,
-RoundingMode = RoundingMode.Up,
-},
-TimeInstance = default,
-TimeZone = new AtlasTimeZone
-{
-DstSavings = 1234,
-Id = "<id>",
-AvailableIds = {"<availableIds>"},
-Default = default,
-DisplayName = "<displayName>",
-RawOffset = 1234,
-},
-},
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {new AtlasAttributeDef
-{
-Cardinality = CardinalityValue.Single,
-Constraints = {new AtlasConstraintDef
-{
-Params =
-{
-["key"] = BinaryData.FromObjectAsJson(new object())
-},
-Type = "<type>",
-}},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
-IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-}},
-}},
-                ClassificationDefs = {new AtlasClassificationDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EntityTypes = {"<entityTypes>"},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-}},
+                ClassificationDefs = { },
                 EntityDefs = {new AtlasEntityDef
 {
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
+Name = "azure_sql_server_example",
+TypeVersion = "1.0",
+AttributeDefs = {new AtlasAttributeDef
 {
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-SubTypes = {"<subTypes>"},
-SuperTypes = {"<superTypes>"},
-RelationshipAttributeDefs = {new AtlasRelationshipAttributeDef
-{
-Cardinality = CardinalityValue.Single,
-Constraints = {default},
-DefaultValue = "<defaultValue>",
-Description = "<description>",
-IncludeInNotification = true,
-IsIndexable = true,
+Cardinality = CardinalityValue.Set,
+IsIndexable = false,
 IsOptional = true,
-IsUnique = true,
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-TypeName = "<typeName>",
-ValuesMaxCount = 1234,
-ValuesMinCount = 1234,
-IsLegacyAttribute = true,
-RelationshipTypeName = "<relationshipTypeName>",
+IsUnique = false,
+Name = "databases",
+TypeName = "array<azure_sql_db>",
 }},
+SuperTypes = {"azure_resource"},
 }},
-                EnumDefs = {new AtlasEnumDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-DefaultValue = "<defaultValue>",
-ElementDefs = {new AtlasEnumElementDef
-{
-Description = "<description>",
-Ordinal = 1234,
-Value = "<value>",
-}},
-}},
-                RelationshipDefs = {new AtlasRelationshipDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-EndDef1 = new AtlasRelationshipEndDef
-{
-Cardinality = CardinalityValue.Single,
-Description = "<description>",
-IsContainer = true,
-IsLegacyAttribute = true,
-Name = "<name>",
-Type = "<type>",
-},
-EndDef2 = default,
-RelationshipCategory = RelationshipCategory.Association,
-RelationshipLabel = "<relationshipLabel>",
-}},
-                StructDefs = {new AtlasStructDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
-                TermTemplateDefs = {new TermTemplateDef
-{
-Category = TypeCategory.Primitive,
-CreateTime = 1234L,
-CreatedBy = "<createdBy>",
-DateFormatter = default,
-Description = "<description>",
-Guid = "<guid>",
-Name = "<name>",
-Options =
-{
-["key"] = "<options>"
-},
-ServiceType = "<serviceType>",
-TypeVersion = "<typeVersion>",
-UpdateTime = 1234L,
-UpdatedBy = "<updatedBy>",
-Version = 1234L,
-LastModifiedTS = "<lastModifiedTS>",
-AttributeDefs = {default},
-}},
+                EnumDefs = { },
+                RelationshipDefs = { },
+                StructDefs = { },
             };
-            Response response = await client.BatchDeleteAsync(atlasTypesDef);
+            Response response = await client.BatchDeleteAsync(body);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetHeaders_ShortVersion()
+        public void Example_TypeDefinition_GetHeaders_TypeListHeaders()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = client.GetHeaders(null, null, null);
+            Response response = client.GetHeaders(true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -8739,13 +1931,13 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetHeaders_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetHeaders_TypeListHeaders_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
-            Response response = await client.GetHeadersAsync(null, null, null);
+            Response response = await client.GetHeadersAsync(true, null, null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result[0].ToString());
@@ -8753,9 +1945,9 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetHeaders_ShortVersion_Convenience()
+        public void Example_TypeDefinition_GetHeaders_TypeListHeaders_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -8764,9 +1956,9 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetHeaders_ShortVersion_Convenience_Async()
+        public async Task Example_TypeDefinition_GetHeaders_TypeListHeaders_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient();
 
@@ -8775,67 +1967,13 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetHeaders_AllParameters()
+        public void Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = client.GetHeaders(true, "PRIMITIVE", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("category").ToString());
-            Console.WriteLine(result[0].GetProperty("guid").ToString());
-            Console.WriteLine(result[0].GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetHeaders_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response response = await client.GetHeadersAsync(true, "PRIMITIVE", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result[0].GetProperty("category").ToString());
-            Console.WriteLine(result[0].GetProperty("guid").ToString());
-            Console.WriteLine(result[0].GetProperty("name").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetHeaders_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response<IReadOnlyList<AtlasTypeDefHeader>> response = client.GetHeaders(includeTermTemplate: true, type: TypeCategory.Primitive);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetHeaders_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response<IReadOnlyList<AtlasTypeDefHeader>> response = await client.GetHeadersAsync(includeTermTemplate: true, type: TypeCategory.Primitive);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateById_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response response = client.GetTermTemplateById("<guid>", null);
+            Response response = client.GetTermTemplateById("d776af9c-985c-4168-abb2-477523dbfc70", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -8843,13 +1981,13 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateById_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = await client.GetTermTemplateByIdAsync("<guid>", null);
+            Response response = await client.GetTermTemplateByIdAsync("d776af9c-985c-4168-abb2-477523dbfc70", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -8857,171 +1995,35 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateById_ShortVersion_Convenience()
+        public void Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response<TermTemplateDef> response = client.GetTermTemplateById("<guid>");
+            Response<TermTemplateDef> response = client.GetTermTemplateById("d776af9c-985c-4168-abb2-477523dbfc70");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateById_ShortVersion_Convenience_Async()
+        public async Task Example_TypeDefinition_GetTermTemplateById_TypeGetTermTemplateDefByGuid_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response<TermTemplateDef> response = await client.GetTermTemplateByIdAsync("<guid>");
+            Response<TermTemplateDef> response = await client.GetTermTemplateByIdAsync("d776af9c-985c-4168-abb2-477523dbfc70");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateById_AllParameters()
+        public void Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = client.GetTermTemplateById("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateById_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response response = await client.GetTermTemplateByIdAsync("<guid>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateById_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response<TermTemplateDef> response = client.GetTermTemplateById("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateById_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response<TermTemplateDef> response = await client.GetTermTemplateByIdAsync("<guid>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateByName_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response response = client.GetTermTemplateByName("<name>", null);
+            Response response = client.GetTermTemplateByName("MS KPI", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -9029,13 +2031,13 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateByName_ShortVersion_Async()
+        public async Task Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response response = await client.GetTermTemplateByNameAsync("<name>", null);
+            Response response = await client.GetTermTemplateByNameAsync("MS KPI", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.ToString());
@@ -9043,160 +2045,24 @@ AttributeDefs = {default},
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateByName_ShortVersion_Convenience()
+        public void Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName_Convenience()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response<TermTemplateDef> response = client.GetTermTemplateByName("<name>");
+            Response<TermTemplateDef> response = client.GetTermTemplateByName("MS KPI");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateByName_ShortVersion_Convenience_Async()
+        public async Task Example_TypeDefinition_GetTermTemplateByName_TypeGetTermTemplateDefByName_Convenience_Async()
         {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            Uri endpoint = new Uri("<endpoint>");
             TokenCredential credential = new DefaultAzureCredential();
             TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
 
-            Response<TermTemplateDef> response = await client.GetTermTemplateByNameAsync("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateByName_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response response = client.GetTermTemplateByName("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateByName_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response response = await client.GetTermTemplateByNameAsync("<name>", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("createTime").ToString());
-            Console.WriteLine(result.GetProperty("createdBy").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("calendar").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("lenient").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("availableLocales")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("currency").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("groupingUsed").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("maximumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumFractionDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("minimumIntegerDigits").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("parseIntegerOnly").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("numberFormat").GetProperty("roundingMode").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("dstSavings").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("id").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("availableIds")[0].ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("displayName").ToString());
-            Console.WriteLine(result.GetProperty("dateFormatter").GetProperty("timeZone").GetProperty("rawOffset").ToString());
-            Console.WriteLine(result.GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("guid").ToString());
-            Console.WriteLine(result.GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("serviceType").ToString());
-            Console.WriteLine(result.GetProperty("typeVersion").ToString());
-            Console.WriteLine(result.GetProperty("updateTime").ToString());
-            Console.WriteLine(result.GetProperty("updatedBy").ToString());
-            Console.WriteLine(result.GetProperty("version").ToString());
-            Console.WriteLine(result.GetProperty("lastModifiedTS").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("cardinality").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("params").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("constraints")[0].GetProperty("type").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("defaultValue").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("includeInNotification").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isIndexable").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isOptional").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("isUnique").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("name").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("options").GetProperty("<key>").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("typeName").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMaxCount").ToString());
-            Console.WriteLine(result.GetProperty("attributeDefs")[0].GetProperty("valuesMinCount").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TypeDefinition_GetTermTemplateByName_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response<TermTemplateDef> response = client.GetTermTemplateByName("<name>");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TypeDefinition_GetTermTemplateByName_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            TypeDefinition client = new DataMapClient(endpoint, credential).GetTypeDefinitionClient(apiVersion: "2023-09-01");
-
-            Response<TermTemplateDef> response = await client.GetTermTemplateByNameAsync("<name>");
+            Response<TermTemplateDef> response = await client.GetTermTemplateByNameAsync("MS KPI");
         }
     }
 }

@@ -4,8 +4,6 @@ Authenticate to Azure using environment variables
 You'll need the following values to authenticate to Azure:
 
 -   **Subscription ID**
--   **Client ID**
--   **Client Secret**
 -   **Tenant ID**
 
 ## Obtaining the values
@@ -20,17 +18,15 @@ These values can be obtained from the [portal](https://portal.azure.com/) with t
 4.  Select **Overview**.
 5.  Copy the Subscription ID.
 
-### Get Client ID / Client Secret / Tenant ID
+### Get Tenant ID
 
-For information on how to get Client ID, Client Secret, and Tenant ID, see [this
-document](https://docs.microsoft.com/azure/active-directory/develop/howto-create-service-principal-portal).
+For information on how to get Tenant ID, see [this
+document](https://learn.microsoft.com/azure/active-directory-b2c/tenant-management-read-tenant-name).
 
 ## Setting Environment Variables
 
 After you obtain the values, set the following environment variables:
 
--   `AZURE_CLIENT_ID`
--   `AZURE_CLIENT_SECRET`
 -   `AZURE_TENANT_ID`
 -   `AZURE_SUBSCRIPTION_ID`
 
@@ -48,7 +44,5 @@ _(Note: Administrator access is required)_
 
 ### Linux-based OS:
 
-    export AZURE_CLIENT_ID="__CLIENT_ID__"
-    export AZURE_CLIENT_SECRET="__CLIENT_SECRET__"
     export AZURE_TENANT_ID="__TENANT_ID__"
     export AZURE_SUBSCRIPTION_ID="__SUBSCRIPTION_ID__"

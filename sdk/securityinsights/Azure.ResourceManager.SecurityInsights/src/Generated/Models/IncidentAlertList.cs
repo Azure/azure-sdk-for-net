@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Array of incident alerts. </summary>
+        [WirePath("value")]
         public IReadOnlyList<SecurityInsightsAlert> Value { get; }
     }
 }

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -27,7 +28,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// List of Job Part Plan Files associated with this job.
         /// </summary>
-        public Dictionary<int, JobPartPlanFile> JobParts { get; private set; }
+        public ConcurrentDictionary<int, JobPartPlanFile> JobParts { get; private set; }
 
         /// <summary>
         /// Lock for the memory mapped file to allow only one writer.
@@ -38,26 +39,44 @@ namespace Azure.Storage.DataMovement.JobPlan
         {
             Id = id;
             FilePath = filePath;
-            JobParts = new Dictionary<int, JobPartPlanFile>();
+            JobParts = new();
             WriteLock = new SemaphoreSlim(1);
+        }
+
+        private static string ToFullPath(string checkpointerPath, string transferId)
+        {
+            string fileName = $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}";
+            return Path.Combine(checkpointerPath, fileName);
         }
 
         public static async Task<JobPlanFile> CreateJobPlanFileAsync(
             string checkpointerPath,
             string id,
-            Stream headerStream)
+            Stream headerStream,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(checkpointerPath, nameof(checkpointerPath));
             Argument.AssertNotNullOrEmpty(id, nameof(id));
             Argument.AssertNotNull(headerStream, nameof(headerStream));
 
-            string fileName = $"{id}{DataMovementConstants.JobPlanFile.FileExtension}";
-            string filePath = Path.Combine(checkpointerPath, fileName);
+            string filePath = ToFullPath(checkpointerPath, id);
 
             JobPlanFile jobPlanFile = new(id, filePath);
-            using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+            try
             {
-                await headerStream.CopyToAsync(fileStream).ConfigureAwait(false);
+                using (FileStream fileStream = File.Create(jobPlanFile.FilePath))
+                {
+                    await headerStream.CopyToAsync(
+                        fileStream,
+                        DataMovementConstants.DefaultStreamCopyBufferSize,
+                        cancellationToken).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                // will handle if file has not been created yet
+                File.Delete(jobPlanFile.FilePath);
+                throw;
             }
 
             return jobPlanFile;
@@ -76,6 +95,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             }
 
             return new JobPlanFile(transferId, fullPath);
+        }
+
+        public static JobPlanFile LoadExistingJobPlanFile(string checkpointerPath, string transferId)
+        {
+            return LoadExistingJobPlanFile(ToFullPath(checkpointerPath, transferId));
         }
 
         public void Dispose()

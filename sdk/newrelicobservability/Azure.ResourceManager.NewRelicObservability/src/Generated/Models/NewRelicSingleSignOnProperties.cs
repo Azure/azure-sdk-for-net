@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Single sign-on state. </summary>
+        [WirePath("singleSignOnState")]
         public NewRelicSingleSignOnState? SingleSignOnState { get; set; }
         /// <summary> The Id of the Enterprise App used for Single sign-on. </summary>
+        [WirePath("enterpriseAppId")]
         public string EnterpriseAppId { get; set; }
         /// <summary> The login URL specific to this NewRelic Organization. </summary>
+        [WirePath("singleSignOnUrl")]
         public Uri SingleSignOnUri { get; set; }
         /// <summary> Provisioning state. </summary>
+        [WirePath("provisioningState")]
         public NewRelicProvisioningState? ProvisioningState { get; set; }
     }
 }

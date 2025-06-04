@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Array of threat intelligence metric fields (type/threat type/source). </summary>
+        [WirePath("value")]
         public IReadOnlyList<ThreatIntelligenceMetrics> Value { get; }
     }
 }

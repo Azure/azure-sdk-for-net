@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> The location where the SenderUsername resource data is stored at rest. </summary>
+        [WirePath("properties.dataLocation")]
         public string DataLocation { get; }
         /// <summary> A sender senderUsername to be used when sending emails. </summary>
+        [WirePath("properties.username")]
         public string Username { get; set; }
         /// <summary> The display name for the senderUsername. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Provisioning state of the resource. Unknown is the default state for Communication Services. </summary>
+        [WirePath("properties.provisioningState")]
         public CommunicationServiceProvisioningState? ProvisioningState { get; }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -27,25 +28,35 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("credentials"u8);
             writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal);
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue<SearchIndexerDataContainer>(Container);
+            writer.WriteObjectValue(Container);
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
+                    writer.WriteObjectValue(Identity);
                 }
                 else
                 {
                     writer.WriteNull("identity");
                 }
             }
+            if (Optional.IsCollectionDefined(IndexerPermissionOptions))
+            {
+                writer.WritePropertyName("indexerPermissionOptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in IndexerPermissionOptions)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataChangeDetectionPolicy"u8);
-                    writer.WriteObjectValue<DataChangeDetectionPolicy>(DataChangeDetectionPolicy);
+                    writer.WriteObjectValue(DataChangeDetectionPolicy);
                 }
                 else
                 {
@@ -57,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DataDeletionDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
-                    writer.WriteObjectValue<DataDeletionDetectionPolicy>(DataDeletionDetectionPolicy);
+                    writer.WriteObjectValue(DataDeletionDetectionPolicy);
                 }
                 else
                 {
@@ -74,7 +85,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -96,6 +107,7 @@ namespace Azure.Search.Documents.Indexes.Models
             DataSourceCredentials credentials = default;
             SearchIndexerDataContainer container = default;
             SearchIndexerDataIdentity identity = default;
+            IList<IndexerPermissionOption> indexerPermissionOptions = default;
             DataChangeDetectionPolicy dataChangeDetectionPolicy = default;
             DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default;
             string odataEtag = default;
@@ -135,6 +147,20 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("indexerPermissionOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<IndexerPermissionOption> array = new List<IndexerPermissionOption>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new IndexerPermissionOption(item.GetString()));
+                    }
+                    indexerPermissionOptions = array;
                     continue;
                 }
                 if (property.NameEquals("dataChangeDetectionPolicy"u8))
@@ -180,6 +206,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 credentials,
                 container,
                 identity,
+                indexerPermissionOptions ?? new ChangeTrackingList<IndexerPermissionOption>(),
                 dataChangeDetectionPolicy,
                 dataDeletionDetectionPolicy,
                 odataEtag,
@@ -190,15 +217,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchIndexerDataSourceConnection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchIndexerDataSourceConnection(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerDataSourceConnection>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

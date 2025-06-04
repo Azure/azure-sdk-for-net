@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class SampleUtterance : IUtf8JsonSerializable, IJsonModel<SampleUtterance>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SampleUtterance>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SampleUtterance>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SampleUtterance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(SampleUtterance)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
@@ -56,14 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SampleUtterance IJsonModel<SampleUtterance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SampleUtterance DeserializeSampleUtterance(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -138,15 +145,16 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Text), out propertyOverride);
-            if (Optional.IsDefined(Text) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  text: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Text))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  text: ");
                     if (Text.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -160,17 +168,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Links), out propertyOverride);
-            if (Optional.IsCollectionDefined(Links) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Links.Any() || hasPropertyOverride)
+                builder.Append("  links: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Links))
                 {
-                    builder.Append("  links: ");
-                    if (hasPropertyOverride)
+                    if (Links.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  links: ");
                         builder.AppendLine("[");
                         foreach (var item in Links)
                         {
@@ -195,15 +204,16 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Qid), out propertyOverride);
-            if (Optional.IsDefined(Qid) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  qid: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Qid))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  qid: ");
                     if (Qid.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -227,7 +237,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -243,7 +253,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSampleUtterance(document.RootElement, options);
                     }
                 default:

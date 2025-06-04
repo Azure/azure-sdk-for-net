@@ -66,8 +66,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The minimum port number. </summary>
+        [WirePath("minPort")]
         public int? MinPort { get; set; }
         /// <summary> The maximum port number. </summary>
+        [WirePath("maxPort")]
         public int? MaxPort { get; set; }
     }
 }

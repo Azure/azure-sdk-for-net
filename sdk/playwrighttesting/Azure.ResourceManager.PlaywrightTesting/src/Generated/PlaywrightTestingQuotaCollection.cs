@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
     {
         private readonly ClientDiagnostics _playwrightTestingQuotaQuotasClientDiagnostics;
         private readonly QuotasRestOperations _playwrightTestingQuotaQuotasRestClient;
-        private readonly AzureLocation _location;
+        private readonly string _location;
 
         /// <summary> Initializes a new instance of the <see cref="PlaywrightTestingQuotaCollection"/> class for mocking. </summary>
         protected PlaywrightTestingQuotaCollection()
@@ -39,7 +39,9 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
         /// <param name="location"> The location of quota in ARM Normalized format like eastus, southeastasia etc. </param>
-        internal PlaywrightTestingQuotaCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="location"/> is an empty string, and was expected to be non-empty. </exception>
+        internal PlaywrightTestingQuotaCollection(ArmClient client, ResourceIdentifier id, string location) : base(client, id)
         {
             _location = location;
             _playwrightTestingQuotaQuotasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PlaywrightTesting", PlaywrightTestingQuotaResource.ResourceType.Namespace, Diagnostics);
@@ -57,19 +59,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary>
-        /// Get quota by name.
+        /// Get subscription quota by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -77,15 +79,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetAsync(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PlaywrightTestingQuotaResource>> GetAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Get");
             scope.Start();
             try
             {
-                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, _location, quotaName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());
@@ -98,19 +100,19 @@ namespace Azure.ResourceManager.PlaywrightTesting
         }
 
         /// <summary>
-        /// Get quota by name.
+        /// Get subscription quota by name.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -118,15 +120,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<PlaywrightTestingQuotaResource> Get(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<PlaywrightTestingQuotaResource> Get(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Get");
             scope.Start();
             try
             {
-                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken);
+                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, _location, quotaName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());
@@ -147,11 +149,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_ListBySubscription</description>
+        /// <description>Quota_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -163,8 +165,8 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> An async collection of <see cref="PlaywrightTestingQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PlaywrightTestingQuotaResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, _location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, _location);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingQuotaResource(Client, PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(e)), _playwrightTestingQuotaQuotasClientDiagnostics, Pipeline, "PlaywrightTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -177,11 +179,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_ListBySubscription</description>
+        /// <description>Quota_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,8 +195,8 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <returns> A collection of <see cref="PlaywrightTestingQuotaResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PlaywrightTestingQuotaResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, new AzureLocation(_location));
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location));
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, _location);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _playwrightTestingQuotaQuotasRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, _location);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PlaywrightTestingQuotaResource(Client, PlaywrightTestingQuotaData.DeserializePlaywrightTestingQuotaData(e)), _playwrightTestingQuotaQuotasClientDiagnostics, Pipeline, "PlaywrightTestingQuotaCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
@@ -203,15 +205,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -219,15 +221,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<bool>> ExistsAsync(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<bool>> ExistsAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, _location, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -242,15 +244,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -258,15 +260,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<bool> Exists(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual Response<bool> Exists(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.Exists");
             scope.Start();
             try
             {
-                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken);
+                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, _location, quotaName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -281,15 +283,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -297,15 +299,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<NullableResponse<PlaywrightTestingQuotaResource>> GetIfExistsAsync(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<PlaywrightTestingQuotaResource>> GetIfExistsAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _playwrightTestingQuotaQuotasRestClient.GetAsync(Id.SubscriptionId, _location, quotaName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     return new NoValueResponse<PlaywrightTestingQuotaResource>(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());
@@ -322,15 +324,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quotas_Get</description>
+        /// <description>Quota_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -338,15 +340,15 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="name"> The quota name. </param>
+        /// <param name="quotaName"> The quota name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual NullableResponse<PlaywrightTestingQuotaResource> GetIfExists(PlaywrightTestingQuotaName name, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<PlaywrightTestingQuotaResource> GetIfExists(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
         {
             using var scope = _playwrightTestingQuotaQuotasClientDiagnostics.CreateScope("PlaywrightTestingQuotaCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), name, cancellationToken: cancellationToken);
+                var response = _playwrightTestingQuotaQuotasRestClient.Get(Id.SubscriptionId, _location, quotaName, cancellationToken: cancellationToken);
                 if (response.Value == null)
                     return new NoValueResponse<PlaywrightTestingQuotaResource>(response.GetRawResponse());
                 return Response.FromValue(new PlaywrightTestingQuotaResource(Client, response.Value), response.GetRawResponse());

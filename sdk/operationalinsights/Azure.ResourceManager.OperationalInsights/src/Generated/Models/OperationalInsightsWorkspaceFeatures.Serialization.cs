@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 {
     public partial class OperationalInsightsWorkspaceFeatures : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspaceFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspaceFeatures>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspaceFeatures>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<OperationalInsightsWorkspaceFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspaceFeatures>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 throw new FormatException($"The model {nameof(OperationalInsightsWorkspaceFeatures)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsDataExportEnabled))
             {
                 if (IsDataExportEnabled != null)
@@ -87,19 +95,30 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     writer.WriteNull("disableLocalAuth");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(IsUnifiedSentinelBillingOnly))
+            {
+                if (IsUnifiedSentinelBillingOnly != null)
+                {
+                    writer.WritePropertyName("unifiedSentinelBillingOnly"u8);
+                    writer.WriteBooleanValue(IsUnifiedSentinelBillingOnly.Value);
+                }
+                else
+                {
+                    writer.WriteNull("unifiedSentinelBillingOnly");
+                }
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
             }
-            writer.WriteEndObject();
         }
 
         OperationalInsightsWorkspaceFeatures IJsonModel<OperationalInsightsWorkspaceFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,7 +135,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
 
         internal static OperationalInsightsWorkspaceFeatures DeserializeOperationalInsightsWorkspaceFeatures(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -127,6 +146,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             bool? enableLogAccessUsingOnlyResourcePermissions = default;
             ResourceIdentifier clusterResourceId = default;
             bool? disableLocalAuth = default;
+            bool? unifiedSentinelBillingOnly = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,6 +201,16 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     disableLocalAuth = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("unifiedSentinelBillingOnly"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        unifiedSentinelBillingOnly = null;
+                        continue;
+                    }
+                    unifiedSentinelBillingOnly = property.Value.GetBoolean();
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
@@ -190,6 +220,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 enableLogAccessUsingOnlyResourcePermissions,
                 clusterResourceId,
                 disableLocalAuth,
+                unifiedSentinelBillingOnly,
                 additionalProperties);
         }
 
@@ -205,75 +236,96 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDataExportEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsDataExportEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enableDataExport: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDataExportEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enableDataExport: ");
                     var boolValue = IsDataExportEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmediatePurgeDataOn30Days), out propertyOverride);
-            if (Optional.IsDefined(ImmediatePurgeDataOn30Days) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  immediatePurgeDataOn30Days: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ImmediatePurgeDataOn30Days))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  immediatePurgeDataOn30Days: ");
                     var boolValue = ImmediatePurgeDataOn30Days.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLogAccessUsingOnlyResourcePermissionsEnabled), out propertyOverride);
-            if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  enableLogAccessUsingOnlyResourcePermissions: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLogAccessUsingOnlyResourcePermissionsEnabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  enableLogAccessUsingOnlyResourcePermissions: ");
                     var boolValue = IsLogAccessUsingOnlyResourcePermissionsEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClusterResourceId), out propertyOverride);
-            if (Optional.IsDefined(ClusterResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  clusterResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ClusterResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  clusterResourceId: ");
                     builder.AppendLine($"'{ClusterResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLocalAuthDisabled), out propertyOverride);
-            if (Optional.IsDefined(IsLocalAuthDisabled) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  disableLocalAuth: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsLocalAuthDisabled))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  disableLocalAuth: ");
                     var boolValue = IsLocalAuthDisabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUnifiedSentinelBillingOnly), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  unifiedSentinelBillingOnly: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUnifiedSentinelBillingOnly))
+                {
+                    builder.Append("  unifiedSentinelBillingOnly: ");
+                    var boolValue = IsUnifiedSentinelBillingOnly.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -289,7 +341,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -305,7 +357,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeOperationalInsightsWorkspaceFeatures(document.RootElement, options);
                     }
                 default:

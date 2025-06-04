@@ -65,19 +65,23 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="description"> Free-form schema entity description. </param>
         /// <param name="value"> Json-encoded string for non json-based schema. </param>
         /// <param name="document"> Global Schema document object for json-based schema formats(e.g. json schema). </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementGlobalSchemaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ApiSchemaType? schemaType, string description, BinaryData value, BinaryData document, string provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SchemaType = schemaType;
             Description = description;
             Value = value;
             Document = document;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Schema Type. Immutable. </summary>
+        [WirePath("properties.schemaType")]
         public ApiSchemaType? SchemaType { get; set; }
         /// <summary> Free-form schema entity description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// Json-encoded string for non json-based schema.
@@ -109,6 +113,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.value")]
         public BinaryData Value { get; set; }
         /// <summary>
         /// Global Schema document object for json-based schema formats(e.g. json schema).
@@ -140,6 +145,10 @@ namespace Azure.ResourceManager.ApiManagement
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.document")]
         public BinaryData Document { get; set; }
+        /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
+        public string ProvisioningState { get; }
     }
 }

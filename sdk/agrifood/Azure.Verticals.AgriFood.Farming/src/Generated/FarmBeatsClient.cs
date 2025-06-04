@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -19,6 +20,7 @@ namespace Azure.Verticals.AgriFood.Farming
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
+        private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
@@ -54,376 +56,267 @@ namespace Azure.Verticals.AgriFood.Farming
             _tokenCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
 
-        /// <summary> Initializes a new instance of ApplicationData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ApplicationData GetApplicationDataClient(string apiVersion = "2022-11-01-preview")
-        {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+        private ApplicationData _cachedApplicationData;
+        private Attachments _cachedAttachments;
+        private Boundaries _cachedBoundaries;
+        private CropProducts _cachedCropProducts;
+        private Crops _cachedCrops;
+        private DeviceDataModels _cachedDeviceDataModels;
+        private Devices _cachedDevices;
+        private FarmOperationsDataIngestion _cachedFarmOperationsDataIngestion;
+        private Farms _cachedFarms;
+        private Fields _cachedFields;
+        private HarvestData _cachedHarvestData;
+        private ImageProcessing _cachedImageProcessing;
+        private InsightAttachments _cachedInsightAttachments;
+        private Insights _cachedInsights;
+        private ManagementZones _cachedManagementZones;
+        private ModelInference _cachedModelInference;
+        private NutrientAnalyses _cachedNutrientAnalyses;
+        private OAuthProviders _cachedOAuthProviders;
+        private FarmerOAuthTokens _cachedFarmerOAuthTokens;
+        private Parties _cachedParties;
+        private PlantingData _cachedPlantingData;
+        private PlantTissueAnalyses _cachedPlantTissueAnalyses;
+        private PrescriptionMaps _cachedPrescriptionMaps;
+        private Prescriptions _cachedPrescriptions;
+        private Scenes _cachedScenes;
+        private SeasonalFields _cachedSeasonalFields;
+        private Seasons _cachedSeasons;
+        private SensorDataModels _cachedSensorDataModels;
+        private SensorEvents _cachedSensorEvents;
+        private SensorMappings _cachedSensorMappings;
+        private SensorPartnerIntegrations _cachedSensorPartnerIntegrations;
+        private Sensors _cachedSensors;
+        private SolutionInference _cachedSolutionInference;
+        private TillageData _cachedTillageData;
+        private Weather _cachedWeather;
+        private WeatherData _cachedWeatherData;
+        private Zones _cachedZones;
 
-            return new ApplicationData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+        /// <summary> Initializes a new instance of ApplicationData. </summary>
+        public virtual ApplicationData GetApplicationDataClient()
+        {
+            return Volatile.Read(ref _cachedApplicationData) ?? Interlocked.CompareExchange(ref _cachedApplicationData, new ApplicationData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedApplicationData;
         }
 
         /// <summary> Initializes a new instance of Attachments. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Attachments GetAttachmentsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Attachments GetAttachmentsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Attachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedAttachments) ?? Interlocked.CompareExchange(ref _cachedAttachments, new Attachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedAttachments;
         }
 
         /// <summary> Initializes a new instance of Boundaries. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Boundaries GetBoundariesClient(string apiVersion = "2022-11-01-preview")
+        public virtual Boundaries GetBoundariesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Boundaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedBoundaries) ?? Interlocked.CompareExchange(ref _cachedBoundaries, new Boundaries(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedBoundaries;
         }
 
         /// <summary> Initializes a new instance of CropProducts. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual CropProducts GetCropProductsClient(string apiVersion = "2022-11-01-preview")
+        public virtual CropProducts GetCropProductsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new CropProducts(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedCropProducts) ?? Interlocked.CompareExchange(ref _cachedCropProducts, new CropProducts(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedCropProducts;
         }
 
         /// <summary> Initializes a new instance of Crops. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Crops GetCropsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Crops GetCropsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Crops(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedCrops) ?? Interlocked.CompareExchange(ref _cachedCrops, new Crops(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedCrops;
         }
 
         /// <summary> Initializes a new instance of DeviceDataModels. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual DeviceDataModels GetDeviceDataModelsClient(string apiVersion = "2022-11-01-preview")
+        public virtual DeviceDataModels GetDeviceDataModelsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new DeviceDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedDeviceDataModels) ?? Interlocked.CompareExchange(ref _cachedDeviceDataModels, new DeviceDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedDeviceDataModels;
         }
 
         /// <summary> Initializes a new instance of Devices. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Devices GetDevicesClient(string apiVersion = "2022-11-01-preview")
+        public virtual Devices GetDevicesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Devices(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedDevices) ?? Interlocked.CompareExchange(ref _cachedDevices, new Devices(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedDevices;
         }
 
         /// <summary> Initializes a new instance of FarmOperationsDataIngestion. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient(string apiVersion = "2022-11-01-preview")
+        public virtual FarmOperationsDataIngestion GetFarmOperationsDataIngestionClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new FarmOperationsDataIngestion(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedFarmOperationsDataIngestion) ?? Interlocked.CompareExchange(ref _cachedFarmOperationsDataIngestion, new FarmOperationsDataIngestion(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmOperationsDataIngestion;
         }
 
         /// <summary> Initializes a new instance of Farms. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Farms GetFarmsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Farms GetFarmsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Farms(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedFarms) ?? Interlocked.CompareExchange(ref _cachedFarms, new Farms(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarms;
         }
 
         /// <summary> Initializes a new instance of Fields. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Fields GetFieldsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Fields GetFieldsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Fields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedFields) ?? Interlocked.CompareExchange(ref _cachedFields, new Fields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFields;
         }
 
         /// <summary> Initializes a new instance of HarvestData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual HarvestData GetHarvestDataClient(string apiVersion = "2022-11-01-preview")
+        public virtual HarvestData GetHarvestDataClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new HarvestData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedHarvestData) ?? Interlocked.CompareExchange(ref _cachedHarvestData, new HarvestData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedHarvestData;
         }
 
         /// <summary> Initializes a new instance of ImageProcessing. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ImageProcessing GetImageProcessingClient(string apiVersion = "2022-11-01-preview")
+        public virtual ImageProcessing GetImageProcessingClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new ImageProcessing(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedImageProcessing) ?? Interlocked.CompareExchange(ref _cachedImageProcessing, new ImageProcessing(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedImageProcessing;
         }
 
         /// <summary> Initializes a new instance of InsightAttachments. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual InsightAttachments GetInsightAttachmentsClient(string apiVersion = "2022-11-01-preview")
+        public virtual InsightAttachments GetInsightAttachmentsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new InsightAttachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedInsightAttachments) ?? Interlocked.CompareExchange(ref _cachedInsightAttachments, new InsightAttachments(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedInsightAttachments;
         }
 
         /// <summary> Initializes a new instance of Insights. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Insights GetInsightsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Insights GetInsightsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Insights(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedInsights) ?? Interlocked.CompareExchange(ref _cachedInsights, new Insights(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedInsights;
         }
 
         /// <summary> Initializes a new instance of ManagementZones. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ManagementZones GetManagementZonesClient(string apiVersion = "2022-11-01-preview")
+        public virtual ManagementZones GetManagementZonesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new ManagementZones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedManagementZones) ?? Interlocked.CompareExchange(ref _cachedManagementZones, new ManagementZones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedManagementZones;
         }
 
         /// <summary> Initializes a new instance of ModelInference. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ModelInference GetModelInferenceClient(string apiVersion = "2022-11-01-preview")
+        public virtual ModelInference GetModelInferenceClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new ModelInference(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedModelInference) ?? Interlocked.CompareExchange(ref _cachedModelInference, new ModelInference(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedModelInference;
         }
 
         /// <summary> Initializes a new instance of NutrientAnalyses. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual NutrientAnalyses GetNutrientAnalysesClient(string apiVersion = "2022-11-01-preview")
+        public virtual NutrientAnalyses GetNutrientAnalysesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new NutrientAnalyses(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedNutrientAnalyses) ?? Interlocked.CompareExchange(ref _cachedNutrientAnalyses, new NutrientAnalyses(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedNutrientAnalyses;
         }
 
         /// <summary> Initializes a new instance of OAuthProviders. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual OAuthProviders GetOAuthProvidersClient(string apiVersion = "2022-11-01-preview")
+        public virtual OAuthProviders GetOAuthProvidersClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new OAuthProviders(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedOAuthProviders) ?? Interlocked.CompareExchange(ref _cachedOAuthProviders, new OAuthProviders(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedOAuthProviders;
         }
 
         /// <summary> Initializes a new instance of FarmerOAuthTokens. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual FarmerOAuthTokens GetFarmerOAuthTokensClient(string apiVersion = "2022-11-01-preview")
+        public virtual FarmerOAuthTokens GetFarmerOAuthTokensClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new FarmerOAuthTokens(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedFarmerOAuthTokens) ?? Interlocked.CompareExchange(ref _cachedFarmerOAuthTokens, new FarmerOAuthTokens(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedFarmerOAuthTokens;
         }
 
         /// <summary> Initializes a new instance of Parties. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Parties GetPartiesClient(string apiVersion = "2022-11-01-preview")
+        public virtual Parties GetPartiesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Parties(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedParties) ?? Interlocked.CompareExchange(ref _cachedParties, new Parties(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedParties;
         }
 
         /// <summary> Initializes a new instance of PlantingData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual PlantingData GetPlantingDataClient(string apiVersion = "2022-11-01-preview")
+        public virtual PlantingData GetPlantingDataClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new PlantingData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedPlantingData) ?? Interlocked.CompareExchange(ref _cachedPlantingData, new PlantingData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPlantingData;
         }
 
         /// <summary> Initializes a new instance of PlantTissueAnalyses. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual PlantTissueAnalyses GetPlantTissueAnalysesClient(string apiVersion = "2022-11-01-preview")
+        public virtual PlantTissueAnalyses GetPlantTissueAnalysesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new PlantTissueAnalyses(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedPlantTissueAnalyses) ?? Interlocked.CompareExchange(ref _cachedPlantTissueAnalyses, new PlantTissueAnalyses(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPlantTissueAnalyses;
         }
 
         /// <summary> Initializes a new instance of PrescriptionMaps. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual PrescriptionMaps GetPrescriptionMapsClient(string apiVersion = "2022-11-01-preview")
+        public virtual PrescriptionMaps GetPrescriptionMapsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new PrescriptionMaps(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedPrescriptionMaps) ?? Interlocked.CompareExchange(ref _cachedPrescriptionMaps, new PrescriptionMaps(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPrescriptionMaps;
         }
 
         /// <summary> Initializes a new instance of Prescriptions. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Prescriptions GetPrescriptionsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Prescriptions GetPrescriptionsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Prescriptions(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedPrescriptions) ?? Interlocked.CompareExchange(ref _cachedPrescriptions, new Prescriptions(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedPrescriptions;
         }
 
         /// <summary> Initializes a new instance of Scenes. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Scenes GetScenesClient(string apiVersion = "2022-11-01-preview")
+        public virtual Scenes GetScenesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Scenes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedScenes) ?? Interlocked.CompareExchange(ref _cachedScenes, new Scenes(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedScenes;
         }
 
         /// <summary> Initializes a new instance of SeasonalFields. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SeasonalFields GetSeasonalFieldsClient(string apiVersion = "2022-11-01-preview")
+        public virtual SeasonalFields GetSeasonalFieldsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SeasonalFields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSeasonalFields) ?? Interlocked.CompareExchange(ref _cachedSeasonalFields, new SeasonalFields(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSeasonalFields;
         }
 
         /// <summary> Initializes a new instance of Seasons. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Seasons GetSeasonsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Seasons GetSeasonsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Seasons(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSeasons) ?? Interlocked.CompareExchange(ref _cachedSeasons, new Seasons(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSeasons;
         }
 
         /// <summary> Initializes a new instance of SensorDataModels. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SensorDataModels GetSensorDataModelsClient(string apiVersion = "2022-11-01-preview")
+        public virtual SensorDataModels GetSensorDataModelsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SensorDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSensorDataModels) ?? Interlocked.CompareExchange(ref _cachedSensorDataModels, new SensorDataModels(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensorDataModels;
         }
 
         /// <summary> Initializes a new instance of SensorEvents. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SensorEvents GetSensorEventsClient(string apiVersion = "2022-11-01-preview")
+        public virtual SensorEvents GetSensorEventsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SensorEvents(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSensorEvents) ?? Interlocked.CompareExchange(ref _cachedSensorEvents, new SensorEvents(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensorEvents;
         }
 
         /// <summary> Initializes a new instance of SensorMappings. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SensorMappings GetSensorMappingsClient(string apiVersion = "2022-11-01-preview")
+        public virtual SensorMappings GetSensorMappingsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SensorMappings(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSensorMappings) ?? Interlocked.CompareExchange(ref _cachedSensorMappings, new SensorMappings(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensorMappings;
         }
 
         /// <summary> Initializes a new instance of SensorPartnerIntegrations. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SensorPartnerIntegrations GetSensorPartnerIntegrationsClient(string apiVersion = "2022-11-01-preview")
+        public virtual SensorPartnerIntegrations GetSensorPartnerIntegrationsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SensorPartnerIntegrations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSensorPartnerIntegrations) ?? Interlocked.CompareExchange(ref _cachedSensorPartnerIntegrations, new SensorPartnerIntegrations(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensorPartnerIntegrations;
         }
 
         /// <summary> Initializes a new instance of Sensors. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Sensors GetSensorsClient(string apiVersion = "2022-11-01-preview")
+        public virtual Sensors GetSensorsClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Sensors(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSensors) ?? Interlocked.CompareExchange(ref _cachedSensors, new Sensors(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSensors;
         }
 
         /// <summary> Initializes a new instance of SolutionInference. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual SolutionInference GetSolutionInferenceClient(string apiVersion = "2022-11-01-preview")
+        public virtual SolutionInference GetSolutionInferenceClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new SolutionInference(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedSolutionInference) ?? Interlocked.CompareExchange(ref _cachedSolutionInference, new SolutionInference(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedSolutionInference;
         }
 
         /// <summary> Initializes a new instance of TillageData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual TillageData GetTillageDataClient(string apiVersion = "2022-11-01-preview")
+        public virtual TillageData GetTillageDataClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new TillageData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedTillageData) ?? Interlocked.CompareExchange(ref _cachedTillageData, new TillageData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedTillageData;
         }
 
         /// <summary> Initializes a new instance of Weather. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Weather GetWeatherClient(string apiVersion = "2022-11-01-preview")
+        public virtual Weather GetWeatherClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Weather(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedWeather) ?? Interlocked.CompareExchange(ref _cachedWeather, new Weather(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedWeather;
         }
 
         /// <summary> Initializes a new instance of WeatherData. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual WeatherData GetWeatherDataClient(string apiVersion = "2022-11-01-preview")
+        public virtual WeatherData GetWeatherDataClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new WeatherData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedWeatherData) ?? Interlocked.CompareExchange(ref _cachedWeatherData, new WeatherData(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedWeatherData;
         }
 
         /// <summary> Initializes a new instance of Zones. </summary>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Zones GetZonesClient(string apiVersion = "2022-11-01-preview")
+        public virtual Zones GetZonesClient()
         {
-            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-
-            return new Zones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return Volatile.Read(ref _cachedZones) ?? Interlocked.CompareExchange(ref _cachedZones, new Zones(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, _apiVersion), null) ?? _cachedZones;
         }
     }
 }

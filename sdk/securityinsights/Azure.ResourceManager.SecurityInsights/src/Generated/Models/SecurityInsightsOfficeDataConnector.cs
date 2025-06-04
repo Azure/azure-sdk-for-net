@@ -39,8 +39,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The tenant id to connect to, and get the data from. </summary>
+        [WirePath("properties.tenantId")]
         public Guid? TenantId { get; set; }
         /// <summary> The available data types for the connector. </summary>
+        [WirePath("properties.dataTypes")]
         public SecurityInsightsOfficeDataConnectorDataTypes DataTypes { get; set; }
     }
 }

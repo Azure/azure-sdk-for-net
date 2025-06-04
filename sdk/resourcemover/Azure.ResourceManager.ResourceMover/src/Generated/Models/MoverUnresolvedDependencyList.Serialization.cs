@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ResourceMover.Models
 {
     internal partial class MoverUnresolvedDependencyList : IUtf8JsonSerializable, IJsonModel<MoverUnresolvedDependencyList>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverUnresolvedDependencyList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverUnresolvedDependencyList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MoverUnresolvedDependencyList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MoverUnresolvedDependencyList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,14 +34,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<MoverUnresolvedDependency>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +52,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(SummaryCollection))
             {
                 writer.WritePropertyName("summaryCollection"u8);
-                writer.WriteObjectValue<MoverSummaryList>(SummaryCollection, options);
+                writer.WriteObjectValue(SummaryCollection, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TotalCount))
             {
@@ -59,14 +67,13 @@ namespace Azure.ResourceManager.ResourceMover.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MoverUnresolvedDependencyList IJsonModel<MoverUnresolvedDependencyList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
 
         internal static MoverUnresolvedDependencyList DeserializeMoverUnresolvedDependencyList(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +157,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MoverUnresolvedDependencyList)} does not support writing '{options.Format}' format.");
             }
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMoverUnresolvedDependencyList(document.RootElement, options);
                     }
                 default:

@@ -102,22 +102,31 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> PDU session identifier. </summary>
+        [WirePath("pduSessionId")]
         public int PduSessionId { get; set; }
         /// <summary> Data network name. </summary>
+        [WirePath("dnn")]
         public string Dnn { get; set; }
         /// <summary> Packet Data Network Type. </summary>
+        [WirePath("pdnType")]
         public PdnType PdnType { get; set; }
         /// <summary> Gets the qos flow. </summary>
+        [WirePath("qosFlow")]
         public IList<UEQosFlow> QosFlow { get; }
         /// <summary> Uplink bit rate. </summary>
+        [WirePath("ambr.uplink")]
         public string Uplink { get; set; }
         /// <summary> Downlink bit rate. </summary>
+        [WirePath("ambr.downlink")]
         public string Downlink { get; set; }
         /// <summary> IPv4 address. </summary>
+        [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
         /// <summary> Slice/service type (SST). </summary>
+        [WirePath("snssai.sst")]
         public int Sst { get; set; }
         /// <summary> Slice differentiator (SD). </summary>
+        [WirePath("snssai.sd")]
         public string Sd { get; set; }
     }
 }

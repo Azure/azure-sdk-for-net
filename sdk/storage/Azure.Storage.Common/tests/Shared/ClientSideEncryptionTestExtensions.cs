@@ -57,7 +57,7 @@ namespace Azure.Storage.Test.Shared
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>(async (algorithm, wrappedKey, cancellationToken) =>
                     {
                         await Task.Delay(optionalDelay);
-                        return KeyWrapImpl(userKeyBytes, wrappedKey.ToArray());
+                        return KeyUnwrapImpl(userKeyBytes, wrappedKey.ToArray());
                     });
             }
             else
@@ -72,7 +72,7 @@ namespace Azure.Storage.Test.Shared
                     .Returns<string, ReadOnlyMemory<byte>, CancellationToken>((algorithm, wrappedKey, cancellationToken) =>
                     {
                         Thread.Sleep(optionalDelay);
-                        return KeyWrapImpl(userKeyBytes, wrappedKey.ToArray());
+                        return KeyUnwrapImpl(userKeyBytes, wrappedKey.ToArray());
                     });
             }
 
@@ -160,7 +160,7 @@ namespace Azure.Storage.Test.Shared
                     Tuple.Create(KeyWrapImpl(userKeyBytes, key), s_algorithmName)));
             keyMock.Setup(k => k.UnwrapKeyAsync(It.IsNotNull<byte[]>(), s_algorithmName, It.IsNotNull<CancellationToken>()))
                 .Returns<byte[], string, CancellationToken>((wrappedKey, algorithm, cancellationToken) => Task.FromResult(
-                    KeyWrapImpl(userKeyBytes, wrappedKey)));
+                    KeyUnwrapImpl(userKeyBytes, wrappedKey)));
 
             return keyMock;
         }
@@ -177,8 +177,29 @@ namespace Azure.Storage.Test.Shared
         private static byte[] KeyWrapImpl(byte[] key, byte[] contents)
         {
             var result = new byte[contents.Length];
-            // just bitflip the contents
-            new System.Collections.BitArray(contents).Not().CopyTo(result, 0);
+
+            if (contents.Length == 0) return result;
+
+            // Move each byte one position to the left
+            new Span<byte>(contents, 1, contents.Length - 1).CopyTo(result);
+
+            // Fill the last byte with the first byte (loop-around)
+            result[contents.Length - 1] = contents[0];
+
+            return result;
+        }
+
+        private static byte[] KeyUnwrapImpl(byte[] key, byte[] contents)
+        {
+            var result = new byte[contents.Length];
+
+            if (contents.Length == 0) return result;
+
+            // Move each byte one position to the right
+            new Span<byte>(contents, 0, contents.Length - 1).CopyTo(new Span<byte>(result, 1, result.Length - 1));
+
+            // Fill the first byte with the last byte (loop-around)
+            result[0] = contents[contents.Length - 1];
 
             return result;
         }

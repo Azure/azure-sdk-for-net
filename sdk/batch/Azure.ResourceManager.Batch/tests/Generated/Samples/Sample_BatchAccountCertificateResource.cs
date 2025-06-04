@@ -7,24 +7,21 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Batch.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Batch.Samples
 {
     public partial class Sample_BatchAccountCertificateResource
     {
-        // UpdateCertificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_UpdateCertificate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetCertificate()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/CertificateUpdate.json
-            // this example is just showing the usage of "Certificate_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/CertificateGet.json
+            // this example is just showing the usage of "Certificate_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,12 +38,7 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchAccountCertificateResource batchAccountCertificate = client.GetBatchAccountCertificateResource(batchAccountCertificateResourceId);
 
             // invoke the operation
-            BatchAccountCertificateCreateOrUpdateContent content = new BatchAccountCertificateCreateOrUpdateContent()
-            {
-                Data = BinaryData.FromString("MIIJsgIBAzCCCW4GCSqGSIb3DQE..."),
-                Password = "<ExamplePassword>",
-            };
-            BatchAccountCertificateResource result = await batchAccountCertificate.UpdateAsync(content);
+            BatchAccountCertificateResource result = await batchAccountCertificate.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -55,12 +47,42 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // CertificateDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetCertificateWithDeletionError()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/CertificateGetWithDeletionError.json
+            // this example is just showing the usage of "Certificate_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountCertificateResource created on azure
+            // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
+            ResourceIdentifier batchAccountCertificateResourceId = BatchAccountCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, certificateName);
+            BatchAccountCertificateResource batchAccountCertificate = client.GetBatchAccountCertificateResource(batchAccountCertificateResourceId);
+
+            // invoke the operation
+            BatchAccountCertificateResource result = await batchAccountCertificate.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BatchAccountCertificateData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_CertificateDelete()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/CertificateDelete.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/CertificateDelete.json
             // this example is just showing the usage of "Certificate_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,16 +102,15 @@ namespace Azure.ResourceManager.Batch.Samples
             // invoke the operation
             await batchAccountCertificate.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Get Certificate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetCertificate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateCertificate()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/CertificateGet.json
-            // this example is just showing the usage of "Certificate_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/CertificateUpdate.json
+            // this example is just showing the usage of "Certificate_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -106,7 +127,12 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchAccountCertificateResource batchAccountCertificate = client.GetBatchAccountCertificateResource(batchAccountCertificateResourceId);
 
             // invoke the operation
-            BatchAccountCertificateResource result = await batchAccountCertificate.GetAsync();
+            BatchAccountCertificateCreateOrUpdateContent content = new BatchAccountCertificateCreateOrUpdateContent
+            {
+                Data = BinaryData.FromObjectAsJson("MIIJsgIBAzCCCW4GCSqGSIb3DQE..."),
+                Password = "<ExamplePassword>",
+            };
+            BatchAccountCertificateResource result = await batchAccountCertificate.UpdateAsync(content);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -115,44 +141,11 @@ namespace Azure.ResourceManager.Batch.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Get Certificate with Deletion Error
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetCertificateWithDeletionError()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/CertificateGetWithDeletionError.json
-            // this example is just showing the usage of "Certificate_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountCertificateResource created on azure
-            // for more information of creating BatchAccountCertificateResource, please refer to the document of BatchAccountCertificateResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            string certificateName = "sha1-0a0e4f50d51beadeac1d35afc5116098e7902e6e";
-            ResourceIdentifier batchAccountCertificateResourceId = BatchAccountCertificateResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, certificateName);
-            BatchAccountCertificateResource batchAccountCertificate = client.GetBatchAccountCertificateResource(batchAccountCertificateResourceId);
-
-            // invoke the operation
-            BatchAccountCertificateResource result = await batchAccountCertificate.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BatchAccountCertificateData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // CertificateCancelDeletion
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CancelDeletion_CertificateCancelDeletion()
         {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-02-01/examples/CertificateCancelDeletion.json
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/CertificateCancelDeletion.json
             // this example is just showing the usage of "Certificate_CancelDeletion" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

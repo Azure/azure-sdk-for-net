@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     public partial class ScVmmVirtualMachineInstancePatch : IUtf8JsonSerializable, IJsonModel<ScVmmVirtualMachineInstancePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmVirtualMachineInstancePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmVirtualMachineInstancePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ScVmmVirtualMachineInstancePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ScVmmVirtualMachineInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,23 +34,22 @@ namespace Azure.ResourceManager.ScVmm.Models
                 throw new FormatException($"The model {nameof(ScVmmVirtualMachineInstancePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue<ScVmmHardwareProfileUpdate>(HardwareProfile, options);
+                writer.WriteObjectValue(HardwareProfile, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<ScVmmStorageProfileUpdate>(StorageProfile, options);
+                writer.WriteObjectValue(StorageProfile, options);
             }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue<ScVmmNetworkProfileUpdate>(NetworkProfile, options);
+                writer.WriteObjectValue(NetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(AvailabilitySets))
             {
@@ -49,14 +57,14 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailabilitySets)
                 {
-                    writer.WriteObjectValue<ScVmmAvailabilitySetItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(InfrastructureProfile))
             {
                 writer.WritePropertyName("infrastructureProfile"u8);
-                writer.WriteObjectValue<ScVmmInfrastructureProfileUpdate>(InfrastructureProfile, options);
+                writer.WriteObjectValue(InfrastructureProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -67,14 +75,13 @@ namespace Azure.ResourceManager.ScVmm.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ScVmmVirtualMachineInstancePatch IJsonModel<ScVmmVirtualMachineInstancePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -91,7 +98,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static ScVmmVirtualMachineInstancePatch DeserializeScVmmVirtualMachineInstancePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -190,7 +197,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScVmmVirtualMachineInstancePatch)} does not support writing '{options.Format}' format.");
             }
@@ -204,7 +211,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScVmmVirtualMachineInstancePatch(document.RootElement, options);
                     }
                 default:

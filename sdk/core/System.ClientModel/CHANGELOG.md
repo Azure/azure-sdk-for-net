@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.4 (Unreleased)
+## 1.5.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,152 @@
 
 ### Other Changes
 
+## 1.4.1 (2025-05-09)
+
+### Bugs Fixed
+
+- Fixed an issue when a model builder was both IEnumerable and IPersistable.
+
+## 1.4.0 (2025-05-02)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+### Other Changes
+
+- Upgraded versions of dependencies on System.Diagnostics.DiagnosticSource, System.Text.Json, and Microsoft.Extensions.Logging.Abstractions.
+- Renamed `ActivityExtensions.MarkFailed` to `ActivityExtensions.MarkClientActivityFailed`.
+- Made `int maxSize` parameter to `ClientCache` constructor required and removed default value.
+- Changed `IEquatable<object> clientId` parameter to `object clientId` in `ClientCache.GetClient`
+- Renamed `ConnectionCollection` to `ClientConnectionCollection`
+- Renamed `ConnectionProvider` to `ClientConnectionProvider`
+- Renamed `ToCollection` to `ConvertCollectionBuilder` in `ModelReadWriteTypeBuilder`
+- Renamed `AddKeyValuePair` to `AddItemWithKey` in `ModelReadWriteTypeBuilder`
+
+## 1.4.0-beta.6 (2025-04-28)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.5 (2025-04-23)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.4 (2025-04-21)
+
+### Features Added
+
+- Added additional supported scenarios to System.ClientModel.SourceGeneration.
+
+## 1.4.0-beta.3 (2025-04-16)
+
+### Bugs Fixed
+
+- System.ClientModel.SourceGeneration adds the Default property even when no type builders exist.
+
+## 1.4.0-beta.2 (2025-04-14)
+
+### Features Added
+
+- Added extensions to `System.Diagnostics.Activity` and `System.Diagnostics.ActivitySource` to simplify instrumentation of client libraries
+- Added new overloads to `System.ClientModel.ModelReaderWriter` which take in a new 
+[ModelReaderWriterContext](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md)
+which allows reading and writing of collections of `IPersistableModel<>`.  In addition any calls to the new overloads are AOT compatible.
+
+## 1.4.0-beta.1 (2025-03-06)
+
+### Features Added
+
+- Added new connection management types in the `System.ClientModel.Primitives` namespace:
+  - `ConnectionProvider`: Abstract base class for managing client connections, including retrieval of connection settings and subclient caching.
+  - `ClientConnection`: Readonly struct that encapsulates connection options with support for API key, token, or no authentication.
+  - `ConnectionCollection`: A keyed collection of client connections, supporting JSON serialization and providing an enhanced debugger view.
+  - `ClientCache`: Implements an LRU-based cache for efficient reuse of client instances and optimized retrieval.
+
+### Bugs Fixed
+
+- Removed debugging statement in pipeline creation when applying the `ClientLoggingOptions.AllowedHeaderNames` option.
+
+## 1.3.0 (2025-02-11)
+
+### Features Added
+
+- Added default logging with sanitization to Event Source.
+  - Added new logging options type to configure logging behavior, disable all logging, or opt to use ILogger instead.
+
+### Other Changes
+
+- Use `BinaryData.Empty` for `PipelineResponse.Content` when HTTP message has no content ([#46669](https://github.com/Azure/azure-sdk-for-net/pull/46669)).
+
+## 1.2.1 (2024-10-09)
+
+### Bugs Fixed
+
+- Upgraded `System.Text.Json` package dependency to 6.0.10 for security fix ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46508)).
+
+## 1.2.0 (2024-10-03)
+
+### Other Changes
+
+- Upgraded `System.Memory.Data` package dependency to 6.0.0 ([#46134](https://github.com/Azure/azure-sdk-for-net/pull/46134)).
+
+## 1.1.0 (2024-09-17)
+
+### Other Changes
+
+- Removed implicit cast from `string` to `ApiKeyCredential` ([#45554](https://github.com/Azure/azure-sdk-for-net/pull/45554)).
+- Upgraded `System.Text.Json` package dependency to 6.0.9 ([#45416](https://github.com/Azure/azure-sdk-for-net/pull/45416)).
+- Removed `PageCollection<T>` and related types in favor of using `CollectionResult<T>` and related types as the return values from paginated service endpoints ([#45961](https://github.com/Azure/azure-sdk-for-net/pull/45961)).
+
+## 1.1.0-beta.7 (2024-08-14)
+
+### Features Added
+
+- Added `JsonModelConverter` to allow integration with System.Text.Json.
+
+### Other Changes
+
+- Removed `ReturnWhen` enum in favor of using bool `waitUntilCompleted` parameter in third-party client LRO method signatures.
+- Added abstract `UpdateStatus` method to `OperationResult`.
+
+## 1.1.0-beta.6 (2024-08-01)
+
+### Features Added
+
+- Added `OperationResult` and `ReturnWhen` types to support long-running operations.
+
+### Bugs Fixed
+
+- Added support for delaying retrying a request until after the interval specified on a response `Retry-After` header.
+
+## 1.1.0-beta.5 (2024-07-11)
+
+### Features Added
+
+- Added `AsyncPageCollection<T>` and `PageCollection<T>` types as return types from paginated service operations, and `ContinuationToken` type for resuming collection state across processes.
+
+### Other Changes
+
+- Renamed `AsyncResultCollection<T>` and `ResultCollection<T>` to `AsyncCollectionResult<T>` and `CollectionResult<T>` to standardize use of the `Result` suffix in type names.
+- Removed `AsyncPageableCollection<T>` and `PageableCollection<T>` that previously represented collections of items rather than collections of pages of items, and renamed `ResultPage<T>` to `PageResult<T>`.
+
+## 1.1.0-beta.4 (2024-05-16)
+
+### Features Added
+
+- Added `BufferResponse` property to `RequestOptions` so protocol method callers can turn off response buffering if desired.
+- Added `AsyncResultCollection<T>` and `ResultCollection<T>` for clients to return from service methods where the service response contains a collection of values.
+- Added `AsyncPageableCollection<T>`, `PageableCollection<T>` and `ResultPage<T>` for clients to return from service methods where collection values are delivered to the client over one or more service responses.
+- Added `SetRawResponse` method to `ClientResult` to allow the response held by the result to be changed, for example by derived types that obtain multiple responses from polling the service.
+
+### Other Changes
+
+- `ClientResult.GetRawResponse` will now throw `InvalidOperationException` if called before the result's raw response is set, for example by collection result types that delay sending a request to the service until the collection is enumerated.
+
 ## 1.1.0-beta.3 (2024-04-04)
 
 ### Features Added
@@ -17,7 +163,7 @@
 - Added protected `Apply(PipelineMessage)` method to `RequestOptions` so that derived types can extend its functionality.
 - Added `Create(Stream)` overload to `BinaryContent`.
 
-### Breaking Changes
+### Other Changes
 
 - Removed `[Serializable]` attribute and serialization constructor from `ClientResultException`.
 - Made `value` parameter nullable in `PipelineMessage.SetProperty` method.
@@ -32,14 +178,11 @@
 - Added an implicit cast from `string` to `ApiKeyCredential`.
 - Added an implicit cast from `ClientResult<T>` to `T`.
 
-### Breaking Changes
+### Other Changes
 
 - Changed `HttpClientPipelineTransport.Shared` and `ClientRetryPolicy.Default` from static readonly fields to static properties.
 - Changed `PipelineResponse.Content` property from abstract to virtual.
 - Removed the `ResponseBufferingPolicy` and moved response buffering functionality into `PipelineTransport`.
-
-### Other Changes
-
 - Made `CancellationToken` parameter passed to `BinaryContent.WriteTo` optional.
 
 ## 1.1.0-beta.1 (2024-02-01)
@@ -57,7 +200,7 @@
 
 ## 1.0.0-beta.2 (2023-12-14)
 
-### Breaking Changes
+### Other Changes
 
 - `ModelReaderWriter` and `ModelReaderWriterOptions` have moved to System.ClientModel.Primitives namespace
 - `JsonModelConverter` was removed.

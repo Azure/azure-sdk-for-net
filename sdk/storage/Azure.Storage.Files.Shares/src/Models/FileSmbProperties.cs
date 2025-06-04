@@ -74,14 +74,34 @@ namespace Azure.Storage.Files.Shares.Models
         public override int GetHashCode() => base.GetHashCode();
     }
 
-     /// <summary>
-     /// FilesModelFactory provides utilities for mocking.
-     /// </summary>
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
+    public static partial class FilesModelFactory
+    {
+        /// <summary>
+        /// Creates a new FileSmbProperties instance for mocking.
+        /// </summary>
+        public static FileSmbProperties FileSmbProperties(
+            DateTimeOffset? fileChangedOn,
+            string fileId,
+            string parentId) => new FileSmbProperties
+            {
+                FileChangedOn = fileChangedOn,
+                FileId = fileId,
+                ParentId = parentId
+            };
+    }
+
+    /// <summary>
+    /// FilesModelFactory provides utilities for mocking.
+    /// </summary>
     public static partial class SharesModelFactory
     {
         /// <summary>
         /// Creates a new FileSmbProperties instance for mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FileSmbProperties FileSmbProperties(
             DateTimeOffset? fileChangedOn,
             string fileId,

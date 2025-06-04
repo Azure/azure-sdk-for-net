@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
 
         MySqlFlexibleServerResource IOperationSource<MySqlFlexibleServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(document.RootElement);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlFlexibleServerResource(_client, data);
         }
 
         async ValueTask<MySqlFlexibleServerResource> IOperationSource<MySqlFlexibleServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(document.RootElement);
-            return new MySqlFlexibleServerResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlFlexibleServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            return await Task.FromResult(new MySqlFlexibleServerResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

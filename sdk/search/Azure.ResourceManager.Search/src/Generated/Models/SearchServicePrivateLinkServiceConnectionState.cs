@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes the current state of an existing Private Link Service connection to the Azure Private Endpoint. </summary>
+    /// <summary> Describes the current state of an existing Azure Private Link service connection to the private endpoint. </summary>
     public partial class SearchServicePrivateLinkServiceConnectionState
     {
         /// <summary>

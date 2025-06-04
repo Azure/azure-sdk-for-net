@@ -5,6 +5,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public AcceptedAge(Azure.Health.Insights.ClinicalMatching.AgeUnit unit, float value) { }
         public Azure.Health.Insights.ClinicalMatching.AgeUnit Unit { get { throw null; } }
         public float Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AcceptedAge System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AcceptedAge>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AcceptedAge>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AcceptedAge System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AcceptedAge>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -16,6 +17,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public AcceptedAgeRange() { }
         public Azure.Health.Insights.ClinicalMatching.AcceptedAge MaximumAge { get { throw null; } set { } }
         public Azure.Health.Insights.ClinicalMatching.AcceptedAge MinimumAge { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AcceptedAgeRange System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AcceptedAgeRange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AcceptedAgeRange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AcceptedAgeRange System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AcceptedAgeRange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -46,6 +48,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public AreaGeometry(Azure.Health.Insights.ClinicalMatching.GeoJsonGeometryType type, System.Collections.Generic.IEnumerable<float> coordinates) { }
         public System.Collections.Generic.IList<float> Coordinates { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.GeoJsonGeometryType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AreaGeometry System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AreaGeometry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AreaGeometry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AreaGeometry System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AreaGeometry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -57,11 +60,18 @@ namespace Azure.Health.Insights.ClinicalMatching
         public AreaProperties(Azure.Health.Insights.ClinicalMatching.GeoJsonPropertiesSubType subType, double radius) { }
         public double Radius { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.GeoJsonPropertiesSubType SubType { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AreaProperties System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.AreaProperties System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.AreaProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AzureHealthInsightsClinicalMatchingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureHealthInsightsClinicalMatchingContext() { }
+        public static Azure.Health.Insights.ClinicalMatching.AzureHealthInsightsClinicalMatchingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class ClinicalCodedElement : System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>, System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>
     {
@@ -70,6 +80,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string Name { get { throw null; } set { } }
         public string System { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -107,9 +118,9 @@ namespace Azure.Health.Insights.ClinicalMatching
         public ClinicalMatchingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.ClinicalMatching.ClinicalMatchingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> MatchTrials(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults> MatchTrials(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData trialMatcherData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults> MatchTrials(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData trialMatcherData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults>> MatchTrialsAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.ClinicalMatching.TrialMatcherData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class ClinicalMatchingClientOptions : Azure.Core.ClientOptions
     {
@@ -126,6 +137,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -156,6 +168,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public ClinicalTrialDemographics() { }
         public Azure.Health.Insights.ClinicalMatching.AcceptedAgeRange AcceptedAgeRange { get { throw null; } set { } }
         public Azure.Health.Insights.ClinicalMatching.ClinicalTrialAcceptedSex? AcceptedSex { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialDemographics System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDemographics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDemographics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialDemographics System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDemographics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -169,6 +182,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string EligibilityCriteriaText { get { throw null; } set { } }
         public string Id { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata Metadata { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialDetails System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialDetails System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -185,6 +199,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public Azure.Health.Insights.ClinicalMatching.ClinicalTrialRecruitmentStatus? RecruitmentStatus { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Sponsors { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.ClinicalTrialStudyType? StudyType { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -273,6 +288,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource> Sources { get { throw null; } }
         public System.Collections.Generic.IList<string> Sponsors { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.ClinicalTrialStudyType> StudyTypes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialRegistryFilter System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialRegistryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialRegistryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialRegistryFilter System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialRegistryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -286,6 +302,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string CountryOrRegion { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialResearchFacility System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialResearchFacility>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialResearchFacility>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrialResearchFacility System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrialResearchFacility>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -297,6 +314,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public ClinicalTrials() { }
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.ClinicalTrialDetails> CustomTrials { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.ClinicalTrialRegistryFilter> RegistryFilters { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrials System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ClinicalTrials System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ClinicalTrials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -347,6 +365,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string Email { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Phone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ContactDetails System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ContactDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ContactDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ContactDetails System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ContactDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -358,6 +377,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public DocumentContent(Azure.Health.Insights.ClinicalMatching.DocumentContentSourceType sourceType, string value) { }
         public Azure.Health.Insights.ClinicalMatching.DocumentContentSourceType SourceType { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.DocumentContent System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.DocumentContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.DocumentContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.DocumentContent System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.DocumentContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -411,6 +431,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string SemanticType { get { throw null; } }
         public string System { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -423,6 +444,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public Azure.Health.Insights.ClinicalMatching.AreaGeometry Geometry { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.AreaProperties Properties { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.GeoJsonType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.GeographicArea System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.GeographicArea>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.GeographicArea>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.GeographicArea System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.GeographicArea>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -435,6 +457,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string City { get { throw null; } set { } }
         public string CountryOrRegion { get { throw null; } }
         public string State { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.GeographicLocation System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.GeographicLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.GeographicLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.GeographicLocation System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.GeographicLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -515,6 +538,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string Id { get { throw null; } }
         public string Language { get { throw null; } set { } }
         public Azure.Health.Insights.ClinicalMatching.DocumentType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.PatientDocument System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.PatientDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.PatientDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.PatientDocument System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.PatientDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -527,6 +551,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public System.DateTimeOffset? BirthDate { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement> ClinicalInfo { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.PatientInfoSex? Sex { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.PatientInfo System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.PatientInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.PatientInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.PatientInfo System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.PatientInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -558,6 +583,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.PatientDocument> Data { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.PatientInfo Info { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.PatientRecord System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.PatientRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.PatientRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.PatientRecord System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.PatientRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -569,6 +595,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public TrialMatcherData(System.Collections.Generic.IEnumerable<Azure.Health.Insights.ClinicalMatching.PatientRecord> patients) { }
         public Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration Configuration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Health.Insights.ClinicalMatching.PatientRecord> Patients { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherData System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -586,6 +613,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public Azure.Health.Insights.ClinicalMatching.ClinicalTrialSource? Source { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceType Type { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherInference System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherInference System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -599,6 +627,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public float? Importance { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.ClinicalNoteEvidence PatientDataEvidence { get { throw null; } }
         public Azure.Health.Insights.ClinicalMatching.ClinicalCodedElement PatientInfoEvidence { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherInferenceEvidence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -628,6 +657,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public Azure.Health.Insights.ClinicalMatching.ClinicalTrials ClinicalTrials { get { throw null; } }
         public bool? IncludeEvidence { get { throw null; } set { } }
         public bool? Verbose { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherModelConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -640,6 +670,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.ClinicalMatching.TrialMatcherInference> Inferences { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.ClinicalMatching.ExtendedClinicalCodedElement> NeededClinicalInfo { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -652,6 +683,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         public System.DateTimeOffset? KnowledgeGraphLastUpdateDate { get { throw null; } }
         public string ModelVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.ClinicalMatching.TrialMatcherPatientResult> Patients { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherResults System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.ClinicalMatching.TrialMatcherResults System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.ClinicalMatching.TrialMatcherResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

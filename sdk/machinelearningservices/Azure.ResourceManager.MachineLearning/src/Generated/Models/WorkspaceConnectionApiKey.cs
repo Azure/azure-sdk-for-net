@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the key. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

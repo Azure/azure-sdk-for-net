@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService
         public ProcessInfoData()
         {
             Children = new ChangeTrackingList<string>();
-            Threads = new ChangeTrackingList<ProcessThreadInfo>();
+            ProcessThreads = new ChangeTrackingList<WebAppProcessThreadProperties>();
             OpenFileHandles = new ChangeTrackingList<string>();
             Modules = new ChangeTrackingList<ProcessModuleInfoData>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="iisProfileTimeoutInSeconds"> IIS Profile timeout (seconds). </param>
         /// <param name="parent"> Parent process. </param>
         /// <param name="children"> Child process list. </param>
-        /// <param name="threads"> Thread list. </param>
+        /// <param name="processThreads"> Thread list. </param>
         /// <param name="openFileHandles"> List of open files. </param>
         /// <param name="modules"> List of modules. </param>
         /// <param name="fileName"> File name of this process. </param>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="description"> Description of process. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<ProcessThreadInfo> threads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ProcessInfoData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? identifier, string deploymentName, string href, string minidump, bool? isProfileRunning, bool? isIisProfileRunning, double? iisProfileTimeoutInSeconds, string parent, IList<string> children, IList<WebAppProcessThreadProperties> processThreads, IList<string> openFileHandles, IList<ProcessModuleInfoData> modules, string fileName, string commandLine, string userName, int? handleCount, int? moduleCount, int? threadCount, DateTimeOffset? startOn, string totalCpuTime, string userCpuTime, string privilegedCpuTime, long? workingSet, long? peakWorkingSet, long? privateMemory, long? virtualMemory, long? peakVirtualMemory, long? pagedSystemMemory, long? nonPagedSystemMemory, long? pagedMemory, long? peakPagedMemory, DateTimeOffset? timeStamp, IDictionary<string, string> environmentVariables, bool? isScmSite, bool? isWebjob, string description, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Identifier = identifier;
             DeploymentName = deploymentName;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.AppService
             IisProfileTimeoutInSeconds = iisProfileTimeoutInSeconds;
             Parent = parent;
             Children = children;
-            Threads = threads;
+            ProcessThreads = processThreads;
             OpenFileHandles = openFileHandles;
             Modules = modules;
             FileName = fileName;
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.AppService
         public IList<string> Children { get; }
         /// <summary> Thread list. </summary>
         [WirePath("properties.threads")]
-        public IList<ProcessThreadInfo> Threads { get; }
+        public IList<WebAppProcessThreadProperties> ProcessThreads { get; }
         /// <summary> List of open files. </summary>
         [WirePath("properties.open_file_handles")]
         public IList<string> OpenFileHandles { get; }

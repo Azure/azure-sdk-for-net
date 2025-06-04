@@ -16,7 +16,8 @@ namespace Azure.ResourceManager.Cdn
 {
     /// <summary>
     /// A class representing the FrontDoorOrigin data model.
-    /// CDN origin is the source of the content being delivered via CDN. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
+    /// Azure Front Door origin is the source of the content being delivered via Azure Front Door. When the edge nodes represented by an endpoint do not have the requested content cached, they attempt to fetch it from one or more of the configured origins.
+    /// Serialized Name: AFDOrigin
     /// </summary>
     public partial class FrontDoorOriginData : ResourceData
     {
@@ -62,19 +63,55 @@ namespace Azure.ResourceManager.Cdn
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="originGroupName"> The name of the origin group which contains this origin. </param>
-        /// <param name="origin"> Resource reference to the Azure origin resource. </param>
-        /// <param name="hostName"> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </param>
-        /// <param name="httpPort"> The value of the HTTP port. Must be between 1 and 65535. </param>
-        /// <param name="httpsPort"> The value of the HTTPS port. Must be between 1 and 65535. </param>
-        /// <param name="originHostHeader"> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </param>
-        /// <param name="priority"> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </param>
-        /// <param name="weight"> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </param>
-        /// <param name="sharedPrivateLinkResource"> The properties of the private link resource for private origin. </param>
-        /// <param name="enabledState"> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </param>
-        /// <param name="enforceCertificateNameCheck"> Whether to enable certificate name check at origin level. </param>
-        /// <param name="provisioningState"> Provisioning status. </param>
-        /// <param name="deploymentStatus"></param>
+        /// <param name="originGroupName">
+        /// The name of the origin group which contains this origin.
+        /// Serialized Name: AFDOrigin.properties.originGroupName
+        /// </param>
+        /// <param name="origin">
+        /// Resource reference to the Azure origin resource.
+        /// Serialized Name: AFDOrigin.properties.azureOrigin
+        /// </param>
+        /// <param name="hostName">
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: AFDOrigin.properties.hostName
+        /// </param>
+        /// <param name="httpPort">
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOrigin.properties.httpPort
+        /// </param>
+        /// <param name="httpsPort">
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOrigin.properties.httpsPort
+        /// </param>
+        /// <param name="originHostHeader">
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: AFDOrigin.properties.originHostHeader
+        /// </param>
+        /// <param name="priority">
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: AFDOrigin.properties.priority
+        /// </param>
+        /// <param name="weight">
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: AFDOrigin.properties.weight
+        /// </param>
+        /// <param name="sharedPrivateLinkResource">
+        /// The properties of the private link resource for private origin.
+        /// Serialized Name: AFDOrigin.properties.sharedPrivateLinkResource
+        /// </param>
+        /// <param name="enabledState">
+        /// Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
+        /// Serialized Name: AFDOrigin.properties.enabledState
+        /// </param>
+        /// <param name="enforceCertificateNameCheck">
+        /// Whether to enable certificate name check at origin level
+        /// Serialized Name: AFDOrigin.properties.enforceCertificateNameCheck
+        /// </param>
+        /// <param name="provisioningState">
+        /// Provisioning status
+        /// Serialized Name: AFDOrigin.properties.provisioningState
+        /// </param>
+        /// <param name="deploymentStatus"> Serialized Name: AFDOrigin.properties.deploymentStatus. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FrontDoorOriginData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string originGroupName, WritableSubResource origin, string hostName, int? httpPort, int? httpsPort, string originHostHeader, int? priority, int? weight, SharedPrivateLinkResourceProperties sharedPrivateLinkResource, EnabledState? enabledState, bool? enforceCertificateNameCheck, FrontDoorProvisioningState? provisioningState, FrontDoorDeploymentStatus? deploymentStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -94,9 +131,15 @@ namespace Azure.ResourceManager.Cdn
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The name of the origin group which contains this origin. </summary>
+        /// <summary>
+        /// The name of the origin group which contains this origin.
+        /// Serialized Name: AFDOrigin.properties.originGroupName
+        /// </summary>
         public string OriginGroupName { get; }
-        /// <summary> Resource reference to the Azure origin resource. </summary>
+        /// <summary>
+        /// Resource reference to the Azure origin resource.
+        /// Serialized Name: AFDOrigin.properties.azureOrigin
+        /// </summary>
         internal WritableSubResource Origin { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginId
@@ -110,27 +153,57 @@ namespace Azure.ResourceManager.Cdn
             }
         }
 
-        /// <summary> The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint. </summary>
+        /// <summary>
+        /// The address of the origin. Domain names, IPv4 addresses, and IPv6 addresses are supported.This should be unique across all origins in an endpoint.
+        /// Serialized Name: AFDOrigin.properties.hostName
+        /// </summary>
         public string HostName { get; set; }
-        /// <summary> The value of the HTTP port. Must be between 1 and 65535. </summary>
+        /// <summary>
+        /// The value of the HTTP port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOrigin.properties.httpPort
+        /// </summary>
         public int? HttpPort { get; set; }
-        /// <summary> The value of the HTTPS port. Must be between 1 and 65535. </summary>
+        /// <summary>
+        /// The value of the HTTPS port. Must be between 1 and 65535.
+        /// Serialized Name: AFDOrigin.properties.httpsPort
+        /// </summary>
         public int? HttpsPort { get; set; }
-        /// <summary> The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure CDN origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint. </summary>
+        /// <summary>
+        /// The host header value sent to the origin with each request. If you leave this blank, the request hostname determines this value. Azure Front Door origins, such as Web Apps, Blob Storage, and Cloud Services require this host header value to match the origin hostname by default. This overrides the host header defined at Endpoint
+        /// Serialized Name: AFDOrigin.properties.originHostHeader
+        /// </summary>
         public string OriginHostHeader { get; set; }
-        /// <summary> Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5. </summary>
+        /// <summary>
+        /// Priority of origin in given origin group for load balancing. Higher priorities will not be used for load balancing if any lower priority origin is healthy.Must be between 1 and 5
+        /// Serialized Name: AFDOrigin.properties.priority
+        /// </summary>
         public int? Priority { get; set; }
-        /// <summary> Weight of the origin in given origin group for load balancing. Must be between 1 and 1000. </summary>
+        /// <summary>
+        /// Weight of the origin in given origin group for load balancing. Must be between 1 and 1000
+        /// Serialized Name: AFDOrigin.properties.weight
+        /// </summary>
         public int? Weight { get; set; }
-        /// <summary> The properties of the private link resource for private origin. </summary>
+        /// <summary>
+        /// The properties of the private link resource for private origin.
+        /// Serialized Name: AFDOrigin.properties.sharedPrivateLinkResource
+        /// </summary>
         public SharedPrivateLinkResourceProperties SharedPrivateLinkResource { get; set; }
-        /// <summary> Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool. </summary>
+        /// <summary>
+        /// Whether to enable health probes to be made against backends defined under backendPools. Health probes can only be disabled if there is a single enabled backend in single enabled backend pool.
+        /// Serialized Name: AFDOrigin.properties.enabledState
+        /// </summary>
         public EnabledState? EnabledState { get; set; }
-        /// <summary> Whether to enable certificate name check at origin level. </summary>
+        /// <summary>
+        /// Whether to enable certificate name check at origin level
+        /// Serialized Name: AFDOrigin.properties.enforceCertificateNameCheck
+        /// </summary>
         public bool? EnforceCertificateNameCheck { get; set; }
-        /// <summary> Provisioning status. </summary>
+        /// <summary>
+        /// Provisioning status
+        /// Serialized Name: AFDOrigin.properties.provisioningState
+        /// </summary>
         public FrontDoorProvisioningState? ProvisioningState { get; }
-        /// <summary> Gets the deployment status. </summary>
+        /// <summary> Serialized Name: AFDOrigin.properties.deploymentStatus. </summary>
         public FrontDoorDeploymentStatus? DeploymentStatus { get; }
     }
 }

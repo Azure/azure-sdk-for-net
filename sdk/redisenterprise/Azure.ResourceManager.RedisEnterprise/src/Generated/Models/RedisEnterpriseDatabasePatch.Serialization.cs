@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class RedisEnterpriseDatabasePatch : IUtf8JsonSerializable, IJsonModel<RedisEnterpriseDatabasePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabasePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RedisEnterpriseDatabasePatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RedisEnterpriseDatabasePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientProtocol))
@@ -61,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue<RedisPersistenceSettings>(Persistence, options);
+                writer.WriteObjectValue(Persistence, options);
             }
             if (Optional.IsCollectionDefined(Modules))
             {
@@ -69,14 +77,29 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue<RedisEnterpriseModule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue<RedisEnterpriseDatabaseGeoReplication>(GeoReplication, options);
+                writer.WriteObjectValue(GeoReplication, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RedisVersion))
+            {
+                writer.WritePropertyName("redisVersion"u8);
+                writer.WriteStringValue(RedisVersion);
+            }
+            if (Optional.IsDefined(DeferUpgrade))
+            {
+                writer.WritePropertyName("deferUpgrade"u8);
+                writer.WriteStringValue(DeferUpgrade.Value.ToString());
+            }
+            if (Optional.IsDefined(AccessKeysAuthentication))
+            {
+                writer.WritePropertyName("accessKeysAuthentication"u8);
+                writer.WriteStringValue(AccessKeysAuthentication.Value.ToString());
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -87,14 +110,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RedisEnterpriseDatabasePatch IJsonModel<RedisEnterpriseDatabasePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -111,7 +133,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static RedisEnterpriseDatabasePatch DeserializeRedisEnterpriseDatabasePatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -126,6 +148,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             RedisPersistenceSettings persistence = default;
             IList<RedisEnterpriseModule> modules = default;
             RedisEnterpriseDatabaseGeoReplication geoReplication = default;
+            string redisVersion = default;
+            DeferUpgradeSetting? deferUpgrade = default;
+            AccessKeysAuthentication? accessKeysAuthentication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -225,6 +250,29 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                             geoReplication = RedisEnterpriseDatabaseGeoReplication.DeserializeRedisEnterpriseDatabaseGeoReplication(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("redisVersion"u8))
+                        {
+                            redisVersion = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("deferUpgrade"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deferUpgrade = new DeferUpgradeSetting(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("accessKeysAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            accessKeysAuthentication = new AccessKeysAuthentication(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -244,6 +292,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 persistence,
                 modules ?? new ChangeTrackingList<RedisEnterpriseModule>(),
                 geoReplication,
+                redisVersion,
+                deferUpgrade,
+                accessKeysAuthentication,
                 serializedAdditionalRawData);
         }
 
@@ -254,7 +305,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support writing '{options.Format}' format.");
             }
@@ -268,7 +319,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRedisEnterpriseDatabasePatch(document.RootElement, options);
                     }
                 default:

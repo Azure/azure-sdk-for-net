@@ -21,9 +21,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string A128CbcValue = "A128CBC";
         internal const string A192CbcValue = "A192CBC";
         internal const string A256CbcValue = "A256CBC";
+        internal const string CkmAesKeyWrapValue = "CKM_AES_KEY_WRAP";
         internal const string A128CbcPadValue = "A128CBCPAD";
         internal const string A192CbcPadValue = "A192CBCPAD";
         internal const string A256CbcPadValue = "A256CBCPAD";
+        internal const string CkmAesKeyWrapPadValue = "CKM_AES_KEY_WRAP_PAD";
 
         private readonly string _value;
 
@@ -37,12 +39,26 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
+        /// <para>
+        /// <b>[Not recommended]</b>
         /// Gets an RSA1_5 <see cref="EncryptionAlgorithm"/>.
+        /// </para><para>
+        /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
+        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.Rsa15"/>, which is included solely for backwards compatibility.
+        /// Cryptographic standards no longer consider RSA with the PKCS#1 v1.5 padding scheme secure for encryption.
+        /// </para>
         /// </summary>
         public static EncryptionAlgorithm Rsa15 { get; } = new EncryptionAlgorithm(Rsa15Value);
 
         /// <summary>
+        /// <para>
+        /// <b>[Not recommended]</b>
         /// Gets an RSA-OAEP <see cref="EncryptionAlgorithm"/>.
+        /// </para><para>
+        /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
+        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.RsaOaep"/>, which is included solely for backwards compatibility.
+        /// <see cref="EncryptionAlgorithm.RsaOaep"/> utilizes SHA1, which has known collision problems.
+        /// </para>
         /// </summary>
         public static EncryptionAlgorithm RsaOaep { get; } = new EncryptionAlgorithm(RsaOaepValue);
 
@@ -82,6 +98,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static EncryptionAlgorithm A256Cbc { get; } = new EncryptionAlgorithm(A256CbcValue);
 
         /// <summary>
+        /// Gets a 256-bit CKM AES Key Wrap <see cref="EncryptionAlgorithm"/>.
+        /// </summary>
+        public static EncryptionAlgorithm CkmAesKeyWrap { get; } = new EncryptionAlgorithm(CkmAesKeyWrapValue);
+
+        /// <summary>
         /// Gets a 128-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
         /// </summary>
         public static EncryptionAlgorithm A128CbcPad { get; } = new EncryptionAlgorithm(A128CbcPadValue);
@@ -95,6 +116,11 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets a 256-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
         /// </summary>
         public static EncryptionAlgorithm A256CbcPad { get; } = new EncryptionAlgorithm(A256CbcPadValue);
+
+        /// <summary>
+        /// Gets a 256-bit CKM AES Key Wrap <see cref="EncryptionAlgorithm"/> with PKCS padding.
+        /// </summary>
+        public static EncryptionAlgorithm CkmAesKeyWrapPad { get; } = new EncryptionAlgorithm(CkmAesKeyWrapPadValue);
 
         /// <summary>
         /// Determines if two <see cref="EncryptionAlgorithm"/> values are the same.
@@ -153,10 +179,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             A128CbcValue => AesCbc.Aes128Cbc,
             A192CbcValue => AesCbc.Aes192Cbc,
             A256CbcValue => AesCbc.Aes256Cbc,
+            CkmAesKeyWrapValue => AesCbc.CkmAesKeyWrap,
 
             A128CbcPadValue => AesCbc.Aes128CbcPad,
             A192CbcPadValue => AesCbc.Aes192CbcPad,
             A256CbcPadValue => AesCbc.Aes256CbcPad,
+            CkmAesKeyWrapPadValue => AesCbc.CkmAesKeyWrapPad,
 
             _ => null,
         };

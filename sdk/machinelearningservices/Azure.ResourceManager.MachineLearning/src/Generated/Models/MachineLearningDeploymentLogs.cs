@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> The retrieved online deployment logs. </summary>
+        [WirePath("content")]
         public string Content { get; }
     }
 }

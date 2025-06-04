@@ -92,16 +92,15 @@ namespace Azure.ResourceManager.Support.Tests
 
         private SupportTicketData BuildSupportTicketData()
         {
-            var ticket = new SupportTicketData();
-            ticket.AdvancedDiagnosticConsent = "No";
-            ticket.ServiceId = "/providers/microsoft.support/services/376afb21-6bd3-91aa-fd58-39fd84d8c201";
-            ticket.ProblemClassificationId = "/providers/microsoft.support/services/376afb21-6bd3-91aa-fd58-39fd84d8c201/problemclassifications/03014459-4572-f8f0-32b0-88833f234f25";
-            ticket.Title = "dotnet sdk unit test, please close";
-            ticket.Description = "dotnet sdk unit test, please close";
+            var ticket = new SupportTicketData("dotnet sdk unit test, please close",
+                                "/providers/microsoft.support/services/376afb21-6bd3-91aa-fd58-39fd84d8c201/problemclassifications/03014459-4572-f8f0-32b0-88833f234f25",
+                                "Minimal",
+                                "No",
+                                new SupportContactProfile("test", "test", PreferredContactMethod.Email, "test@microsoft.com", "Dateline Standard Time", "USA", "en-us"),
+                                "dotnet sdk unit test, please close",
+                                "/providers/microsoft.support/services/376afb21-6bd3-91aa-fd58-39fd84d8c201");
             ticket.ProblemStartOn = new DateTimeOffset(2023, 10, 23, 0, 0, 0, new TimeSpan(0));
-            ticket.Severity = "Minimal";
             ticket.Require24X7Response = false;
-            ticket.ContactDetails = new SupportContactProfile("test", "test", PreferredContactMethod.Email, "test@microsoft.com", "Dateline Standard Time", "USA", "en-us");
             return ticket;
         }
 

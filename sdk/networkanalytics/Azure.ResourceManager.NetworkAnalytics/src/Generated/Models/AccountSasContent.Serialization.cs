@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
     public partial class AccountSasContent : IUtf8JsonSerializable, IJsonModel<AccountSasContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountSasContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccountSasContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AccountSasContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccountSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("startTimeStamp"u8);
             writer.WriteStringValue(StartTimeStamp, "O");
             writer.WritePropertyName("expiryTimeStamp"u8);
@@ -40,14 +48,13 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AccountSasContent IJsonModel<AccountSasContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
 
         internal static AccountSasContent DeserializeAccountSasContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,7 +115,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AccountSasContent)} does not support writing '{options.Format}' format.");
             }
@@ -122,7 +129,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAccountSasContent(document.RootElement, options);
                     }
                 default:

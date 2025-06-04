@@ -54,7 +54,6 @@ namespace Azure.ResourceManager.Support
         internal SupportAzureServiceData()
         {
             ResourceTypes = new ChangeTrackingList<string>();
-            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportAzureServiceData"/>. </summary>
@@ -64,13 +63,11 @@ namespace Azure.ResourceManager.Support
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of the Azure service. </param>
         /// <param name="resourceTypes"> ARM Resource types. </param>
-        /// <param name="metadata"> Metadata about the service, only visible for 1P clients. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> resourceTypes, IReadOnlyDictionary<string, string> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SupportAzureServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> resourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             ResourceTypes = resourceTypes;
-            Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,7 +75,5 @@ namespace Azure.ResourceManager.Support
         public string DisplayName { get; }
         /// <summary> ARM Resource types. </summary>
         public IReadOnlyList<string> ResourceTypes { get; }
-        /// <summary> Metadata about the service, only visible for 1P clients. </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; }
     }
 }

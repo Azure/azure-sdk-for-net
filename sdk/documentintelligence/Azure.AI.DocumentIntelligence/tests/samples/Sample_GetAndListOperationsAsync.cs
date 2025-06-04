@@ -13,18 +13,15 @@ namespace Azure.AI.DocumentIntelligence.Samples
         public async Task GetAndListOperationsAsync()
         {
             string endpoint = TestEnvironment.Endpoint;
-            string apiKey = TestEnvironment.ApiKey;
-            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            var client = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), TestEnvironment.Credential);
 
             // Build a custom model to make sure that there is at least one operation.
             string modelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
-            {
-                AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
-            };
+            var blobSource = new BlobContentSource(blobContainerUri);
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, blobSource);
 
-            Operation<DocumentModelDetails> buildOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+            Operation<DocumentModelDetails> buildOperation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 
             #region Snippet:DocumentIntelligenceSampleGetAndListOperations
             // Get an operation by ID.
@@ -33,9 +30,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             string operationId = buildOperation.Id;
 #endif
-            OperationDetails operationDetails = await client.GetOperationAsync(operationId);
+            DocumentIntelligenceOperationDetails operationDetails = await client.GetOperationAsync(operationId);
 
-            if (operationDetails.Status == OperationStatus.Succeeded)
+            if (operationDetails.Status == DocumentIntelligenceOperationStatus.Succeeded)
             {
                 Console.WriteLine($"Operation with ID '{operationDetails.OperationId}' has succeeded.");
 
@@ -57,9 +54,13 @@ namespace Azure.AI.DocumentIntelligence.Samples
                     case DocumentClassifierBuildOperationDetails classifierOperation:
                         Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
                         break;
+
+                    case DocumentClassifierCopyToOperationDetails classifierOperation:
+                        Console.WriteLine($"Classifier ID: {classifierOperation.Result.ClassifierId}");
+                        break;
                 }
             }
-            else if (operationDetails.Status == OperationStatus.Failed)
+            else if (operationDetails.Status == DocumentIntelligenceOperationStatus.Failed)
             {
                 Console.WriteLine($"Operation with ID '{operationDetails.OperationId}' has failed.");
                 Console.WriteLine($"Error code: {operationDetails.Error.Code}");
@@ -73,7 +74,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
             // List up to 10 operations that have been executed in the last 24 hours.
             int count = 0;
 
-            await foreach (OperationDetails operationItem in client.GetOperationsAsync())
+            await foreach (DocumentIntelligenceOperationDetails operationItem in client.GetOperationsAsync())
             {
                 Console.WriteLine($"Operation details:");
                 Console.WriteLine($"  Operation ID: {operationItem.OperationId}");

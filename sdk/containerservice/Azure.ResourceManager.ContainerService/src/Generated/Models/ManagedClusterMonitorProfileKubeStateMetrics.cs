@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Comma-separated list of additional Kubernetes label keys that will be used in the resource's labels metric (Example: 'namespaces=[k8s-label-1,k8s-label-n,...],pods=[app],...'). By default the metric contains only resource name and namespace labels. </summary>
+        [WirePath("metricLabelsAllowlist")]
         public string MetricLabelsAllowlist { get; set; }
         /// <summary> Comma-separated list of Kubernetes annotation keys that will be used in the resource's labels metric (Example: 'namespaces=[kubernetes.io/team,...],pods=[kubernetes.io/team],...'). By default the metric contains only resource name and namespace labels. </summary>
+        [WirePath("metricAnnotationsAllowList")]
         public string MetricAnnotationsAllowList { get; set; }
     }
 }

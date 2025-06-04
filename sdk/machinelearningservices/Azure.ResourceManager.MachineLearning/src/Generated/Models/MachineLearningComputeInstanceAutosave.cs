@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningComputeInstanceAutosave left, MachineLearningComputeInstanceAutosave right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningComputeInstanceAutosave"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningComputeInstanceAutosave left, MachineLearningComputeInstanceAutosave right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningComputeInstanceAutosave"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningComputeInstanceAutosave"/>. </summary>
         public static implicit operator MachineLearningComputeInstanceAutosave(string value) => new MachineLearningComputeInstanceAutosave(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

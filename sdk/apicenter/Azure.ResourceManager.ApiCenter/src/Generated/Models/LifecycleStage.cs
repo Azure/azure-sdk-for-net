@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static bool operator ==(LifecycleStage left, LifecycleStage right) => left.Equals(right);
         /// <summary> Determines if two <see cref="LifecycleStage"/> values are not the same. </summary>
         public static bool operator !=(LifecycleStage left, LifecycleStage right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="LifecycleStage"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="LifecycleStage"/>. </summary>
         public static implicit operator LifecycleStage(string value) => new LifecycleStage(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -10,14 +10,24 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     public partial class NetworkCloudClusterPatch : IUtf8JsonSerializable, IJsonModel<NetworkCloudClusterPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudClusterPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkCloudClusterPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +35,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(NetworkCloudClusterPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -42,7 +57,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(AggregatorOrSingleRackDefinition))
             {
                 writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
-                writer.WriteObjectValue<NetworkCloudRackDefinition>(AggregatorOrSingleRackDefinition, options);
+                writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
+            }
+            if (Optional.IsDefined(AnalyticsOutputSettings))
+            {
+                if (AnalyticsOutputSettings != null)
+                {
+                    writer.WritePropertyName("analyticsOutputSettings"u8);
+                    writer.WriteObjectValue(AnalyticsOutputSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("analyticsOutputSettings");
+                }
             }
             if (Optional.IsDefined(ClusterLocation))
             {
@@ -51,13 +78,39 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             if (Optional.IsDefined(ClusterServicePrincipal))
             {
-                writer.WritePropertyName("clusterServicePrincipal"u8);
-                writer.WriteObjectValue<ServicePrincipalInformation>(ClusterServicePrincipal, options);
+                if (ClusterServicePrincipal != null)
+                {
+                    writer.WritePropertyName("clusterServicePrincipal"u8);
+                    writer.WriteObjectValue(ClusterServicePrincipal, options);
+                }
+                else
+                {
+                    writer.WriteNull("clusterServicePrincipal");
+                }
+            }
+            if (Optional.IsDefined(CommandOutputSettings))
+            {
+                if (CommandOutputSettings != null)
+                {
+                    writer.WritePropertyName("commandOutputSettings"u8);
+                    writer.WriteObjectValue(CommandOutputSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("commandOutputSettings");
+                }
             }
             if (Optional.IsDefined(ComputeDeploymentThreshold))
             {
-                writer.WritePropertyName("computeDeploymentThreshold"u8);
-                writer.WriteObjectValue<ValidationThreshold>(ComputeDeploymentThreshold, options);
+                if (ComputeDeploymentThreshold != null)
+                {
+                    writer.WritePropertyName("computeDeploymentThreshold"u8);
+                    writer.WriteObjectValue(ComputeDeploymentThreshold, options);
+                }
+                else
+                {
+                    writer.WriteNull("computeDeploymentThreshold");
+                }
             }
             if (Optional.IsCollectionDefined(ComputeRackDefinitions))
             {
@@ -65,9 +118,69 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputeRackDefinitions)
                 {
-                    writer.WriteObjectValue<NetworkCloudRackDefinition>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(RuntimeProtectionConfiguration))
+            {
+                if (RuntimeProtectionConfiguration != null)
+                {
+                    writer.WritePropertyName("runtimeProtectionConfiguration"u8);
+                    writer.WriteObjectValue(RuntimeProtectionConfiguration, options);
+                }
+                else
+                {
+                    writer.WriteNull("runtimeProtectionConfiguration");
+                }
+            }
+            if (Optional.IsDefined(SecretArchive))
+            {
+                if (SecretArchive != null)
+                {
+                    writer.WritePropertyName("secretArchive"u8);
+                    writer.WriteObjectValue(SecretArchive, options);
+                }
+                else
+                {
+                    writer.WriteNull("secretArchive");
+                }
+            }
+            if (Optional.IsDefined(SecretArchiveSettings))
+            {
+                if (SecretArchiveSettings != null)
+                {
+                    writer.WritePropertyName("secretArchiveSettings"u8);
+                    writer.WriteObjectValue(SecretArchiveSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("secretArchiveSettings");
+                }
+            }
+            if (Optional.IsDefined(UpdateStrategy))
+            {
+                if (UpdateStrategy != null)
+                {
+                    writer.WritePropertyName("updateStrategy"u8);
+                    writer.WriteObjectValue(UpdateStrategy, options);
+                }
+                else
+                {
+                    writer.WriteNull("updateStrategy");
+                }
+            }
+            if (Optional.IsDefined(VulnerabilityScanningSettings))
+            {
+                if (VulnerabilityScanningSettings != null)
+                {
+                    writer.WritePropertyName("vulnerabilityScanningSettings"u8);
+                    writer.WriteObjectValue(VulnerabilityScanningSettings, options);
+                }
+                else
+                {
+                    writer.WriteNull("vulnerabilityScanningSettings");
+                }
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -78,14 +191,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetworkCloudClusterPatch IJsonModel<NetworkCloudClusterPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -102,22 +214,40 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static NetworkCloudClusterPatch DeserializeNetworkCloudClusterPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            ManagedServiceIdentity identity = default;
             IDictionary<string, string> tags = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
+            AnalyticsOutputSettings analyticsOutputSettings = default;
             string clusterLocation = default;
             ServicePrincipalInformation clusterServicePrincipal = default;
+            CommandOutputSettings commandOutputSettings = default;
             ValidationThreshold computeDeploymentThreshold = default;
             IList<NetworkCloudRackDefinition> computeRackDefinitions = default;
+            RuntimeProtectionConfiguration runtimeProtectionConfiguration = default;
+            ClusterSecretArchive secretArchive = default;
+            SecretArchiveSettings secretArchiveSettings = default;
+            ClusterUpdateStrategy updateStrategy = default;
+            VulnerabilityScanningSettingsPatch vulnerabilityScanningSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -150,6 +280,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("analyticsOutputSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                analyticsOutputSettings = null;
+                                continue;
+                            }
+                            analyticsOutputSettings = AnalyticsOutputSettings.DeserializeAnalyticsOutputSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("clusterLocation"u8))
                         {
                             clusterLocation = property0.Value.GetString();
@@ -159,15 +299,27 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                clusterServicePrincipal = null;
                                 continue;
                             }
                             clusterServicePrincipal = ServicePrincipalInformation.DeserializeServicePrincipalInformation(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("commandOutputSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                commandOutputSettings = null;
+                                continue;
+                            }
+                            commandOutputSettings = CommandOutputSettings.DeserializeCommandOutputSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("computeDeploymentThreshold"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                computeDeploymentThreshold = null;
                                 continue;
                             }
                             computeDeploymentThreshold = ValidationThreshold.DeserializeValidationThreshold(property0.Value, options);
@@ -187,6 +339,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                             computeRackDefinitions = array;
                             continue;
                         }
+                        if (property0.NameEquals("runtimeProtectionConfiguration"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                runtimeProtectionConfiguration = null;
+                                continue;
+                            }
+                            runtimeProtectionConfiguration = RuntimeProtectionConfiguration.DeserializeRuntimeProtectionConfiguration(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("secretArchive"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                secretArchive = null;
+                                continue;
+                            }
+                            secretArchive = ClusterSecretArchive.DeserializeClusterSecretArchive(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("secretArchiveSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                secretArchiveSettings = null;
+                                continue;
+                            }
+                            secretArchiveSettings = SecretArchiveSettings.DeserializeSecretArchiveSettings(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("updateStrategy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                updateStrategy = null;
+                                continue;
+                            }
+                            updateStrategy = ClusterUpdateStrategy.DeserializeClusterUpdateStrategy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("vulnerabilityScanningSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                vulnerabilityScanningSettings = null;
+                                continue;
+                            }
+                            vulnerabilityScanningSettings = VulnerabilityScanningSettingsPatch.DeserializeVulnerabilityScanningSettingsPatch(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -197,12 +399,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new NetworkCloudClusterPatch(
+                identity,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 aggregatorOrSingleRackDefinition,
+                analyticsOutputSettings,
                 clusterLocation,
                 clusterServicePrincipal,
+                commandOutputSettings,
                 computeDeploymentThreshold,
                 computeRackDefinitions ?? new ChangeTrackingList<NetworkCloudRackDefinition>(),
+                runtimeProtectionConfiguration,
+                secretArchive,
+                secretArchiveSettings,
+                updateStrategy,
+                vulnerabilityScanningSettings,
                 serializedAdditionalRawData);
         }
 
@@ -213,7 +423,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudClusterPatch)} does not support writing '{options.Format}' format.");
             }
@@ -227,7 +437,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkCloudClusterPatch(document.RootElement, options);
                     }
                 default:

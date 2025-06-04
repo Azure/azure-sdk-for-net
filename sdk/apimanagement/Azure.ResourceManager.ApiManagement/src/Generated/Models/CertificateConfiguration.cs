@@ -73,12 +73,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Base64 Encoded certificate. </summary>
+        [WirePath("encodedCertificate")]
         public string EncodedCertificate { get; set; }
         /// <summary> Certificate Password. </summary>
+        [WirePath("certificatePassword")]
         public string CertificatePassword { get; set; }
         /// <summary> The System.Security.Cryptography.x509certificates.StoreName certificate store location. Only Root and CertificateAuthority are valid locations. </summary>
+        [WirePath("storeName")]
         public CertificateConfigurationStoreName StoreName { get; set; }
         /// <summary> Certificate information. </summary>
+        [WirePath("certificate")]
         public CertificateInformation Certificate { get; set; }
     }
 }

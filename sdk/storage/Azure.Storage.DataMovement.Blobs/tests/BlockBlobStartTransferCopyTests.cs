@@ -18,6 +18,7 @@ using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -34,7 +35,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         StorageTestEnvironment>
     {
         private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
-        private const string _defaultContentType = "text/plain";
+        private const string _defaultContentType = "image/jpeg";
         private const string _defaultContentLanguage = "en-US";
         private const string _defaultContentDisposition = "inline";
         private const string _defaultCacheControl = "no-cache";
@@ -70,7 +71,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default)
         {
             objectName ??= GetNewObjectName();
             BlockBlobClient blobClient = container.GetBlockBlobClient(objectName);
@@ -90,7 +92,20 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 {
                     var data = GetRandomBuffer(objectLength.Value);
                     using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
-                    await blobClient.UploadAsync(originalStream);
+                    await blobClient.UploadAsync(
+                        originalStream,
+                        new BlobUploadOptions()
+                        {
+                            AccessTier = _defaultAccessTier,
+                            Metadata = _defaultMetadata,
+                            HttpHeaders = new BlobHttpHeaders()
+                            {
+                                ContentType = _defaultContentType,
+                                ContentLanguage = _defaultContentLanguage,
+                                ContentDisposition = _defaultContentDisposition,
+                                CacheControl = _defaultCacheControl,
+                            }
+                        });
                 }
             }
             Uri sourceUri = blobClient.GenerateSasUri(BaseBlobs::Azure.Storage.Sas.BlobSasPermissions.All, Recording.UtcNow.AddDays(1));
@@ -103,7 +118,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = default,
+            TransferPropertiesTestType propertiesTestType = default,
+            CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
                 objectLength,
@@ -124,7 +141,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createResource = false,
             string objectName = null,
             BlobClientOptions options = null,
-            Stream contents = null)
+            Stream contents = null,
+            CancellationToken cancellationToken = default)
             => GetBlockBlobClientAsync(
                 container,
                 objectLength,
@@ -142,33 +160,24 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(_defaultAccessTier),
-                    ContentDisposition = new(_defaultContentDisposition),
-                    ContentLanguage = new(_defaultContentLanguage),
-                    CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType)
+                    AccessTier = _defaultAccessTier,
+                    ContentDisposition = _defaultContentDisposition,
+                    ContentLanguage = _defaultContentLanguage,
+                    CacheControl = _defaultCacheControl,
+                    ContentType = _defaultContentType,
+                    Metadata = _defaultMetadata,
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    AccessTier = new(false),
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false)
-                };
-            }
-            else if (type == TransferPropertiesTestType.Preserve)
-            {
-                options = new BlockBlobStorageResourceOptions
-                {
-                    AccessTier = new(true),
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true)
+                    AccessTier = default,
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default
                 };
             }
             return new BlockBlobStorageResource(objectClient, options);
@@ -178,16 +187,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             => objectClient.OpenReadAsync();
 
         protected override async Task VerifyPropertiesCopyAsync(
-            DataTransfer transfer,
+            TransferOperation transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             BlockBlobClient sourceClient,
-            BlockBlobClient destinationClient)
+            BlockBlobClient destinationClient,
+            CancellationToken cancellationToken)
         {
             // Verify completion
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();
@@ -202,6 +212,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 Assert.IsNull(destinationProperties.ContentDisposition);
                 Assert.IsNull(destinationProperties.ContentLanguage);
                 Assert.IsNull(destinationProperties.CacheControl);
+                // Because AccessTier is not preserved, the access tier value on the destination will
+                // default to what the storage account sets (normally AccessTier.Hot)
+                Assert.AreNotEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
+                Assert.That(destinationProperties.ContentType, Is.Not.EqualTo(_defaultContentType));
 
                 GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
                 Assert.IsEmpty(destinationTags.Tags);

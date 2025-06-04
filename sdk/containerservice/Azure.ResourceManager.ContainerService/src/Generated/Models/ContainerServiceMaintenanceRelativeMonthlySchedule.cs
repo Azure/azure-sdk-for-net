@@ -75,10 +75,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Specifies the number of months between each set of occurrences. </summary>
+        [WirePath("intervalMonths")]
         public int IntervalMonths { get; set; }
         /// <summary> Specifies on which week of the month the dayOfWeek applies. </summary>
+        [WirePath("weekIndex")]
         public ContainerServiceMaintenanceRelativeMonthlyScheduleWeekIndex WeekIndex { get; set; }
         /// <summary> Specifies on which day of the week the maintenance occurs. </summary>
+        [WirePath("dayOfWeek")]
         public ContainerServiceWeekDay DayOfWeek { get; set; }
     }
 }

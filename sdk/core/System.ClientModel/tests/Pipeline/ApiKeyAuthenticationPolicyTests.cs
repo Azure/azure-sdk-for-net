@@ -17,19 +17,6 @@ public class ApiKeyAuthenticationPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
-    public void CanImplicitlyCastApiKeyCredential()
-    {
-        string keyValue = "test_key";
-        ApiKeyCredential credential1 = new(keyValue);
-        ApiKeyCredential credential2 = keyValue;
-
-        credential1.Deconstruct(out string deconstructed1);
-        credential2.Deconstruct(out string deconstructed2);
-
-        Assert.AreEqual(deconstructed1, deconstructed2);
-    }
-
-    [Test]
     public async Task HeaderPolicySetsKey()
     {
         string keyValue = "test_key";

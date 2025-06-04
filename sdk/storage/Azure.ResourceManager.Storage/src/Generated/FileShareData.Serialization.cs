@@ -19,9 +19,18 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class FileShareData : IUtf8JsonSerializable, IJsonModel<FileShareData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FileShareData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<FileShareData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<FileShareData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -29,31 +38,11 @@ namespace Azure.ResourceManager.Storage
                 throw new FormatException($"The model {nameof(FileShareData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -77,6 +66,41 @@ namespace Azure.ResourceManager.Storage
             {
                 writer.WritePropertyName("shareQuota"u8);
                 writer.WriteNumberValue(ShareQuota.Value);
+            }
+            if (Optional.IsDefined(ProvisionedIops))
+            {
+                writer.WritePropertyName("provisionedIops"u8);
+                writer.WriteNumberValue(ProvisionedIops.Value);
+            }
+            if (Optional.IsDefined(ProvisionedBandwidthMibps))
+            {
+                writer.WritePropertyName("provisionedBandwidthMibps"u8);
+                writer.WriteNumberValue(ProvisionedBandwidthMibps.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IncludedBurstIops))
+            {
+                writer.WritePropertyName("includedBurstIops"u8);
+                writer.WriteNumberValue(IncludedBurstIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxBurstCreditsForIops))
+            {
+                writer.WritePropertyName("maxBurstCreditsForIops"u8);
+                writer.WriteNumberValue(MaxBurstCreditsForIops.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAllowedQuotaDowngradeOn))
+            {
+                writer.WritePropertyName("nextAllowedQuotaDowngradeTime"u8);
+                writer.WriteStringValue(NextAllowedQuotaDowngradeOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAllowedProvisionedIopsDowngradeOn))
+            {
+                writer.WritePropertyName("nextAllowedProvisionedIopsDowngradeTime"u8);
+                writer.WriteStringValue(NextAllowedProvisionedIopsDowngradeOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeOn))
+            {
+                writer.WritePropertyName("nextAllowedProvisionedBandwidthDowngradeTime"u8);
+                writer.WriteStringValue(NextAllowedProvisionedBandwidthDowngradeOn.Value, "R");
             }
             if (Optional.IsDefined(EnabledProtocol))
             {
@@ -149,7 +173,7 @@ namespace Azure.ResourceManager.Storage
                 writer.WriteStartArray();
                 foreach (var item in SignedIdentifiers)
                 {
-                    writer.WriteObjectValue<StorageSignedIdentifier>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -158,21 +182,10 @@ namespace Azure.ResourceManager.Storage
                 writer.WritePropertyName("snapshotTime"u8);
                 writer.WriteStringValue(SnapshotOn.Value, "O");
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(FileSharePaidBursting))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("fileSharePaidBursting"u8);
+                writer.WriteObjectValue(FileSharePaidBursting, options);
             }
             writer.WriteEndObject();
         }
@@ -191,7 +204,7 @@ namespace Azure.ResourceManager.Storage
 
         internal static FileShareData DeserializeFileShareData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -205,6 +218,13 @@ namespace Azure.ResourceManager.Storage
             DateTimeOffset? lastModifiedTime = default;
             IDictionary<string, string> metadata = default;
             int? shareQuota = default;
+            int? provisionedIops = default;
+            int? provisionedBandwidthMibps = default;
+            int? includedBurstIops = default;
+            long? maxBurstCreditsForIops = default;
+            DateTimeOffset? nextAllowedQuotaDowngradeTime = default;
+            DateTimeOffset? nextAllowedProvisionedIopsDowngradeTime = default;
+            DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeTime = default;
             FileShareEnabledProtocol? enabledProtocols = default;
             RootSquashType? rootSquash = default;
             string version = default;
@@ -220,6 +240,7 @@ namespace Azure.ResourceManager.Storage
             StorageLeaseDurationType? leaseDuration = default;
             IList<StorageSignedIdentifier> signedIdentifiers = default;
             DateTimeOffset? snapshotTime = default;
+            FileSharePropertiesFileSharePaidBursting fileSharePaidBursting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -296,6 +317,69 @@ namespace Azure.ResourceManager.Storage
                                 continue;
                             }
                             shareQuota = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisionedIops"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisionedIops = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("provisionedBandwidthMibps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisionedBandwidthMibps = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("includedBurstIops"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            includedBurstIops = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxBurstCreditsForIops"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxBurstCreditsForIops = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAllowedQuotaDowngradeTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAllowedQuotaDowngradeTime = property0.Value.GetDateTimeOffset("R");
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAllowedProvisionedIopsDowngradeTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAllowedProvisionedIopsDowngradeTime = property0.Value.GetDateTimeOffset("R");
+                            continue;
+                        }
+                        if (property0.NameEquals("nextAllowedProvisionedBandwidthDowngradeTime"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            nextAllowedProvisionedBandwidthDowngradeTime = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("enabledProtocols"u8))
@@ -430,6 +514,15 @@ namespace Azure.ResourceManager.Storage
                             snapshotTime = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
+                        if (property0.NameEquals("fileSharePaidBursting"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            fileSharePaidBursting = FileSharePropertiesFileSharePaidBursting.DeserializeFileSharePropertiesFileSharePaidBursting(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -447,6 +540,13 @@ namespace Azure.ResourceManager.Storage
                 lastModifiedTime,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 shareQuota,
+                provisionedIops,
+                provisionedBandwidthMibps,
+                includedBurstIops,
+                maxBurstCreditsForIops,
+                nextAllowedQuotaDowngradeTime,
+                nextAllowedProvisionedIopsDowngradeTime,
+                nextAllowedProvisionedBandwidthDowngradeTime,
                 enabledProtocols,
                 rootSquash,
                 version,
@@ -462,6 +562,7 @@ namespace Azure.ResourceManager.Storage
                 leaseDuration,
                 signedIdentifiers ?? new ChangeTrackingList<StorageSignedIdentifier>(),
                 snapshotTime,
+                fileSharePaidBursting,
                 etag,
                 serializedAdditionalRawData);
         }
@@ -478,15 +579,16 @@ namespace Azure.ResourceManager.Storage
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -500,43 +602,46 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  etag: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  etag: ");
                     builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -544,32 +649,34 @@ namespace Azure.ResourceManager.Storage
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastModifiedOn), out propertyOverride);
-            if (Optional.IsDefined(LastModifiedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    lastModifiedTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LastModifiedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    lastModifiedTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LastModifiedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metadata), out propertyOverride);
-            if (Optional.IsCollectionDefined(Metadata) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Metadata.Any() || hasPropertyOverride)
+                builder.Append("    metadata: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Metadata))
                 {
-                    builder.Append("    metadata: ");
-                    if (hasPropertyOverride)
+                    if (Metadata.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    metadata: ");
                         builder.AppendLine("{");
                         foreach (var item in Metadata)
                         {
@@ -595,57 +702,169 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareQuota), out propertyOverride);
-            if (Optional.IsDefined(ShareQuota) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    shareQuota: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShareQuota))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    shareQuota: ");
                     builder.AppendLine($"{ShareQuota.Value}");
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionedIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisionedIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisionedIops))
+                {
+                    builder.Append("    provisionedIops: ");
+                    builder.AppendLine($"{ProvisionedIops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisionedBandwidthMibps), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    provisionedBandwidthMibps: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisionedBandwidthMibps))
+                {
+                    builder.Append("    provisionedBandwidthMibps: ");
+                    builder.AppendLine($"{ProvisionedBandwidthMibps.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedBurstIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    includedBurstIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IncludedBurstIops))
+                {
+                    builder.Append("    includedBurstIops: ");
+                    builder.AppendLine($"{IncludedBurstIops.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxBurstCreditsForIops), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    maxBurstCreditsForIops: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(MaxBurstCreditsForIops))
+                {
+                    builder.Append("    maxBurstCreditsForIops: ");
+                    builder.AppendLine($"'{MaxBurstCreditsForIops.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextAllowedQuotaDowngradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextAllowedQuotaDowngradeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextAllowedQuotaDowngradeOn))
+                {
+                    builder.Append("    nextAllowedQuotaDowngradeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextAllowedQuotaDowngradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextAllowedProvisionedIopsDowngradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextAllowedProvisionedIopsDowngradeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextAllowedProvisionedIopsDowngradeOn))
+                {
+                    builder.Append("    nextAllowedProvisionedIopsDowngradeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextAllowedProvisionedIopsDowngradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NextAllowedProvisionedBandwidthDowngradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    nextAllowedProvisionedBandwidthDowngradeTime: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NextAllowedProvisionedBandwidthDowngradeOn))
+                {
+                    builder.Append("    nextAllowedProvisionedBandwidthDowngradeTime: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(NextAllowedProvisionedBandwidthDowngradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnabledProtocol), out propertyOverride);
-            if (Optional.IsDefined(EnabledProtocol) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    enabledProtocols: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(EnabledProtocol))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    enabledProtocols: ");
                     builder.AppendLine($"'{EnabledProtocol.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RootSquash), out propertyOverride);
-            if (Optional.IsDefined(RootSquash) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    rootSquash: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RootSquash))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    rootSquash: ");
                     builder.AppendLine($"'{RootSquash.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
-            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    version: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Version))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    version: ");
                     if (Version.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -659,88 +878,94 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeleted), out propertyOverride);
-            if (Optional.IsDefined(IsDeleted) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    deleted: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDeleted))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    deleted: ");
                     var boolValue = IsDeleted.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeletedOn), out propertyOverride);
-            if (Optional.IsDefined(DeletedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    deletedTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeletedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    deletedTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(DeletedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RemainingRetentionDays), out propertyOverride);
-            if (Optional.IsDefined(RemainingRetentionDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    remainingRetentionDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RemainingRetentionDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    remainingRetentionDays: ");
                     builder.AppendLine($"{RemainingRetentionDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessTier), out propertyOverride);
-            if (Optional.IsDefined(AccessTier) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    accessTier: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessTier))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    accessTier: ");
                     builder.AppendLine($"'{AccessTier.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessTierChangeOn), out propertyOverride);
-            if (Optional.IsDefined(AccessTierChangeOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    accessTierChangeTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessTierChangeOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    accessTierChangeTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(AccessTierChangeOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccessTierStatus), out propertyOverride);
-            if (Optional.IsDefined(AccessTierStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    accessTierStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AccessTierStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    accessTierStatus: ");
                     if (AccessTierStatus.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -754,73 +979,78 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ShareUsageBytes), out propertyOverride);
-            if (Optional.IsDefined(ShareUsageBytes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    shareUsageBytes: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ShareUsageBytes))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    shareUsageBytes: ");
                     builder.AppendLine($"'{ShareUsageBytes.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseStatus), out propertyOverride);
-            if (Optional.IsDefined(LeaseStatus) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    leaseStatus: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseStatus))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    leaseStatus: ");
                     builder.AppendLine($"'{LeaseStatus.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseState), out propertyOverride);
-            if (Optional.IsDefined(LeaseState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    leaseState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    leaseState: ");
                     builder.AppendLine($"'{LeaseState.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseDuration), out propertyOverride);
-            if (Optional.IsDefined(LeaseDuration) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    leaseDuration: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LeaseDuration))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    leaseDuration: ");
                     builder.AppendLine($"'{LeaseDuration.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignedIdentifiers), out propertyOverride);
-            if (Optional.IsCollectionDefined(SignedIdentifiers) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SignedIdentifiers.Any() || hasPropertyOverride)
+                builder.Append("    signedIdentifiers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SignedIdentifiers))
                 {
-                    builder.Append("    signedIdentifiers: ");
-                    if (hasPropertyOverride)
+                    if (SignedIdentifiers.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    signedIdentifiers: ");
                         builder.AppendLine("[");
                         foreach (var item in SignedIdentifiers)
                         {
@@ -832,17 +1062,33 @@ namespace Azure.ResourceManager.Storage
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SnapshotOn), out propertyOverride);
-            if (Optional.IsDefined(SnapshotOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    snapshotTime: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SnapshotOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    snapshotTime: ");
                     var formattedDateTimeString = TypeFormatters.ToString(SnapshotOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileSharePaidBursting), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    fileSharePaidBursting: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FileSharePaidBursting))
+                {
+                    builder.Append("    fileSharePaidBursting: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, FileSharePaidBursting, options, 4, false, "    fileSharePaidBursting: ");
                 }
             }
 
@@ -858,7 +1104,7 @@ namespace Azure.ResourceManager.Storage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -874,7 +1120,7 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFileShareData(document.RootElement, options);
                     }
                 default:

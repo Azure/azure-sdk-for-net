@@ -9,7 +9,7 @@ using Azure.Core.TestFramework;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
-namespace Azure.Identity
+namespace Azure.Identity.Tests
 {
     public class DefaultAzureCredentialImdsRetryPolicyTests : SyncAsyncPolicyTestBase
     {
@@ -26,13 +26,13 @@ namespace Azure.Identity
             MockTransport mockTransport = CreateMockTransport(req =>
             {
                 tryCount++;
-                if (!req.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _))
+                if (!req.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _))
                 {
                     return new MockResponse(400).WithJson("""{"error":"invalid_request","error_description":"Required query variable 'resource' is missing"}""");
                 }
                 return new MockResponse(500);
             });
-            Uri imdsUri = new Uri(ImdsManagedIdentitySource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
+            Uri imdsUri = new Uri(ImdsManagedIdentityProbeSource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
 
             // The first request should only try once
             var response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
@@ -46,7 +46,7 @@ namespace Azure.Identity
             {
                 req.Method = RequestMethod.Get;
                 req.Uri.Reset(imdsUri);
-                req.Headers.Add(ImdsManagedIdentitySource.metadataHeaderName, "true");
+                req.Headers.Add(ImdsManagedIdentityProbeSource.metadataHeaderName, "true");
             }, policy);
             Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
             Assert.AreEqual(500, response.Status);
@@ -56,7 +56,7 @@ namespace Azure.Identity
             {
                 req.Method = RequestMethod.Get;
                 req.Uri.Reset(imdsUri);
-                req.Headers.Add(ImdsManagedIdentitySource.metadataHeaderName, "true");
+                req.Headers.Add(ImdsManagedIdentityProbeSource.metadataHeaderName, "true");
             }, policy);
             Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
             Assert.AreEqual(500, response.Status);
@@ -74,7 +74,7 @@ namespace Azure.Identity
                 tryCount++;
                 return new MockResponse(500);
             });
-            Uri imdsUri = new Uri(ImdsManagedIdentitySource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
+            Uri imdsUri = new Uri(ImdsManagedIdentityProbeSource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
 
             // non-IMDS requests should default to the retry options behavior
             var response = await SendGetRequest(mockTransport, policy);

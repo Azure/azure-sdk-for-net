@@ -7,7 +7,7 @@
       Microsoft Azure Communication Router quickstart - Coming Soon
     </Description>
     <AssemblyTitle>Azure Communication Router Service</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.1.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageTags>Microsoft Azure Communication Router Service;Microsoft;Azure;Azure Communication Service;Azure Communication Router Service;Router;Communication;$(PackageCommonTags)</PackageTags>
@@ -21,8 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />

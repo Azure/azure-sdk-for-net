@@ -37,7 +37,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -60,7 +60,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             {
                 Serializer = new NewtonsoftJsonObjectSerializer()
             };
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator(), serializerOptions);
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName, serializerOptions);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -84,7 +84,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
                 Serializer = new FakeCustomSerializer(),
                 Format = SchemaFormat.Custom
             };
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleCustomGenerator(), serializerOptions);
+            var serializer = new SchemaRegistrySerializer(client, new SampleCustomGenerator(), groupName, serializerOptions);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             Employee deserializedEmployee = await serializer.DeserializeAsync<Employee>(content);
@@ -103,7 +103,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             MessageContent content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             // validate that we can use the constructor that only takes the client when deserializing since groupName is not necessary
@@ -124,7 +124,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             await client.RegisterSchemaAsync(groupName, (typeof(EmployeeV2)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
-            var serializer = new SchemaRegistrySerializer(client, groupName: groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             var content = await serializer.SerializeAsync<MessageContent, EmployeeV2>(employee);
 
             // deserialize using the old schema, which is forward compatible with the new schema
@@ -153,7 +153,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             var content = await serializer.SerializeAsync<MessageContent, Employee>(employee);
 
             // Since the serializer does not have built-in validation, deserialize is able to fill undefined properties with null values.
@@ -170,7 +170,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             var content = new MessageContent
             {
                 Data = new BinaryData(Array.Empty<byte>()),
@@ -188,7 +188,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
 
             await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
 
             var employee = new Employee { Age = 42, Name = "Caketown" };
             EventData eventData = (EventData)await serializer.SerializeAsync(employee, messageType: typeof(EventData));
@@ -233,7 +233,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
 
             await client.RegisterSchemaAsync(groupName, (typeof(Employee)).Name, s_schema, SchemaFormat.Json, CancellationToken.None).ConfigureAwait(false);
 
@@ -266,7 +266,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             Assert.ThrowsAsync<InvalidOperationException>(
                 async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }, messageType: typeof(MessageContentWithNoConstructor)));
         }
@@ -277,7 +277,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new ValidateThrowsGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new ValidateThrowsGenerator(), groupName);
 
             Assert.That(
                 async () => await serializer.SerializeAsync(new Employee { Age = 42, Name = "Caketown" }), Throws.InstanceOf<AggregateException>());
@@ -289,7 +289,7 @@ namespace Azure.Data.SchemaRegistry.Tests.Serialization
             var client = CreateClient();
             var groupName = TestEnvironment.SchemaRegistryGroup;
 
-            var serializer = new SchemaRegistrySerializer(client, groupName, new SampleJsonGenerator());
+            var serializer = new SchemaRegistrySerializer(client, new SampleJsonGenerator(), groupName);
             Assert.ThrowsAsync<RequestFailedException>(async () => await serializer.SerializeAsync(new UnregisteredEmployee { Age = 42, Name = "Caketown" }));
         }
 

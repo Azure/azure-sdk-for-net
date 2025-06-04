@@ -43,7 +43,6 @@ anand-rengasamy is an invalid user. Ensure the user exists, is public member of 
 alex-frankel is not a public member of Azure.
 filizt is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 sgellock is not a public member of Azure.
-maertendMSFT is not a public member of Azure.
 wangyuantao is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 bowgong is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 areddish is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -254,7 +253,6 @@ EldertGrootenboer is not a public member of Azure.
 QingChenmsft is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 vaishnavk is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 juhacket is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
-sffamily is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 chenkennt is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 azureSQLGitHub is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
 xgithubtriage is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
@@ -279,3 +277,6 @@ JieZhou000 is not a public member of Azure.
 ethanann-ms is not a public member of Azure.
 tmahmood-microsoft is not a public member of Azure.
 Aviv-Yaniv is not a public member of Azure.
+sakash279 is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+sivethe is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.
+ThomasWeiss is an invalid user. Ensure the user exists, is public member of Azure and has write permissions.

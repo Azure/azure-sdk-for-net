@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> How to authenticate users who access local diagnostics APIs. </summary>
+        [WirePath("authenticationType")]
         public MobileNetworkAuthenticationType AuthenticationType { get; set; }
         /// <summary> The HTTPS server TLS certificate used to secure local access to diagnostics. </summary>
+        [WirePath("httpsServerCertificate")]
         public MobileNetworkHttpsServerCertificate HttpsServerCertificate { get; set; }
     }
 }

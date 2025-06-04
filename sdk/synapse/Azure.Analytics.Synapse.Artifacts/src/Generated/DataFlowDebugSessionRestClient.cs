@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CreateDataFlowDebugSessionRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -146,7 +146,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -168,7 +168,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataFlowDebugPackage>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }
@@ -191,7 +191,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         AddDataFlowToDebugSessionResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +218,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         AddDataFlowToDebugSessionResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AddDataFlowToDebugSessionResponse.DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -240,7 +240,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DeleteDataFlowDebugSessionRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }
@@ -302,7 +302,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request0.Headers.Add("Accept", "application/json");
             request0.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DataFlowDebugCommandRequest>(request);
+            content.JsonWriter.WriteObjectValue(request);
             request0.Content = content;
             return message;
         }
@@ -386,7 +386,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         QueryDataFlowDebugSessionsResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = QueryDataFlowDebugSessionsResponse.DeserializeQueryDataFlowDebugSessionsResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

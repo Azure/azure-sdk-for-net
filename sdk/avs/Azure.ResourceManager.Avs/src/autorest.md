@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: Avs
 namespace: Azure.ResourceManager.Avs
-require: https://github.com/Azure/azure-rest-api-specs/blob/a032c2413b49d297196a0c64393e862433fccbb1/specification/vmware/resource-manager/readme.md
-#tag: package-2023-03-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/e19b5771846718774c0452800b9a42c251319f48/specification/vmware/resource-manager/readme.md
+#tag: package-2023-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -116,6 +116,9 @@ rename-mapping:
   NsxPublicIPQuotaRaisedEnum: NsxPublicIPQuotaRaisedStatus
   AffinityStrength: VmHostPlacementPolicyAffinityStrength
   ClusterZone: AvsClusterZone
+  CloudLinkProvisioningState: AvsCloudLinkProvisioningState
+  DnsZoneType : AvsDnsZoneType
+  VirtualMachineProvisioningState : AvsVirtualMachineProvisioningState
 
 prepend-rp-prefix:
 - CloudLink

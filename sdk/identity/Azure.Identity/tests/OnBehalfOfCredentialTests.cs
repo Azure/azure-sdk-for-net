@@ -53,10 +53,15 @@ namespace Azure.Identity.Tests
                 AdditionallyAllowedTenants = config.AdditionallyAllowedTenants,
                 DisableInstanceDiscovery = config.DisableInstanceDiscovery,
                 IsUnsafeSupportLoggingEnabled = config.IsUnsafeSupportLoggingEnabled,
+                AuthorityHost = config.AuthorityHost,
             };
             if (config.Transport != null)
             {
                 options.Transport = config.Transport;
+            }
+            if (config.TokenCachePersistenceOptions != null)
+            {
+                options.TokenCachePersistenceOptions = config.TokenCachePersistenceOptions;
             }
             var pipeline = CredentialPipeline.GetInstance(options);
             return InstrumentClient(
@@ -142,7 +147,12 @@ namespace Azure.Identity.Tests
             var _transport = CredentialTestHelpers.Createx5cValidatingTransport(sendCertChain, expectedToken);
             var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+            var mockCert= X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             options = new OnBehalfOfCredentialOptions
             {
@@ -161,6 +171,56 @@ namespace Azure.Identity.Tests
 
             var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
             Assert.AreEqual(token.Token, expectedToken, "Should be the expected token value");
+        }
+
+        [Test]
+        public async Task ValidatesClientAssertionIsCorrect()
+        {
+            var expectedToken = Guid.NewGuid().ToString();
+            var expectedClientAssertion = Guid.NewGuid().ToString();
+            TransportConfig transportConfig = new()
+            {
+                TokenFactory = req => expectedToken,
+                RequestValidator = req =>
+                {
+                    if (req.Content != null)
+                    {
+                        var stream = new MemoryStream();
+                        req.Content.WriteTo(stream, default);
+                        var content = new BinaryData(stream.ToArray()).ToString();
+                        Assert.That(content, Does.Contain($"client_assertion={expectedClientAssertion}"));
+                    }
+                }
+            };
+            var factory = MockTokenTransportFactory(transportConfig);
+            var _transport = new MockTransport(factory);
+            var _pipeline = new HttpPipeline(_transport, new[] { new BearerTokenAuthenticationPolicy(new MockCredential(), "scope") });
+            var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+
+#if NET9_0_OR_GREATER
+           var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
+            var mockCert = new X509Certificate2(certificatePath);
+#endif
+
+            options = new OnBehalfOfCredentialOptions
+            {
+                AuthorityHost = new Uri("https://localhost"),
+                Transport = _transport
+            };
+            OnBehalfOfCredential client =
+                InstrumentClient(new OnBehalfOfCredential(
+                    TenantId,
+                    ClientId,
+                    IsAsync ? null : () => expectedClientAssertion,
+                    IsAsync ? (_) => Task.FromResult(expectedClientAssertion) : null,
+                    expectedUserAssertion,
+                    options as OnBehalfOfCredentialOptions,
+                    new CredentialPipeline(_pipeline, new ClientDiagnostics(options)),
+                    null));
+
+            var token = await client.GetTokenAsync(new TokenRequestContext(MockScopes.Default), default);
+            Assert.AreEqual(expectedToken, token.Token, "Should be the expected token value");
         }
     }
 }

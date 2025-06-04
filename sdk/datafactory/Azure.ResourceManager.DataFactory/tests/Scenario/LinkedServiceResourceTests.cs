@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
     [NonParallelizable]
     internal class LinkedServiceResourceTests : DataFactoryManagementTestBase
     {
-        public LinkedServiceResourceTests(bool isAsync) : base(isAsync)
+        public LinkedServiceResourceTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;"))
+                return new DataFactoryLinkedServiceData(new SqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;"))
                 {
                     AlwaysEncryptedSettings = new SqlAlwaysEncryptedProperties(SqlAlwaysEncryptedAkvAuthType.UserAssignedManagedIdentity)
                     {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("amazon", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User Id=myUsername;Password=myPassword;")))
+                return new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService(DataFactoryElement<string>.FromSecretString("Server=myserverinstance.c9pvwz9h1k8r.us-west-2.rds.amazonaws.com;Database=myDataBase;User ID=myUsername;Password=myPassword;")))
                 {
                     Properties =
                     {
@@ -2550,7 +2550,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await LinkedSerivceCreate("postgresql", (dataFactory, linkedServiceKeyVaultName, integrationRuntimeName) =>
             {
-                return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User Id=myUsername;Password=myPassword;\r\n")) { });
+                return new DataFactoryLinkedServiceData(new PostgreSqlLinkedService(DataFactoryElement<string>.FromSecretString("Server=myServerAddress;Port=5432;Database=myDataBase;User ID=myUsername;Password=myPassword;\r\n")) { });
             });
         }
 

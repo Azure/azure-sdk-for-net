@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class BackupRecoveryPointBasedRestoreContent : IUtf8JsonSerializable, IJsonModel<BackupRecoveryPointBasedRestoreContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRecoveryPointBasedRestoreContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupRecoveryPointBasedRestoreContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackupRecoveryPointBasedRestoreContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryPointBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,41 +34,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("recoveryPointId"u8);
             writer.WriteStringValue(RecoveryPointId);
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("restoreTargetInfo"u8);
-            writer.WriteObjectValue<RestoreTargetInfoBase>(RestoreTargetInfo, options);
-            writer.WritePropertyName("sourceDataStoreType"u8);
-            writer.WriteStringValue(SourceDataStoreType.ToString());
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(IdentityDetails))
-            {
-                writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         BackupRecoveryPointBasedRestoreContent IJsonModel<BackupRecoveryPointBasedRestoreContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static BackupRecoveryPointBasedRestoreContent DeserializeBackupRecoveryPointBasedRestoreContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -94,6 +71,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RestoreTargetInfoBase restoreTargetInfo = default;
             SourceDataStoreType sourceDataStoreType = default;
             ResourceIdentifier sourceResourceId = default;
+            IList<string> resourceGuardOperationRequests = default;
             DataProtectionIdentityDetails identityDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -128,6 +106,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     sourceResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("resourceGuardOperationRequests"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceGuardOperationRequests = array;
+                    continue;
+                }
                 if (property.NameEquals("identityDetails"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -148,6 +140,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 restoreTargetInfo,
                 sourceDataStoreType,
                 sourceResourceId,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
                 identityDetails,
                 serializedAdditionalRawData,
                 recoveryPointId);
@@ -160,7 +153,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support writing '{options.Format}' format.");
             }
@@ -174,7 +167,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBackupRecoveryPointBasedRestoreContent(document.RootElement, options);
                     }
                 default:

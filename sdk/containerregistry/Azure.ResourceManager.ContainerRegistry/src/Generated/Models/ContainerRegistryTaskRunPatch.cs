@@ -75,18 +75,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The location of the resource. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The ARM resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// The request (parameters) for the new run
         /// Please note <see cref="ContainerRegistryRunContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryDockerBuildContent"/>, <see cref="ContainerRegistryEncodedTaskRunContent"/>, <see cref="ContainerRegistryFileTaskRunContent"/> and <see cref="ContainerRegistryTaskRunContent"/>.
         /// </summary>
+        [WirePath("properties.runRequest")]
         public ContainerRegistryRunContent RunRequest { get; set; }
         /// <summary> How the run should be forced to rerun even if the run request configuration has not changed. </summary>
+        [WirePath("properties.forceUpdateTag")]
         public string ForceUpdateTag { get; set; }
     }
 }

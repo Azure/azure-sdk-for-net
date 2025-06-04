@@ -1,0 +1,6 @@
+{
+  "AssetsRepo": "Azure/azure-sdk-assets",
+  "AssetsRepoPrefixPath": "net",
+  "TagPrefix": "net/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents",
+  "Tag": "net/eventgrid/Microsoft.Azure.Messaging.EventGrid.CloudNativeCloudEvents_84648fc55d"
+}

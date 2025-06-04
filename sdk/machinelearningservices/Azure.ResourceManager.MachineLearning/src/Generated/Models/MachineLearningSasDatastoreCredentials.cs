@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] Storage container secrets. </summary>
+        [WirePath("secrets")]
         public MachineLearningSasDatastoreSecrets Secrets { get; set; }
     }
 }

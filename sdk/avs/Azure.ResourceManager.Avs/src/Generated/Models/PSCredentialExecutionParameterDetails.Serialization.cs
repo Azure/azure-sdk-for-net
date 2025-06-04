@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Avs.Models
 {
     public partial class PSCredentialExecutionParameterDetails : IUtf8JsonSerializable, IJsonModel<PSCredentialExecutionParameterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PSCredentialExecutionParameterDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PSCredentialExecutionParameterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PSCredentialExecutionParameterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PSCredentialExecutionParameterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.Avs.Models
                 throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
@@ -36,26 +45,6 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ParameterType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         PSCredentialExecutionParameterDetails IJsonModel<PSCredentialExecutionParameterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -72,7 +61,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         internal static PSCredentialExecutionParameterDetails DeserializePSCredentialExecutionParameterDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -80,8 +69,8 @@ namespace Azure.ResourceManager.Avs.Models
             }
             string username = default;
             string password = default;
-            string name = default;
             ScriptExecutionParameterType type = default;
+            string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,14 +85,14 @@ namespace Azure.ResourceManager.Avs.Models
                     password = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new ScriptExecutionParameterType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +101,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PSCredentialExecutionParameterDetails(name, type, serializedAdditionalRawData, username, password);
+            return new PSCredentialExecutionParameterDetails(type, name, serializedAdditionalRawData, username, password);
         }
 
         BinaryData IPersistableModel<PSCredentialExecutionParameterDetails>.Write(ModelReaderWriterOptions options)
@@ -122,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PSCredentialExecutionParameterDetails)} does not support writing '{options.Format}' format.");
             }
@@ -136,7 +125,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePSCredentialExecutionParameterDetails(document.RootElement, options);
                     }
                 default:

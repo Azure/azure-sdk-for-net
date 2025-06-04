@@ -52,13 +52,15 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Initializes a new instance of <see cref="ResponseValidationProperties"/>. </summary>
         /// <param name="regex"> Regex used for the input validation. </param>
+        /// <param name="validationScope"> Validation scope. </param>
         /// <param name="isRequired"> Default True. </param>
         /// <param name="validationErrorMessage"> Validation Error Message. </param>
         /// <param name="maxLength"> Max text input (open Ended Text). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResponseValidationProperties(string regex, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseValidationProperties(string regex, TroubleshooterValidationScope? validationScope, bool? isRequired, string validationErrorMessage, long? maxLength, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Regex = regex;
+            ValidationScope = validationScope;
             IsRequired = isRequired;
             ValidationErrorMessage = validationErrorMessage;
             MaxLength = maxLength;
@@ -67,6 +69,8 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <summary> Regex used for the input validation. </summary>
         public string Regex { get; }
+        /// <summary> Validation scope. </summary>
+        public TroubleshooterValidationScope? ValidationScope { get; }
         /// <summary> Default True. </summary>
         public bool? IsRequired { get; }
         /// <summary> Validation Error Message. </summary>

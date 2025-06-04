@@ -71,14 +71,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the ComputeInstance container. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Auto save settings. </summary>
+        [WirePath("autosave")]
         public MachineLearningComputeInstanceAutosave? Autosave { get; }
         /// <summary> Information of GPU. </summary>
+        [WirePath("gpu")]
         public string Gpu { get; }
         /// <summary> network of this container. </summary>
+        [WirePath("network")]
         public MachineLearningNetwork? Network { get; }
         /// <summary> Environment information of this container. </summary>
+        [WirePath("environment")]
         public MachineLearningComputeInstanceEnvironmentInfo Environment { get; }
         /// <summary>
         /// services of this containers.
@@ -110,6 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("services")]
         public IReadOnlyList<BinaryData> Services { get; }
     }
 }

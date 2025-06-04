@@ -1,13 +1,5 @@
 # Azure Storage Data Movement File Shares client library for .NET
 
-> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
-
-## Project Status: Beta
-
-This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
-
----
-
 Azure Storage is a Microsoft-managed service providing cloud storage that is
 highly available, secure, durable, scalable, and redundant. Azure Storage
 includes Azure Blobs (objects), Azure Data Lake Storage Gen2, Azure Files,
@@ -29,8 +21,8 @@ Install the Azure Storage client library for .NET you'd like to use with
 [NuGet][nuget] and the `Azure.Storage.DataMovement.Files.Shares` client library will be included:
 
 ```dotnetcli
-dotnet add package Azure.Storage.DataMovement --prerelease
-dotnet add package Azure.Storage.DataMovement.Files.Shares --prerelease
+dotnet add package Azure.Storage.DataMovement
+dotnet add package Azure.Storage.DataMovement.Files.Shares
 ```
 
 ### Prerequisites
@@ -47,7 +39,17 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares#authenticate-the-client).
+The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#authenticate-the-client).
+
+### Permissions
+
+The authenticated share storage resource needs the following permissions to perform a transfer:
+
+1. Read
+2. List (for directory transfers)
+3. Write
+5. Delete (for cleanup of a failed transfer item)
+6. Create
 
 ## Key concepts
 
@@ -83,20 +85,19 @@ ShareFilesStorageResourceProvider shares = new(tokenCredential);
 To create a share `StorageResource`, use the methods `FromFile` or `FromDirectory`.
 
 ```C# Snippet:ResourceConstruction_Shares
-StorageResource directory = shares.FromDirectory(
-    "http://myaccount.files.core.windows.net/share/path/to/directory");
-StorageResource rootDirectory = shares.FromDirectory(
-    "http://myaccount.files.core.windows.net/share");
-StorageResource file = shares.FromFile(
-    "http://myaccount.files.core.windows.net/share/path/to/file.txt");
+StorageResource directory = await shares.FromDirectoryAsync(
+    new Uri("https://myaccount.files.core.windows.net/share/path/to/directory"));
+StorageResource rootDirectory = await shares.FromDirectoryAsync(
+    new Uri("https://myaccount.files.core.windows.net/share"));
+StorageResource file = await shares.FromFileAsync(
+    new Uri("https://myaccount.files.core.windows.net/share/path/to/file.txt"));
 ```
 
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Files.Shares. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `ShareFilesStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
 ```C# Snippet:ResourceConstruction_FromClients_Shares
-ShareFilesStorageResourceProvider shares = new();
-StorageResource shareDirectoryResource = shares.FromClient(directoryClient);
-StorageResource shareFileResource = shares.FromClient(fileClient);
+StorageResource shareDirectoryResource = ShareFilesStorageResourceProvider.FromClient(directoryClient);
+StorageResource shareFileResource = ShareFilesStorageResourceProvider.FromClient(fileClient);
 ```
 
 ### Upload
@@ -106,18 +107,21 @@ An upload takes place between a local file `StorageResource` as source and file 
 Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
-DataTransfer fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalFile),
-    destinationResource: shares.FromFile(destinationFileUri));
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+TransferOperation fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
+    destinationResource: await shares.FromFileAsync(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
 Upload a directory.
 
 ```C# Snippet:SimpleDirectoryUpload_Shares
-DataTransfer folderTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalDirectory),
-    destinationResource: shares.FromDirectory(destinationFolderUri));
+TransferOperation folderTransfer = await transferManager.StartTransferAsync(
+    sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourceLocalDirectory),
+    destinationResource: await shares.FromDirectoryAsync(destinationFolderUri));
 await folderTransfer.WaitForCompletionAsync();
 ```
 
@@ -128,18 +132,18 @@ A download takes place between a file share `StorageResource` as source and loca
 Download a file.
 
 ```C# Snippet:SimpleFileDownload_Shares
-DataTransfer fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromFile(sourceFileUri),
-    destinationResource: files.FromFile(destinationLocalFile));
+TransferOperation fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: await shares.FromFileAsync(sourceFileUri),
+    destinationResource: LocalFilesStorageResourceProvider.FromFile(destinationLocalFile));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
 Download a Directory.
 
 ```C# Snippet:SimpleDirectoryDownload_Shares
-DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromDirectory(sourceDirectoryUri),
-    destinationResource: files.FromDirectory(destinationLocalDirectory));
+TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
+    sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
+    destinationResource: LocalFilesStorageResourceProvider.FromDirectory(destinationLocalDirectory));
 await directoryTransfer.WaitForCompletionAsync();
 ```
 
@@ -150,28 +154,56 @@ A copy takes place between two share `StorageResource` instances. Copying betwee
 Copy a single file.
 
 ```C# Snippet:s2sCopyFile_Shares
-DataTransfer fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromFile(sourceFileUri),
-    destinationResource: shares.FromFile(destinationFileUri));
+TransferOperation fileTransfer = await transferManager.StartTransferAsync(
+    sourceResource: await shares.FromFileAsync(sourceFileUri),
+    destinationResource: await shares.FromFileAsync(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
 Copy a directory.
 
 ```C# Snippet:s2sCopyDirectory_Shares
-DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromDirectory(sourceDirectoryUri),
-    destinationResource: shares.FromDirectory(destinationDirectoryUri));
+TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
+    sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
+    destinationResource: await shares.FromDirectoryAsync(destinationDirectoryUri));
 await directoryTransfer.WaitForCompletionAsync();
 ```
 
+### Resume using ShareFilesStorageResourceProvider
+
+To resume a transfer with Share File(s), valid credentials must be provided. See the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers_Shares
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { shares }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+For more information regarding pause, resume, and/or checkpointing, see [Pause and Resume Checkpointing](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
+
 ## Troubleshooting
 
-***TODO***
+See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+
+See [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
 
 ## Next steps
 
-***TODO***
+Get started with our [Blob DataMovement samples][blob_samples].
+
+For more base Transfer Manager scenarios see [DataMovement samples][datamovement_base].
 
 ## Contributing
 
@@ -188,24 +220,23 @@ For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
-
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Common/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.storage
-[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/
-[product_docs]: https://docs.microsoft.com/azure/storage/
+[docs]: https://learn.microsoft.com/dotnet/api/azure.storage
+[rest_docs]: https://learn.microsoft.com/rest/api/storageservices/
+[product_docs]: https://learn.microsoft.com/azure/storage/
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
+[error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
+[datamovement_base]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement
+[blob_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

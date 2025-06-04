@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SolutionsTroubleshooters"/>. </summary>
-        public SolutionsTroubleshooters()
+        internal SolutionsTroubleshooters()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Solution Id to identify single Solutions Troubleshooter. </summary>
-        public string SolutionId { get; set; }
+        public string SolutionId { get; }
         /// <summary> Troubleshooter title. </summary>
-        public string Title { get; set; }
+        public string Title { get; }
         /// <summary> Troubleshooter summary. </summary>
-        public string Summary { get; set; }
+        public string Summary { get; }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> Collection configuration error type reported by SDK. </summary>
+    /// <summary> Collection configuration error type reported by the client SDK. </summary>
     internal readonly partial struct CollectionConfigurationErrorType : IEquatable<CollectionConfigurationErrorType>
     {
         private readonly string _value;
@@ -36,37 +36,37 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         private const string FilterFailureToCreateUnexpectedValue = "FilterFailureToCreateUnexpected";
         private const string CollectionConfigurationFailureToCreateUnexpectedValue = "CollectionConfigurationFailureToCreateUnexpected";
 
-        /// <summary> Unknown. </summary>
+        /// <summary> Unknown error type. </summary>
         public static CollectionConfigurationErrorType Unknown { get; } = new CollectionConfigurationErrorType(UnknownValue);
-        /// <summary> PerformanceCounterParsing. </summary>
+        /// <summary> Performance counter parsing error. </summary>
         public static CollectionConfigurationErrorType PerformanceCounterParsing { get; } = new CollectionConfigurationErrorType(PerformanceCounterParsingValue);
-        /// <summary> PerformanceCounterUnexpected. </summary>
+        /// <summary> Performance counter unexpected error. </summary>
         public static CollectionConfigurationErrorType PerformanceCounterUnexpected { get; } = new CollectionConfigurationErrorType(PerformanceCounterUnexpectedValue);
-        /// <summary> PerformanceCounterDuplicateIds. </summary>
+        /// <summary> Performance counter duplicate ids. </summary>
         public static CollectionConfigurationErrorType PerformanceCounterDuplicateIds { get; } = new CollectionConfigurationErrorType(PerformanceCounterDuplicateIdsValue);
-        /// <summary> DocumentStreamDuplicateIds. </summary>
+        /// <summary> Document stream duplication ids. </summary>
         public static CollectionConfigurationErrorType DocumentStreamDuplicateIds { get; } = new CollectionConfigurationErrorType(DocumentStreamDuplicateIdsValue);
-        /// <summary> DocumentStreamFailureToCreate. </summary>
+        /// <summary> Document stream failed to create. </summary>
         public static CollectionConfigurationErrorType DocumentStreamFailureToCreate { get; } = new CollectionConfigurationErrorType(DocumentStreamFailureToCreateValue);
-        /// <summary> DocumentStreamFailureToCreateFilterUnexpected. </summary>
+        /// <summary> Document stream failed to create filter unexpectedly. </summary>
         public static CollectionConfigurationErrorType DocumentStreamFailureToCreateFilterUnexpected { get; } = new CollectionConfigurationErrorType(DocumentStreamFailureToCreateFilterUnexpectedValue);
-        /// <summary> MetricDuplicateIds. </summary>
+        /// <summary> Metric duplicate ids. </summary>
         public static CollectionConfigurationErrorType MetricDuplicateIds { get; } = new CollectionConfigurationErrorType(MetricDuplicateIdsValue);
-        /// <summary> MetricTelemetryTypeUnsupported. </summary>
+        /// <summary> Metric telemetry type unsupported. </summary>
         public static CollectionConfigurationErrorType MetricTelemetryTypeUnsupported { get; } = new CollectionConfigurationErrorType(MetricTelemetryTypeUnsupportedValue);
-        /// <summary> MetricFailureToCreate. </summary>
+        /// <summary> Metric failed to create. </summary>
         public static CollectionConfigurationErrorType MetricFailureToCreate { get; } = new CollectionConfigurationErrorType(MetricFailureToCreateValue);
-        /// <summary> MetricFailureToCreateFilterUnexpected. </summary>
+        /// <summary> Metric failed to create filter unexpectedly. </summary>
         public static CollectionConfigurationErrorType MetricFailureToCreateFilterUnexpected { get; } = new CollectionConfigurationErrorType(MetricFailureToCreateFilterUnexpectedValue);
-        /// <summary> FilterFailureToCreateUnexpected. </summary>
+        /// <summary> Filter failed to create unexpectedly. </summary>
         public static CollectionConfigurationErrorType FilterFailureToCreateUnexpected { get; } = new CollectionConfigurationErrorType(FilterFailureToCreateUnexpectedValue);
-        /// <summary> CollectionConfigurationFailureToCreateUnexpected. </summary>
+        /// <summary> Collection configuration failed to create unexpectedly. </summary>
         public static CollectionConfigurationErrorType CollectionConfigurationFailureToCreateUnexpected { get; } = new CollectionConfigurationErrorType(CollectionConfigurationFailureToCreateUnexpectedValue);
         /// <summary> Determines if two <see cref="CollectionConfigurationErrorType"/> values are the same. </summary>
         public static bool operator ==(CollectionConfigurationErrorType left, CollectionConfigurationErrorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CollectionConfigurationErrorType"/> values are not the same. </summary>
         public static bool operator !=(CollectionConfigurationErrorType left, CollectionConfigurationErrorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CollectionConfigurationErrorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CollectionConfigurationErrorType"/>. </summary>
         public static implicit operator CollectionConfigurationErrorType(string value) => new CollectionConfigurationErrorType(value);
 
         /// <inheritdoc />
@@ -77,7 +77,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -43,15 +43,15 @@ namespace Azure.Communication
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CommunicationUserIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCommunicationUserIdentifierModel(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new CallingServer.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CommunicationUserIdentifierModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

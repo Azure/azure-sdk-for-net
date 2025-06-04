@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 {
     public partial class ForceUnlinkRedisEnterpriseDatabaseContent : IUtf8JsonSerializable, IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ForceUnlinkRedisEnterpriseDatabaseContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 throw new FormatException($"The model {nameof(ForceUnlinkRedisEnterpriseDatabaseContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("ids"u8);
             writer.WriteStartArray();
             foreach (var item in Ids)
@@ -46,14 +54,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ForceUnlinkRedisEnterpriseDatabaseContent IJsonModel<ForceUnlinkRedisEnterpriseDatabaseContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +77,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         internal static ForceUnlinkRedisEnterpriseDatabaseContent DeserializeForceUnlinkRedisEnterpriseDatabaseContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -114,7 +121,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ForceUnlinkRedisEnterpriseDatabaseContent)} does not support writing '{options.Format}' format.");
             }
@@ -128,7 +135,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeForceUnlinkRedisEnterpriseDatabaseContent(document.RootElement, options);
                     }
                 default:

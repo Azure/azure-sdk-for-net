@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MonitorWorkspaceMetricProperties"/>. </summary>
-        internal MonitorWorkspaceMetricProperties()
+        public MonitorWorkspaceMetricProperties()
         {
         }
 

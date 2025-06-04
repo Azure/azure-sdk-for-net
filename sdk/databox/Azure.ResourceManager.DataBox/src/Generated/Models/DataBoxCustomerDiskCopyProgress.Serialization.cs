@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DataBoxCustomerDiskCopyProgress : IUtf8JsonSerializable, IJsonModel<DataBoxCustomerDiskCopyProgress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxCustomerDiskCopyProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxCustomerDiskCopyProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxCustomerDiskCopyProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxCustomerDiskCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(DataBoxCustomerDiskCopyProgress)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(SerialNumber))
             {
                 writer.WritePropertyName("serialNumber"u8);
@@ -36,112 +45,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("copyStatus"u8);
                 writer.WriteStringValue(CopyStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountName))
-            {
-                writer.WritePropertyName("storageAccountName"u8);
-                writer.WriteStringValue(StorageAccountName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TransferType))
-            {
-                writer.WritePropertyName("transferType"u8);
-                writer.WriteStringValue(TransferType.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(DataAccountType))
-            {
-                writer.WritePropertyName("dataAccountType"u8);
-                writer.WriteStringValue(DataAccountType.Value.ToSerialString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(AccountId))
-            {
-                writer.WritePropertyName("accountId"u8);
-                writer.WriteStringValue(AccountId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(BytesProcessed))
-            {
-                writer.WritePropertyName("bytesProcessed"u8);
-                writer.WriteNumberValue(BytesProcessed.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalBytesToProcess))
-            {
-                writer.WritePropertyName("totalBytesToProcess"u8);
-                writer.WriteNumberValue(TotalBytesToProcess.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FilesProcessed))
-            {
-                writer.WritePropertyName("filesProcessed"u8);
-                writer.WriteNumberValue(FilesProcessed.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(TotalFilesToProcess))
-            {
-                writer.WritePropertyName("totalFilesToProcess"u8);
-                writer.WriteNumberValue(TotalFilesToProcess.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InvalidFilesProcessed))
-            {
-                writer.WritePropertyName("invalidFilesProcessed"u8);
-                writer.WriteNumberValue(InvalidFilesProcessed.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InvalidFileBytesUploaded))
-            {
-                writer.WritePropertyName("invalidFileBytesUploaded"u8);
-                writer.WriteNumberValue(InvalidFileBytesUploaded.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(RenamedContainerCount))
-            {
-                writer.WritePropertyName("renamedContainerCount"u8);
-                writer.WriteNumberValue(RenamedContainerCount.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(FilesErroredOut))
-            {
-                writer.WritePropertyName("filesErroredOut"u8);
-                writer.WriteNumberValue(FilesErroredOut.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DirectoriesErroredOut))
-            {
-                writer.WritePropertyName("directoriesErroredOut"u8);
-                writer.WriteNumberValue(DirectoriesErroredOut.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InvalidDirectoriesProcessed))
-            {
-                writer.WritePropertyName("invalidDirectoriesProcessed"u8);
-                writer.WriteNumberValue(InvalidDirectoriesProcessed.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsEnumerationInProgress))
-            {
-                writer.WritePropertyName("isEnumerationInProgress"u8);
-                writer.WriteBooleanValue(IsEnumerationInProgress.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Error))
-            {
-                writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
-            {
-                writer.WritePropertyName("actions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Actions)
-                {
-                    writer.WriteStringValue(item.ToSerialString());
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DataBoxCustomerDiskCopyProgress IJsonModel<DataBoxCustomerDiskCopyProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -158,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DataBoxCustomerDiskCopyProgress DeserializeDataBoxCustomerDiskCopyProgress(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -391,7 +294,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxCustomerDiskCopyProgress)} does not support writing '{options.Format}' format.");
             }
@@ -405,7 +308,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxCustomerDiskCopyProgress(document.RootElement, options);
                     }
                 default:

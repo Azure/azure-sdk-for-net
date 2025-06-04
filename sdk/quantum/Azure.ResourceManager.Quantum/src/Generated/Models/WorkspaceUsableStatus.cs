@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator ==(WorkspaceUsableStatus left, WorkspaceUsableStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkspaceUsableStatus"/> values are not the same. </summary>
         public static bool operator !=(WorkspaceUsableStatus left, WorkspaceUsableStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkspaceUsableStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkspaceUsableStatus"/>. </summary>
         public static implicit operator WorkspaceUsableStatus(string value) => new WorkspaceUsableStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

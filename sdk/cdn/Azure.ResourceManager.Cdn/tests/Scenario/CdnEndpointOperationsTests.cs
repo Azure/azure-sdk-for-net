@@ -107,13 +107,13 @@ namespace Azure.ResourceManager.Cdn.Tests
             //A CName mapping needs to be created in advance to validate custom domain.
             //In this test is "customdomainrecord.azuretest.net" maps to "testEndpoint4dotnetsdk.azureedge.net"
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("CdnTest");
+            ResourceGroupResource rg = await subscription.GetResourceGroups().GetAsync("azure_cli_test");
             ProfileResource cdnProfile = await rg.GetProfiles().GetAsync("testProfile");
-            CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk");
-            ValidateCustomDomainContent validateCustomDomainContent1 = new ValidateCustomDomainContent("customdomainrecord.azuretest.net");
+            CdnEndpointResource cdnEndpoint = await cdnProfile.GetCdnEndpoints().GetAsync("testEndpoint4dotnetsdk1");
+            ValidateCustomDomainContent validateCustomDomainContent1 = new ValidateCustomDomainContent("customdomainrecord.clitest.azfdtest.xyz");
             ValidateCustomDomainResult validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent1);
             Assert.True(validateResult.IsCustomDomainValid);
-            ValidateCustomDomainContent validateCustomDomainContent2 = new ValidateCustomDomainContent("customdomainvirtual.azuretest.net");
+            ValidateCustomDomainContent validateCustomDomainContent2 = new ValidateCustomDomainContent("customdomainvirtual.clitest.azfdtest.xyz");
             validateResult = await cdnEndpoint.ValidateCustomDomainAsync(validateCustomDomainContent2);
             Assert.False(validateResult.IsCustomDomainValid);
         }

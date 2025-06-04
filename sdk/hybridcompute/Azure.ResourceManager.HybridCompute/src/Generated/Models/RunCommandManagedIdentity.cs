@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Client Id (GUID value) of the user-assigned managed identity. ObjectId should not be used if this is provided. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; set; }
         /// <summary> Object Id (GUID value) of the user-assigned managed identity. ClientId should not be used if this is provided. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
     }
 }

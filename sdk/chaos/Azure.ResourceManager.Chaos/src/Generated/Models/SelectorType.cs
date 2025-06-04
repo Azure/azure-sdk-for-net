@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string ListValue = "List";
         private const string QueryValue = "Query";
 
-        /// <summary> List. </summary>
+        /// <summary> List selector type. </summary>
         public static SelectorType List { get; } = new SelectorType(ListValue);
-        /// <summary> Query. </summary>
+        /// <summary> Query selector type. </summary>
         public static SelectorType Query { get; } = new SelectorType(QueryValue);
         /// <summary> Determines if two <see cref="SelectorType"/> values are the same. </summary>
         public static bool operator ==(SelectorType left, SelectorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SelectorType"/> values are not the same. </summary>
         public static bool operator !=(SelectorType left, SelectorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SelectorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SelectorType"/>. </summary>
         public static implicit operator SelectorType(string value) => new SelectorType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

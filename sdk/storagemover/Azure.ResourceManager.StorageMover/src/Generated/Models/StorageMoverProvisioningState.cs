@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
-    /// <summary> The provisioning state of this resource. </summary>
+    /// <summary> The provisioning state of a resource. </summary>
     public readonly partial struct StorageMoverProvisioningState : IEquatable<StorageMoverProvisioningState>
     {
         private readonly string _value;
@@ -23,14 +23,23 @@ namespace Azure.ResourceManager.StorageMover.Models
         }
 
         private const string SucceededValue = "Succeeded";
+        private const string CanceledValue = "Canceled";
+        private const string FailedValue = "Failed";
+        private const string DeletingValue = "Deleting";
 
         /// <summary> Succeeded. </summary>
         public static StorageMoverProvisioningState Succeeded { get; } = new StorageMoverProvisioningState(SucceededValue);
+        /// <summary> Canceled. </summary>
+        public static StorageMoverProvisioningState Canceled { get; } = new StorageMoverProvisioningState(CanceledValue);
+        /// <summary> Failed. </summary>
+        public static StorageMoverProvisioningState Failed { get; } = new StorageMoverProvisioningState(FailedValue);
+        /// <summary> Deleting. </summary>
+        public static StorageMoverProvisioningState Deleting { get; } = new StorageMoverProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are the same. </summary>
         public static bool operator ==(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="StorageMoverProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(StorageMoverProvisioningState left, StorageMoverProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="StorageMoverProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="StorageMoverProvisioningState"/>. </summary>
         public static implicit operator StorageMoverProvisioningState(string value) => new StorageMoverProvisioningState(value);
 
         /// <inheritdoc />
@@ -41,7 +50,7 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -11,7 +11,7 @@ resources:
     - repository: azure-sdk-build-tools
       type: git
       name: internal/azure-sdk-build-tools
-      ref: refs/tags/azure-sdk-build-tools_20240320.1
+      ref: refs/tags/azure-sdk-build-tools_20250603.1
 
 parameters:
 - name: stages
@@ -34,9 +34,20 @@ extends:
   ${{ else }}:
     template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
+    ${{ if eq(parameters.oneESTemplateTag, 'canary') }}:
+      # Enable 1es template team to verify validation has been run on canary
+      customBuildTags:
+        - 1ES.PT.Tag-refs/tags/canary
     settings:
       skipBuildTagsForGitHubPullRequests: true
+    ${{ if and(eq(variables['Build.DefinitionName'], 'net - core'), eq(variables['Build.SourceBranchName'], 'main'), eq(variables['System.TeamProject'], 'internal')) }}:
+      featureFlags:
+        autoBaseline: true
     sdl:
+      ${{ if and(eq(variables['Build.DefinitionName'], 'net - core'), eq(variables['Build.SourceBranchName'], 'main'), eq(variables['System.TeamProject'], 'internal')) }}:
+        autobaseline:
+          isMainPipeline: true
+          enableForGitHub: true
       sourceRepositoriesToScan:
         exclude:
           - repository: azure-sdk-build-tools
@@ -49,6 +60,8 @@ extends:
         # See https://dev.azure.com/securitytools/SecurityIntegration/_wiki/wikis/Guardian/1378/Glob-Format
         # Exclude Microsoft.Azure.KeyVault.Core.dll track 1 dependency that we no longer support but is causing issues
         analyzeTargetGlob: +:file|**/*.dll;+:file|**/*.exe;-:f|**/net452/Microsoft.Azure.KeyVault.Core.dll;-:f|**/net461/Microsoft.Azure.KeyVault.Core.dll;-:f|**/tools/NuGet.exe;-:f|**/tools/gpg/**/*.dll;-:f|**/tools/gpg/**/*.exe;-:f|**/tools/azcopy/**/*.exe;-:f|**/tools/azcopy/**/*.dll;-:f|**/aotcompatibility/**/*.exe
+      # Turn off the build warnings caused by disabling some sdl checks
+      createAdoIssuesForJustificationsForDisablement: false
       eslint:
         enabled: false
         justificationForDisabling: 'ESLint injected task has failures because it uses an old version of mkdirp. We should not fail for tools not controlled by the repo. See: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=3499746'
@@ -64,6 +77,5 @@ extends:
         suppressionsFile: $(Build.SourcesDirectory)/eng/CredScanSuppression.json
         scanFolder: $(Build.SourcesDirectory)/credscan.tsv
         toolVersion: 2.3.12.23
-        baselineFiles: $(Build.SourcesDirectory)/eng/dotnet.gdnbaselines
 
     stages: ${{ parameters.stages }}

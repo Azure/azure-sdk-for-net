@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
-        /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
+        /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
         /// <param name="beta2"> Value of 'beta2' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
         /// <param name="checkpointFrequency"> Frequency to store model checkpoints. Must be a positive integer. </param>
-        /// <param name="checkpointModel"> The pretrained checkpoint model for incremental training. </param>
         /// <param name="checkpointRunId"> The id of a previous run that has a pretrained checkpoint for incremental training. </param>
+        /// <param name="checkpointModel"> The pretrained checkpoint model for incremental training. </param>
         /// <param name="distributed"> Whether to use distributed training. </param>
         /// <param name="earlyStopping"> Enable early stopping logic during training. </param>
         /// <param name="earlyStoppingDelay">
@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Minimum number of epochs or validation evaluations with no primary metric improvement before
         /// the run is stopped. Must be a positive integer.
         /// </param>
-        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="evaluationFrequency"> Frequency to evaluate validation dataset to get metric scores. Must be a positive integer. </param>
+        /// <param name="enableOnnxNormalization"> Enable normalization when exporting ONNX model. </param>
         /// <param name="gradientAccumulationStep">
         /// Gradient accumulation means running a configured number of "GradAccumulationStep" steps without
         /// updating the model weights while accumulating the gradients of those steps, and then using
@@ -88,8 +88,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: The training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </param>
-        /// <param name="logTrainingMetrics"> Enable computing and logging training metrics. </param>
-        /// <param name="logValidationLoss"> Enable computing and logging validation loss. </param>
         /// <param name="maxSize">
         /// Maximum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.
@@ -127,13 +125,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="validationIouThreshold"> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </param>
         /// <param name="validationMetricType"> Metric computation method to use for validation metrics. </param>
-        internal ImageModelSettingsObjectDetection(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, LogTrainingMetric? logTrainingMetrics, LogValidationLoss? logValidationLoss, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType) : base(advancedSettings, amsGradient, augmentations, beta1, beta2, checkpointFrequency, checkpointModel, checkpointRunId, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, serializedAdditionalRawData)
+        internal ImageModelSettingsObjectDetection(bool? amsGradient, string advancedSettings, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, string checkpointRunId, MachineLearningFlowModelJobInput checkpointModel, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, int? evaluationFrequency, bool? enableOnnxNormalization, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType) : base(amsGradient, advancedSettings, augmentations, beta1, beta2, checkpointFrequency, checkpointRunId, checkpointModel, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, evaluationFrequency, enableOnnxNormalization, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, serializedAdditionalRawData)
         {
             BoxDetectionsPerImage = boxDetectionsPerImage;
             BoxScoreThreshold = boxScoreThreshold;
             ImageSize = imageSize;
-            LogTrainingMetrics = logTrainingMetrics;
-            LogValidationLoss = logValidationLoss;
             MaxSize = maxSize;
             MinSize = minSize;
             ModelSize = modelSize;
@@ -150,68 +146,77 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Maximum number of detections per image, for all classes. Must be a positive integer.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("boxDetectionsPerImage")]
         public int? BoxDetectionsPerImage { get; set; }
         /// <summary>
         /// During inference, only return proposals with a classification score greater than
         /// BoxScoreThreshold. Must be a float in the range[0, 1].
         /// </summary>
+        [WirePath("boxScoreThreshold")]
         public float? BoxScoreThreshold { get; set; }
         /// <summary>
         /// Image size for train and validation. Must be a positive integer.
         /// Note: The training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("imageSize")]
         public int? ImageSize { get; set; }
-        /// <summary> Enable computing and logging training metrics. </summary>
-        public LogTrainingMetric? LogTrainingMetrics { get; set; }
-        /// <summary> Enable computing and logging validation loss. </summary>
-        public LogValidationLoss? LogValidationLoss { get; set; }
         /// <summary>
         /// Maximum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("maxSize")]
         public int? MaxSize { get; set; }
         /// <summary>
         /// Minimum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("minSize")]
         public int? MinSize { get; set; }
         /// <summary>
         /// Model size. Must be 'small', 'medium', 'large', or 'xlarge'.
         /// Note: training run may get into CUDA OOM if the model size is too big.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("modelSize")]
         public MachineLearningModelSize? ModelSize { get; set; }
         /// <summary>
         /// Enable multi-scale image by varying image size by +/- 50%.
         /// Note: training run may get into CUDA OOM if no sufficient GPU memory.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("multiScale")]
         public bool? MultiScale { get; set; }
         /// <summary> IOU threshold used during inference in NMS post processing. Must be a float in the range [0, 1]. </summary>
+        [WirePath("nmsIouThreshold")]
         public float? NmsIouThreshold { get; set; }
         /// <summary>
         /// The grid size to use for tiling each image. Note: TileGridSize must not be
         /// None to enable small object detection logic. A string containing two integers in mxn format.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("tileGridSize")]
         public string TileGridSize { get; set; }
         /// <summary>
         /// Overlap ratio between adjacent tiles in each dimension. Must be float in the range [0, 1).
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("tileOverlapRatio")]
         public float? TileOverlapRatio { get; set; }
         /// <summary>
         /// The IOU threshold to use to perform NMS while merging predictions from tiles and image.
         /// Used in validation/ inference. Must be float in the range [0, 1].
         /// Note: This settings is not supported for the 'yolov5' algorithm.
         /// </summary>
+        [WirePath("tilePredictionsNmsThreshold")]
         public float? TilePredictionsNmsThreshold { get; set; }
         /// <summary> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </summary>
+        [WirePath("validationIouThreshold")]
         public float? ValidationIouThreshold { get; set; }
         /// <summary> Metric computation method to use for validation metrics. </summary>
+        [WirePath("validationMetricType")]
         public ValidationMetricType? ValidationMetricType { get; set; }
     }
 }

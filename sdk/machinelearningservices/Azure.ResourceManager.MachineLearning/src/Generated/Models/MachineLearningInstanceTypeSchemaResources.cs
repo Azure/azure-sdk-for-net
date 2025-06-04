@@ -64,8 +64,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Resource requests for this instance type. </summary>
+        [WirePath("requests")]
         public IDictionary<string, string> Requests { get; }
         /// <summary> Resource limits for this instance type. </summary>
+        [WirePath("limits")]
         public IDictionary<string, string> Limits { get; }
     }
 }

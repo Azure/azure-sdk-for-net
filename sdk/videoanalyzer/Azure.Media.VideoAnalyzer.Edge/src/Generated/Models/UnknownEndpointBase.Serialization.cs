@@ -20,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue<CredentialsBase>(Credentials);
+                writer.WriteObjectValue(Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
@@ -65,15 +65,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownEndpointBase FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownEndpointBase(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownEndpointBase>(this);
+            content.JsonWriter.WriteObjectValue<EndpointBase>(this);
             return content;
         }
     }

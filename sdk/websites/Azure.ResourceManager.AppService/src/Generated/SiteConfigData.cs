@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.AppService
         {
             DefaultDocuments = new ChangeTrackingList<string>();
             AppSettings = new ChangeTrackingList<AppServiceNameValuePair>();
+            Metadata = new ChangeTrackingList<AppServiceNameValuePair>();
             ConnectionStrings = new ChangeTrackingList<ConnStringInfo>();
             HandlerMappings = new ChangeTrackingList<HttpRequestHandlerMapping>();
             VirtualApplications = new ChangeTrackingList<VirtualApplication>();
@@ -88,8 +89,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
-        /// <param name="appSettings"> Application settings. </param>
-        /// <param name="connectionStrings"> Connection strings. </param>
+        /// <param name="appSettings"> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
+        /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
+        /// <param name="connectionStrings"> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="machineKey"> Site MachineKey. </param>
         /// <param name="handlerMappings"> Handler mappings. </param>
         /// <param name="documentRoot"> Document root. </param>
@@ -122,10 +124,14 @@ namespace Azure.ResourceManager.AppService
         /// <param name="xManagedServiceIdentityId"> Explicit Managed Service Identity Id. </param>
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="ipSecurityRestrictions"> IP security restrictions for main. </param>
+        /// <param name="ipSecurityRestrictionsDefaultAction"> Default action for main access restriction if no rules are matched. </param>
         /// <param name="scmIPSecurityRestrictions"> IP security restrictions for scm. </param>
+        /// <param name="scmIPSecurityRestrictionsDefaultAction"> Default action for scm access restriction if no rules are matched. </param>
         /// <param name="allowIPSecurityRestrictionsForScmToUseMain"> IP security restrictions for scm to use main. </param>
         /// <param name="isHttp20Enabled"> Http20Enabled: configures a web site to allow clients to connect over http2.0. </param>
+        /// <param name="http20ProxyFlag"> Http20ProxyFlag: Configures a website to allow http2.0 to pass be proxied all the way to the app. 0 = disabled, 1 = pass through all http2 traffic, 2 = pass through gRPC only. </param>
         /// <param name="minTlsVersion"> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </param>
+        /// <param name="minTlsCipherSuite"> The minimum strength TLS cipher suite allowed for an application. </param>
         /// <param name="scmMinTlsVersion"> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </param>
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
@@ -135,6 +141,10 @@ namespace Azure.ResourceManager.AppService
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
         /// This setting only applies to the Consumption and Elastic Premium Plans
+        /// </param>
+        /// <param name="elasticWebAppScaleLimit">
+        /// Maximum number of workers that a site can scale out to.
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
@@ -151,7 +161,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions, IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IList<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IList<AppServiceNameValuePair> appSettings, IList<AppServiceNameValuePair> metadata, IList<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IList<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IList<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, RoutingRuleExperiments experiments, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, AppServiceApiDefinitionInfo apiDefinition, ApiManagementConfig apiManagementConfig, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IList<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IList<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, int? http20ProxyFlag, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             NumberOfWorkers = numberOfWorkers;
             DefaultDocuments = defaultDocuments;
@@ -173,6 +183,7 @@ namespace Azure.ResourceManager.AppService
             IsDetailedErrorLoggingEnabled = isDetailedErrorLoggingEnabled;
             PublishingUsername = publishingUsername;
             AppSettings = appSettings;
+            Metadata = metadata;
             ConnectionStrings = connectionStrings;
             MachineKey = machineKey;
             HandlerMappings = handlerMappings;
@@ -206,14 +217,19 @@ namespace Azure.ResourceManager.AppService
             XManagedServiceIdentityId = xManagedServiceIdentityId;
             KeyVaultReferenceIdentity = keyVaultReferenceIdentity;
             IPSecurityRestrictions = ipSecurityRestrictions;
+            IPSecurityRestrictionsDefaultAction = ipSecurityRestrictionsDefaultAction;
             ScmIPSecurityRestrictions = scmIPSecurityRestrictions;
+            ScmIPSecurityRestrictionsDefaultAction = scmIPSecurityRestrictionsDefaultAction;
             AllowIPSecurityRestrictionsForScmToUseMain = allowIPSecurityRestrictionsForScmToUseMain;
             IsHttp20Enabled = isHttp20Enabled;
+            Http20ProxyFlag = http20ProxyFlag;
             MinTlsVersion = minTlsVersion;
+            MinTlsCipherSuite = minTlsCipherSuite;
             ScmMinTlsVersion = scmMinTlsVersion;
             FtpsState = ftpsState;
             PreWarmedInstanceCount = preWarmedInstanceCount;
             FunctionAppScaleLimit = functionAppScaleLimit;
+            ElasticWebAppScaleLimit = elasticWebAppScaleLimit;
             HealthCheckPath = healthCheckPath;
             IsFunctionsRuntimeScaleMonitoringEnabled = isFunctionsRuntimeScaleMonitoringEnabled;
             WebsiteTimeZone = websiteTimeZone;
@@ -281,10 +297,13 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Publishing user name. </summary>
         [WirePath("properties.publishingUsername")]
         public string PublishingUsername { get; set; }
-        /// <summary> Application settings. </summary>
+        /// <summary> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
         [WirePath("properties.appSettings")]
         public IList<AppServiceNameValuePair> AppSettings { get; set; }
-        /// <summary> Connection strings. </summary>
+        /// <summary> Application metadata. This property cannot be retrieved, since it may contain secrets. </summary>
+        [WirePath("properties.metadata")]
+        public IList<AppServiceNameValuePair> Metadata { get; set; }
+        /// <summary> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </summary>
         [WirePath("properties.connectionStrings")]
         public IList<ConnStringInfo> ConnectionStrings { get; set; }
         /// <summary> Site MachineKey. </summary>
@@ -418,18 +437,30 @@ namespace Azure.ResourceManager.AppService
         /// <summary> IP security restrictions for main. </summary>
         [WirePath("properties.ipSecurityRestrictions")]
         public IList<AppServiceIPSecurityRestriction> IPSecurityRestrictions { get; set; }
+        /// <summary> Default action for main access restriction if no rules are matched. </summary>
+        [WirePath("properties.ipSecurityRestrictionsDefaultAction")]
+        public SiteDefaultAction? IPSecurityRestrictionsDefaultAction { get; set; }
         /// <summary> IP security restrictions for scm. </summary>
         [WirePath("properties.scmIpSecurityRestrictions")]
         public IList<AppServiceIPSecurityRestriction> ScmIPSecurityRestrictions { get; set; }
+        /// <summary> Default action for scm access restriction if no rules are matched. </summary>
+        [WirePath("properties.scmIpSecurityRestrictionsDefaultAction")]
+        public SiteDefaultAction? ScmIPSecurityRestrictionsDefaultAction { get; set; }
         /// <summary> IP security restrictions for scm to use main. </summary>
         [WirePath("properties.scmIpSecurityRestrictionsUseMain")]
         public bool? AllowIPSecurityRestrictionsForScmToUseMain { get; set; }
         /// <summary> Http20Enabled: configures a web site to allow clients to connect over http2.0. </summary>
         [WirePath("properties.http20Enabled")]
         public bool? IsHttp20Enabled { get; set; }
+        /// <summary> Http20ProxyFlag: Configures a website to allow http2.0 to pass be proxied all the way to the app. 0 = disabled, 1 = pass through all http2 traffic, 2 = pass through gRPC only. </summary>
+        [WirePath("properties.http20ProxyFlag")]
+        public int? Http20ProxyFlag { get; set; }
         /// <summary> MinTlsVersion: configures the minimum version of TLS required for SSL requests. </summary>
         [WirePath("properties.minTlsVersion")]
         public AppServiceSupportedTlsVersion? MinTlsVersion { get; set; }
+        /// <summary> The minimum strength TLS cipher suite allowed for an application. </summary>
+        [WirePath("properties.minTlsCipherSuite")]
+        public AppServiceTlsCipherSuite? MinTlsCipherSuite { get; set; }
         /// <summary> ScmMinTlsVersion: configures the minimum version of TLS required for SSL requests for SCM site. </summary>
         [WirePath("properties.scmMinTlsVersion")]
         public AppServiceSupportedTlsVersion? ScmMinTlsVersion { get; set; }
@@ -448,6 +479,12 @@ namespace Azure.ResourceManager.AppService
         /// </summary>
         [WirePath("properties.functionAppScaleLimit")]
         public int? FunctionAppScaleLimit { get; set; }
+        /// <summary>
+        /// Maximum number of workers that a site can scale out to.
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
+        /// </summary>
+        [WirePath("properties.elasticWebAppScaleLimit")]
+        public int? ElasticWebAppScaleLimit { get; set; }
         /// <summary> Health check path. </summary>
         [WirePath("properties.healthCheckPath")]
         public string HealthCheckPath { get; set; }

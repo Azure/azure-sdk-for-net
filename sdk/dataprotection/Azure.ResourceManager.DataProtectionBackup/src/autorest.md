@@ -8,13 +8,17 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/1fead771fdafa41ccaa1e43750bab608b951ca80/specification/dataprotection/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a6ba164815464151a4adb687ea12a7a7090ed7fe/specification/dataprotection/resource-manager/readme.md
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+# mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -45,6 +49,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
   PIN: Pin
 
 request-path-is-non-resource:
@@ -67,8 +72,8 @@ override-operation-name:
   ResourceGuards_GetDeleteResourceGuardProxyRequestsObjects: GetDeleteResourceGuardProxyObjects
   ResourceGuards_GetDefaultDisableSoftDeleteRequestsObject: GetDisableSoftDeleteObject
   ResourceGuards_GetDisableSoftDeleteRequestsObjects: GetDisableSoftDeleteObjects
-  ResourceGuards_GetDefaultBackupSecurityPINRequestsObject: GetBackupSecurityPinObject
-  ResourceGuards_GetBackupSecurityPINRequestsObjects: GetBackupSecurityPinObjects
+  ResourceGuards_GetDefaultBackupSecurityPinRequestsObject: GetBackupSecurityPinObject
+  ResourceGuards_GetBackupSecurityPinRequestsObjects: GetBackupSecurityPinObjects
   ResourceGuards_GetDefaultUpdateProtectedItemRequestsObject: GetUpdateProtectedItemObject
   ResourceGuards_GetUpdateProtectedItemRequestsObjects: GetUpdateProtectedItemObjects
   ResourceGuards_GetDefaultUpdateProtectionPolicyRequestsObject: GetUpdateProtectionPolicyObject
@@ -230,6 +235,7 @@ rename-mapping:
   DeletedBackupInstance: DeletedDataProtectionBackupInstanceProperties
   BackupDatasourceParameters: BackupDataSourceSettings
   BlobBackupDatasourceParameters: BlobBackupDataSourceSettings
+  AdlsBlobBackupDatasourceParameters: AdlsBlobBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters: KubernetesClusterBackupDataSourceSettings
   KubernetesClusterBackupDatasourceParameters.snapshotVolumes: IsSnapshotVolumesEnabled
   KubernetesClusterBackupDatasourceParameters.includeClusterScopeResources: IsClusterScopeResourcesIncluded
@@ -252,6 +258,7 @@ rename-mapping:
   SecureScoreLevel: BackupVaultSecureScoreLevel
   FeatureSettings: BackupVaultFeatureSettings
   IdentityDetails: DataProtectionIdentityDetails
+  IdentityDetails.userAssignedIdentityArmUrl: UserAssignedIdentityId|arm-id
   NamespacedNameResource: NamespacedName
   CrossRegionRestoreDetails.sourceBackupInstanceId : -|arm-id
   CrossRegionRestoreDetails.sourceRegion  : -|azure-location
@@ -264,6 +271,11 @@ rename-mapping:
   FetchSecondaryRPsRequestParameters.sourceRegion  : -|azure-location
   BackupVault.replicatedRegions : -|azure-location
   RecoveryPointCompletionState: DataProtectionBackupRecoveryPointCompletionState
+  CmkKekIdentity: BackupVaultCmkKekIdentity
+  EncryptionSettings: BackupVaultEncryptionSettings
+  EncryptionState: BackupVaultEncryptionState
+  IdentityType: BackupVaultCmkKekIdentityType
+  InfrastructureEncryptionState: BackupVaultInfrastructureEncryptionState
 
 directive:
 # Correct the type of properties

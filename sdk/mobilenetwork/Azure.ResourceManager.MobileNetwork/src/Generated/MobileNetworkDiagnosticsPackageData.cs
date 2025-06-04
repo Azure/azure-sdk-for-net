@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the diagnostics package resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> The status of the diagnostics package collection. </summary>
+        [WirePath("properties.status")]
         public MobileNetworkDiagnosticsPackageStatus? Status { get; }
         /// <summary> The reason for the current state of the diagnostics package collection. </summary>
+        [WirePath("properties.reason")]
         public string Reason { get; }
     }
 }

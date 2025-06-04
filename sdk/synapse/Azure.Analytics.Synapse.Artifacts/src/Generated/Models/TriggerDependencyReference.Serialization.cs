@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("referenceTrigger"u8);
-            writer.WriteObjectValue<TriggerReference>(ReferenceTrigger);
+            writer.WriteObjectValue(ReferenceTrigger);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WriteEndObject();
@@ -60,15 +60,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new TriggerDependencyReference FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTriggerDependencyReference(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TriggerDependencyReference>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, TriggerDependencyReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<TriggerDependencyReference>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override TriggerDependencyReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

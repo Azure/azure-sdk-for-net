@@ -2,20 +2,20 @@
 
 This sample demonstrates how to analyze a document with add-on capabilities. For more information about the supported features, see the [service documentation][docint_addon].
 
-To get started you'll need a Cognitive Services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
+To get started you'll need an Azure AI services resource or a Document Intelligence resource. See [README][README] for prerequisites and instructions.
 
 When analyzing a document, you can specify a list of optional [analysis features][sdk_docfeature] to enable certain add-on capabilities. Some of the capabilities are free, while others incur additional charges, see [pricing][docint_pricing] for more information.
 
 ## Creating a `DocumentIntelligenceClient`
 
-To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll use a Document Intelligence API key credential by creating an `AzureKeyCredential` object that, if needed, will allow you to update the API key without creating a new client.
+To create a new `DocumentIntelligenceClient` you need the endpoint and credentials from your resource. In the sample below you'll make use of identity-based authentication by creating a `DefaultAzureCredential` object.
 
-You can set `endpoint` and `apiKey` based on an environment variable, a configuration setting, or any way that works for your application.
+You can set `endpoint` based on an environment variable, a configuration setting, or any way that works for your application.
 
 ```C# Snippet:CreateDocumentIntelligenceClient
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var client = new DocumentIntelligenceClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var credential = new DefaultAzureCredential();
+var client = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 ```
 
 ## High resolution extraction
@@ -27,17 +27,12 @@ To extract formulas from a given file at a URI with the add-on formulas capabili
 ```C# Snippet:DocumentIntelligenceSampleFormulaExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
-    UrlSource = uriSource
+    Features = { DocumentAnalysisFeature.Formulas }
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-{
-    DocumentAnalysisFeature.Formulas
-};
-
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -66,17 +61,12 @@ To extract font information from a given file at a URI with the add-on font styl
 ```C# Snippet:DocumentIntelligenceSampleFontStyling
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
-    UrlSource = uriSource
+    Features = { DocumentAnalysisFeature.FontStyling }
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-{
-    DocumentAnalysisFeature.StyleFont
-};
-
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 // Handwritten styles
@@ -220,17 +210,12 @@ To extract barcodes from a given file at a URI with the add-on barcodes capabili
 ```C# Snippet:DocumentIntelligenceSampleBarcodeExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
-    UrlSource = uriSource
+    Features = { DocumentAnalysisFeature.Barcodes }
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-{
-    DocumentAnalysisFeature.Barcodes
-};
-
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 foreach (DocumentPage page in result.Pages)
@@ -261,17 +246,12 @@ To detect languages from a given file at a URI with the add-on languages capabil
 ```C# Snippet:DocumentIntelligenceSampleLanguageDetection
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
-    UrlSource = uriSource
+    Features = { DocumentAnalysisFeature.Languages }
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-{
-    DocumentAnalysisFeature.Languages
-};
-
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Languages detected in the document----");
@@ -294,17 +274,12 @@ To extract key-value pairs from a given file at a URI with the add-on keyValuePa
 ```C# Snippet:DocumentIntelligenceSampleKeyValuePairsExtraction
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
+var options = new AnalyzeDocumentOptions("prebuilt-layout", uriSource)
 {
-    UrlSource = uriSource
+    Features = { DocumentAnalysisFeature.KeyValuePairs }
 };
 
-List<DocumentAnalysisFeature> features = new List<DocumentAnalysisFeature>
-{
-    DocumentAnalysisFeature.KeyValuePairs
-};
-
-var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content, features: features);
+var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine("----Key Value Pair Options detected in the document----");

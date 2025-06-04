@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ConnectivityConfigurationData : IUtf8JsonSerializable, IJsonModel<ConnectivityConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ConnectivityConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,31 +36,11 @@ namespace Azure.ResourceManager.Network
                 throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -71,7 +60,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Hubs)
                 {
-                    writer.WriteObjectValue<ConnectivityHub>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,13 +69,18 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
+            if (Optional.IsDefined(ConnectivityCapabilities))
+            {
+                writer.WritePropertyName("connectivityCapabilities"u8);
+                writer.WriteObjectValue(ConnectivityCapabilities, options);
+            }
             if (Optional.IsCollectionDefined(AppliesToGroups))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue<ConnectivityGroupItem>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,22 +100,6 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStringValue(ResourceGuid.Value);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ConnectivityConfigurationData IJsonModel<ConnectivityConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -138,7 +116,7 @@ namespace Azure.ResourceManager.Network
 
         internal static ConnectivityConfigurationData DeserializeConnectivityConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,6 +131,7 @@ namespace Azure.ResourceManager.Network
             ConnectivityTopology? connectivityTopology = default;
             IList<ConnectivityHub> hubs = default;
             GlobalMeshSupportFlag? isGlobal = default;
+            ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default;
             IList<ConnectivityGroupItem> appliesToGroups = default;
             NetworkProvisioningState? provisioningState = default;
             DeleteExistingPeering? deleteExistingPeering = default;
@@ -240,6 +219,15 @@ namespace Azure.ResourceManager.Network
                             isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("connectivityCapabilities"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectivityCapabilities = ConnectivityConfigurationPropertiesConnectivityCapabilities.DeserializeConnectivityConfigurationPropertiesConnectivityCapabilities(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("appliesToGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -299,6 +287,7 @@ namespace Azure.ResourceManager.Network
                 connectivityTopology,
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
                 isGlobal,
+                connectivityCapabilities,
                 appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
                 provisioningState,
                 deleteExistingPeering,
@@ -314,7 +303,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConnectivityConfigurationData)} does not support writing '{options.Format}' format.");
             }
@@ -328,7 +317,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConnectivityConfigurationData(document.RootElement, options);
                     }
                 default:

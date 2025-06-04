@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The MIME type of the referenced object. </summary>
+        [WirePath("mediaType")]
         public string MediaType { get; }
         /// <summary> The number of bytes of the content. Same as Length field. </summary>
+        [WirePath("size")]
         public long? Size { get; }
         /// <summary> The digest of the content, as defined by the Registry V2 HTTP API Specification. </summary>
+        [WirePath("digest")]
         public string Digest { get; }
         /// <summary> The number of bytes of the content. Same as Size field. </summary>
+        [WirePath("length")]
         public long? Length { get; }
         /// <summary> The repository name. </summary>
+        [WirePath("repository")]
         public string Repository { get; }
         /// <summary> The direct URL to the content. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
         /// <summary> The tag name. </summary>
+        [WirePath("tag")]
         public string Tag { get; }
         /// <summary> The name of the artifact. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The version of the artifact. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

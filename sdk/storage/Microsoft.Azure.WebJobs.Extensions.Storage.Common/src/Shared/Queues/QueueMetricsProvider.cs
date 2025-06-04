@@ -37,8 +37,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             try
             {
-                QueueProperties queueProperties = await _queue.GetPropertiesAsync().ConfigureAwait(false);
-                return queueProperties.ApproximateMessagesCount;
+                QueueTriggerMetrics queueMetrics = await GetMetricsAsync().ConfigureAwait(false);
+                return queueMetrics.QueueLength;
             }
             catch (RequestFailedException ex)
             {
@@ -49,9 +49,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // ignore transient errors, and return default metrics
                     // E.g. if the queue doesn't exist, we'll return a zero queue length
                     // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
+                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
+            }
+
             return 0;
         }
 
@@ -96,8 +101,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     // ignore transient errors, and return default metrics
                     // E.g. if the queue doesn't exist, we'll return a zero queue length
                     // and scale in
-                    _logger.LogWarning($"Error querying for queue scale status: {ex.Message}");
+                    _logger.LogWarning($"Error querying for queue scale status: {ex.ToString()}");
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning($"Fatal error querying for queue scale status: {ex.ToString()}");
             }
 
             return new QueueTriggerMetrics

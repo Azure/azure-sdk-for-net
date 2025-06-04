@@ -96,40 +96,58 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> API identifier path. /apis/{apiId}. </summary>
+        [WirePath("apiId")]
         public string ApiId { get; }
         /// <summary> Operation identifier path. /apis/{apiId}/operations/{operationId}. </summary>
+        [WirePath("operationId")]
         public string OperationId { get; }
         /// <summary> Product identifier path. /products/{productId}. </summary>
+        [WirePath("productId")]
         public string ProductId { get; }
         /// <summary> User identifier path. /users/{userId}. </summary>
+        [WirePath("userId")]
         public string UserId { get; }
         /// <summary> The HTTP method associated with this request.. </summary>
+        [WirePath("method")]
         public RequestMethod? Method { get; }
         /// <summary> The full URL associated with this request. </summary>
+        [WirePath("url")]
         public Uri Uri { get; }
         /// <summary> The client IP address associated with this request. </summary>
+        [WirePath("ipAddress")]
         public IPAddress IPAddress { get; }
         /// <summary> The HTTP status code received by the gateway as a result of forwarding this request to the backend. </summary>
+        [WirePath("backendResponseCode")]
         public string BackendResponseCode { get; }
         /// <summary> The HTTP status code returned by the gateway. </summary>
+        [WirePath("responseCode")]
         public int? ResponseCode { get; }
         /// <summary> The size of the response returned by the gateway. </summary>
+        [WirePath("responseSize")]
         public int? ResponseSize { get; }
         /// <summary> The date and time when this request was received by the gateway in ISO 8601 format. </summary>
+        [WirePath("timestamp")]
         public DateTimeOffset? Timestamp { get; }
         /// <summary> Specifies if response cache was involved in generating the response. If the value is none, the cache was not used. If the value is hit, cached response was returned. If the value is miss, the cache was used but lookup resulted in a miss and request was fulfilled by the backend. </summary>
+        [WirePath("cache")]
         public string Cache { get; }
         /// <summary> The total time it took to process this request. </summary>
+        [WirePath("apiTime")]
         public double? ApiTime { get; }
         /// <summary> he time it took to forward this request to the backend and get the response back. </summary>
+        [WirePath("serviceTime")]
         public double? ServiceTime { get; }
         /// <summary> Azure region where the gateway that processed this request is located. </summary>
+        [WirePath("apiRegion")]
         public string ApiRegion { get; }
         /// <summary> Subscription identifier path. /subscriptions/{subscriptionId}. </summary>
+        [WirePath("subscriptionId")]
         public ResourceIdentifier SubscriptionResourceId { get; }
         /// <summary> Request Identifier. </summary>
+        [WirePath("requestId")]
         public string RequestId { get; }
         /// <summary> The size of this request.. </summary>
+        [WirePath("requestSize")]
         public int? RequestSize { get; }
     }
 }

@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Compute.Models
         public static bool operator ==(ConsistencyModeType left, ConsistencyModeType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ConsistencyModeType"/> values are not the same. </summary>
         public static bool operator !=(ConsistencyModeType left, ConsistencyModeType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ConsistencyModeType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ConsistencyModeType"/>. </summary>
         public static implicit operator ConsistencyModeType(string value) => new ConsistencyModeType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

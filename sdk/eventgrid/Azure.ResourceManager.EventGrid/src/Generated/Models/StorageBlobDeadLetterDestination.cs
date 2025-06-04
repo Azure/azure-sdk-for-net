@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The Azure Resource ID of the storage account that is the destination of the deadletter events. </summary>
+        [WirePath("properties.resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The name of the Storage blob container that is the destination of the deadletter events. </summary>
+        [WirePath("properties.blobContainerName")]
         public string BlobContainerName { get; set; }
     }
 }

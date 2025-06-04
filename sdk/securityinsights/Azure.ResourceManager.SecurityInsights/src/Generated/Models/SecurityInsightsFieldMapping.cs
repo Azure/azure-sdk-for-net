@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> the V3 identifier of the entity. </summary>
+        [WirePath("identifier")]
         public string Identifier { get; set; }
         /// <summary> the column name to be mapped to the identifier. </summary>
+        [WirePath("columnName")]
         public string ColumnName { get; set; }
     }
 }

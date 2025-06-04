@@ -23,20 +23,26 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         private const string SucceededValue = "Succeeded";
+        private const string PartialCompleteValue = "PartialComplete";
         private const string FailedValue = "Failed";
+        private const string RunningValue = "Running";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> All Solutions in the Batch succeeded. </summary>
         public static SolutionProvisioningState Succeeded { get; } = new SolutionProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Some Solutions are still running or failed. </summary>
+        public static SolutionProvisioningState PartialComplete { get; } = new SolutionProvisioningState(PartialCompleteValue);
+        /// <summary> All Solutions failed to run. </summary>
         public static SolutionProvisioningState Failed { get; } = new SolutionProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> All Solutions are still running. </summary>
+        public static SolutionProvisioningState Running { get; } = new SolutionProvisioningState(RunningValue);
+        /// <summary> When Solutions request gets canceled. </summary>
         public static SolutionProvisioningState Canceled { get; } = new SolutionProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="SolutionProvisioningState"/> values are the same. </summary>
         public static bool operator ==(SolutionProvisioningState left, SolutionProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SolutionProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(SolutionProvisioningState left, SolutionProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SolutionProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SolutionProvisioningState"/>. </summary>
         public static implicit operator SolutionProvisioningState(string value) => new SolutionProvisioningState(value);
 
         /// <inheritdoc />
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

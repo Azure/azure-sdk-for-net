@@ -64,12 +64,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Represents the IP Address. </summary>
+        [WirePath("address")]
         public string Address { get; }
         /// <summary> Represents the Ip Address Version. </summary>
+        [WirePath("ipAddressVersion")]
         public string IPAddressVersion { get; }
         /// <summary> The subnet to which this IP address belongs. </summary>
         internal HybridComputeSubnet Subnet { get; }
         /// <summary> Represents address prefix. </summary>
+        [WirePath("subnet.addressPrefix")]
         public string SubnetAddressPrefix
         {
             get => Subnet?.AddressPrefix;

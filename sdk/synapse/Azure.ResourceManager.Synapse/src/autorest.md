@@ -14,7 +14,7 @@ tag: package-composite-v2
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - WorkspaceManagedSqlServerDedicatedSQLMinimalTlsSettings_Update
@@ -379,7 +379,7 @@ override-operation-name:
   KustoPoolChildResource_CheckNameAvailability: CheckKustoPoolChildResourceNameAvailability
   KustoPoolPrincipalAssignments_CheckNameAvailability: CheckKustoPoolPrincipalAssignmentNameAvailability
   KustoPools_CheckNameAvailability: CheckKustoPoolNameAvailability
-  KustoPoolDataConnections_dataConnectionValidation: ValidateDataConnection
+  KustoPoolDataConnections_DataConnectionValidation: ValidateDataConnection
   IntegrationRuntimeNodeIpAddress_Get: GetIntegrationRuntimeNodeIPAddress
   KustoPoolPrivateLinkResources_List: GetAllKustoPoolPrivateLinkData
 

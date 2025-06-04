@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBCollectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBCollectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("databaseName"u8);
             writer.WriteStringValue(DatabaseName);
             writer.WritePropertyName("isCapped"u8);
@@ -37,7 +46,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(ShardKey))
             {
                 writer.WritePropertyName("shardKey"u8);
-                writer.WriteObjectValue<MongoDBShardKeyInfo>(ShardKey, options);
+                writer.WriteObjectValue(ShardKey, options);
             }
             writer.WritePropertyName("supportsSharding"u8);
             writer.WriteBooleanValue(SupportsSharding);
@@ -46,32 +55,6 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("viewOf"u8);
                 writer.WriteStringValue(ViewOf);
             }
-            writer.WritePropertyName("averageDocumentSize"u8);
-            writer.WriteNumberValue(AverageDocumentSize);
-            writer.WritePropertyName("dataSize"u8);
-            writer.WriteNumberValue(DataSize);
-            writer.WritePropertyName("documentCount"u8);
-            writer.WriteNumberValue(DocumentCount);
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("qualifiedName"u8);
-            writer.WriteStringValue(QualifiedName);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MongoDBCollectionInfo IJsonModel<MongoDBCollectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBCollectionInfo DeserializeMongoDBCollectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -203,7 +186,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBCollectionInfo)} does not support writing '{options.Format}' format.");
             }
@@ -217,7 +200,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoDBCollectionInfo(document.RootElement, options);
                     }
                 default:

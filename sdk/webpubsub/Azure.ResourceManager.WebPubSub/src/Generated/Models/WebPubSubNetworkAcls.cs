@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> Azure Networking ACL Action. </summary>
+        [WirePath("defaultAction")]
         public AclAction? DefaultAction { get; set; }
         /// <summary> Network ACL. </summary>
+        [WirePath("publicNetwork")]
         public PublicNetworkAcls PublicNetwork { get; set; }
         /// <summary> ACLs for requests from private endpoints. </summary>
+        [WirePath("privateEndpoints")]
         public IList<PrivateEndpointAcl> PrivateEndpoints { get; }
     }
 }

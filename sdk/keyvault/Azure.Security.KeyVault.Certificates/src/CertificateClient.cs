@@ -99,12 +99,35 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            return StartCreateCertificate(certificateName, policy, enabled, tags, preserveCertificateOrder: null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Starts a long running operation to create a <see cref="KeyVaultCertificate"/> in the vault with the specified certificate policy.
+        /// </summary>
+        /// <remarks>
+        /// If no certificate with the specified name exists it will be created; otherwise, a new version of the existing certificate will be created.
+        /// This operation requires the certificates/create permission.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to create.</param>
+        /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the properties and lifecycle of the created certificate.</param>
+        /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
+        /// <param name="tags">Tags to be applied to the created certificate.</param>
+        /// <param name="preserveCertificateOrder">Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual CertificateOperation StartCreateCertificate(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, bool? preserveCertificateOrder = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            var parameters = new CertificateCreateParameters(policy, enabled, tags);
+            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
@@ -139,12 +162,35 @@ namespace Azure.Security.KeyVault.Certificates
         /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
         /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
         [CallerShouldAudit(CallerShouldAuditReason)]
-        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, CancellationToken cancellationToken = default)
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled, IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        {
+            return await StartCreateCertificateAsync(certificateName, policy, enabled, tags, preserveCertificateOrder: null, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Starts a long running operation to create a <see cref="KeyVaultCertificate"/> in the vault with the specified certificate policy.
+        /// </summary>
+        /// <remarks>
+        /// If no certificate with the specified name exists it will be created; otherwise, a new version of the existing certificate will be created.
+        /// This operation requires the certificates/create permission.
+        /// </remarks>
+        /// <param name="certificateName">The name of the certificate to create.</param>
+        /// <param name="policy">The <see cref="CertificatePolicy"/> which governs the properties and lifecycle of the created certificate.</param>
+        /// <param name="enabled">Specifies whether the certificate should be created in an enabled state. If null, the server default will be used.</param>
+        /// <param name="tags">Tags to be applied to the created certificate.</param>
+        /// <param name="preserveCertificateOrder">Specifies whether the certificate chain preserves its original order. The default value is false, which sets the leaf certificate at index 0.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>A <see cref="CertificateOperation"/> which contains details on the create operation, and can be used to retrieve updated status.</returns>
+        /// <exception cref="ArgumentException"><paramref name="certificateName"/> is empty.</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="certificateName"/> or <paramref name="policy"/> is null.</exception>
+        [CallerShouldAudit(CallerShouldAuditReason)]
+        public virtual async Task<CertificateOperation> StartCreateCertificateAsync(string certificateName, CertificatePolicy policy, bool? enabled = default, IDictionary<string, string> tags = default, bool? preserveCertificateOrder = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(certificateName, nameof(certificateName));
             Argument.AssertNotNull(policy, nameof(policy));
 
-            var parameters = new CertificateCreateParameters(policy, enabled, tags);
+            var parameters = new CertificateCreateParameters(policy, enabled, tags, preserveCertificateOrder);
 
             using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CertificateClient)}.{nameof(StartCreateCertificate)}");
             scope.AddAttribute(OTelCertificateNameKey, certificateName);
@@ -836,7 +882,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/restore");
+                return _pipeline.SendRequest(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "restore");
             }
             catch (Exception e)
             {
@@ -863,7 +909,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/restore").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, new CertificateBackup { Value = backup }, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "restore").ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -893,7 +939,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return _pipeline.SendRequest(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/", importCertificateOptions.Name, "/import");
+                return _pipeline.SendRequest(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, importCertificateOptions.Name, "/import");
             }
             catch (Exception e)
             {
@@ -923,7 +969,7 @@ namespace Azure.Security.KeyVault.Certificates
 
             try
             {
-                return await _pipeline.SendRequestAsync(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, "/", importCertificateOptions.Name, "/import").ConfigureAwait(false);
+                return await _pipeline.SendRequestAsync(RequestMethod.Post, importCertificateOptions, () => new KeyVaultCertificateWithPolicy(), cancellationToken, CertificatesPath, importCertificateOptions.Name, "/import").ConfigureAwait(false);
             }
             catch (Exception e)
             {

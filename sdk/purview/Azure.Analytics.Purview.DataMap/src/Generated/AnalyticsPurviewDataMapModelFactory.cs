@@ -298,8 +298,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <returns> A new <see cref="DataMap.SearchResultValue"/> instance for mocking. </returns>
-        public static SearchResultValue SearchResultValue(float? searchScore = null, SearchHighlights searchHighlights = null, string objectType = null, long? createTime = null, long? updateTime = null, string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, string endorsement = null, string owner = null, IEnumerable<string> classification = null, IEnumerable<string> label = null, IEnumerable<TermSearchResultValue> term = null, IEnumerable<ContactSearchResultValue> contact = null, IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, IEnumerable<string> termTemplate = null, string longDescription = null)
+        public static SearchResultValue SearchResultValue(float? searchScore = null, SearchHighlights searchHighlights = null, string objectType = null, long? createTime = null, long? updateTime = null, string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, IEnumerable<string> endorsement = null, string owner = null, IEnumerable<string> classification = null, IEnumerable<string> label = null, IEnumerable<TermSearchResultValue> term = null, IEnumerable<ContactSearchResultValue> contact = null, IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, IEnumerable<string> termTemplate = null, string longDescription = null)
         {
+            endorsement ??= new List<string>();
             classification ??= new List<string>();
             label ??= new List<string>();
             term ??= new List<TermSearchResultValue>();
@@ -318,7 +319,7 @@ namespace Azure.Analytics.Purview.DataMap
                 qualifiedName,
                 entityType,
                 description,
-                endorsement,
+                endorsement?.ToList(),
                 owner,
                 classification?.ToList(),
                 label?.ToList(),
@@ -426,8 +427,9 @@ namespace Azure.Analytics.Purview.DataMap
         /// <param name="termTemplate"> The term template names used by the term. </param>
         /// <param name="longDescription"> The definition of the term. </param>
         /// <returns> A new <see cref="DataMap.SuggestResultValue"/> instance for mocking. </returns>
-        public static SuggestResultValue SuggestResultValue(float? searchScore = null, string searchText = null, string objectType = null, long? createTime = null, long? updateTime = null, string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, string endorsement = null, string owner = null, IEnumerable<string> classification = null, IEnumerable<string> label = null, IEnumerable<TermSearchResultValue> term = null, IEnumerable<ContactSearchResultValue> contact = null, IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, IEnumerable<string> termTemplate = null, string longDescription = null)
+        public static SuggestResultValue SuggestResultValue(float? searchScore = null, string searchText = null, string objectType = null, long? createTime = null, long? updateTime = null, string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, IEnumerable<string> endorsement = null, string owner = null, IEnumerable<string> classification = null, IEnumerable<string> label = null, IEnumerable<TermSearchResultValue> term = null, IEnumerable<ContactSearchResultValue> contact = null, IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, IEnumerable<string> termTemplate = null, string longDescription = null)
         {
+            endorsement ??= new List<string>();
             classification ??= new List<string>();
             label ??= new List<string>();
             term ??= new List<TermSearchResultValue>();
@@ -446,7 +448,7 @@ namespace Azure.Analytics.Purview.DataMap
                 qualifiedName,
                 entityType,
                 description,
-                endorsement,
+                endorsement?.ToList(),
                 owner,
                 classification?.ToList(),
                 label?.ToList(),

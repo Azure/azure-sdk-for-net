@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ApiCenter.Models
 {
     public partial class ApiEntityProperties : IUtf8JsonSerializable, IJsonModel<ApiEntityProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiEntityProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiEntityProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiEntityProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiEntityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 throw new FormatException($"The model {nameof(ApiEntityProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
             writer.WritePropertyName("kind"u8);
@@ -48,7 +56,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             if (Optional.IsDefined(TermsOfService))
             {
                 writer.WritePropertyName("termsOfService"u8);
-                writer.WriteObjectValue<TermsOfService>(TermsOfService, options);
+                writer.WriteObjectValue(TermsOfService, options);
             }
             if (Optional.IsCollectionDefined(ExternalDocumentation))
             {
@@ -56,7 +64,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in ExternalDocumentation)
                 {
-                    writer.WriteObjectValue<ExternalDocumentation>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,14 +74,14 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Contacts)
                 {
-                    writer.WriteObjectValue<ApiContact>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue<ApiLicense>(License, options);
+                writer.WriteObjectValue(License, options);
             }
             if (Optional.IsDefined(CustomProperties))
             {
@@ -81,7 +89,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CustomProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CustomProperties))
+                using (JsonDocument document = JsonDocument.Parse(CustomProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -95,14 +103,13 @@ namespace Azure.ResourceManager.ApiCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApiEntityProperties IJsonModel<ApiEntityProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -119,7 +126,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         internal static ApiEntityProperties DeserializeApiEntityProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -250,7 +257,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApiEntityProperties)} does not support writing '{options.Format}' format.");
             }
@@ -264,7 +271,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiEntityProperties(document.RootElement, options);
                     }
                 default:

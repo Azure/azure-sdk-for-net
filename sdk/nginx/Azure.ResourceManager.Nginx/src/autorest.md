@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: Nginx
 namespace: Azure.ResourceManager.Nginx
-require: https://github.com/Azure/azure-rest-api-specs/blob/4a361fccb94e82da94a239d3563f1e3e3b9d007d/specification/nginx/resource-manager/readme.md
-#tag: package-2023-04-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/7a3f210cf6924c6139e2493f5fd0625919af1f32/specification/nginx/resource-manager/readme.md
+#tag: package-2024-11-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -27,10 +27,28 @@ rename-mapping:
   NginxNetworkInterfaceConfiguration.subnetId: -|arm-id
   NginxPrivateIPAddress.privateIPAddress: -|ip-address
   NginxPrivateIPAddress.subnetId: -|arm-id
+  AnalysisCreate : NginxAnalysisContent
+  AnalysisCreateConfig: NginxAnalysisConfig
+  NginxCertificateErrorResponseBody: NginxCertificateError
+  ActivationState : WebApplicationFirewallActivationState
+  AnalysisResultData: NginxAnalysisResultDetails
+  Level: NginxDiagnosticLevel
+  NginxConfigurationResponse: NginxConfiguration
+  NginxConfigurationResponseProperties: NginxConfigurationProperties
+  NginxDeploymentApiKeyResponse: NginxDeploymentApiKey
+  NginxDeploymentApiKeyResponseProperties: NginxDeploymentApiKeyProperties
+  NginxConfigurationRequestProperties: NginxConfigurationCreateOrUpdateProperties
+  NginxConfigurationProtectedFileRequest: NginxConfigurationProtectedFileContent
+  NginxConfigurationProtectedFileResponse: NginxConfigurationProtectedFileResult
 
 prepend-rp-prefix:
+  - AnalysisDiagnostic
+  - AnalysisResult
+  - DiagnosticItem
   - ProvisioningState
   - ResourceSku
+  - ScaleProfile
+  - ScaleProfileCapacity
 
 format-by-name-rules:
   'tenantId': 'uuid'

@@ -27,9 +27,11 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             patientRecord.PatientDocuments[0].AdministrativeMetadata = CreateDocumentAdministrativeMetadata();
             List<PatientRecord> patientRecords = new List<PatientRecord> { patientRecord };
             RadiologyInsightsData radiologyInsightsData = new RadiologyInsightsData(patientRecords);
+            RadiologyInsightsJob radiologyInsightsJob = new RadiologyInsightsJob();
+            radiologyInsightsJob.JobData = radiologyInsightsData;
             radiologyInsightsData.Configuration = CreateConfiguration();
-
-            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, radiologyInsightsData);
+            var jobId = "job1714464011094";
+            Operation<RadiologyInsightsInferenceResult> operation = client.InferRadiologyInsights(WaitUntil.Completed, jobId, radiologyInsightsJob);
             RadiologyInsightsInferenceResult responseData = operation.Value;
             var inferences = responseData.PatientResults.First().Inferences;
 
@@ -86,7 +88,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                 BirthDate = new System.DateTime(1959, 11, 11),
                 Sex = PatientSex.Female,
             };
-            Encounter encounter = new Encounter("encounterid1")
+            PatientEncounter encounter = new PatientEncounter("encounterid1")
             {
                 Class = EncounterClass.InPatient,
                 Period = new TimePeriod
@@ -95,14 +97,14 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
                     End = new System.DateTime(2021, 08, 28)
                 }
             };
-            DocumentContent documentContent = new DocumentContent(DocumentContentSourceType.Inline, "CLINICAL HISTORY:   \n        20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy.\n        COMPARISON:   \n        Right upper quadrant sonographic performed 1 day prior.\n        TECHNIQUE:   \n        Transabdominal grayscale pelvic sonography with duplex color Doppler and spectral waveform analysis of the ovaries.\n        FINDINGS:   \n        The uterus is unremarkable given the transabdominal technique with endometrial echo complex within physiologic normal limits. The ovaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the left measuring 2.8 x 1.5 x 1.9 cm.\n On duplex imaging, Doppler signal is symmetric.\n        IMPRESSION:   \n        1. Normal pelvic sonography. Findings of testicular torsion.\n        A new US pelvis within the next 6 months is recommended.\n        These results have been discussed with Dr. Jones at 3 PM on November 5 2020.");
-            PatientDocument patientDocument = new PatientDocument(DocumentType.Note, "doc2", documentContent)
+            ClinicalDocumentContent documentContent = new ClinicalDocumentContent(DocumentContentSourceType.Inline, "CLINICAL HISTORY:   \n        20-year-old female presenting with abdominal pain. Surgical history significant for appendectomy.\n        COMPARISON:   \n        Right upper quadrant sonographic performed 1 day prior.\n        TECHNIQUE:   \n        Transabdominal grayscale pelvic sonography with duplex color Doppler and spectral waveform analysis of the ovaries.\n        FINDINGS:   \n        The uterus is unremarkable given the transabdominal technique with endometrial echo complex within physiologic normal limits. The ovaries are symmetric in size, measuring 2.5 x 1.2 x 3.0 cm and the left measuring 2.8 x 1.5 x 1.9 cm.\n On duplex imaging, Doppler signal is symmetric.\n        IMPRESSION:   \n        1. Normal pelvic sonography. Findings of testicular torsion.\n        A new US pelvis within the next 6 months is recommended.\n        These results have been discussed with Dr. Jones at 3 PM on November 5 2020.");
+            PatientDocument patientDocument = new PatientDocument(ClinicalDocumentContentType.Note, "doc2", documentContent)
             {
                 ClinicalType = ClinicalDocumentType.RadiologyReport,
-                CreatedDateTime = new System.DateTime(2021, 08, 28)
+                CreatedAt = new System.DateTime(2021, 08, 28)
             };
             PatientRecord patientRecord = new PatientRecord(id);
-            patientRecord.Info = patientInfo;
+            patientRecord.Details = patientInfo;
             patientRecord.Encounters.Add(encounter);
             patientRecord.PatientDocuments.Add(patientDocument);
             return patientRecord;
@@ -122,7 +124,7 @@ namespace Azure.Health.Insights.RadiologyInsights.Tests
             FhirR4CodeableConcept codeableConcept = new FhirR4CodeableConcept();
             codeableConcept.Coding.Add(coding);
 
-            FhirR4Extendible orderedProcedure = new FhirR4Extendible()
+            OrderedProcedure orderedProcedure = new OrderedProcedure()
             {
                 Description = "US PELVIS COMPLETE",
                 Code = codeableConcept

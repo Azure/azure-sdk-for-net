@@ -1,38 +1,34 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Storage.Files.Shares;
-using Azure.Storage.Files.Shares.Models;
+using BaseShares::Azure.Storage.Files.Shares;
+using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test;
 using Azure.Storage.Tests;
-using BenchmarkDotNet.Toolchains.Roslyn;
 using Moq;
 using NUnit.Framework;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     internal class ShareDirectoryStorageResourceContainerTests
     {
-        private async IAsyncEnumerable<(TDirectory Directory, TFile File)> ToAsyncEnumerable<TDirectory, TFile>(
-            IEnumerable<TDirectory> directories,
-            IEnumerable<TFile> files)
+        private async IAsyncEnumerable<StorageResource> ToAsyncEnumerable(
+            IEnumerable<StorageResource> resources)
         {
-            if (files.Count() != directories.Count())
-            {
-                throw new ArgumentException("Items and Directories should be the same amount");
-            }
-            for (int i = 0; i < files.Count(); i++)
+            for (int i = 0; i < resources.Count(); i++)
             {
                 // returning async enumerable must be an async method
                 // so we need something to await
-                yield return await Task.FromResult((directories.ElementAt(i), files.ElementAt(i)));
+                yield return await Task.FromResult(resources.ElementAt(i));
             }
         }
 
@@ -48,14 +44,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             List<Mock<ShareDirectoryClient>> expectedDirectories = Enumerable.Range(0, pathCount)
                 .Select(i => new Mock<ShareDirectoryClient>())
                 .ToList();
-
+            List<StorageResource> expectedResources = expectedFiles.Select(m => (StorageResource) new ShareFileStorageResource(m.Object)).ToList();
+            expectedResources.Concat(expectedDirectories.Select(m => (StorageResource) new ShareDirectoryStorageResourceContainer(m.Object, default)));
             // And a mock path scanner
-            Mock<PathScanner> pathScanner = new();
-            pathScanner.Setup(p => p.ScanAsync(mainClient.Object, It.IsAny<CancellationToken>()))
-                .Returns<ShareDirectoryClient, CancellationToken>(
-                (dir, cancellationToken) => ToAsyncEnumerable(
-                    expectedDirectories.Select(m => m.Object),
-                    expectedFiles.Select(m => m.Object)));
+            Mock<SharesPathScanner> pathScanner = new();
+            pathScanner.Setup(p => p.ScanAsync(
+                mainClient.Object,
+                default,
+                It.IsAny<ShareFileStorageResourceOptions>(),
+                It.IsAny<ShareFileTraits>(),
+                It.IsAny<CancellationToken>()))
+                .Returns<ShareDirectoryClient, ShareClient, ShareFileStorageResourceOptions, ShareFileTraits, CancellationToken>(
+                (dir, shareclient, options, traits, cancellationToken) => ToAsyncEnumerable(expectedResources));
 
             // Setup StorageResourceContainer
             ShareDirectoryStorageResourceContainer resource = new(mainClient.Object, default)
@@ -87,7 +87,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             // Get the subpath resource item
             StorageResourceItem resourceItem = resourceContainer.GetStorageResourceReferenceInternal(
-                string.Join("/", pathSegments));
+                string.Join("/", pathSegments),
+                "ShareFile");
 
             Assert.That(resourceItem, Is.TypeOf(typeof(ShareFileStorageResource)));
             ShareFileStorageResource fileResourceItem = resourceItem as ShareFileStorageResource;

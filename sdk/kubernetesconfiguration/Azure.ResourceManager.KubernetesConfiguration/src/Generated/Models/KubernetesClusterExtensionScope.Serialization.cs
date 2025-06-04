@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
     public partial class KubernetesClusterExtensionScope : IUtf8JsonSerializable, IJsonModel<KubernetesClusterExtensionScope>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterExtensionScope>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesClusterExtensionScope>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KubernetesClusterExtensionScope>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,13 +35,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Cluster))
             {
                 if (Cluster != null)
                 {
                     writer.WritePropertyName("cluster"u8);
-                    writer.WriteObjectValue<ScopeCluster>(Cluster, options);
+                    writer.WriteObjectValue(Cluster, options);
                 }
                 else
                 {
@@ -43,7 +52,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (Namespace != null)
                 {
                     writer.WritePropertyName("namespace"u8);
-                    writer.WriteObjectValue<ScopeNamespace>(Namespace, options);
+                    writer.WriteObjectValue(Namespace, options);
                 }
                 else
                 {
@@ -58,14 +67,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         KubernetesClusterExtensionScope IJsonModel<KubernetesClusterExtensionScope>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -82,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
 
         internal static KubernetesClusterExtensionScope DeserializeKubernetesClusterExtensionScope(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -123,6 +131,57 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             return new KubernetesClusterExtensionScope(cluster, @namespace, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ClusterReleaseNamespace", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  cluster: ");
+                builder.AppendLine("{");
+                builder.Append("    releaseNamespace: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Cluster))
+                {
+                    builder.Append("  cluster: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Cluster, options, 2, false, "  cluster: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TargetNamespace", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  namespace: ");
+                builder.AppendLine("{");
+                builder.Append("    targetNamespace: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Namespace))
+                {
+                    builder.Append("  namespace: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Namespace, options, 2, false, "  namespace: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KubernetesClusterExtensionScope>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionScope>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,7 +189,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(KubernetesClusterExtensionScope)} does not support writing '{options.Format}' format.");
             }
@@ -144,7 +205,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKubernetesClusterExtensionScope(document.RootElement, options);
                     }
                 default:

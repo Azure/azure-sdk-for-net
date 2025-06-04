@@ -49,6 +49,12 @@ jobs:
       # Add a default so the job doesn't fail when the matrix is empty
       container: $[ variables['Container'] ]
 
+    variables:
+      ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        ServiceDirectory: '*'
+      ${{ else }}:
+        ServiceDirectory: ${{ parameters.ServiceDirectory }}
+
     templateContext:
       outputs:
         - output: pipelineArtifact
@@ -72,7 +78,9 @@ jobs:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            ${{ if eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
+            # we only need to checkout all sdk directories for All PR builds OR the
+            # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
+            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
@@ -82,42 +90,73 @@ jobs:
                 - "/*"
                 - "!SessionRecords"
                 - "/sdk/*/**/SessionRecords/*"
+
       - ${{ if ne(parameters.ProjectListOverrideFilePropertyName, '') }}:
         - task: DownloadPipelineArtifact@2
           inputs:
             artifact: DependencyTestProjectReferences
             patterns: "**/$(${{ parameters.ProjectListOverrideFilePropertyName }})"
             path: $(Build.SourcesDirectory)
+      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: TestPackagesArtifact
+            path: $(Build.SourcesDirectory)/PackageInfo
+
       - pwsh: |
           $(Build.SourcesDirectory)/eng/common/scripts/trust-proxy-certificate.ps1
         displayName: 'Language Specific Certificate Trust'
+
       - pwsh: |
           Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Path]$(Build.SourcesDirectory)/eng/common/testproxy/dotnet-devcert.pfx"
           Write-Host "##vso[task.setvariable variable=ASPNETCORE_Kestrel__Certificates__Default__Password]password"
         displayName: 'Configure Kestrel Environment Variables'
+
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: ${{ parameters.OSName }}
+
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
+
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+
+      # this section is only included when invoking with a dynamic set of packages (EG net - pullrequest)
+      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+        - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+          parameters:
+            PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+            Restore: true
+
+        - pwsh: |
+            if ("$(ProjectNames)" -like "*storage*") {
+              &"$(Build.SourcesDirectory)/eng/scripts/Install-Azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
+            }
+          displayName: Install Azurite If Necessary
+          condition: ne(variables['ProjectNames'], '')
+
+      # ProjectListOverrideFile is set by the customization within dependency.tests.yml
+      # OR it is set by the PR built to target a set of packages outside of a single target service directory.
+      # if it is unset, then we are in a traditional service directory build.
       - pwsh: |
-          if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '') {
-            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]$(${{ parameters.ProjectListOverrideFilePropertyName }})"
-            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\**\coverage.cobertura.xml"
+          if ($env:PROJECTLISTOVERRIDEFILE) {
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)/sdk/**/coverage.cobertura.xml"
           }
           else
           {
-            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFileName]"
-            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**\coverage.cobertura.xml"
+            # we aren't running in net - pullrequest, so we need to ensure the value is set to empty string
+            Write-Host "##vso[task.setvariable variable=ProjectListOverrideFile]"
+            Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)/sdk/$(ServiceDirectory)/**/coverage.cobertura.xml"
           }
         displayName: Set variable for the project list file and coverage directory
+
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
+
       - script: >-
           dotnet test eng/service.proj
           --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
@@ -125,16 +164,18 @@ jobs:
           --logger "trx;LogFileName=$(TestTargetFramework).trx" --logger:"console;verbosity=normal"
           --blame-crash-dump-type full --blame-hang-dump-type full --blame-hang-timeout ${{parameters.TestTimeoutInMinutes}}minutes
           /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false
+          /p:ServiceDirectory=$(ServiceDirectory)
+          /p:IncludeSrc=false /p:IncludeSamples=false /p:IncludePerf=false /p:IncludeStress=false /p:IncludeIntegrationTests=false
           /p:RunApiCompat=false /p:InheritDocEnabled=false
           /p:Configuration=$(BuildConfiguration)
           /p:CollectCoverage=$(CollectCoverage)
           /p:EnableSourceLink=false
-          /p:ProjectListOverrideFile=$(ProjectListOverrideFileName)
+          /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
+          /p:EnableOverrideExclusions=true
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
+
       - task: PublishTestResults@2
         condition: always()
         displayName: "Publish Results ($(TestTargetFramework))"
@@ -144,19 +185,17 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
-      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
           reports: $(CodeCoverageFilePattern)
-          targetdir: $(Build.ArtifactStagingDirectory)\coverage
+          targetdir: $(Build.ArtifactStagingDirectory)/coverage
           reporttypes: Cobertura
-          filefilters: +$(Build.SourcesDirectory)\sdk\${{parameters.ServiceDirectory}}\**
+          filefilters: +$(Build.SourcesDirectory)/sdk/$(ServiceDirectory)/**
           verbosity: Verbose
-      - task: PublishCodeCoverageResults@1
+      - task: PublishCodeCoverageResults@2
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Publish Code Coverage Reports
         inputs:
-          codeCoverageTool: Cobertura
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
-

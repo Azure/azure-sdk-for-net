@@ -195,7 +195,9 @@ namespace Azure.ResourceManager.ScVmm
             try
             {
                 var response = await _scVmmGuestAgentVmInstanceGuestAgentsRestClient.DeleteAsync(Id.Parent.Parent, cancellationToken).ConfigureAwait(false);
-                var operation = new ScVmmArmOperation(response);
+                var uri = _scVmmGuestAgentVmInstanceGuestAgentsRestClient.CreateDeleteRequestUri(Id.Parent.Parent);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ScVmmArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -237,7 +239,9 @@ namespace Azure.ResourceManager.ScVmm
             try
             {
                 var response = _scVmmGuestAgentVmInstanceGuestAgentsRestClient.Delete(Id.Parent.Parent, cancellationToken);
-                var operation = new ScVmmArmOperation(response);
+                var uri = _scVmmGuestAgentVmInstanceGuestAgentsRestClient.CreateDeleteRequestUri(Id.Parent.Parent);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ScVmmArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

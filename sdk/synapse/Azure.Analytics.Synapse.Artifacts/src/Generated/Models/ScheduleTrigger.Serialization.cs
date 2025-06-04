@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue<TriggerPipelineReference>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("recurrence"u8);
-            writer.WriteObjectValue<ScheduleTriggerRecurrence>(Recurrence);
+            writer.WriteObjectValue(Recurrence);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -168,15 +168,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new ScheduleTrigger FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeScheduleTrigger(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScheduleTrigger>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ScheduleTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ScheduleTrigger>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ScheduleTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

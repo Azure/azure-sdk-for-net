@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator ==(ViewPivotType left, ViewPivotType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ViewPivotType"/> values are not the same. </summary>
         public static bool operator !=(ViewPivotType left, ViewPivotType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ViewPivotType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ViewPivotType"/>. </summary>
         public static implicit operator ViewPivotType(string value) => new ViewPivotType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

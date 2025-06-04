@@ -24,16 +24,22 @@ namespace Azure.ResourceManager.Network.Models
 
         private const string SecurityAdminValue = "SecurityAdmin";
         private const string ConnectivityValue = "Connectivity";
+        private const string SecurityUserValue = "SecurityUser";
+        private const string RoutingValue = "Routing";
 
         /// <summary> SecurityAdmin. </summary>
         public static NetworkConfigurationDeploymentType SecurityAdmin { get; } = new NetworkConfigurationDeploymentType(SecurityAdminValue);
         /// <summary> Connectivity. </summary>
         public static NetworkConfigurationDeploymentType Connectivity { get; } = new NetworkConfigurationDeploymentType(ConnectivityValue);
+        /// <summary> SecurityUser. </summary>
+        public static NetworkConfigurationDeploymentType SecurityUser { get; } = new NetworkConfigurationDeploymentType(SecurityUserValue);
+        /// <summary> Routing. </summary>
+        public static NetworkConfigurationDeploymentType Routing { get; } = new NetworkConfigurationDeploymentType(RoutingValue);
         /// <summary> Determines if two <see cref="NetworkConfigurationDeploymentType"/> values are the same. </summary>
         public static bool operator ==(NetworkConfigurationDeploymentType left, NetworkConfigurationDeploymentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="NetworkConfigurationDeploymentType"/> values are not the same. </summary>
         public static bool operator !=(NetworkConfigurationDeploymentType left, NetworkConfigurationDeploymentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="NetworkConfigurationDeploymentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkConfigurationDeploymentType"/>. </summary>
         public static implicit operator NetworkConfigurationDeploymentType(string value) => new NetworkConfigurationDeploymentType(value);
 
         /// <inheritdoc />
@@ -44,7 +50,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

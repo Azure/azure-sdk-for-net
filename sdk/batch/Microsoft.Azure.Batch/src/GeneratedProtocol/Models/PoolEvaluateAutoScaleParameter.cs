@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// automatic scaling on a Pool'. For more information about specifying
         /// this formula, see Automatically scale Compute Nodes in an Azure
         /// Batch Pool
-        /// (https://azure.microsoft.com/en-us/documentation/articles/batch-automatic-scaling).
+        /// (https://azure.microsoft.com/documentation/articles/batch-automatic-scaling).
         /// </remarks>
         [JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Communication.Messages
 {
-    /// <summary> The type of message. Supports text, image, template. </summary>
+    /// <summary> The type of message. </summary>
     internal readonly partial struct CommunicationMessageKind : IEquatable<CommunicationMessageKind>
     {
         private readonly string _value;
@@ -24,19 +24,40 @@ namespace Azure.Communication.Messages
 
         private const string TextValue = "text";
         private const string ImageValue = "image";
+        private const string ImageV0Value = "image_v0";
+        private const string DocumentValue = "document";
+        private const string VideoValue = "video";
+        private const string AudioValue = "audio";
         private const string TemplateValue = "template";
+        private const string StickerValue = "sticker";
+        private const string ReactionValue = "reaction";
+        private const string InteractiveValue = "interactive";
 
         /// <summary> Text message type. </summary>
         public static CommunicationMessageKind Text { get; } = new CommunicationMessageKind(TextValue);
         /// <summary> Image message type. </summary>
         public static CommunicationMessageKind Image { get; } = new CommunicationMessageKind(ImageValue);
+        /// <summary> Image message type. Legacy image type for `MediaNotificationContent` which is being deprecated. </summary>
+        public static CommunicationMessageKind ImageV0 { get; } = new CommunicationMessageKind(ImageV0Value);
+        /// <summary> Document message type. </summary>
+        public static CommunicationMessageKind Document { get; } = new CommunicationMessageKind(DocumentValue);
+        /// <summary> Video message type. </summary>
+        public static CommunicationMessageKind Video { get; } = new CommunicationMessageKind(VideoValue);
+        /// <summary> Audio message type. </summary>
+        public static CommunicationMessageKind Audio { get; } = new CommunicationMessageKind(AudioValue);
         /// <summary> Template message type. </summary>
         public static CommunicationMessageKind Template { get; } = new CommunicationMessageKind(TemplateValue);
+        /// <summary> Sticker message type. </summary>
+        public static CommunicationMessageKind Sticker { get; } = new CommunicationMessageKind(StickerValue);
+        /// <summary> Reaction message type. </summary>
+        public static CommunicationMessageKind Reaction { get; } = new CommunicationMessageKind(ReactionValue);
+        /// <summary> Interactive Actionable message type. </summary>
+        public static CommunicationMessageKind Interactive { get; } = new CommunicationMessageKind(InteractiveValue);
         /// <summary> Determines if two <see cref="CommunicationMessageKind"/> values are the same. </summary>
         public static bool operator ==(CommunicationMessageKind left, CommunicationMessageKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CommunicationMessageKind"/> values are not the same. </summary>
         public static bool operator !=(CommunicationMessageKind left, CommunicationMessageKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CommunicationMessageKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CommunicationMessageKind"/>. </summary>
         public static implicit operator CommunicationMessageKind(string value) => new CommunicationMessageKind(value);
 
         /// <inheritdoc />
@@ -47,7 +68,7 @@ namespace Azure.Communication.Messages
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

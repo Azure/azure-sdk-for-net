@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary>
         /// contains connectivity related configuration for ARC resources
@@ -94,6 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.connectivityProperties")]
         public BinaryData ConnectivityProperties { get; set; }
     }
 }

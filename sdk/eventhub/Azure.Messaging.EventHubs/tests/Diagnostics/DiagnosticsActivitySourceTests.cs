@@ -13,9 +13,11 @@ using Azure.Core.Shared;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests;
 using Azure.Messaging.EventHubs.Authorization;
+using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Diagnostics;
 using Azure.Messaging.EventHubs.Primitives;
+using Azure.Messaging.EventHubs.Processor;
 using Azure.Messaging.EventHubs.Producer;
 using Moq;
 using Moq.Protected;
@@ -596,6 +598,45 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
+        ///   Verifies diagnostics functionality of the <see cref="EventProcessorClient.UpdateCheckpointAsync" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task UpdateCheckpointAsyncCreatesScope(bool useOldOverload)
+        {
+            using var cancellationSource = new CancellationTokenSource();
+            cancellationSource.CancelAfter(TimeSpan.FromSeconds(30));
+
+            var fullyQualifiedNamespace = "namespace";
+            var eventHubName = "eventHub";
+            var mockCheckpointStore = new Mock<CheckpointStore>();
+            var mockProcessor = new MockCheckpointStoreProcessor(mockCheckpointStore.Object, 100, "fakeConsumer", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>());
+
+            using var _ = SetAppConfigSwitch();
+            using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
+
+            if (useOldOverload)
+            {
+                await mockProcessor.InvokeOldUpdateCheckpointAsync("65", "12345", 67890, cancellationSource.Token);
+            }
+            else
+            {
+                await mockProcessor.InvokeUpdateCheckpointAsync("65", new CheckpointPosition("12345"), cancellationSource.Token);
+            }
+
+            Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+            var checkpointActivity = listener.AssertAndRemoveActivity(DiagnosticProperty.EventProcessorCheckpointActivityName);
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.ServerAddress, fullyQualifiedNamespace));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.DestinationName, eventHubName));
+            CollectionAssert.Contains(checkpointActivity.Tags, new KeyValuePair<string, string>(MessagingClientDiagnostics.MessagingSystem, DiagnosticProperty.EventHubsServiceContext));
+            cancellationSource.Cancel();
+        }
+
+        /// <summary>
         /// Asserts that the common tags are present in the activity.
         /// </summary>
         private void AssertCommonTags(Activity activity, string eventHubName, string endpoint, MessagingDiagnosticOperation operation, int eventCount)
@@ -682,6 +723,70 @@ namespace Azure.Messaging.EventHubs.Tests
             protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => Task.CompletedTask;
 
             protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => Task.CompletedTask;
+        }
+
+        /// <summary>
+        ///   A minimal processor implementation for testing functionality
+        ///   related  to the checkpoint store integration.
+        /// </summary>
+        ///
+        private class MockCheckpointStoreProcessor : PluggableCheckpointStoreEventProcessor<EventProcessorPartition>
+        {
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string connectionString,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, connectionString, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string connectionString,
+                                                string eventHubName,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, connectionString, eventHubName, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string fullyQualifiedNamespace,
+                                                string eventHubName,
+                                                AzureNamedKeyCredential credential,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string fullyQualifiedNamespace,
+                                                string eventHubName,
+                                                AzureSasCredential credential,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public MockCheckpointStoreProcessor(CheckpointStore checkpointStore,
+                                                int eventBatchMaximumCount,
+                                                string consumerGroup,
+                                                string fullyQualifiedNamespace,
+                                                string eventHubName,
+                                                TokenCredential credential,
+                                                EventProcessorOptions options = default) : base(checkpointStore, eventBatchMaximumCount, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            public Task<EventProcessorCheckpoint> InvokeGetCheckpointAsync(string partitionId, CancellationToken cancellationToken) => GetCheckpointAsync(partitionId, cancellationToken);
+            public Task InvokeOldUpdateCheckpointAsync(string partitionId, string offset, long? sequenceNumber, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, new CheckpointPosition(offset, sequenceNumber ?? long.MinValue), cancellationToken);
+            public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointPosition, CancellationToken cancellationToken) => UpdateCheckpointAsync(partitionId, checkpointPosition, cancellationToken);
+            public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeListOwnershipAsync(CancellationToken cancellationToken) => ListOwnershipAsync(cancellationToken);
+            public Task<IEnumerable<EventProcessorPartitionOwnership>> InvokeClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => ClaimOwnershipAsync(desiredOwnership, cancellationToken);
         }
     }
 #endif

@@ -38,6 +38,92 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string CognitiveSearchValue = "CognitiveSearch";
         private const string CognitiveServiceValue = "CognitiveService";
         private const string CustomKeysValue = "CustomKeys";
+        private const string AzureBlobValue = "AzureBlob";
+        private const string AzureOneLakeValue = "AzureOneLake";
+        private const string CosmosDbValue = "CosmosDb";
+        private const string CosmosDbMongoDbApiValue = "CosmosDbMongoDbApi";
+        private const string AzureDataExplorerValue = "AzureDataExplorer";
+        private const string AzureMariaDbValue = "AzureMariaDb";
+        private const string AzureDatabricksDeltaLakeValue = "AzureDatabricksDeltaLake";
+        private const string AzureSqlMiValue = "AzureSqlMi";
+        private const string AzureTableStorageValue = "AzureTableStorage";
+        private const string AmazonRdsForOracleValue = "AmazonRdsForOracle";
+        private const string AmazonRdsForSqlServerValue = "AmazonRdsForSqlServer";
+        private const string AmazonRedshiftValue = "AmazonRedshift";
+        private const string Db2Value = "Db2";
+        private const string DrillValue = "Drill";
+        private const string GoogleBigQueryValue = "GoogleBigQuery";
+        private const string GreenplumValue = "Greenplum";
+        private const string HbaseValue = "Hbase";
+        private const string HiveValue = "Hive";
+        private const string ImpalaValue = "Impala";
+        private const string InformixValue = "Informix";
+        private const string MariaDbValue = "MariaDb";
+        private const string MicrosoftAccessValue = "MicrosoftAccess";
+        private const string MySqlValue = "MySql";
+        private const string NetezzaValue = "Netezza";
+        private const string OracleValue = "Oracle";
+        private const string PhoenixValue = "Phoenix";
+        private const string PostgreSqlValue = "PostgreSql";
+        private const string PrestoValue = "Presto";
+        private const string SapOpenHubValue = "SapOpenHub";
+        private const string SapBwValue = "SapBw";
+        private const string SapHanaValue = "SapHana";
+        private const string SapTableValue = "SapTable";
+        private const string SparkValue = "Spark";
+        private const string SqlServerValue = "SqlServer";
+        private const string SybaseValue = "Sybase";
+        private const string TeradataValue = "Teradata";
+        private const string VerticaValue = "Vertica";
+        private const string CassandraValue = "Cassandra";
+        private const string CouchbaseValue = "Couchbase";
+        private const string MongoDbV2Value = "MongoDbV2";
+        private const string MongoDbAtlasValue = "MongoDbAtlas";
+        private const string AmazonS3CompatibleValue = "AmazonS3Compatible";
+        private const string FileServerValue = "FileServer";
+        private const string FtpServerValue = "FtpServer";
+        private const string GoogleCloudStorageValue = "GoogleCloudStorage";
+        private const string HdfsValue = "Hdfs";
+        private const string OracleCloudStorageValue = "OracleCloudStorage";
+        private const string SftpValue = "Sftp";
+        private const string GenericHttpValue = "GenericHttp";
+        private const string ODataRestValue = "ODataRest";
+        private const string OdbcValue = "Odbc";
+        private const string GenericRestValue = "GenericRest";
+        private const string AmazonMwsValue = "AmazonMws";
+        private const string ConcurValue = "Concur";
+        private const string DynamicsValue = "Dynamics";
+        private const string DynamicsAxValue = "DynamicsAx";
+        private const string DynamicsCrmValue = "DynamicsCrm";
+        private const string GoogleAdWordsValue = "GoogleAdWords";
+        private const string HubspotValue = "Hubspot";
+        private const string JiraValue = "Jira";
+        private const string MagentoValue = "Magento";
+        private const string MarketoValue = "Marketo";
+        private const string Office365Value = "Office365";
+        private const string EloquaValue = "Eloqua";
+        private const string ResponsysValue = "Responsys";
+        private const string OracleServiceCloudValue = "OracleServiceCloud";
+        private const string PayPalValue = "PayPal";
+        private const string QuickBooksValue = "QuickBooks";
+        private const string SalesforceValue = "Salesforce";
+        private const string SalesforceServiceCloudValue = "SalesforceServiceCloud";
+        private const string SalesforceMarketingCloudValue = "SalesforceMarketingCloud";
+        private const string SapCloudForCustomerValue = "SapCloudForCustomer";
+        private const string SapEccValue = "SapEcc";
+        private const string ServiceNowValue = "ServiceNow";
+        private const string SharePointOnlineListValue = "SharePointOnlineList";
+        private const string ShopifyValue = "Shopify";
+        private const string SquareValue = "Square";
+        private const string WebTableValue = "WebTable";
+        private const string XeroValue = "Xero";
+        private const string ZohoValue = "Zoho";
+        private const string GenericContainerRegistryValue = "GenericContainerRegistry";
+        private const string OpenAIValue = "OpenAI";
+        private const string SerpValue = "Serp";
+        private const string BingLLMSearchValue = "BingLLMSearch";
+        private const string ServerlessValue = "Serverless";
+        private const string AIServicesValue = "AIServices";
 
         /// <summary> PythonFeed. </summary>
         public static MachineLearningConnectionCategory PythonFeed { get; } = new MachineLearningConnectionCategory(PythonFeedValue);
@@ -71,11 +157,183 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static MachineLearningConnectionCategory CognitiveService { get; } = new MachineLearningConnectionCategory(CognitiveServiceValue);
         /// <summary> CustomKeys. </summary>
         public static MachineLearningConnectionCategory CustomKeys { get; } = new MachineLearningConnectionCategory(CustomKeysValue);
+        /// <summary> AzureBlob. </summary>
+        public static MachineLearningConnectionCategory AzureBlob { get; } = new MachineLearningConnectionCategory(AzureBlobValue);
+        /// <summary> AzureOneLake. </summary>
+        public static MachineLearningConnectionCategory AzureOneLake { get; } = new MachineLearningConnectionCategory(AzureOneLakeValue);
+        /// <summary> CosmosDb. </summary>
+        public static MachineLearningConnectionCategory CosmosDb { get; } = new MachineLearningConnectionCategory(CosmosDbValue);
+        /// <summary> CosmosDbMongoDbApi. </summary>
+        public static MachineLearningConnectionCategory CosmosDbMongoDbApi { get; } = new MachineLearningConnectionCategory(CosmosDbMongoDbApiValue);
+        /// <summary> AzureDataExplorer. </summary>
+        public static MachineLearningConnectionCategory AzureDataExplorer { get; } = new MachineLearningConnectionCategory(AzureDataExplorerValue);
+        /// <summary> AzureMariaDb. </summary>
+        public static MachineLearningConnectionCategory AzureMariaDb { get; } = new MachineLearningConnectionCategory(AzureMariaDbValue);
+        /// <summary> AzureDatabricksDeltaLake. </summary>
+        public static MachineLearningConnectionCategory AzureDatabricksDeltaLake { get; } = new MachineLearningConnectionCategory(AzureDatabricksDeltaLakeValue);
+        /// <summary> AzureSqlMi. </summary>
+        public static MachineLearningConnectionCategory AzureSqlMi { get; } = new MachineLearningConnectionCategory(AzureSqlMiValue);
+        /// <summary> AzureTableStorage. </summary>
+        public static MachineLearningConnectionCategory AzureTableStorage { get; } = new MachineLearningConnectionCategory(AzureTableStorageValue);
+        /// <summary> AmazonRdsForOracle. </summary>
+        public static MachineLearningConnectionCategory AmazonRdsForOracle { get; } = new MachineLearningConnectionCategory(AmazonRdsForOracleValue);
+        /// <summary> AmazonRdsForSqlServer. </summary>
+        public static MachineLearningConnectionCategory AmazonRdsForSqlServer { get; } = new MachineLearningConnectionCategory(AmazonRdsForSqlServerValue);
+        /// <summary> AmazonRedshift. </summary>
+        public static MachineLearningConnectionCategory AmazonRedshift { get; } = new MachineLearningConnectionCategory(AmazonRedshiftValue);
+        /// <summary> Db2. </summary>
+        public static MachineLearningConnectionCategory Db2 { get; } = new MachineLearningConnectionCategory(Db2Value);
+        /// <summary> Drill. </summary>
+        public static MachineLearningConnectionCategory Drill { get; } = new MachineLearningConnectionCategory(DrillValue);
+        /// <summary> GoogleBigQuery. </summary>
+        public static MachineLearningConnectionCategory GoogleBigQuery { get; } = new MachineLearningConnectionCategory(GoogleBigQueryValue);
+        /// <summary> Greenplum. </summary>
+        public static MachineLearningConnectionCategory Greenplum { get; } = new MachineLearningConnectionCategory(GreenplumValue);
+        /// <summary> Hbase. </summary>
+        public static MachineLearningConnectionCategory Hbase { get; } = new MachineLearningConnectionCategory(HbaseValue);
+        /// <summary> Hive. </summary>
+        public static MachineLearningConnectionCategory Hive { get; } = new MachineLearningConnectionCategory(HiveValue);
+        /// <summary> Impala. </summary>
+        public static MachineLearningConnectionCategory Impala { get; } = new MachineLearningConnectionCategory(ImpalaValue);
+        /// <summary> Informix. </summary>
+        public static MachineLearningConnectionCategory Informix { get; } = new MachineLearningConnectionCategory(InformixValue);
+        /// <summary> MariaDb. </summary>
+        public static MachineLearningConnectionCategory MariaDb { get; } = new MachineLearningConnectionCategory(MariaDbValue);
+        /// <summary> MicrosoftAccess. </summary>
+        public static MachineLearningConnectionCategory MicrosoftAccess { get; } = new MachineLearningConnectionCategory(MicrosoftAccessValue);
+        /// <summary> MySql. </summary>
+        public static MachineLearningConnectionCategory MySql { get; } = new MachineLearningConnectionCategory(MySqlValue);
+        /// <summary> Netezza. </summary>
+        public static MachineLearningConnectionCategory Netezza { get; } = new MachineLearningConnectionCategory(NetezzaValue);
+        /// <summary> Oracle. </summary>
+        public static MachineLearningConnectionCategory Oracle { get; } = new MachineLearningConnectionCategory(OracleValue);
+        /// <summary> Phoenix. </summary>
+        public static MachineLearningConnectionCategory Phoenix { get; } = new MachineLearningConnectionCategory(PhoenixValue);
+        /// <summary> PostgreSql. </summary>
+        public static MachineLearningConnectionCategory PostgreSql { get; } = new MachineLearningConnectionCategory(PostgreSqlValue);
+        /// <summary> Presto. </summary>
+        public static MachineLearningConnectionCategory Presto { get; } = new MachineLearningConnectionCategory(PrestoValue);
+        /// <summary> SapOpenHub. </summary>
+        public static MachineLearningConnectionCategory SapOpenHub { get; } = new MachineLearningConnectionCategory(SapOpenHubValue);
+        /// <summary> SapBw. </summary>
+        public static MachineLearningConnectionCategory SapBw { get; } = new MachineLearningConnectionCategory(SapBwValue);
+        /// <summary> SapHana. </summary>
+        public static MachineLearningConnectionCategory SapHana { get; } = new MachineLearningConnectionCategory(SapHanaValue);
+        /// <summary> SapTable. </summary>
+        public static MachineLearningConnectionCategory SapTable { get; } = new MachineLearningConnectionCategory(SapTableValue);
+        /// <summary> Spark. </summary>
+        public static MachineLearningConnectionCategory Spark { get; } = new MachineLearningConnectionCategory(SparkValue);
+        /// <summary> SqlServer. </summary>
+        public static MachineLearningConnectionCategory SqlServer { get; } = new MachineLearningConnectionCategory(SqlServerValue);
+        /// <summary> Sybase. </summary>
+        public static MachineLearningConnectionCategory Sybase { get; } = new MachineLearningConnectionCategory(SybaseValue);
+        /// <summary> Teradata. </summary>
+        public static MachineLearningConnectionCategory Teradata { get; } = new MachineLearningConnectionCategory(TeradataValue);
+        /// <summary> Vertica. </summary>
+        public static MachineLearningConnectionCategory Vertica { get; } = new MachineLearningConnectionCategory(VerticaValue);
+        /// <summary> Cassandra. </summary>
+        public static MachineLearningConnectionCategory Cassandra { get; } = new MachineLearningConnectionCategory(CassandraValue);
+        /// <summary> Couchbase. </summary>
+        public static MachineLearningConnectionCategory Couchbase { get; } = new MachineLearningConnectionCategory(CouchbaseValue);
+        /// <summary> MongoDbV2. </summary>
+        public static MachineLearningConnectionCategory MongoDbV2 { get; } = new MachineLearningConnectionCategory(MongoDbV2Value);
+        /// <summary> MongoDbAtlas. </summary>
+        public static MachineLearningConnectionCategory MongoDbAtlas { get; } = new MachineLearningConnectionCategory(MongoDbAtlasValue);
+        /// <summary> AmazonS3Compatible. </summary>
+        public static MachineLearningConnectionCategory AmazonS3Compatible { get; } = new MachineLearningConnectionCategory(AmazonS3CompatibleValue);
+        /// <summary> FileServer. </summary>
+        public static MachineLearningConnectionCategory FileServer { get; } = new MachineLearningConnectionCategory(FileServerValue);
+        /// <summary> FtpServer. </summary>
+        public static MachineLearningConnectionCategory FtpServer { get; } = new MachineLearningConnectionCategory(FtpServerValue);
+        /// <summary> GoogleCloudStorage. </summary>
+        public static MachineLearningConnectionCategory GoogleCloudStorage { get; } = new MachineLearningConnectionCategory(GoogleCloudStorageValue);
+        /// <summary> Hdfs. </summary>
+        public static MachineLearningConnectionCategory Hdfs { get; } = new MachineLearningConnectionCategory(HdfsValue);
+        /// <summary> OracleCloudStorage. </summary>
+        public static MachineLearningConnectionCategory OracleCloudStorage { get; } = new MachineLearningConnectionCategory(OracleCloudStorageValue);
+        /// <summary> Sftp. </summary>
+        public static MachineLearningConnectionCategory Sftp { get; } = new MachineLearningConnectionCategory(SftpValue);
+        /// <summary> GenericHttp. </summary>
+        public static MachineLearningConnectionCategory GenericHttp { get; } = new MachineLearningConnectionCategory(GenericHttpValue);
+        /// <summary> ODataRest. </summary>
+        public static MachineLearningConnectionCategory ODataRest { get; } = new MachineLearningConnectionCategory(ODataRestValue);
+        /// <summary> Odbc. </summary>
+        public static MachineLearningConnectionCategory Odbc { get; } = new MachineLearningConnectionCategory(OdbcValue);
+        /// <summary> GenericRest. </summary>
+        public static MachineLearningConnectionCategory GenericRest { get; } = new MachineLearningConnectionCategory(GenericRestValue);
+        /// <summary> AmazonMws. </summary>
+        public static MachineLearningConnectionCategory AmazonMws { get; } = new MachineLearningConnectionCategory(AmazonMwsValue);
+        /// <summary> Concur. </summary>
+        public static MachineLearningConnectionCategory Concur { get; } = new MachineLearningConnectionCategory(ConcurValue);
+        /// <summary> Dynamics. </summary>
+        public static MachineLearningConnectionCategory Dynamics { get; } = new MachineLearningConnectionCategory(DynamicsValue);
+        /// <summary> DynamicsAx. </summary>
+        public static MachineLearningConnectionCategory DynamicsAx { get; } = new MachineLearningConnectionCategory(DynamicsAxValue);
+        /// <summary> DynamicsCrm. </summary>
+        public static MachineLearningConnectionCategory DynamicsCrm { get; } = new MachineLearningConnectionCategory(DynamicsCrmValue);
+        /// <summary> GoogleAdWords. </summary>
+        public static MachineLearningConnectionCategory GoogleAdWords { get; } = new MachineLearningConnectionCategory(GoogleAdWordsValue);
+        /// <summary> Hubspot. </summary>
+        public static MachineLearningConnectionCategory Hubspot { get; } = new MachineLearningConnectionCategory(HubspotValue);
+        /// <summary> Jira. </summary>
+        public static MachineLearningConnectionCategory Jira { get; } = new MachineLearningConnectionCategory(JiraValue);
+        /// <summary> Magento. </summary>
+        public static MachineLearningConnectionCategory Magento { get; } = new MachineLearningConnectionCategory(MagentoValue);
+        /// <summary> Marketo. </summary>
+        public static MachineLearningConnectionCategory Marketo { get; } = new MachineLearningConnectionCategory(MarketoValue);
+        /// <summary> Office365. </summary>
+        public static MachineLearningConnectionCategory Office365 { get; } = new MachineLearningConnectionCategory(Office365Value);
+        /// <summary> Eloqua. </summary>
+        public static MachineLearningConnectionCategory Eloqua { get; } = new MachineLearningConnectionCategory(EloquaValue);
+        /// <summary> Responsys. </summary>
+        public static MachineLearningConnectionCategory Responsys { get; } = new MachineLearningConnectionCategory(ResponsysValue);
+        /// <summary> OracleServiceCloud. </summary>
+        public static MachineLearningConnectionCategory OracleServiceCloud { get; } = new MachineLearningConnectionCategory(OracleServiceCloudValue);
+        /// <summary> PayPal. </summary>
+        public static MachineLearningConnectionCategory PayPal { get; } = new MachineLearningConnectionCategory(PayPalValue);
+        /// <summary> QuickBooks. </summary>
+        public static MachineLearningConnectionCategory QuickBooks { get; } = new MachineLearningConnectionCategory(QuickBooksValue);
+        /// <summary> Salesforce. </summary>
+        public static MachineLearningConnectionCategory Salesforce { get; } = new MachineLearningConnectionCategory(SalesforceValue);
+        /// <summary> SalesforceServiceCloud. </summary>
+        public static MachineLearningConnectionCategory SalesforceServiceCloud { get; } = new MachineLearningConnectionCategory(SalesforceServiceCloudValue);
+        /// <summary> SalesforceMarketingCloud. </summary>
+        public static MachineLearningConnectionCategory SalesforceMarketingCloud { get; } = new MachineLearningConnectionCategory(SalesforceMarketingCloudValue);
+        /// <summary> SapCloudForCustomer. </summary>
+        public static MachineLearningConnectionCategory SapCloudForCustomer { get; } = new MachineLearningConnectionCategory(SapCloudForCustomerValue);
+        /// <summary> SapEcc. </summary>
+        public static MachineLearningConnectionCategory SapEcc { get; } = new MachineLearningConnectionCategory(SapEccValue);
+        /// <summary> ServiceNow. </summary>
+        public static MachineLearningConnectionCategory ServiceNow { get; } = new MachineLearningConnectionCategory(ServiceNowValue);
+        /// <summary> SharePointOnlineList. </summary>
+        public static MachineLearningConnectionCategory SharePointOnlineList { get; } = new MachineLearningConnectionCategory(SharePointOnlineListValue);
+        /// <summary> Shopify. </summary>
+        public static MachineLearningConnectionCategory Shopify { get; } = new MachineLearningConnectionCategory(ShopifyValue);
+        /// <summary> Square. </summary>
+        public static MachineLearningConnectionCategory Square { get; } = new MachineLearningConnectionCategory(SquareValue);
+        /// <summary> WebTable. </summary>
+        public static MachineLearningConnectionCategory WebTable { get; } = new MachineLearningConnectionCategory(WebTableValue);
+        /// <summary> Xero. </summary>
+        public static MachineLearningConnectionCategory Xero { get; } = new MachineLearningConnectionCategory(XeroValue);
+        /// <summary> Zoho. </summary>
+        public static MachineLearningConnectionCategory Zoho { get; } = new MachineLearningConnectionCategory(ZohoValue);
+        /// <summary> GenericContainerRegistry. </summary>
+        public static MachineLearningConnectionCategory GenericContainerRegistry { get; } = new MachineLearningConnectionCategory(GenericContainerRegistryValue);
+        /// <summary> OpenAI. </summary>
+        public static MachineLearningConnectionCategory OpenAI { get; } = new MachineLearningConnectionCategory(OpenAIValue);
+        /// <summary> Serp. </summary>
+        public static MachineLearningConnectionCategory Serp { get; } = new MachineLearningConnectionCategory(SerpValue);
+        /// <summary> BingLLMSearch. </summary>
+        public static MachineLearningConnectionCategory BingLLMSearch { get; } = new MachineLearningConnectionCategory(BingLLMSearchValue);
+        /// <summary> Serverless. </summary>
+        public static MachineLearningConnectionCategory Serverless { get; } = new MachineLearningConnectionCategory(ServerlessValue);
+        /// <summary> AIServices. </summary>
+        public static MachineLearningConnectionCategory AIServices { get; } = new MachineLearningConnectionCategory(AIServicesValue);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are the same. </summary>
         public static bool operator ==(MachineLearningConnectionCategory left, MachineLearningConnectionCategory right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningConnectionCategory"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningConnectionCategory left, MachineLearningConnectionCategory right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningConnectionCategory"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningConnectionCategory"/>. </summary>
         public static implicit operator MachineLearningConnectionCategory(string value) => new MachineLearningConnectionCategory(value);
 
         /// <inheritdoc />
@@ -86,7 +344,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

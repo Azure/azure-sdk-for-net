@@ -35,10 +35,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies a user-assigned identity by client ID. For system-assigned, do not set this field. </summary>
+        [WirePath("clientId")]
         public Guid? ClientId { get; set; }
         /// <summary> Specifies a user-assigned identity by object ID. For system-assigned, do not set this field. </summary>
+        [WirePath("objectId")]
         public Guid? ObjectId { get; set; }
         /// <summary> Specifies a user-assigned identity by ARM resource ID. For system-assigned, do not set this field. </summary>
+        [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; set; }
     }
 }

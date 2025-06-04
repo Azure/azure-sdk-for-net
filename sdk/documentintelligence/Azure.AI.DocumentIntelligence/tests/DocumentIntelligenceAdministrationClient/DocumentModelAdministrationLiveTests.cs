@@ -28,7 +28,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         [RecordedTest]
         [TestCaseSource(nameof(s_buildDocumentModelTestCases))]
-        public async Task BuildDocumentModelWithAzureBlobContentSource(DocumentBuildMode buildMode)
+        public async Task BuildDocumentModelWithBlobContentSource(DocumentBuildMode buildMode)
         {
             if (buildMode == DocumentBuildMode.Neural && Recording.Mode == RecordedTestMode.Live)
             {
@@ -44,11 +44,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var containerUrl = new Uri(TestEnvironment.BlobContainerSasUrl);
             var prefix = "subfolder";
-            var source = new AzureBlobContentSource(containerUrl) { Prefix = prefix };
+            var source = new BlobContentSource(containerUrl) { Prefix = prefix };
 
-            var content = new BuildDocumentModelContent(modelId, buildMode)
+            var options = new BuildDocumentModelOptions(modelId, buildMode, source)
             {
-                AzureBlobSource = source,
                 Description = description,
                 Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
             };
@@ -57,7 +56,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildDocumentModelAsync(WaitUntil.Started, content);
+                operation = await client.BuildDocumentModelAsync(WaitUntil.Started, options);
 
                 await (buildMode == DocumentBuildMode.Neural
                     ? operation.WaitForCompletionAsync(TimeSpan.FromMinutes(1), CancellationToken.None)
@@ -83,15 +82,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
             Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
-            Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
+            Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
 
-            Assert.That(model.AzureBlobSource, Is.Null);
-            Assert.That(model.AzureBlobFileListSource, Is.Null);
+            Assert.That(model.BlobSource, Is.Null);
+            Assert.That(model.BlobFileListSource, Is.Null);
 
-            Assert.That(model.DocTypes.Count, Is.EqualTo(1));
-            Assert.That(model.DocTypes.ContainsKey(modelId));
+            Assert.That(model.DocumentTypes.Count, Is.EqualTo(1));
+            Assert.That(model.DocumentTypes.ContainsKey(modelId));
 
-            DocumentTypeDetails docType = model.DocTypes[modelId];
+            DocumentTypeDetails docType = model.DocumentTypes[modelId];
 
             Assert.That(docType.Description, Is.Null);
             Assert.That(docType.BuildMode, Is.EqualTo(buildMode));
@@ -122,8 +121,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             DocumentFieldSchema merchantSchema = docType.FieldSchema["Merchant"];
             DocumentFieldSchema quantitySchema = docType.FieldSchema["Quantity"];
 
-            Assert.That(merchantSchema.Type, Is.EqualTo(DocumentFieldType.String));
-            Assert.That(quantitySchema.Type, Is.EqualTo(DocumentFieldType.Double));
+            Assert.That(merchantSchema.FieldType, Is.EqualTo(DocumentFieldType.String));
+            Assert.That(quantitySchema.FieldType, Is.EqualTo(DocumentFieldType.Double));
         }
 
         [RecordedTest]
@@ -134,14 +133,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             var containerUrl = new Uri(TestEnvironment.BlobContainerSasUrl);
             var prefix = "testfolder"; // folder exists but most training files are missing
-            var source = new AzureBlobContentSource(containerUrl) { Prefix = prefix };
+            var source = new BlobContentSource(containerUrl) { Prefix = prefix };
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, source);
 
-            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
-            {
-                AzureBlobSource = source
-            };
-
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, content));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.BuildDocumentModelAsync(WaitUntil.Started, options));
 
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
@@ -161,9 +156,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            var authorizeCopyContent = new AuthorizeCopyContent(modelId, description, tags, serializedAdditionalRawData: null);
+            var authorizeCopyOptions = new AuthorizeModelCopyOptions(modelId)
+            {
+                Description = description
+            };
 
-            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyContent);
+            foreach (var tag in tags)
+            {
+                authorizeCopyOptions.Tags.Add(tag);
+            }
+
+            ModelCopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(authorizeCopyOptions);
 
             Operation<DocumentModelDetails> operation = null;
 
@@ -194,8 +197,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
             Assert.That(model.Tags, Is.EquivalentTo(tags));
 
-            Assert.That(model.AzureBlobSource, Is.Null);
-            Assert.That(model.AzureBlobFileListSource, Is.Null);
+            Assert.That(model.BlobSource, Is.Null);
+            Assert.That(model.BlobFileListSource, Is.Null);
 
             // TODO: reenable validation once the following service issue has been fixed: https://github.com/Azure/azure-sdk-for-net/issues/37172
             // DocumentAssert.AreEquivalent(sourceModel.DocTypes, model.DocTypes);
@@ -216,14 +219,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             // Note: this will fail once we implement model caching. We'll need to set different containers to make it work.
             await using var disposableModel0 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
             await using var disposableModel1 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
+            await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync();
 
-            var componentModels = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails(disposableModel0.ModelId),
-                new ComponentDocumentModelDetails(disposableModel1.ModelId)
+                { "model0", new DocumentTypeDetails() { ModelId = disposableModel0.ModelId } },
+                { "model1", new DocumentTypeDetails() { ModelId = disposableModel1.ModelId } }
             };
 
-            var content = new ComposeDocumentModelContent(modelId, componentModels)
+            var options = new ComposeModelOptions(modelId, disposableClassifier.ClassifierId, docTypes)
             {
                 Description = description,
                 Tags = { { "tag1", "value1" }, { "tag2", "value2" } }
@@ -233,7 +237,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.ComposeModelAsync(WaitUntil.Completed, content);
+                operation = await client.ComposeModelAsync(WaitUntil.Completed, options);
             }
             finally
             {
@@ -257,17 +261,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
             // Add a 4-hour tolerance because the model could have been cached before this test.
             Assert.That(model.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
             Assert.That(model.ExpiresOn, Is.GreaterThan(model.CreatedOn));
-            Assert.That(model.Tags, Is.EquivalentTo(content.Tags));
+            Assert.That(model.Tags, Is.EquivalentTo(options.Tags));
 
-            Assert.That(model.AzureBlobSource, Is.Null);
-            Assert.That(model.AzureBlobFileListSource, Is.Null);
+            Assert.That(model.BlobSource, Is.Null);
+            Assert.That(model.BlobFileListSource, Is.Null);
 
-            Assert.That(model.DocTypes.Count, Is.EqualTo(2));
+            Assert.That(model.DocumentTypes.Count, Is.EqualTo(2));
 
-            DocumentTypeDetails expectedDocType0 = componentModel0.DocTypes[componentModel0.ModelId];
-            DocumentTypeDetails expectedDocType1 = componentModel1.DocTypes[componentModel1.ModelId];
-            DocumentTypeDetails docType0 = model.DocTypes[componentModel0.ModelId];
-            DocumentTypeDetails docType1 = model.DocTypes[componentModel1.ModelId];
+            DocumentTypeDetails expectedDocType0 = componentModel0.DocumentTypes[componentModel0.ModelId];
+            DocumentTypeDetails expectedDocType1 = componentModel1.DocumentTypes[componentModel1.ModelId];
+            DocumentTypeDetails docType0 = model.DocumentTypes["model0"];
+            DocumentTypeDetails docType1 = model.DocumentTypes["model1"];
 
             DocumentAssert.AreEqual(expectedDocType0, docType0);
             DocumentAssert.AreEqual(expectedDocType1, docType1);
@@ -279,15 +283,15 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
 
-            var componentModels = new List<ComponentDocumentModelDetails>()
+            var docTypes = new Dictionary<string, DocumentTypeDetails>()
             {
-                new ComponentDocumentModelDetails("00000000-0000-0000-0000-000000000000"),
-                new ComponentDocumentModelDetails("00000000-0000-0000-0000-000000000001")
+                { "model0", new DocumentTypeDetails() { ModelId = "00000000-0000-0000-0000-000000000000" } },
+                { "model1", new DocumentTypeDetails() { ModelId = "00000000-0000-0000-0000-000000000001" } }
             };
 
-            var content = new ComposeDocumentModelContent(modelId, componentModels);
+            var options = new ComposeModelOptions(modelId, classifierId: "00000000-0000-0000-0000-000000000002", docTypes);
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, content));
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.ComposeModelAsync(WaitUntil.Started, options));
 
             Assert.That(ex.ErrorCode, Is.EqualTo("InvalidRequest"));
         }
@@ -373,9 +377,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 Assert.That(model.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
                 Assert.That(model.Tags, Is.EquivalentTo(expected.Tags));
 
-                Assert.That(model.AzureBlobSource, Is.Null);
-                Assert.That(model.AzureBlobFileListSource, Is.Null);
-                Assert.That(model.DocTypes, Is.Empty);
+                Assert.That(model.BlobSource, Is.Null);
+                Assert.That(model.BlobFileListSource, Is.Null);
+                Assert.That(model.DocumentTypes, Is.Empty);
             }
         }
 
@@ -413,16 +417,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
-            var content = new AuthorizeCopyContent(modelId);
+            var options = new AuthorizeModelCopyOptions(modelId);
 
-            CopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(content);
+            ModelCopyAuthorization copyAuthorization = await client.AuthorizeModelCopyAsync(options);
 
             Assert.That(copyAuthorization.TargetModelId, Is.EqualTo(modelId));
+            Assert.That(copyAuthorization.TargetModelLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
             Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo(TestEnvironment.ResourceId));
             Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
             Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
             Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
-            Assert.That(copyAuthorization.ExpirationDateTime, Is.GreaterThan(Recording.UtcNow));
+            Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
         }
     }
 }

@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.ServiceBus.Models
 {
     public partial class MessageCountDetails : IUtf8JsonSerializable, IJsonModel<MessageCountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageCountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MessageCountDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MessageCountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MessageCountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 throw new FormatException($"The model {nameof(MessageCountDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ActiveMessageCount))
             {
                 writer.WritePropertyName("activeMessageCount"u8);
@@ -60,14 +68,13 @@ namespace Azure.ResourceManager.ServiceBus.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MessageCountDetails IJsonModel<MessageCountDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,7 +91,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         internal static MessageCountDetails DeserializeMessageCountDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,71 +178,76 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActiveMessageCount), out propertyOverride);
-            if (Optional.IsDefined(ActiveMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  activeMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ActiveMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  activeMessageCount: ");
                     builder.AppendLine($"'{ActiveMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeadLetterMessageCount), out propertyOverride);
-            if (Optional.IsDefined(DeadLetterMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  deadLetterMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeadLetterMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  deadLetterMessageCount: ");
                     builder.AppendLine($"'{DeadLetterMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ScheduledMessageCount), out propertyOverride);
-            if (Optional.IsDefined(ScheduledMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  scheduledMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ScheduledMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  scheduledMessageCount: ");
                     builder.AppendLine($"'{ScheduledMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferMessageCount), out propertyOverride);
-            if (Optional.IsDefined(TransferMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  transferMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransferMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  transferMessageCount: ");
                     builder.AppendLine($"'{TransferMessageCount.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TransferDeadLetterMessageCount), out propertyOverride);
-            if (Optional.IsDefined(TransferDeadLetterMessageCount) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  transferDeadLetterMessageCount: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TransferDeadLetterMessageCount))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  transferDeadLetterMessageCount: ");
                     builder.AppendLine($"'{TransferDeadLetterMessageCount.Value.ToString()}'");
                 }
             }
@@ -251,7 +263,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceBusContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -267,7 +279,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMessageCountDetails(document.RootElement, options);
                     }
                 default:

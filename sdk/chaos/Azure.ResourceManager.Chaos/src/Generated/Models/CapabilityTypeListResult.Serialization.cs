@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Chaos.Models
 {
     internal partial class CapabilityTypeListResult : IUtf8JsonSerializable, IJsonModel<CapabilityTypeListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilityTypeListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilityTypeListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CapabilityTypeListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CapabilityTypeListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,28 +34,17 @@ namespace Azure.ResourceManager.Chaos.Models
                 throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue<ChaosCapabilityTypeData>(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
             {
-                if (NextLink != null)
-                {
-                    writer.WritePropertyName("nextLink"u8);
-                    writer.WriteStringValue(NextLink);
-                }
-                else
-                {
-                    writer.WriteNull("nextLink");
-                }
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,14 +54,13 @@ namespace Azure.ResourceManager.Chaos.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CapabilityTypeListResult IJsonModel<CapabilityTypeListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,28 +77,24 @@ namespace Azure.ResourceManager.Chaos.Models
 
         internal static CapabilityTypeListResult DeserializeCapabilityTypeListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ChaosCapabilityTypeData> value = default;
-            string nextLink = default;
+            IReadOnlyList<ChaosCapabilityMetadataData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ChaosCapabilityTypeData> array = new List<ChaosCapabilityTypeData>();
+                    List<ChaosCapabilityMetadataData> array = new List<ChaosCapabilityMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosCapabilityTypeData.DeserializeChaosCapabilityTypeData(item, options));
+                        array.Add(ChaosCapabilityMetadataData.DeserializeChaosCapabilityMetadataData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,10 +103,9 @@ namespace Azure.ResourceManager.Chaos.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        nextLink = null;
                         continue;
                     }
-                    nextLink = property.Value.GetString();
+                    nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +114,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CapabilityTypeListResult(value ?? new ChangeTrackingList<ChaosCapabilityTypeData>(), nextLink, serializedAdditionalRawData);
+            return new CapabilityTypeListResult(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CapabilityTypeListResult>.Write(ModelReaderWriterOptions options)
@@ -132,7 +124,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CapabilityTypeListResult)} does not support writing '{options.Format}' format.");
             }
@@ -146,7 +138,7 @@ namespace Azure.ResourceManager.Chaos.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCapabilityTypeListResult(document.RootElement, options);
                     }
                 default:

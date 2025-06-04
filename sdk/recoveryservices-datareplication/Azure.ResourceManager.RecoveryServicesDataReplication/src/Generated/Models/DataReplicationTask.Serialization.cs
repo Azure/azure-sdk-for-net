@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class DataReplicationTask : IUtf8JsonSerializable, IJsonModel<DataReplicationTask>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationTask>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataReplicationTask>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataReplicationTask>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 throw new FormatException($"The model {nameof(DataReplicationTask)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(TaskName))
             {
                 writer.WritePropertyName("taskName"u8);
@@ -49,15 +57,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
-                writer.WriteObjectValue<TaskModelCustomProperties>(CustomProperties, options);
+                writer.WriteObjectValue(CustomProperties, options);
             }
-            if (Optional.IsCollectionDefined(ChildrenWorkflows))
+            if (Optional.IsCollectionDefined(ChildrenJobs))
             {
-                writer.WritePropertyName("childrenWorkflows"u8);
+                writer.WritePropertyName("childrenJobs"u8);
                 writer.WriteStartArray();
-                foreach (var item in ChildrenWorkflows)
+                foreach (var item in ChildrenJobs)
                 {
-                    writer.WriteObjectValue<DataReplicationWorkflowData>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,14 +77,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataReplicationTask IJsonModel<DataReplicationTask>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static DataReplicationTask DeserializeDataReplicationTask(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,8 +110,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DataReplicationTaskState? state = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
-            TaskModelCustomProperties customProperties = default;
-            IReadOnlyList<DataReplicationWorkflowData> childrenWorkflows = default;
+            DataReplicationTaskCustomProperties customProperties = default;
+            IReadOnlyList<DataReplicationJobData> childrenJobs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,21 +154,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    customProperties = TaskModelCustomProperties.DeserializeTaskModelCustomProperties(property.Value, options);
+                    customProperties = DataReplicationTaskCustomProperties.DeserializeDataReplicationTaskCustomProperties(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("childrenWorkflows"u8))
+                if (property.NameEquals("childrenJobs"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DataReplicationWorkflowData> array = new List<DataReplicationWorkflowData>();
+                    List<DataReplicationJobData> array = new List<DataReplicationJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataReplicationWorkflowData.DeserializeDataReplicationWorkflowData(item, options));
+                        array.Add(DataReplicationJobData.DeserializeDataReplicationJobData(item, options));
                     }
-                    childrenWorkflows = array;
+                    childrenJobs = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 startTime,
                 endTime,
                 customProperties,
-                childrenWorkflows ?? new ChangeTrackingList<DataReplicationWorkflowData>(),
+                childrenJobs ?? new ChangeTrackingList<DataReplicationJobData>(),
                 serializedAdditionalRawData);
         }
 
@@ -187,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationTask)} does not support writing '{options.Format}' format.");
             }
@@ -201,7 +208,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationTask(document.RootElement, options);
                     }
                 default:

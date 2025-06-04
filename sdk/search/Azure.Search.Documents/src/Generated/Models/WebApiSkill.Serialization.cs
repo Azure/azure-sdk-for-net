@@ -95,7 +95,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(AuthIdentity);
+                    writer.WriteObjectValue(AuthIdentity);
                 }
                 else
                 {
@@ -142,6 +142,13 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            if (element.TryGetProperty("@odata.type", out JsonElement discriminator))
+            {
+                switch (discriminator.GetString())
+                {
+                    case "#Microsoft.Skills.Custom.ChatCompletionSkill": return ChatCompletionSkill.DeserializeChatCompletionSkill(element);
+                }
+            }
             string uri = default;
             IDictionary<string, string> httpHeaders = default;
             string httpMethod = default;
@@ -150,7 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? degreeOfParallelism = default;
             ResourceIdentifier authResourceId = default;
             SearchIndexerDataIdentity authIdentity = default;
-            string odataType = default;
+            string odataType = "#Microsoft.Skills.Custom.WebApiSkill";
             string name = default;
             string description = default;
             string context = default;
@@ -295,15 +302,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new WebApiSkill FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWebApiSkill(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WebApiSkill>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

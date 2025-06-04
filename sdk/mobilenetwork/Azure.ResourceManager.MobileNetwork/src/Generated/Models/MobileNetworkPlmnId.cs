@@ -75,8 +75,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Mobile country code (MCC). </summary>
+        [WirePath("mcc")]
         public string Mcc { get; set; }
         /// <summary> Mobile network code (MNC). </summary>
+        [WirePath("mnc")]
         public string Mnc { get; set; }
     }
 }

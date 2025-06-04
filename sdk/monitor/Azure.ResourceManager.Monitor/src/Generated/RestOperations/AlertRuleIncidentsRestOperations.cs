@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string ruleName, string incidentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.insights/alertrules/", false);
+            uri.AppendPath(ruleName, true);
+            uri.AppendPath("/incidents/", false);
+            uri.AppendPath(incidentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string ruleName, string incidentName)
         {
             var message = _pipeline.CreateMessage();
@@ -80,7 +96,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorIncident value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorIncident.DeserializeMonitorIncident(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,13 +127,28 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorIncident value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorIncident.DeserializeMonitorIncident(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAlertRuleRequestUri(string subscriptionId, string resourceGroupName, string ruleName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/microsoft.insights/alertrules/", false);
+            uri.AppendPath(ruleName, true);
+            uri.AppendPath("/incidents", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByAlertRuleRequest(string subscriptionId, string resourceGroupName, string ruleName)
@@ -161,7 +192,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         IncidentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IncidentListResult.DeserializeIncidentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -190,7 +221,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         IncidentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IncidentListResult.DeserializeIncidentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

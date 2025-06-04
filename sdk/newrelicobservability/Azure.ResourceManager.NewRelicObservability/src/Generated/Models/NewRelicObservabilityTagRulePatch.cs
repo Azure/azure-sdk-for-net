@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Set of rules for sending logs for the Monitor resource. </summary>
+        [WirePath("properties.logRules")]
         public NewRelicObservabilityLogRules LogRules { get; set; }
         /// <summary> Set of rules for sending metrics for the Monitor resource. </summary>
+        [WirePath("properties.metricRules")]
         public NewRelicObservabilityMetricRules MetricRules { get; set; }
     }
 }

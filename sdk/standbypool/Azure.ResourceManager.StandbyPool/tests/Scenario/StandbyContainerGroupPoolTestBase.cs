@@ -14,33 +14,35 @@ namespace Azure.ResourceManager.StandbyPool.Tests
 {
     public class StandbyContainerGroupPoolTestBase : StandbyPoolManagementTestBase
     {
-        protected StandbyContainerGroupPoolTestBase(bool isAsync) : base(isAsync)
+        protected StandbyContainerGroupPoolTestBase(bool isAsync) : base(isAsync, AzureLocation.CentralIndia)
         {
         }
 
-        protected StandbyContainerGroupPoolTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode)
+        protected StandbyContainerGroupPoolTestBase(bool isAsync, RecordedTestMode mode) : base(isAsync, mode, AzureLocation.CentralIndia)
         {
         }
 
         protected async Task<StandbyContainerGroupPoolResource> CreateContainerGroupPoolResource(ResourceGroupResource resourceGroup, string standbyContainerGroupPoolName, long maxReadyCapacity, AzureLocation location, GenericResource containerGroupProfile, ResourceIdentifier subnetId)
         {
-            StandbyContainerGroupPoolData input = new StandbyContainerGroupPoolData(location)
+            var ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
             {
-                Location = location,
-                ElasticityProfile = new StandbyContainerGroupPoolElasticityProfile()
-                {
-                    MaxReadyCapacity = maxReadyCapacity,
-                    RefillPolicy = StandbyPoolRefillPolicy.Always,
-                },
-                ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
-                {
-                    SubnetIds = {
+                MaxReadyCapacity = maxReadyCapacity,
+                RefillPolicy = StandbyRefillPolicy.Always,
+            };
+            var ContainerGroupProperties = new StandbyContainerGroupProperties(new StandbyContainerGroupProfile(containerGroupProfile.Id))
+            {
+                SubnetIds = {
                         new WritableSubResource()
                         {
                             Id = subnetId,
                         }
                     }
-                }
+            };
+            StandbyContainerGroupPoolProperties properties = new StandbyContainerGroupPoolProperties(ElasticityProfile, ContainerGroupProperties);
+            properties.Zones.Add("1");
+            StandbyContainerGroupPoolData input = new StandbyContainerGroupPoolData(location)
+            {
+                Properties = properties
             };
             StandbyContainerGroupPoolCollection collection = resourceGroup.GetStandbyContainerGroupPools();
             var lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, standbyContainerGroupPoolName, input);

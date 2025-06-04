@@ -8,7 +8,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ca95eb5342d848ab71387be54048c509f9c63b70/specification/maps/data-plane/Render/stable/2022-08-01/render.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/ab064e0047ec560a700d6b501097d99471ad817b/specification/maps/data-plane/Render/stable/2024-04-01/render.json
 title: MapsRenderingClient
 openapi-type: data-plane
 tag: 2.0

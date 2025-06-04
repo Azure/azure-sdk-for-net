@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class AutoHealTriggers : IUtf8JsonSerializable, IJsonModel<AutoHealTriggers>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealTriggers>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealTriggers>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AutoHealTriggers>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,11 +36,10 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue<RequestsBasedTrigger>(Requests, options);
+                writer.WriteObjectValue(Requests, options);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -44,14 +52,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue<StatusCodesBasedTrigger>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue<SlowRequestsBasedTrigger>(SlowRequests, options);
+                writer.WriteObjectValue(SlowRequests, options);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -59,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue<SlowRequestsBasedTrigger>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue<StatusCodesRangeBasedTrigger>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,14 +89,13 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AutoHealTriggers IJsonModel<AutoHealTriggers>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -105,7 +112,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static AutoHealTriggers DeserializeAutoHealTriggers(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -218,45 +225,48 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
-            if (Optional.IsDefined(Requests) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  requests: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Requests))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  requests: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Requests, options, 2, false, "  requests: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateBytesInKB), out propertyOverride);
-            if (Optional.IsDefined(PrivateBytesInKB) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  privateBytesInKB: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PrivateBytesInKB))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  privateBytesInKB: ");
                     builder.AppendLine($"{PrivateBytesInKB.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodes), out propertyOverride);
-            if (Optional.IsCollectionDefined(StatusCodes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (StatusCodes.Any() || hasPropertyOverride)
+                builder.Append("  statusCodes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StatusCodes))
                 {
-                    builder.Append("  statusCodes: ");
-                    if (hasPropertyOverride)
+                    if (StatusCodes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  statusCodes: ");
                         builder.AppendLine("[");
                         foreach (var item in StatusCodes)
                         {
@@ -268,31 +278,33 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequests), out propertyOverride);
-            if (Optional.IsDefined(SlowRequests) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  slowRequests: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SlowRequests))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  slowRequests: ");
                     BicepSerializationHelpers.AppendChildObject(builder, SlowRequests, options, 2, false, "  slowRequests: ");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequestsWithPath), out propertyOverride);
-            if (Optional.IsCollectionDefined(SlowRequestsWithPath) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SlowRequestsWithPath.Any() || hasPropertyOverride)
+                builder.Append("  slowRequestsWithPath: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SlowRequestsWithPath))
                 {
-                    builder.Append("  slowRequestsWithPath: ");
-                    if (hasPropertyOverride)
+                    if (SlowRequestsWithPath.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  slowRequestsWithPath: ");
                         builder.AppendLine("[");
                         foreach (var item in SlowRequestsWithPath)
                         {
@@ -304,17 +316,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodesRange), out propertyOverride);
-            if (Optional.IsCollectionDefined(StatusCodesRange) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (StatusCodesRange.Any() || hasPropertyOverride)
+                builder.Append("  statusCodesRange: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(StatusCodesRange))
                 {
-                    builder.Append("  statusCodesRange: ");
-                    if (hasPropertyOverride)
+                    if (StatusCodesRange.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  statusCodesRange: ");
                         builder.AppendLine("[");
                         foreach (var item in StatusCodesRange)
                         {
@@ -336,7 +349,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -352,7 +365,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutoHealTriggers(document.RootElement, options);
                     }
                 default:

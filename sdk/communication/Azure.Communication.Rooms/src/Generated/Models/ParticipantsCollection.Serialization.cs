@@ -45,7 +45,7 @@ namespace Azure.Communication.Rooms
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ParticipantsCollection FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeParticipantsCollection(document.RootElement);
         }
     }

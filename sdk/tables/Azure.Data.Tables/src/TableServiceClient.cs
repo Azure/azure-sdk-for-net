@@ -273,10 +273,11 @@ namespace Azure.Data.Tables
             var perCallPolicies = _isCosmosEndpoint ? new[] { new CosmosPatchTransformPolicy() } : Array.Empty<HttpPipelinePolicy>();
             var endpointString = _endpoint.AbsoluteUri;
             string secondaryEndpoint = TableConnectionString.GetSecondaryUriFromPrimary(_endpoint)?.AbsoluteUri;
-
+            var audienceScope = (options?.Audience ?? TableAudience.AzurePublicCloud)
+                .GetDefaultScope(_isCosmosEndpoint);
             var pipelineOptions = new HttpPipelineOptions(options)
             {
-                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, TableConstants.StorageScope, options.EnableTenantDiscovery) },
+                PerRetryPolicies = { new TableBearerTokenChallengeAuthorizationPolicy(tokenCredential, audienceScope, options.EnableTenantDiscovery) },
                 ResponseClassifier = new ResponseClassifier(),
                 RequestFailedDetailsParser = new TablesRequestFailedDetailsParser()
             };
@@ -411,7 +412,7 @@ namespace Azure.Data.Tables
                                 new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                                 cancellationToken)
                             .ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -431,7 +432,7 @@ namespace Azure.Data.Tables
                                 new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                                 cancellationToken)
                             .ConfigureAwait(false);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -468,7 +469,7 @@ namespace Azure.Data.Tables
                             null,
                             new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {
@@ -487,7 +488,7 @@ namespace Azure.Data.Tables
                             nextLink,
                             new QueryOptions() { Filter = filter, Select = null, Top = pageSizeHint, Format = _format },
                             cancellationToken);
-                        return Page.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
+                        return Page<TableItem>.FromValues(response.Value.Value, response.Headers.XMsContinuationNextTableName, response.GetRawResponse());
                     }
                     catch (Exception ex)
                     {

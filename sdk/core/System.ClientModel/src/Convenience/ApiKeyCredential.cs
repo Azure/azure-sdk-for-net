@@ -65,7 +65,4 @@ public class ApiKeyCredential
 
         Volatile.Write(ref _key, key);
     }
-
-    /// <summary> Converts a string to an <see cref="ApiKeyCredential"/>. </summary>
-    public static implicit operator ApiKeyCredential(string key) => new(key);
 }

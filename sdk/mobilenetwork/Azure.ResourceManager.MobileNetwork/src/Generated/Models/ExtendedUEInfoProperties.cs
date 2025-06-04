@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> RAT Type. </summary>
         internal RatType RatType { get; set; }
         /// <summary> The timestamp of last UE info read from the packet core (UTC). </summary>
+        [WirePath("lastReadAt")]
         public DateTimeOffset? LastReadOn { get; set; }
     }
 }

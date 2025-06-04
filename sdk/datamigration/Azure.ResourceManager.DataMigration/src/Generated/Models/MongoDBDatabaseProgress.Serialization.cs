@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     public partial class MongoDBDatabaseProgress : IUtf8JsonSerializable, IJsonModel<MongoDBDatabaseProgress>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBDatabaseProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBDatabaseProgress>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MongoDBDatabaseProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBDatabaseProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 throw new FormatException($"The model {nameof(MongoDBDatabaseProgress)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsCollectionDefined(Collections))
             {
                 writer.WritePropertyName("collections"u8);
@@ -33,72 +42,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in Collections)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<MongoDBCollectionProgress>(item.Value, options);
+                    writer.WriteObjectValue(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("bytesCopied"u8);
-            writer.WriteNumberValue(BytesCopied);
-            writer.WritePropertyName("documentsCopied"u8);
-            writer.WriteNumberValue(DocumentsCopied);
-            writer.WritePropertyName("elapsedTime"u8);
-            writer.WriteStringValue(ElapsedTime);
-            writer.WritePropertyName("errors"u8);
-            writer.WriteStartObject();
-            foreach (var item in Errors)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<MongoDBError>(item.Value, options);
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("eventsPending"u8);
-            writer.WriteNumberValue(EventsPending);
-            writer.WritePropertyName("eventsReplayed"u8);
-            writer.WriteNumberValue(EventsReplayed);
-            if (Optional.IsDefined(LastEventOn))
-            {
-                writer.WritePropertyName("lastEventTime"u8);
-                writer.WriteStringValue(LastEventOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastReplayOn))
-            {
-                writer.WritePropertyName("lastReplayTime"u8);
-                writer.WriteStringValue(LastReplayOn.Value, "O");
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(QualifiedName))
-            {
-                writer.WritePropertyName("qualifiedName"u8);
-                writer.WriteStringValue(QualifiedName);
-            }
-            writer.WritePropertyName("resultType"u8);
-            writer.WriteStringValue(ResultType.ToString());
-            writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(State.ToString());
-            writer.WritePropertyName("totalBytes"u8);
-            writer.WriteNumberValue(TotalBytes);
-            writer.WritePropertyName("totalDocuments"u8);
-            writer.WriteNumberValue(TotalDocuments);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MongoDBDatabaseProgress IJsonModel<MongoDBDatabaseProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -115,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 
         internal static MongoDBDatabaseProgress DeserializeMongoDBDatabaseProgress(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -269,7 +216,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MongoDBDatabaseProgress)} does not support writing '{options.Format}' format.");
             }
@@ -283,7 +230,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMongoDBDatabaseProgress(document.RootElement, options);
                     }
                 default:

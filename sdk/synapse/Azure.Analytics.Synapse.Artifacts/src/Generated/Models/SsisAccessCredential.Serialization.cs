@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("userName"u8);
             writer.WriteObjectValue<object>(UserName);
             writer.WritePropertyName("password"u8);
-            writer.WriteObjectValue<SecretBase>(Password);
+            writer.WriteObjectValue(Password);
             writer.WriteEndObject();
         }
 
@@ -61,15 +61,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SsisAccessCredential FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSsisAccessCredential(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SsisAccessCredential>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -77,7 +77,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SsisAccessCredential model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SsisAccessCredential>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SsisAccessCredential Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

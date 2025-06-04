@@ -10,6 +10,8 @@ using Xunit;
 
 namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 {
+    [CollectionDefinition("ManipulatesEnvironmentVariable", DisableParallelization = true)]
+    [Collection("ManipulatesEnvironmentVariable")] // These tests need to manipulate environment variables and must not be run in parallel.
     public class DefaultAzureMonitorOptionsTests
     {
         private const string ConnectionStringEnvironmentVariable = "APPLICATIONINSIGHTS_CONNECTION_STRING";
@@ -29,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Null(azureMonitorOptions.StorageDirectory);
         }
 
-#if !NETFRAMEWORK
+#if NET
         [Fact]
         public void VerifyConfigure_ViaJson()
         {

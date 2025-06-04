@@ -18,12 +18,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue<SymmetricKey>(SymmetricKey);
+                writer.WriteObjectValue(SymmetricKey);
             }
             if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue<X509Thumbprint>(X509Thumbprint);
+                writer.WriteObjectValue(X509Thumbprint);
             }
             if (Optional.IsDefined(Type))
             {
@@ -79,15 +79,15 @@ namespace Azure.IoT.Hub.Service.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AuthenticationMechanism FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAuthenticationMechanism(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AuthenticationMechanism>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

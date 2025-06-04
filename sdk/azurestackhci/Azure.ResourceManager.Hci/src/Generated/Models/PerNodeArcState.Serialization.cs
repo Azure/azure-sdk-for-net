@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.Hci.Models
 {
     public partial class PerNodeArcState : IUtf8JsonSerializable, IJsonModel<PerNodeArcState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerNodeArcState>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PerNodeArcState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PerNodeArcState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PerNodeArcState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +35,6 @@ namespace Azure.ResourceManager.Hci.Models
                 throw new FormatException($"The model {nameof(PerNodeArcState)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -35,6 +44,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 writer.WritePropertyName("arcInstance"u8);
                 writer.WriteStringValue(ArcInstance);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ArcNodeServicePrincipalObjectId))
+            {
+                writer.WritePropertyName("arcNodeServicePrincipalObjectId"u8);
+                writer.WriteStringValue(ArcNodeServicePrincipalObjectId.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -49,14 +63,13 @@ namespace Azure.ResourceManager.Hci.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PerNodeArcState IJsonModel<PerNodeArcState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +86,7 @@ namespace Azure.ResourceManager.Hci.Models
 
         internal static PerNodeArcState DeserializePerNodeArcState(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -81,6 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
             }
             string name = default;
             string arcInstance = default;
+            Guid? arcNodeServicePrincipalObjectId = default;
             NodeArcState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,6 +108,15 @@ namespace Azure.ResourceManager.Hci.Models
                 if (property.NameEquals("arcInstance"u8))
                 {
                     arcInstance = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("arcNodeServicePrincipalObjectId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    arcNodeServicePrincipalObjectId = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -111,7 +134,98 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PerNodeArcState(name, arcInstance, state, serializedAdditionalRawData);
+            return new PerNodeArcState(name, arcInstance, arcNodeServicePrincipalObjectId, state, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
+                {
+                    builder.Append("  name: ");
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcInstance), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  arcInstance: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcInstance))
+                {
+                    builder.Append("  arcInstance: ");
+                    if (ArcInstance.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArcInstance}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArcInstance}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArcNodeServicePrincipalObjectId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  arcNodeServicePrincipalObjectId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ArcNodeServicePrincipalObjectId))
+                {
+                    builder.Append("  arcNodeServicePrincipalObjectId: ");
+                    builder.AppendLine($"'{ArcNodeServicePrincipalObjectId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(State))
+                {
+                    builder.Append("  state: ");
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PerNodeArcState>.Write(ModelReaderWriterOptions options)
@@ -121,7 +235,9 @@ namespace Azure.ResourceManager.Hci.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PerNodeArcState)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +251,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePerNodeArcState(document.RootElement, options);
                     }
                 default:

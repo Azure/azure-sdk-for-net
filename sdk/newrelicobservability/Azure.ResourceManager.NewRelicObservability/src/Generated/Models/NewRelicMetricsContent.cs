@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> User Email. </summary>
+        [WirePath("userEmail")]
         public string UserEmail { get; }
     }
 }

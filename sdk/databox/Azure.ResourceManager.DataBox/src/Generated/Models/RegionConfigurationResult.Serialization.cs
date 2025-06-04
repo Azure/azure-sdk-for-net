@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class RegionConfigurationResult : IUtf8JsonSerializable, IJsonModel<RegionConfigurationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionConfigurationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegionConfigurationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RegionConfigurationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RegionConfigurationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,21 +34,25 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(RegionConfigurationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ScheduleAvailabilityResponse))
             {
                 writer.WritePropertyName("scheduleAvailabilityResponse"u8);
-                writer.WriteObjectValue<ScheduleAvailabilityResponse>(ScheduleAvailabilityResponse, options);
+                writer.WriteObjectValue(ScheduleAvailabilityResponse, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TransportAvailabilityResponse))
             {
                 writer.WritePropertyName("transportAvailabilityResponse"u8);
-                writer.WriteObjectValue<TransportAvailabilityResponse>(TransportAvailabilityResponse, options);
+                writer.WriteObjectValue(TransportAvailabilityResponse, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterAddressResponse))
             {
                 writer.WritePropertyName("datacenterAddressResponse"u8);
-                writer.WriteObjectValue<DataCenterAddressResult>(DataCenterAddressResponse, options);
+                writer.WriteObjectValue(DataCenterAddressResponse, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeviceCapabilityResponse))
+            {
+                writer.WritePropertyName("deviceCapabilityResponse"u8);
+                writer.WriteObjectValue(DeviceCapabilityResponse, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -49,14 +62,13 @@ namespace Azure.ResourceManager.DataBox.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RegionConfigurationResult IJsonModel<RegionConfigurationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +85,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static RegionConfigurationResult DeserializeRegionConfigurationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -82,6 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
             ScheduleAvailabilityResponse scheduleAvailabilityResponse = default;
             TransportAvailabilityResponse transportAvailabilityResponse = default;
             DataCenterAddressResult dataCenterAddressResponse = default;
+            DeviceCapabilityResponse deviceCapabilityResponse = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +126,22 @@ namespace Azure.ResourceManager.DataBox.Models
                     dataCenterAddressResponse = DataCenterAddressResult.DeserializeDataCenterAddressResult(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("deviceCapabilityResponse"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceCapabilityResponse = DeviceCapabilityResponse.DeserializeDeviceCapabilityResponse(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, dataCenterAddressResponse, serializedAdditionalRawData);
+            return new RegionConfigurationResult(scheduleAvailabilityResponse, transportAvailabilityResponse, dataCenterAddressResponse, deviceCapabilityResponse, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegionConfigurationResult>.Write(ModelReaderWriterOptions options)
@@ -129,7 +151,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegionConfigurationResult)} does not support writing '{options.Format}' format.");
             }
@@ -143,7 +165,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRegionConfigurationResult(document.RootElement, options);
                     }
                 default:

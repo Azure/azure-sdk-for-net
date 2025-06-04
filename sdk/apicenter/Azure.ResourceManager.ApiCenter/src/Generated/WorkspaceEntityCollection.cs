@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = await _workspaceEntityWorkspacesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiCenterArmOperation<WorkspaceEntityResource>(Response.FromValue(new WorkspaceEntityResource(Client, response), response.GetRawResponse()));
+                var uri = _workspaceEntityWorkspacesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<WorkspaceEntityResource>(Response.FromValue(new WorkspaceEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = _workspaceEntityWorkspacesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data, cancellationToken);
-                var operation = new ApiCenterArmOperation<WorkspaceEntityResource>(Response.FromValue(new WorkspaceEntityResource(Client, response), response.GetRawResponse()));
+                var uri = _workspaceEntityWorkspacesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, workspaceName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<WorkspaceEntityResource>(Response.FromValue(new WorkspaceEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -65,16 +65,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The type of resource the SKU applies to. </summary>
+        [WirePath("resourceType")]
         public ResourceType? ResourceType { get; }
         /// <summary> Specifies API Management SKU. </summary>
         internal ResourceSku Sku { get; }
         /// <summary> Name of the Sku. </summary>
+        [WirePath("sku.name")]
         public ApiManagementServiceSkuType? SkuName
         {
             get => Sku?.Name;
         }
 
         /// <summary> Specifies the number of API Management units. </summary>
+        [WirePath("capacity")]
         public ApiManagementResourceSkuCapacity Capacity { get; }
     }
 }

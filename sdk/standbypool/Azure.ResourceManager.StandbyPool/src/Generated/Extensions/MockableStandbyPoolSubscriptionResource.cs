@@ -15,10 +15,10 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableStandbyPoolSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _standbyContainerGroupPoolClientDiagnostics;
-        private StandbyContainerGroupPoolsRestOperations _standbyContainerGroupPoolRestClient;
         private ClientDiagnostics _standbyVirtualMachinePoolClientDiagnostics;
         private StandbyVirtualMachinePoolsRestOperations _standbyVirtualMachinePoolRestClient;
+        private ClientDiagnostics _standbyContainerGroupPoolClientDiagnostics;
+        private StandbyContainerGroupPoolsRestOperations _standbyContainerGroupPoolRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableStandbyPoolSubscriptionResource"/> class for mocking. </summary>
         protected MockableStandbyPoolSubscriptionResource()
@@ -32,75 +32,15 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         {
         }
 
-        private ClientDiagnostics StandbyContainerGroupPoolClientDiagnostics => _standbyContainerGroupPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolResource.ResourceType.Namespace, Diagnostics);
-        private StandbyContainerGroupPoolsRestOperations StandbyContainerGroupPoolRestClient => _standbyContainerGroupPoolRestClient ??= new StandbyContainerGroupPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyContainerGroupPoolResource.ResourceType));
         private ClientDiagnostics StandbyVirtualMachinePoolClientDiagnostics => _standbyVirtualMachinePoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyVirtualMachinePoolResource.ResourceType.Namespace, Diagnostics);
         private StandbyVirtualMachinePoolsRestOperations StandbyVirtualMachinePoolRestClient => _standbyVirtualMachinePoolRestClient ??= new StandbyVirtualMachinePoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyVirtualMachinePoolResource.ResourceType));
+        private ClientDiagnostics StandbyContainerGroupPoolClientDiagnostics => _standbyContainerGroupPoolClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.StandbyPool", StandbyContainerGroupPoolResource.ResourceType.Namespace, Diagnostics);
+        private StandbyContainerGroupPoolsRestOperations StandbyContainerGroupPoolRestClient => _standbyContainerGroupPoolRestClient ??= new StandbyContainerGroupPoolsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(StandbyContainerGroupPoolResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
             TryGetApiVersion(resourceType, out string apiVersion);
             return apiVersion;
-        }
-
-        /// <summary>
-        /// List StandbyContainerGroupPoolResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyContainerGroupPools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPools_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="StandbyContainerGroupPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPoolsAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(e)), StandbyContainerGroupPoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// List StandbyContainerGroupPoolResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyContainerGroupPools</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPools_ListBySubscription</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="StandbyContainerGroupPoolResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="StandbyContainerGroupPoolResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPools(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(e)), StandbyContainerGroupPoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -112,11 +52,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePools_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,11 +82,11 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePools_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-12-01-preview</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -161,6 +101,66 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
             HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyVirtualMachinePoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyVirtualMachinePoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyVirtualMachinePoolResource(Client, StandbyVirtualMachinePoolData.DeserializeStandbyVirtualMachinePoolData(e)), StandbyVirtualMachinePoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyVirtualMachinePools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List StandbyContainerGroupPoolResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyContainerGroupPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyContainerGroupPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="StandbyContainerGroupPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPoolsAsync(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(e)), StandbyContainerGroupPoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools", "value", "nextLink", cancellationToken);
+        }
+
+        /// <summary>
+        /// List StandbyContainerGroupPoolResource resources by subscription ID
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.StandbyPool/standbyContainerGroupPools</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2025-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StandbyContainerGroupPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="StandbyContainerGroupPoolResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<StandbyContainerGroupPoolResource> GetStandbyContainerGroupPools(CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => StandbyContainerGroupPoolRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StandbyContainerGroupPoolResource(Client, StandbyContainerGroupPoolData.DeserializeStandbyContainerGroupPoolData(e)), StandbyContainerGroupPoolClientDiagnostics, Pipeline, "MockableStandbyPoolSubscriptionResource.GetStandbyContainerGroupPools", "value", "nextLink", cancellationToken);
         }
     }
 }

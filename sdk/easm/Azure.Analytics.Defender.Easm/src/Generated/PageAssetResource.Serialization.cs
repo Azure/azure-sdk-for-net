@@ -15,9 +15,18 @@ namespace Azure.Analytics.Defender.Easm
 {
     public partial class PageAssetResource : IUtf8JsonSerializable, IJsonModel<PageAssetResource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PageAssetResource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PageAssetResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PageAssetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PageAssetResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,102 +34,9 @@ namespace Azure.Analytics.Defender.Easm
                 throw new FormatException($"The model {nameof(PageAssetResource)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("asset"u8);
-            writer.WriteObjectValue<PageAsset>(Asset, options);
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(Name))
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Uuid))
-            {
-                writer.WritePropertyName("uuid"u8);
-                writer.WriteStringValue(Uuid.Value);
-            }
-            if (Optional.IsDefined(CreatedDate))
-            {
-                writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedDate.Value, "O");
-            }
-            if (Optional.IsDefined(UpdatedDate))
-            {
-                writer.WritePropertyName("updatedDate"u8);
-                writer.WriteStringValue(UpdatedDate.Value, "O");
-            }
-            if (Optional.IsDefined(State))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State.Value.ToString());
-            }
-            if (Optional.IsDefined(ExternalId))
-            {
-                writer.WritePropertyName("externalId"u8);
-                writer.WriteStringValue(ExternalId);
-            }
-            if (Optional.IsCollectionDefined(Labels))
-            {
-                writer.WritePropertyName("labels"u8);
-                writer.WriteStartArray();
-                foreach (var item in Labels)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Wildcard))
-            {
-                writer.WritePropertyName("wildcard"u8);
-                writer.WriteBooleanValue(Wildcard.Value);
-            }
-            if (Optional.IsDefined(DiscoGroupName))
-            {
-                writer.WritePropertyName("discoGroupName"u8);
-                writer.WriteStringValue(DiscoGroupName);
-            }
-            if (Optional.IsCollectionDefined(AuditTrail))
-            {
-                writer.WritePropertyName("auditTrail"u8);
-                writer.WriteStartArray();
-                foreach (var item in AuditTrail)
-                {
-                    writer.WriteObjectValue<AuditTrailItem>(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Reason))
-            {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(Asset, options);
         }
 
         PageAssetResource IJsonModel<PageAssetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -137,7 +53,7 @@ namespace Azure.Analytics.Defender.Easm
 
         internal static PageAssetResource DeserializePageAssetResource(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -307,7 +223,7 @@ namespace Azure.Analytics.Defender.Easm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PageAssetResource)} does not support writing '{options.Format}' format.");
             }
@@ -321,7 +237,7 @@ namespace Azure.Analytics.Defender.Easm
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePageAssetResource(document.RootElement, options);
                     }
                 default:
@@ -335,15 +251,15 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new PageAssetResource FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePageAssetResource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PageAssetResource>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -18,6 +18,10 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     internal static class ModelSerializationExtensions
     {
+        internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
+        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+        internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
+
         public static object GetObject(this JsonElement element)
         {
             switch (element.ValueKind)
@@ -165,7 +169,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions options = null)
         {
             switch (value)
             {
@@ -173,7 +177,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                     writer.WriteNullValue();
                     break;
                 case IJsonModel<T> jsonModel:
-                    jsonModel.Write(writer, options ?? new ModelReaderWriterOptions("W"));
+                    jsonModel.Write(writer, options ?? WireOptions);
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -252,6 +256,13 @@ namespace Azure.Health.Insights.RadiologyInsights
         public static void WriteObjectValue(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions options = null)
         {
             writer.WriteObjectValue<object>(value, options);
+        }
+
+        internal static bool IsSentinelValue(BinaryData value)
+        {
+            ReadOnlySpan<byte> sentinelSpan = SentinelValue.ToMemory().Span;
+            ReadOnlySpan<byte> valueSpan = value.ToMemory().Span;
+            return sentinelSpan.SequenceEqual(valueSpan);
         }
 
         internal static class TypeFormatters

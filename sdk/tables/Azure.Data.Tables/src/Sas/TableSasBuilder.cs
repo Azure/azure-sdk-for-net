@@ -39,12 +39,21 @@ namespace Azure.Data.Tables.Sas
         public TableSasBuilder(string tableName, string rawPermissions, DateTimeOffset expiresOn)
         {
             Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
-            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(tableName));
+            Argument.AssertNotNullOrEmpty(rawPermissions, nameof(rawPermissions));
 
             TableName = tableName;
             ExpiresOn = expiresOn;
             Permissions = rawPermissions.ToLowerInvariant();
         }
+
+        /// <summary>
+        /// Initializes an instance of a <see cref="TableSasBuilder"/> with no details set. At minimum, additional properties must be set to create a valid SaS.
+        /// These include setting the <see cref="TableName"/>, permissions, and an expiry. Permissions and expiry can also be specified in a shared access policy, which can be
+        /// selected by specifying the name of the policy on the <see cref="Identifier"/> property.
+        ///
+        /// </summary>
+        public TableSasBuilder()
+        { }
 
         /// <summary>
         /// Initializes a new instance of <see cref="TableSasBuilder"/> based on an existing Uri containing a shared access signature.
@@ -117,6 +126,8 @@ namespace Azure.Data.Tables.Sas
         /// <summary>
         /// An optional unique value up to 64 characters in length that
         /// correlates to an access policy specified for the container.
+        /// Note: Either the stored access policy specified by the <see cref="Identifier"/> or the created shared access signature must define an expiry.
+        /// If neither define an expiry or both do, authentication will fail.
         /// </summary>
         public string Identifier { get; set; }
 

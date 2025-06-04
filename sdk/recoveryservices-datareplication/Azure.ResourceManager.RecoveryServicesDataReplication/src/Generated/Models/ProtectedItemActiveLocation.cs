@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string PrimaryValue = "Primary";
         private const string RecoveryValue = "Recovery";
 
-        /// <summary> Primary. </summary>
+        /// <summary> Protected item is active on Primary. </summary>
         public static ProtectedItemActiveLocation Primary { get; } = new ProtectedItemActiveLocation(PrimaryValue);
-        /// <summary> Recovery. </summary>
+        /// <summary> Protected item is active on Recovery. </summary>
         public static ProtectedItemActiveLocation Recovery { get; } = new ProtectedItemActiveLocation(RecoveryValue);
         /// <summary> Determines if two <see cref="ProtectedItemActiveLocation"/> values are the same. </summary>
         public static bool operator ==(ProtectedItemActiveLocation left, ProtectedItemActiveLocation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProtectedItemActiveLocation"/> values are not the same. </summary>
         public static bool operator !=(ProtectedItemActiveLocation left, ProtectedItemActiveLocation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProtectedItemActiveLocation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProtectedItemActiveLocation"/>. </summary>
         public static implicit operator ProtectedItemActiveLocation(string value) => new ProtectedItemActiveLocation(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

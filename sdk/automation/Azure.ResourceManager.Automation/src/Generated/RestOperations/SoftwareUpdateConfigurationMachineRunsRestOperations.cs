@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetByIdRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationMachineRunId, string clientRequestId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/softwareUpdateConfigurationMachineRuns/", false);
+            uri.AppendPath(softwareUpdateConfigurationMachineRunId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByIdRequest(string subscriptionId, string resourceGroupName, string automationAccountName, Guid softwareUpdateConfigurationMachineRunId, string clientRequestId)
         {
             var message = _pipeline.CreateMessage();
@@ -84,7 +100,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationMachineRun value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -115,13 +131,40 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationMachineRun value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string clientRequestId, string filter, string skip, string top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/softwareUpdateConfigurationMachineRuns", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string clientRequestId, string filter, string skip, string top)
@@ -185,7 +228,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationMachineRunListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SoftwareUpdateConfigurationMachineRunListResult.DeserializeSoftwareUpdateConfigurationMachineRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -218,7 +261,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SoftwareUpdateConfigurationMachineRunListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SoftwareUpdateConfigurationMachineRunListResult.DeserializeSoftwareUpdateConfigurationMachineRunListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

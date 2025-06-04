@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -52,6 +53,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             {
                 testOutput.WriteLine($"\t{tag.Key}:{tag.Value}");
             }
+        }
+
+        internal void VerifyCustomProperties(DocumentIngress document, int reservedPropertyCount = 0)
+        {
+            Assert.Equal(10, document.Properties.Count);
+
+            for (int i = 1; i <= (10 - reservedPropertyCount); i++)
+            {
+                Assert.Contains(document.Properties, x => x.Key == $"customKey{i}" && x.Value == $"customValue{i}");
+            }
+
+            // LiveMetrics supports a maximum of 10 Properties; reservedPropertyCount is the count of properties taken up by standard properties
+            int firstOmittedPropertyIndex = 11 - reservedPropertyCount;
+            Assert.DoesNotContain(document.Properties, x => x.Key == $"customKey{ firstOmittedPropertyIndex }" && x.Value == $"customValue{ firstOmittedPropertyIndex }");
         }
     }
 }

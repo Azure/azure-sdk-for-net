@@ -13,26 +13,26 @@ namespace Azure.Search.Documents.Indexes.Models
     public partial class AzureOpenAIVectorizer : VectorSearchVectorizer
     {
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AzureOpenAIVectorizer(string name) : base(name)
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vectorizerName"/> is null. </exception>
+        public AzureOpenAIVectorizer(string vectorizerName) : base(vectorizerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(vectorizerName, nameof(vectorizerName));
 
             Kind = VectorSearchVectorizerKind.AzureOpenAI;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureOpenAIVectorizer"/>. </summary>
-        /// <param name="name"> The name to associate with this particular vectorization method. </param>
+        /// <param name="vectorizerName"> The name to associate with this particular vectorization method. </param>
         /// <param name="kind"> The name of the kind of vectorization method being configured for use with vector search. </param>
-        /// <param name="azureOpenAIParameters"> Contains the parameters specific to Azure OpenAI embedding vectorization. </param>
-        internal AzureOpenAIVectorizer(string name, VectorSearchVectorizerKind kind, AzureOpenAIParameters azureOpenAIParameters) : base(name, kind)
+        /// <param name="parameters"> Contains the parameters specific to Azure OpenAI embedding vectorization. </param>
+        internal AzureOpenAIVectorizer(string vectorizerName, VectorSearchVectorizerKind kind, AzureOpenAIVectorizerParameters parameters) : base(vectorizerName, kind)
         {
-            AzureOpenAIParameters = azureOpenAIParameters;
+            Parameters = parameters;
             Kind = kind;
         }
 
         /// <summary> Contains the parameters specific to Azure OpenAI embedding vectorization. </summary>
-        public AzureOpenAIParameters AzureOpenAIParameters { get; set; }
+        public AzureOpenAIVectorizerParameters Parameters { get; set; }
     }
 }

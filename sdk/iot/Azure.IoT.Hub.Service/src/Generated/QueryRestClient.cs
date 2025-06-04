@@ -60,7 +60,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<QuerySpecification>(querySpecification);
+            content.JsonWriter.WriteObjectValue(querySpecification);
             request.Content = content;
             return message;
         }
@@ -86,7 +86,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<TwinData> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<TwinData> array = new List<TwinData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -121,7 +121,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<TwinData> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<TwinData> array = new List<TwinData>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {

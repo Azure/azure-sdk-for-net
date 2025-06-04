@@ -16,10 +16,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
         }
 
-        #region Resource Info
+        #region Resource Details
 
         [RecordedTest]
-        public async Task GetResourceInfo()
+        public async Task GetResourceDetails()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var startTime = Recording.UtcNow;
@@ -27,16 +27,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             // Ensure we will have at least one custom model to populate the resource details.
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl);
 
-            ResourceDetails resourceDetails = await client.GetResourceInfoAsync();
+            DocumentIntelligenceResourceDetails resourceDetails = await client.GetResourceDetailsAsync();
 
             Assert.That(resourceDetails.CustomDocumentModels, Is.Not.Null);
             Assert.That(resourceDetails.CustomDocumentModels.Count, Is.GreaterThan(0));
             Assert.That(resourceDetails.CustomDocumentModels.Limit, Is.GreaterThanOrEqualTo(resourceDetails.CustomDocumentModels.Count));
-
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds, Is.Not.Null);
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.Used, Is.GreaterThanOrEqualTo(0));
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.Quota, Is.GreaterThanOrEqualTo(resourceDetails.CustomNeuralDocumentModelBuilds.Used));
-            Assert.That(resourceDetails.CustomNeuralDocumentModelBuilds.QuotaResetsOn, Is.GreaterThan(startTime));
         }
 
         #endregion Resource Info
@@ -53,7 +48,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableModel = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl, description, tags);
 
-            OperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
+            DocumentIntelligenceOperationDetails operationDetails = await client.GetOperationAsync(disposableModel.Operation.Id);
 
             // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
             // to ensure the behavior is consistent.
@@ -80,7 +75,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(description);
 
-            OperationDetails operationDetails = await client.GetOperationAsync(disposableClassifier.Operation.Id);
+            DocumentIntelligenceOperationDetails operationDetails = await client.GetOperationAsync(disposableClassifier.Operation.Id);
 
             // The endpoint environment variable may or may not contain a trailing '/' character. Trim the string
             // to ensure the behavior is consistent.
@@ -123,17 +118,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
             await using var disposableModel0 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl, description, tags);
             await using var disposableModel1 = await BuildDisposableDocumentModelAsync(TestEnvironment.BlobContainerSasUrl, description, tags);
 
-            OperationDetails expectedOperation0 = await client.GetOperationAsync(disposableModel0.Operation.Id);
-            OperationDetails expectedOperation1 = await client.GetOperationAsync(disposableModel1.Operation.Id);
+            DocumentIntelligenceOperationDetails expectedOperation0 = await client.GetOperationAsync(disposableModel0.Operation.Id);
+            DocumentIntelligenceOperationDetails expectedOperation1 = await client.GetOperationAsync(disposableModel1.Operation.Id);
 
-            var expectedIdMapping = new Dictionary<string, OperationDetails>()
+            var expectedIdMapping = new Dictionary<string, DocumentIntelligenceOperationDetails>()
             {
                 { disposableModel0.Operation.Id, expectedOperation0 },
                 { disposableModel1.Operation.Id, expectedOperation1 }
             };
-            var idMapping = new Dictionary<string, OperationDetails>();
+            var idMapping = new Dictionary<string, DocumentIntelligenceOperationDetails>();
 
-            await foreach (OperationDetails operation in client.GetOperationsAsync())
+            await foreach (DocumentIntelligenceOperationDetails operation in client.GetOperationsAsync())
             {
                 if (expectedIdMapping.ContainsKey(operation.OperationId))
                 {
@@ -152,8 +147,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
             {
                 Assert.That(idMapping, Contains.Key(id));
 
-                OperationDetails expected = expectedIdMapping[id];
-                OperationDetails operation = idMapping[id];
+                DocumentIntelligenceOperationDetails expected = expectedIdMapping[id];
+                DocumentIntelligenceOperationDetails operation = idMapping[id];
 
                 Assert.That(operation.OperationId, Is.EqualTo(expected.OperationId));
                 Assert.That(operation.ApiVersion, Is.EqualTo(expected.ApiVersion));
@@ -170,11 +165,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
         #endregion List Operations
 
-        private void ValidateOperationDetails(OperationDetails operationDetails, string operationId, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
+        private void ValidateOperationDetails(DocumentIntelligenceOperationDetails operationDetails, string operationId, string resourceLocation, DateTimeOffset startTime, IDictionary<string, string> tags)
         {
             Assert.That(operationDetails.OperationId, Is.EqualTo(operationId));
             Assert.That(operationDetails.ApiVersion, Is.EqualTo(ServiceVersionString));
-            Assert.That(operationDetails.Status, Is.EqualTo(OperationStatus.Succeeded));
+            Assert.That(operationDetails.Status, Is.EqualTo(DocumentIntelligenceOperationStatus.Succeeded));
             Assert.That(operationDetails.PercentCompleted, Is.EqualTo(100));
             Assert.That(operationDetails.ResourceLocation.AbsoluteUri, Is.EqualTo(resourceLocation));
 

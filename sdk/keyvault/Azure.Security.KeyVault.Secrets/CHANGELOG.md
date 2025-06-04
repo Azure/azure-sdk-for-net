@@ -1,6 +1,6 @@
 # Release History
 
-## 4.7.0-beta.1 (Unreleased)
+## 4.8.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.8.0-beta.1 (2025-04-08)
+
+### Other Changes
+
+- The default service version is now "7.6-preview.2".
+
+## 4.7.0 (2024-10-14)
+
+### Features Added
+
+- Support for Continuous Access Evaluation (CAE).
 
 ## 4.6.0 (2024-02-14)
 

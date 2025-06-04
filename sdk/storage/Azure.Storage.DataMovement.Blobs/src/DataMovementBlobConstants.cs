@@ -7,21 +7,31 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     internal class DataMovementBlobConstants
     {
-        internal class SourceCheckpointData
-        {
-            internal const int SchemaVersion = 1;
+        internal const string FolderMetadataKey = "hdi_isfolder";
 
-            internal const int VersionIndex = 0;
-            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
-            internal const int DataSize = BlobTypeIndex + OneByte;
+        internal class ResourceId
+        {
+            internal const string BlockBlob = "BlockBlob";
+            internal const string PageBlob = "PageBlob";
+            internal const string AppendBlob = "AppendBlob";
         }
 
-        internal class DestinationCheckpointData
+        internal class SourceCheckpointDetails
         {
-            internal const int SchemaVersion = 2;
+            internal const int DataSize = 0;
+        }
+
+        internal class DestinationCheckpointDetails
+        {
+            // Blob Schema Versions 1 and 2 were the beta version of the schema and do not need to be serialized and deserialized backwards compatible.
+            // Only Blob Schema Versions 3 and beyond need to be backwards compatible.
+            internal const int SchemaVersion_3 = 3;
+            internal const int SchemaVersion_4 = 4;
+            internal const int SchemaVersion = SchemaVersion_4;
 
             internal const int VersionIndex = 0;
-            internal const int BlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;
+            internal const int BlobTypeIndex = PreserveBlobTypeIndex + OneByte;
             internal const int PreserveContentTypeIndex = BlobTypeIndex + OneByte;
             internal const int ContentTypeOffsetIndex = PreserveContentTypeIndex + OneByte;
             internal const int ContentTypeLengthIndex = ContentTypeOffsetIndex + IntSizeInBytes;

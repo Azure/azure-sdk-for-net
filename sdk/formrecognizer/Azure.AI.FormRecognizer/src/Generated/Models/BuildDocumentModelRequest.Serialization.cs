@@ -27,12 +27,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             if (Optional.IsDefined(AzureBlobSource))
             {
                 writer.WritePropertyName("azureBlobSource"u8);
-                writer.WriteObjectValue<BlobContentSource>(AzureBlobSource);
+                writer.WriteObjectValue(AzureBlobSource);
             }
             if (Optional.IsDefined(AzureBlobFileListSource))
             {
                 writer.WritePropertyName("azureBlobFileListSource"u8);
-                writer.WriteObjectValue<BlobFileListContentSource>(AzureBlobFileListSource);
+                writer.WriteObjectValue(AzureBlobFileListSource);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -48,11 +48,11 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BuildDocumentModelRequest>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

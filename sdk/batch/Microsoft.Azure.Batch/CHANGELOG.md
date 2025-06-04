@@ -1,6 +1,6 @@
 # Release History
 
-## 16.3.0-beta.1 (Unreleased)
+## 16.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,41 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 16.3.1 (2024-09-19)
+
+### Bugs Fixed
+
+- Fixed `ImageReference` constructor null reference exception.
+
+## 16.3.0 (2024-07-01)
+
+### Features Added
+
+- Compute node start/deallocate support.
+  - Added `Start` and `StartAsync` to ComputeNode
+  - Added `Deallocate` and `DeallocateAsync` to ComputeNode
+
+- Force delete/terminate job/jobSchedule.
+  - Added `force` of type Boolean to type `JobDeleteOptions`, `JobTerminateOptions`, `JobScheduleTerminateOptions`, and `JobScheduleDeleteOptions`.
+
+- Improved patch for pool/job
+  - Added `DisplayName`, `VmSize`, `TaskSlotsPerNode`, `TaskSchedulingPolicy`, `EnableInterNodeCommunication`, `VirtualMachineConfiguration`, `NetworkConfiguration`, `UserAccounts`, `MountConfiguration`, `UpgradePolicy`, and `ResourceTags` to type `PoolPatchParameter`.
+  - Added `JobNetworkConfiguration` to type `JobPatchParameter`.
+
+- Confidential VM support.
+  - Added `ConfidentialVM` value to type `SecurityTypes`.
+  - Added `securityProfile` of type `VMDiskSecurityProfile` to type `ManagedDisk`.
+
+- Added `sharedGalleryImageId` and `communityGalleryImageId` of type string to type `ImageReference`.
+
+### Breaking Changes
+- Removed `CloudServiceConfiguration` from pool models and operations, `VirtualMachineConfiguration` is the only supported pool configuration.
+- Removed `ApplicationLicenses` from pool models and operations.
+
+- Removed `GetRDPFile()` method, use `GetRemoteLoginSettings()` instead.
+  - Removed `GetRDPFile` and `GetRDPFileAsync` from PoolOperations 
+  - Removed `GetRDPFile` and `GetRDPFileAsync` from ComputeNode
 
 ## 16.2.0 (2024-02-29)
 
@@ -256,7 +291,7 @@ This version of the Batch .NET client library targets version 2018-08-01.7.0 of 
 ### Features
 
 - Added the ability to see what version of the Azure Batch Node Agent is running on each of the VMs in a pool, via the new `NodeAgentInformation` property on `ComputeNode`.
-- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
+- Added the ability to specify a `Filter` on the `Result` of a task. See [here](https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch) for more details.
   - This enables the often requested scenario of performing a server-side query to find all tasks which failed.
 - **[Breaking]** Added a default retry policy to `BatchClient`.
   - Note that this policy may not be sufficient for every case. If the old behavior (a `BatchClient` that doesn't perform any retries) is desired, the default policy can be removed from a `BatchClient` with `client.CustomBehaviors = client.CustomBehaviors.Where(behavior => !(behavior is RetryPolicyProvider)).ToList()`.

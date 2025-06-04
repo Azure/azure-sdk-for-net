@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Analysis.Models
         public static bool operator ==(AnalysisManagedMode left, AnalysisManagedMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalysisManagedMode"/> values are not the same. </summary>
         public static bool operator !=(AnalysisManagedMode left, AnalysisManagedMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AnalysisManagedMode"/>. </summary>
+        /// <summary> Converts a <see cref="int"/> to a <see cref="AnalysisManagedMode"/>. </summary>
         public static implicit operator AnalysisManagedMode(int value) => new AnalysisManagedMode(value);
 
         /// <inheritdoc />

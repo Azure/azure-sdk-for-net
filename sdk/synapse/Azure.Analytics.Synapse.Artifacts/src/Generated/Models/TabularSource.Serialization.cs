@@ -81,6 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "EloquaSource": return EloquaSource.DeserializeEloquaSource(element);
                     case "GoogleAdWordsSource": return GoogleAdWordsSource.DeserializeGoogleAdWordsSource(element);
                     case "GoogleBigQuerySource": return GoogleBigQuerySource.DeserializeGoogleBigQuerySource(element);
+                    case "GoogleBigQueryV2Source": return GoogleBigQueryV2Source.DeserializeGoogleBigQueryV2Source(element);
                     case "GreenplumSource": return GreenplumSource.DeserializeGreenplumSource(element);
                     case "HBaseSource": return HBaseSource.DeserializeHBaseSource(element);
                     case "HiveSource": return HiveSource.DeserializeHiveSource(element);
@@ -98,11 +99,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "PaypalSource": return PaypalSource.DeserializePaypalSource(element);
                     case "PhoenixSource": return PhoenixSource.DeserializePhoenixSource(element);
                     case "PostgreSqlSource": return PostgreSqlSource.DeserializePostgreSqlSource(element);
+                    case "PostgreSqlV2Source": return PostgreSqlV2Source.DeserializePostgreSqlV2Source(element);
                     case "PrestoSource": return PrestoSource.DeserializePrestoSource(element);
                     case "QuickBooksSource": return QuickBooksSource.DeserializeQuickBooksSource(element);
                     case "ResponsysSource": return ResponsysSource.DeserializeResponsysSource(element);
                     case "SalesforceMarketingCloudSource": return SalesforceMarketingCloudSource.DeserializeSalesforceMarketingCloudSource(element);
                     case "SalesforceSource": return SalesforceSource.DeserializeSalesforceSource(element);
+                    case "SalesforceV2Source": return SalesforceV2Source.DeserializeSalesforceV2Source(element);
                     case "SapBwSource": return SapBwSource.DeserializeSapBwSource(element);
                     case "SapCloudForCustomerSource": return SapCloudForCustomerSource.DeserializeSapCloudForCustomerSource(element);
                     case "SapEccSource": return SapEccSource.DeserializeSapEccSource(element);
@@ -111,6 +114,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SapOpenHubSource": return SapOpenHubSource.DeserializeSapOpenHubSource(element);
                     case "SapTableSource": return SapTableSource.DeserializeSapTableSource(element);
                     case "ServiceNowSource": return ServiceNowSource.DeserializeServiceNowSource(element);
+                    case "ServiceNowV2Source": return ServiceNowV2Source.DeserializeServiceNowV2Source(element);
                     case "ShopifySource": return ShopifySource.DeserializeShopifySource(element);
                     case "SparkSource": return SparkSource.DeserializeSparkSource(element);
                     case "SqlDWSource": return SqlDWSource.DeserializeSqlDWSource(element);
@@ -121,6 +125,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     case "SybaseSource": return SybaseSource.DeserializeSybaseSource(element);
                     case "TeradataSource": return TeradataSource.DeserializeTeradataSource(element);
                     case "VerticaSource": return VerticaSource.DeserializeVerticaSource(element);
+                    case "WarehouseSource": return WarehouseSource.DeserializeWarehouseSource(element);
                     case "XeroSource": return XeroSource.DeserializeXeroSource(element);
                     case "ZohoSource": return ZohoSource.DeserializeZohoSource(element);
                 }
@@ -202,15 +207,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new TabularSource FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTabularSource(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TabularSource>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -218,7 +223,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, TabularSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<TabularSource>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override TabularSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Name of the Sku. </summary>
+        [WirePath("name")]
         public ApiManagementServiceSkuType? Name { get; }
     }
 }

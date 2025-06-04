@@ -7,13 +7,13 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
-    /// The MachineLearningWorkspaceConnectionProperties.
     /// Please note <see cref="MachineLearningWorkspaceConnectionProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
+    /// The available derived classes include <see cref="AadAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccessKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="AccountKeyAuthTypeWorkspaceConnectionProperties"/>, <see cref="ApiKeyAuthWorkspaceConnectionProperties"/>, <see cref="CustomKeysWorkspaceConnectionProperties"/>, <see cref="MachineLearningManagedIdentityAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningNoneAuthTypeWorkspaceConnection"/>, <see cref="OAuth2AuthTypeWorkspaceConnectionProperties"/>, <see cref="MachineLearningPatAuthTypeWorkspaceConnection"/>, <see cref="MachineLearningSasAuthTypeWorkspaceConnection"/>, <see cref="ServicePrincipalAuthTypeWorkspaceConnectionProperties"/> and <see cref="MachineLearningUsernamePasswordAuthTypeWorkspaceConnection"/>.
     /// </summary>
     public abstract partial class MachineLearningWorkspaceConnectionProperties
     {
@@ -52,63 +52,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionProperties"/>. </summary>
         protected MachineLearningWorkspaceConnectionProperties()
         {
+            Metadata = new ChangeTrackingDictionary<string, string>();
+            SharedUserList = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionProperties"/>. </summary>
         /// <param name="authType"> Authentication type of the connection target. </param>
         /// <param name="category"> Category of the connection. </param>
+        /// <param name="createdByWorkspaceArmId"></param>
         /// <param name="expiryOn"></param>
-        /// <param name="metadata"> Any object. </param>
+        /// <param name="group"> Group based on connection category. </param>
+        /// <param name="isSharedToAll"></param>
         /// <param name="target"></param>
+        /// <param name="metadata"> Store user metadata for this connection. </param>
+        /// <param name="sharedUserList"></param>
+        /// <param name="value"> Value details of the workspace connection. </param>
+        /// <param name="valueFormat"> format for the workspace connection value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, DateTimeOffset? expiryOn, BinaryData metadata, string target, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceConnectionProperties(MachineLearningConnectionAuthType authType, MachineLearningConnectionCategory? category, ResourceIdentifier createdByWorkspaceArmId, DateTimeOffset? expiryOn, WorkspaceConnectionGroup? group, bool? isSharedToAll, string target, IDictionary<string, string> metadata, IList<string> sharedUserList, string value, MachineLearningValueFormat? valueFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthType = authType;
             Category = category;
+            CreatedByWorkspaceArmId = createdByWorkspaceArmId;
             ExpiryOn = expiryOn;
-            Metadata = metadata;
+            Group = group;
+            IsSharedToAll = isSharedToAll;
             Target = target;
+            Metadata = metadata;
+            SharedUserList = sharedUserList;
+            Value = value;
+            ValueFormat = valueFormat;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Authentication type of the connection target. </summary>
         internal MachineLearningConnectionAuthType AuthType { get; set; }
         /// <summary> Category of the connection. </summary>
+        [WirePath("category")]
         public MachineLearningConnectionCategory? Category { get; set; }
+        /// <summary> Gets the created by workspace arm id. </summary>
+        [WirePath("createdByWorkspaceArmId")]
+        public ResourceIdentifier CreatedByWorkspaceArmId { get; }
         /// <summary> Gets or sets the expiry on. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpiryOn { get; set; }
-        /// <summary>
-        /// Any object
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Metadata { get; set; }
+        /// <summary> Group based on connection category. </summary>
+        [WirePath("group")]
+        public WorkspaceConnectionGroup? Group { get; }
+        /// <summary> Gets or sets the is shared to all. </summary>
+        [WirePath("isSharedToAll")]
+        public bool? IsSharedToAll { get; set; }
         /// <summary> Gets or sets the target. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
+        /// <summary> Store user metadata for this connection. </summary>
+        [WirePath("metadata")]
+        public IDictionary<string, string> Metadata { get; }
+        /// <summary> Gets the shared user list. </summary>
+        [WirePath("sharedUserList")]
+        public IList<string> SharedUserList { get; }
     }
 }

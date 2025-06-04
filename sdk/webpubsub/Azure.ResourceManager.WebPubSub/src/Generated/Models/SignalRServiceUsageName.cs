@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
         }
 
         /// <summary> The identifier of the usage. </summary>
+        [WirePath("value")]
         public string Value { get; }
         /// <summary> Localized name of the usage. </summary>
+        [WirePath("localizedValue")]
         public string LocalizedValue { get; }
     }
 }

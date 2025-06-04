@@ -28,8 +28,8 @@ namespace Azure.Health.Insights.RadiologyInsights
         {
             Argument.AssertNotNull(recommendedProcedure, nameof(recommendedProcedure));
 
-            Kind = "followupRecommendation";
-            Findings = new ChangeTrackingList<FhirR4Extendible>();
+            Kind = RadiologyInsightsInferenceType.FollowupRecommendation;
+            Findings = new ChangeTrackingList<RecommendationFinding>();
             IsConditional = isConditional;
             IsOption = isOption;
             IsGuideline = isGuideline;
@@ -38,10 +38,10 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Initializes a new instance of <see cref="FollowupRecommendationInference"/>. </summary>
-        /// <param name="kind"> Discriminator. </param>
+        /// <param name="kind"> Discriminator property for RadiologyInsightsInference. </param>
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="effectiveDateTime"> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </param>
+        /// <param name="effectiveAt"> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </param>
         /// <param name="effectivePeriod"> The period is shown if a specific period is mentioned, with a start and end date-time. </param>
         /// <param name="findings"> Findings related to the recommendation. </param>
         /// <param name="isConditional"> The conditional value indicates whether or not the sentence containing the recommendation includes a conditional statement. Keywords for conditional statements include 'if', 'when', 'unless', and so on. </param>
@@ -53,9 +53,9 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
         /// </param>
-        internal FollowupRecommendationInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<FhirR4Extendible> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
+        internal FollowupRecommendationInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveAt, FhirR4Period effectivePeriod, IReadOnlyList<RecommendationFinding> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
-            EffectiveDateTime = effectiveDateTime;
+            EffectiveAt = effectiveAt;
             EffectivePeriod = effectivePeriod;
             Findings = findings;
             IsConditional = isConditional;
@@ -71,11 +71,11 @@ namespace Azure.Health.Insights.RadiologyInsights
         }
 
         /// <summary> Date and time are displayed when the procedure is recommended to be done at a specific point in time. </summary>
-        public string EffectiveDateTime { get; }
+        public string EffectiveAt { get; }
         /// <summary> The period is shown if a specific period is mentioned, with a start and end date-time. </summary>
         public FhirR4Period EffectivePeriod { get; }
         /// <summary> Findings related to the recommendation. </summary>
-        public IReadOnlyList<FhirR4Extendible> Findings { get; }
+        public IReadOnlyList<RecommendationFinding> Findings { get; }
         /// <summary> The conditional value indicates whether or not the sentence containing the recommendation includes a conditional statement. Keywords for conditional statements include 'if', 'when', 'unless', and so on. </summary>
         public bool IsConditional { get; }
         /// <summary> The option value indicates whether or not the sentence containing the recommendation includes an optional statement. Keywords for optional statements include 'recommend', 'consider', and so on. </summary>

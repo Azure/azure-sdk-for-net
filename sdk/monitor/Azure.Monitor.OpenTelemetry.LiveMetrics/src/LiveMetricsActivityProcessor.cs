@@ -1,24 +1,24 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
-using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using OpenTelemetry;
+using System.Diagnostics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 {
     internal sealed class LiveMetricsActivityProcessor : BaseProcessor<Activity>
     {
-        private LiveMetricsResource? _resource;
-        private readonly Manager _manager;
+        private readonly LiveMetricsClientManager _manager;
 
-        internal LiveMetricsResource? LiveMetricsResource => _resource ??= ParentProvider?.GetResource().CreateAzureMonitorResource();
-
-        internal LiveMetricsActivityProcessor(Manager manager)
+        internal LiveMetricsActivityProcessor(LiveMetricsClientManager manager)
         {
             _manager = manager;
+
+            // Resource is not available at sdk initialization and must be read later.
+            manager.LiveMetricsResourceFunc ??= () => ParentProvider?.GetResource().CreateAzureMonitorResource();
         }
 
         public override void OnEnd(Activity activity)
@@ -29,67 +29,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 return;
             }
 
-            // Resource is not available at initialization and must be set later.
-            if (_manager.LiveMetricsResource == null && LiveMetricsResource != null)
-            {
-                _manager.LiveMetricsResource = LiveMetricsResource;
-            }
-
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                AddRequestDocument(activity);
+                _manager._documentBuffer.AddRequestDocument(activity);
             }
             else
             {
-                AddRemoteDependencyDocument(activity);
+                _manager._documentBuffer.AddDependencyDocument(activity);
             }
 
             if (activity.Events != null)
             {
                 foreach (ref readonly var @event in activity.EnumerateEvents())
                 {
-                    string exceptionType = string.Empty;
-                    string exceptionMessage = string.Empty;
-
-                    foreach (ref readonly var tag in @event.EnumerateTagObjects())
+                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        if (tag.Value == null)
-                        {
-                            continue;
-                        }
-                        else if (tag.Key == SemanticConventions.AttributeExceptionType)
-                        {
-                            exceptionType = tag.Value.ToString()!;
-                            continue;
-                        }
-                        else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
-                        {
-                            exceptionMessage = tag.Value.ToString()!;
-                            continue;
-                        }
+                        _manager._documentBuffer.AddExceptionDocument(@event);
                     }
-
-                    AddExceptionDocument(exceptionType, exceptionMessage);
+                    else
+                    {
+                        _manager._documentBuffer.AddLogDocument(@event);
+                    }
                 }
             }
-        }
-
-        private void AddExceptionDocument(string exceptionType, string exceptionMessage)
-        {
-            var exceptionDocumentIngress = DocumentHelper.CreateException(exceptionType, exceptionMessage);
-            _manager._documentBuffer.WriteDocument(exceptionDocumentIngress);
-        }
-
-        private void AddRemoteDependencyDocument(Activity activity)
-        {
-            var remoteDependencyDocumentIngress = DocumentHelper.ConvertToRemoteDependency(activity);
-            _manager._documentBuffer.WriteDocument(remoteDependencyDocumentIngress);
-        }
-
-        private void AddRequestDocument(Activity activity)
-        {
-            var requestDocumentIngress = DocumentHelper.ConvertToRequest(activity);
-            _manager._documentBuffer.WriteDocument(requestDocumentIngress);
         }
     }
 }

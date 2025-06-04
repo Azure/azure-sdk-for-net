@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public static bool operator ==(DataBoxStageName left, DataBoxStageName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataBoxStageName"/> values are not the same. </summary>
         public static bool operator !=(DataBoxStageName left, DataBoxStageName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataBoxStageName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataBoxStageName"/>. </summary>
         public static implicit operator DataBoxStageName(string value) => new DataBoxStageName(value);
 
         /// <inheritdoc />
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

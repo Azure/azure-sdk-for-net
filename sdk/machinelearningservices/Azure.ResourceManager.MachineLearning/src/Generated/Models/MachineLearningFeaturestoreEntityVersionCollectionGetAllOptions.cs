@@ -16,22 +16,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Continuation token for pagination. </summary>
+        [WirePath("skip")]
         public string Skip { get; set; }
         /// <summary> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </summary>
+        [WirePath("tags")]
         public string Tags { get; set; }
         /// <summary> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </summary>
+        [WirePath("listViewType")]
         public MachineLearningListViewType? ListViewType { get; set; }
         /// <summary> page size. </summary>
+        [WirePath("pageSize")]
         public int? PageSize { get; set; }
         /// <summary> name for the featurestore entity version. </summary>
+        [WirePath("versionName")]
         public string VersionName { get; set; }
         /// <summary> featurestore entity version. </summary>
+        [WirePath("version")]
         public string Version { get; set; }
         /// <summary> description for the feature entity version. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> createdBy user name. </summary>
+        [WirePath("createdBy")]
         public string CreatedBy { get; set; }
         /// <summary> Specifies the featurestore stage. </summary>
+        [WirePath("stage")]
         public string Stage { get; set; }
     }
 }

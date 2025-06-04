@@ -6,7 +6,7 @@
     <PackageReference Include="Azure.ResourceManager.Network" />
     <PackageReference Include="Azure.Identity" />
     <PackageReference Include="Azure.ResourceManager.KeyVault" VersionOverride="1.0.0" />
-    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.0.0" />
+    <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" VersionOverride="1.3.0-beta.1" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />

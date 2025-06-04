@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.ServiceLinker
 {
     public partial class LinkerResourceData : IUtf8JsonSerializable, IJsonModel<LinkerResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<LinkerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,38 +36,18 @@ namespace Azure.ResourceManager.ServiceLinker
                 throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue<TargetServiceBaseInfo>(TargetService, options);
+                writer.WriteObjectValue(TargetService, options);
             }
             if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue<AuthBaseInfo>(AuthInfo, options);
+                writer.WriteObjectValue(AuthInfo, options);
             }
             if (Optional.IsDefined(ClientType))
             {
@@ -75,7 +64,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue<VnetSolution>(VnetSolution, options);
+                    writer.WriteObjectValue(VnetSolution, options);
                 }
                 else
                 {
@@ -87,7 +76,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (SecretStore != null)
                 {
                     writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue<LinkerSecretStore>(SecretStore, options);
+                    writer.WriteObjectValue(SecretStore, options);
                 }
                 else
                 {
@@ -107,22 +96,6 @@ namespace Azure.ResourceManager.ServiceLinker
                 }
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -139,7 +112,7 @@ namespace Azure.ResourceManager.ServiceLinker
 
         internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -286,7 +259,7 @@ namespace Azure.ResourceManager.ServiceLinker
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -300,7 +273,7 @@ namespace Azure.ResourceManager.ServiceLinker
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLinkerResourceData(document.RootElement, options);
                     }
                 default:

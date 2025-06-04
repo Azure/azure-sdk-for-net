@@ -20,9 +20,10 @@ namespace Azure.Search.Documents.Models
             }
             double searchScore = default;
             double? searchRerankerScore = default;
+            double? searchRerankerBoostedScore = default;
             IReadOnlyDictionary<string, IList<string>> searchHighlights = default;
             IReadOnlyList<QueryCaptionResult> searchCaptions = default;
-            IReadOnlyList<DocumentDebugInfo> searchDocumentDebugInfo = default;
+            DocumentDebugInfo searchDocumentDebugInfo = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -40,6 +41,16 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     searchRerankerScore = property.Value.GetDouble();
+                    continue;
+                }
+                if (property.NameEquals("@search.rerankerBoostedScore"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchRerankerBoostedScore = null;
+                        continue;
+                    }
+                    searchRerankerBoostedScore = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.highlights"u8))
@@ -90,12 +101,7 @@ namespace Azure.Search.Documents.Models
                         searchDocumentDebugInfo = null;
                         continue;
                     }
-                    List<DocumentDebugInfo> array = new List<DocumentDebugInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(Models.DocumentDebugInfo.DeserializeDocumentDebugInfo(item));
-                    }
-                    searchDocumentDebugInfo = array;
+                    searchDocumentDebugInfo = DocumentDebugInfo.DeserializeDocumentDebugInfo(property.Value);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
@@ -104,9 +110,10 @@ namespace Azure.Search.Documents.Models
             return new SearchResult(
                 searchScore,
                 searchRerankerScore,
+                searchRerankerBoostedScore,
                 searchHighlights ?? new ChangeTrackingDictionary<string, IList<string>>(),
                 searchCaptions ?? new ChangeTrackingList<QueryCaptionResult>(),
-                searchDocumentDebugInfo ?? new ChangeTrackingList<DocumentDebugInfo>(),
+                searchDocumentDebugInfo,
                 additionalProperties);
         }
 
@@ -114,7 +121,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchResult(document.RootElement);
         }
     }

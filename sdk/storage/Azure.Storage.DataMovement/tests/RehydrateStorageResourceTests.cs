@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement.Tests
             Local
         }
 
-        private static Mock<DataTransferProperties> GetProperties(
+        private static Mock<TransferProperties> GetProperties(
             string transferId,
             string sourcePath,
             string destinationPath,
@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Path = destinationPath,
             };
 
-            var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
+            var mock = new Mock<TransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.SourceUri).Returns(sourceBuilder.Uri);
             mock.Setup(p => p.DestinationUri).Returns(destinationBuilder.Uri);
@@ -58,7 +58,6 @@ namespace Azure.Storage.DataMovement.Tests
             [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             Random random = new();
             string transferId = GetNewTransferId();
             string sourcePath = string.Concat("/", random.NextString(20));
@@ -68,7 +67,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
             StorageResourceType destinationType = isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -87,7 +86,6 @@ namespace Azure.Storage.DataMovement.Tests
             [Values(true, false)] bool isSource)
         {
             using DisposingLocalDirectory test = DisposingLocalDirectory.GetTestDirectory();
-            TransferCheckpointer checkpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             Random random = new();
             string transferId = GetNewTransferId();
             string sourceParentPath = string.Concat("/", random.NextString(20));
@@ -106,7 +104,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = !isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
             StorageResourceType destinationType = isSource ? StorageResourceType.BlockBlob : StorageResourceType.Local;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourceParentPath,
                 destinationParentPath,

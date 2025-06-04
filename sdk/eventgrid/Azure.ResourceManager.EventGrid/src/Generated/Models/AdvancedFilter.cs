@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> The operator type used for filtering, e.g., NumberIn, StringContains, BoolEquals and others. </summary>
         internal AdvancedFilterOperatorType OperatorType { get; set; }
         /// <summary> The field/property in the event based on which you want to filter. </summary>
+        [WirePath("key")]
         public string Key { get; set; }
     }
 }

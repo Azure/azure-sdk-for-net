@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Resources.Models
 {
     internal partial class ArmApplicationNotificationPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationNotificationPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationNotificationPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationNotificationPolicy>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ArmApplicationNotificationPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationNotificationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,12 +36,11 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(ArmApplicationNotificationPolicy)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("notificationEndpoints"u8);
             writer.WriteStartArray();
             foreach (var item in NotificationEndpoints)
             {
-                writer.WriteObjectValue<ArmApplicationNotificationEndpoint>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -43,14 +51,13 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ArmApplicationNotificationPolicy IJsonModel<ArmApplicationNotificationPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +74,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static ArmApplicationNotificationPolicy DeserializeArmApplicationNotificationPolicy(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -109,17 +116,18 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotificationEndpoints), out propertyOverride);
-            if (Optional.IsCollectionDefined(NotificationEndpoints) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NotificationEndpoints.Any() || hasPropertyOverride)
+                builder.Append("  notificationEndpoints: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NotificationEndpoints))
                 {
-                    builder.Append("  notificationEndpoints: ");
-                    if (hasPropertyOverride)
+                    if (NotificationEndpoints.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  notificationEndpoints: ");
                         builder.AppendLine("[");
                         foreach (var item in NotificationEndpoints)
                         {
@@ -141,7 +149,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -157,7 +165,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeArmApplicationNotificationPolicy(document.RootElement, options);
                     }
                 default:

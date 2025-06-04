@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 
 namespace Azure.AI.DocumentIntelligence.Samples
 {
@@ -15,12 +16,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             #region Snippet:DocumentIntelligenceSampleCreateCopySourceClient
 #if SNIPPET
             string sourceEndpoint = "<sourceEndpoint>";
-            string sourceApiKey = "<sourceApiKey>";
+            var sourceResourceCredential = new DefaultAzureCredential();
 #else
             string sourceEndpoint = TestEnvironment.Endpoint;
-            string sourceApiKey = TestEnvironment.ApiKey;
+            var sourceResourceCredential = TestEnvironment.Credential;
 #endif
-            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), new AzureKeyCredential(sourceApiKey));
+            var sourceClient = new DocumentIntelligenceAdministrationClient(new Uri(sourceEndpoint), sourceResourceCredential);
             #endregion
 
             // For the purpose of this sample, we are going to create a model to copy. Note that
@@ -28,22 +29,20 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
             string setupModelId = Guid.NewGuid().ToString();
             Uri blobContainerUri = new Uri(TestEnvironment.BlobContainerSasUrl);
-            var buildContent = new BuildDocumentModelContent(setupModelId, DocumentBuildMode.Template)
-            {
-                AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
-            };
+            var blobSource = new BlobContentSource(blobContainerUri);
+            var buildOptions = new BuildDocumentModelOptions(setupModelId, DocumentBuildMode.Template, blobSource);
 
-            await sourceClient.BuildDocumentModelAsync(WaitUntil.Completed, buildContent);
+            await sourceClient.BuildDocumentModelAsync(WaitUntil.Completed, buildOptions);
 
             #region Snippet:DocumentIntelligenceSampleCreateCopyTargetClient
 #if SNIPPET
             string targetEndpoint = "<targetEndpoint>";
-            string targetApiKey = "<targetApiKey>";
+            var targetResourceCredential = new DefaultAzureCredential();
 #else
             string targetEndpoint = TestEnvironment.Endpoint;
-            string targetApiKey = TestEnvironment.ApiKey;
+            var targetResourceCredential = TestEnvironment.Credential;
 #endif
-            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), new AzureKeyCredential(targetApiKey));
+            var targetClient = new DocumentIntelligenceAdministrationClient(new Uri(targetEndpoint), targetResourceCredential);
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleGetCopyAuthorization
@@ -52,8 +51,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             string targetModelId = Guid.NewGuid().ToString();
 #endif
-            var authorizeCopyContent = new AuthorizeCopyContent(targetModelId);
-            CopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyContent);
+            var authorizeCopyOptions = new AuthorizeModelCopyOptions(targetModelId);
+            ModelCopyAuthorization copyAuthorization = await targetClient.AuthorizeModelCopyAsync(authorizeCopyOptions);
             #endregion
 
             #region Snippet:DocumentIntelligenceSampleCreateCopyModel

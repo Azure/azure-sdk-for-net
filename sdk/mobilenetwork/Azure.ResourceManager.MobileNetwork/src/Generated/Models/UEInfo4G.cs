@@ -114,66 +114,97 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> International mobile subscriber identifier. </summary>
+        [WirePath("info.imsi")]
         public string Imsi { get; set; }
         /// <summary> International mobile equipment identity. </summary>
+        [WirePath("info.imei")]
         public string Imei { get; set; }
         /// <summary> International mobile equipment identity – software version. </summary>
+        [WirePath("info.imeisv")]
         public string Imeisv { get; set; }
         /// <summary> Gets the session info. </summary>
+        [WirePath("info.sessionInfo")]
         public IList<UESessionInfo4G> SessionInfo { get; }
         /// <summary> Per-UE transport network layer association. </summary>
+        [WirePath("info.perUeTnla")]
         public string PerUETnla { get; set; }
         /// <summary> MME S1AP identifier. </summary>
+        [WirePath("info.mmeS1apId")]
         public int? MmeS1ApId { get; set; }
         /// <summary> eNodeB S1AP identifier. </summary>
+        [WirePath("info.enbS1apId")]
         public int? EnbS1ApId { get; set; }
         /// <summary> Last Visited TAI. </summary>
+        [WirePath("info.lastVisitedTai")]
         public string LastVisitedTai { get; set; }
         /// <summary> State of the UE. </summary>
+        [WirePath("info.ueState")]
         public UEState? UEState { get; set; }
         /// <summary> Radio connection establishment cause. </summary>
+        [WirePath("info.rrcEstablishmentCause")]
         public RrcEstablishmentCause? RrcEstablishmentCause { get; set; }
         /// <summary> The UE's usage setting. </summary>
+        [WirePath("info.ueUsageSetting")]
         public UEUsageSetting? UEUsageSetting { get; set; }
         /// <summary> The timestamp of last activity of UE (UTC). </summary>
+        [WirePath("info.lastActivityTime")]
         public DateTimeOffset? LastActivityOn { get; set; }
         /// <summary> NG-eNodeB identifier. </summary>
+        [WirePath("info.ngeNbId")]
         public string NgeNbId { get; set; }
         /// <summary> eNodeB identifier. </summary>
+        [WirePath("info.eNbId")]
         public string ENbId { get; set; }
         /// <summary> N3 IWF identifier. </summary>
+        [WirePath("info.n3IwfId")]
         public string N3IwfId { get; set; }
         /// <summary> W-AGF identifier. </summary>
+        [WirePath("info.wagfId")]
         public string WagfId { get; set; }
         /// <summary> TNGF identifier. </summary>
+        [WirePath("info.tngfId")]
         public string TngfId { get; set; }
         /// <summary> Network identifier. </summary>
+        [WirePath("info.nid")]
         public string Nid { get; set; }
         /// <summary> Gets or sets the bit length. </summary>
+        [WirePath("info.bitLength")]
         public int? BitLength { get; set; }
         /// <summary> Gets or sets the gnb value. </summary>
+        [WirePath("info.gNBValue")]
         public string GNBValue { get; set; }
         /// <summary> Mobile country code (MCC). </summary>
+        [WirePath("info.mcc")]
         public string MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc { get; set; }
         /// <summary> Mobile network code (MNC). </summary>
+        [WirePath("info.mnc")]
         public string MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc { get; set; }
         /// <summary> Location Type. </summary>
+        [WirePath("info.locationType")]
         public string LocationType { get; set; }
         /// <summary> Type Allocation Code of UE. </summary>
+        [WirePath("info.tac")]
         public string Tac { get; set; }
         /// <summary> Mobile country code (MCC). </summary>
+        [WirePath("info.mcc")]
         public string MccInfoConnectionInfoLocationInfoPlmnMcc { get; set; }
         /// <summary> Mobile network code (MNC). </summary>
+        [WirePath("info.mnc")]
         public string MncInfoConnectionInfoLocationInfoPlmnMnc { get; set; }
         /// <summary> MME Temporary Mobile Subscriber Identity. </summary>
+        [WirePath("info.mTmsi")]
         public int MTmsi { get; set; }
         /// <summary> MME group identifier. </summary>
+        [WirePath("info.groupId")]
         public int GroupId { get; set; }
         /// <summary> MME code. </summary>
+        [WirePath("info.code")]
         public int Code { get; set; }
         /// <summary> Mobile country code (MCC). </summary>
+        [WirePath("info.mcc")]
         public string MccInfoGutiPlmnMcc { get; set; }
         /// <summary> Mobile network code (MNC). </summary>
+        [WirePath("info.mnc")]
         public string MncInfoGutiPlmnMnc { get; set; }
     }
 }

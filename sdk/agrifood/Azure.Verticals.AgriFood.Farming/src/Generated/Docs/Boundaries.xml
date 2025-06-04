@@ -7,7 +7,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -20,7 +20,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -45,7 +45,7 @@ This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -58,7 +58,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -83,7 +83,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", "<boundaryId>", content);
@@ -95,7 +95,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -165,7 +165,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", "<boundaryId>", content);
@@ -177,7 +177,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -247,7 +247,7 @@ This sample shows how to call GetBoundaryAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>", null);
 
@@ -258,7 +258,7 @@ This sample shows how to call GetBoundaryAsync with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.GetBoundaryAsync("<partyId>", "<boundaryId>", null);
 
@@ -292,7 +292,7 @@ This sample shows how to call GetBoundary and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.GetBoundary("<partyId>", "<boundaryId>", null);
 
@@ -303,7 +303,7 @@ This sample shows how to call GetBoundary with all parameters and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.GetBoundary("<partyId>", "<boundaryId>", null);
 
@@ -337,7 +337,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
 
@@ -347,7 +347,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.DeleteAsync("<partyId>", "<boundaryId>");
 
@@ -360,7 +360,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.Delete("<partyId>", "<boundaryId>");
 
@@ -370,7 +370,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.Delete("<partyId>", "<boundaryId>");
 
@@ -383,7 +383,7 @@ This sample shows how to call GetOverlapAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -394,7 +394,7 @@ This sample shows how to call GetOverlapAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = await client.GetOverlapAsync("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -410,7 +410,7 @@ This sample shows how to call GetOverlap and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -421,7 +421,7 @@ This sample shows how to call GetOverlap with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Response response = client.GetOverlap("<partyId>", "<boundaryId>", "<otherPartyId>", "<otherBoundaryId>", null);
 
@@ -437,7 +437,7 @@ This sample shows how to call GetBoundariesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 await foreach (BinaryData item in client.GetBoundariesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -449,7 +449,7 @@ This sample shows how to call GetBoundariesAsync with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 await foreach (BinaryData item in client.GetBoundariesAsync("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -480,7 +480,7 @@ This sample shows how to call GetBoundaries and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 foreach (BinaryData item in client.GetBoundaries(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -492,7 +492,7 @@ This sample shows how to call GetBoundaries with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 foreach (BinaryData item in client.GetBoundaries("<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<boundaryIds>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -523,7 +523,7 @@ This sample shows how to call SearchAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 await foreach (BinaryData item in client.SearchAsync(content))
@@ -536,7 +536,7 @@ This sample shows how to call SearchAsync with all request content and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -617,7 +617,7 @@ This sample shows how to call Search and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 foreach (BinaryData item in client.Search(content))
@@ -630,7 +630,7 @@ This sample shows how to call Search with all request content and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -711,7 +711,7 @@ This sample shows how to call GetBoundariesByPartyIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -723,7 +723,7 @@ This sample shows how to call GetBoundariesByPartyIdAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 await foreach (BinaryData item in client.GetBoundariesByPartyIdAsync("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -754,7 +754,7 @@ This sample shows how to call GetBoundariesByPartyId and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -766,7 +766,7 @@ This sample shows how to call GetBoundariesByPartyId with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 foreach (BinaryData item in client.GetBoundariesByPartyId("<partyId>", "<parentType>", "<type>", new string[] { "<parentIds>" }, 123.45, 123.45, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -797,7 +797,7 @@ This sample shows how to call SearchByPartyIdAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 await foreach (BinaryData item in client.SearchByPartyIdAsync("<partyId>", content))
@@ -810,7 +810,7 @@ This sample shows how to call SearchByPartyIdAsync with all parameters and reque
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -891,7 +891,7 @@ This sample shows how to call SearchByPartyId and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 foreach (BinaryData item in client.SearchByPartyId("<partyId>", content))
@@ -904,7 +904,7 @@ This sample shows how to call SearchByPartyId with all parameters and request co
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -985,7 +985,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
 BinaryData responseData = operation.Value;
@@ -999,7 +999,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
 BinaryData responseData = operation.Value;
@@ -1025,7 +1025,7 @@ This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
 BinaryData responseData = operation.Value;
@@ -1039,7 +1039,7 @@ This sample shows how to call CreateCascadeDeleteJob with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient(apiVersion: "2022-11-01-preview");
+Boundaries client = new FarmBeatsClient(endpoint, credential).GetBoundariesClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", "<boundaryId>", null);
 BinaryData responseData = operation.Value;

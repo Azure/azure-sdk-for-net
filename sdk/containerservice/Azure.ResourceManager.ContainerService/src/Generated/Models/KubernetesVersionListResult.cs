@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Array of AKS supported Kubernetes versions. </summary>
+        [WirePath("values")]
         public IReadOnlyList<KubernetesVersion> Values { get; }
     }
 }

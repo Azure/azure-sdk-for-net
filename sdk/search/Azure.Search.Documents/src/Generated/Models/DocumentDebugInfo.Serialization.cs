@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Search.Documents.Models
@@ -18,6 +19,8 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             SemanticDebugInfo semantic = default;
+            VectorsDebugInfo vectors = default;
+            IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("semantic"u8))
@@ -29,15 +32,50 @@ namespace Azure.Search.Documents.Models
                     semantic = SemanticDebugInfo.DeserializeSemanticDebugInfo(property.Value);
                     continue;
                 }
+                if (property.NameEquals("vectors"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vectors = VectorsDebugInfo.DeserializeVectorsDebugInfo(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("innerHits"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, IList<QueryResultDocumentInnerHit>> dictionary = new Dictionary<string, IList<QueryResultDocumentInnerHit>>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            List<QueryResultDocumentInnerHit> array = new List<QueryResultDocumentInnerHit>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(QueryResultDocumentInnerHit.DeserializeQueryResultDocumentInnerHit(item));
+                            }
+                            dictionary.Add(property0.Name, array);
+                        }
+                    }
+                    innerHits = dictionary;
+                    continue;
+                }
             }
-            return new DocumentDebugInfo(semantic);
+            return new DocumentDebugInfo(semantic, vectors, innerHits ?? new ChangeTrackingDictionary<string, IList<QueryResultDocumentInnerHit>>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentDebugInfo FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentDebugInfo(document.RootElement);
         }
     }

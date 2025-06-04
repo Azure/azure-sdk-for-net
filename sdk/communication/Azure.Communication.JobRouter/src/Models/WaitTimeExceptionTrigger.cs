@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -27,7 +28,7 @@ namespace Azure.Communication.JobRouter
         public TimeSpan Threshold { get; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        internal void WriteThresholdSeconds(Utf8JsonWriter writer)
+        internal void WriteThresholdSeconds(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteNumberValue(Threshold.TotalSeconds);
         }

@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.SecurityDevOps
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityDevOps/azureDevOpsConnectors/", false);
+            uri.AppendPath(azureDevOpsConnectorName, true);
+            uri.AppendPath("/stats", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName)
         {
             var message = _pipeline.CreateMessage();
@@ -77,7 +92,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsConnectorStatsListResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AzureDevOpsConnectorStatsListResponse.DeserializeAzureDevOpsConnectorStatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -106,7 +121,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case 200:
                     {
                         AzureDevOpsConnectorStatsListResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AzureDevOpsConnectorStatsListResponse.DeserializeAzureDevOpsConnectorStatsListResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

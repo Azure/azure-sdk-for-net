@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<ActivityDependency>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,16 +54,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<UserProperty>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue<Expression>(Items);
+            writer.WriteObjectValue(Items);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue<Expression>(Condition);
+            writer.WriteObjectValue(Condition);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -195,15 +195,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new FilterActivity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFilterActivity(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<FilterActivity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -211,7 +211,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, FilterActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<FilterActivity>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override FilterActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

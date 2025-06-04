@@ -51,19 +51,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionUsernamePassword"/>. </summary>
-        /// <param name="password"></param>
         /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <param name="securityToken"> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningWorkspaceConnectionUsernamePassword(string password, string username, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningWorkspaceConnectionUsernamePassword(string username, string password, string securityToken, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Password = password;
             Username = username;
+            Password = password;
+            SecurityToken = securityToken;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the password. </summary>
-        public string Password { get; set; }
         /// <summary> Gets or sets the username. </summary>
+        [WirePath("username")]
         public string Username { get; set; }
+        /// <summary> Gets or sets the password. </summary>
+        [WirePath("password")]
+        public string Password { get; set; }
+        /// <summary> Optional, required by connections like SalesForce for extra security in addition to UsernamePassword. </summary>
+        [WirePath("securityToken")]
+        public string SecurityToken { get; set; }
     }
 }

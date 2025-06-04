@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 {
     public partial class CheckManagementGroupPolicyRestrictionsContent : IUtf8JsonSerializable, IJsonModel<CheckManagementGroupPolicyRestrictionsContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckManagementGroupPolicyRestrictionsContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CheckManagementGroupPolicyRestrictionsContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CheckManagementGroupPolicyRestrictionsContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CheckManagementGroupPolicyRestrictionsContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
-                writer.WriteObjectValue<CheckRestrictionsResourceDetails>(ResourceDetails, options);
+                writer.WriteObjectValue(ResourceDetails, options);
             }
             if (Optional.IsCollectionDefined(PendingFields))
             {
@@ -37,7 +45,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in PendingFields)
                 {
-                    writer.WriteObjectValue<PendingField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,14 +57,13 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CheckManagementGroupPolicyRestrictionsContent IJsonModel<CheckManagementGroupPolicyRestrictionsContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
 
         internal static CheckManagementGroupPolicyRestrictionsContent DeserializeCheckManagementGroupPolicyRestrictionsContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -124,7 +131,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPolicyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CheckManagementGroupPolicyRestrictionsContent)} does not support writing '{options.Format}' format.");
             }
@@ -138,7 +145,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCheckManagementGroupPolicyRestrictionsContent(document.RootElement, options);
                     }
                 default:

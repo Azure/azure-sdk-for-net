@@ -18,6 +18,11 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteStartObject();
             writer.WritePropertyName("permission"u8);
             writer.WriteStringValue(Permission);
+            if (Common.Optional.IsDefined(Format))
+            {
+                writer.WritePropertyName("format"u8);
+                writer.WriteStringValue(Format.Value.ToSerialString());
+            }
             writer.WriteEndObject();
         }
 
@@ -28,6 +33,7 @@ namespace Azure.Storage.Files.Shares.Models
                 return null;
             }
             string permission = default;
+            FilePermissionFormat? format = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("permission"u8))
@@ -35,23 +41,32 @@ namespace Azure.Storage.Files.Shares.Models
                     permission = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("format"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    format = property.Value.GetString().ToFilePermissionFormat();
+                    continue;
+                }
             }
-            return new SharePermission(permission);
+            return new SharePermission(permission, format);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SharePermission FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSharePermission(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SharePermission>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

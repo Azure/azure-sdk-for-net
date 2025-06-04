@@ -33,7 +33,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(MessageRole left, MessageRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MessageRole"/> values are not the same. </summary>
         public static bool operator !=(MessageRole left, MessageRole right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MessageRole"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MessageRole"/>. </summary>
         public static implicit operator MessageRole(string value) => new MessageRole(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

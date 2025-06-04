@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Key vault secret identifier for fetching secret. Providing a versioned secret will prevent auto-refresh. This requires API Management service to be configured with aka.ms/apimmsi. </summary>
+        [WirePath("secretIdentifier")]
         public string SecretIdentifier { get; set; }
         /// <summary> Null for SystemAssignedIdentity or Client Id for UserAssignedIdentity , which will be used to access key vault secret. </summary>
+        [WirePath("identityClientId")]
         public string IdentityClientId { get; set; }
     }
 }

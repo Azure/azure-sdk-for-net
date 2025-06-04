@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> Delivery mode of the event subscription. </summary>
+        [WirePath("deliveryMode")]
         public DeliveryMode? DeliveryMode { get; set; }
         /// <summary> This property should be populated when deliveryMode is queue and represents information about the queue subscription. </summary>
+        [WirePath("queue")]
         public QueueInfo Queue { get; set; }
         /// <summary> This property should be populated when deliveryMode is push and represents information about the push subscription. </summary>
+        [WirePath("push")]
         public PushInfo Push { get; set; }
     }
 }

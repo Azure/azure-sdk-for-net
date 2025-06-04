@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Defines the source of the SSL certificate. </summary>
+    /// <summary>
+    /// Defines the source of the SSL certificate.
+    /// Serialized Name: AfdCertificateType
+    /// </summary>
     public readonly partial struct FrontDoorCertificateType : IEquatable<FrontDoorCertificateType>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string ManagedCertificateValue = "ManagedCertificate";
         private const string AzureFirstPartyManagedCertificateValue = "AzureFirstPartyManagedCertificate";
 
-        /// <summary> CustomerCertificate. </summary>
+        /// <summary>
+        /// CustomerCertificate
+        /// Serialized Name: AfdCertificateType.CustomerCertificate
+        /// </summary>
         public static FrontDoorCertificateType CustomerCertificate { get; } = new FrontDoorCertificateType(CustomerCertificateValue);
-        /// <summary> ManagedCertificate. </summary>
+        /// <summary>
+        /// ManagedCertificate
+        /// Serialized Name: AfdCertificateType.ManagedCertificate
+        /// </summary>
         public static FrontDoorCertificateType ManagedCertificate { get; } = new FrontDoorCertificateType(ManagedCertificateValue);
-        /// <summary> AzureFirstPartyManagedCertificate. </summary>
+        /// <summary>
+        /// AzureFirstPartyManagedCertificate
+        /// Serialized Name: AfdCertificateType.AzureFirstPartyManagedCertificate
+        /// </summary>
         public static FrontDoorCertificateType AzureFirstPartyManagedCertificate { get; } = new FrontDoorCertificateType(AzureFirstPartyManagedCertificateValue);
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are the same. </summary>
         public static bool operator ==(FrontDoorCertificateType left, FrontDoorCertificateType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FrontDoorCertificateType"/> values are not the same. </summary>
         public static bool operator !=(FrontDoorCertificateType left, FrontDoorCertificateType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="FrontDoorCertificateType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="FrontDoorCertificateType"/>. </summary>
         public static implicit operator FrontDoorCertificateType(string value) => new FrontDoorCertificateType(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

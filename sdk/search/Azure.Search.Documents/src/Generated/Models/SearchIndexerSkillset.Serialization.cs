@@ -33,17 +33,17 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
-                writer.WriteObjectValue<CognitiveServicesAccount>(CognitiveServicesAccount);
+                writer.WriteObjectValue(CognitiveServicesAccount);
             }
             if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
-                writer.WriteObjectValue<KnowledgeStore>(KnowledgeStore);
+                writer.WriteObjectValue(KnowledgeStore);
             }
-            if (Optional.IsDefined(IndexProjections))
+            if (Optional.IsDefined(IndexProjection))
             {
                 writer.WritePropertyName("indexProjections"u8);
-                writer.WriteObjectValue<SearchIndexerIndexProjections>(IndexProjections);
+                writer.WriteObjectValue(IndexProjection);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
+                    writer.WriteObjectValue(EncryptionKey);
                 }
                 else
                 {
@@ -76,7 +76,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<SearchIndexerSkill> skills = default;
             CognitiveServicesAccount cognitiveServices = default;
             KnowledgeStore knowledgeStore = default;
-            SearchIndexerIndexProjections indexProjections = default;
+            SearchIndexerIndexProjection indexProjections = default;
             string odataEtag = default;
             SearchResourceEncryptionKey encryptionKey = default;
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    indexProjections = SearchIndexerIndexProjections.DeserializeSearchIndexerIndexProjections(property.Value);
+                    indexProjections = SearchIndexerIndexProjection.DeserializeSearchIndexerIndexProjection(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.etag"u8))
@@ -159,15 +159,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchIndexerSkillset FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchIndexerSkillset(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchIndexerSkillset>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseBigDataPoolInfoData : IUtf8JsonSerializable, IJsonModel<SynapseBigDataPoolInfoData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseBigDataPoolInfoData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseBigDataPoolInfoData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SynapseBigDataPoolInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SynapseBigDataPoolInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,40 +36,7 @@ namespace Azure.ResourceManager.Synapse
                 throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
@@ -71,7 +47,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue<BigDataPoolAutoScaleProperties>(AutoScale, options);
+                writer.WriteObjectValue(AutoScale, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -81,7 +57,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
-                writer.WriteObjectValue<BigDataPoolAutoPauseProperties>(AutoPause, options);
+                writer.WriteObjectValue(AutoPause, options);
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
@@ -106,7 +82,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
-                writer.WriteObjectValue<SynapseDynamicExecutorAllocation>(DynamicExecutorAllocation, options);
+                writer.WriteObjectValue(DynamicExecutorAllocation, options);
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
@@ -121,7 +97,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
-                writer.WriteObjectValue<BigDataPoolLibraryRequirements>(LibraryRequirements, options);
+                writer.WriteObjectValue(LibraryRequirements, options);
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
@@ -129,14 +105,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue<BigDataPoolLibraryInfo>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
-                writer.WriteObjectValue<BigDataPoolSparkConfigProperties>(SparkConfigProperties, options);
+                writer.WriteObjectValue(SparkConfigProperties, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -164,22 +140,6 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStringValue(LastSucceededOn.Value, "O");
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         SynapseBigDataPoolInfoData IJsonModel<SynapseBigDataPoolInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -196,7 +156,7 @@ namespace Azure.ResourceManager.Synapse
 
         internal static SynapseBigDataPoolInfoData DeserializeSynapseBigDataPoolInfoData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -488,7 +448,7 @@ namespace Azure.ResourceManager.Synapse
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSynapseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support writing '{options.Format}' format.");
             }
@@ -502,7 +462,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSynapseBigDataPoolInfoData(document.RootElement, options);
                     }
                 default:

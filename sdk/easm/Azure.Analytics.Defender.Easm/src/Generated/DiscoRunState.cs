@@ -39,7 +39,7 @@ namespace Azure.Analytics.Defender.Easm
         public static bool operator ==(DiscoRunState left, DiscoRunState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiscoRunState"/> values are not the same. </summary>
         public static bool operator !=(DiscoRunState left, DiscoRunState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiscoRunState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiscoRunState"/>. </summary>
         public static implicit operator DiscoRunState(string value) => new DiscoRunState(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.Analytics.Defender.Easm
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

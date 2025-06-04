@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Describes the properties of a supported private link resource for the search service. For a given API version, this represents the 'supported' groupIds when creating a shared private link resource. </summary>
+    /// <summary> Describes the properties of a supported private link resource for the Azure AI Search service. For a given API version, this represents the 'supported' groupIds when creating a shared private link resource. </summary>
     public partial class SearchPrivateLinkResourceProperties
     {
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="groupId"> The group ID of the private link resource. </param>
         /// <param name="requiredMembers"> The list of required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> The list of required DNS zone names of the private link resource. </param>
-        /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service and that are supported by search. </param>
+        /// <param name="shareablePrivateLinkResourceTypes"> The list of resources that are onboarded to private link service, that are supported by Azure AI Search. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SearchPrivateLinkResourceProperties(string groupId, IReadOnlyList<string> requiredMembers, IReadOnlyList<string> requiredZoneNames, IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> shareablePrivateLinkResourceTypes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <summary> The list of required DNS zone names of the private link resource. </summary>
         [WirePath("requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
-        /// <summary> The list of resources that are onboarded to private link service and that are supported by search. </summary>
+        /// <summary> The list of resources that are onboarded to private link service, that are supported by Azure AI Search. </summary>
         [WirePath("shareablePrivateLinkResourceTypes")]
         public IReadOnlyList<ShareableSearchServicePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get; }
     }

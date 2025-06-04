@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    /// <summary> The provisioning state of the Azure Monitor workspace. Set to Succeeded if everything is healthy. </summary>
+    /// <summary> The provisioning state of a resource. </summary>
     public readonly partial struct MonitorProvisioningState : IEquatable<MonitorProvisioningState>
     {
         private readonly string _value;
@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Monitor.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string CreatingValue = "Creating";
         private const string SucceededValue = "Succeeded";
-        private const string DeletingValue = "Deleting";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
+        private const string CreatingValue = "Creating";
+        private const string DeletingValue = "Deleting";
 
-        /// <summary> Creating. </summary>
-        public static MonitorProvisioningState Creating { get; } = new MonitorProvisioningState(CreatingValue);
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static MonitorProvisioningState Succeeded { get; } = new MonitorProvisioningState(SucceededValue);
-        /// <summary> Deleting. </summary>
-        public static MonitorProvisioningState Deleting { get; } = new MonitorProvisioningState(DeletingValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static MonitorProvisioningState Failed { get; } = new MonitorProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static MonitorProvisioningState Canceled { get; } = new MonitorProvisioningState(CanceledValue);
+        /// <summary> The resource is being created. </summary>
+        public static MonitorProvisioningState Creating { get; } = new MonitorProvisioningState(CreatingValue);
+        /// <summary> The resource is being deleted. </summary>
+        public static MonitorProvisioningState Deleting { get; } = new MonitorProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="MonitorProvisioningState"/> values are the same. </summary>
         public static bool operator ==(MonitorProvisioningState left, MonitorProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MonitorProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MonitorProvisioningState left, MonitorProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MonitorProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitorProvisioningState"/>. </summary>
         public static implicit operator MonitorProvisioningState(string value) => new MonitorProvisioningState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

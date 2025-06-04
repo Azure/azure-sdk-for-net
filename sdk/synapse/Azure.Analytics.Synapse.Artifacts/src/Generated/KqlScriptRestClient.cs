@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<KqlScriptResource>(kqlScript);
+            content.JsonWriter.WriteObjectValue(kqlScript);
             request.Content = content;
             return message;
         }
@@ -143,7 +143,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         KqlScriptResource value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,7 +170,7 @@ namespace Azure.Analytics.Synapse.Artifacts
                 case 200:
                     {
                         KqlScriptResource value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KqlScriptResource.DeserializeKqlScriptResource(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ArtifactRenameRequest>(renameRequest);
+            content.JsonWriter.WriteObjectValue(renameRequest);
             request.Content = content;
             return message;
         }

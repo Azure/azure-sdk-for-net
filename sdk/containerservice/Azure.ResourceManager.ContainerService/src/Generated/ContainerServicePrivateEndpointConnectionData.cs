@@ -75,10 +75,12 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> The current provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerServicePrivateEndpointConnectionProvisioningState? ProvisioningState { get; }
         /// <summary> The resource of private endpoint. </summary>
         internal WritableSubResource PrivateEndpoint { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.privateEndpoint.id")]
         public ResourceIdentifier PrivateEndpointId
         {
             get => PrivateEndpoint is null ? default : PrivateEndpoint.Id;
@@ -91,6 +93,7 @@ namespace Azure.ResourceManager.ContainerService
         }
 
         /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
+        [WirePath("properties.privateLinkServiceConnectionState")]
         public ContainerServicePrivateLinkServiceConnectionState ConnectionState { get; set; }
     }
 }

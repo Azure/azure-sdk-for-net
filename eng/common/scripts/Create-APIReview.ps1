@@ -78,6 +78,7 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     try
     {
         $Response = Invoke-WebRequest -Method 'POST' -Uri $uri -Body $multipartContent -Headers $headers
+        Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -114,6 +115,7 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     try
     {
         $Response = Invoke-WebRequest -Method 'GET' -Uri $uri -Headers $headers
+        Write-Host "API review: $($Response.Content)"
         $StatusCode = $Response.StatusCode
     }
     catch
@@ -159,7 +161,12 @@ function Submit-APIReview($packageInfo, $packagePath, $packageArtifactName)
 
 function IsApiviewStatusCheckRequired($packageInfo)
 {
-    if (($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "spring") -and $packageInfo.IsNewSdk) {
+    if ($IsApiviewStatusCheckRequiredFn -and (Test-Path "Function:$IsApiviewStatusCheckRequiredFn"))
+    {
+        return &$IsApiviewStatusCheckRequiredFn $packageInfo
+    }
+
+    if ($packageInfo.SdkType -eq "client" -and $packageInfo.IsNewSdk) {
         return $true
     }
     return $false

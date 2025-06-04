@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Type of the value. </summary>
+        [WirePath("valueType")]
         public string ValueType { get; set; }
         /// <summary> Value of parsed pattern. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

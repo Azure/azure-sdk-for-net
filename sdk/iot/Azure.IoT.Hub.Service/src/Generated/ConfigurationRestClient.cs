@@ -72,7 +72,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         TwinConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -99,7 +99,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         TwinConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -108,7 +108,7 @@ namespace Azure.IoT.Hub.Service
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string id, TwinConfiguration configuration, string ifMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string id, TwinConfiguration twinConfiguration, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -126,29 +126,29 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TwinConfiguration>(configuration);
+            content.JsonWriter.WriteObjectValue(twinConfiguration);
             request.Content = content;
             return message;
         }
 
         /// <summary> Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
-        /// <param name="configuration"> The configuration to be created or updated. </param>
+        /// <param name="twinConfiguration"> The configuration to be created or updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
-        public async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="twinConfiguration"/> is null. </exception>
+        public async Task<Response<TwinConfiguration>> CreateOrUpdateAsync(string id, TwinConfiguration twinConfiguration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (configuration == null)
+            if (twinConfiguration == null)
             {
-                throw new ArgumentNullException(nameof(configuration));
+                throw new ArgumentNullException(nameof(twinConfiguration));
             }
 
-            using var message = CreateCreateOrUpdateRequest(id, configuration, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(id, twinConfiguration, ifMatch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -156,7 +156,7 @@ namespace Azure.IoT.Hub.Service
                 case 201:
                     {
                         TwinConfiguration value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -167,22 +167,22 @@ namespace Azure.IoT.Hub.Service
 
         /// <summary> Creates or updates a configuration on the IoT Hub for automatic device/module management. Configuration identifier and Content cannot be updated. </summary>
         /// <param name="id"> The unique identifier of the configuration. </param>
-        /// <param name="configuration"> The configuration to be created or updated. </param>
+        /// <param name="twinConfiguration"> The configuration to be created or updated. </param>
         /// <param name="ifMatch"> The string representing a weak ETag for the configuration, as per RFC7232. This should not be set when creating a configuration, but may be set when updating a configuration. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="configuration"/> is null. </exception>
-        public Response<TwinConfiguration> CreateOrUpdate(string id, TwinConfiguration configuration, string ifMatch = null, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="twinConfiguration"/> is null. </exception>
+        public Response<TwinConfiguration> CreateOrUpdate(string id, TwinConfiguration twinConfiguration, string ifMatch = null, CancellationToken cancellationToken = default)
         {
             if (id == null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
-            if (configuration == null)
+            if (twinConfiguration == null)
             {
-                throw new ArgumentNullException(nameof(configuration));
+                throw new ArgumentNullException(nameof(twinConfiguration));
             }
 
-            using var message = CreateCreateOrUpdateRequest(id, configuration, ifMatch);
+            using var message = CreateCreateOrUpdateRequest(id, twinConfiguration, ifMatch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -190,7 +190,7 @@ namespace Azure.IoT.Hub.Service
                 case 201:
                     {
                         TwinConfiguration value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = TwinConfiguration.DeserializeTwinConfiguration(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -293,7 +293,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<TwinConfiguration> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<TwinConfiguration> array = new List<TwinConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -319,7 +319,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         IReadOnlyList<TwinConfiguration> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<TwinConfiguration> array = new List<TwinConfiguration>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -346,7 +346,7 @@ namespace Azure.IoT.Hub.Service
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ConfigurationQueriesTestInput>(input);
+            content.JsonWriter.WriteObjectValue(input);
             request.Content = content;
             return message;
         }
@@ -369,7 +369,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         ConfigurationQueriesTestResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -396,7 +396,7 @@ namespace Azure.IoT.Hub.Service
                 case 200:
                     {
                         ConfigurationQueriesTestResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConfigurationQueriesTestResponse.DeserializeConfigurationQueriesTestResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.IoT.Hub.Service
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue<ConfigurationContent>(content);
+            content0.JsonWriter.WriteObjectValue(content);
             request.Content = content0;
             return message;
         }

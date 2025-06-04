@@ -25,11 +25,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("targetBigDataPool"u8);
-            writer.WriteObjectValue<BigDataPoolReference>(TargetBigDataPool);
+            writer.WriteObjectValue(TargetBigDataPool);
             if (Optional.IsDefined(TargetSparkConfiguration))
             {
                 writer.WritePropertyName("targetSparkConfiguration"u8);
-                writer.WriteObjectValue<SparkConfigurationReference>(TargetSparkConfiguration);
+                writer.WriteObjectValue(TargetSparkConfiguration);
             }
             if (Optional.IsDefined(RequiredSparkVersion))
             {
@@ -42,13 +42,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Language);
             }
             writer.WritePropertyName("jobProperties"u8);
-            writer.WriteObjectValue<SparkJobProperties>(JobProperties);
+            writer.WriteObjectValue(JobProperties);
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue<SparkJobDefinitionFolder>(Folder);
+                    writer.WriteObjectValue(Folder);
                 }
                 else
                 {
@@ -142,15 +142,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SparkJobDefinition FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSparkJobDefinition(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SparkJobDefinition>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SparkJobDefinition model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<SparkJobDefinition>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override SparkJobDefinition Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

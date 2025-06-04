@@ -53,22 +53,18 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="elasticityProfile"> Specifies elasticity profile of standby container group pools. </param>
-        /// <param name="containerGroupProperties"> Specifies container group properties of standby container group pools. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolPatch(IDictionary<string, string> tags, StandbyContainerGroupPoolElasticityPatchProfile elasticityProfile, StandbyContainerGroupPatchProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StandbyContainerGroupPoolPatch(IDictionary<string, string> tags, StandbyContainerGroupPoolUpdateProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            ElasticityProfile = elasticityProfile;
-            ContainerGroupProperties = containerGroupProperties;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Specifies elasticity profile of standby container group pools. </summary>
-        public StandbyContainerGroupPoolElasticityPatchProfile ElasticityProfile { get; set; }
-        /// <summary> Specifies container group properties of standby container group pools. </summary>
-        public StandbyContainerGroupPatchProperties ContainerGroupProperties { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public StandbyContainerGroupPoolUpdateProperties Properties { get; set; }
     }
 }

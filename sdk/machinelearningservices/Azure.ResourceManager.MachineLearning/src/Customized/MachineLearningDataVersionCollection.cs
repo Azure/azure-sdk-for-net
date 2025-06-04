@@ -31,18 +31,18 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
+        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="top">
         /// Top count of results, top count cannot be greater than the page size.
         ///                               If topCount &gt; page size, results with be default page size count will be returned
         /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy, int? top, string skip, string tags, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAllAsync(new MachineLearningDataVersionCollectionGetAllOptions() { OrderBy = orderBy, Top = top, Skip = skip, Tags = tags, ListViewType = listViewType, Stage = null}, cancellationToken);
+        public virtual AsyncPageable<MachineLearningDataVersionResource> GetAllAsync(string orderBy, string skip, int? top, string tags, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
+            => GetAllAsync(orderBy, top, skip, tags, listViewType, cancellationToken);
 
         /// <summary>
         /// List data versions in the data container
@@ -58,17 +58,17 @@ namespace Azure.ResourceManager.MachineLearning
         /// </list>
         /// </summary>
         /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
+        ///  <param name="skip"> Continuation token for pagination. </param>
         /// <param name="top">
         /// Top count of results, top count cannot be greater than the page size.
         ///                               If topCount &gt; page size, results with be default page size count will be returned
         /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
         /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
         /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="MachineLearningDataVersionResource" /> that may take multiple service requests to iterate over. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy, int? top, string skip, string tags, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
-            => GetAll(new MachineLearningDataVersionCollectionGetAllOptions() { OrderBy = orderBy, Top = top, Skip = skip, Tags = tags, ListViewType = listViewType, Stage = null}, cancellationToken);
+        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy, string skip, int? top, string tags, MachineLearningListViewType? listViewType, CancellationToken cancellationToken)
+            => GetAll(orderBy, top, skip, tags, listViewType, cancellationToken);
     }
 }

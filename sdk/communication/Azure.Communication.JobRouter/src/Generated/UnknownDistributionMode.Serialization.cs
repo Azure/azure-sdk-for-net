@@ -15,9 +15,18 @@ namespace Azure.Communication.JobRouter
 {
     internal partial class UnknownDistributionMode : IUtf8JsonSerializable, IJsonModel<DistributionMode>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributionMode>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DistributionMode>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,34 +34,7 @@ namespace Azure.Communication.JobRouter
                 throw new FormatException($"The model {nameof(DistributionMode)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("minConcurrentOffers"u8);
-            writer.WriteNumberValue(MinConcurrentOffers);
-            writer.WritePropertyName("maxConcurrentOffers"u8);
-            writer.WriteNumberValue(MaxConcurrentOffers);
-            if (Optional.IsDefined(BypassSelectors))
-            {
-                writer.WritePropertyName("bypassSelectors"u8);
-                writer.WriteBooleanValue(BypassSelectors.Value);
-            }
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         DistributionMode IJsonModel<DistributionMode>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +51,7 @@ namespace Azure.Communication.JobRouter
 
         internal static UnknownDistributionMode DeserializeUnknownDistributionMode(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -131,7 +113,7 @@ namespace Azure.Communication.JobRouter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DistributionMode)} does not support writing '{options.Format}' format.");
             }
@@ -145,7 +127,7 @@ namespace Azure.Communication.JobRouter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDistributionMode(document.RootElement, options);
                     }
                 default:
@@ -159,15 +141,15 @@ namespace Azure.Communication.JobRouter
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownDistributionMode FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownDistributionMode(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<UnknownDistributionMode>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<DistributionMode>(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

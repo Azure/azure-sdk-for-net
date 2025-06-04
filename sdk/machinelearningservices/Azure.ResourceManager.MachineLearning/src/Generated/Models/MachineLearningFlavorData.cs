@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Model flavor-specific data. </summary>
+        [WirePath("data")]
         public IDictionary<string, string> Data { get; set; }
     }
 }

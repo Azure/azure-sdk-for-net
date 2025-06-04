@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Search
 
         SearchServiceResource IOperationSource<SearchServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
             return new SearchServiceResource(_client, data);
         }
 
         async ValueTask<SearchServiceResource> IOperationSource<SearchServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SearchServiceData.DeserializeSearchServiceData(document.RootElement);
-            return new SearchServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<SearchServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSearchContext.Default);
+            return await Task.FromResult(new SearchServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

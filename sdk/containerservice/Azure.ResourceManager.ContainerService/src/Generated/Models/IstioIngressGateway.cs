@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Mode of an ingress gateway. </summary>
+        [WirePath("mode")]
         public IstioIngressGatewayMode Mode { get; set; }
         /// <summary> Whether to enable the ingress gateway. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
     }
 }

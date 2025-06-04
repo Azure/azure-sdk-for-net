@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaJobInputHttp : IUtf8JsonSerializable, IJsonModel<MediaJobInputHttp>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputHttp>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobInputHttp>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaJobInputHttp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputHttp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,65 +34,12 @@ namespace Azure.ResourceManager.Media.Models
                 throw new FormatException($"The model {nameof(MediaJobInputHttp)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(BaseUri))
             {
                 writer.WritePropertyName("baseUri"u8);
                 writer.WriteStringValue(BaseUri.AbsoluteUri);
             }
-            if (Optional.IsCollectionDefined(Files))
-            {
-                writer.WritePropertyName("files"u8);
-                writer.WriteStartArray();
-                foreach (var item in Files)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(Start))
-            {
-                writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue<ClipTime>(Start, options);
-            }
-            if (Optional.IsDefined(End))
-            {
-                writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue<ClipTime>(End, options);
-            }
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
-            if (Optional.IsCollectionDefined(InputDefinitions))
-            {
-                writer.WritePropertyName("inputDefinitions"u8);
-                writer.WriteStartArray();
-                foreach (var item in InputDefinitions)
-                {
-                    writer.WriteObjectValue<MediaJobInputDefinition>(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MediaJobInputHttp IJsonModel<MediaJobInputHttp>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -100,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaJobInputHttp DeserializeMediaJobInputHttp(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -206,7 +162,7 @@ namespace Azure.ResourceManager.Media.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MediaJobInputHttp)} does not support writing '{options.Format}' format.");
             }
@@ -220,7 +176,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMediaJobInputHttp(document.RootElement, options);
                     }
                 default:

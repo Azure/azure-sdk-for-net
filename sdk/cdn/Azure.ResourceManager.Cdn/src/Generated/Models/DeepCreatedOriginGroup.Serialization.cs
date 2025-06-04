@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.Cdn.Models
 {
     public partial class DeepCreatedOriginGroup : IUtf8JsonSerializable, IJsonModel<DeepCreatedOriginGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedOriginGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeepCreatedOriginGroup>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeepCreatedOriginGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeepCreatedOriginGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
@@ -36,7 +44,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
+                    writer.WriteObjectValue(HealthProbeSettings, options);
                 }
                 else
                 {
@@ -70,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue<ResponseBasedOriginErrorDetectionSettings>(ResponseBasedOriginErrorDetectionSettings, options);
+                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings, options);
                 }
                 else
                 {
@@ -86,14 +94,13 @@ namespace Azure.ResourceManager.Cdn.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DeepCreatedOriginGroup IJsonModel<DeepCreatedOriginGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -110,7 +117,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         internal static DeepCreatedOriginGroup DeserializeDeepCreatedOriginGroup(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -208,7 +215,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeepCreatedOriginGroup)} does not support writing '{options.Format}' format.");
             }
@@ -222,7 +229,7 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeepCreatedOriginGroup(document.RootElement, options);
                     }
                 default:

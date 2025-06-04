@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Reservations.Models
 {
     public partial class ReservationToReturnForExchange : IUtf8JsonSerializable, IJsonModel<ReservationToReturnForExchange>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationToReturnForExchange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReservationToReturnForExchange>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ReservationToReturnForExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturnForExchange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Reservations.Models
                 throw new FormatException($"The model {nameof(ReservationToReturnForExchange)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
@@ -39,12 +47,12 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
+                writer.WriteObjectValue(BillingRefundAmount, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue<BillingInformation>(BillingInformation, options);
+                writer.WriteObjectValue(BillingInformation, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -59,14 +67,13 @@ namespace Azure.ResourceManager.Reservations.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ReservationToReturnForExchange IJsonModel<ReservationToReturnForExchange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.Reservations.Models
 
         internal static ReservationToReturnForExchange DeserializeReservationToReturnForExchange(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.Reservations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerReservationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ReservationToReturnForExchange)} does not support writing '{options.Format}' format.");
             }
@@ -179,7 +186,7 @@ namespace Azure.ResourceManager.Reservations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeReservationToReturnForExchange(document.RootElement, options);
                     }
                 default:

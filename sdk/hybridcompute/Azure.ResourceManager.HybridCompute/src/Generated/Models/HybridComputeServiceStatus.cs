@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> The current status of the service. </summary>
+        [WirePath("status")]
         public string Status { get; set; }
         /// <summary> The behavior of the service when the Arc-enabled machine starts up. </summary>
+        [WirePath("startupType")]
         public string StartupType { get; set; }
     }
 }

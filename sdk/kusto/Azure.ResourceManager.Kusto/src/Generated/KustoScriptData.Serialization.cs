@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoScriptData : IUtf8JsonSerializable, IJsonModel<KustoScriptData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoScriptData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KustoScriptData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<KustoScriptData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,27 +36,7 @@ namespace Azure.ResourceManager.Kusto
                 throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(ScriptUri))
@@ -80,21 +69,15 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(ScriptLevel))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("scriptLevel"u8);
+                writer.WriteStringValue(ScriptLevel.Value.ToString());
+            }
+            if (Optional.IsDefined(PrincipalPermissionsAction))
+            {
+                writer.WritePropertyName("principalPermissionsAction"u8);
+                writer.WriteStringValue(PrincipalPermissionsAction.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -113,7 +96,7 @@ namespace Azure.ResourceManager.Kusto
 
         internal static KustoScriptData DeserializeKustoScriptData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -129,6 +112,8 @@ namespace Azure.ResourceManager.Kusto
             string forceUpdateTag = default;
             bool? continueOnErrors = default;
             KustoProvisioningState? provisioningState = default;
+            KustoScriptLevel? scriptLevel = default;
+            PrincipalPermissionsAction? principalPermissionsAction = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,6 +193,24 @@ namespace Azure.ResourceManager.Kusto
                             provisioningState = new KustoProvisioningState(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("scriptLevel"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            scriptLevel = new KustoScriptLevel(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("principalPermissionsAction"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            principalPermissionsAction = new PrincipalPermissionsAction(property0.Value.GetString());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -228,6 +231,8 @@ namespace Azure.ResourceManager.Kusto
                 forceUpdateTag,
                 continueOnErrors,
                 provisioningState,
+                scriptLevel,
+                principalPermissionsAction,
                 serializedAdditionalRawData);
         }
 
@@ -238,7 +243,7 @@ namespace Azure.ResourceManager.Kusto
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKustoContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{options.Format}' format.");
             }
@@ -252,7 +257,7 @@ namespace Azure.ResourceManager.Kusto
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKustoScriptData(document.RootElement, options);
                     }
                 default:

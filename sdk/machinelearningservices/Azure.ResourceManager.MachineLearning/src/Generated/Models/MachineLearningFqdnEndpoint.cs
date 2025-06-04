@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets the domain name. </summary>
+        [WirePath("domainName")]
         public string DomainName { get; }
         /// <summary> Gets the endpoint details. </summary>
+        [WirePath("endpointDetails")]
         public IReadOnlyList<MachineLearningFqdnEndpointDetail> EndpointDetails { get; }
     }
 }

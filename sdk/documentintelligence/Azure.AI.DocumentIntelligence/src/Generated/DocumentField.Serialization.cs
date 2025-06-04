@@ -15,9 +15,18 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentField : IUtf8JsonSerializable, IJsonModel<DocumentField>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentField>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentField>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentField>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,9 +34,8 @@ namespace Azure.AI.DocumentIntelligence
                 throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(FieldType.ToString());
             if (Optional.IsDefined(ValueString))
             {
                 writer.WritePropertyName("valueString"u8);
@@ -53,10 +61,10 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WritePropertyName("valueNumber"u8);
                 writer.WriteNumberValue(ValueDouble.Value);
             }
-            if (Optional.IsDefined(ValueLong))
+            if (Optional.IsDefined(ValueInt64))
             {
                 writer.WritePropertyName("valueInteger"u8);
-                writer.WriteNumberValue(ValueLong.Value);
+                writer.WriteNumberValue(ValueInt64.Value);
             }
             if (Optional.IsDefined(ValueSelectionMark))
             {
@@ -79,15 +87,15 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in ValueList)
                 {
-                    writer.WriteObjectValue<DocumentField>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ValueDictionary))
+            if (Optional.IsCollectionDefined(ValueObject))
             {
                 writer.WritePropertyName("valueObject"u8);
                 writer.WriteStartObject();
-                foreach (var item in ValueDictionary)
+                foreach (var item in ValueObject)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteObjectValue<DocumentField>(item.Value, options);
@@ -97,12 +105,12 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(ValueCurrency))
             {
                 writer.WritePropertyName("valueCurrency"u8);
-                writer.WriteObjectValue<CurrencyValue>(ValueCurrency, options);
+                writer.WriteObjectValue(ValueCurrency, options);
             }
             if (Optional.IsDefined(ValueAddress))
             {
                 writer.WritePropertyName("valueAddress"u8);
-                writer.WriteObjectValue<AddressValue>(ValueAddress, options);
+                writer.WriteObjectValue(ValueAddress, options);
             }
             if (Optional.IsDefined(ValueBoolean))
             {
@@ -130,7 +138,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue<BoundingRegion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +148,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Spans)
                 {
-                    writer.WriteObjectValue<DocumentSpan>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,14 +165,13 @@ namespace Azure.AI.DocumentIntelligence
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DocumentField IJsonModel<DocumentField>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -181,7 +188,7 @@ namespace Azure.AI.DocumentIntelligence
 
         internal static DocumentField DeserializeDocumentField(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -433,7 +440,7 @@ namespace Azure.AI.DocumentIntelligence
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIDocumentIntelligenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentField)} does not support writing '{options.Format}' format.");
             }
@@ -447,7 +454,7 @@ namespace Azure.AI.DocumentIntelligence
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentField(document.RootElement, options);
                     }
                 default:
@@ -461,15 +468,15 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentField FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentField(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentField>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

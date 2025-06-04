@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <param name="organizationId"> organization id. </param>
         /// <param name="accountId"> account id. </param>
         /// <param name="accountName"> account name. </param>
-        /// <param name="region"> region. </param>
+        /// <param name="region"> Region where New Relic account is present. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NewRelicAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string organizationId, string accountId, string accountName, AzureLocation? region, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -72,12 +72,16 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> organization id. </summary>
+        [WirePath("properties.organizationId")]
         public string OrganizationId { get; set; }
         /// <summary> account id. </summary>
+        [WirePath("properties.accountId")]
         public string AccountId { get; set; }
         /// <summary> account name. </summary>
+        [WirePath("properties.accountName")]
         public string AccountName { get; set; }
-        /// <summary> region. </summary>
+        /// <summary> Region where New Relic account is present. </summary>
+        [WirePath("properties.region")]
         public AzureLocation? Region { get; set; }
     }
 }

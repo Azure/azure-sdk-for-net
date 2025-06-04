@@ -22,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("text"u8);
             writer.WriteObjectValue<object>(Text);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteObjectValue<object>(Type);
             if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue<ScriptActivityParameter>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +43,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             object text = default;
-            ScriptType type = default;
+            object type = default;
             IList<ScriptActivityParameter> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = new ScriptType(property.Value.GetString());
+                    type = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -79,15 +79,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ScriptActivityScriptBlock FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeScriptActivityScriptBlock(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScriptActivityScriptBlock>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ScriptActivityScriptBlock model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<ScriptActivityScriptBlock>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override ScriptActivityScriptBlock Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Quantum.Models
         public static bool operator ==(ProviderProvisioningStatus left, ProviderProvisioningStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProviderProvisioningStatus"/> values are not the same. </summary>
         public static bool operator !=(ProviderProvisioningStatus left, ProviderProvisioningStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ProviderProvisioningStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ProviderProvisioningStatus"/>. </summary>
         public static implicit operator ProviderProvisioningStatus(string value) => new ProviderProvisioningStatus(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Quantum.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

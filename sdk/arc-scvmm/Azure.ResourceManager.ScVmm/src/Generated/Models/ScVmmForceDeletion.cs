@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ScVmm.Models
         public static bool operator ==(ScVmmForceDeletion left, ScVmmForceDeletion right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScVmmForceDeletion"/> values are not the same. </summary>
         public static bool operator !=(ScVmmForceDeletion left, ScVmmForceDeletion right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScVmmForceDeletion"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScVmmForceDeletion"/>. </summary>
         public static implicit operator ScVmmForceDeletion(string value) => new ScVmmForceDeletion(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

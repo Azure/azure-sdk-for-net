@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> User’s AAD Object Id. </summary>
+        [WirePath("objectId")]
         public string ObjectId { get; set; }
         /// <summary> User’s AAD Tenant Id. </summary>
+        [WirePath("tenantId")]
         public Guid TenantId { get; set; }
     }
 }

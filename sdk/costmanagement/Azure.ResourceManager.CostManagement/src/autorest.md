@@ -11,7 +11,7 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/20e9229b38b94c897538
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - BenefitRecommendations_List
@@ -64,6 +64,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
 
 request-path-to-resource-name:
   /providers/Microsoft.CostManagement/views/{viewName}: TenantsCostManagementViews

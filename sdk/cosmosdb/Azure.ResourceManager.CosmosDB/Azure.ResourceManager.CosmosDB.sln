@@ -3,13 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31630.363
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.CosmosDB", "src\Azure.ResourceManager.CosmosDB.csproj", "{7C8507C6-BFAE-4DD2-B4AD-FE1A49B8E246}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.CosmosDB.Tests", "tests\Azure.ResourceManager.CosmosDB.Tests.csproj", "{3EC07824-4ECC-4909-8F2A-4796B3B157C6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.CosmosDB.Samples", "samples\Azure.ResourceManager.CosmosDB.Samples.csproj", "{049D538F-4379-460C-B178-1946BE1AD737}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,18 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Debug|x64.Build.0 = Debug|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Debug|x86.Build.0 = Debug|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Release|x64.ActiveCfg = Release|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Release|x64.Build.0 = Release|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Release|x86.ActiveCfg = Release|Any CPU
-		{62AF7C88-CE3F-416E-B18E-BC6F884C89E2}.Release|x86.Build.0 = Release|Any CPU
 		{7C8507C6-BFAE-4DD2-B4AD-FE1A49B8E246}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7C8507C6-BFAE-4DD2-B4AD-FE1A49B8E246}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C8507C6-BFAE-4DD2-B4AD-FE1A49B8E246}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -57,18 +41,6 @@ Global
 		{3EC07824-4ECC-4909-8F2A-4796B3B157C6}.Release|x64.Build.0 = Release|Any CPU
 		{3EC07824-4ECC-4909-8F2A-4796B3B157C6}.Release|x86.ActiveCfg = Release|Any CPU
 		{3EC07824-4ECC-4909-8F2A-4796B3B157C6}.Release|x86.Build.0 = Release|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Debug|x64.Build.0 = Debug|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Debug|x86.Build.0 = Debug|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Release|Any CPU.Build.0 = Release|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Release|x64.ActiveCfg = Release|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Release|x64.Build.0 = Release|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Release|x86.ActiveCfg = Release|Any CPU
-		{049D538F-4379-460C-B178-1946BE1AD737}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

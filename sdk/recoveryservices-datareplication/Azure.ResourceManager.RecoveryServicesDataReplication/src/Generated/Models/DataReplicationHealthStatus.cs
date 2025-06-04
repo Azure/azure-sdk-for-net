@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string WarningValue = "Warning";
         private const string CriticalValue = "Critical";
 
-        /// <summary> Normal. </summary>
+        /// <summary> Healthy Status. </summary>
         public static DataReplicationHealthStatus Normal { get; } = new DataReplicationHealthStatus(NormalValue);
-        /// <summary> Warning. </summary>
+        /// <summary> Warning Status. </summary>
         public static DataReplicationHealthStatus Warning { get; } = new DataReplicationHealthStatus(WarningValue);
-        /// <summary> Critical. </summary>
+        /// <summary> Critical Status. </summary>
         public static DataReplicationHealthStatus Critical { get; } = new DataReplicationHealthStatus(CriticalValue);
         /// <summary> Determines if two <see cref="DataReplicationHealthStatus"/> values are the same. </summary>
         public static bool operator ==(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DataReplicationHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(DataReplicationHealthStatus left, DataReplicationHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DataReplicationHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataReplicationHealthStatus"/>. </summary>
         public static implicit operator DataReplicationHealthStatus(string value) => new DataReplicationHealthStatus(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

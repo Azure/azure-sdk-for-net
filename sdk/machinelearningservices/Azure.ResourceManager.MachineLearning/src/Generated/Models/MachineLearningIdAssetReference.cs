@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> [Required] ARM resource ID of the asset. </summary>
+        [WirePath("assetId")]
         public ResourceIdentifier AssetId { get; set; }
     }
 }

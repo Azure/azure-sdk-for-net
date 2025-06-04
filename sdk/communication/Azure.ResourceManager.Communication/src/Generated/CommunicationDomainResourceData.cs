@@ -92,20 +92,28 @@ namespace Azure.ResourceManager.Communication
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public DomainProvisioningState? ProvisioningState { get; }
         /// <summary> The location where the Domains resource data is stored at rest. </summary>
+        [WirePath("properties.dataLocation")]
         public string DataLocation { get; }
         /// <summary> P2 sender domain that is displayed to the email recipients [RFC 5322]. </summary>
+        [WirePath("properties.fromSenderDomain")]
         public string FromSenderDomain { get; }
         /// <summary> P1 sender domain that is present on the email envelope [RFC 5321]. </summary>
+        [WirePath("properties.mailFromSenderDomain")]
         public string MailFromSenderDomain { get; }
         /// <summary> Describes how a Domains resource is being managed. </summary>
+        [WirePath("properties.domainManagement")]
         public DomainManagement? DomainManagement { get; set; }
         /// <summary> List of VerificationStatusRecord. </summary>
+        [WirePath("properties.verificationStates")]
         public DomainPropertiesVerificationStates VerificationStates { get; }
         /// <summary> List of DnsRecord. </summary>
+        [WirePath("properties.verificationRecords")]
         public DomainPropertiesVerificationRecords VerificationRecords { get; }
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
+        [WirePath("properties.userEngagementTracking")]
         public UserEngagementTracking? UserEngagementTracking { get; set; }
     }
 }

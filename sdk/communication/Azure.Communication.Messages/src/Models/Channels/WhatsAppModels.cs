@@ -25,5 +25,17 @@ namespace Azure.Communication.Messages.Models.Channels
 
     [CodeGenModel("WhatsAppMessageTemplateItem")]
     public partial class WhatsAppMessageTemplateItem { }
+
+    [CodeGenModel("WhatsAppContact")]
+    public partial class WhatsAppContact { }
+
+    [CodeGenModel("WhatsAppButtonActionBindings")]
+    public partial class WhatsAppButtonActionBindings { }
+
+    [CodeGenModel("WhatsAppListActionBindings")]
+    public partial class WhatsAppListActionBindings { }
+
+    [CodeGenModel("WhatsAppUrlActionBindings")]
+    public partial class WhatsAppUrlActionBindings { }
 }
 #pragma warning restore SA1402 // File may only contain a single type

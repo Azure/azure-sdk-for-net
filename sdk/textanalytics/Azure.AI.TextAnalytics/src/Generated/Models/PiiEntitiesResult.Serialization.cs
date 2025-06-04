@@ -21,20 +21,20 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue<PiiResultDocumentsItem>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue<DocumentError>(item);
+                writer.WriteObjectValue(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue<TextDocumentBatchStatistics>(Statistics);
+                writer.WriteObjectValue(Statistics);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -95,15 +95,15 @@ namespace Azure.AI.TextAnalytics
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new PiiEntitiesResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePiiEntitiesResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<PiiEntitiesResult>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

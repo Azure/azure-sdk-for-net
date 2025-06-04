@@ -15,39 +15,27 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CollectionConfigurationErrorType))
+            writer.WritePropertyName("CollectionConfigurationErrorType"u8);
+            writer.WriteStringValue(CollectionConfigurationErrorType.ToString());
+            writer.WritePropertyName("Message"u8);
+            writer.WriteStringValue(Message);
+            writer.WritePropertyName("FullException"u8);
+            writer.WriteStringValue(FullException);
+            writer.WritePropertyName("Data"u8);
+            writer.WriteStartArray();
+            foreach (var item in Data)
             {
-                writer.WritePropertyName("CollectionConfigurationErrorType"u8);
-                writer.WriteStringValue(CollectionConfigurationErrorType.Value.ToString());
+                writer.WriteObjectValue(item);
             }
-            if (Optional.IsDefined(Message))
-            {
-                writer.WritePropertyName("Message"u8);
-                writer.WriteStringValue(Message);
-            }
-            if (Optional.IsDefined(FullException))
-            {
-                writer.WritePropertyName("FullException"u8);
-                writer.WriteStringValue(FullException);
-            }
-            if (Optional.IsCollectionDefined(Data))
-            {
-                writer.WritePropertyName("Data"u8);
-                writer.WriteStartArray();
-                foreach (var item in Data)
-                {
-                    writer.WriteObjectValue<KeyValuePairString>(item);
-                }
-                writer.WriteEndArray();
-            }
+            writer.WriteEndArray();
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CollectionConfigurationError>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

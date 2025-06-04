@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The guaranteed bit rate (GBR) for all service data flows that use this data flow policy rule. This is an optional setting. If you do not provide a value, there will be no GBR set for the data flow policy rule that uses this QoS definition. </summary>
+        [WirePath("guaranteedBitRate")]
         public Ambr GuaranteedBitRate { get; set; }
     }
 }

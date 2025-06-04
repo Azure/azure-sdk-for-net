@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             string updateRunName = "run1";
             ContainerServiceFleetUpdateRunData updateRunData = new ContainerServiceFleetUpdateRunData();
             updateRunData.ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
-                new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full, "1.26.1", null), new NodeImageSelection(NodeImageSelectionType.Latest), null);
+                new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full, "1.29.8", null), new NodeImageSelection(NodeImageSelectionType.Latest), null);
 
             ArmOperation<ContainerServiceFleetUpdateRunResource> createUpdateRunLRO = await updateRunCollection.CreateOrUpdateAsync(WaitUntil.Completed, updateRunName, updateRunData);
             ContainerServiceFleetUpdateRunResource updateRunResource = createUpdateRunLRO.Value;
@@ -122,6 +122,73 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             // Stop UpdateRun
             ArmOperation<ContainerServiceFleetUpdateRunResource> stopUpdateRunLRO = await updateRunResource.StopAsync(WaitUntil.Completed);
             Console.WriteLine($"Succeeded on id: {stopUpdateRunLRO.Value.Data.Id}");
+
+            // Create AutoUpgradeProfile
+            AutoUpgradeProfileCollection autoUpgradeProfileCollection = fleetResource.GetAutoUpgradeProfiles();
+            string autoUpgradeProfileName = "autoupgradeprofile1";
+            AutoUpgradeProfileData createAutoUpgradeProfileData = new AutoUpgradeProfileData()
+            {
+                Channel = ContainerServiceFleetUpgradeChannel.Stable,
+            };
+            ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData);
+            AutoUpgradeProfileResource createAutoUpgradeProfileResult = createAutoUpgradeProfileLRO.Value;
+            Debug.Assert(createAutoUpgradeProfileResult.HasData, "CreateOrUpdateAsync AutoUpgradeProfile data was not valid");
+
+            createAutoUpgradeProfileData = createAutoUpgradeProfileResult.Data;
+            Console.WriteLine($"Succeeded on id: {createAutoUpgradeProfileData.Id}");
+            Console.WriteLine($"Created AutoUpgradeProfile was: {createAutoUpgradeProfileData.Id}");
+
+            // Get AutoUpgradeProfile
+            AutoUpgradeProfileResource getAutoUpgradeProfileResult = await autoUpgradeProfileCollection.GetAsync(autoUpgradeProfileName);
+            Debug.Assert(getAutoUpgradeProfileResult.HasData, "GetAsync AutoUpgradeProfile data was not valid");
+            AutoUpgradeProfileData getAutoUpgradeProfileData = getAutoUpgradeProfileResult.Data;
+            Console.WriteLine($"Succeeded on id: {getAutoUpgradeProfileData.Id}");
+            Console.WriteLine($"Get AutoUpgradeProfile was: {getAutoUpgradeProfileData.Id}");
+            Debug.Assert(getAutoUpgradeProfileData.Name == createAutoUpgradeProfileData.Name, "GetAutoUpgradeProfile did not retrieve the correct data.");
+            Debug.Assert(getAutoUpgradeProfileData.Id == createAutoUpgradeProfileData.Id, "GetAutoUpgradeProfile did not retrieve the correct data.");
+
+            // Update AutoUpgradeProfile
+            AutoUpgradeProfileData updateAutoUpgradeProfileData = new AutoUpgradeProfileData()
+            {
+                Channel = ContainerServiceFleetUpgradeChannel.Rapid,
+            };
+            ArmOperation<AutoUpgradeProfileResource> updateAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, updateAutoUpgradeProfileData);
+            AutoUpgradeProfileResource updateAutoUpgradeProfileResult = updateAutoUpgradeProfileLRO.Value;
+            Debug.Assert(updateAutoUpgradeProfileResult.HasData, "CreateOrUpdateAsync AutoUpgradeProfile data was not valid");
+            Debug.Assert(updateAutoUpgradeProfileResult.Data.Channel == ContainerServiceFleetUpgradeChannel.Rapid, "CreateOrUpdateAsync AutoUpgradeProfile channel was not successfully updated.");
+
+            // GenerateUpdateRun
+            getAutoUpgradeProfileResult = await autoUpgradeProfileCollection.GetAsync(autoUpgradeProfileName);
+            Debug.Assert(getAutoUpgradeProfileResult.HasData, "GetAsync AutoUpgradeProfile data was not valid");
+            ArmOperation<AutoUpgradeProfileGenerateResult> generateUpdateRunLRO = await getAutoUpgradeProfileResult.GenerateUpdateRunAsync(WaitUntil.Completed);
+            AutoUpgradeProfileGenerateResult generateResult = generateUpdateRunLRO.Value;
+            Console.WriteLine($"GenerateUpdateRun Succeeded: {generateResult.Id}");
+
+            // Verify and Delete the Generated UpdateRun
+            string[] generateParts = generateResult.Id.Split('/');
+
+            ContainerServiceFleetUpdateRunResource generateUpdateRunResource = await armClient
+                .GetContainerServiceFleetUpdateRunResource(
+                    ContainerServiceFleetUpdateRunResource.CreateResourceIdentifier(
+                        generateParts[2],  // subscriptionId
+                        generateParts[4],  // resourceGroupName
+                        generateParts[8],  // fleetName
+                        generateParts[10]  // updateRunName
+                    )
+                )
+                .GetAsync();
+
+            ContainerServiceFleetUpdateRunResource getGenerateUpdateRun = await generateUpdateRunResource.GetAsync();
+            Console.WriteLine($"generateUpdateRunResource get Succeeded on id: {getGenerateUpdateRun.Data.Id}");
+
+            await generateUpdateRunResource.DeleteAsync(WaitUntil.Completed);
+            bool doesGenerateUpdateRunExist = await updateRunCollection.ExistsAsync(generateParts[10]);
+            Debug.Assert(doesGenerateUpdateRunExist == false, "UpdateRun was not deleted.");
+
+            // Delete AutoUpgradeProfile
+            await updateAutoUpgradeProfileResult.DeleteAsync(WaitUntil.Completed);
+            bool doesAutoUpgradeProfileExist = await autoUpgradeProfileCollection.ExistsAsync(autoUpgradeProfileName);
+            Debug.Assert(doesAutoUpgradeProfileExist == false, "AutoUpgradeProfile was not deleted.");
 
             // Delete UpdateRun
             await updateRunResource.DeleteAsync(WaitUntil.Completed);

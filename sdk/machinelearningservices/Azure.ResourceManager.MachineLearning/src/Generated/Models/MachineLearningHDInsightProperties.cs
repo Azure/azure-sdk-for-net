@@ -65,10 +65,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Port open for ssh connections on the master node of the cluster. </summary>
+        [WirePath("sshPort")]
         public int? SshPort { get; set; }
         /// <summary> Public IP address of the master node of the cluster. </summary>
+        [WirePath("address")]
         public IPAddress Address { get; set; }
         /// <summary> Admin credentials for master node of the cluster. </summary>
+        [WirePath("administratorAccount")]
         public MachineLearningVmSshCredentials AdministratorAccount { get; set; }
     }
 }

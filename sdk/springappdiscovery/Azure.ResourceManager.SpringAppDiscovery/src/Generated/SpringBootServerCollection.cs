@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             try
             {
                 var response = await _springBootServerspringbootserversRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, springbootserversName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SpringAppDiscoveryArmOperation<SpringBootServerResource>(Response.FromValue(new SpringBootServerResource(Client, response), response.GetRawResponse()));
+                var uri = _springBootServerspringbootserversRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, springbootserversName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SpringAppDiscoveryArmOperation<SpringBootServerResource>(Response.FromValue(new SpringBootServerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             try
             {
                 var response = _springBootServerspringbootserversRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, springbootserversName, data, cancellationToken);
-                var operation = new SpringAppDiscoveryArmOperation<SpringBootServerResource>(Response.FromValue(new SpringBootServerResource(Client, response), response.GetRawResponse()));
+                var uri = _springBootServerspringbootserversRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, springbootserversName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SpringAppDiscoveryArmOperation<SpringBootServerResource>(Response.FromValue(new SpringBootServerResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

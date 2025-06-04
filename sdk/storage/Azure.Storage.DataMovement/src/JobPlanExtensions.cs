@@ -2,67 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
 
 namespace Azure.Storage.DataMovement
 {
     internal static partial class JobPlanExtensions
     {
-        internal static async Task<string> GetHeaderLongValue(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            int startIndex,
-            int streamReadLength,
-            int valueLength,
-            CancellationToken cancellationToken)
-        {
-            string value;
-            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: startIndex,
-                length: streamReadLength,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // Read Path Length
-                byte[] pathLengthBuffer = reader.ReadBytes(DataMovementConstants.LongSizeInBytes);
-                long pathLength = pathLengthBuffer.ToLong();
-
-                // Read Path
-                byte[] pathBuffer = reader.ReadBytes(valueLength);
-                value = pathBuffer.ToString(pathLength);
-            }
-            return value;
-        }
-
-        internal static async Task<byte> GetByteValue(
-            this TransferCheckpointer checkpointer,
-            string transferId,
-            int startIndex,
-            CancellationToken cancellationToken)
-        {
-            byte value;
-            using (Stream stream = await checkpointer.ReadJobPartPlanFileAsync(
-                transferId: transferId,
-                partNumber: 0,
-                offset: startIndex,
-                length: DataMovementConstants.OneByte,
-                cancellationToken: cancellationToken).ConfigureAwait(false))
-            {
-                BinaryReader reader = new BinaryReader(stream);
-
-                // Read Byte
-                value = reader.ReadByte();
-            }
-            return value;
-        }
-
-        internal static JobPlanStatus ToJobPlanStatus(this DataTransferStatus transferStatus)
+        internal static JobPlanStatus ToJobPlanStatus(this TransferStatus transferStatus)
         {
             if (transferStatus == default)
             {
@@ -82,42 +28,42 @@ namespace Azure.Storage.DataMovement
             return jobPlanStatus;
         }
 
-        internal static DataTransferStatus ToDataTransferStatus(this JobPlanStatus jobPlanStatus)
+        internal static TransferStatus ToTransferStatus(this JobPlanStatus jobPlanStatus)
         {
-            DataTransferState state;
+            TransferState state;
             if (jobPlanStatus.HasFlag(JobPlanStatus.Queued))
             {
-                state = DataTransferState.Queued;
+                state = TransferState.Queued;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.InProgress))
             {
-                state = DataTransferState.InProgress;
+                state = TransferState.InProgress;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Pausing))
             {
-                state = DataTransferState.Pausing;
+                state = TransferState.Pausing;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Stopping))
             {
-                state = DataTransferState.Stopping;
+                state = TransferState.Stopping;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Paused))
             {
-                state = DataTransferState.Paused;
+                state = TransferState.Paused;
             }
             else if (jobPlanStatus.HasFlag(JobPlanStatus.Completed))
             {
-                state = DataTransferState.Completed;
+                state = TransferState.Completed;
             }
             else
             {
-                state = DataTransferState.None;
+                state = TransferState.None;
             }
 
             bool hasFailed = jobPlanStatus.HasFlag(JobPlanStatus.HasFailed);
             bool hasSkipped = jobPlanStatus.HasFlag(JobPlanStatus.HasSkipped);
 
-            return new DataTransferStatus(state, hasFailed, hasSkipped);
+            return new TransferStatus(state, hasFailed, hasSkipped);
         }
     }
 }

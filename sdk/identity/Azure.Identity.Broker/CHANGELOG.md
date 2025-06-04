@@ -1,12 +1,43 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.3.0-beta.3 (Unreleased)
 
 ### Features Added
+
+- Support broker on Linux.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client.Broker` dependency to version 4.70.2
+
+## 1.3.0-beta.2 (2025-04-08)
+
+### Other Changes
+
+- Support for dynamic addition of the broker authentication to `DefaultAzureCredential` has been added. This allows the broker authentication to be used as part of the default credential chain by only adding a reference to this package to your application.
+
+## 1.3.0-beta.1 (2025-03-11)
+
+### Other Changes
+- Updated Microsoft.Identity.Client.Broker dependency to version 4.69.1.
+
+## 1.2.0 (2024-11-18)
+
+### Other Changes
+
+- Support for Proof of Possession (PoP) tokens for `InteractiveBrowserCredential` has migrated out of Azure.Core.Experimental to Azure.Core. This feature is enabled via the `IsProofOfPossessionEnabled` property on `TokenRequestContext`.
+- Updating package dependencies.
+
+## 1.2.0-beta.1 (2024-04-24)
+
+### Breaking Changes
+- The `IsProofOfPossessionRequired` property on `InteractiveBrowserCredentialBrokerOptions` and `SharedTokenCacheCredentialBrokerOptions` has been removed. This property has moved to the experimental `PopTokenRequestContext` struct.
+
+## 1.1.0 (2024-04-09)
 
 ### Other Changes
 
@@ -47,9 +78,9 @@
 ## 1.0.0-beta.2 (2022-04-05)
 
 ### Features Added
-- Added `SharedTokenCacheCredentialBrokerOptions` to enable `SharedTokenCacheCredential` to use the authentication broker for silent authentication calls when this specicialized options type is used to construct the credential.
+- Added `SharedTokenCacheCredentialBrokerOptions` to enable `SharedTokenCacheCredential` to use the authentication broker for silent authentication calls when this specialized options type is used to construct the credential.
 
 ## 1.0.0-beta.1 (2022-02-23)
 
 ### Features Added
-- Added `InteractiveBrowserCredentialBrokerOptions` to enable `InteractiveBrowserCredential` to use the authentication broker when this specicialized options type is used to construct the credential.
+- Added `InteractiveBrowserCredentialBrokerOptions` to enable `InteractiveBrowserCredential` to use the authentication broker when this specialized options type is used to construct the credential.

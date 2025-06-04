@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class ServiceSpecification : IUtf8JsonSerializable, IJsonModel<ServiceSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceSpecification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServiceSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,14 +36,13 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(ServiceSpecification)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(MetricSpecifications))
             {
                 writer.WritePropertyName("metricSpecifications"u8);
                 writer.WriteStartArray();
                 foreach (var item in MetricSpecifications)
                 {
-                    writer.WriteObjectValue<MetricSpecification>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +52,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in LogSpecifications)
                 {
-                    writer.WriteObjectValue<LogSpecification>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -56,14 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServiceSpecification IJsonModel<ServiceSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -80,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static ServiceSpecification DeserializeServiceSpecification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -141,17 +148,18 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricSpecifications), out propertyOverride);
-            if (Optional.IsCollectionDefined(MetricSpecifications) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (MetricSpecifications.Any() || hasPropertyOverride)
+                builder.Append("  metricSpecifications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(MetricSpecifications))
                 {
-                    builder.Append("  metricSpecifications: ");
-                    if (hasPropertyOverride)
+                    if (MetricSpecifications.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  metricSpecifications: ");
                         builder.AppendLine("[");
                         foreach (var item in MetricSpecifications)
                         {
@@ -163,17 +171,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSpecifications), out propertyOverride);
-            if (Optional.IsCollectionDefined(LogSpecifications) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LogSpecifications.Any() || hasPropertyOverride)
+                builder.Append("  logSpecifications: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LogSpecifications))
                 {
-                    builder.Append("  logSpecifications: ");
-                    if (hasPropertyOverride)
+                    if (LogSpecifications.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  logSpecifications: ");
                         builder.AppendLine("[");
                         foreach (var item in LogSpecifications)
                         {
@@ -195,7 +204,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -211,7 +220,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServiceSpecification(document.RootElement, options);
                     }
                 default:

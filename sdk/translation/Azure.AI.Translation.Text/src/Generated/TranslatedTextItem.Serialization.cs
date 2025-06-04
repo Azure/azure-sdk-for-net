@@ -15,9 +15,18 @@ namespace Azure.AI.Translation.Text
 {
     public partial class TranslatedTextItem : IUtf8JsonSerializable, IJsonModel<TranslatedTextItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslatedTextItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TranslatedTextItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TranslatedTextItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TranslatedTextItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,23 +34,22 @@ namespace Azure.AI.Translation.Text
                 throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DetectedLanguage))
             {
                 writer.WritePropertyName("detectedLanguage"u8);
-                writer.WriteObjectValue<DetectedLanguage>(DetectedLanguage, options);
+                writer.WriteObjectValue(DetectedLanguage, options);
             }
             writer.WritePropertyName("translations"u8);
             writer.WriteStartArray();
             foreach (var item in Translations)
             {
-                writer.WriteObjectValue<Translation>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceText))
             {
                 writer.WritePropertyName("sourceText"u8);
-                writer.WriteObjectValue<SourceText>(SourceText, options);
+                writer.WriteObjectValue(SourceText, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -51,14 +59,13 @@ namespace Azure.AI.Translation.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TranslatedTextItem IJsonModel<TranslatedTextItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -75,14 +82,14 @@ namespace Azure.AI.Translation.Text
 
         internal static TranslatedTextItem DeserializeTranslatedTextItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DetectedLanguage detectedLanguage = default;
-            IReadOnlyList<Translation> translations = default;
+            IReadOnlyList<TranslationText> translations = default;
             SourceText sourceText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,10 +106,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (property.NameEquals("translations"u8))
                 {
-                    List<Translation> array = new List<Translation>();
+                    List<TranslationText> array = new List<TranslationText>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Translation.DeserializeTranslation(item, options));
+                        array.Add(TranslationText.DeserializeTranslationText(item, options));
                     }
                     translations = array;
                     continue;
@@ -132,7 +139,7 @@ namespace Azure.AI.Translation.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TranslatedTextItem)} does not support writing '{options.Format}' format.");
             }
@@ -146,7 +153,7 @@ namespace Azure.AI.Translation.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTranslatedTextItem(document.RootElement, options);
                     }
                 default:
@@ -160,15 +167,15 @@ namespace Azure.AI.Translation.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TranslatedTextItem FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTranslatedTextItem(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TranslatedTextItem>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

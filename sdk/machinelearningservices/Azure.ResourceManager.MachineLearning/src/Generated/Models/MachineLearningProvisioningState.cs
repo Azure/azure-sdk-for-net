@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </summary>
+    /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
     public readonly partial struct MachineLearningProvisioningState : IEquatable<MachineLearningProvisioningState>
     {
         private readonly string _value;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         public static bool operator ==(MachineLearningProvisioningState left, MachineLearningProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MachineLearningProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(MachineLearningProvisioningState left, MachineLearningProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MachineLearningProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningProvisioningState"/>. </summary>
         public static implicit operator MachineLearningProvisioningState(string value) => new MachineLearningProvisioningState(value);
 
         /// <inheritdoc />
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

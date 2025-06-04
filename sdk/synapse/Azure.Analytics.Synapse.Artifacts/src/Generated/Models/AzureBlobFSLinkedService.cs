@@ -20,6 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureBlobFSLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -49,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureBlobFSLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object accountKey, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential, object sasUri, SecretBase sasToken, CredentialReference credential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureBlobFSLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object url, object accountKey, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, object azureCloudType, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential, object encryptedCredential, object sasUri, SecretBase sasToken, CredentialReference credential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             Url = url;
             AccountKey = accountKey;

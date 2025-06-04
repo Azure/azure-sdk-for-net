@@ -107,18 +107,24 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> Identity for the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the task. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of task. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The current status of task. </summary>
+        [WirePath("properties.status")]
         public ContainerRegistryTaskStatus? Status { get; set; }
         /// <summary> The platform properties against which the run has to happen. </summary>
+        [WirePath("properties.platform")]
         public ContainerRegistryPlatformProperties Platform { get; set; }
         /// <summary> The machine configuration of the run agent. </summary>
         internal ContainerRegistryAgentProperties AgentConfiguration { get; set; }
         /// <summary> The CPU configuration in terms of number of cores required for the run. </summary>
+        [WirePath("properties.agentConfiguration.cpu")]
         public int? AgentCpu
         {
             get => AgentConfiguration is null ? default : AgentConfiguration.Cpu;
@@ -131,22 +137,29 @@ namespace Azure.ResourceManager.ContainerRegistry
         }
 
         /// <summary> The dedicated agent pool for the task. </summary>
+        [WirePath("properties.agentPoolName")]
         public string AgentPoolName { get; set; }
         /// <summary> Run timeout in seconds. </summary>
+        [WirePath("properties.timeout")]
         public int? TimeoutInSeconds { get; set; }
         /// <summary>
         /// The properties of a task step.
         /// Please note <see cref="ContainerRegistryTaskStepProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ContainerRegistryDockerBuildStep"/>, <see cref="ContainerRegistryEncodedTaskStep"/> and <see cref="ContainerRegistryFileTaskStep"/>.
         /// </summary>
+        [WirePath("properties.step")]
         public ContainerRegistryTaskStepProperties Step { get; set; }
         /// <summary> The properties that describe all triggers for the task. </summary>
+        [WirePath("properties.trigger")]
         public ContainerRegistryTriggerProperties Trigger { get; set; }
         /// <summary> The properties that describes a set of credentials that will be used when this run is invoked. </summary>
+        [WirePath("properties.credentials")]
         public ContainerRegistryCredentials Credentials { get; set; }
         /// <summary> The template that describes the repository and tag information for run log artifact. </summary>
+        [WirePath("properties.logTemplate")]
         public string LogTemplate { get; set; }
         /// <summary> The value of this property indicates whether the task resource is system task or not. </summary>
+        [WirePath("properties.isSystemTask")]
         public bool? IsSystemTask { get; set; }
     }
 }

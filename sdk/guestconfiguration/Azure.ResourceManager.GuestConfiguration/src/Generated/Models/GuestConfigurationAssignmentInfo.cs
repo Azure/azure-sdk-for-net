@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Name of the guest configuration assignment. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Information about the configuration. </summary>
+        [WirePath("configuration")]
         public GuestConfigurationInfo Configuration { get; set; }
     }
 }

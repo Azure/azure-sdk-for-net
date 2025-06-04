@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.MySql.Models
 {
     public partial class MySqlServerPropertiesForDefaultCreate : IUtf8JsonSerializable, IJsonModel<MySqlServerPropertiesForDefaultCreate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForDefaultCreate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPropertiesForDefaultCreate>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MySqlServerPropertiesForDefaultCreate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPropertiesForDefaultCreate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,59 +34,11 @@ namespace Azure.ResourceManager.MySql.Models
                 throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("administratorLogin"u8);
             writer.WriteStringValue(AdministratorLogin);
             writer.WritePropertyName("administratorLoginPassword"u8);
             writer.WriteStringValue(AdministratorLoginPassword);
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version.Value.ToString());
-            }
-            if (Optional.IsDefined(SslEnforcement))
-            {
-                writer.WritePropertyName("sslEnforcement"u8);
-                writer.WriteStringValue(SslEnforcement.Value.ToSerialString());
-            }
-            if (Optional.IsDefined(MinimalTlsVersion))
-            {
-                writer.WritePropertyName("minimalTlsVersion"u8);
-                writer.WriteStringValue(MinimalTlsVersion.Value.ToString());
-            }
-            if (Optional.IsDefined(InfrastructureEncryption))
-            {
-                writer.WritePropertyName("infrastructureEncryption"u8);
-                writer.WriteStringValue(InfrastructureEncryption.Value.ToString());
-            }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(StorageProfile))
-            {
-                writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue<MySqlStorageProfile>(StorageProfile, options);
-            }
-            writer.WritePropertyName("createMode"u8);
-            writer.WriteStringValue(CreateMode.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MySqlServerPropertiesForDefaultCreate IJsonModel<MySqlServerPropertiesForDefaultCreate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -94,7 +55,7 @@ namespace Azure.ResourceManager.MySql.Models
 
         internal static MySqlServerPropertiesForDefaultCreate DeserializeMySqlServerPropertiesForDefaultCreate(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -208,7 +169,7 @@ namespace Azure.ResourceManager.MySql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlServerPropertiesForDefaultCreate)} does not support writing '{options.Format}' format.");
             }
@@ -222,7 +183,7 @@ namespace Azure.ResourceManager.MySql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlServerPropertiesForDefaultCreate(document.RootElement, options);
                     }
                 default:

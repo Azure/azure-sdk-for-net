@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Broker.Tests
 {
-    public class ManualInteractiveBrowserCredentialBrokerTests
+    public partial class ManualInteractiveBrowserCredentialBrokerTests
     {
         private static TokenRequestContext context = new TokenRequestContext(new string[] { "https://vault.azure.net/.default" });
 
@@ -62,14 +62,14 @@ namespace Azure.Identity.Broker.Tests
                 new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)),
                 new PopClientOptions() { Diagnostics = { IsLoggingContentEnabled = true, LoggedHeaderNames = { "Authorization" } } });
             var response = isAsync ?
-                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
-                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+                await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None) :
+                client.Get(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None);
             Assert.IsNotNull(response);
             Assert.AreEqual(200, response.Status);
 
             response = isAsync ?
-                await client.GetAsync(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None) :
-                client.Get(new Uri("https://20.190.132.47/beta/me"), CancellationToken.None);
+                await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None) :
+                client.Get(new Uri("https://graph.microsoft.com/v1.0/me"), CancellationToken.None);
             Assert.IsNotNull(response);
             Assert.AreEqual(200, response.Status);
         }
@@ -86,7 +86,7 @@ namespace Azure.Identity.Broker.Tests
             // Issue the unauthorized request to get the PoP challenge
             var scopes = new[] { "https://graph.microsoft.com/.default" };
             string nonce = null;
-            Uri resourceUri = new Uri("https://20.190.132.47/beta/me");
+            Uri resourceUri = new Uri("https://graph.microsoft.com/v1.0/me");
             string nonceToken = "nonce=\"";
             var handler = new HttpClientHandler
             {
@@ -111,7 +111,7 @@ namespace Azure.Identity.Broker.Tests
             request.Method = RequestMethod.Get;
             request.Uri.Reset(resourceUri);
 
-            var popContext = new PopTokenRequestContext(scopes, proofOfPossessionNonce: nonce, request: request);
+            var popContext = new TokenRequestContext(scopes, proofOfPossessionNonce: nonce, requestUri: request.Uri.ToUri(), requestMethod: request.Method.ToString());
             // this should pop browser amd validate the AuthenticateAsync path.
             var record = await credential.AuthenticateAsync(popContext).ConfigureAwait(false);
             credential.Record = record;

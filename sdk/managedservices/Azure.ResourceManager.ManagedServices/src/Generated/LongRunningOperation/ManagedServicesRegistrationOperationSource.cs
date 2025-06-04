@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ManagedServices
 
         ManagedServicesRegistrationResource IOperationSource<ManagedServicesRegistrationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedServicesRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedServicesContext.Default);
             return new ManagedServicesRegistrationResource(_client, data);
         }
 
         async ValueTask<ManagedServicesRegistrationResource> IOperationSource<ManagedServicesRegistrationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedServicesRegistrationData.DeserializeManagedServicesRegistrationData(document.RootElement);
-            return new ManagedServicesRegistrationResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedServicesRegistrationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedServicesContext.Default);
+            return await Task.FromResult(new ManagedServicesRegistrationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

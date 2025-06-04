@@ -1,6 +1,6 @@
 # Customizing JSON serialization
 
-The messages sent to SignalR clients are serialized into JSON. By default, the JSON library used is `Newtonsoft.Json` for "transient" transport type (the default one), and `System.Text.Json` for "persistent" transport type. If you want to customize the JSON serialization, you could set the `SignalROptions.JsonObjectSerializer` with [dependency injection](https://docs.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection#register-services). The `SignalROptions.JsonObjectSerializer` will be applied to all the service transport types. See the samples below:
+The messages sent to SignalR clients are serialized into JSON. By default, the JSON library used is `Newtonsoft.Json` for "transient" transport type (the default one), and `System.Text.Json` for "persistent" transport type. If you want to customize the JSON serialization, you could set the `SignalROptions.JsonObjectSerializer` with [dependency injection](https://learn.microsoft.com/azure/azure-functions/functions-dotnet-dependency-injection#register-services). The `SignalROptions.JsonObjectSerializer` will be applied to all the service transport types. See the samples below:
 
 ## Use `System.Text.Json` library
 

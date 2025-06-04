@@ -7,21 +7,21 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/8a28143c7271d4496296ed47f70c3cb5a9981e57/specification/containerregistry/resource-manager/readme.md
-tag: package-2022-12
+require: https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0aec760d4e28712c3a4ae0/specification/containerregistry/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -65,74 +65,83 @@ keep-plural-enums:
   - ContainerRegistryOS
 
 prepend-rp-prefix:
-  - KeyVaultProperties
-  - PlatformProperties
-  - TaskStepProperties
-  - Run
-  - RunPatch
-  - RunStatus
-  - RunType
-  - RunListResult
-  - Task
-  - TaskRun
-  - TaskPatch
-  - TaskStatus
-  - TaskListResult
-  - TaskRunListResult
-  - ProvisioningState
-  - Policies
-  - PolicyStatus
-  - Replication
-  - ReplicationPatch
-  - ReplicationListResult
-  - Webhook
-  - IPRule
   - AgentPool
-  - AgentPoolPatch
-  - AgentPoolQueueStatus
-  - NetworkRuleSet
-  - DockerBuildStep
-  - TriggerProperties
-  - EncryptionStatus
-  - ExportPolicy
-  - ExportPolicyStatus
-  - FileTaskStep
-  - ImageDescriptor
-  - ImageUpdateTrigger
-  - ImportImageParameters
-  - ImportMode
-  - ImportSource
-  - ImportSourceCredentials
-  - PublicNetworkAccess
-  - RetentionPolicy
-  - RunGetLogResult
-  - SecretObject
-  - SecretObjectType
-  - SourceTrigger
-  - SourceTriggerDescriptor
-  - SourceTriggerEvent
-  - TimerTrigger
-  - TimerTriggerDescriptor
-  - TriggerStatus
-  - TrustPolicy
-  - TrustPolicyType
-  - WebhookAction
-  - WebhookPatch
-  - WebhookStatus
-  - ZoneRedundancy
-  - PasswordName
   - AgentPoolListResult
+  - AgentPoolQueueStatus
   - AgentProperties
-  - EncodedTaskStep
-  - OverrideTaskStepProperties
-  - QuarantinePolicy
-  - UpdateTriggerPayloadType
-  - WebhookListResult
+  - Archive
+  - ArchiveVersion
+  - AuthCredential
   - BaseImageDependency
   - BaseImageDependencyType
   - BaseImageTrigger
   - BaseImageTriggerType
+  - CacheRule
+  - CertificateType
+  - CredentialName
+  - CredentialHealth
+  - CredentialHealthStatus
   - Credentials
+  - CredentialSet
+  - DockerBuildStep
+  - EncodedTaskStep
+  - EncryptionStatus
+  - ExportPipeline
+  - ExportPolicy
+  - ExportPolicyStatus
+  - FileTaskStep
+  - GenerateCredentialsResult
+  - ImageDescriptor
+  - ImageUpdateTrigger
+  - ImportImageParameters
+  - ImportMode
+  - ImportPipeline
+  - ImportSource
+  - ImportSourceCredentials
+  - IPRule
+  - KeyVaultProperties
+  - MetadataSearch
+  - NetworkRuleSet
+  - OverrideTaskStepProperties
+  - PasswordName
+  - PipelineOptions
+  - PipelineRun
+  - PipelineRunSourceProperties
+  - PipelineRunSourceType
+  - PipelineRunTargetProperties
+  - PipelineRunTargetType
+  - PipelineSourceType
+  - PlatformProperties
+  - Policies
+  - PolicyStatus
+  - ProvisioningState
+  - PublicNetworkAccess
+  - QuarantinePolicy
+  - Replication
+  - ReplicationListResult
+  - RetentionPolicy
+  - Run
+  - RunGetLogResult
+  - RunListResult
+  - RunStatus
+  - RunType
+  - SecretObject
+  - SecretObjectType
+  - SoftDeletePolicy
+  - SourceTrigger
+  - SourceTriggerDescriptor
+  - SourceTriggerEvent
+  - Task
+  - TaskListResult
+  - TaskRun
+  - TaskRunListResult
+  - TaskStatus
+  - TaskStepProperties
+  - TimerTrigger
+  - TimerTriggerDescriptor
+  - TlsCertificateProperties
+  - TlsProperties
+  - TlsStatus
   - Token
   - TokenCertificate
   - TokenCertificateName
@@ -140,9 +149,16 @@ prepend-rp-prefix:
   - TokenPassword
   - TokenPasswordName
   - TokenStatus
-  - PipelineRun
-  - GenerateCredentialsResult
-  - SoftDeletePolicy
+  - TriggerProperties
+  - TriggerStatus
+  - TrustPolicy
+  - TrustPolicyType
+  - UpdateTriggerPayloadType
+  - Webhook
+  - WebhookAction
+  - WebhookListResult
+  - WebhookStatus
+  - ZoneRedundancy
 
 rename-mapping:
   OS: ContainerRegistryOS
@@ -220,7 +236,6 @@ rename-mapping:
   ImageUpdateTrigger.id: -|uuid
   SourceTriggerDescriptor.id: -|uuid
   EventContent.id: -|uuid
-  Event.id: -|uuid
   EventInfo.id: -|uuid
   Request.id: -|uuid
   ActivationProperties: ConnectedRegistryActivation
@@ -232,11 +247,11 @@ rename-mapping:
   LoggingProperties: ConnectedRegistryLogging
   StatusDetailProperties: ConnectedRegistryStatusDetail
   StatusDetailProperties.type: StatusDetailType
+  StatusDetailProperties.correlationId: -|uuid
   AuditLogStatus: ConnectedRegistryAuditLogStatus
-  CertificateType: TlsCertificateLocationType
   GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
   LogLevel: ConnectedRegistryLogLevel
-  PipelineRunRequest: PipelineRunContent
+  PipelineRunRequest: ConnectedRegistryPipelineRunContent
   PipelineRunResponse: PipelineRunResult
   ProgressProperties: PipelineProgress
   SyncProperties: ConnectedRegistrySyncProperties
@@ -247,6 +262,11 @@ rename-mapping:
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
   ImportSource.registryUri: RegistryAddress
+  AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
+  PackageSourceType: ArchivePackageSourceType
+  RoleAssignmentMode: ContainerRegistryRoleAssignmentMode
+  ConnectedRegistry.properties.clientTokenIds: -|arm-id
+  ConnectedRegistryUpdateParameters.properties.clientTokenIds: -|arm-id
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun
@@ -254,6 +274,7 @@ override-operation-name:
   Builds_GetBuildSourceUploadUrl: GetBuildSourceUploadUrl
 
 directive:
+  # these two renames of operation would make the xml doc incorrect, but currently this is required because now the same operation would contain multiple api-versions if we do not rename.
   - rename-operation:
       from: Registries_GetBuildSourceUploadUrl
       to: Builds_GetBuildSourceUploadUrl
@@ -270,8 +291,16 @@ directive:
   - from: containerregistry.json
     where: $.definitions
     transform: >
-      $.ConnectedRegistryProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
-      $.ConnectedRegistryUpdateProperties.properties.clientTokenIds.items['x-ms-format'] = 'arm-id';
+      $.LoginServerProperties.properties.tls = {
+          "$ref": "#/definitions/TlsProperties",
+          "description": "The TLS properties of the connected registry login server.",
+          "readOnly": true
+        };
+      $.TlsProperties.properties.certificate = {
+          "$ref": "#/definitions/TlsCertificateProperties",
+          "description": "The certificate used to configure HTTPS for the login server.",
+          "readOnly": true
+        };
   - from: swagger-document
     where: $.definitions..expiry
     transform: >

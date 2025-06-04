@@ -6,6 +6,7 @@ using Azure.Core.TestFramework;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.SelfHelp.Tests
@@ -14,6 +15,7 @@ namespace Azure.ResourceManager.SelfHelp.Tests
     {
         protected ArmClient Client { get; private set; }
         protected SubscriptionResource DefaultSubscription { get; private set; }
+        protected TenantResource DefaultTenantResource { get; private set; }
         public AzureLocation DefaultLocation => AzureLocation.EastUS;
         public const string DefaultResourceGroupNamePrefix = "DiagnosticsRp-Synthetics-Public-Global";
         public const string SubId = "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba";
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             // DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
             SubscriptionCollection subscriptions = Client.GetSubscriptions();
             DefaultSubscription = await subscriptions.GetAsync(SubId);
+
+            var tenants = await Client.GetTenants().GetAllAsync().ToEnumerableAsync();
+            DefaultTenantResource = tenants.FirstOrDefault();
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(string rgNamePrefix = DefaultResourceGroupNamePrefix)

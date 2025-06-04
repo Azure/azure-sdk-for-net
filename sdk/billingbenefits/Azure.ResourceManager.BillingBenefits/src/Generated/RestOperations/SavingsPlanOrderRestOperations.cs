@@ -36,6 +36,20 @@ namespace Azure.ResourceManager.BillingBenefits
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string savingsPlanOrderId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string savingsPlanOrderId, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -73,7 +87,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         BillingBenefitsSavingsPlanOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,7 +115,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         BillingBenefitsSavingsPlanOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingBenefitsSavingsPlanOrderData.DeserializeBillingBenefitsSavingsPlanOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,6 +124,17 @@ namespace Azure.ResourceManager.BillingBenefits
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateElevateRequestUri(string savingsPlanOrderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders/", false);
+            uri.AppendPath(savingsPlanOrderId, true);
+            uri.AppendPath("/elevate", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateElevateRequest(string savingsPlanOrderId)
@@ -145,7 +170,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         BillingBenefitsRoleAssignmentEntity value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingBenefitsRoleAssignmentEntity.DeserializeBillingBenefitsRoleAssignmentEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -170,13 +195,22 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         BillingBenefitsRoleAssignmentEntity value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingBenefitsRoleAssignmentEntity.DeserializeBillingBenefitsRoleAssignmentEntity(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.BillingBenefits/savingsPlanOrders", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest()
@@ -205,7 +239,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanOrderModelList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SavingsPlanOrderModelList.DeserializeSavingsPlanOrderModelList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,13 +259,21 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanOrderModelList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SavingsPlanOrderModelList.DeserializeSavingsPlanOrderModelList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink)
@@ -263,7 +305,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanOrderModelList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SavingsPlanOrderModelList.DeserializeSavingsPlanOrderModelList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +329,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 case 200:
                     {
                         SavingsPlanOrderModelList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SavingsPlanOrderModelList.DeserializeSavingsPlanOrderModelList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

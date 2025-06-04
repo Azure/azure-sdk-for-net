@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Communication.Models
         }
 
         /// <summary> Describes whether user engagement tracking is enabled or disabled. </summary>
+        [WirePath("properties.userEngagementTracking")]
         public UserEngagementTracking? UserEngagementTracking { get; set; }
     }
 }

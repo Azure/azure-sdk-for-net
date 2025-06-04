@@ -45,10 +45,16 @@ namespace Azure.Storage
             => new InvalidOperationException("Use of token credentials requires HTTPS");
 
         public static ArgumentException SasCredentialRequiresUriWithoutSas<TUriBuilder>(Uri uri)
-            => new ArgumentException(
-                $"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature: {uri}\n" +
+        {
+            UriBuilder uriBuilder = new UriBuilder(uri);
+            uriBuilder.Query = "[REDACTED]";
+            Uri redactedUri = uriBuilder.Uri;
+
+            return new ArgumentException(
+                $"You cannot use {nameof(AzureSasCredential)} when the resource URI also contains a Shared Access Signature: {redactedUri}\n" +
                 $"You can remove the shared access signature by creating a {typeof(TUriBuilder).Name}, setting {typeof(TUriBuilder).Name}.Sas to null," +
                 $" and calling {typeof(TUriBuilder).Name}.ToUri.");
+        }
 
         public static InvalidOperationException SasMissingData(string paramName)
             => new InvalidOperationException($"SAS is missing required parameter: {paramName}");
@@ -78,7 +84,7 @@ namespace Azure.Storage
             => new InvalidOperationException($"SAS Uri cannot be generated. {builderName}.{paramName} cannot be set to create a {sasType} SAS.");
 
         public static InvalidOperationException SasIncorrectResourceType(string builderName, string builderParam, string value, string clientName)
-            => new InvalidOperationException($"SAS Uri cannot be generated. Expected {builderName}.{builderParam} to be set to {value} to generate" +
+            => new InvalidOperationException($"SAS Uri cannot be generated. Expected {builderName}.{builderParam} to be set to {value} to generate " +
                 $"the respective SAS for the client, {clientName}");
 
         public static ArgumentException InvalidPermission(char s)

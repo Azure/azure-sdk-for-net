@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaLiveEventData : IUtf8JsonSerializable, IJsonModel<MediaLiveEventData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaLiveEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaLiveEventData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaLiveEventData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,40 +36,7 @@ namespace Azure.ResourceManager.Media
                 throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -71,17 +47,17 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue<LiveEventInput>(Input, options);
+                writer.WriteObjectValue(Input, options);
             }
             if (Optional.IsDefined(Preview))
             {
                 writer.WritePropertyName("preview"u8);
-                writer.WriteObjectValue<LiveEventPreview>(Preview, options);
+                writer.WriteObjectValue(Preview, options);
             }
             if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
-                writer.WriteObjectValue<LiveEventEncoding>(Encoding, options);
+                writer.WriteObjectValue(Encoding, options);
             }
             if (Optional.IsCollectionDefined(Transcriptions))
             {
@@ -89,7 +65,7 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStartArray();
                 foreach (var item in Transcriptions)
                 {
-                    writer.WriteObjectValue<LiveEventTranscription>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +82,7 @@ namespace Azure.ResourceManager.Media
             if (Optional.IsDefined(CrossSiteAccessPolicies))
             {
                 writer.WritePropertyName("crossSiteAccessPolicies"u8);
-                writer.WriteObjectValue<CrossSiteAccessPolicies>(CrossSiteAccessPolicies, options);
+                writer.WriteObjectValue(CrossSiteAccessPolicies, options);
             }
             if (Optional.IsDefined(UseStaticHostname))
             {
@@ -139,22 +115,6 @@ namespace Azure.ResourceManager.Media
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MediaLiveEventData IJsonModel<MediaLiveEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -171,7 +131,7 @@ namespace Azure.ResourceManager.Media
 
         internal static MediaLiveEventData DeserializeMediaLiveEventData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -406,7 +366,7 @@ namespace Azure.ResourceManager.Media
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MediaLiveEventData)} does not support writing '{options.Format}' format.");
             }
@@ -420,7 +380,7 @@ namespace Azure.ResourceManager.Media
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMediaLiveEventData(document.RootElement, options);
                     }
                 default:

@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.Core;
+using Azure;
 using Azure.Core.Extensions;
 using Azure.Storage;
 using Azure.Storage.Files.DataLake;
@@ -40,6 +42,24 @@ namespace Microsoft.Extensions.Azure
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>(configuration);
+        }
+
+        /// <summary>
+        /// Registers a <see cref="DataLakeServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="tokenCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, TokenCredential tokenCredential)
+            where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>((options, token) => new DataLakeServiceClient(serviceUri, token, options));
+        }
+
+        /// <summary>
+        /// Registers a <see cref="DataLakeServiceClient"/> instance with the provided <paramref name="serviceUri"/> and <paramref name="sasCredential"/>
+        /// </summary>
+        public static IAzureClientBuilder<DataLakeServiceClient, DataLakeClientOptions> AddDataLakeServiceClient<TBuilder>(this TBuilder builder, Uri serviceUri, AzureSasCredential sasCredential)
+            where TBuilder : IAzureClientFactoryBuilder
+        {
+            return builder.RegisterClientFactory<DataLakeServiceClient, DataLakeClientOptions>(options => new DataLakeServiceClient(serviceUri, sasCredential, options));
         }
     }
 }

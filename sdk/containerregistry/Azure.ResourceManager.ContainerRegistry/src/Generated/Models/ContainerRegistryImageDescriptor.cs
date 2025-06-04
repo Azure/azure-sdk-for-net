@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The registry login server. </summary>
+        [WirePath("registry")]
         public string Registry { get; set; }
         /// <summary> The repository name. </summary>
+        [WirePath("repository")]
         public string Repository { get; set; }
         /// <summary> The tag name. </summary>
+        [WirePath("tag")]
         public string Tag { get; set; }
         /// <summary> The sha256-based digest of the image manifest. </summary>
+        [WirePath("digest")]
         public string Digest { get; set; }
     }
 }

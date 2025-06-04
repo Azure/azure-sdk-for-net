@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Minimum time in seconds that will pass before a TCP port that was used by a closed pinhole can be reused. Default for TCP is 2 minutes. </summary>
+        [WirePath("tcp")]
         public int? Tcp { get; set; }
         /// <summary> Minimum time in seconds that will pass before a UDP port that was used by a closed pinhole can be reused. Default for UDP is 1 minute. </summary>
+        [WirePath("udp")]
         public int? Udp { get; set; }
     }
 }

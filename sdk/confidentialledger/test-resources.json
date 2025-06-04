@@ -25,7 +25,7 @@
     },
     "location": {
       "type": "string",
-      "defaultValue": "eastus",
+      "defaultValue": "eastus2euap",
       "metadata": {
         "description": "The location of the resource. By default, this is the same as the resource group."
       }
@@ -46,9 +46,9 @@
   "resources": [
     {
       "type": "Microsoft.ConfidentialLedger/ledgers",
-      "apiVersion": "2020-12-01-preview",
+      "apiVersion": "2022-05-13",
       "name": "[parameters('baseName')]",
-      "location": "eastus",
+      "location": "southcentralus",
       "properties": {
         "ledgerType": "Public",
         "aadBasedSecurityPrincipals": [

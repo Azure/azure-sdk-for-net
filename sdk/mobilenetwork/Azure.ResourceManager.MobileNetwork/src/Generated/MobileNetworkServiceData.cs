@@ -92,12 +92,16 @@ namespace Azure.ResourceManager.MobileNetwork
         }
 
         /// <summary> The provisioning state of the service resource. </summary>
+        [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> A precedence value that is used to decide between services when identifying the QoS values to use for a particular SIM. A lower value means a higher priority. This value should be unique among all services configured in the mobile network. </summary>
+        [WirePath("properties.servicePrecedence")]
         public int ServicePrecedence { get; set; }
         /// <summary> The QoS policy to use for packets matching this service. This can be overridden for particular flows using the ruleQosPolicy field in a PccRuleConfiguration. If this field is null then the UE's SIM policy will define the QoS settings. </summary>
+        [WirePath("properties.serviceQosPolicy")]
         public MobileNetworkQosPolicy ServiceQosPolicy { get; set; }
         /// <summary> The set of data flow policy rules that make up this service. </summary>
+        [WirePath("properties.pccRules")]
         public IList<PccRuleConfiguration> PccRules { get; }
     }
 }

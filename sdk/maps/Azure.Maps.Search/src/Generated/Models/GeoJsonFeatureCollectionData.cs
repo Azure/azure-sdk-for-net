@@ -18,7 +18,7 @@ namespace Azure.Maps.Search.Models
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
-        public GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features)
+        internal GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features)
         {
             Argument.AssertNotNull(features, nameof(features));
 
@@ -27,12 +27,12 @@ namespace Azure.Maps.Search.Models
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
         /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
-        internal GeoJsonFeatureCollectionData(IList<GeoJsonFeature> features)
+        internal GeoJsonFeatureCollectionData(IReadOnlyList<GeoJsonFeature> features)
         {
             Features = features;
         }
 
         /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>
-        public IList<GeoJsonFeature> Features { get; }
+        public IReadOnlyList<GeoJsonFeature> Features { get; }
     }
 }

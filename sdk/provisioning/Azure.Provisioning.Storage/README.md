@@ -9,7 +9,7 @@ Azure.Provisioning.Storage simplifies declarative resource provisioning in .NET 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
+dotnet add package Azure.Provisioning.Storage
 ```
 
 ### Prerequisites
@@ -20,32 +20,7 @@ dotnet add package Azure.Provisioning.ApplicationInsights --prerelease
 
 ## Key concepts
 
-This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure diretly without needing to write or maintain bicep or arm templates.
-
-## Examples
-
-Here is a simple example which creates a KeyVault.
-
-First create your Infrastructure class.
-
-```C# Snippet:SampleInfrastructure
-public class SampleInfrastructure : Infrastructure
-{
-}
-```
-
-Next add your resources into your infrastructure and then Build.
-
-```C# Snippet:KeyVaultOnly
-// Create a new infrastructure
-var infrastructure = new SampleInfrastructure();
-
-// Add a new key vault
-var keyVault = infrastructure.AddKeyVault();
-
-// You can call Build to convert the infrastructure into bicep files
-infrastructure.Build();
-```
+This library allows you to specify your infrastructure in a declarative style using dotnet.  You can then use azd to deploy your infrastructure to Azure directly without needing to write or maintain bicep or arm templates.
 
 ## Troubleshooting
 

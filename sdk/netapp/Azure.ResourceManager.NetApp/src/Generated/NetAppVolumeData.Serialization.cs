@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeData : IUtf8JsonSerializable, IJsonModel<NetAppVolumeData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppVolumeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,7 @@ namespace Azure.ResourceManager.NetApp
                 throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -43,38 +52,10 @@ namespace Azure.ResourceManager.NetApp
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Tags))
+            if (options.Format != "W" && Optional.IsDefined(IsRestoring))
             {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
+                writer.WritePropertyName("isRestoring"u8);
+                writer.WriteBooleanValue(IsRestoring.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -95,7 +76,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue<VolumePropertiesExportPolicy>(ExportPolicy, options);
+                writer.WriteObjectValue(ExportPolicy, options);
             }
             if (Optional.IsCollectionDefined(ProtocolTypes))
             {
@@ -153,6 +134,11 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("networkFeatures"u8);
                 writer.WriteStringValue(NetworkFeatures.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(EffectiveNetworkFeatures))
+            {
+                writer.WritePropertyName("effectiveNetworkFeatures"u8);
+                writer.WriteStringValue(EffectiveNetworkFeatures.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(NetworkSiblingSetId))
             {
                 writer.WritePropertyName("networkSiblingSetId"u8);
@@ -169,7 +155,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in MountTargets)
                 {
-                    writer.WriteObjectValue<NetAppVolumeMountTarget>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -181,12 +167,7 @@ namespace Azure.ResourceManager.NetApp
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue<NetAppVolumeDataProtection>(DataProtection, options);
-            }
-            if (Optional.IsDefined(IsRestoring))
-            {
-                writer.WritePropertyName("isRestoring"u8);
-                writer.WriteBooleanValue(IsRestoring.Value);
+                writer.WriteObjectValue(DataProtection, options);
             }
             if (Optional.IsDefined(IsSnapshotDirectoryVisible))
             {
@@ -276,6 +257,11 @@ namespace Azure.ResourceManager.NetApp
             {
                 writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
                 writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(CoolAccessTieringPolicy))
+            {
+                writer.WritePropertyName("coolAccessTieringPolicy"u8);
+                writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
             }
             if (Optional.IsDefined(UnixPermissions))
             {
@@ -382,7 +368,7 @@ namespace Azure.ResourceManager.NetApp
                 writer.WriteStartArray();
                 foreach (var item in PlacementRules)
                 {
-                    writer.WriteObjectValue<NetAppVolumePlacementRule>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -421,22 +407,6 @@ namespace Azure.ResourceManager.NetApp
                 }
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         NetAppVolumeData IJsonModel<NetAppVolumeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -453,7 +423,7 @@ namespace Azure.ResourceManager.NetApp
 
         internal static NetAppVolumeData DeserializeNetAppVolumeData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -461,6 +431,7 @@ namespace Azure.ResourceManager.NetApp
             }
             ETag? etag = default;
             IList<string> zones = default;
+            bool? isRestoring = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -480,12 +451,12 @@ namespace Azure.ResourceManager.NetApp
             string baremetalTenantId = default;
             ResourceIdentifier subnetId = default;
             NetAppNetworkFeature? networkFeatures = default;
+            NetAppNetworkFeature? effectiveNetworkFeatures = default;
             Guid? networkSiblingSetId = default;
             NetAppVolumeStorageToNetworkProximity? storageToNetworkProximity = default;
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
             NetAppVolumeDataProtection dataProtection = default;
-            bool? isRestoring = default;
             bool? snapshotDirectoryVisible = default;
             bool? kerberosEnabled = default;
             NetAppVolumeSecurityStyle? securityStyle = default;
@@ -501,6 +472,7 @@ namespace Azure.ResourceManager.NetApp
             bool? coolAccess = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
+            CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
             string unixPermissions = default;
             int? cloneProgress = default;
             NetAppFileAccessLog? fileAccessLogs = default;
@@ -546,6 +518,15 @@ namespace Azure.ResourceManager.NetApp
                         array.Add(item.GetString());
                     }
                     zones = array;
+                    continue;
+                }
+                if (property.NameEquals("isRestoring"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRestoring = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -704,6 +685,15 @@ namespace Azure.ResourceManager.NetApp
                             networkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("effectiveNetworkFeatures"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            effectiveNetworkFeatures = new NetAppNetworkFeature(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("networkSiblingSetId"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -748,15 +738,6 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("isRestoring"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            isRestoring = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("snapshotDirectoryVisible"u8))
@@ -894,6 +875,15 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             coolAccessRetrievalPolicy = new CoolAccessRetrievalPolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("coolAccessTieringPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolAccessTieringPolicy = new CoolAccessTieringPolicy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("unixPermissions"u8))
@@ -1116,6 +1106,7 @@ namespace Azure.ResourceManager.NetApp
                 baremetalTenantId,
                 subnetId,
                 networkFeatures,
+                effectiveNetworkFeatures,
                 networkSiblingSetId,
                 storageToNetworkProximity,
                 mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
@@ -1137,6 +1128,7 @@ namespace Azure.ResourceManager.NetApp
                 coolAccess,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy,
                 unixPermissions,
                 cloneProgress,
                 fileAccessLogs,
@@ -1167,7 +1159,7 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeData)} does not support writing '{options.Format}' format.");
             }
@@ -1181,7 +1173,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppVolumeData(document.RootElement, options);
                     }
                 default:

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Storage.Blobs.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
@@ -51,11 +52,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.AccessTier, new AccessTier(blobProperties.AccessTier));
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: blobProperties.ContentLength,
-                eTag: blobProperties.ETag,
-                lastModifiedTime: blobProperties.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = blobProperties.ContentLength,
+                ETag = blobProperties.ETag,
+                LastModifiedTime = blobProperties.LastModified,
+                RawProperties = properties
+            };
         }
 
         internal static StorageResourceItemProperties ToStorageResourceItemProperties(this BlobDownloadStreamingResult result)
@@ -101,11 +104,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 size = contentRange.Size;
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: size,
-                eTag : result?.Details.ETag,
-                lastModifiedTime: result?.Details.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = size,
+                ETag = result?.Details.ETag,
+                LastModifiedTime = result?.Details.LastModified,
+                RawProperties = properties
+            };
         }
 
         internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
@@ -161,11 +166,13 @@ namespace Azure.Storage.DataMovement.Blobs
             return new StorageResourceReadStreamResult(
                 content: result.Content,
                 range: range,
-                properties: new StorageResourceItemProperties(
-                    resourceLength: size.HasValue ? size : result.Details.ContentLength,
-                    eTag: result.Details.ETag,
-                    lastModifiedTime: result?.Details.LastModified,
-                    properties: properties));
+                properties: new StorageResourceItemProperties()
+                {
+                    ResourceLength = size.HasValue ? size : result.Details.ContentLength,
+                    ETag = result.Details.ETag,
+                    LastModifiedTime = result?.Details.LastModified,
+                    RawProperties = properties
+                });
         }
 
         /// <summary>
@@ -378,13 +385,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
             };
-            if ((options?.ContentEncoding?.Preserve ?? true) &&
-                (options?.ContentDisposition?.Preserve ?? true) &&
-                (options?.ContentLanguage?.Preserve ?? true) &&
-                (options?.ContentType?.Preserve ?? true) &&
-                (options?.CacheControl?.Preserve ?? true) &&
-                (options?.AccessTier?.Preserve ?? true) &&
-                (options?.Metadata?.Preserve ?? true))
+            if (options == default ||
+                ((options?._isContentEncodingSet == false) &&
+                (options?._isContentDispositionSet == false) &&
+                (options?._isContentLanguageSet == false) &&
+                (options?._isContentTypeSet == false) &&
+                (options?._isCacheControlSet == false) &&
+                (options?._isMetadataSet == false)))
             {
                 return uploadFromUriOptions;
             }
@@ -475,6 +482,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     TagConditions = options?.DestinationConditions?.TagConditions,
                     LeaseId = options?.DestinationConditions?.LeaseId,
                 },
+                PremiumPageBlobAccessTier = GetAccessTier(options, sourceProperties?.RawProperties).ToPremiumPageBlobAccessTier(),
             };
         }
 
@@ -507,88 +515,56 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCheckpointData GetCheckpointData(this DataTransferProperties properties, bool isSource)
+        internal static StorageResourceCheckpointDetails GetCheckpointDetails(this TransferProperties properties, bool isSource)
         {
             if (isSource)
             {
-                using (MemoryStream stream = new(properties.SourceCheckpointData))
+                using (MemoryStream stream = new(properties.SourceCheckpointDetails))
                 {
-                    return BlobSourceCheckpointData.Deserialize(stream);
+                    return BlobSourceCheckpointDetails.Deserialize(stream);
                 }
             }
             else
             {
-                using (MemoryStream stream = new(properties.DestinationCheckpointData))
+                using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
                 {
-                    return BlobDestinationCheckpointData.Deserialize(stream);
+                    return BlobDestinationCheckpointDetails.Deserialize(stream);
                 }
             }
         }
 
-        internal static BlobStorageResourceOptions GetBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
-        {
-            return new()
-            {
-                Metadata = checkpointData.Metadata,
-                CacheControl = checkpointData.CacheControl,
-                ContentDisposition = checkpointData.ContentDisposition,
-                ContentEncoding = checkpointData.ContentEncoding,
-                ContentLanguage = checkpointData.ContentLanguage,
-                ContentType = checkpointData.ContentType,
-                AccessTier = checkpointData.AccessTier,
-            };
-        }
-
         internal static BlockBlobStorageResourceOptions GetBlockBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
-        {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
-            return new BlockBlobStorageResourceOptions(baseOptions);
-        }
+            this BlobDestinationCheckpointDetails checkpointDetails)
+            => new BlockBlobStorageResourceOptions(checkpointDetails);
 
         internal static PageBlobStorageResourceOptions GetPageBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
-        {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
-            return new PageBlobStorageResourceOptions(baseOptions);
-        }
+            this BlobDestinationCheckpointDetails checkpointDetails)
+            => new PageBlobStorageResourceOptions(checkpointDetails);
 
         internal static AppendBlobStorageResourceOptions GetAppendBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
-        {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
-            return new AppendBlobStorageResourceOptions(baseOptions);
-        }
+            this BlobDestinationCheckpointDetails checkpointDetails)
+            => new AppendBlobStorageResourceOptions(checkpointDetails);
 
         internal static BlobStorageResourceContainerOptions GetBlobContainerOptions(
-            this BlobDestinationCheckpointData checkpointData,
+            this BlobDestinationCheckpointDetails checkpointDetails,
             string directoryPrefix)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
-                BlobType = checkpointData.BlobType,
-                BlobDirectoryPrefix = directoryPrefix,
-                BlobOptions = baseOptions,
+                BlobType = default,
+                _isBlobTypeSet = false,
+                BlobPrefix = directoryPrefix,
+                BlobOptions = new(checkpointDetails),
             };
         }
 
         internal static BlobStorageResourceContainerOptions DeepCopy(this BlobStorageResourceContainerOptions options)
             => new BlobStorageResourceContainerOptions()
             {
-                BlobType = options?.BlobType ?? BlobType.Block,
-                BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
-                BlobOptions = new BlobStorageResourceOptions()
-                {
-                    Metadata = options?.BlobOptions?.Metadata,
-                    CacheControl = options?.BlobOptions?.CacheControl,
-                    ContentEncoding = options?.BlobOptions?.ContentEncoding,
-                    ContentDisposition = options?.BlobOptions?.ContentDisposition,
-                    ContentLanguage = options?.BlobOptions?.ContentLanguage,
-                    ContentType = options?.BlobOptions?.ContentType,
-                    AccessTier = options?.BlobOptions?.AccessTier,
-                }
+                BlobType = options?.BlobType,
+                _isBlobTypeSet = options?._isBlobTypeSet ?? false,
+                BlobPrefix = options?.BlobPrefix,
+                BlobOptions = new BlobStorageResourceOptions(options?.BlobOptions)
             };
 
         internal static StorageResourceItemProperties ToResourceProperties(this BlobItem blobItem)
@@ -631,63 +607,96 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.CacheControl, blobItem.Properties.CacheControl);
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: blobItem.Properties.ContentLength,
-                eTag: blobItem.Properties.ETag,
-                lastModifiedTime: blobItem.Properties.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = blobItem.Properties.ContentLength,
+                ETag = blobItem.Properties.ETag,
+                LastModifiedTime = blobItem.Properties.LastModified,
+                RawProperties = properties
+            };
+        }
+
+        private static string ConvertContentPropertyObjectToString(string contentPropertyName, object contentPropertyValue)
+        {
+            if (contentPropertyValue is string)
+            {
+                return contentPropertyValue as string;
+            }
+            else if (contentPropertyValue is string[])
+            {
+                return string.Join(",", (string[])contentPropertyValue);
+            }
+            else
+            {
+                throw Errors.UnexpectedPropertyType(contentPropertyName, DataMovementConstants.StringTypeStr, DataMovementConstants.StringArrayTypeStr);
+            }
         }
 
         private static BlobHttpHeaders GetHttpHeaders(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => new()
             {
-                ContentType = (options?.ContentType?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
+                ContentType = (options?._isContentTypeSet ?? false)
+                    ? options?.ContentType
+                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
                         ? (string) contentType
+                        : default,
+                ContentEncoding = (options?._isContentEncodingSet ?? false)
+                    ? options?.ContentEncoding
+                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
+                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentEncoding, contentEncoding)
+                        : default,
+                ContentLanguage = (options?._isContentLanguageSet ?? false)
+                    ? options?.ContentLanguage
+                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
+                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentLanguage, contentLanguage)
+                        : default,
+                ContentDisposition = (options?._isContentDispositionSet ?? false)
+                    ? options?.ContentDisposition
+                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
+                        ? (string)contentDisposition
+                        : default,
+                CacheControl = (options?._isCacheControlSet ?? false)
+                    ? options?.CacheControl
+                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
+                        ? (string)cacheControl
                         : default
-                    : options?.ContentType?.Value,
-                ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
-                        ? (string) contentEncoding
-                        : default
-                    : options?.ContentEncoding?.Value,
-                ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
-                        ? (string) contentLanguage
-                        : default
-                    : options?.ContentLanguage?.Value,
-                ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
-                        ? (string) contentDisposition
-                        : default
-                    : options?.ContentDisposition?.Value,
-                CacheControl = (options?.CacheControl?.Preserve ?? true)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
-                        ? (string) cacheControl
-                        : default
-                    : options?.CacheControl?.Value,
             };
 
-        // By default we preserve the access tier
+        // Get the access tier property
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
-            => (options?.AccessTier?.Preserve ?? true)
-               ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
+            IDictionary<string, object> properties)
+            => options?._isAccessTierSet ?? false
+                ? options?.AccessTier
+                : properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
                     ? (AccessTier?)accessTierObject
-                    : default
-               : options?.AccessTier?.Value;
+                    : default;
 
         // By default we preserve the metadata
         private static Metadata GetMetadata(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
-            => (options?.Metadata?.Preserve ?? true)
-                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
-                    ? (Metadata) metadataObject
-                    : default
-               : options?.Metadata?.Value;
+            IDictionary<string, object> properties)
+            => (options?._isMetadataSet ?? false)
+                ? options?.Metadata
+                : properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
+                    ? (Metadata)metadataObject
+                    : default;
+
+        // Convert AccessTier to PremiumPageBlobAccessTier
+        // As long as it works. Do not set if the AccessTier is a BlockBlob tier
+        private static PremiumPageBlobAccessTier? ToPremiumPageBlobAccessTier(this AccessTier? accessTier)
+        {
+            if (accessTier != default &&
+                accessTier != AccessTier.Hot &&
+                accessTier != AccessTier.Cool &&
+                accessTier != AccessTier.Archive &&
+                accessTier != AccessTier.Cold)
+            {
+                return new PremiumPageBlobAccessTier(accessTier.ToString());
+            }
+            return default;
+        }
     }
 }

@@ -11,51 +11,54 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     public class DocumentIntelligenceLiveTestBase : RecordedTestBase<DocumentIntelligenceTestEnvironment>
     {
+        private const string SanitizedContainerUri = "https://sanitized.blob.core.windows.net";
+
         public DocumentIntelligenceLiveTestBase(bool isAsync, RecordedTestMode? mode = null)
             : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$..accessToken");
-            BodyKeySanitizers.Add(new BodyKeySanitizer("https://sanitized.blob.core.windows.net") { JsonPath = "$..containerUrl" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..containerUrl") { Value = SanitizedContainerUri });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..resultContainerUrl") { Value = SanitizedContainerUri });
             SanitizedHeaders.Add("Ocp-Apim-Subscription-Key");
         }
 
-        protected string ServiceVersionString { get; } = "2024-02-29-preview";
+        protected string ServiceVersionString { get; } = "2024-11-30";
 
-        protected DocumentIntelligenceClient CreateDocumentIntelligenceClient(bool useTokenCredential = false)
+        protected DocumentIntelligenceClient CreateDocumentIntelligenceClient(bool useApiKey = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentIntelligenceClientOptions());
 
             DocumentIntelligenceClient nonInstrumentedClient;
 
-            if (useTokenCredential)
-            {
-                nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, TestEnvironment.Credential, options);
-            }
-            else
+            if (useApiKey)
             {
                 var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
                 nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, credential, options);
+            }
+            else
+            {
+                nonInstrumentedClient = new DocumentIntelligenceClient(endpoint, TestEnvironment.Credential, options);
             }
 
             return InstrumentClient(nonInstrumentedClient);
         }
 
-        protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient(bool useTokenCredential = false)
+        protected DocumentIntelligenceAdministrationClient CreateDocumentIntelligenceAdministrationClient(bool useApiKey = false)
         {
             var endpoint = new Uri(TestEnvironment.Endpoint);
             var options = InstrumentClientOptions(new DocumentIntelligenceClientOptions());
 
             DocumentIntelligenceAdministrationClient nonInstrumentedClient;
 
-            if (useTokenCredential)
-            {
-                nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, TestEnvironment.Credential, options);
-            }
-            else
+            if (useApiKey)
             {
                 var credential = new AzureKeyCredential(TestEnvironment.ApiKey);
                 nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, credential, options);
+            }
+            else
+            {
+                nonInstrumentedClient = new DocumentIntelligenceAdministrationClient(endpoint, TestEnvironment.Credential, options);
             }
 
             return InstrumentClient(nonInstrumentedClient);
@@ -66,11 +69,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceAdministrationClient();
             var modelId = Recording.GenerateId();
             var containerUrl = new Uri(containerUrlString);
-            var source = new AzureBlobContentSource(containerUrl);
+            var source = new BlobContentSource(containerUrl);
 
-            var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
+            var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, source)
             {
-                AzureBlobSource = source,
                 Description = description
             };
 
@@ -78,11 +80,11 @@ namespace Azure.AI.DocumentIntelligence.Tests
             {
                 foreach (var tag in tags)
                 {
-                    content.Tags.Add(tag);
+                    options.Tags.Add(tag);
                 }
             }
 
-            return await DisposableDocumentModel.BuildAsync(client, content);
+            return await DisposableDocumentModel.BuildAsync(client, options);
         }
 
         protected async Task<DisposableDocumentClassifier> BuildDisposableDocumentClassifierAsync(string description = null)
@@ -90,16 +92,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
-            var sourceC = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-C/train" };
-            var sourceD = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-D/train" };
-            var sourceE = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-E/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
-            var docTypeC = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceC };
-            var docTypeD = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceD };
-            var docTypeE = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceE };
+            var sourceA = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
+            var sourceC = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-C/train" };
+            var sourceD = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-D/train" };
+            var sourceE = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-E/train" };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
+            var docTypeC = new ClassifierDocumentTypeDetails(sourceC);
+            var docTypeD = new ClassifierDocumentTypeDetails(sourceD);
+            var docTypeE = new ClassifierDocumentTypeDetails(sourceE);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
@@ -109,12 +111,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 { "IRS-1040-E", docTypeE }
             };
 
-            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
+            var options = new BuildClassifierOptions(classifierId, docTypes)
             {
                 Description = description
             };
 
-            return await DisposableDocumentClassifier.BuildAsync(client, content);
+            return await DisposableDocumentClassifier.BuildAsync(client, options);
         }
     }
 }

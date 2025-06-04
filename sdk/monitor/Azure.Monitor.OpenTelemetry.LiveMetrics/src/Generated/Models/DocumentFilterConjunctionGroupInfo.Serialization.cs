@@ -17,25 +17,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            DocumentFilterConjunctionGroupInfoTelemetryType? telemetryType = default;
+            TelemetryType telemetryType = default;
             FilterConjunctionGroupInfo filters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("TelemetryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    telemetryType = new DocumentFilterConjunctionGroupInfoTelemetryType(property.Value.GetString());
+                    telemetryType = new TelemetryType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("Filters"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     filters = FilterConjunctionGroupInfo.DeserializeFilterConjunctionGroupInfo(property.Value);
                     continue;
                 }
@@ -47,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentFilterConjunctionGroupInfo FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement);
         }
     }

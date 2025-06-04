@@ -77,11 +77,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The Key to be used to generate gateway token. </summary>
+        [WirePath("keyType")]
         public TokenGenerationUsedKeyType KeyType { get; }
         /// <summary>
         /// The Expiry time of the Token. Maximum token expiry time is set to 30 days. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
+        [WirePath("expiry")]
         public DateTimeOffset Expiry { get; }
     }
 }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.WebPubSub
 
         WebPubSubResource IOperationSource<WebPubSubResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = WebPubSubData.DeserializeWebPubSubData(document.RootElement);
+            var data = ModelReaderWriter.Read<WebPubSubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
             return new WebPubSubResource(_client, data);
         }
 
         async ValueTask<WebPubSubResource> IOperationSource<WebPubSubResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = WebPubSubData.DeserializeWebPubSubData(document.RootElement);
-            return new WebPubSubResource(_client, data);
+            var data = ModelReaderWriter.Read<WebPubSubData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWebPubSubContext.Default);
+            return await Task.FromResult(new WebPubSubResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

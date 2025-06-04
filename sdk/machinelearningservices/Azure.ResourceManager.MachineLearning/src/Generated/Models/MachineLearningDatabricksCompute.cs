@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Properties of Databricks. </summary>
+        [WirePath("properties")]
         public MachineLearningDatabricksProperties Properties { get; set; }
     }
 }

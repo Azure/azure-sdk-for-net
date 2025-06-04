@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string PreparedForResynchronizationValue = "PreparedForResynchronization";
         private const string StartedResynchronizationValue = "StartedResynchronization";
 
-        /// <summary> None. </summary>
+        /// <summary> None state. </summary>
         public static VMwareToAzureMigrateResyncState None { get; } = new VMwareToAzureMigrateResyncState(NoneValue);
-        /// <summary> PreparedForResynchronization. </summary>
+        /// <summary> Prepared for resynchronization state. </summary>
         public static VMwareToAzureMigrateResyncState PreparedForResynchronization { get; } = new VMwareToAzureMigrateResyncState(PreparedForResynchronizationValue);
-        /// <summary> StartedResynchronization. </summary>
+        /// <summary> Started resynchronization state. </summary>
         public static VMwareToAzureMigrateResyncState StartedResynchronization { get; } = new VMwareToAzureMigrateResyncState(StartedResynchronizationValue);
         /// <summary> Determines if two <see cref="VMwareToAzureMigrateResyncState"/> values are the same. </summary>
         public static bool operator ==(VMwareToAzureMigrateResyncState left, VMwareToAzureMigrateResyncState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VMwareToAzureMigrateResyncState"/> values are not the same. </summary>
         public static bool operator !=(VMwareToAzureMigrateResyncState left, VMwareToAzureMigrateResyncState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VMwareToAzureMigrateResyncState"/>. </summary>
         public static implicit operator VMwareToAzureMigrateResyncState(string value) => new VMwareToAzureMigrateResyncState(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

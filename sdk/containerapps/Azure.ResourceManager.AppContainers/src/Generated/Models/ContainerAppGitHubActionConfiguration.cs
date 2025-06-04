@@ -76,22 +76,31 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Registry configurations. </summary>
+        [WirePath("registryInfo")]
         public ContainerAppRegistryInfo RegistryInfo { get; set; }
         /// <summary> AzureCredentials configurations. </summary>
+        [WirePath("azureCredentials")]
         public ContainerAppCredentials AzureCredentials { get; set; }
         /// <summary> Context path. </summary>
+        [WirePath("contextPath")]
         public string ContextPath { get; set; }
         /// <summary> One time Github PAT to configure github environment. </summary>
+        [WirePath("githubPersonalAccessToken")]
         public string GitHubPersonalAccessToken { get; set; }
         /// <summary> Image name. </summary>
+        [WirePath("image")]
         public string Image { get; set; }
         /// <summary> Code or Image. </summary>
+        [WirePath("publishType")]
         public string PublishType { get; set; }
         /// <summary> Operation system. </summary>
+        [WirePath("os")]
         public string OS { get; set; }
         /// <summary> Runtime stack. </summary>
+        [WirePath("runtimeStack")]
         public string RuntimeStack { get; set; }
         /// <summary> Runtime version. </summary>
+        [WirePath("runtimeVersion")]
         public string RuntimeVersion { get; set; }
     }
 }

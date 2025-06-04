@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformGatewayRouteConfigResource IOperationSource<AppPlatformGatewayRouteConfigResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppPlatformGatewayRouteConfigData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformGatewayRouteConfigResource(_client, data);
         }
 
         async ValueTask<AppPlatformGatewayRouteConfigResource> IOperationSource<AppPlatformGatewayRouteConfigResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppPlatformGatewayRouteConfigData.DeserializeAppPlatformGatewayRouteConfigData(document.RootElement);
-            return new AppPlatformGatewayRouteConfigResource(_client, data);
+            var data = ModelReaderWriter.Read<AppPlatformGatewayRouteConfigData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
+            return await Task.FromResult(new AppPlatformGatewayRouteConfigResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

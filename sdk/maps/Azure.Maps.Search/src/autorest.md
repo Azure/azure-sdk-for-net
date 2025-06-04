@@ -7,7 +7,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ```yaml
 input-file:
-- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/c1260c7a90d503c18b0aeaf29968dfc0b4bf9e11/specification/maps/data-plane/Search/preview/1.0/search.json
+- https://raw.githubusercontent.com/Azure/azure-rest-api-specs/45924e49834c4e01c0713e6b7ca21f94be17e396/specification/maps/data-plane/Search/stable/2025-01-01/search.json
 title: MapsSearchClient
 openapi-type: data-plane
 add-credentials: true
@@ -28,17 +28,23 @@ helper-namespace: Azure.Maps.Common
 ```yaml
 directive:
 - from: swagger-document
-  where: $.securityDefinitions
-  transform: |
-    $["azure_auth"] = $["AADToken"];
-    delete $["AADToken"];
+  where: "$.definitions.GeocodingBatchRequestItem.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
 - from: swagger-document
-  where: '$.security[0]'
-  transform: |
-    $["azure_auth"] = $["AADToken"];
-    delete $["AADToken"];
+  where: '$.parameters.Bbox'
+  transform: >
+    $["name"] = "boundingBox";
 - from: swagger-document
-  where: $.securityDefinitions
-  transform: |
-    $["SharedKey"]["in"] = "header";
+  where: "$.parameters.Bbox"
+  transform: >
+    $["x-ms-client-name"] = "BoundingBox";
+- from: swagger-document
+  where: "$.definitions.FeaturesItem.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
+- from: swagger-document
+  where: "$.definitions.GeoJsonObject.properties.bbox"
+  transform: >
+    $["x-ms-client-name"] = "boundingBox";
 ```

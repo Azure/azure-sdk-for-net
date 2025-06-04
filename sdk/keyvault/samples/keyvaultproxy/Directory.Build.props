@@ -6,8 +6,7 @@
     <RootNamespace>AzureSamples.Security.KeyVault.Proxy</RootNamespace>
     <LangVersion>11.0</LangVersion>
     <NoWarn>
-      $(NoWarn);
-      AZC0001
+      $(NoWarn)
     </NoWarn>
   </PropertyGroup>
 </Project>

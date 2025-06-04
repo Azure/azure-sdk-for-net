@@ -9,12 +9,13 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/4b5fe2fb0a5066c4ff2b
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
 request-path-is-non-resource:
   - /{scope}/providers/Microsoft.Automanage/configurationProfileAssignments/{configurationProfileAssignmentName}/reports/{reportName}
   - /subscriptions/{subscriptionId}/providers/Microsoft.Automanage/servicePrincipals/default

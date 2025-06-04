@@ -56,6 +56,8 @@ namespace Azure.ResourceManager.Billing
         {
             BillingPolicies = new ChangeTrackingDictionary<string, string>();
             SuspensionReasons = new ChangeTrackingList<string>();
+            SuspensionReasonDetails = new ChangeTrackingList<BillingSubscriptionStatusDetails>();
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingSubscriptionAliasData"/>. </summary>
@@ -63,57 +65,68 @@ namespace Azure.ResourceManager.Billing
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a subscription. </param>
-        /// <param name="beneficiaryTenantId"> The provisioning tenant of the subscription. </param>
-        /// <param name="billingFrequency"> The billing frequency of the subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </param>
-        /// <param name="billingProfileId"> The ID of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
+        /// <param name="autoRenew"> Indicates whether auto renewal is turned on or off for a product. </param>
+        /// <param name="subscriptionAliasBeneficiaryTenantId"> The provisioning tenant of the subscription. </param>
+        /// <param name="beneficiary"> The beneficiary of the billing subscription. </param>
+        /// <param name="billingFrequency"> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </param>
+        /// <param name="billingProfileId"> The fully qualified ID that uniquely identifies a billing profile. </param>
         /// <param name="billingPolicies"> Dictionary of billing policies associated with the subscription. </param>
-        /// <param name="billingProfileDisplayName"> The display name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="billingProfileName"> The name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement Type billing accounts. </param>
-        /// <param name="customerId"> The ID of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="customerDisplayName"> The name of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="displayName"> The name of the subscription. </param>
-        /// <param name="enrollmentAccountId"> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountDisplayName"> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="invoiceSectionId"> The ID of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="invoiceSectionDisplayName"> The display name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="invoiceSectionName"> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </param>
+        /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
+        /// <param name="billingProfileName"> The ID that uniquely identifies a billing profile. </param>
+        /// <param name="consumptionCostCenter"> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </param>
+        /// <param name="subscriptionAliasCustomerId"> The fully qualified ID that uniquely identifies a customer. </param>
+        /// <param name="customerDisplayName"> The name of the customer. </param>
+        /// <param name="customerName"> The ID that uniquely identifies a customer. </param>
+        /// <param name="displayName"> The name of the billing subscription. </param>
+        /// <param name="enrollmentAccountId"> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </param>
+        /// <param name="enrollmentAccountDisplayName"> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </param>
+        /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
+        /// <param name="invoiceSectionDisplayName"> The name of the invoice section. </param>
+        /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
         /// <param name="lastMonthCharges"> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
         /// <param name="monthToDateCharges"> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </param>
         /// <param name="nextBillingCycleDetails"> Next billing cycle details of the subscription. </param>
         /// <param name="offerId"> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts. </param>
         /// <param name="productCategory"> The category of the product for which the subscription is purchased. Possible values include: AzureSupport, Hardware, ReservationOrder, SaaS, SavingsPlanOrder, Software, UsageBased, Other. </param>
-        /// <param name="productType"> The type of the product for which the subscription is purchased. </param>
-        /// <param name="productTypeId"> The ID of the product for which the subscription is purchased. </param>
-        /// <param name="purchaseOn"> The purchase date of the subscription in UTC time. </param>
-        /// <param name="quantity"> The number of licenses purchased for the subscription. </param>
-        /// <param name="reseller"> The reseller for which the subscription is created. The field is available for Microsoft Partner Agreement billing accounts. </param>
-        /// <param name="renewalTermDetails"> The term details of the subscription at the next renewal. </param>
-        /// <param name="skuDescription"> The SKU description of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </param>
+        /// <param name="productType"> Type of the product for which the subscription is purchased. </param>
+        /// <param name="productTypeId"> Id of the product for which the subscription is purchased. </param>
+        /// <param name="purchaseOn"> Purchase date of the product in UTC time. </param>
+        /// <param name="quantity"> The quantity of licenses or fulfillment units for the subscription. </param>
+        /// <param name="reseller"> Reseller for this subscription. The fields is not available for Microsoft Partner Agreement billing accounts. </param>
+        /// <param name="renewalTermDetails"> Details for the next renewal term of a subscription. </param>
+        /// <param name="skuId"> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </param>
+        /// <param name="skuDescription"> The SKU description of the product for which the subscription is purchased. This field is is only available for billing accounts with agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. </param>
+        /// <param name="systemOverrides"> System imposed policies that regulate behavior of the subscription. </param>
+        /// <param name="resourceUri"> Unique identifier of the linked resource. </param>
+        /// <param name="termDuration"> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </param>
+        /// <param name="termStartOn"> Start date of the term in UTC time. </param>
+        /// <param name="termEndOn"> End date of the term in UTC time. </param>
+        /// <param name="provisioningTenantId"> The tenant in which the subscription is provisioned. </param>
         /// <param name="status"> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="subscriptionId"> The ID of the usage-based subscription. This field is only available for usage-based subscriptions of Microsoft Customer Agreement billing accounts. </param>
-        /// <param name="suspensionReasons"> The suspension reason for the subscription. This field is not available for Enterprise Agreement billing accounts. </param>
-        /// <param name="termDuration"> The duration for which you can use the subscription. Example P1Y and P1M. </param>
-        /// <param name="termStartOn"> The start date of the term in UTC time. </param>
-        /// <param name="termEndOn"> The end date of the term in UTC time. </param>
-        /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement billing accounts. </param>
-        /// <param name="billingSubscriptionId"> The ID of the billing subscription with the subscription alias. </param>
+        /// <param name="operationStatus"> The status of an operation on the subscription. When None, there is no ongoing operation. When LockedForUpdate, write operations will be blocked on the Billing Subscription. Other is the default value and you may need to refer to the latest API version for more details. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
+        /// <param name="subscriptionId"> The ID of the subscription. </param>
+        /// <param name="suspensionReasons"> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
+        /// <param name="suspensionReasonDetails"> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </param>
+        /// <param name="enrollmentAccountStartOn"> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </param>
+        /// <param name="subscriptionEnrollmentAccountStatus"> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </param>
+        /// <param name="subscriptionAliasSubscriptionId"> The ID of the billing subscription with the subscription alias. </param>
+        /// <param name="tags"> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSubscriptionAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, string beneficiaryTenantId, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string customerId, string customerDisplayName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuDescription, string skuId, BillingSubscriptionStatus? status, string subscriptionId, IReadOnlyList<string> suspensionReasons, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, DateTimeOffset? enrollmentAccountStartOn, ResourceIdentifier billingSubscriptionId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal BillingSubscriptionAliasData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, BillingSubscriptionAutoRenewState? autoRenew, Guid? subscriptionAliasBeneficiaryTenantId, BillingBeneficiary beneficiary, string billingFrequency, ResourceIdentifier billingProfileId, IReadOnlyDictionary<string, string> billingPolicies, string billingProfileDisplayName, string billingProfileName, string consumptionCostCenter, string subscriptionAliasCustomerId, string customerDisplayName, string customerName, string displayName, string enrollmentAccountId, string enrollmentAccountDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, string invoiceSectionName, BillingAmount lastMonthCharges, BillingAmount monthToDateCharges, NextBillingCycleDetails nextBillingCycleDetails, string offerId, string productCategory, string productType, string productTypeId, DateTimeOffset? purchaseOn, long? quantity, CreatedSubscriptionReseller reseller, SubscriptionRenewalTermDetails renewalTermDetails, string skuId, string skuDescription, BillingSystemOverrides systemOverrides, Uri resourceUri, TimeSpan? termDuration, DateTimeOffset? termStartOn, DateTimeOffset? termEndOn, Guid? provisioningTenantId, BillingSubscriptionStatus? status, BillingSubscriptionOperationStatus? operationStatus, BillingProvisioningState? provisioningState, string subscriptionId, IReadOnlyList<string> suspensionReasons, IReadOnlyList<BillingSubscriptionStatusDetails> suspensionReasonDetails, DateTimeOffset? enrollmentAccountStartOn, SubscriptionEnrollmentAccountStatus? subscriptionEnrollmentAccountStatus, string subscriptionAliasSubscriptionId, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             AutoRenew = autoRenew;
-            BeneficiaryTenantId = beneficiaryTenantId;
+            SubscriptionAliasBeneficiaryTenantId = subscriptionAliasBeneficiaryTenantId;
+            Beneficiary = beneficiary;
             BillingFrequency = billingFrequency;
             BillingProfileId = billingProfileId;
             BillingPolicies = billingPolicies;
             BillingProfileDisplayName = billingProfileDisplayName;
             BillingProfileName = billingProfileName;
             ConsumptionCostCenter = consumptionCostCenter;
-            CustomerId = customerId;
+            SubscriptionAliasCustomerId = subscriptionAliasCustomerId;
             CustomerDisplayName = customerDisplayName;
+            CustomerName = customerName;
             DisplayName = displayName;
             EnrollmentAccountId = enrollmentAccountId;
             EnrollmentAccountDisplayName = enrollmentAccountDisplayName;
@@ -131,101 +144,173 @@ namespace Azure.ResourceManager.Billing
             Quantity = quantity;
             Reseller = reseller;
             RenewalTermDetails = renewalTermDetails;
-            SkuDescription = skuDescription;
             SkuId = skuId;
-            Status = status;
-            SubscriptionId = subscriptionId;
-            SuspensionReasons = suspensionReasons;
+            SkuDescription = skuDescription;
+            SystemOverrides = systemOverrides;
+            ResourceUri = resourceUri;
             TermDuration = termDuration;
             TermStartOn = termStartOn;
             TermEndOn = termEndOn;
-            SubscriptionEnrollmentAccountStatus = subscriptionEnrollmentAccountStatus;
+            ProvisioningTenantId = provisioningTenantId;
+            Status = status;
+            OperationStatus = operationStatus;
+            ProvisioningState = provisioningState;
+            SubscriptionId = subscriptionId;
+            SuspensionReasons = suspensionReasons;
+            SuspensionReasonDetails = suspensionReasonDetails;
             EnrollmentAccountStartOn = enrollmentAccountStartOn;
-            BillingSubscriptionId = billingSubscriptionId;
+            SubscriptionEnrollmentAccountStatus = subscriptionEnrollmentAccountStatus;
+            SubscriptionAliasSubscriptionId = subscriptionAliasSubscriptionId;
+            Tags = tags;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Indicates whether auto renewal is turned on or off for a subscription. </summary>
+        /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
+        [WirePath("properties.autoRenew")]
         public BillingSubscriptionAutoRenewState? AutoRenew { get; set; }
         /// <summary> The provisioning tenant of the subscription. </summary>
-        public string BeneficiaryTenantId { get; set; }
-        /// <summary> The billing frequency of the subscription in the ISO8601 format. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("properties.beneficiaryTenantId")]
+        public Guid? SubscriptionAliasBeneficiaryTenantId { get; set; }
+        /// <summary> The beneficiary of the billing subscription. </summary>
+        [WirePath("properties.beneficiary")]
+        public BillingBeneficiary Beneficiary { get; set; }
+        /// <summary> The billing frequency in ISO8601 format of product in the subscription. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("properties.billingFrequency")]
         public string BillingFrequency { get; set; }
-        /// <summary> The ID of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </summary>
+        /// <summary> The fully qualified ID that uniquely identifies a billing profile. </summary>
+        [WirePath("properties.billingProfileId")]
         public ResourceIdentifier BillingProfileId { get; set; }
         /// <summary> Dictionary of billing policies associated with the subscription. </summary>
+        [WirePath("properties.billingPolicies")]
         public IReadOnlyDictionary<string, string> BillingPolicies { get; }
-        /// <summary> The display name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </summary>
+        /// <summary> The name of the billing profile. </summary>
+        [WirePath("properties.billingProfileDisplayName")]
         public string BillingProfileDisplayName { get; }
-        /// <summary> The name of the billing profile to which the subscription is billed. This field is only applicable for Microsoft Customer Agreement billing accounts. </summary>
+        /// <summary> The ID that uniquely identifies a billing profile. </summary>
+        [WirePath("properties.billingProfileName")]
         public string BillingProfileName { get; }
-        /// <summary> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement Type billing accounts. </summary>
+        /// <summary> The cost center applied to the subscription. This field is only available for consumption subscriptions of Microsoft Customer Agreement or Enterprise Agreement Type billing accounts. </summary>
+        [WirePath("properties.consumptionCostCenter")]
         public string ConsumptionCostCenter { get; set; }
-        /// <summary> The ID of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
-        public string CustomerId { get; set; }
-        /// <summary> The name of the customer for whom the subscription was created. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
+        /// <summary> The fully qualified ID that uniquely identifies a customer. </summary>
+        [WirePath("properties.customerId")]
+        public string SubscriptionAliasCustomerId { get; set; }
+        /// <summary> The name of the customer. </summary>
+        [WirePath("properties.customerDisplayName")]
         public string CustomerDisplayName { get; }
-        /// <summary> The name of the subscription. </summary>
+        /// <summary> The ID that uniquely identifies a customer. </summary>
+        [WirePath("properties.customerName")]
+        public string CustomerName { get; }
+        /// <summary> The name of the billing subscription. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
-        /// <summary> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </summary>
+        /// <summary> The enrollment Account ID associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </summary>
+        [WirePath("properties.enrollmentAccountId")]
         public string EnrollmentAccountId { get; }
-        /// <summary> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement billing accounts. </summary>
+        /// <summary> The enrollment Account name associated with the subscription. This field is available only for the Enterprise Agreement Type billing accounts. </summary>
+        [WirePath("properties.enrollmentAccountDisplayName")]
         public string EnrollmentAccountDisplayName { get; }
-        /// <summary> The ID of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
+        /// <summary> The fully qualified ID that uniquely identifies an invoice section. </summary>
+        [WirePath("properties.invoiceSectionId")]
         public ResourceIdentifier InvoiceSectionId { get; set; }
-        /// <summary> The display name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
+        /// <summary> The name of the invoice section. </summary>
+        [WirePath("properties.invoiceSectionDisplayName")]
         public string InvoiceSectionDisplayName { get; }
-        /// <summary> The name of the invoice section to which the subscription is billed. The field is applicable only for Microsoft Partner Agreement billing accounts. </summary>
+        /// <summary> The ID that uniquely identifies an invoice section. </summary>
+        [WirePath("properties.invoiceSectionName")]
         public string InvoiceSectionName { get; }
         /// <summary> The last month's charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("properties.lastMonthCharges")]
         public BillingAmount LastMonthCharges { get; }
         /// <summary> The current month to date charges. This field is only available for usage based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("properties.monthToDateCharges")]
         public BillingAmount MonthToDateCharges { get; }
         /// <summary> Next billing cycle details of the subscription. </summary>
         internal NextBillingCycleDetails NextBillingCycleDetails { get; }
-        /// <summary> The billing frequency of the subscription in the next billing cycle. </summary>
+        /// <summary> Billing frequency of the product under the subscription. </summary>
+        [WirePath("properties.nextBillingCycleDetails.billingFrequency")]
         public string NextBillingCycleBillingFrequency
         {
             get => NextBillingCycleDetails?.NextBillingCycleBillingFrequency;
         }
 
         /// <summary> The offer ID for the subscription. This field is only available for the Microsoft Online Services Program billing accounts. </summary>
+        [WirePath("properties.offerId")]
         public string OfferId { get; }
         /// <summary> The category of the product for which the subscription is purchased. Possible values include: AzureSupport, Hardware, ReservationOrder, SaaS, SavingsPlanOrder, Software, UsageBased, Other. </summary>
+        [WirePath("properties.productCategory")]
         public string ProductCategory { get; }
-        /// <summary> The type of the product for which the subscription is purchased. </summary>
+        /// <summary> Type of the product for which the subscription is purchased. </summary>
+        [WirePath("properties.productType")]
         public string ProductType { get; }
-        /// <summary> The ID of the product for which the subscription is purchased. </summary>
+        /// <summary> Id of the product for which the subscription is purchased. </summary>
+        [WirePath("properties.productTypeId")]
         public string ProductTypeId { get; set; }
-        /// <summary> The purchase date of the subscription in UTC time. </summary>
+        /// <summary> Purchase date of the product in UTC time. </summary>
+        [WirePath("properties.purchaseDate")]
         public DateTimeOffset? PurchaseOn { get; }
-        /// <summary> The number of licenses purchased for the subscription. </summary>
+        /// <summary> The quantity of licenses or fulfillment units for the subscription. </summary>
+        [WirePath("properties.quantity")]
         public long? Quantity { get; set; }
-        /// <summary> The reseller for which the subscription is created. The field is available for Microsoft Partner Agreement billing accounts. </summary>
+        /// <summary> Reseller for this subscription. The fields is not available for Microsoft Partner Agreement billing accounts. </summary>
+        [WirePath("properties.reseller")]
         public CreatedSubscriptionReseller Reseller { get; }
-        /// <summary> The term details of the subscription at the next renewal. </summary>
+        /// <summary> Details for the next renewal term of a subscription. </summary>
+        [WirePath("properties.renewalTermDetails")]
         public SubscriptionRenewalTermDetails RenewalTermDetails { get; }
-        /// <summary> The SKU description of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </summary>
-        public string SkuDescription { get; }
-        /// <summary> The SKU ID of the product for which the subscription is purchased. This field is only available for Microsoft Customer Agreement billing accounts. </summary>
+        /// <summary> The SKU ID of the product for which the subscription is purchased. This field is is only available  for Microsoft Customer Agreement billing accounts. </summary>
+        [WirePath("properties.skuId")]
         public string SkuId { get; set; }
-        /// <summary> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
-        public BillingSubscriptionStatus? Status { get; }
-        /// <summary> The ID of the usage-based subscription. This field is only available for usage-based subscriptions of Microsoft Customer Agreement billing accounts. </summary>
-        public string SubscriptionId { get; }
-        /// <summary> The suspension reason for the subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
-        public IReadOnlyList<string> SuspensionReasons { get; }
-        /// <summary> The duration for which you can use the subscription. Example P1Y and P1M. </summary>
+        /// <summary> The SKU description of the product for which the subscription is purchased. This field is is only available for billing accounts with agreement type Microsoft Customer Agreement and Microsoft Partner Agreement. </summary>
+        [WirePath("properties.skuDescription")]
+        public string SkuDescription { get; }
+        /// <summary> System imposed policies that regulate behavior of the subscription. </summary>
+        [WirePath("properties.systemOverrides")]
+        public BillingSystemOverrides SystemOverrides { get; set; }
+        /// <summary> Unique identifier of the linked resource. </summary>
+        [WirePath("properties.resourceUri")]
+        public Uri ResourceUri { get; }
+        /// <summary> The duration in ISO8601 format for which you can use the subscription. Example: P1M, P3M, P1Y. </summary>
+        [WirePath("properties.termDuration")]
         public TimeSpan? TermDuration { get; set; }
-        /// <summary> The start date of the term in UTC time. </summary>
+        /// <summary> Start date of the term in UTC time. </summary>
+        [WirePath("properties.termStartDate")]
         public DateTimeOffset? TermStartOn { get; }
-        /// <summary> The end date of the term in UTC time. </summary>
+        /// <summary> End date of the term in UTC time. </summary>
+        [WirePath("properties.termEndDate")]
         public DateTimeOffset? TermEndOn { get; }
-        /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement billing accounts. </summary>
-        public SubscriptionEnrollmentAccountStatus? SubscriptionEnrollmentAccountStatus { get; }
-        /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement billing accounts. </summary>
+        /// <summary> The tenant in which the subscription is provisioned. </summary>
+        [WirePath("properties.provisioningTenantId")]
+        public Guid? ProvisioningTenantId { get; set; }
+        /// <summary> The status of the subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("properties.status")]
+        public BillingSubscriptionStatus? Status { get; }
+        /// <summary> The status of an operation on the subscription. When None, there is no ongoing operation. When LockedForUpdate, write operations will be blocked on the Billing Subscription. Other is the default value and you may need to refer to the latest API version for more details. </summary>
+        [WirePath("properties.operationStatus")]
+        public BillingSubscriptionOperationStatus? OperationStatus { get; }
+        /// <summary> The provisioning state of the resource during a long-running operation. </summary>
+        [WirePath("properties.provisioningState")]
+        public BillingProvisioningState? ProvisioningState { get; }
+        /// <summary> The ID of the subscription. </summary>
+        [WirePath("properties.subscriptionId")]
+        public string SubscriptionId { get; }
+        /// <summary> The suspension reason for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("properties.suspensionReasons")]
+        public IReadOnlyList<string> SuspensionReasons { get; }
+        /// <summary> The suspension details for a subscription. This field is not available for Enterprise Agreement billing accounts. </summary>
+        [WirePath("properties.suspensionReasonDetails")]
+        public IReadOnlyList<BillingSubscriptionStatusDetails> SuspensionReasonDetails { get; }
+        /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </summary>
+        [WirePath("properties.enrollmentAccountStartDate")]
         public DateTimeOffset? EnrollmentAccountStartOn { get; }
+        /// <summary> The current enrollment account status of the subscription. This field is available only for the Enterprise Agreement Type. </summary>
+        [WirePath("properties.subscriptionEnrollmentAccountStatus")]
+        public SubscriptionEnrollmentAccountStatus? SubscriptionEnrollmentAccountStatus { get; }
         /// <summary> The ID of the billing subscription with the subscription alias. </summary>
-        public ResourceIdentifier BillingSubscriptionId { get; }
+        [WirePath("properties.billingSubscriptionId")]
+        public string SubscriptionAliasSubscriptionId { get; }
+        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
     }
 }

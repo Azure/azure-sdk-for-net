@@ -7,13 +7,29 @@ azure-arm: true
 csharp: true
 library-name: NetworkCloud
 namespace: Azure.ResourceManager.NetworkCloud
-require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba076ba0546213bcce56ee/specification/networkcloud/resource-manager/readme.md
-#tag: package-2023-07-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/08973141b0d31a7e75d4dc43a5224a1814a0994f/specification/networkcloud/resource-manager/readme.md
+#tag: package-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
+  skipped-operations:
+    # Not support generate samples from customized operations
+    - AgentPools_Delete
+    - BareMetalMachineKeySets_Delete
+    - BmcKeySets_Delete
+    - CloudServicesNetworks_Delete
+    - ClusterManagers_Delete
+    - MetricsConfigurations_Delete
+    - Clusters_Delete
+    - KubernetesClusters_Delete
+    - L2Networks_Delete
+    - L3Networks_Delete
+    - TrunkedNetworks_Delete
+    - Consoles_Delete
+    - VirtualMachines_Delete
+    - Volumes_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -62,10 +78,13 @@ rename-mapping:
   Console.properties.privateLinkServiceId: -|arm-id
   Console.properties.virtualMachineAccessId: -|uuid
   ConsolePatchParameters.properties.expiration: ExpireOn
+  IdentitySelector: ManagedServiceIdentitySelector
   ImageRepositoryCredentials.registryUrl: registryUriString
   KubernetesCluster.properties.attachedNetworkIds: -|arm-id
   KubernetesCluster.properties.clusterId: -|arm-id
   KubernetesCluster.properties.connectedClusterId: -|arm-id
+  KubernetesClusterNode.agentPoolId: AgentPoolArmId
+  KubernetesClusterNode.bareMetalMachineId: BareMetalMachineArmId
   L2Network.properties.associatedResourceIds: -|arm-id
   L2Network.properties.clusterId: -|arm-id
   L2Network.properties.hybridAksClustersAssociatedIds: -|arm-id
@@ -78,10 +97,12 @@ rename-mapping:
   L3Network.properties.l3IsolationDomainId: -|arm-id
   L3Network.properties.virtualMachinesAssociatedIds: -|arm-id
   L3NetworkAttachmentConfiguration.networkId: -|arm-id
+  NetworkAttachment.attachedNetworkId: AttachedNetworkArmId
   NetworkConfiguration: KubernetesClusterNetworkConfiguration
   NetworkConfiguration.cloudServicesNetworkId: -|arm-id
   NetworkConfiguration.cniNetworkId: -|arm-id
   NetworkConfiguration.dnsServiceIp: -|ip-address
+  OperationStatusResult.id: -|arm-id
   OsDisk.diskSizeGB: DiskSizeInGB
   Rack.properties.clusterId: -|arm-id
   Rack.properties.rackSkuId: -|arm-id
@@ -119,10 +140,12 @@ prepend-rp-prefix:
   - ClusterManager
   - ClusterMetricsConfiguration
   - KubernetesCluster
+  - KubernetesClusterFeature
   - L2Network
   - L3Network
   - NetworkInterface
   - Nic
+  - OperationStatusResult
   - OsDisk
   - Rack
   - RackDefinition
@@ -133,7 +156,6 @@ prepend-rp-prefix:
   - TrunkedNetwork
   - VirtualMachine
   - Volume
-  - OperationStatusResult
 
 acronym-mapping:
   CPU: Cpu

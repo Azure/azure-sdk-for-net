@@ -22,8 +22,8 @@ namespace Azure.Identity.Tests
         public void SetupKubernetesEnvironment()
         {
             string sp = Environment.GetEnvironmentVariable("IDENTITY_CLIENT_ID");
-            string secret = Environment.GetEnvironmentVariable("IDENTITY_CLIENT_SECRET");
             string tenant = Environment.GetEnvironmentVariable("IDENTITY_TENANT_ID");
+            string oidc = Environment.GetEnvironmentVariable("ARM_OIDC_TOKEN");
             string rg = Environment.GetEnvironmentVariable("IDENTITY_RESOURCE_GROUP");
             string aks = Environment.GetEnvironmentVariable("IDENTITY_AKS_CLUSTER_NAME");
             string subscription = Environment.GetEnvironmentVariable("IDENTITY_SUBSCRIPTION_ID");
@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
             kubectlPath = RunCommand("which", "kubectl");
 
             // Login to Azure
-            RunCommand(azPath, $"login --service-principal -u {sp} -p {secret} --tenant {tenant}");
+            RunCommand(azPath, $"login --federated-token {oidc} --service-principal -u {sp} --tenant {tenant}");
 
             // Set the subscription
             RunCommand(azPath, $"account set --subscription {subscription}");

@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Incident Id. </summary>
+        [WirePath("incidentId")]
         public Guid? IncidentId { get; set; }
         /// <summary> The severity of the incident. </summary>
+        [WirePath("severity")]
         public SecurityInsightsIncidentSeverity? Severity { get; set; }
         /// <summary> The title of the incident. </summary>
+        [WirePath("title")]
         public string Title { get; set; }
         /// <summary> Relation Name. </summary>
+        [WirePath("relationName")]
         public string RelationName { get; set; }
     }
 }

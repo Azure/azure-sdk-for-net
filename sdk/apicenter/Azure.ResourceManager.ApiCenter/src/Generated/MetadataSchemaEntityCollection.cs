@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = await _metadataSchemaEntityMetadataSchemasRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiCenterArmOperation<MetadataSchemaEntityResource>(Response.FromValue(new MetadataSchemaEntityResource(Client, response), response.GetRawResponse()));
+                var uri = _metadataSchemaEntityMetadataSchemasRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<MetadataSchemaEntityResource>(Response.FromValue(new MetadataSchemaEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = _metadataSchemaEntityMetadataSchemasRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data, cancellationToken);
-                var operation = new ApiCenterArmOperation<MetadataSchemaEntityResource>(Response.FromValue(new MetadataSchemaEntityResource(Client, response), response.GetRawResponse()));
+                var uri = _metadataSchemaEntityMetadataSchemasRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, metadataSchemaName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<MetadataSchemaEntityResource>(Response.FromValue(new MetadataSchemaEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

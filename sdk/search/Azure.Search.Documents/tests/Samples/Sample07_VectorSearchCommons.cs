@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.ClientModel;
 using Azure.AI.OpenAI;
+using OpenAI.Embeddings;
 #pragma warning disable SA1402 // File may only contain a single type
 
 namespace Azure.Search.Documents.Tests.Samples.VectorSearch
@@ -18,11 +18,11 @@ namespace Azure.Search.Documents.Tests.Samples.VectorSearch
             string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
             AzureKeyCredential credential = new AzureKeyCredential(key);
 
-            OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-            EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+            AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
+            EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-            Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
-            return embeddings.Data[0].Embedding;
+            OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input);
+            return embedding.ToFloats();
         }
         #endregion
 

@@ -21,6 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             int? maxFieldNestingDepthPerIndex = default;
             int? maxComplexCollectionFieldsPerIndex = default;
             int? maxComplexObjectsInCollectionsPerDocument = default;
+            long? maxStoragePerIndex = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxFieldsPerIndex"u8))
@@ -63,15 +64,25 @@ namespace Azure.Search.Documents.Indexes.Models
                     maxComplexObjectsInCollectionsPerDocument = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("maxStoragePerIndex"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        maxStoragePerIndex = null;
+                        continue;
+                    }
+                    maxStoragePerIndex = property.Value.GetInt64();
+                    continue;
+                }
             }
-            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument);
+            return new SearchServiceLimits(maxFieldsPerIndex, maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndex);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchServiceLimits FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchServiceLimits(document.RootElement);
         }
     }

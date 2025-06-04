@@ -6,12 +6,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 azure-arm: true
 namespace: Azure.ResourceManager.ConnectedVMwarevSphere
-require: https://github.com/Azure/azure-rest-api-specs/blob/5775c90db370eb73a5cd7ccb36e16c34630a5c8c/specification/connectedvmware/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b8932418d4fd4940849e8722cc90e2b7bf1f8fda/specification/connectedvmware/resource-manager/readme.md
 #tag: package-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -92,4 +92,6 @@ rename-mapping:
   VirtualMachineTemplatesList: VMwareVmTemplateListResult
   VirtualNetwork: VMwareVirtualNetwork
   VirtualNetworksList: VMwareVirtualNetworkListResult
+  WindowsConfiguration: VMwareVmWindowsConfiguration
+  WindowsConfiguration.autoLogon: isAutoLogon
 ```

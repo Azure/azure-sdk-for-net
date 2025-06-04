@@ -19,7 +19,7 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestApplicationOid <String>] [-SubscriptionId <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -29,10 +29,10 @@ New-TestResources.ps1 [-BaseName <String>] [-ResourceGroupName <String>] [-Servi
  [-TestResourcesDirectory <String>] [-TestApplicationId <String>] [-TestApplicationSecret <String>]
  [-TestApplicationOid <String>] -TenantId <String> [-SubscriptionId <String>]
  -ProvisionerApplicationId <String> [-ProvisionerApplicationOid <String>]
- -ProvisionerApplicationSecret <String> [-DeleteAfterHours <Int32>] [-Location <String>]
+ [-ProvisionerApplicationSecret <String>] [-DeleteAfterHours <Int32>] [-Location <String>]
  [-Environment <String>] [-ResourceType <String>] [-ArmTemplateParameters <Hashtable>]
  [-AdditionalParameters <Hashtable>] [-EnvironmentVariables <Hashtable>] [-CI] [-Force] [-OutFile]
- [-SuppressVsoCommands] [-UserAuth] [-NewTestResourcesRemainingArguments <Object>]
+ [-SuppressVsoCommands] [-ServicePrincipalAuth] [-NewTestResourcesRemainingArguments <Object>]
  [-ProgressAction <ActionPreference>] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -426,7 +426,7 @@ Type: String
 Parameter Sets: Provisioner
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -588,16 +588,18 @@ Accept wildcard characters: False
 
 ### -OutFile
 Save test environment settings into a .env file next to test resources template.
-The contents of the file are protected via the .NET Data Protection API (DPAPI).
-This is supported only on Windows.
-The environment file is scoped to the current
-service directory.
 
+On Windows in the Azure/azure-sdk-for-net repository,
+the contents of the file are protected via the .NET Data Protection API (DPAPI).
+The environment file is scoped to the current service directory.
 The environment file will be named for the test resources template that it was
-generated for.
-For ARM templates, it will be test-resources.json.env.
-For
+generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
+
+If `$SupportsTestResourcesDotenv=$true` in language repos' `LanguageSettings.ps1`,
+and if `.env` files are gitignore'd, and if a service directory's `test-resources.bicep`
+file does not expose secrets based on `bicep lint`, a `.env` file is written next to
+`test-resources.bicep` that can be loaded by a test harness to be used for recording tests.
 
 ```yaml
 Type: SwitchParameter
@@ -629,15 +631,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UserAuth
-Create the resource group and deploy the template using the signed in user's credentials.
-No service principal will be created or used.
-
-The environment file will be named for the test resources template that it was
-generated for.
-For ARM templates, it will be test-resources.json.env.
-For
-Bicep templates, test-resources.bicep.env.
+### -ServicePrincipalAuth
+Use the provisioner SP credentials to deploy, and pass the test SP credentials
+to tests.
+If provisioner and test SP are not set, provision an SP with user
+credentials and pass the new SP to tests.
 
 ```yaml
 Type: SwitchParameter

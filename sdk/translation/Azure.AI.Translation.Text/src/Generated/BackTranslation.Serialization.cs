@@ -15,9 +15,18 @@ namespace Azure.AI.Translation.Text
 {
     public partial class BackTranslation : IUtf8JsonSerializable, IJsonModel<BackTranslation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackTranslation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackTranslation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BackTranslation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BackTranslation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,13 +34,12 @@ namespace Azure.AI.Translation.Text
                 throw new FormatException($"The model {nameof(BackTranslation)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("normalizedText"u8);
             writer.WriteStringValue(NormalizedText);
             writer.WritePropertyName("displayText"u8);
             writer.WriteStringValue(DisplayText);
             writer.WritePropertyName("numExamples"u8);
-            writer.WriteNumberValue(NumExamples);
+            writer.WriteNumberValue(ExamplesCount);
             writer.WritePropertyName("frequencyCount"u8);
             writer.WriteNumberValue(FrequencyCount);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -42,14 +50,13 @@ namespace Azure.AI.Translation.Text
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BackTranslation IJsonModel<BackTranslation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -66,7 +73,7 @@ namespace Azure.AI.Translation.Text
 
         internal static BackTranslation DeserializeBackTranslation(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -116,7 +123,7 @@ namespace Azure.AI.Translation.Text
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAITranslationTextContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BackTranslation)} does not support writing '{options.Format}' format.");
             }
@@ -130,7 +137,7 @@ namespace Azure.AI.Translation.Text
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBackTranslation(document.RootElement, options);
                     }
                 default:
@@ -144,15 +151,15 @@ namespace Azure.AI.Translation.Text
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BackTranslation FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBackTranslation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BackTranslation>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

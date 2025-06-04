@@ -23,7 +23,7 @@ namespace Azure.Search.Documents.Tests
     /// Base class for Search unit tests that adds shared infrastructure on top
     /// of the Azure.Core testing framework.
     /// </summary>
-    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2023_11_01)]
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_07_01)]
     public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
     {
         /// <summary>
@@ -59,9 +59,11 @@ namespace Azure.Search.Documents.Tests
         {
             ServiceVersion = serviceVersion;
             JsonPathSanitizers.Add("$..applicationSecret");
+            JsonPathSanitizers.Add("$..apiKey");
+            JsonPathSanitizers.Add("$..storageConnectionString");
+            JsonPathSanitizers.Remove("$..token");
             SanitizedHeaders.Add("api-key");
             CompareBodies = false;
-            BodyKeySanitizers.Add(new BodyKeySanitizer("apiKey") { JsonPath = "vectorSearch.vectorizers[0].azureOpenAIParameters.apiKey" });
         }
 
         /// <summary>

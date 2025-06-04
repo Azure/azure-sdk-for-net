@@ -5,28 +5,28 @@
 
 #nullable disable
 
+using System;
+
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
-    /// <summary> A collection of filters for a specificy telemetry type. </summary>
+    /// <summary> A collection of filters for a specific telemetry type. </summary>
     internal partial class DocumentFilterConjunctionGroupInfo
     {
         /// <summary> Initializes a new instance of <see cref="DocumentFilterConjunctionGroupInfo"/>. </summary>
-        internal DocumentFilterConjunctionGroupInfo()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="DocumentFilterConjunctionGroupInfo"/>. </summary>
         /// <param name="telemetryType"> Telemetry type. </param>
-        /// <param name="filters"> An AND-connected group of FilterInfo objects. </param>
-        internal DocumentFilterConjunctionGroupInfo(DocumentFilterConjunctionGroupInfoTelemetryType? telemetryType, FilterConjunctionGroupInfo filters)
+        /// <param name="filters"> An array of filter groups. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="filters"/> is null. </exception>
+        internal DocumentFilterConjunctionGroupInfo(TelemetryType telemetryType, FilterConjunctionGroupInfo filters)
         {
+            Argument.AssertNotNull(filters, nameof(filters));
+
             TelemetryType = telemetryType;
             Filters = filters;
         }
 
         /// <summary> Telemetry type. </summary>
-        public DocumentFilterConjunctionGroupInfoTelemetryType? TelemetryType { get; }
-        /// <summary> An AND-connected group of FilterInfo objects. </summary>
+        public TelemetryType TelemetryType { get; }
+        /// <summary> An array of filter groups. </summary>
         public FilterConjunctionGroupInfo Filters { get; }
     }
 }

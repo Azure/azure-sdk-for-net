@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Peering.Models
         public static bool operator ==(PeerAsnValidationState left, PeerAsnValidationState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PeerAsnValidationState"/> values are not the same. </summary>
         public static bool operator !=(PeerAsnValidationState left, PeerAsnValidationState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PeerAsnValidationState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PeerAsnValidationState"/>. </summary>
         public static implicit operator PeerAsnValidationState(string value) => new PeerAsnValidationState(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Peering.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

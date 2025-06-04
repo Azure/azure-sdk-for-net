@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Describes operator to be matched. </summary>
+    /// <summary>
+    /// Describes operator to be matched
+    /// Serialized Name: QueryStringOperator
+    /// </summary>
     public readonly partial struct QueryStringOperator : IEquatable<QueryStringOperator>
     {
         private readonly string _value;
@@ -33,31 +36,61 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string GreaterThanOrEqualValue = "GreaterThanOrEqual";
         private const string RegExValue = "RegEx";
 
-        /// <summary> Any. </summary>
+        /// <summary>
+        /// Any
+        /// Serialized Name: QueryStringOperator.Any
+        /// </summary>
         public static QueryStringOperator Any { get; } = new QueryStringOperator(AnyValue);
-        /// <summary> Equal. </summary>
+        /// <summary>
+        /// Equal
+        /// Serialized Name: QueryStringOperator.Equal
+        /// </summary>
         public static QueryStringOperator Equal { get; } = new QueryStringOperator(EqualValue);
-        /// <summary> Contains. </summary>
+        /// <summary>
+        /// Contains
+        /// Serialized Name: QueryStringOperator.Contains
+        /// </summary>
         public static QueryStringOperator Contains { get; } = new QueryStringOperator(ContainsValue);
-        /// <summary> BeginsWith. </summary>
+        /// <summary>
+        /// BeginsWith
+        /// Serialized Name: QueryStringOperator.BeginsWith
+        /// </summary>
         public static QueryStringOperator BeginsWith { get; } = new QueryStringOperator(BeginsWithValue);
-        /// <summary> EndsWith. </summary>
+        /// <summary>
+        /// EndsWith
+        /// Serialized Name: QueryStringOperator.EndsWith
+        /// </summary>
         public static QueryStringOperator EndsWith { get; } = new QueryStringOperator(EndsWithValue);
-        /// <summary> LessThan. </summary>
+        /// <summary>
+        /// LessThan
+        /// Serialized Name: QueryStringOperator.LessThan
+        /// </summary>
         public static QueryStringOperator LessThan { get; } = new QueryStringOperator(LessThanValue);
-        /// <summary> LessThanOrEqual. </summary>
+        /// <summary>
+        /// LessThanOrEqual
+        /// Serialized Name: QueryStringOperator.LessThanOrEqual
+        /// </summary>
         public static QueryStringOperator LessThanOrEqual { get; } = new QueryStringOperator(LessThanOrEqualValue);
-        /// <summary> GreaterThan. </summary>
+        /// <summary>
+        /// GreaterThan
+        /// Serialized Name: QueryStringOperator.GreaterThan
+        /// </summary>
         public static QueryStringOperator GreaterThan { get; } = new QueryStringOperator(GreaterThanValue);
-        /// <summary> GreaterThanOrEqual. </summary>
+        /// <summary>
+        /// GreaterThanOrEqual
+        /// Serialized Name: QueryStringOperator.GreaterThanOrEqual
+        /// </summary>
         public static QueryStringOperator GreaterThanOrEqual { get; } = new QueryStringOperator(GreaterThanOrEqualValue);
-        /// <summary> RegEx. </summary>
+        /// <summary>
+        /// RegEx
+        /// Serialized Name: QueryStringOperator.RegEx
+        /// </summary>
         public static QueryStringOperator RegEx { get; } = new QueryStringOperator(RegExValue);
         /// <summary> Determines if two <see cref="QueryStringOperator"/> values are the same. </summary>
         public static bool operator ==(QueryStringOperator left, QueryStringOperator right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryStringOperator"/> values are not the same. </summary>
         public static bool operator !=(QueryStringOperator left, QueryStringOperator right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryStringOperator"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryStringOperator"/>. </summary>
         public static implicit operator QueryStringOperator(string value) => new QueryStringOperator(value);
 
         /// <inheritdoc />
@@ -68,7 +101,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

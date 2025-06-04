@@ -51,51 +51,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TableVerticalLimitSettings"/>. </summary>
-        /// <param name="enableEarlyTermination"> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </param>
-        /// <param name="exitScore"> Exit score for the AutoML job. </param>
+        /// <param name="maxTrials"> Number of iterations. </param>
+        /// <param name="trialTimeout"> Iteration timeout. </param>
+        /// <param name="timeout"> AutoML job timeout. </param>
         /// <param name="maxConcurrentTrials"> Maximum Concurrent iterations. </param>
         /// <param name="maxCoresPerTrial"> Max cores per iteration. </param>
-        /// <param name="maxNodes"> Maximum nodes to use for the experiment. </param>
-        /// <param name="maxTrials"> Number of iterations. </param>
-        /// <param name="sweepConcurrentTrials"> Number of concurrent sweeping runs that user wants to trigger. </param>
-        /// <param name="sweepTrials"> Number of sweeping runs that user wants to trigger. </param>
-        /// <param name="timeout"> AutoML job timeout. </param>
-        /// <param name="trialTimeout"> Iteration timeout. </param>
+        /// <param name="exitScore"> Exit score for the AutoML job. </param>
+        /// <param name="enableEarlyTermination"> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TableVerticalLimitSettings(bool? enableEarlyTermination, double? exitScore, int? maxConcurrentTrials, int? maxCoresPerTrial, int? maxNodes, int? maxTrials, int? sweepConcurrentTrials, int? sweepTrials, TimeSpan? timeout, TimeSpan? trialTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TableVerticalLimitSettings(int? maxTrials, TimeSpan? trialTimeout, TimeSpan? timeout, int? maxConcurrentTrials, int? maxCoresPerTrial, double? exitScore, bool? enableEarlyTermination, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            EnableEarlyTermination = enableEarlyTermination;
-            ExitScore = exitScore;
+            MaxTrials = maxTrials;
+            TrialTimeout = trialTimeout;
+            Timeout = timeout;
             MaxConcurrentTrials = maxConcurrentTrials;
             MaxCoresPerTrial = maxCoresPerTrial;
-            MaxNodes = maxNodes;
-            MaxTrials = maxTrials;
-            SweepConcurrentTrials = sweepConcurrentTrials;
-            SweepTrials = sweepTrials;
-            Timeout = timeout;
-            TrialTimeout = trialTimeout;
+            ExitScore = exitScore;
+            EnableEarlyTermination = enableEarlyTermination;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </summary>
-        public bool? EnableEarlyTermination { get; set; }
-        /// <summary> Exit score for the AutoML job. </summary>
-        public double? ExitScore { get; set; }
+        /// <summary> Number of iterations. </summary>
+        [WirePath("maxTrials")]
+        public int? MaxTrials { get; set; }
+        /// <summary> Iteration timeout. </summary>
+        [WirePath("trialTimeout")]
+        public TimeSpan? TrialTimeout { get; set; }
+        /// <summary> AutoML job timeout. </summary>
+        [WirePath("timeout")]
+        public TimeSpan? Timeout { get; set; }
         /// <summary> Maximum Concurrent iterations. </summary>
+        [WirePath("maxConcurrentTrials")]
         public int? MaxConcurrentTrials { get; set; }
         /// <summary> Max cores per iteration. </summary>
+        [WirePath("maxCoresPerTrial")]
         public int? MaxCoresPerTrial { get; set; }
-        /// <summary> Maximum nodes to use for the experiment. </summary>
-        public int? MaxNodes { get; set; }
-        /// <summary> Number of iterations. </summary>
-        public int? MaxTrials { get; set; }
-        /// <summary> Number of concurrent sweeping runs that user wants to trigger. </summary>
-        public int? SweepConcurrentTrials { get; set; }
-        /// <summary> Number of sweeping runs that user wants to trigger. </summary>
-        public int? SweepTrials { get; set; }
-        /// <summary> AutoML job timeout. </summary>
-        public TimeSpan? Timeout { get; set; }
-        /// <summary> Iteration timeout. </summary>
-        public TimeSpan? TrialTimeout { get; set; }
+        /// <summary> Exit score for the AutoML job. </summary>
+        [WirePath("exitScore")]
+        public double? ExitScore { get; set; }
+        /// <summary> Enable early termination, determines whether or not if AutoMLJob will terminate early if there is no score improvement in last 20 iterations. </summary>
+        [WirePath("enableEarlyTermination")]
+        public bool? EnableEarlyTermination { get; set; }
     }
 }

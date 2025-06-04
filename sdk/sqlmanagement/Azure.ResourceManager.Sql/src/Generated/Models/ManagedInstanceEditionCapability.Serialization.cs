@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Sql.Models
 {
     public partial class ManagedInstanceEditionCapability : IUtf8JsonSerializable, IJsonModel<ManagedInstanceEditionCapability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEditionCapability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ManagedInstanceEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,11 +36,15 @@ namespace Azure.ResourceManager.Sql.Models
                 throw new FormatException($"The model {nameof(ManagedInstanceEditionCapability)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsGeneralPurposeV2))
+            {
+                writer.WritePropertyName("isGeneralPurposeV2"u8);
+                writer.WriteBooleanValue(IsGeneralPurposeV2.Value);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
             {
@@ -39,7 +52,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedFamilies)
                 {
-                    writer.WriteObjectValue<ManagedInstanceFamilyCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,14 +62,9 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedStorageCapabilities)
                 {
-                    writer.WriteObjectValue<StorageCapability>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
-            {
-                writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -76,14 +84,13 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ManagedInstanceEditionCapability IJsonModel<ManagedInstanceEditionCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -100,16 +107,16 @@ namespace Azure.ResourceManager.Sql.Models
 
         internal static ManagedInstanceEditionCapability DeserializeManagedInstanceEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
+            bool? isGeneralPurposeV2 = default;
             IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies = default;
             IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
-            bool? zoneRedundant = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -119,6 +126,15 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isGeneralPurposeV2"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isGeneralPurposeV2 = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("supportedFamilies"u8))
@@ -149,15 +165,6 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedStorageCapabilities = array;
                     continue;
                 }
-                if (property.NameEquals("zoneRedundant"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneRedundant = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -180,9 +187,9 @@ namespace Azure.ResourceManager.Sql.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstanceEditionCapability(
                 name,
+                isGeneralPurposeV2,
                 supportedFamilies ?? new ChangeTrackingList<ManagedInstanceFamilyCapability>(),
                 supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
-                zoneRedundant,
                 status,
                 reason,
                 serializedAdditionalRawData);
@@ -200,15 +207,16 @@ namespace Azure.ResourceManager.Sql.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -221,18 +229,35 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFamilies), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedFamilies) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGeneralPurposeV2), out propertyOverride);
+            if (hasPropertyOverride)
             {
-                if (SupportedFamilies.Any() || hasPropertyOverride)
+                builder.Append("  isGeneralPurposeV2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGeneralPurposeV2))
                 {
-                    builder.Append("  supportedFamilies: ");
-                    if (hasPropertyOverride)
+                    builder.Append("  isGeneralPurposeV2: ");
+                    var boolValue = IsGeneralPurposeV2.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFamilies), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedFamilies: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedFamilies))
+                {
+                    if (SupportedFamilies.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  supportedFamilies: ");
                         builder.AppendLine("[");
                         foreach (var item in SupportedFamilies)
                         {
@@ -244,17 +269,18 @@ namespace Azure.ResourceManager.Sql.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageCapabilities), out propertyOverride);
-            if (Optional.IsCollectionDefined(SupportedStorageCapabilities) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (SupportedStorageCapabilities.Any() || hasPropertyOverride)
+                builder.Append("  supportedStorageCapabilities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedStorageCapabilities))
                 {
-                    builder.Append("  supportedStorageCapabilities: ");
-                    if (hasPropertyOverride)
+                    if (SupportedStorageCapabilities.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  supportedStorageCapabilities: ");
                         builder.AppendLine("[");
                         foreach (var item in SupportedStorageCapabilities)
                         {
@@ -265,45 +291,32 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
-            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
-            {
-                builder.Append("  zoneRedundant: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     builder.AppendLine($"'{Status.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
-            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  reason: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Reason))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  reason: ");
                     if (Reason.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -327,7 +340,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -343,7 +356,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedInstanceEditionCapability(document.RootElement, options);
                     }
                 default:

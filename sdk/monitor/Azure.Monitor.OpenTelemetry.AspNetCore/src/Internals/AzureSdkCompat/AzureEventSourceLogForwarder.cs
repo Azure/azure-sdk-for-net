@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System.Collections.Concurrent;
 using System.Diagnostics.Tracing;
 using Azure.Core.Diagnostics;
@@ -12,8 +14,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
 {
     internal sealed class AzureEventSourceLogForwarder : IHostedService, IDisposable
     {
-        internal static readonly AzureEventSourceLogForwarder Noop = new AzureEventSourceLogForwarder(null);
+        internal static readonly AzureEventSourceLogForwarder Noop = new AzureEventSourceLogForwarder(null, null);
         private readonly ILoggerFactory _loggerFactory;
+        private readonly bool _hasAzureLoggerFilterOptionsRules = false;
 
         private readonly ConcurrentDictionary<string, ILogger> _loggers = new ConcurrentDictionary<string, ILogger>();
 
@@ -21,9 +24,18 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
 
         private AzureEventSourceListener _listener;
 
-        public AzureEventSourceLogForwarder(ILoggerFactory loggerFactory)
+        public AzureEventSourceLogForwarder(ILoggerFactory loggerFactory, LoggerFilterOptions loggerFilterOptions)
         {
             _loggerFactory = loggerFactory;
+
+            foreach (var rule in loggerFilterOptions?.Rules ?? Enumerable.Empty<LoggerFilterRule>())
+            {
+                if (!string.IsNullOrEmpty(rule.CategoryName)
+                    && (rule.CategoryName.StartsWith("Azure.") || rule.CategoryName.StartsWith("Microsoft.Azure.")))
+                {
+                    _hasAzureLoggerFilterOptionsRules = true;
+                }
+            }
         }
 
         private void LogEvent(EventWrittenEventArgs eventData)
@@ -65,7 +77,9 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Internals.AzureSdkCompat
         {
             if (_loggerFactory != null)
             {
-                _listener ??= new AzureEventSourceListener((e, s) => LogEvent(e), EventLevel.Verbose);
+                // Setting even a single custom filter for Azure SDK logs will reset the default warning level and switch to listening at the verbose level.
+                // This gives the customer full control over the log levels for all Azure SDK components.
+                _listener ??= new AzureEventSourceListener(LogEvent, _hasAzureLoggerFilterOptionsRules ? EventLevel.Verbose : EventLevel.Warning);
             }
 
             return Task.CompletedTask;

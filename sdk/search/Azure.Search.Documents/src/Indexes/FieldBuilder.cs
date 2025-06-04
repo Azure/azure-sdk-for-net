@@ -28,6 +28,7 @@ namespace Azure.Search.Documents.Indexes
                 {
                     [typeof(string)] = SearchFieldDataType.String,
                     [typeof(sbyte)] = SearchFieldDataType.SByte,
+                    [typeof(byte)] = SearchFieldDataType.Byte,
                     [typeof(short)] = SearchFieldDataType.Int16,
                     [typeof(int)] = SearchFieldDataType.Int32,
                     [typeof(long)] = SearchFieldDataType.Int64,

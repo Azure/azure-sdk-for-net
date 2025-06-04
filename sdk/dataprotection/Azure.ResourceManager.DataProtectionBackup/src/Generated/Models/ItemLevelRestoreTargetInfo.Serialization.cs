@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     public partial class ItemLevelRestoreTargetInfo : IUtf8JsonSerializable, IJsonModel<ItemLevelRestoreTargetInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreTargetInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ItemLevelRestoreTargetInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ItemLevelRestoreTargetInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ItemLevelRestoreTargetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,51 +34,26 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("restoreCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in RestoreCriteria)
             {
-                writer.WriteObjectValue<ItemLevelRestoreCriteria>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("datasourceInfo"u8);
-            writer.WriteObjectValue<DataSourceInfo>(DatasourceInfo, options);
+            writer.WriteObjectValue(DatasourceInfo, options);
             if (Optional.IsDefined(DatasourceSetInfo))
             {
                 writer.WritePropertyName("datasourceSetInfo"u8);
-                writer.WriteObjectValue<DataSourceSetInfo>(DatasourceSetInfo, options);
+                writer.WriteObjectValue(DatasourceSetInfo, options);
             }
             if (Optional.IsDefined(DatasourceAuthCredentials))
             {
                 writer.WritePropertyName("datasourceAuthCredentials"u8);
-                writer.WriteObjectValue<DataProtectionBackupAuthCredentials>(DatasourceAuthCredentials, options);
+                writer.WriteObjectValue(DatasourceAuthCredentials, options);
             }
-            writer.WritePropertyName("objectType"u8);
-            writer.WriteStringValue(ObjectType);
-            writer.WritePropertyName("recoveryOption"u8);
-            writer.WriteStringValue(RecoverySetting.ToString());
-            if (Optional.IsDefined(RestoreLocation))
-            {
-                writer.WritePropertyName("restoreLocation"u8);
-                writer.WriteStringValue(RestoreLocation.Value);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ItemLevelRestoreTargetInfo IJsonModel<ItemLevelRestoreTargetInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -86,7 +70,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         internal static ItemLevelRestoreTargetInfo DeserializeItemLevelRestoreTargetInfo(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -179,7 +163,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ItemLevelRestoreTargetInfo)} does not support writing '{options.Format}' format.");
             }
@@ -193,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeItemLevelRestoreTargetInfo(document.RootElement, options);
                     }
                 default:

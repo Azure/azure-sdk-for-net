@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
-        /// <param name="supportExportData"> Whether allow to use continuous export feature. </param>
+        /// <param name="isExportDataSupported"> Whether allow to use continuous export feature. </param>
         /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
         /// <param name="metadataClass"> Reserved, not used now. </param>
         /// <param name="liveStreamMetrics"> Reserved, not used now. </param>
@@ -68,9 +68,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="dailyCapResetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="throttleRate"> Reserved, not used now. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentFeatureCapabilities(bool? isExportDataSupported, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SupportExportData = supportExportData;
+            IsExportDataSupported = isExportDataSupported;
             BurstThrottlePolicy = burstThrottlePolicy;
             MetadataClass = metadataClass;
             LiveStreamMetrics = liveStreamMetrics;
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
         /// <summary> Whether allow to use continuous export feature. </summary>
         [WirePath("SupportExportData")]
-        public bool? SupportExportData { get; }
+        public bool? IsExportDataSupported { get; }
         /// <summary> Reserved, not used now. </summary>
         [WirePath("BurstThrottlePolicy")]
         public string BurstThrottlePolicy { get; }

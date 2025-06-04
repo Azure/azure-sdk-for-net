@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Models
 {
-    /// <summary> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. </summary>
+    /// <summary> This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-&lt;number of answers&gt;` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-&lt;confidence threshold&gt;` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7. The maximum character length of answers can be configured by appending the pipe character '|' followed by the 'count-&lt;number of maximum character length&gt;', such as 'extractive|maxcharlength-600'. </summary>
     public readonly partial struct QueryAnswerType : IEquatable<QueryAnswerType>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Models
         public static bool operator ==(QueryAnswerType left, QueryAnswerType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="QueryAnswerType"/> values are not the same. </summary>
         public static bool operator !=(QueryAnswerType left, QueryAnswerType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="QueryAnswerType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="QueryAnswerType"/>. </summary>
         public static implicit operator QueryAnswerType(string value) => new QueryAnswerType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

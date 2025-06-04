@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The minimum port that is included in the range. It should be ranged from 1 to 65535, and be less than or equal to portEnd. </summary>
+        [WirePath("portStart")]
         public int? PortStart { get; set; }
         /// <summary> The maximum port that is included in the range. It should be ranged from 1 to 65535, and be greater than or equal to portStart. </summary>
+        [WirePath("portEnd")]
         public int? PortEnd { get; set; }
         /// <summary> The network protocol of the port. </summary>
+        [WirePath("protocol")]
         public AgentPoolNetworkPortProtocol? Protocol { get; set; }
     }
 }

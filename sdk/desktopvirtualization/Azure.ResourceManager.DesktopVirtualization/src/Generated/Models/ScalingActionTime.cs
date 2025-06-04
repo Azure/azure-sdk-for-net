@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         }
 
         /// <summary> The hour. </summary>
+        [WirePath("hour")]
         public int Hour { get; set; }
         /// <summary> The minute. </summary>
+        [WirePath("minute")]
         public int Minute { get; set; }
     }
 }

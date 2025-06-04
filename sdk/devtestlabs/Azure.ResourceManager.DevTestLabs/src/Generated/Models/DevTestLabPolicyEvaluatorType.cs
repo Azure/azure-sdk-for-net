@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public static bool operator ==(DevTestLabPolicyEvaluatorType left, DevTestLabPolicyEvaluatorType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DevTestLabPolicyEvaluatorType"/> values are not the same. </summary>
         public static bool operator !=(DevTestLabPolicyEvaluatorType left, DevTestLabPolicyEvaluatorType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DevTestLabPolicyEvaluatorType"/>. </summary>
         public static implicit operator DevTestLabPolicyEvaluatorType(string value) => new DevTestLabPolicyEvaluatorType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

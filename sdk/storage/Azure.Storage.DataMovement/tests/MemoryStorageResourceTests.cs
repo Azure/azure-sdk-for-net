@@ -158,8 +158,8 @@ namespace Azure.Storage.DataMovement.Tests
             MemoryStorageResourceItem buzz = new(new Uri(baseUri + "/fizz/buzz"));
             fizz.Children.Add(buzz);
 
-            Assert.That(baseContainer.GetStorageResourceReference("foo"), Is.EqualTo(foo));
-            Assert.That(baseContainer.GetStorageResourceReference("fizz/buzz"), Is.EqualTo(buzz));
+            Assert.That(baseContainer.GetStorageResourceReference("foo", default), Is.EqualTo(foo));
+            Assert.That(baseContainer.GetStorageResourceReference("fizz/buzz", default), Is.EqualTo(buzz));
         }
     }
 }

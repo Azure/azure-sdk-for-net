@@ -59,14 +59,14 @@ namespace Azure.ResourceManager.ServiceNetworking.Tests
             return GetTrafficControllerCollection(resourceGroupName);
         }
 
-        protected FrontendCollection GetFrontends(TrafficControllerResource trafficController)
+        protected TrafficControllerFrontendCollection GetFrontends(TrafficControllerResource trafficController)
         {
-            return trafficController.GetFrontends();
+            return trafficController.GetTrafficControllerFrontends();
         }
 
-        protected AssociationCollection GetAssociations(TrafficControllerResource trafficController)
+        protected TrafficControllerAssociationCollection GetAssociations(TrafficControllerResource trafficController)
         {
-            return trafficController.GetAssociations();
+            return trafficController.GetTrafficControllerAssociations();
         }
 
         protected VirtualNetworkCollection GetVirtualNetworks(string resourceGroupName)

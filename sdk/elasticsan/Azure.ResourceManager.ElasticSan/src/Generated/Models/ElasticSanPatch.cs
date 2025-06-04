@@ -56,13 +56,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="baseSizeTiB"> Base size of the Elastic San appliance in TiB. </param>
         /// <param name="extendedCapacitySizeTiB"> Extended size of the Elastic San appliance in TiB. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="autoScaleProperties"> Auto Scale Properties for Elastic San Appliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ElasticSanPatch(IDictionary<string, string> tags, long? baseSizeTiB, long? extendedCapacitySizeTiB, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             BaseSizeTiB = baseSizeTiB;
             ExtendedCapacitySizeTiB = extendedCapacitySizeTiB;
             PublicNetworkAccess = publicNetworkAccess;
+            AutoScaleProperties = autoScaleProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +76,18 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public long? ExtendedCapacitySizeTiB { get; set; }
         /// <summary> Allow or disallow public network access to ElasticSan Account. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public ElasticSanPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Auto Scale Properties for Elastic San Appliance. </summary>
+        internal AutoScaleProperties AutoScaleProperties { get; set; }
+        /// <summary> Scale up settings on Elastic San Appliance. </summary>
+        public ElasticSanScaleUpProperties ScaleUpProperties
+        {
+            get => AutoScaleProperties is null ? default : AutoScaleProperties.ScaleUpProperties;
+            set
+            {
+                if (AutoScaleProperties is null)
+                    AutoScaleProperties = new AutoScaleProperties();
+                AutoScaleProperties.ScaleUpProperties = value;
+            }
+        }
     }
 }

@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     internal partial class TrafficControllerListResult : IUtf8JsonSerializable, IJsonModel<TrafficControllerListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficControllerListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficControllerListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrafficControllerListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,12 +34,11 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 throw new FormatException($"The model {nameof(TrafficControllerListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<TrafficControllerData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -46,14 +54,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TrafficControllerListResult IJsonModel<TrafficControllerListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +77,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         internal static TrafficControllerListResult DeserializeTrafficControllerListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrafficControllerListResult)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficControllerListResult(document.RootElement, options);
                     }
                 default:

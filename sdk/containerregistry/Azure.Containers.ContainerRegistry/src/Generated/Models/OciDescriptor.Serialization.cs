@@ -52,7 +52,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue<OciAnnotations>(Annotations);
+                    writer.WriteObjectValue(Annotations);
                 }
                 else
                 {
@@ -133,15 +133,15 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static OciDescriptor FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeOciDescriptor(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<OciDescriptor>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -15,9 +15,18 @@ namespace Azure.AI.Vision.ImageAnalysis
 {
     public partial class CaptionResult : IUtf8JsonSerializable, IJsonModel<CaptionResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaptionResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CaptionResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CaptionResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CaptionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.AI.Vision.ImageAnalysis
                 throw new FormatException($"The model {nameof(CaptionResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             writer.WritePropertyName("text"u8);
@@ -38,14 +46,13 @@ namespace Azure.AI.Vision.ImageAnalysis
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CaptionResult IJsonModel<CaptionResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,7 +69,7 @@ namespace Azure.AI.Vision.ImageAnalysis
 
         internal static CaptionResult DeserializeCaptionResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -100,7 +107,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIVisionImageAnalysisContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CaptionResult)} does not support writing '{options.Format}' format.");
             }
@@ -114,7 +121,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCaptionResult(document.RootElement, options);
                     }
                 default:
@@ -128,15 +135,15 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CaptionResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCaptionResult(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CaptionResult>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

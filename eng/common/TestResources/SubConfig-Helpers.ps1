@@ -1,4 +1,7 @@
 function BuildServiceDirectoryPrefix([string]$serviceName) {
+    if(!$serviceName) {
+        return ""
+    }
     $serviceName = $serviceName -replace '[\./\\]', '_'
     return $serviceName.ToUpperInvariant() + "_"
 }
@@ -32,10 +35,15 @@ function GetBaseAndResourceGroupNames(
     if ($CI) {
         $base = 't' + (New-Guid).ToString('n').Substring(0, 16)
         # Format the resource group name based on resource group naming recommendations and limitations.
-        $generatedGroup = "rg-{0}-$base" -f ($serviceName -replace '[\.\\\/:]', '-').
-                            Substring(0, [Math]::Min($serviceDirectoryName.Length, 90 - $base.Length - 4)).
-                            Trim('-').
-                            ToLowerInvariant()
+        if ($serviceDirectoryName) {
+            $generatedGroup = "rg-{0}-$base" -f ($serviceName -replace '[\.\\\/:]', '-').
+              Substring(0, [Math]::Min($serviceDirectoryName.Length, 90 - $base.Length - 4)).
+              Trim('-').
+              ToLowerInvariant()
+        } else {
+            $generatedGroup = "rg-$base"
+        }
+
         $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : $generatedGroup
 
         Log "Generated resource base name '$base' and resource group name '$group' for CI build"
@@ -82,7 +90,8 @@ function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$va
         "TenantId",
         "TestApplicationId",
         "TestApplicationOid",
-        "ProvisionerApplicationId"
+        "ProvisionerApplicationId",
+        "ProvisionerApplicationOid"
     )
 
     $serviceDirectoryPrefix = BuildServiceDirectoryPrefix $serviceName
@@ -103,7 +112,7 @@ function ShouldMarkValueAsSecret([string]$serviceName, [string]$key, [string]$va
 
 function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
 {
-    foreach($pair in $subscriptionConfiguration.GetEnumerator()) {
+    foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
         if ($pair.Value -is [Hashtable]) {
             foreach($nestedPair in $pair.Value.GetEnumerator()) {
                 # Mark values as secret so we don't print json blobs containing secrets in the logs.
@@ -126,36 +135,104 @@ function SetSubscriptionConfiguration([object]$subscriptionConfiguration)
         }
     }
 
-    Write-Host ($subscriptionConfiguration | ConvertTo-Json)
-    $serialized = $subscriptionConfiguration | ConvertTo-Json -Compress
-    Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+    return $subscriptionConfiguration
 }
 
-function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase, [object]$subscriptionConfiguration)
+function UpdateSubscriptionConfiguration([object]$subscriptionConfigurationBase, [object]$subscriptionConfiguration, [array]$allowedValues)
 {
-        foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
-            if ($pair.Value -is [Hashtable]) {
-                if (!$subscriptionConfigurationBase.ContainsKey($pair.Name)) {
-                    $subscriptionConfigurationBase[$pair.Name] = @{}
-                }
-                foreach($nestedPair in $pair.Value.GetEnumerator()) {
-                    # Mark values as secret so we don't print json blobs containing secrets in the logs.
-                    # Prepend underscore to the variable name, so we can still access the variable names via environment
-                    # variables if they get set subsequently.
-                    if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value) {
-                        Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
-                    }
-                    $subscriptionConfigurationBase[$pair.Name][$nestedPair.Name] = $nestedPair.Value
-                }
-            } else {
-                if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value) {
-                    Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
-                }
-                $subscriptionConfigurationBase[$pair.Name] = $pair.Value
+    foreach ($pair in $subscriptionConfiguration.GetEnumerator()) {
+        if ($pair.Value -is [Hashtable]) {
+            if (!$subscriptionConfigurationBase.ContainsKey($pair.Name)) {
+                $subscriptionConfigurationBase[$pair.Name] = @{}
             }
+            foreach($nestedPair in $pair.Value.GetEnumerator()) {
+                # Mark values as secret so we don't print json blobs containing secrets in the logs.
+                # Prepend underscore to the variable name, so we can still access the variable names via environment
+                # variables if they get set subsequently.
+                if (ShouldMarkValueAsSecret "AZURE_" $nestedPair.Name $nestedPair.Value $allowedValues) {
+                    Write-Host "##vso[task.setvariable variable=_$($nestedPair.Name);issecret=true;]$($nestedPair.Value)"
+                }
+                $subscriptionConfigurationBase[$pair.Name][$nestedPair.Name] = $nestedPair.Value
+            }
+        } else {
+            if (ShouldMarkValueAsSecret "AZURE_" $pair.Name $pair.Value $allowedValues) {
+                Write-Host "##vso[task.setvariable variable=_$($pair.Name);issecret=true;]$($pair.Value)"
+            }
+            $subscriptionConfigurationBase[$pair.Name] = $pair.Value
         }
+    }
 
-        $serialized = $subscriptionConfigurationBase | ConvertTo-Json -Compress
-        Write-Host ($subscriptionConfigurationBase | ConvertTo-Json)
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
+    return $subscriptionConfigurationBase
+}
+
+# Helper function for processing sub config files from a pipeline file list yaml parameter
+function UpdateSubscriptionConfigurationWithFiles([object]$baseSubConfig, [string]$fileListJson) {
+  if (!$fileListJson) {
+    return $baseSubConfig
+  }
+
+  $finalConfig = $baseSubConfig
+
+  $subConfigFiles = $fileListJson | ConvertFrom-Json -AsHashtable
+  foreach ($file in $subConfigFiles) {
+    # In some cases, $file could be an empty string. Get-Content will fail
+    # if $file is an empty string, so skip those cases.
+    if (!$file) {
+      continue
+    }
+
+    Write-Host "Merging sub config from file: $file"
+    $subConfig = Get-Content $file | ConvertFrom-Json -AsHashtable
+    $allowedValues = @()
+    # Since the keys are all coming from a file in github, we know every key should not be marked
+    # as a secret. Set up these exclusions here to make pipeline log debugging easier.
+    foreach ($pair in $subConfig.GetEnumerator()) {
+      if ($pair.Value -is [Hashtable]) {
+        foreach($nestedPair in $pair.Value.GetEnumerator()) {
+          $allowedValues += $nestedPair.Name
+        }
+      } else {
+        $allowedValues += $pair.Name
+      }
+    }
+    $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig $allowedValues
+  }
+
+  return $finalConfig
+}
+
+# Helper function for processing stringified json sub configs from pipeline parameter data
+function BuildAndSetSubscriptionConfig([string]$baseSubConfigJson, [string]$additionalSubConfigsJson, [string]$subConfigFilesJson) {
+  $finalConfig = @{}
+
+  if ($baseSubConfigJson -and $baseSubConfigJson -ne '""') {
+    # When variable groups are not added to the pipeline, secret references like
+    # $(<my secret>) are passed as a string literal instead of being replaced by the keyvault secret value
+    if ($baseSubConfigJson -notlike '{*') {
+      throw "Expected a json dictionary object but found '$baseSubConfigJson'. This probably means a subscription config secret was not downloaded. The pipeline is likely missing a variable group."
+    }
+    $baseSubConfig = $baseSubConfigJson | ConvertFrom-Json -AsHashtable
+
+    Write-Host "Setting base sub config"
+    $finalConfig = SetSubscriptionConfiguration $baseSubConfig
+  }
+
+  if ($additionalSubConfigsJson -and $additionalSubConfigsJson -ne '""') {
+    $subConfigs = $additionalSubConfigsJson | ConvertFrom-Json -AsHashtable
+
+    foreach ($subConfig in $subConfigs) {
+      if ($subConfig -isnot [hashtable]) {
+        throw "Expected a json dictionary object but found '$subConfig'. This probably means a subscription config secret was not downloaded. The pipeline is likely missing a variable group."
+      }
+      Write-Host "Merging sub config from list"
+      $finalConfig = UpdateSubscriptionConfiguration $finalConfig $subConfig
+    }
+  }
+
+  Write-Host "Merging sub config from files"
+  $finalConfig = UpdateSubscriptionConfigurationWithFiles $finalConfig $subConfigFilesJson
+
+  Write-Host ($finalConfig | ConvertTo-Json)
+  $serialized = $finalConfig | ConvertTo-Json -Compress
+  Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]$serialized"
 }

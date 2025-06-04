@@ -29,10 +29,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("DocumentFilterGroups"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<DocumentFilterConjunctionGroupInfo> array = new List<DocumentFilterConjunctionGroupInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -42,14 +38,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new DocumentStreamInfo(id, documentFilterGroups ?? new ChangeTrackingList<DocumentFilterConjunctionGroupInfo>());
+            return new DocumentStreamInfo(id, documentFilterGroups);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentStreamInfo FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentStreamInfo(document.RootElement);
         }
     }

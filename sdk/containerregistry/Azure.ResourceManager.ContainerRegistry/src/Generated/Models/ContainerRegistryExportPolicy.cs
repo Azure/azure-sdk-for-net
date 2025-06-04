@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("status")]
         public ContainerRegistryExportPolicyStatus? Status { get; set; }
     }
 }

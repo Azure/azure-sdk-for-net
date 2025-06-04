@@ -21,9 +21,9 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue<RemoteDeviceAdapterTarget>(Target);
+            writer.WriteObjectValue(Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue<IotHubDeviceConnection>(IotHubDeviceConnection);
+            writer.WriteObjectValue(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 
@@ -61,15 +61,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static RemoteDeviceAdapterProperties FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeRemoteDeviceAdapterProperties(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<RemoteDeviceAdapterProperties>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

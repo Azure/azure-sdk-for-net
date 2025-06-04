@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
 {
     internal class DataFactoryPipelineTests : DataFactoryManagementTestBase
     {
-        public DataFactoryPipelineTests(bool isAsync) : base(isAsync)
+        public DataFactoryPipelineTests(bool isAsync) : base(isAsync)//,RecordedTestMode.Record)
         {
         }
 
@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSapOpenHub = new DataFactoryLinkedServiceData(new SapTableLinkedService()
             {
                 ClientId = "1",
-                SncMode = "false",
+                SncFlag = false,
                 UserName = "admin",
                 Server = "testserver",
                 Password = new DataFactorySecretString("fakePassword")

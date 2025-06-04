@@ -1,13 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
     <Description>Microsoft Azure WebJobs SDK ServiceBus Extension</Description>
-    <Version>5.15.0-beta.1</Version>
+    <Version>5.17.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <!--Since we are adding a new target for net6.0, we need to temporarily condition on netstandard-->
-    <ApiCompatVersion>5.14.0</ApiCompatVersion>
-    <NoWarn>$(NoWarn);AZC0001;CS1591;SA1636;AZC0007;AZC0015</NoWarn>
+    <ApiCompatVersion>5.16.6</ApiCompatVersion>
+    <NoWarn>$(NoWarn);CS1591;SA1636;AZC0007;AZC0015</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
     <InheritDocTrimLevel>internal</InheritDocTrimLevel>
@@ -20,14 +19,14 @@
     <PackageReference Include="Azure.Messaging.ServiceBus" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Rpc" />
     <PackageReference Include="Grpc.Tools" />
     <PackageReference Include="Google.Protobuf" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Condition="'$(TargetFramework)' == 'net6.0'" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
+    <Protobuf Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))" Include="Grpc\Proto\settlement.proto" GrpcServices="service" Access="internal" />
   </ItemGroup>
 
   <ItemGroup>

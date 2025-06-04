@@ -36,6 +36,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("copyBehavior"u8);
                 writer.WriteObjectValue<object>(CopyBehavior);
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in Metadata)
+                {
+                    writer.WriteObjectValue(item);
+                }
+                writer.WriteEndArray();
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -54,6 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             string type = default;
             object maxConcurrentConnections = default;
             object copyBehavior = default;
+            IList<MetadataItem> metadata = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -90,25 +101,45 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     copyBehavior = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MetadataItem> array = new List<MetadataItem>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MetadataItem.DeserializeMetadataItem(item));
+                    }
+                    metadata = array;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AzureBlobFSWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties, blockSizeInMB);
+            return new AzureBlobFSWriteSettings(
+                type,
+                maxConcurrentConnections,
+                copyBehavior,
+                metadata ?? new ChangeTrackingList<MetadataItem>(),
+                additionalProperties,
+                blockSizeInMB);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AzureBlobFSWriteSettings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAzureBlobFSWriteSettings(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureBlobFSWriteSettings>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -116,7 +147,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobFSWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureBlobFSWriteSettings>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureBlobFSWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

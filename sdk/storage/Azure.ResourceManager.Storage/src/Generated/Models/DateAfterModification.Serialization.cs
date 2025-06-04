@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.Storage.Models
 {
     public partial class DateAfterModification : IUtf8JsonSerializable, IJsonModel<DateAfterModification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateAfterModification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DateAfterModification>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DateAfterModification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DateAfterModification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.Storage.Models
                 throw new FormatException($"The model {nameof(DateAfterModification)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(DaysAfterModificationGreaterThan))
             {
                 writer.WritePropertyName("daysAfterModificationGreaterThan"u8);
@@ -55,14 +63,13 @@ namespace Azure.ResourceManager.Storage.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DateAfterModification IJsonModel<DateAfterModification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,7 +86,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         internal static DateAfterModification DeserializeDateAfterModification(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,57 +157,61 @@ namespace Azure.ResourceManager.Storage.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterModificationGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterModificationGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterModificationGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterModificationGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterModificationGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterModificationGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastAccessTimeGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterLastAccessTimeGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterLastAccessTimeGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterLastAccessTimeGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterLastAccessTimeGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterLastTierChangeGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterLastTierChangeGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterLastTierChangeGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterLastTierChangeGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterLastTierChangeGreaterThan.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DaysAfterCreationGreaterThan), out propertyOverride);
-            if (Optional.IsDefined(DaysAfterCreationGreaterThan) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  daysAfterCreationGreaterThan: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DaysAfterCreationGreaterThan))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  daysAfterCreationGreaterThan: ");
                     builder.AppendLine($"'{DaysAfterCreationGreaterThan.Value.ToString()}'");
                 }
             }
@@ -216,7 +227,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -232,7 +243,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDateAfterModification(document.RootElement, options);
                     }
                 default:

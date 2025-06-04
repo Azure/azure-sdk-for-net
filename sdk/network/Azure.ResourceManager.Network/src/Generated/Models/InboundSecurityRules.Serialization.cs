@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Network.Models
 {
     public partial class InboundSecurityRules : IUtf8JsonSerializable, IJsonModel<InboundSecurityRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundSecurityRules>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InboundSecurityRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InboundSecurityRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,11 @@ namespace Azure.ResourceManager.Network.Models
                 throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
             if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
@@ -41,6 +54,26 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("destinationPortRange"u8);
                 writer.WriteNumberValue(DestinationPortRange.Value);
             }
+            if (Optional.IsCollectionDefined(DestinationPortRanges))
+            {
+                writer.WritePropertyName("destinationPortRanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in DestinationPortRanges)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(AppliesOn))
+            {
+                writer.WritePropertyName("appliesOn"u8);
+                writer.WriteStartArray();
+                foreach (var item in AppliesOn)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -49,14 +82,13 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         InboundSecurityRules IJsonModel<InboundSecurityRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,19 +105,27 @@ namespace Azure.ResourceManager.Network.Models
 
         internal static InboundSecurityRules DeserializeInboundSecurityRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string name = default;
             InboundSecurityRulesProtocol? protocol = default;
             string sourceAddressPrefix = default;
             int? destinationPortRange = default;
+            IList<string> destinationPortRanges = default;
+            IList<string> appliesOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("protocol"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -109,13 +149,48 @@ namespace Azure.ResourceManager.Network.Models
                     destinationPortRange = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("destinationPortRanges"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    destinationPortRanges = array;
+                    continue;
+                }
+                if (property.NameEquals("appliesOn"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    appliesOn = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InboundSecurityRules(protocol, sourceAddressPrefix, destinationPortRange, serializedAdditionalRawData);
+            return new InboundSecurityRules(
+                name,
+                protocol,
+                sourceAddressPrefix,
+                destinationPortRange,
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                appliesOn ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundSecurityRules>.Write(ModelReaderWriterOptions options)
@@ -125,7 +200,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support writing '{options.Format}' format.");
             }
@@ -139,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInboundSecurityRules(document.RootElement, options);
                     }
                 default:

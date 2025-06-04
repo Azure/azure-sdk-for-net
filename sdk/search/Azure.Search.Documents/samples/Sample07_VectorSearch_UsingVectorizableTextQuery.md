@@ -11,7 +11,7 @@ We will create an instace of `SearchIndex` and define `Hotel` fields.
 ```C# Snippet:Azure_Search_Documents_Tests_Samples_Sample07_Vector_Search_Index_UsingVectorizableTextQuery
 string vectorSearchProfileName = "my-vector-profile";
 string vectorSearchHnswConfig = "my-hsnw-vector-config";
-string modelName = "text-embedding-ada-002";
+string deploymentName = "text-embedding-ada-002";
 int modelDimensions = 1536;
 
 string indexName = "hotel";
@@ -32,7 +32,7 @@ SearchIndex searchIndex = new(indexName)
         {
             new VectorSearchProfile(vectorSearchProfileName, vectorSearchHnswConfig)
             {
-                Vectorizer = "openai"
+                VectorizerName = "openai"
             }
         },
         Algorithms =
@@ -43,11 +43,12 @@ SearchIndex searchIndex = new(indexName)
         {
             new AzureOpenAIVectorizer("openai")
             {
-                AzureOpenAIParameters  = new AzureOpenAIParameters()
+                Parameters  = new AzureOpenAIVectorizerParameters()
                 {
                     ResourceUri = new Uri(Environment.GetEnvironmentVariable("OPENAI_ENDPOINT")),
                     ApiKey = Environment.GetEnvironmentVariable("OPENAI_KEY"),
-                    DeploymentId = modelName,
+                    DeploymentName = deploymentName,
+                    ModelName = AzureOpenAIModelName.TextEmbeddingAda002
                 }
             }
         }
@@ -93,11 +94,11 @@ public static ReadOnlyMemory<float> GetEmbeddings(string input)
     string key = Environment.GetEnvironmentVariable("OpenAI_API_KEY");
     AzureKeyCredential credential = new AzureKeyCredential(key);
 
-    OpenAIClient openAIClient = new OpenAIClient(endpoint, credential);
-    EmbeddingsOptions embeddingsOptions = new("EmbeddingsModelName", new string[] { input });
+    AzureOpenAIClient openAIClient = new AzureOpenAIClient(endpoint, credential);
+    EmbeddingClient embeddingClient = openAIClient.GetEmbeddingClient("text-embedding-ada-002");
 
-    Embeddings embeddings = openAIClient.GetEmbeddings(embeddingsOptions);
-    return embeddings.Data[0].Embedding;
+    OpenAIEmbedding embedding = embeddingClient.GenerateEmbedding(input);
+    return embedding.ToFloats();
 }
 ```
 

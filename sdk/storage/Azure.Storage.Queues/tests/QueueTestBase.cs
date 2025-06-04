@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Sas;
@@ -15,12 +14,15 @@ using Azure.Storage.Test.Shared;
 
 namespace Azure.Storage.Queues.Tests
 {
+    [QueueClientTestFixture]
     public class QueueTestBase : StorageTestBase<StorageTestEnvironment>
     {
         /// <summary>
         /// Source of clients.
         /// </summary>
         protected ClientBuilder<QueueServiceClient, QueueClientOptions> QueuesClientBuilder { get; }
+
+        protected readonly QueueClientOptions.ServiceVersion _serviceVersion;
 
         public string GetNewQueueName() => QueuesClientBuilder.GetNewQueueName();
         public string GetNewMessageId() => QueuesClientBuilder.GetNewMessageId();
@@ -33,11 +35,10 @@ namespace Azure.Storage.Queues.Tests
         protected string SecondaryStorageTenantSecondaryHost() =>
             new Uri(Tenants.TestConfigSecondary.QueueServiceSecondaryEndpoint).Host;
 
-        public QueueTestBase(bool async) : this(async, null) { }
-
-        public QueueTestBase(bool async, RecordedTestMode? mode = null)
+        public QueueTestBase(bool async, QueueClientOptions.ServiceVersion serviceVersion, RecordedTestMode? mode = null)
             : base(async, mode)
         {
+            _serviceVersion = serviceVersion;
             QueuesClientBuilder = new ClientBuilder<QueueServiceClient, QueueClientOptions>(
                 ServiceEndpoint.Queue,
                 Tenants,
@@ -45,7 +46,7 @@ namespace Azure.Storage.Queues.Tests
                 (uri, sharedKeyCredential, clientOptions) => new QueueServiceClient(uri, sharedKeyCredential, clientOptions),
                 (uri, tokenCredential, clientOptions) => new QueueServiceClient(uri, tokenCredential, clientOptions),
                 (uri, azureSasCredential, clientOptions) => new QueueServiceClient(uri, azureSasCredential, clientOptions),
-                () => new QueueClientOptions());
+                () => new QueueClientOptions(serviceVersion));
         }
 
         public QueueClientOptions GetOptions()
@@ -81,22 +82,22 @@ namespace Azure.Storage.Queues.Tests
                     new Uri($"{TestConfigDefault.QueueServiceEndpoint}?{sasCredentials ?? GetNewQueueServiceSasCredentials(queueName, sharedKeyCredentials ?? GetNewSharedKeyCredentials())}"),
                     GetOptions()));
 
+        public QueueServiceClient GetServiceClient_OAuth(QueueClientOptions options = default)
+            => QueuesClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential, options);
+
         public Security.KeyVault.Keys.KeyClient GetKeyClient_TargetKeyClient()
             => GetKeyClient(TestConfigurations.DefaultTargetKeyVault);
 
         public TokenCredential GetTokenCredential_TargetKeyClient()
             => GetKeyClientTokenCredential(TestConfigurations.DefaultTargetKeyVault);
 
-        private static Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
+        private Security.KeyVault.Keys.KeyClient GetKeyClient(KeyVaultConfiguration config)
             => new Security.KeyVault.Keys.KeyClient(
                 new Uri(config.VaultEndpoint),
                 GetKeyClientTokenCredential(config));
 
-        private static TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
-            => new Identity.ClientSecretCredential(
-                config.ActiveDirectoryTenantId,
-                config.ActiveDirectoryApplicationId,
-                config.ActiveDirectoryApplicationSecret);
+        private TokenCredential GetKeyClientTokenCredential(KeyVaultConfiguration config)
+            => TestEnvironment.Credential;
 
         public QueueServiceClient GetServiceClient_SecondaryAccount_ReadEnabledOnRetry(int numberOfReadFailuresToSimulate, out TestExceptionPolicy testExceptionPolicy, bool simulate404 = false)
             => GetSecondaryReadServiceClient(Tenants.TestConfigSecondary, numberOfReadFailuresToSimulate, out testExceptionPolicy, simulate404);

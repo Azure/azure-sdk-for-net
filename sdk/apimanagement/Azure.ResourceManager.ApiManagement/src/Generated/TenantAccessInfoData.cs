@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
+        [WirePath("properties.id")]
         public string AccessInfoType { get; set; }
         /// <summary> Principal (User) Identifier. </summary>
+        [WirePath("properties.principalId")]
         public string PrincipalId { get; set; }
         /// <summary> Determines whether direct access is enabled. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsDirectAccessEnabled { get; set; }
     }
 }

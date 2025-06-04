@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Used to categorize billing meters. </summary>
+        [WirePath("category")]
         public string WorkloadProfileCategory { get; set; }
         /// <summary> Billing meter type. </summary>
+        [WirePath("meterType")]
         public string MeterType { get; set; }
         /// <summary> The everyday name of the billing meter. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

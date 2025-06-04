@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/microsoft.insights/metricNamespaces", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri, string startTime)
         {
             var message = _pipeline.CreateMessage();
@@ -73,7 +88,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MetricNamespaceCollection value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricNamespaceCollection.DeserializeMetricNamespaceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -98,7 +113,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MetricNamespaceCollection value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricNamespaceCollection.DeserializeMetricNamespaceCollection(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

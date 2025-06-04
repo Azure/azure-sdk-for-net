@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Slice/service type (SST). </summary>
+        [WirePath("sst")]
         public int Sst { get; set; }
         /// <summary> Slice differentiator (SD). </summary>
+        [WirePath("sd")]
         public string Sd { get; set; }
     }
 }

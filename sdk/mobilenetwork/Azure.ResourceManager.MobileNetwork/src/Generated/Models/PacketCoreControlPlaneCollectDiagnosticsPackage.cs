@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The Storage Account Blob URL to upload the diagnostics package to. </summary>
+        [WirePath("storageAccountBlobUrl")]
         public Uri StorageAccountBlobUri { get; }
     }
 }

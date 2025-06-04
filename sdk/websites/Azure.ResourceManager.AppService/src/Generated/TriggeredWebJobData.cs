@@ -71,10 +71,12 @@ namespace Azure.ResourceManager.AppService
         /// <param name="webJobType"> Job type. </param>
         /// <param name="error"> Error information. </param>
         /// <param name="isUsingSdk"> Using SDK?. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
         /// <param name="settings"> Job settings. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal TriggeredWebJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggeredJobRun latestRun, Uri historyUri, Uri schedulerLogsUri, string runCommand, Uri uri, Uri extraInfoUri, WebJobType? webJobType, string error, bool? isUsingSdk, string publicNetworkAccess, bool? isStorageAccountRequired, IDictionary<string, BinaryData> settings, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LatestRun = latestRun;
             HistoryUri = historyUri;
@@ -85,6 +87,8 @@ namespace Azure.ResourceManager.AppService
             WebJobType = webJobType;
             Error = error;
             IsUsingSdk = isUsingSdk;
+            PublicNetworkAccess = publicNetworkAccess;
+            IsStorageAccountRequired = isStorageAccountRequired;
             Settings = settings;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -117,6 +121,12 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Using SDK?. </summary>
         [WirePath("properties.using_sdk")]
         public bool? IsUsingSdk { get; set; }
+        /// <summary> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </summary>
+        [WirePath("properties.publicNetworkAccess")]
+        public string PublicNetworkAccess { get; set; }
+        /// <summary> Checks if Customer provided storage account is required. </summary>
+        [WirePath("properties.storageAccountRequired")]
+        public bool? IsStorageAccountRequired { get; set; }
         /// <summary>
         /// Job settings.
         /// <para>

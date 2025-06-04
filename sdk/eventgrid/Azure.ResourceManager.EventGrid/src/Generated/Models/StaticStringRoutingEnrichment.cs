@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> String type routing enrichment value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

@@ -5,44 +5,14 @@
 
 #nullable disable
 
-using System;
-using System.ComponentModel;
-
 namespace Azure.ResourceManager.Batch.Models
 {
     /// <summary> Specifies the SecurityType of the virtual machine. It has to be set to any specified value to enable UefiSettings. </summary>
-    public readonly partial struct BatchSecurityType : IEquatable<BatchSecurityType>
+    public enum BatchSecurityType
     {
-        private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="BatchSecurityType"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public BatchSecurityType(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
-        private const string TrustedLaunchValue = "trustedLaunch";
-
-        /// <summary> trustedLaunch. </summary>
-        public static BatchSecurityType TrustedLaunch { get; } = new BatchSecurityType(TrustedLaunchValue);
-        /// <summary> Determines if two <see cref="BatchSecurityType"/> values are the same. </summary>
-        public static bool operator ==(BatchSecurityType left, BatchSecurityType right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="BatchSecurityType"/> values are not the same. </summary>
-        public static bool operator !=(BatchSecurityType left, BatchSecurityType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="BatchSecurityType"/>. </summary>
-        public static implicit operator BatchSecurityType(string value) => new BatchSecurityType(value);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is BatchSecurityType other && Equals(other);
-        /// <inheritdoc />
-        public bool Equals(BatchSecurityType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
-
-        /// <inheritdoc />
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
-        /// <inheritdoc />
-        public override string ToString() => _value;
+        /// <summary> Trusted launch protects against advanced and persistent attack techniques. </summary>
+        TrustedLaunch,
+        /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
+        ConfidentialVm
     }
 }

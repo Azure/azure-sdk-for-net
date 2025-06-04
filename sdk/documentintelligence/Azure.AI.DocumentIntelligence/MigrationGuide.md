@@ -1,8 +1,8 @@
 # Guide for migrating to Azure.AI.DocumentIntelligence from Azure.AI.FormRecognizer
 
-This guide is intended to assist in the migration to `Azure.AI.DocumentIntelligence (1.0.0-beta.2)` from `Azure.AI.FormRecognizer (4.1.0 or 4.0.0)`. It will focus on side-by-side comparisons for similar operations between libraries. Please note that version `1.0.0-beta.2` will be used for comparison with `4.1.0`.
+This guide is intended to assist in the migration to `Azure.AI.DocumentIntelligence (1.0.0)` from `Azure.AI.FormRecognizer (4.1.0 or 4.0.0)`. It will focus on side-by-side comparisons for similar operations between libraries. Please note that version `1.0.0` will be used for comparison with `4.1.0`.
 
-Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new to the Document Intelligence and the Form Recognizer client libraries for .NET, please refer to the [README][readme] rather than this guide. For an exhaustive list of breaking changes between the packages, see the [CHANGELOG][changelog].
+Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new to the Document Intelligence and the Form Recognizer client libraries for .NET, please refer to the [README][readme] rather than this guide.
 
 ## Table of Contents
 - [Migration benefits](#migration-benefits)
@@ -22,21 +22,22 @@ Familiarity with the `Azure.AI.FormRecognizer` package is assumed. For those new
 
 A natural question to ask when considering whether to adopt a new version of a library is what the benefits of doing so would be. As Azure Document Intelligence has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and add value to our customers.
 
-There are many benefits to using the new `Azure.AI.DocumentIntelligence` library. This new library introduces two new clients: `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient`, providing support for the new features added by the service in API version `2024-02-29-preview` and higher.
+There are many benefits to using the new `Azure.AI.DocumentIntelligence` library. This new library introduces two new clients: `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient`, providing support for the new features added by the service in API version `2024-11-30` and higher.
 
 New features provided by the `Azure.AI.DocumentIntelligence` library include:
 - **Markdown content format:** support to output with Markdown content format along with the default plain text. This is only supported for the "prebuilt-layout" model. Markdown content format is deemed a more friendly format for LLM consumption in a chat or automation use scenario.
-- **Query fields:** query fields are reintroduced as a premium add-on feature. When the `DocumentAnalysisFeature.QueryFields` argument is passed to a document analysis request, the service will further extract the values of the fields specified via the parameter `queryFields` to supplement any existing fields defined by the model as fallback.
-- **Split options:** in previous API versions, the document splitting and classification operation always tried to split the input file into multiple documents. To enable a wider set of scenarios, `ClassifyDocument` now supports a `split` parameter. The following values are supported:
+- **Query fields:** query fields are reintroduced as a premium add-on feature. When the `DocumentAnalysisFeature.QueryFields` argument is passed to a document analysis request, the service will further extract the values of the fields specified via the option `QueryFields` to supplement any existing fields defined by the model as fallback.
+- **Split options:** in previous API versions, the document splitting and classification operation always tried to split the input file into multiple documents. To enable a wider set of scenarios, `ClassifyDocument` now supports a `Split` option. The following values are supported:
   - `Auto`: let the service determine where to split.
   - `None`: the entire file is treated as a single document. No splitting is performed.
   - `PerPage`: each page is treated as a separate document. Each empty page is kept as its own document.
+- **Batch analysis:** allows you to bulk process multiple documents using a single request. Rather than having to submit documents individually, you can analyze a collection of documents like invoices, a series of a loan documents, or a group of custom documents simultaneously.
 
 The table below describes the relationship of each client and its supported API version(s):
 
 Package|API version|Supported clients
 |-|-|-
-|Azure.AI.DocumentIntelligence | 2024-02-29-preview | DocumentIntelligenceClient and DocumentIntelligenceAdministrationClient
+|Azure.AI.DocumentIntelligence | 2024-11-30 | DocumentIntelligenceClient and DocumentIntelligenceAdministrationClient
 |Azure.AI.FormRecognizer |2023-07-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |Azure.AI.FormRecognizer |2022-08-31 | DocumentAnalysisClient and DocumentModelAdministrationClient
 |Azure.AI.FormRecognizer |2.1 | FormRecognizerClient and FormTrainingClient
@@ -57,16 +58,12 @@ Some terminology has changed to reflect the enhanced capabilities of the latest 
 
 ### Client usage
 
-We continue to support API key and AAD authentication methods when creating the clients. Below are the differences between the two versions:
-
-- In `Azure.AI.DocumentIntelligence`, we have `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` which support API version `2024-02-29-preview` and higher.
-- Some client methods have been renamed. See the [CHANGELOG][changelog] for an exhaustive list of changes.
+In `Azure.AI.DocumentIntelligence`, we have `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` which can only be used with API version `2024-11-30` and higher. We continue to support Microsoft Entra ID and API key authentication methods when creating the clients:
 
 Creating new clients in `Azure.AI.FormRecognizer`:
 ```C#
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
+var credential = new DefaultAzureCredential();
 
 var documentAnalysisClient = new DocumentAnalysisClient(new Uri(endpoint), credential);
 var documentModelAdministrationClient = new DocumentModelAdministrationClient(new Uri(endpoint), credential);
@@ -75,8 +72,7 @@ var documentModelAdministrationClient = new DocumentModelAdministrationClient(ne
 Creating new clients in `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:Migration_CreateBothDocumentIntelligenceClients
 string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
+var credential = new DefaultAzureCredential();
 
 var documentIntelligenceClient = new DocumentIntelligenceClient(new Uri(endpoint), credential);
 var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministrationClient(new Uri(endpoint), credential);
@@ -85,10 +81,10 @@ var documentIntelligenceAdministrationClient = new DocumentIntelligenceAdministr
 ### Analyzing documents
 
 Differences between the versions:
-- The former `AnalyzeDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.2. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
-- `AnalyzeDocumentFromUri` has been renamed to `AnalyzeDocument` and its input arguments have been reorganized:
-  - The `documentUri` parameter has been removed. Instead, an `AnalyzeDocumentContent` object must be passed to the method to select the desired input type: URI or Base64 binary data.
-  - The `options` parameter has been removed. Instead, `pages`, `locale`, and `features` options can be passed directly as method parameters.
+- The former `AnalyzeDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. As a workaround you will need to use a URI input or the new binary data input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
+- `AnalyzeDocumentFromUri` has been renamed to `AnalyzeDocument`.
+  - The `modelId` and the `documentUri` parameters have been moved into `AnalyzeDocumentOptions`, which is now required. The desired input type must be selected when creating the options object: URI or binary data.
+- Overloads of `AnalyzeDocument` have been added to support simpler scenarios without creating an `AnalyzeDocumentOptions` object.
 - The property `DocumentField.Value` has been removed. A field's value can now be extracted from one of the its new value properties, depending on the type of the field: `ValueAddress` for type `Address`, `ValueBoolean` for type `Boolean`, and so on.
 
 Analyzing documents with `Azure.AI.FormRecognizer`:
@@ -216,13 +212,7 @@ if (invoice.Fields.TryGetValue("InvoiceTotal", out FormField invoiceTotalField))
 Analyzing documents with `Azure.AI.DocumentIntelligence`:
 ```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromUriAsync
 Uri uriSource = new Uri("<uriSource>");
-
-var content = new AnalyzeDocumentContent()
-{
-    UrlSource = uriSource
-};
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", uriSource);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -236,39 +226,39 @@ for (int i = 0; i < result.Documents.Count; i++)
     AnalyzedDocument document = result.Documents[i];
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField)
-        && vendorNameField.Type == DocumentFieldType.String)
+        && vendorNameField.FieldType == DocumentFieldType.String)
     {
         string vendorName = vendorNameField.ValueString;
         Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField)
-        && customerNameField.Type == DocumentFieldType.String)
+        && customerNameField.FieldType == DocumentFieldType.String)
     {
         string customerName = customerNameField.ValueString;
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.List)
+        && itemsField.FieldType == DocumentFieldType.List)
     {
         foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Dictionary)
+            if (itemField.FieldType == DocumentFieldType.Dictionary)
             {
                 IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
-                    && itemDescriptionField.Type == DocumentFieldType.String)
+                    && itemDescriptionField.FieldType == DocumentFieldType.String)
                 {
                     string itemDescription = itemDescriptionField.ValueString;
                     Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                 }
 
                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField)
-                    && itemAmountField.Type == DocumentFieldType.Currency)
+                    && itemAmountField.FieldType == DocumentFieldType.Currency)
                 {
                     CurrencyValue itemAmount = itemAmountField.ValueCurrency;
                     Console.WriteLine($"  Amount: '{itemAmount.CurrencySymbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
@@ -278,21 +268,21 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField)
-        && subTotalField.Type == DocumentFieldType.Currency)
+        && subTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue subTotal = subTotalField.ValueCurrency;
         Console.WriteLine($"Sub Total: '{subTotal.CurrencySymbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField)
-        && totalTaxField.Type == DocumentFieldType.Currency)
+        && totalTaxField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue totalTax = totalTaxField.ValueCurrency;
         Console.WriteLine($"Total Tax: '{totalTax.CurrencySymbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField)
-        && invoiceTotalField.Type == DocumentFieldType.Currency)
+        && invoiceTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue invoiceTotal = invoiceTotalField.ValueCurrency;
         Console.WriteLine($"Invoice Total: '{invoiceTotal.CurrencySymbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
@@ -303,8 +293,9 @@ for (int i = 0; i < result.Documents.Count; i++)
 ### Classifying documents
 
 Differences between the versions:
-- The former `ClassifyDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.2. As a workaround you will need to use a URI input or the new Base64 input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
-- `ClassifyDocumentFromUri` has been renamed to `ClassifyDocument` and its input arguments have been reorganized. The `documentUri` parameter has been removed. Instead, a `ClassifyDocumentContent` object must be passed to the method to select the desired input type: URI or Base64 binary data.
+- The former `ClassifyDocument` method taking a `Stream` as the input document is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. As a workaround you will need to use a URI input or the new binary data input option, which is described later in this guide ([Analyzing and classifying documents from a stream](#analyzing-and-classifying-documents-from-a-stream)).
+- `ClassifyDocumentFromUri` has been renamed to `ClassifyDocument`:
+  - The `classifierId` and the `documentUri` parameters have been moved into a new `ClassifyDocumentOptions` property bag. The desired input type must be selected when creating the options object: URI or binary data.
 
 Classifying documents with `Azure.AI.FormRecognizer`:
 ```C#
@@ -327,32 +318,29 @@ Classifying documents with `Azure.AI.DocumentIntelligence`:
 string classifierId = "<classifierId>";
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new ClassifyDocumentContent()
-{
-    UrlSource = uriSource
-};
+var options = new ClassifyDocumentOptions(classifierId, uriSource);
 
-Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, classifierId, content);
+Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 Console.WriteLine($"Input was classified by the classifier with ID '{result.ModelId}'.");
 
 foreach (AnalyzedDocument document in result.Documents)
 {
-    Console.WriteLine($"Found a document of type: {document.DocType}");
+    Console.WriteLine($"Found a document of type: {document.DocumentType}");
 }
 ```
 
 ### Building a document model
 
 Differences between the versions:
-- Parameters `trainingDataSource`, `buildMode`, `modelId`, and `options` have been removed. The method now takes a `buildRequest` parameter of type `BuildDocumentModelContent` containing all the removed options.
-- After creating a `BuildDocumentModelContent` instance, either property `AzureBlobSource` or `AzureBlobFileListSource` must be set depending on your data source.
+- Parameters `trainingDataSource`, `buildMode`, `modelId` have moved into `BuildDocumentModelOptions`, which is now required.
+- When creating a `BuildDocumentModelOptions` instance, either property `BlobSource` or `BlobFileListSource` must be set depending on your data source.
 
 Building a document model with `Azure.AI.FormRecognizer`:
 ```C#
 Uri blobContainerUri = new Uri("<blobContainerUri>");
-var client = new DocumentModelAdministrationClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+var client = new DocumentModelAdministrationClient(new Uri(endpoint), new DefaultAzureCredential());
 
 BuildDocumentModelOperation operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, blobContainerUri, DocumentBuildMode.Template);
 DocumentModelDetails model = operation.Value;
@@ -388,19 +376,17 @@ Uri blobContainerUri = new Uri("<blobContainerUri>");
 // build modes and their differences, see:
 // https://aka.ms/azsdk/formrecognizer/buildmode
 
-var content = new BuildDocumentModelContent(modelId, DocumentBuildMode.Template)
-{
-    AzureBlobSource = new AzureBlobContentSource(blobContainerUri)
-};
+var blobSource = new BlobContentSource(blobContainerUri);
+var options = new BuildDocumentModelOptions(modelId, DocumentBuildMode.Template, blobSource);
 
-Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, content);
+Operation<DocumentModelDetails> operation = await client.BuildDocumentModelAsync(WaitUntil.Completed, options);
 DocumentModelDetails model = operation.Value;
 
 Console.WriteLine($"Model ID: {model.ModelId}");
 Console.WriteLine($"Created on: {model.CreatedOn}");
 
 Console.WriteLine("Document types the model can recognize:");
-foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
+foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocumentTypes)
 {
     Console.WriteLine($"  Document type: '{docType.Key}', which has the following fields:");
     foreach (KeyValuePair<string, DocumentFieldSchema> schema in docType.Value.FieldSchema)
@@ -414,18 +400,14 @@ foreach (KeyValuePair<string, DocumentTypeDetails> docType in model.DocTypes)
 
 ### Analyzing and classifying documents from a stream
 
-Currently neither `AnalyzeDocument` nor `ClassifyDocument` support submitting a document from a `Stream` input. As a temporary workaround, you can make use of the new Base64 input option. The following example illustrates how to submit a local file for analysis:
+Currently neither `AnalyzeDocument` nor `ClassifyDocument` support submitting a document from a `Stream` input. As a temporary workaround, you can make use of the new binary data input option. The following example illustrates how to submit a local file for analysis:
 
-```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelWithBase64Async
+```C# Snippet:DocumentIntelligenceAnalyzeWithPrebuiltModelFromBytesAsync
 string filePath = "<filePath>";
 byte[] fileBytes = File.ReadAllBytes(filePath);
 
-var content = new AnalyzeDocumentContent()
-{
-    Base64Source = BinaryData.FromBytes(fileBytes)
-};
-
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+BinaryData bytesSource = BinaryData.FromBytes(fileBytes);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", bytesSource);
 AnalyzeResult result = operation.Value;
 
 // To see the list of all the supported fields returned by service and its corresponding types for the
@@ -439,39 +421,39 @@ for (int i = 0; i < result.Documents.Count; i++)
     AnalyzedDocument document = result.Documents[i];
 
     if (document.Fields.TryGetValue("VendorName", out DocumentField vendorNameField)
-        && vendorNameField.Type == DocumentFieldType.String)
+        && vendorNameField.FieldType == DocumentFieldType.String)
     {
         string vendorName = vendorNameField.ValueString;
         Console.WriteLine($"Vendor Name: '{vendorName}', with confidence {vendorNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("CustomerName", out DocumentField customerNameField)
-        && customerNameField.Type == DocumentFieldType.String)
+        && customerNameField.FieldType == DocumentFieldType.String)
     {
         string customerName = customerNameField.ValueString;
         Console.WriteLine($"Customer Name: '{customerName}', with confidence {customerNameField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("Items", out DocumentField itemsField)
-        && itemsField.Type == DocumentFieldType.List)
+        && itemsField.FieldType == DocumentFieldType.List)
     {
         foreach (DocumentField itemField in itemsField.ValueList)
         {
             Console.WriteLine("Item:");
 
-            if (itemField.Type == DocumentFieldType.Dictionary)
+            if (itemField.FieldType == DocumentFieldType.Dictionary)
             {
                 IReadOnlyDictionary<string, DocumentField> itemFields = itemField.ValueDictionary;
 
                 if (itemFields.TryGetValue("Description", out DocumentField itemDescriptionField)
-                    && itemDescriptionField.Type == DocumentFieldType.String)
+                    && itemDescriptionField.FieldType == DocumentFieldType.String)
                 {
                     string itemDescription = itemDescriptionField.ValueString;
                     Console.WriteLine($"  Description: '{itemDescription}', with confidence {itemDescriptionField.Confidence}");
                 }
 
                 if (itemFields.TryGetValue("Amount", out DocumentField itemAmountField)
-                    && itemAmountField.Type == DocumentFieldType.Currency)
+                    && itemAmountField.FieldType == DocumentFieldType.Currency)
                 {
                     CurrencyValue itemAmount = itemAmountField.ValueCurrency;
                     Console.WriteLine($"  Amount: '{itemAmount.CurrencySymbol}{itemAmount.Amount}', with confidence {itemAmountField.Confidence}");
@@ -481,21 +463,21 @@ for (int i = 0; i < result.Documents.Count; i++)
     }
 
     if (document.Fields.TryGetValue("SubTotal", out DocumentField subTotalField)
-        && subTotalField.Type == DocumentFieldType.Currency)
+        && subTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue subTotal = subTotalField.ValueCurrency;
         Console.WriteLine($"Sub Total: '{subTotal.CurrencySymbol}{subTotal.Amount}', with confidence {subTotalField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("TotalTax", out DocumentField totalTaxField)
-        && totalTaxField.Type == DocumentFieldType.Currency)
+        && totalTaxField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue totalTax = totalTaxField.ValueCurrency;
         Console.WriteLine($"Total Tax: '{totalTax.CurrencySymbol}{totalTax.Amount}', with confidence {totalTaxField.Confidence}");
     }
 
     if (document.Fields.TryGetValue("InvoiceTotal", out DocumentField invoiceTotalField)
-        && invoiceTotalField.Type == DocumentFieldType.Currency)
+        && invoiceTotalField.FieldType == DocumentFieldType.Currency)
     {
         CurrencyValue invoiceTotal = invoiceTotalField.ValueCurrency;
         Console.WriteLine($"Invoice Total: '{invoiceTotal.CurrencySymbol}{invoiceTotal.Amount}', with confidence {invoiceTotalField.Confidence}");
@@ -535,12 +517,9 @@ Note that it's necessary to pass the `DocumentPage` containing the line to the m
 ```C# Snippet:Migration_DocumentIntelligenceGetWordsUsage
 Uri uriSource = new Uri("<uriSource>");
 
-var content = new AnalyzeDocumentContent()
-{
-    UrlSource = uriSource
-};
+var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
 
-Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
 AnalyzeResult result = operation.Value;
 
 DocumentPage firstPage = result.Pages[0];
@@ -561,7 +540,7 @@ foreach (DocumentLine line in firstPage.Lines)
 
 ### Accessing an existing long-running operation
 
-Storing the ID of a long-running operation to retrieve its status at a later point in time is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0-beta.2. There are no straightforward workarounds to support this scenario.
+With the exception of the new batch analysis API, storing the ID of a long-running operation to retrieve its status at a later point in time is still not supported in `Azure.AI.DocumentIntelligence` 1.0.0. There are no straightforward workarounds to support this scenario.
 
 ## Additional samples
 

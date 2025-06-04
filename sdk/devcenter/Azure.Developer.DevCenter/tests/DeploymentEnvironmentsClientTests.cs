@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +17,7 @@ namespace Azure.Developer.DevCenter.Tests
     {
         private const string EnvName = "DevTestEnv";
         private const string EnvDefinitionName = "Sandbox";
+        private const int EnvDefinitionCount = 8;
         private DeploymentEnvironmentsClient _environmentsClient;
 
         internal DeploymentEnvironmentsClient GetEnvironmentsClient() =>
@@ -110,7 +109,7 @@ namespace Azure.Developer.DevCenter.Tests
             List<EnvironmentDefinition> envDefinitions = await _environmentsClient.GetEnvironmentDefinitionsAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
 
-            Assert.AreEqual(3, envDefinitions.Count);
+            Assert.AreEqual(EnvDefinitionCount, envDefinitions.Count);
 
             foreach (var envDefinition in envDefinitions)
             {
@@ -131,7 +130,7 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.ProjectName,
                 TestEnvironment.CatalogName).ToEnumerableAsync();
 
-            Assert.AreEqual(3, envDefinitions.Count);
+            Assert.AreEqual(EnvDefinitionCount, envDefinitions.Count);
 
             foreach (var envDefinition in envDefinitions)
             {
@@ -146,22 +145,21 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [Test]
-        public async Task CreateAndDeleteEnvironmentSucceeds()
+        public async Task CreateGetAndDeleteEnvironmentSucceeds()
         {
-            await SetUpEnvironmentAsync();
+            await CreateEnvironmentAsync();
+            await GetEnvironmentAsync();
+            await GetEnvironmentsAsync();
+            await GetAllEnvironmentsAsync();
             await DeleteEnvironmentAsync();
         }
 
-        [Test]
-        public async Task GetEnvironmentSucceeds()
+        private async Task GetEnvironmentAsync()
         {
-            DevCenterEnvironment environment = await GetEnvironmentAsync();
-
-            if (environment == default)
-            {
-                await SetUpEnvironmentAsync();
-                environment = await GetEnvironmentAsync();
-            }
+            DevCenterEnvironment environment = (await _environmentsClient.GetEnvironmentAsync(
+                    TestEnvironment.ProjectName,
+                    TestEnvironment.MeUserId,
+                    EnvName)).Value;
 
             string envName = environment.Name;
             if (string.IsNullOrWhiteSpace(envName))
@@ -172,80 +170,40 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
-        [Test]
-        public async Task GetEnvironmentsSucceeds()
+        private async Task GetEnvironmentsAsync()
         {
-            var environments = await GetEnvironmentsAsync();
-
-            if (!environments.Any())
-            {
-                await SetUpEnvironmentAsync();
-                environments = await GetEnvironmentsAsync();
-            }
-
-            Assert.AreEqual(1, environments.Count);
-
-            string envName = environments[0].Name;
-            if (string.IsNullOrWhiteSpace(envName))
-            {
-                FailDueToMissingProperty("name");
-            }
-
-            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        [Test]
-        public async Task GetAllEnvironmentsSucceeds()
-        {
-            var environments = await GetAllEnvironmentsAsync();
-
-            if (!environments.Any())
-            {
-                await SetUpEnvironmentAsync();
-                environments = await GetAllEnvironmentsAsync();
-            }
-
-            Assert.AreEqual(1, environments.Count);
-
-            string envName = environments[0].Name;
-            if (string.IsNullOrWhiteSpace(envName))
-            {
-                FailDueToMissingProperty("name");
-            }
-
-            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
-        }
-
-        private async Task<DevCenterEnvironment> GetEnvironmentAsync()
-        {
-            try
-            {
-                return (await _environmentsClient.GetEnvironmentAsync(
-                    TestEnvironment.ProjectName,
-                    TestEnvironment.MeUserId,
-                    EnvName)).Value;
-            }
-            // if environment doesn't exist Get Environment will throw an error
-            catch
-            {
-                return default;
-            }
-        }
-
-        private async Task<List<DevCenterEnvironment>> GetEnvironmentsAsync()
-        {
-            return await _environmentsClient.GetEnvironmentsAsync(
+            List<DevCenterEnvironment> environments = await _environmentsClient.GetEnvironmentsAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId).ToEnumerableAsync();
+
+            Assert.AreEqual(1, environments.Count);
+
+            string envName = environments[0].Name;
+            if (string.IsNullOrWhiteSpace(envName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
-        private async Task<List<DevCenterEnvironment>> GetAllEnvironmentsAsync()
+        private async Task GetAllEnvironmentsAsync()
         {
-            return await _environmentsClient.GetAllEnvironmentsAsync(
+            List<DevCenterEnvironment> environments = await _environmentsClient.GetAllEnvironmentsAsync(
                 TestEnvironment.ProjectName).ToEnumerableAsync();
+
+            Assert.AreEqual(1, environments.Count);
+
+            string envName = environments[0].Name;
+            if (string.IsNullOrWhiteSpace(envName))
+            {
+                FailDueToMissingProperty("name");
+            }
+
+            Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
-        private async Task SetUpEnvironmentAsync()
+        private async Task CreateEnvironmentAsync()
         {
             var environment = new DevCenterEnvironment
             (

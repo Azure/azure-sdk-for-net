@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Gets or sets the name. </summary>
+        [WirePath("name")]
         public ContainerRegistryTokenCertificateName? Name { get; set; }
         /// <summary> The expiry datetime of the certificate. </summary>
+        [WirePath("expiry")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> The thumbprint of the certificate. </summary>
+        [WirePath("thumbprint")]
         public string Thumbprint { get; set; }
         /// <summary> Base 64 encoded string of the public certificate1 in PEM format that will be used for authenticating the token. </summary>
+        [WirePath("encodedPemCertificate")]
         public string EncodedPemCertificate { get; set; }
     }
 }

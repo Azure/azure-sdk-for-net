@@ -1,4 +1,21 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <AzureOpenAILibraryVersion>2.2.0</AzureOpenAILibraryVersion>
+    <!--
+      During development, we may want to get ahead of the published Nuget package versions. These next property flags
+      allow you to replace Nuget package references with external assembly .dll references, or even the source code
+      projects in a more simplified way.
+    -->
+    <!--
+    <GAServiceVersionLabel>2024_10_21</GAServiceVersionLabel>
+    <UseExternalOpenAILibrary>true</UseExternalOpenAILibrary>
+    <SystemClientModelVersion>1.1.0-beta.5</SystemClientModelVersion>
+    <ExternalOpenAISource>../../external/OpenAI/src/OpenAI.csproj</ExternalOpenAISource>
+    <ExternalAzureCoreSource>$(RepoRoot)/sdk/core/Azure.Core/src/Azure.Core.csproj</ExternalAzureCoreSource>
+    <ExternalAzureCoreLibrary>../../external/Azure.Core.Slim/netstandard2.0/Azure.Core.Slim.dll</ExternalAzureCoreLibrary>
+    -->
+  </PropertyGroup>
+
   <!--
     Add any shared properties you want for the projects under this package directory that need to be set before the auto imported Directory.Build.props
   -->

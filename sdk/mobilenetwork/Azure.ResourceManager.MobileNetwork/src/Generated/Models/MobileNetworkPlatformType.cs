@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AKSHCIValue = "AKS-HCI";
-        private const string ThreePAzureStackHCIValue = "3P-AZURE-STACK-HCI";
+        private const string AksHciValue = "AKS-HCI";
+        private const string ThreePAzureStackHciValue = "3P-AZURE-STACK-HCI";
 
         /// <summary> If this option is chosen, you must set one of "azureStackEdgeDevice", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other. </summary>
-        public static MobileNetworkPlatformType AKSHCI { get; } = new MobileNetworkPlatformType(AKSHCIValue);
+        public static MobileNetworkPlatformType AksHci { get; } = new MobileNetworkPlatformType(AksHciValue);
         /// <summary> If this option is chosen, you must set one of "azureStackHciCluster", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other. </summary>
-        public static MobileNetworkPlatformType ThreePAzureStackHCI { get; } = new MobileNetworkPlatformType(ThreePAzureStackHCIValue);
+        public static MobileNetworkPlatformType ThreePAzureStackHci { get; } = new MobileNetworkPlatformType(ThreePAzureStackHciValue);
         /// <summary> Determines if two <see cref="MobileNetworkPlatformType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkPlatformType left, MobileNetworkPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkPlatformType"/> values are not the same. </summary>
         public static bool operator !=(MobileNetworkPlatformType left, MobileNetworkPlatformType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MobileNetworkPlatformType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MobileNetworkPlatformType"/>. </summary>
         public static implicit operator MobileNetworkPlatformType(string value) => new MobileNetworkPlatformType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

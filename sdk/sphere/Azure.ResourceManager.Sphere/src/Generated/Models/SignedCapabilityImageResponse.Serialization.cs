@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Sphere.Models
 {
     public partial class SignedCapabilityImageResponse : IUtf8JsonSerializable, IJsonModel<SignedCapabilityImageResponse>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignedCapabilityImageResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignedCapabilityImageResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SignedCapabilityImageResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignedCapabilityImageResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.Sphere.Models
                 throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
@@ -39,14 +47,13 @@ namespace Azure.ResourceManager.Sphere.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SignedCapabilityImageResponse IJsonModel<SignedCapabilityImageResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.Sphere.Models
 
         internal static SignedCapabilityImageResponse DeserializeSignedCapabilityImageResponse(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.Sphere.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSphereContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support writing '{options.Format}' format.");
             }
@@ -109,7 +116,7 @@ namespace Azure.ResourceManager.Sphere.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSignedCapabilityImageResponse(document.RootElement, options);
                     }
                 default:

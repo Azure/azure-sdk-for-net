@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Resources
     {
         ArmDeploymentValidateResult IOperationSource<ArmDeploymentValidateResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement);
         }
 
         async ValueTask<ArmDeploymentValidateResult> IOperationSource<ArmDeploymentValidateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ArmDeploymentValidateResult.DeserializeArmDeploymentValidateResult(document.RootElement);
         }
     }

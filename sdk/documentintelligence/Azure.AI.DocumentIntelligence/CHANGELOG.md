@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,112 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0 (2024-12-16)
+
+### Features Added
+- Added methods `GetAnalyzeBatchResult`, `GetAnalyzeBatchResults`, `DeleteAnalyzeBatchResult`, and `DeleteAnalyzeResult` to `DocumentIntelligenceClient`.
+- Added class `AnalyzeBatchOperationDetails` to be used as the output of the `GetAnalyzeBatchResult` and `GetAnalyzeBatchResults` APIs.
+- Added overloads for the `AnalyzeDocument` API that take only required parameters.
+- Added property `ModifiedOn` to `DocumentModelDetails` and to `DocumentClassifierDetails`.
+- Added member `Skipped` to `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Breaking Changes
+- Replaced the following `Content` classes with new corresponding `Options` classes:
+  - `AnalyzeBatchDocumentsContent` to `AnalyzeBatchDocumentsOptions`.
+  - `AnalyzeDocumentContent` to `AnalyzeDocumentOptions`.
+  - `AuthorizeClassifierCopyContent` to `AuthorizeClassifierCopyOptions`.
+  - `AuthorizeCopyContent` to `AuthorizeModelCopyOptions`.
+  - `BuildDocumentClassifierContent` to `BuildClassifierOptions`.
+  - `BuildDocumentModelContent` to `BuildDocumentModelOptions`.
+  - `ClassifyDocumentContent` to `ClassifyDocumentOptions`.
+  - `ComposeDocumentModelContent` to `ComposeModelOptions`.
+  - Parameters of the `AnalyzeBatchDocuments`, `AnalyzeDocument`, and `ClassifyDocument` methods have been moved into their corresponding `Options` class.
+- Updated parameter `resultId` of methods `GetAnalyzeResultPdf` and `GetAnalyzeResultFigure` to take a `string` instead of a `Guid`.
+- Renamed all occurrences of property `UrlSource` to `UriSource`.
+- Renamed all occurrences of properties `DocType` and `DocTypes` to `DocumentType` and `DocumentTypes`, respectively.
+- In `DocumentField`, renamed properties `Type` and `ValueLong` to `FieldType` and `ValueInt64`, respectively.
+- Renamed property `Type` to `FieldType` in `DocumentFieldSchema`.
+- Renamed class `AzureBlobContentSource` to `BlobContentSource`.
+- Renamed class `AzureBlobFileListContentSource` to `BlobFileListContentSource`.
+- Renamed all occurrences of properties `AzureBlobSource` and `AzureBlobFileListSource` to `BlobSource` and `BlobFileListSource`, respectively.
+- Renamed all occurrences of property `ContainerUrl` to `ContainerUri`.
+- Renamed property `ResultContainerUrl` to `ResultContainerUri` in `AnalyzeBatchDocumentsContent`.
+- Renamed class `AnalyzeBatchOperationDetail` to `AnalyzeBatchResultDetails`.
+- In `AnalyzeBatchResultDetails` (former `AnalyzeBatchOperationDetail`), renamed properties `SourceUrl` and `ResultUrl` to `SourceUri` and `ResultUri`, respectively.
+- Removed member `Generative` from `DocumentBuildMode`.
+- Renamed member `StyleFonts` to `FontStyling` in `DocumentAnalysisFeature`.
+- In `ContentSourceKind`, renamed members `Url`, `Base64`, `AzureBlob`, and `AzureBlobFileList` to `Uri`, `Bytes`, `Blob`, and `BlobFileList`, respectively.
+- Renamed all occurrences of property `ExpirationDateTime` to `ExpiresOn`.
+- Renamed method `GetResourceInfo` to `GetResourceDetails` in `DocumentIntelligenceAdministrationClient`.
+- Renamed class `ResourceDetails` to `DocumentIntelligenceResourceDetails`.
+- Renamed type `ContentFormat` to `DocumentContentFormat`.
+- Renamed class `OperationDetails` to `DocumentIntelligenceOperationDetails`.
+- Renamed class `InnerError` to `DocumentIntelligenceInnerError`.
+- Renamed class `CopyAuthorization` to `ModelCopyAuthorization`.
+- Renamed type `OperationStatus` to `DocumentIntelligenceOperationStatus`.
+- Renamed property `Innererror` to `InnerError` in `DocumentIntelligenceError`.
+- Renamed property `InnerErrorObject` to `InnerError` in `DocumentIntelligenceInnerError` (former class `InnerError`).
+- Removed member `Completed` from `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
+- Removed type `StringIndexType`.
+- Removed property `StringIndexType` in `AnalyzeResult`.
+- Updated property `Fields` in `AnalyzedDocument` to be a `DocumentFieldDictionary` instead of an `IReadOnly<string, DocumentField>`.
+- Updated property `ValueDictionary` in `DocumentField` to be a `DocumentFieldDictionary` instead of an `IReadOnly<string, DocumentField>`.
+- Made type `BoundingRegion` a `struct`.
+- Made type `DocumentSpan` a `struct`.
+
+### Bugs Fixed
+- Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
+- Calling `Operation.Id` in an operation returned from the `AnalyzeBatchDocuments` and `ClassifyDocument` APIs won't throw a `NotSupportedException` anymore.
+
+## 1.0.0-beta.3 (2024-08-14)
+
+### Features Added
+- Added support for the Analyze Batch Documents API:
+  - Added method `AnalyzeBatchDocuments` to `DocumentIntelligenceClient`.
+  - Added class `AnalyzeBatchDocumentsContent` to be used as the main input of the API.
+  - Added class `AnalyzeBatchResult` to be used as the main output of the API.
+  - Added class `AnalyzeBatchOperationDetail` to be used as part of the output of the API.
+- Added support for different kinds of output in the Analyze Document API:
+  - Added method `GetAnalyzeResultPdf` to `DocumentIntelligenceClient`.
+  - Added method `GetAnalyzeResultFigures` to `DocumentIntelligenceClient`.
+  - Added type `AnalyzeOutputOption` to specify other kinds of output: either `Pdf` and `Figures`.
+  - Added parameter `output` to `AnalyzeDocument` overloads in `DocumentIntelligenceClient`.
+  - Added property `Id` to `DocumentFigure`.
+- Added support for the Copy Classifier API:
+  - Added method `AuthorizeClassifierCopy` to `DocumentIntelligenceAdministrationClient`.
+  - Added method `CopyClassifierTo` to `DocumentIntelligenceAdministrationClient`.
+  - Added class `AuthorizeClassifierCopyContent` to be used as the input of the `AuthorizeClassifierCopy` API.
+  - Added class `ClassifierCopyAuthorization` to be use das the output of the `AuthorizeClassifierCopy` API.
+  - Added class `DocumentClassifierCopyToOperationDetails` to represent a Copy Classifier operation in calls to the `GetOperation` API.
+- Miscellaneous:
+  - Added new kind of `DocumentBuildMode`: `Generative`.
+  - Added property `Warnings` to `AnalyzeResult`.
+  - Added properties `ClassifierId`, `Split`, and `TrainingHours` to `DocumentModelDetails`.
+  - Added properties `ConfidenceThreshold`, `Features`, `MaxDocumentsToAnalyze`, `ModelId`, and `QueryFields` to `DocumentTypeDetails`.
+  - Added properties `AllowOverwrite` and `MaxTrainingHours` to `BuildDocumentModelContent`.
+  - Exposed the constructor of `DocumentTypeDetails` and made its properties settable to support new changes to the Compose Document API.
+  - Exposed the constructor of `DocumentFieldSchema` and made its properties settable to support new changes to the Compose Document API.
+  - Added parameter `pages` to `ClassifyDocument` overloads in `DocumentIntelligenceClient`.
+  - Added properties `ClassifierId`, `DocTypes`, and `Split` to `ComposeDocumentModelContent`.
+  - Added property `AllowOverwrite` to `BuildDocumentClassifierContent`.
+
+### Breaking Changes
+- `DocumentIntelligenceClient` and `DocumentIntelligenceAdministrationClient` now target service API version `2024-07-31-preview`. Support for `2024-02-29-preview` has been removed.
+- Removed support for extracting lists from analyzed documents:
+  - Removed types `DocumentList` and `DocumentListItem`.
+  - Removed property `Lists` from `AnalyzeResult`.
+- Changes to the Compose Document API:
+  - Removed class `ComponentDocumentModelDetails`, originally used as part of the input of the API.
+  - Removed property `ComponentModels` from `ComposeDocumentModelContent`.
+  - `ComposeDocumentModelContent` now needs a dictionary of `DocumentTypeDetails` instances and a classifier ID to be constructed.
+- Removed type `QuotaDetails`.
+- Removed property `CustomNeuralDocumentModelBuilds` from `ResourceDetails.`
+- Updated class `DocumentIntelligenceModelFactory` to reflect model changes.
+
+### Bugs Fixed
+- Calling `Operation.Id` in an operation returned from the Analyze Document API won't throw a `NotSupportedException` anymore. Using the operation ID to retrieve operations started previously is still not supported.
 
 ## 1.0.0-beta.2 (2024-03-05)
 

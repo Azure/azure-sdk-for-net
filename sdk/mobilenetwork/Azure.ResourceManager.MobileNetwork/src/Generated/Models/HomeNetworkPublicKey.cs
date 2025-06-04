@@ -69,8 +69,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The Home Network Public Key Identifier determines which public key was used to generate the SUCI sent to the AMF. See TS 23.003 Section 2.2B Section 5. </summary>
+        [WirePath("id")]
         public int Id { get; set; }
         /// <summary> The URL of Azure Key Vault secret containing the private key, versioned or unversioned. For example: https://contosovault.vault.azure.net/secrets/mySuciPrivateKey/562a4bb76b524a1493a6afe8e536ee78. </summary>
+        [WirePath("url")]
         public Uri Uri { get; set; }
     }
 }

@@ -7,7 +7,6 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -54,8 +53,9 @@ namespace Azure.Storage.DataMovement
         /// Gets the storage Resource
         /// </summary>
         /// <param name="childPath"></param>
+        /// <param name="resourceId"></param>
         /// <returns></returns>
-        protected internal override StorageResourceItem GetStorageResourceReference(string childPath)
+        protected internal override StorageResourceItem GetStorageResourceReference(string childPath, string resourceId)
         {
             Uri concatPath = _uri.AppendToPath(childPath);
             return new LocalFileStorageResource(concatPath);
@@ -64,10 +64,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Lists storage resource in the filesystem.
         /// </summary>
+        /// <param name="destinationContainer"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         protected internal override async IAsyncEnumerable<StorageResource> GetStorageResourcesAsync(
+            StorageResourceContainer destinationContainer = default,
             [EnumeratorCancellation] CancellationToken cancellationToken = default)
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
         {
@@ -90,14 +92,14 @@ namespace Azure.Storage.DataMovement
             }
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new LocalSourceCheckpointData();
+            return new LocalSourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new LocalDestinationCheckpointData();
+            return new LocalDestinationCheckpointDetails();
         }
 
         protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
@@ -108,6 +110,12 @@ namespace Azure.Storage.DataMovement
             UriBuilder uri = new UriBuilder(_uri);
             uri.Path = Path.Combine(uri.Path, path);
             return new LocalDirectoryStorageResourceContainer(uri.Uri);
+        }
+
+        protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            // Will implement this when implementing NFS Upload
+            return Task.FromResult(new StorageResourceContainerProperties());
         }
     }
 }

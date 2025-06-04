@@ -30,7 +30,7 @@ namespace Azure.Identity.Tests
         [SetUp]
         public void TestSetup()
         {
-            options.ManagedIdentityClientId = clientId;
+            options.ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId(clientId);
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Azure.Identity.Tests
         {
             new AzureApplicationCredential(null);
             new AzureApplicationCredential(new AzureApplicationCredentialOptions());
-            new AzureApplicationCredential(new AzureApplicationCredentialOptions { ManagedIdentityClientId = "clientId" });
+            new AzureApplicationCredential(new AzureApplicationCredentialOptions { ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("clientId") });
         }
 
         [Test]

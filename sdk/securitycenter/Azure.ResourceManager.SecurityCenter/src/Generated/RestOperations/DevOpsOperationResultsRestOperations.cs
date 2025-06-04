@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string securityConnectorName, string operationResultId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Security/securityConnectors/", false);
+            uri.AppendPath(securityConnectorName, true);
+            uri.AppendPath("/devops/default/operationResults/", false);
+            uri.AppendPath(operationResultId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string securityConnectorName, string operationResultId)
         {
             var message = _pipeline.CreateMessage();
@@ -80,7 +96,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         OperationStatusResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
                         return Response.FromValue(value, message.Response);
                     }
@@ -111,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         OperationStatusResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
                         return Response.FromValue(value, message.Response);
                     }

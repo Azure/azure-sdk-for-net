@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The text value of this TXT record. </summary>
+        [WirePath("value")]
         public IList<string> Values { get; }
     }
 }

@@ -15,9 +15,18 @@ namespace Azure.Health.Insights.ClinicalMatching
 {
     public partial class TrialMatcherInferenceEvidence : IUtf8JsonSerializable, IJsonModel<TrialMatcherInferenceEvidence>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInferenceEvidence>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrialMatcherInferenceEvidence>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<TrialMatcherInferenceEvidence>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TrialMatcherInferenceEvidence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.Health.Insights.ClinicalMatching
                 throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(EligibilityCriteriaEvidence))
             {
                 writer.WritePropertyName("eligibilityCriteriaEvidence"u8);
@@ -34,12 +42,12 @@ namespace Azure.Health.Insights.ClinicalMatching
             if (Optional.IsDefined(PatientDataEvidence))
             {
                 writer.WritePropertyName("patientDataEvidence"u8);
-                writer.WriteObjectValue<ClinicalNoteEvidence>(PatientDataEvidence, options);
+                writer.WriteObjectValue(PatientDataEvidence, options);
             }
             if (Optional.IsDefined(PatientInfoEvidence))
             {
                 writer.WritePropertyName("patientInfoEvidence"u8);
-                writer.WriteObjectValue<ClinicalCodedElement>(PatientInfoEvidence, options);
+                writer.WriteObjectValue(PatientInfoEvidence, options);
             }
             if (Optional.IsDefined(Importance))
             {
@@ -54,14 +62,13 @@ namespace Azure.Health.Insights.ClinicalMatching
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         TrialMatcherInferenceEvidence IJsonModel<TrialMatcherInferenceEvidence>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -78,7 +85,7 @@ namespace Azure.Health.Insights.ClinicalMatching
 
         internal static TrialMatcherInferenceEvidence DeserializeTrialMatcherInferenceEvidence(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -140,7 +147,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsClinicalMatchingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrialMatcherInferenceEvidence)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +161,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrialMatcherInferenceEvidence(document.RootElement, options);
                     }
                 default:
@@ -168,15 +175,15 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TrialMatcherInferenceEvidence FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTrialMatcherInferenceEvidence(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrialMatcherInferenceEvidence>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

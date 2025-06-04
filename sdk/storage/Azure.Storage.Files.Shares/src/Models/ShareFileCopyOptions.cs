@@ -28,6 +28,13 @@ namespace Azure.Storage.Files.Shares.Models
         public string FilePermission { get; set; }
 
         /// <summary>
+        /// Specifies the format in which the file permission is returned. If unspecified or explicitly set to SDDL,
+        /// the permission is returned in SDDL format. If explicitly set to binary, the permission is returned as a base64
+        /// string representing the binary encoding of the permission.
+        /// </summary>
+        public FilePermissionFormat? PermissionFormat { get; set; }
+
+        /// <summary>
         /// Specifies the option to copy file security descriptor from source file or
         /// to set it using the value which is defined by the header value of FilePermission
         /// or FilePermissionKey.
@@ -57,5 +64,22 @@ namespace Azure.Storage.Files.Shares.Models
         /// SMB properties to copy from the source file.
         /// </summary>
         public CopyableFileSmbProperties SmbPropertiesToCopy { get; set; }
+
+        /// <summary>
+        /// Only applicable to NFS Files.  NFS properties to set on the destination file.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default File Mode.
+        /// </summary>
+        public ModeCopyMode? ModeCopyMode { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default Owner and Group.
+        /// </summary>
+        public OwnerCopyMode? OwnerCopyMode { get; set; }
     }
 }

@@ -55,27 +55,37 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="applicability"> indicates whether the profile is default for the location. </param>
         /// <param name="cores"> Number of cores in CPU. </param>
         /// <param name="memoryInGiB"> Memory in GiB. </param>
+        /// <param name="gpus"> Number of GPUs. </param>
         /// <param name="displayName"> The everyday name of the workload profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppAvailableWorkloadProfileProperties(string category, ContainerAppAvailableWorkloadProfileApplicability? applicability, int? cores, int? memoryInGiB, int? gpus, string displayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
             Applicability = applicability;
             Cores = cores;
             MemoryInGiB = memoryInGiB;
+            Gpus = gpus;
             DisplayName = displayName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Used to categorize workload profiles. </summary>
+        [WirePath("category")]
         public string Category { get; set; }
         /// <summary> indicates whether the profile is default for the location. </summary>
+        [WirePath("applicability")]
         public ContainerAppAvailableWorkloadProfileApplicability? Applicability { get; set; }
         /// <summary> Number of cores in CPU. </summary>
+        [WirePath("cores")]
         public int? Cores { get; set; }
         /// <summary> Memory in GiB. </summary>
+        [WirePath("memoryGiB")]
         public int? MemoryInGiB { get; set; }
+        /// <summary> Number of GPUs. </summary>
+        [WirePath("gpus")]
+        public int? Gpus { get; set; }
         /// <summary> The everyday name of the workload profile. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

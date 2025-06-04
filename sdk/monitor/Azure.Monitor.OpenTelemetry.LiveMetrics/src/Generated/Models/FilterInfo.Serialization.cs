@@ -18,7 +18,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 return null;
             }
             string fieldName = default;
-            FilterInfoPredicate? predicate = default;
+            PredicateType predicate = default;
             string comparand = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -29,11 +29,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 }
                 if (property.NameEquals("Predicate"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    predicate = new FilterInfoPredicate(property.Value.GetString());
+                    predicate = new PredicateType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("Comparand"u8))
@@ -49,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FilterInfo FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFilterInfo(document.RootElement);
         }
     }

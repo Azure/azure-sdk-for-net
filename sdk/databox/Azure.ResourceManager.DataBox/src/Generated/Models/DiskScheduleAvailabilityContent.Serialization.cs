@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     public partial class DiskScheduleAvailabilityContent : IUtf8JsonSerializable, IJsonModel<DiskScheduleAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskScheduleAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DiskScheduleAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DiskScheduleAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DiskScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,34 +34,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(DiskScheduleAvailabilityContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
             writer.WriteNumberValue(ExpectedDataSizeInTerabytes);
-            writer.WritePropertyName("storageLocation"u8);
-            writer.WriteStringValue(StorageLocation);
-            writer.WritePropertyName("skuName"u8);
-            writer.WriteStringValue(SkuName.ToSerialString());
-            if (Optional.IsDefined(Country))
-            {
-                writer.WritePropertyName("country"u8);
-                writer.WriteStringValue(Country);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         DiskScheduleAvailabilityContent IJsonModel<DiskScheduleAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,7 +53,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static DiskScheduleAvailabilityContent DeserializeDiskScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -79,6 +63,7 @@ namespace Azure.ResourceManager.DataBox.Models
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
+            DeviceModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,13 +88,28 @@ namespace Azure.ResourceManager.DataBox.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = property.Value.GetString().ToDeviceModelName();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DiskScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData, expectedDataSizeInTerabytes);
+            return new DiskScheduleAvailabilityContent(
+                storageLocation,
+                skuName,
+                country,
+                model,
+                serializedAdditionalRawData,
+                expectedDataSizeInTerabytes);
         }
 
         BinaryData IPersistableModel<DiskScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DiskScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDiskScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:

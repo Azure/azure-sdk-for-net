@@ -13,11 +13,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.StandbyPool.Models
 {
-    internal partial class StandbyVirtualMachinePoolElasticityProfile : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolElasticityProfile>
+    public partial class StandbyVirtualMachinePoolElasticityProfile : IUtf8JsonSerializable, IJsonModel<StandbyVirtualMachinePoolElasticityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolElasticityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StandbyVirtualMachinePoolElasticityProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<StandbyVirtualMachinePoolElasticityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StandbyVirtualMachinePoolElasticityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,9 +34,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolElasticityProfile)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("maxReadyCapacity"u8);
             writer.WriteNumberValue(MaxReadyCapacity);
+            if (Optional.IsDefined(MinReadyCapacity))
+            {
+                writer.WritePropertyName("minReadyCapacity"u8);
+                writer.WriteNumberValue(MinReadyCapacity.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -36,14 +49,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         StandbyVirtualMachinePoolElasticityProfile IJsonModel<StandbyVirtualMachinePoolElasticityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,13 +72,14 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         internal static StandbyVirtualMachinePoolElasticityProfile DeserializeStandbyVirtualMachinePoolElasticityProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             long maxReadyCapacity = default;
+            long? minReadyCapacity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -76,13 +89,22 @@ namespace Azure.ResourceManager.StandbyPool.Models
                     maxReadyCapacity = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("minReadyCapacity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minReadyCapacity = property.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyVirtualMachinePoolElasticityProfile(maxReadyCapacity, serializedAdditionalRawData);
+            return new StandbyVirtualMachinePoolElasticityProfile(maxReadyCapacity, minReadyCapacity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StandbyVirtualMachinePoolElasticityProfile>.Write(ModelReaderWriterOptions options)
@@ -92,7 +114,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyVirtualMachinePoolElasticityProfile)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +128,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyVirtualMachinePoolElasticityProfile(document.RootElement, options);
                     }
                 default:

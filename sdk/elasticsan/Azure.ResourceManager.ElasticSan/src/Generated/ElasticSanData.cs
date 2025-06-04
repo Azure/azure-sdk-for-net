@@ -87,8 +87,9 @@ namespace Azure.ResourceManager.ElasticSan
         /// <param name="totalSizeTiB"> Total size of the Elastic San appliance in TB. </param>
         /// <param name="privateEndpointConnections"> The list of Private Endpoint Connections. </param>
         /// <param name="publicNetworkAccess"> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
+        /// <param name="autoScaleProperties"> Auto Scale Properties for Elastic San Appliance. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ElasticSanData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ElasticSanSku sku, IList<string> availabilityZones, ElasticSanProvisioningState? provisioningState, long baseSizeTiB, long extendedCapacitySizeTiB, long? totalVolumeSizeGiB, long? volumeGroupCount, long? totalIops, long? totalMbps, long? totalSizeTiB, IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections, ElasticSanPublicNetworkAccess? publicNetworkAccess, AutoScaleProperties autoScaleProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             AvailabilityZones = availabilityZones;
@@ -102,6 +103,7 @@ namespace Azure.ResourceManager.ElasticSan
             TotalSizeTiB = totalSizeTiB;
             PrivateEndpointConnections = privateEndpointConnections;
             PublicNetworkAccess = publicNetworkAccess;
+            AutoScaleProperties = autoScaleProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -134,5 +136,18 @@ namespace Azure.ResourceManager.ElasticSan
         public IReadOnlyList<ElasticSanPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Allow or disallow public network access to ElasticSan. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
         public ElasticSanPublicNetworkAccess? PublicNetworkAccess { get; set; }
+        /// <summary> Auto Scale Properties for Elastic San Appliance. </summary>
+        internal AutoScaleProperties AutoScaleProperties { get; set; }
+        /// <summary> Scale up settings on Elastic San Appliance. </summary>
+        public ElasticSanScaleUpProperties ScaleUpProperties
+        {
+            get => AutoScaleProperties is null ? default : AutoScaleProperties.ScaleUpProperties;
+            set
+            {
+                if (AutoScaleProperties is null)
+                    AutoScaleProperties = new AutoScaleProperties();
+                AutoScaleProperties.ScaleUpProperties = value;
+            }
+        }
     }
 }

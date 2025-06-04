@@ -59,6 +59,18 @@ namespace Azure.ResourceManager.RedisEnterprise.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing an <see cref="AccessPolicyAssignmentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AccessPolicyAssignmentResource.CreateResourceIdentifier" /> to create an <see cref="AccessPolicyAssignmentResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AccessPolicyAssignmentResource"/> object. </returns>
+        public virtual AccessPolicyAssignmentResource GetAccessPolicyAssignmentResource(ResourceIdentifier id)
+        {
+            AccessPolicyAssignmentResource.ValidateResourceId(id);
+            return new AccessPolicyAssignmentResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="RedisEnterprisePrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="RedisEnterprisePrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

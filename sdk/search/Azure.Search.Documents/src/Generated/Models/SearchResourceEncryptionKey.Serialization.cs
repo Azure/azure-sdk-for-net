@@ -17,8 +17,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultKeyName"u8);
             writer.WriteStringValue(KeyName);
-            writer.WritePropertyName("keyVaultKeyVersion"u8);
-            writer.WriteStringValue(KeyVersion);
+            if (Optional.IsDefined(KeyVersion))
+            {
+                writer.WritePropertyName("keyVaultKeyVersion"u8);
+                writer.WriteStringValue(KeyVersion);
+            }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
             if (Optional.IsDefined(AccessCredentialsInternal))
@@ -31,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
+                    writer.WriteObjectValue(Identity);
                 }
                 else
                 {
@@ -96,15 +99,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchResourceEncryptionKey FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchResourceEncryptionKey(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchResourceEncryptionKey>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

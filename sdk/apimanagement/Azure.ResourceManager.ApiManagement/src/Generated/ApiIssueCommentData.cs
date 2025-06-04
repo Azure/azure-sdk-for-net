@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Comment text. </summary>
+        [WirePath("properties.text")]
         public string Text { get; set; }
         /// <summary> Date and time when the comment was created. </summary>
+        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; set; }
         /// <summary> A resource identifier for the user who left the comment. </summary>
+        [WirePath("properties.userId")]
         public ResourceIdentifier UserId { get; set; }
     }
 }

@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class WebChatSite : IUtf8JsonSerializable, IJsonModel<WebChatSite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebChatSite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebChatSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WebChatSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebChatSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,124 +34,7 @@ namespace Azure.ResourceManager.BotService.Models
                 throw new FormatException($"The model {nameof(WebChatSite)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SiteId))
-            {
-                writer.WritePropertyName("siteId"u8);
-                writer.WriteStringValue(SiteId);
-            }
-            writer.WritePropertyName("siteName"u8);
-            writer.WriteStringValue(SiteName);
-            if (options.Format != "W" && Optional.IsDefined(Key))
-            {
-                writer.WritePropertyName("key"u8);
-                writer.WriteStringValue(Key);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Key2))
-            {
-                writer.WritePropertyName("key2"u8);
-                writer.WriteStringValue(Key2);
-            }
-            writer.WritePropertyName("isEnabled"u8);
-            writer.WriteBooleanValue(IsEnabled);
-            if (options.Format != "W" && Optional.IsDefined(IsTokenEnabled))
-            {
-                writer.WritePropertyName("isTokenEnabled"u8);
-                writer.WriteBooleanValue(IsTokenEnabled.Value);
-            }
-            if (Optional.IsDefined(IsEndpointParametersEnabled))
-            {
-                writer.WritePropertyName("isEndpointParametersEnabled"u8);
-                writer.WriteBooleanValue(IsEndpointParametersEnabled.Value);
-            }
-            if (Optional.IsDefined(IsDetailedLoggingEnabled))
-            {
-                writer.WritePropertyName("isDetailedLoggingEnabled"u8);
-                writer.WriteBooleanValue(IsDetailedLoggingEnabled.Value);
-            }
-            if (Optional.IsDefined(IsBlockUserUploadEnabled))
-            {
-                if (IsBlockUserUploadEnabled != null)
-                {
-                    writer.WritePropertyName("isBlockUserUploadEnabled"u8);
-                    writer.WriteBooleanValue(IsBlockUserUploadEnabled.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isBlockUserUploadEnabled");
-                }
-            }
-            if (Optional.IsDefined(IsNoStorageEnabled))
-            {
-                writer.WritePropertyName("isNoStorageEnabled"u8);
-                writer.WriteBooleanValue(IsNoStorageEnabled.Value);
-            }
-            if (Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsDefined(AppId))
-            {
-                writer.WritePropertyName("appId"u8);
-                writer.WriteStringValue(AppId);
-            }
-            if (Optional.IsDefined(IsV1Enabled))
-            {
-                writer.WritePropertyName("isV1Enabled"u8);
-                writer.WriteBooleanValue(IsV1Enabled.Value);
-            }
-            if (Optional.IsDefined(IsV3Enabled))
-            {
-                writer.WritePropertyName("isV3Enabled"u8);
-                writer.WriteBooleanValue(IsV3Enabled.Value);
-            }
-            if (Optional.IsDefined(IsSecureSiteEnabled))
-            {
-                writer.WritePropertyName("isSecureSiteEnabled"u8);
-                writer.WriteBooleanValue(IsSecureSiteEnabled.Value);
-            }
-            if (Optional.IsCollectionDefined(TrustedOrigins))
-            {
-                writer.WritePropertyName("trustedOrigins"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrustedOrigins)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsWebChatSpeechEnabled))
-            {
-                writer.WritePropertyName("isWebChatSpeechEnabled"u8);
-                writer.WriteBooleanValue(IsWebChatSpeechEnabled.Value);
-            }
-            if (Optional.IsDefined(IsWebchatPreviewEnabled))
-            {
-                writer.WritePropertyName("isWebchatPreviewEnabled"u8);
-                writer.WriteBooleanValue(IsWebchatPreviewEnabled.Value);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         WebChatSite IJsonModel<WebChatSite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -159,7 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static WebChatSite DeserializeWebChatSite(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +68,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDetailedLoggingEnabled = default;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             string appId = default;
             bool? isV1Enabled = default;
             bool? isV3Enabled = default;
@@ -274,7 +166,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appId"u8))
@@ -359,7 +251,7 @@ namespace Azure.ResourceManager.BotService.Models
                 isDetailedLoggingEnabled,
                 isBlockUserUploadEnabled,
                 isNoStorageEnabled,
-                eTag,
+                etag,
                 appId,
                 isV1Enabled,
                 isV3Enabled,
@@ -377,7 +269,7 @@ namespace Azure.ResourceManager.BotService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebChatSite)} does not support writing '{options.Format}' format.");
             }
@@ -391,7 +283,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWebChatSite(document.RootElement, options);
                     }
                 default:

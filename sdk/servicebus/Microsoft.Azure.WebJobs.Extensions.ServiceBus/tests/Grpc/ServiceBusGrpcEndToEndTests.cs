@@ -232,6 +232,27 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.IsEmpty(provider.ActionsCache);
         }
 
+        [Test]
+        public async Task BindToMessageAndRenewMessageLock()
+        {
+            var host = BuildHost<ServiceBusBindToMessageAndRenewMessageLock>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToMessageAndRenewMessageLock.SettlementService = settlementImpl;
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar");
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+            Assert.IsEmpty(provider.ActionsCache);
+        }
+
         public class ServiceBusBindToMessageAndComplete
         {
             internal static SettlementService SettlementService { get; set; }
@@ -454,6 +475,21 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                         Locktoken = message.LockToken,
                         PropertiesToModify = EncodeDictionary(new Dictionary<string, object>{{ "key", "value"}})
                     },
+                    new MockServerCallContext());
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToMessageAndRenewMessageLock
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+            {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                var lockedBefore = message.LockedUntil;
+                await SettlementService.RenewMessageLock(
+                    new RenewMessageLockRequest { Locktoken = message.LockToken },
                     new MockServerCallContext());
                 _waitHandle1.Set();
             }

@@ -15,9 +15,18 @@ namespace Azure.Health.Insights.RadiologyInsights
 {
     public partial class DocumentAdministrativeMetadata : IUtf8JsonSerializable, IJsonModel<DocumentAdministrativeMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentAdministrativeMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentAdministrativeMetadata>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DocumentAdministrativeMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DocumentAdministrativeMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,14 +34,13 @@ namespace Azure.Health.Insights.RadiologyInsights
                 throw new FormatException($"The model {nameof(DocumentAdministrativeMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsCollectionDefined(OrderedProcedures))
             {
                 writer.WritePropertyName("orderedProcedures"u8);
                 writer.WriteStartArray();
                 foreach (var item in OrderedProcedures)
                 {
-                    writer.WriteObjectValue<FhirR4Extendible>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,14 +57,13 @@ namespace Azure.Health.Insights.RadiologyInsights
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DocumentAdministrativeMetadata IJsonModel<DocumentAdministrativeMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,13 +80,13 @@ namespace Azure.Health.Insights.RadiologyInsights
 
         internal static DocumentAdministrativeMetadata DeserializeDocumentAdministrativeMetadata(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<FhirR4Extendible> orderedProcedures = default;
+            IList<OrderedProcedure> orderedProcedures = default;
             string encounterId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +98,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                     {
                         continue;
                     }
-                    List<FhirR4Extendible> array = new List<FhirR4Extendible>();
+                    List<OrderedProcedure> array = new List<OrderedProcedure>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FhirR4Extendible.DeserializeFhirR4Extendible(item, options));
+                        array.Add(OrderedProcedure.DeserializeOrderedProcedure(item, options));
                     }
                     orderedProcedures = array;
                     continue;
@@ -110,7 +117,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DocumentAdministrativeMetadata(orderedProcedures ?? new ChangeTrackingList<FhirR4Extendible>(), encounterId, serializedAdditionalRawData);
+            return new DocumentAdministrativeMetadata(orderedProcedures ?? new ChangeTrackingList<OrderedProcedure>(), encounterId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DocumentAdministrativeMetadata>.Write(ModelReaderWriterOptions options)
@@ -120,7 +127,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DocumentAdministrativeMetadata)} does not support writing '{options.Format}' format.");
             }
@@ -134,7 +141,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDocumentAdministrativeMetadata(document.RootElement, options);
                     }
                 default:
@@ -148,15 +155,15 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DocumentAdministrativeMetadata FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDocumentAdministrativeMetadata(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DocumentAdministrativeMetadata>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

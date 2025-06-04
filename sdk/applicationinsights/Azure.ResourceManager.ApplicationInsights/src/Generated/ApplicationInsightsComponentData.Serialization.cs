@@ -19,9 +19,18 @@ namespace Azure.ResourceManager.ApplicationInsights
 {
     public partial class ApplicationInsightsComponentData : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApplicationInsightsComponentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -29,46 +38,13 @@ namespace Azure.ResourceManager.ApplicationInsights
                 throw new FormatException($"The model {nameof(ApplicationInsightsComponentData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -173,7 +149,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkScopedResources)
                 {
-                    writer.WriteObjectValue<PrivateLinkScopedResourceContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,22 +179,6 @@ namespace Azure.ResourceManager.ApplicationInsights
                 writer.WriteBooleanValue(IsForceCustomerStorageForProfiler.Value);
             }
             writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         ApplicationInsightsComponentData IJsonModel<ApplicationInsightsComponentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -235,7 +195,7 @@ namespace Azure.ResourceManager.ApplicationInsights
 
         internal static ApplicationInsightsComponentData DeserializeApplicationInsightsComponentData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -252,9 +212,9 @@ namespace Azure.ResourceManager.ApplicationInsights
             string applicationId = default;
             string appId = default;
             string name0 = default;
-            ApplicationType? applicationType = default;
-            FlowType? flowType = default;
-            RequestSource? requestSource = default;
+            ApplicationInsightsApplicationType? applicationType = default;
+            ComponentFlowType? flowType = default;
+            ComponentRequestSource? requestSource = default;
             string instrumentationKey = default;
             DateTimeOffset? creationDate = default;
             Guid? tenantId = default;
@@ -266,12 +226,12 @@ namespace Azure.ResourceManager.ApplicationInsights
             int? retentionInDays = default;
             bool? disableIPMasking = default;
             bool? immediatePurgeDataOn30Days = default;
-            string workspaceResourceId = default;
+            ResourceIdentifier workspaceResourceId = default;
             DateTimeOffset? laMigrationDate = default;
-            IReadOnlyList<PrivateLinkScopedResourceContent> privateLinkScopedResources = default;
-            PublicNetworkAccessType? publicNetworkAccessForIngestion = default;
-            PublicNetworkAccessType? publicNetworkAccessForQuery = default;
-            IngestionMode? ingestionMode = default;
+            IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources = default;
+            ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            ComponentIngestionMode? ingestionMode = default;
             bool? disableLocalAuth = default;
             bool? forceCustomerStorageForProfiler = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -365,7 +325,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            applicationType = new ApplicationType(property0.Value.GetString());
+                            applicationType = new ApplicationInsightsApplicationType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("Flow_Type"u8))
@@ -374,7 +334,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            flowType = new FlowType(property0.Value.GetString());
+                            flowType = new ComponentFlowType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("Request_Source"u8))
@@ -383,7 +343,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            requestSource = new RequestSource(property0.Value.GetString());
+                            requestSource = new ComponentRequestSource(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("InstrumentationKey"u8))
@@ -467,7 +427,11 @@ namespace Azure.ResourceManager.ApplicationInsights
                         }
                         if (property0.NameEquals("WorkspaceResourceId"u8))
                         {
-                            workspaceResourceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            workspaceResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("LaMigrationDate"u8))
@@ -485,10 +449,10 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            List<PrivateLinkScopedResourceContent> array = new List<PrivateLinkScopedResourceContent>();
+                            List<PrivateLinkScopedResourceReference> array = new List<PrivateLinkScopedResourceReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PrivateLinkScopedResourceContent.DeserializePrivateLinkScopedResourceContent(item, options));
+                                array.Add(PrivateLinkScopedResourceReference.DeserializePrivateLinkScopedResourceReference(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -499,7 +463,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            publicNetworkAccessForIngestion = new PublicNetworkAccessType(property0.Value.GetString());
+                            publicNetworkAccessForIngestion = new ApplicationInsightsPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccessForQuery"u8))
@@ -508,7 +472,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            publicNetworkAccessForQuery = new PublicNetworkAccessType(property0.Value.GetString());
+                            publicNetworkAccessForQuery = new ApplicationInsightsPublicNetworkAccessType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("IngestionMode"u8))
@@ -517,7 +481,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                             {
                                 continue;
                             }
-                            ingestionMode = new IngestionMode(property0.Value.GetString());
+                            ingestionMode = new ComponentIngestionMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("DisableLocalAuth"u8))
@@ -575,7 +539,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 immediatePurgeDataOn30Days,
                 workspaceResourceId,
                 laMigrationDate,
-                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceContent>(),
+                privateLinkScopedResources ?? new ChangeTrackingList<PrivateLinkScopedResourceReference>(),
                 publicNetworkAccessForIngestion,
                 publicNetworkAccessForQuery,
                 ingestionMode,
@@ -596,15 +560,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -618,28 +583,30 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
-            builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.Append("  location: ");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
+                builder.Append("  location: ");
                 builder.AppendLine($"'{Location.ToString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
-            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Tags.Any() || hasPropertyOverride)
+                builder.Append("  tags: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Tags))
                 {
-                    builder.Append("  tags: ");
-                    if (hasPropertyOverride)
+                    if (Tags.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  tags: ");
                         builder.AppendLine("{");
                         foreach (var item in Tags)
                         {
@@ -665,15 +632,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -687,43 +655,46 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  etag: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  etag: ");
                     builder.AppendLine($"'{ETag.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -731,15 +702,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
-            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    ApplicationId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    ApplicationId: ");
                     if (ApplicationId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -753,15 +725,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AppId), out propertyOverride);
-            if (Optional.IsDefined(AppId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    AppId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AppId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    AppId: ");
                     if (AppId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -775,15 +748,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NamePropertiesName), out propertyOverride);
-            if (Optional.IsDefined(NamePropertiesName) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    Name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(NamePropertiesName))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    Name: ");
                     if (NamePropertiesName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -797,57 +771,61 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationType), out propertyOverride);
-            if (Optional.IsDefined(ApplicationType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    Application_Type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApplicationType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    Application_Type: ");
                     builder.AppendLine($"'{ApplicationType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FlowType), out propertyOverride);
-            if (Optional.IsDefined(FlowType) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    Flow_Type: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(FlowType))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    Flow_Type: ");
                     builder.AppendLine($"'{FlowType.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestSource), out propertyOverride);
-            if (Optional.IsDefined(RequestSource) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    Request_Source: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RequestSource))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    Request_Source: ");
                     builder.AppendLine($"'{RequestSource.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InstrumentationKey), out propertyOverride);
-            if (Optional.IsDefined(InstrumentationKey) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    InstrumentationKey: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InstrumentationKey))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    InstrumentationKey: ");
                     if (InstrumentationKey.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -861,44 +839,47 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    CreationDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(CreatedOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    CreationDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
-            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    TenantId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(TenantId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    TenantId: ");
                     builder.AppendLine($"'{TenantId.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HockeyAppId), out propertyOverride);
-            if (Optional.IsDefined(HockeyAppId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    HockeyAppId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HockeyAppId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    HockeyAppId: ");
                     if (HockeyAppId.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -912,15 +893,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HockeyAppToken), out propertyOverride);
-            if (Optional.IsDefined(HockeyAppToken) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    HockeyAppToken: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HockeyAppToken))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    HockeyAppToken: ");
                     if (HockeyAppToken.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -934,15 +916,16 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ProvisioningState))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    provisioningState: ");
                     if (ProvisioningState.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -956,29 +939,31 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingPercentage), out propertyOverride);
-            if (Optional.IsDefined(SamplingPercentage) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    SamplingPercentage: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SamplingPercentage))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    SamplingPercentage: ");
                     builder.AppendLine($"'{SamplingPercentage.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionString), out propertyOverride);
-            if (Optional.IsDefined(ConnectionString) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    ConnectionString: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ConnectionString))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    ConnectionString: ");
                     if (ConnectionString.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -992,98 +977,96 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInDays), out propertyOverride);
-            if (Optional.IsDefined(RetentionInDays) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    RetentionInDays: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(RetentionInDays))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    RetentionInDays: ");
                     builder.AppendLine($"{RetentionInDays.Value}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDisableIPMasking), out propertyOverride);
-            if (Optional.IsDefined(IsDisableIPMasking) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    DisableIpMasking: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDisableIPMasking))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    DisableIpMasking: ");
                     var boolValue = IsDisableIPMasking.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsImmediatePurgeDataOn30Days), out propertyOverride);
-            if (Optional.IsDefined(IsImmediatePurgeDataOn30Days) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    ImmediatePurgeDataOn30Days: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsImmediatePurgeDataOn30Days))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    ImmediatePurgeDataOn30Days: ");
                     var boolValue = IsImmediatePurgeDataOn30Days.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceResourceId), out propertyOverride);
-            if (Optional.IsDefined(WorkspaceResourceId) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    WorkspaceResourceId: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(WorkspaceResourceId))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (WorkspaceResourceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{WorkspaceResourceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{WorkspaceResourceId}'");
-                    }
+                    builder.Append("    WorkspaceResourceId: ");
+                    builder.AppendLine($"'{WorkspaceResourceId.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LaMigrationOn), out propertyOverride);
-            if (Optional.IsDefined(LaMigrationOn) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    LaMigrationDate: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(LaMigrationOn))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    LaMigrationDate: ");
                     var formattedDateTimeString = TypeFormatters.ToString(LaMigrationOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkScopedResources), out propertyOverride);
-            if (Optional.IsCollectionDefined(PrivateLinkScopedResources) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (PrivateLinkScopedResources.Any() || hasPropertyOverride)
+                builder.Append("    PrivateLinkScopedResources: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PrivateLinkScopedResources))
                 {
-                    builder.Append("    PrivateLinkScopedResources: ");
-                    if (hasPropertyOverride)
+                    if (PrivateLinkScopedResources.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    PrivateLinkScopedResources: ");
                         builder.AppendLine("[");
                         foreach (var item in PrivateLinkScopedResources)
                         {
@@ -1095,72 +1078,77 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessForIngestion), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccessForIngestion) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    publicNetworkAccessForIngestion: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccessForIngestion))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    publicNetworkAccessForIngestion: ");
                     builder.AppendLine($"'{PublicNetworkAccessForIngestion.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessForQuery), out propertyOverride);
-            if (Optional.IsDefined(PublicNetworkAccessForQuery) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    publicNetworkAccessForQuery: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(PublicNetworkAccessForQuery))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    publicNetworkAccessForQuery: ");
                     builder.AppendLine($"'{PublicNetworkAccessForQuery.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngestionMode), out propertyOverride);
-            if (Optional.IsDefined(IngestionMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    IngestionMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IngestionMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    IngestionMode: ");
                     builder.AppendLine($"'{IngestionMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDisableLocalAuth), out propertyOverride);
-            if (Optional.IsDefined(IsDisableLocalAuth) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    DisableLocalAuth: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsDisableLocalAuth))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    DisableLocalAuth: ");
                     var boolValue = IsDisableLocalAuth.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsForceCustomerStorageForProfiler), out propertyOverride);
-            if (Optional.IsDefined(IsForceCustomerStorageForProfiler) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    ForceCustomerStorageForProfiler: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsForceCustomerStorageForProfiler))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    ForceCustomerStorageForProfiler: ");
                     var boolValue = IsForceCustomerStorageForProfiler.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
@@ -1178,7 +1166,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1194,7 +1182,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApplicationInsightsComponentData(document.RootElement, options);
                     }
                 default:

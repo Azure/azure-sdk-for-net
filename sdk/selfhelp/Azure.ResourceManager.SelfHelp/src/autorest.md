@@ -7,16 +7,13 @@ azure-arm: true
 csharp: true
 library-name: SelfHelp
 namespace: Azure.ResourceManager.SelfHelp
-require: https://github.com/Azure/azure-rest-api-specs/blob/3eb9ec8e9c8f717c6b461c4c0f49a4662fb948fd/specification/help/resource-manager/readme.md
-tag: package-2023-09-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/51031c3dc961c33be93afe1f15d35acfe5999861/specification/help/resource-manager/readme.md
+#tag: package-2024-03-01-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
-  skipped-operations:
-  - Diagnostics_CheckNameAvailability
-  - DiscoverySolution_List
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -54,11 +51,17 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  NLP: Nlp
+
+request-path-is-non-resource:
+  - /providers/Microsoft.Help/selfHelp/{solutionId}
 
 list-exception:
 - /{scope}/providers/Microsoft.Help/diagnostics/{diagnosticsResourceName}
 - /{scope}/providers/Microsoft.Help/solutions/{solutionResourceName}
 - /{scope}/providers/Microsoft.Help/troubleshooters/{troubleshooterName}
+- /{scope}/providers/Microsoft.Help/simplifiedSolutions/{simplifiedSolutionsResourceName}
+- /providers/Microsoft.Help/selfHelp/{solutionId}
 
 rename-mapping:
   DiagnosticResource: SelfHelpDiagnostic
@@ -88,10 +91,39 @@ rename-mapping:
   RestartTroubleshooterResponse: RestartTroubleshooterResult
   TroubleshooterResponse: TroubleshooterResult
   ResponseOption: ResponseConfig
+  DiscoveryNlpRequest: DiscoveryNlpContent
+  SolutionResource: SelfHelpSolution
+  SolutionResourceSelfHelp: SelfHelpSolutionResult
+  SolutionNlpMetadataResource: SolutionNlpMetadata
+  SimplifiedSolutionsResource: SelfHelpSimplifiedSolution
+  TroubleshooterResource: SelfHelpTroubleshooter
+  AggregationType: ChartAggregationType
+  FilterGroup: ChartFilterGroup
+  ContinueRequestBody: TroubleshooterContinueContent
+  DiscoveryNlpResponse: DiscoveryNlpResult
+  ExecutionStatus: TroubleshooterExecutionStatus
+  QuestionContentType: TroubleshooterQuestionContentType
+  QuestionType: TroubleshooterQuestionType
+  ReplacementMaps: SolutionReplacementMaps
+  ReplacementMapsSelfHelp: ReplacementMapsResult
+  ResultType: KBSearchResultType
+  SearchResult: KBSearchResult
+  SectionSelfHelp: SolutionSection
+  SolutionType: SelfHelpSolutionType
+  SolutionWarmUpRequestBody: SolutionWarmUpContent
+  StepInput: TroubleshooterStepInput
+  TriggerCriterion: SolutionTriggerCriterion
+  ValidationScope: TroubleshooterValidationScope
+  ValidationScope.URLFormat: UrlFormat
+  VideoGroup: VideoGroupDetail
+  WebResult: KBWebResult
 
 override-operation-name:
-  CheckNameAvailability_Post: CheckSelfHelpNameAvailability
-  DiscoverySolution_List: GetSelfHelpDiscoverySolutions
+  CheckNameAvailability_CheckAvailability: CheckSelfHelpNameAvailability
+  DiscoverySolution_List: DiscoverSolutions
+  SolutionSelfHelp_Get: GetSelfHelpSolutionById
+  DiscoverySolutionNLP_DiscoverSolutionsBySubscription: DiscoverSolutionsNlp
+  DiscoverySolutionNLP_DiscoverSolutions: DiscoverSolutionsNlp
 
 directive:
   - from: help.json

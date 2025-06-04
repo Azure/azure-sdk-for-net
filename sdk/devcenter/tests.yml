@@ -7,7 +7,8 @@ extends:
     SDKType: client
     DeployTestResources: true
     TimeoutInMinutes: 240
+    UseFederatedAuth: false #This looks to be another sub so it will need a new service connection to run
     CloudConfig:
-        Public:
-            SubscriptionConfiguration: $(sub-config-devcenter-test-resources)
-            Location: "eastus"
+      Public:
+        SubscriptionConfiguration: $(sub-config-devcenter-test-resources)
+        Location: "eastus"

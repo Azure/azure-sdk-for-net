@@ -25,6 +25,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private const string ScheduledValue = "Scheduled";
         private const string MicrosoftSecurityIncidentCreationValue = "MicrosoftSecurityIncidentCreation";
         private const string FusionValue = "Fusion";
+        private const string MLBehaviorAnalyticsValue = "MLBehaviorAnalytics";
+        private const string ThreatIntelligenceValue = "ThreatIntelligence";
+        private const string NRTValue = "NRT";
 
         /// <summary> Scheduled. </summary>
         public static AlertRuleKind Scheduled { get; } = new AlertRuleKind(ScheduledValue);
@@ -32,11 +35,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static AlertRuleKind MicrosoftSecurityIncidentCreation { get; } = new AlertRuleKind(MicrosoftSecurityIncidentCreationValue);
         /// <summary> Fusion. </summary>
         public static AlertRuleKind Fusion { get; } = new AlertRuleKind(FusionValue);
+        /// <summary> MLBehaviorAnalytics. </summary>
+        public static AlertRuleKind MLBehaviorAnalytics { get; } = new AlertRuleKind(MLBehaviorAnalyticsValue);
+        /// <summary> ThreatIntelligence. </summary>
+        public static AlertRuleKind ThreatIntelligence { get; } = new AlertRuleKind(ThreatIntelligenceValue);
+        /// <summary> NRT. </summary>
+        public static AlertRuleKind NRT { get; } = new AlertRuleKind(NRTValue);
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are the same. </summary>
         public static bool operator ==(AlertRuleKind left, AlertRuleKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AlertRuleKind"/> values are not the same. </summary>
         public static bool operator !=(AlertRuleKind left, AlertRuleKind right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AlertRuleKind"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AlertRuleKind"/>. </summary>
         public static implicit operator AlertRuleKind(string value) => new AlertRuleKind(value);
 
         /// <inheritdoc />
@@ -47,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

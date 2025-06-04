@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Cool. </summary>
         Cool,
         /// <summary> Premium. </summary>
-        Premium
+        Premium,
+        /// <summary> Cold. </summary>
+        Cold
     }
 }

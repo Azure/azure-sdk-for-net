@@ -24,19 +24,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string ClassificationValue = "Classification";
         private const string RegressionValue = "Regression";
-        private const string QuestionAnsweringValue = "QuestionAnswering";
 
         /// <summary> Classification. </summary>
         public static ModelTaskType Classification { get; } = new ModelTaskType(ClassificationValue);
         /// <summary> Regression. </summary>
         public static ModelTaskType Regression { get; } = new ModelTaskType(RegressionValue);
-        /// <summary> QuestionAnswering. </summary>
-        public static ModelTaskType QuestionAnswering { get; } = new ModelTaskType(QuestionAnsweringValue);
         /// <summary> Determines if two <see cref="ModelTaskType"/> values are the same. </summary>
         public static bool operator ==(ModelTaskType left, ModelTaskType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelTaskType"/> values are not the same. </summary>
         public static bool operator !=(ModelTaskType left, ModelTaskType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ModelTaskType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ModelTaskType"/>. </summary>
         public static implicit operator ModelTaskType(string value) => new ModelTaskType(value);
 
         /// <inheritdoc />
@@ -47,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

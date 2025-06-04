@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.NetApp
 
         NetAppVolumeSnapshotResource IOperationSource<NetAppVolumeSnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(document.RootElement);
+            var data = ModelReaderWriter.Read<NetAppVolumeSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
             return new NetAppVolumeSnapshotResource(_client, data);
         }
 
         async ValueTask<NetAppVolumeSnapshotResource> IOperationSource<NetAppVolumeSnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NetAppVolumeSnapshotData.DeserializeNetAppVolumeSnapshotData(document.RootElement);
-            return new NetAppVolumeSnapshotResource(_client, data);
+            var data = ModelReaderWriter.Read<NetAppVolumeSnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetAppContext.Default);
+            return await Task.FromResult(new NetAppVolumeSnapshotResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

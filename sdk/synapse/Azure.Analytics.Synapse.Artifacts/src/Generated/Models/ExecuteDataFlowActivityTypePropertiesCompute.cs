@@ -16,17 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExecuteDataFlowActivityTypePropertiesCompute"/>. </summary>
-        /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
-        /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
-        internal ExecuteDataFlowActivityTypePropertiesCompute(DataFlowComputeType? computeType, int? coreCount)
+        /// <param name="computeType"> Compute type of the cluster which will execute data flow job. Possible values include: 'General', 'MemoryOptimized', 'ComputeOptimized'. Type: string (or Expression with resultType string). </param>
+        /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </param>
+        internal ExecuteDataFlowActivityTypePropertiesCompute(object computeType, object coreCount)
         {
             ComputeType = computeType;
             CoreCount = coreCount;
         }
 
-        /// <summary> Compute type of the cluster which will execute data flow job. </summary>
-        public DataFlowComputeType? ComputeType { get; set; }
-        /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </summary>
-        public int? CoreCount { get; set; }
+        /// <summary> Compute type of the cluster which will execute data flow job. Possible values include: 'General', 'MemoryOptimized', 'ComputeOptimized'. Type: string (or Expression with resultType string). </summary>
+        public object ComputeType { get; set; }
+        /// <summary> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </summary>
+        public object CoreCount { get; set; }
     }
 }

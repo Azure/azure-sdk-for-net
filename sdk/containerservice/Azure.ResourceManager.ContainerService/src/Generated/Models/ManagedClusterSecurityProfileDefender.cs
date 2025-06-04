@@ -63,10 +63,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Resource ID of the Log Analytics workspace to be associated with Microsoft Defender. When Microsoft Defender is enabled, this field is required and must be a valid workspace resource ID. When Microsoft Defender is disabled, leave the field empty. </summary>
+        [WirePath("logAnalyticsWorkspaceResourceId")]
         public ResourceIdentifier LogAnalyticsWorkspaceResourceId { get; set; }
         /// <summary> Microsoft Defender threat detection for Cloud settings for the security profile. </summary>
         internal ManagedClusterSecurityProfileDefenderSecurityMonitoring SecurityMonitoring { get; set; }
         /// <summary> Whether to enable Defender threat detection. </summary>
+        [WirePath("securityMonitoring.enabled")]
         public bool? IsSecurityMonitoringEnabled
         {
             get => SecurityMonitoring is null ? default : SecurityMonitoring.IsSecurityMonitoringEnabled;

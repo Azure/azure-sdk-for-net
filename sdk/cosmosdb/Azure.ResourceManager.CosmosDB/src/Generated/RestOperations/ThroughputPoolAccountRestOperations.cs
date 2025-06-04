@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -32,8 +31,24 @@ namespace Azure.ResourceManager.CosmosDB
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-02-15-preview";
+            _apiVersion = apiVersion ?? "2024-12-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/throughputPools/", false);
+            uri.AppendPath(throughputPoolName, true);
+            uri.AppendPath("/throughputPoolAccounts/", false);
+            uri.AppendPath(throughputPoolAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
@@ -59,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB Throughput Pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
@@ -80,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBThroughputPoolAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -92,7 +107,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Retrieves the properties of an existing Azure Cosmos DB Throughput Pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
@@ -113,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB
                 case 200:
                     {
                         CosmosDBThroughputPoolAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CosmosDBThroughputPoolAccountData.DeserializeCosmosDBThroughputPoolAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,6 +137,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CosmosDBThroughputPoolAccountData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/throughputPools/", false);
+            uri.AppendPath(throughputPoolName, true);
+            uri.AppendPath("/throughputPoolAccounts/", false);
+            uri.AppendPath(throughputPoolAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName, CosmosDBThroughputPoolAccountData data)
@@ -144,14 +175,14 @@ namespace Azure.ResourceManager.CosmosDB
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CosmosDBThroughputPoolAccountData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Creates or updates an Azure Cosmos DB ThroughputPool account. The "Update" method is preferred when performing updates on an account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
@@ -180,7 +211,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Creates or updates an Azure Cosmos DB ThroughputPool account. The "Update" method is preferred when performing updates on an account. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
@@ -208,6 +239,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/throughputPools/", false);
+            uri.AppendPath(throughputPoolName, true);
+            uri.AppendPath("/throughputPoolAccounts/", false);
+            uri.AppendPath(throughputPoolAccountName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string throughputPoolName, string throughputPoolAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -231,7 +278,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Removes an existing Azure Cosmos DB database account from a throughput pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>
@@ -258,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Removes an existing Azure Cosmos DB database account from a throughput pool. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="throughputPoolName"> Cosmos DB Throughput Pool name. </param>
         /// <param name="throughputPoolAccountName"> Cosmos DB global database account in a Throughput Pool. </param>

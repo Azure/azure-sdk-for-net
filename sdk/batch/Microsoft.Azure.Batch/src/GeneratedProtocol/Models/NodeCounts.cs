@@ -57,8 +57,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the waitingForStartTask state.</param>
         /// <param name="upgradingOS">The number of Compute Nodes in the
         /// upgradingOS state.</param>
+        /// <param name="deallocated">The number of Compute Nodes in the
+        /// deallocated state.</param>
+        /// <param name="deallocating">The number of Compute Nodes in the
+        /// deallocating state.</param>
         /// <param name="total">The total number of Compute Nodes.</param>
-        public NodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int upgradingOS, int total)
+        public NodeCounts(int creating, int idle, int offline, int preempted, int rebooting, int reimaging, int running, int starting, int startTaskFailed, int leavingPool, int unknown, int unusable, int waitingForStartTask, int upgradingOS, int deallocated, int deallocating, int total)
         {
             Creating = creating;
             Idle = idle;
@@ -74,6 +78,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
             Unusable = unusable;
             WaitingForStartTask = waitingForStartTask;
             UpgradingOS = upgradingOS;
+            Deallocated = deallocated;
+            Deallocating = deallocating;
             Total = total;
             CustomInit();
         }
@@ -168,6 +174,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         [JsonProperty(PropertyName = "upgradingOS")]
         public int UpgradingOS { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of Compute Nodes in the deallocated state.
+        /// </summary>
+        [JsonProperty(PropertyName = "deallocated")]
+        public int Deallocated { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of Compute Nodes in the deallocating state.
+        /// </summary>
+        [JsonProperty(PropertyName = "deallocating")]
+        public int Deallocating { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of Compute Nodes.

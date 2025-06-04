@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
-    /// <summary> Sets the frequency at which data is written to disk. </summary>
+    /// <summary> Sets the frequency at which data is written to disk. Defaults to '1s', meaning 'every second'. Note that the 'always' setting is deprecated, because of its performance impact. </summary>
     public readonly partial struct PersistenceSettingAofFrequency : IEquatable<PersistenceSettingAofFrequency>
     {
         private readonly string _value;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         public static bool operator ==(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PersistenceSettingAofFrequency"/> values are not the same. </summary>
         public static bool operator !=(PersistenceSettingAofFrequency left, PersistenceSettingAofFrequency right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PersistenceSettingAofFrequency"/>. </summary>
         public static implicit operator PersistenceSettingAofFrequency(string value) => new PersistenceSettingAofFrequency(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

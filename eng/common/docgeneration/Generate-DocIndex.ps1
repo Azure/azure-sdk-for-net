@@ -25,13 +25,14 @@ function Get-BlobStorage-Artifacts(
     # "--query '[].name'" returns a list of only blob names
     # "--num-results *" handles pagination so the caller does not have to
     $artifacts = az storage blob list `
+        --auth-mode login `
         --account-name $storageAccountName `
         --container-name $storageContainerName `
         --prefix $storagePrefix `
         --delimiter / `
         --only-show-errors `
         --query '[].name' `
-        --num-results * | ConvertFrom-Json
+        --num-results * | ConvertFrom-Json 
     LogDebug "Number of artifacts found: $($artifacts.Length)"
 
     # example: "python/azure-storage-blob" -> "azure-storage-blob"

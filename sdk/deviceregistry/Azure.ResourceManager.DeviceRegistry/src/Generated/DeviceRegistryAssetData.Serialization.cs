@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.DeviceRegistry
 {
     public partial class DeviceRegistryAssetData : IUtf8JsonSerializable, IJsonModel<DeviceRegistryAssetData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAssetData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DeviceRegistryAssetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAssetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,204 +36,14 @@ namespace Azure.ResourceManager.DeviceRegistry
                 throw new FormatException($"The model {nameof(DeviceRegistryAssetData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue<DeviceRegistryExtendedLocation>(ExtendedLocation, options);
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
-            writer.WritePropertyName("location"u8);
-            writer.WriteStringValue(Location);
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
-            {
-                writer.WritePropertyName("uuid"u8);
-                writer.WriteStringValue(Uuid);
-            }
-            if (Optional.IsDefined(AssetType))
-            {
-                writer.WritePropertyName("assetType"u8);
-                writer.WriteStringValue(AssetType);
-            }
-            if (Optional.IsDefined(Enabled))
-            {
-                writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
-            }
-            if (Optional.IsDefined(ExternalAssetId))
-            {
-                writer.WritePropertyName("externalAssetId"u8);
-                writer.WriteStringValue(ExternalAssetId);
-            }
-            if (Optional.IsDefined(DisplayName))
-            {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
-            }
-            if (Optional.IsDefined(Description))
-            {
-                writer.WritePropertyName("description"u8);
-                writer.WriteStringValue(Description);
-            }
-            if (Optional.IsDefined(AssetEndpointProfileUri))
-            {
-                writer.WritePropertyName("assetEndpointProfileUri"u8);
-                writer.WriteStringValue(AssetEndpointProfileUri.AbsoluteUri);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("version"u8);
-                writer.WriteNumberValue(Version.Value);
-            }
-            if (Optional.IsDefined(Manufacturer))
-            {
-                writer.WritePropertyName("manufacturer"u8);
-                writer.WriteStringValue(Manufacturer);
-            }
-            if (Optional.IsDefined(ManufacturerUri))
-            {
-                writer.WritePropertyName("manufacturerUri"u8);
-                writer.WriteStringValue(ManufacturerUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model);
-            }
-            if (Optional.IsDefined(ProductCode))
-            {
-                writer.WritePropertyName("productCode"u8);
-                writer.WriteStringValue(ProductCode);
-            }
-            if (Optional.IsDefined(HardwareRevision))
-            {
-                writer.WritePropertyName("hardwareRevision"u8);
-                writer.WriteStringValue(HardwareRevision);
-            }
-            if (Optional.IsDefined(SoftwareRevision))
-            {
-                writer.WritePropertyName("softwareRevision"u8);
-                writer.WriteStringValue(SoftwareRevision);
-            }
-            if (Optional.IsDefined(DocumentationUri))
-            {
-                writer.WritePropertyName("documentationUri"u8);
-                writer.WriteStringValue(DocumentationUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(SerialNumber))
-            {
-                writer.WritePropertyName("serialNumber"u8);
-                writer.WriteStringValue(SerialNumber);
-            }
-            if (Optional.IsCollectionDefined(Attributes))
-            {
-                writer.WritePropertyName("attributes"u8);
-                writer.WriteStartObject();
-                foreach (var item in Attributes)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsDefined(DefaultDataPointsConfiguration))
-            {
-                writer.WritePropertyName("defaultDataPointsConfiguration"u8);
-                writer.WriteStringValue(DefaultDataPointsConfiguration);
-            }
-            if (Optional.IsDefined(DefaultEventsConfiguration))
-            {
-                writer.WritePropertyName("defaultEventsConfiguration"u8);
-                writer.WriteStringValue(DefaultEventsConfiguration);
-            }
-            if (Optional.IsCollectionDefined(DataPoints))
-            {
-                writer.WritePropertyName("dataPoints"u8);
-                writer.WriteStartArray();
-                foreach (var item in DataPoints)
-                {
-                    writer.WriteObjectValue<DataPoint>(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(Events))
-            {
-                writer.WritePropertyName("events"u8);
-                writer.WriteStartArray();
-                foreach (var item in Events)
-                {
-                    writer.WriteObjectValue<AssetEvent>(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && Optional.IsDefined(Status))
-            {
-                writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue<AssetStatus>(Status, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(ExtendedLocation, options);
         }
 
         DeviceRegistryAssetData IJsonModel<DeviceRegistryAssetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -241,12 +60,13 @@ namespace Azure.ResourceManager.DeviceRegistry
 
         internal static DeviceRegistryAssetData DeserializeDeviceRegistryAssetData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            AssetProperties properties = default;
             DeviceRegistryExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -254,33 +74,19 @@ namespace Azure.ResourceManager.DeviceRegistry
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string uuid = default;
-            string assetType = default;
-            bool? enabled = default;
-            string externalAssetId = default;
-            string displayName = default;
-            string description = default;
-            Uri assetEndpointProfileUri = default;
-            int? version = default;
-            string manufacturer = default;
-            Uri manufacturerUri = default;
-            string model = default;
-            string productCode = default;
-            string hardwareRevision = default;
-            string softwareRevision = default;
-            Uri documentationUri = default;
-            string serialNumber = default;
-            IDictionary<string, BinaryData> attributes = default;
-            string defaultDataPointsConfiguration = default;
-            string defaultEventsConfiguration = default;
-            IList<DataPoint> dataPoints = default;
-            IList<AssetEvent> events = default;
-            AssetStatus status = default;
-            DeviceRegistryProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = AssetProperties.DeserializeAssetProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = DeviceRegistryExtendedLocation.DeserializeDeviceRegistryExtendedLocation(property.Value, options);
@@ -329,195 +135,6 @@ namespace Azure.ResourceManager.DeviceRegistry
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("uuid"u8))
-                        {
-                            uuid = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("assetType"u8))
-                        {
-                            assetType = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("externalAssetId"u8))
-                        {
-                            externalAssetId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("description"u8))
-                        {
-                            description = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("assetEndpointProfileUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            assetEndpointProfileUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            version = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("manufacturer"u8))
-                        {
-                            manufacturer = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("manufacturerUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            manufacturerUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("model"u8))
-                        {
-                            model = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("productCode"u8))
-                        {
-                            productCode = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hardwareRevision"u8))
-                        {
-                            hardwareRevision = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("softwareRevision"u8))
-                        {
-                            softwareRevision = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("documentationUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            documentationUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("serialNumber"u8))
-                        {
-                            serialNumber = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("attributes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                if (property1.Value.ValueKind == JsonValueKind.Null)
-                                {
-                                    dictionary.Add(property1.Name, null);
-                                }
-                                else
-                                {
-                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
-                                }
-                            }
-                            attributes = dictionary;
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultDataPointsConfiguration"u8))
-                        {
-                            defaultDataPointsConfiguration = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("defaultEventsConfiguration"u8))
-                        {
-                            defaultEventsConfiguration = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("dataPoints"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<DataPoint> array = new List<DataPoint>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(DataPoint.DeserializeDataPoint(item, options));
-                            }
-                            dataPoints = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("events"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<AssetEvent> array = new List<AssetEvent>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(AssetEvent.DeserializeAssetEvent(item, options));
-                            }
-                            events = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("status"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            status = AssetStatus.DeserializeAssetStatus(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new DeviceRegistryProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -531,30 +148,8 @@ namespace Azure.ResourceManager.DeviceRegistry
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                properties,
                 extendedLocation,
-                uuid,
-                assetType,
-                enabled,
-                externalAssetId,
-                displayName,
-                description,
-                assetEndpointProfileUri,
-                version,
-                manufacturer,
-                manufacturerUri,
-                model,
-                productCode,
-                hardwareRevision,
-                softwareRevision,
-                documentationUri,
-                serialNumber,
-                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                defaultDataPointsConfiguration,
-                defaultEventsConfiguration,
-                dataPoints ?? new ChangeTrackingList<DataPoint>(),
-                events ?? new ChangeTrackingList<AssetEvent>(),
-                status,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -565,7 +160,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceRegistryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceRegistryAssetData)} does not support writing '{options.Format}' format.");
             }
@@ -579,7 +174,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceRegistryAssetData(document.RootElement, options);
                     }
                 default:

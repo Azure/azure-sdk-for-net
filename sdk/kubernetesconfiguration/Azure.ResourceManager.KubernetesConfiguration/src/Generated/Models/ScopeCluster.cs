@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
         }
 
         /// <summary> Namespace where the extension Release must be placed, for a Cluster scoped extension.  If this namespace does not exist, it will be created. </summary>
+        [WirePath("releaseNamespace")]
         public string ReleaseNamespace { get; set; }
     }
 }

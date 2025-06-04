@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Synapse
     {
         SynapseDataConnectionValidationListResult IOperationSource<SynapseDataConnectionValidationListResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return SynapseDataConnectionValidationListResult.DeserializeSynapseDataConnectionValidationListResult(document.RootElement);
         }
 
         async ValueTask<SynapseDataConnectionValidationListResult> IOperationSource<SynapseDataConnectionValidationListResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return SynapseDataConnectionValidationListResult.DeserializeSynapseDataConnectionValidationListResult(document.RootElement);
         }
     }

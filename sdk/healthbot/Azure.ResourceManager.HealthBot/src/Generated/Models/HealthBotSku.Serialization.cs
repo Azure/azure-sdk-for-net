@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.HealthBot.Models
 {
     public partial class HealthBotSku : IUtf8JsonSerializable, IJsonModel<HealthBotSku>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotSku>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthBotSku>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HealthBotSku>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HealthBotSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.HealthBot.Models
                 throw new FormatException($"The model {nameof(HealthBotSku)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name.ToSerialString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -36,14 +44,13 @@ namespace Azure.ResourceManager.HealthBot.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         HealthBotSku IJsonModel<HealthBotSku>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,7 +67,7 @@ namespace Azure.ResourceManager.HealthBot.Models
 
         internal static HealthBotSku DeserializeHealthBotSku(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +99,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthBotContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthBotSku)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +113,7 @@ namespace Azure.ResourceManager.HealthBot.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthBotSku(document.RootElement, options);
                     }
                 default:

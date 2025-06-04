@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Concurrent;
 using System.Threading;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
@@ -15,17 +16,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
     /// </summary>
     internal class DoubleBuffer
     {
-        private DocumentBuffer _currentBuffer = new();
+        private ConcurrentQueue<DocumentIngress> _currentBuffer = new();
 
         public void WriteDocument(DocumentIngress document)
         {
-            _currentBuffer.Add(document);
+            _currentBuffer.Enqueue(document);
         }
 
-        public DocumentBuffer FlipDocumentBuffers()
+        public ConcurrentQueue<DocumentIngress> FlipDocumentBuffers()
         {
             // Atomically exchange the current buffer with a new empty buffer and return the old buffer
-            return Interlocked.Exchange(ref _currentBuffer, new DocumentBuffer());
+            return Interlocked.Exchange(ref _currentBuffer, new ConcurrentQueue<DocumentIngress>());
         }
     }
 }

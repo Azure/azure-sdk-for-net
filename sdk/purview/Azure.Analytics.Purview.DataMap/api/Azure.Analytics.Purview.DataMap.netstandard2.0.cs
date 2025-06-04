@@ -21,9 +21,9 @@ namespace Azure.Analytics.Purview.DataMap
         public static Azure.Analytics.Purview.DataMap.SearchFacetItemValue SearchFacetItemValue(int? count = default(int?), string value = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.SearchFacetResultValue SearchFacetResultValue(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> entityType = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> assetType = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> classification = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> term = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> contactId = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> contactType = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> label = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> glossaryType = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> termStatus = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> termTemplate = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.SearchHighlights SearchHighlights(System.Collections.Generic.IEnumerable<string> id = null, System.Collections.Generic.IEnumerable<string> qualifiedName = null, System.Collections.Generic.IEnumerable<string> name = null, System.Collections.Generic.IEnumerable<string> description = null, System.Collections.Generic.IEnumerable<string> entityType = null) { throw null; }
-        public static Azure.Analytics.Purview.DataMap.SearchResultValue SearchResultValue(float? searchScore = default(float?), Azure.Analytics.Purview.DataMap.SearchHighlights searchHighlights = null, string objectType = null, long? createTime = default(long?), long? updateTime = default(long?), string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, string endorsement = null, string owner = null, System.Collections.Generic.IEnumerable<string> classification = null, System.Collections.Generic.IEnumerable<string> label = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = null, System.Collections.Generic.IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, System.Collections.Generic.IEnumerable<string> termTemplate = null, string longDescription = null) { throw null; }
+        public static Azure.Analytics.Purview.DataMap.SearchResultValue SearchResultValue(float? searchScore = default(float?), Azure.Analytics.Purview.DataMap.SearchHighlights searchHighlights = null, string objectType = null, long? createTime = default(long?), long? updateTime = default(long?), string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, System.Collections.Generic.IEnumerable<string> endorsement = null, string owner = null, System.Collections.Generic.IEnumerable<string> classification = null, System.Collections.Generic.IEnumerable<string> label = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = null, System.Collections.Generic.IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, System.Collections.Generic.IEnumerable<string> termTemplate = null, string longDescription = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.SuggestResult SuggestResult(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.SuggestResultValue> value = null) { throw null; }
-        public static Azure.Analytics.Purview.DataMap.SuggestResultValue SuggestResultValue(float? searchScore = default(float?), string searchText = null, string objectType = null, long? createTime = default(long?), long? updateTime = default(long?), string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, string endorsement = null, string owner = null, System.Collections.Generic.IEnumerable<string> classification = null, System.Collections.Generic.IEnumerable<string> label = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = null, System.Collections.Generic.IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, System.Collections.Generic.IEnumerable<string> termTemplate = null, string longDescription = null) { throw null; }
+        public static Azure.Analytics.Purview.DataMap.SuggestResultValue SuggestResultValue(float? searchScore = default(float?), string searchText = null, string objectType = null, long? createTime = default(long?), long? updateTime = default(long?), string id = null, string name = null, string qualifiedName = null, string entityType = null, string description = null, System.Collections.Generic.IEnumerable<string> endorsement = null, string owner = null, System.Collections.Generic.IEnumerable<string> classification = null, System.Collections.Generic.IEnumerable<string> label = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.TermSearchResultValue> term = null, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.ContactSearchResultValue> contact = null, System.Collections.Generic.IEnumerable<string> assetType = null, string glossaryType = null, string glossary = null, string termStatus = null, System.Collections.Generic.IEnumerable<string> termTemplate = null, string longDescription = null) { throw null; }
         public static Azure.Analytics.Purview.DataMap.TermSearchResultValue TermSearchResultValue(string name = null, string glossaryName = null, string guid = null) { throw null; }
     }
     public partial class AtlasAttributeDef : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasAttributeDef>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasAttributeDef>
@@ -42,6 +42,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string TypeName { get { throw null; } set { } }
         public int? ValuesMaxCount { get { throw null; } set { } }
         public int? ValuesMinCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasAttributeDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasAttributeDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasAttributeDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasAttributeDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasAttributeDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -66,6 +67,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasBusinessMetadataDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -82,6 +84,7 @@ namespace Azure.Analytics.Purview.DataMap
         public bool? RemovePropagationsOnEntityDelete { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.TimeBoundary> ValidityPeriods { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasClassification System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasClassification>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasClassification>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasClassification System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasClassification>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -109,6 +112,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasClassificationDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasClassificationDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasClassificationDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasClassificationDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasClassificationDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -124,6 +128,7 @@ namespace Azure.Analytics.Purview.DataMap
         public Azure.Analytics.Purview.DataMap.AtlasSortType? SortType { get { throw null; } }
         public int? StartIndex { get { throw null; } }
         public int? TotalCount { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasClassifications System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasClassifications>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasClassifications>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasClassifications System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasClassifications>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -135,6 +140,7 @@ namespace Azure.Analytics.Purview.DataMap
         public AtlasConstraintDef() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Params { get { throw null; } }
         public string Type { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasConstraintDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasConstraintDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasConstraintDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasConstraintDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasConstraintDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -153,6 +159,7 @@ namespace Azure.Analytics.Purview.DataMap
         public Azure.Analytics.Purview.DataMap.AtlasNumberFormat NumberFormat { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.AtlasDateFormat TimeInstance { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.AtlasTimeZone TimeZone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasDateFormat System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasDateFormat System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasDateFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -164,6 +171,7 @@ namespace Azure.Analytics.Purview.DataMap
         public AtlasEntitiesWithExtInfo() { }
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasEntity> Entities { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.Analytics.Purview.DataMap.AtlasEntity> ReferredEntities { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -195,6 +203,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntity System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntity System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -222,6 +231,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEntityDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -243,6 +253,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader> Meanings { get { throw null; } }
         public Azure.Analytics.Purview.DataMap.EntityStatus? Status { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -253,6 +264,7 @@ namespace Azure.Analytics.Purview.DataMap
     {
         public AtlasEntityHeaders() { }
         public System.Collections.Generic.IDictionary<string, Azure.Analytics.Purview.DataMap.AtlasEntityHeader> GuidHeaderMap { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityHeaders System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityHeaders>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityHeaders>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityHeaders System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEntityHeaders>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -264,6 +276,7 @@ namespace Azure.Analytics.Purview.DataMap
         public AtlasEntityWithExtInfo() { }
         public Azure.Analytics.Purview.DataMap.AtlasEntity Entity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.Analytics.Purview.DataMap.AtlasEntity> ReferredEntities { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -289,6 +302,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEnumDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEnumDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEnumDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEnumDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEnumDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -301,6 +315,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string Description { get { throw null; } set { } }
         public int? Ordinal { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEnumElementDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEnumElementDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasEnumElementDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasEnumElementDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasEnumElementDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -325,6 +340,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public string Usage { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossary System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossary System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasGlossary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -349,6 +365,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> Terms { get { throw null; } }
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -375,6 +392,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } }
         public long? UpdateTime { get { throw null; } }
         public string Usage { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryExtInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -387,6 +405,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string DisplayText { get { throw null; } set { } }
         public string GlossaryGuid { get { throw null; } set { } }
         public string RelationGuid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -433,6 +452,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string Usage { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> ValidValues { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader> ValidValuesFor { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -451,6 +471,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.ParentRelation> ParentRelations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.LineageRelation> Relations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IDictionary<string, System.BinaryData>> WidthCounts { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasLineageInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasLineageInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasLineageInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -474,6 +495,7 @@ namespace Azure.Analytics.Purview.DataMap
         public bool? ParseIntegerOnly { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.AtlasNumberFormat PercentInstance { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.RoundingMode? RoundingMode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasNumberFormat System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasNumberFormat System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasNumberFormat>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -486,6 +508,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string Guid { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> UniqueAttributes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasObjectId System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasObjectId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasObjectId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasObjectId System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasObjectId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -500,6 +523,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string DisplayText { get { throw null; } set { } }
         public string ParentCategoryGuid { get { throw null; } set { } }
         public string RelationGuid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelatedCategoryHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -518,6 +542,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string RelationshipType { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> UniqueAttributes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelatedObjectId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -534,6 +559,7 @@ namespace Azure.Analytics.Purview.DataMap
         public Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus? Status { get { throw null; } set { } }
         public string Steward { get { throw null; } set { } }
         public string TermGuid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelatedTermHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -558,6 +584,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationship System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationship>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationship>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationship System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelationship>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -582,6 +609,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string TypeName { get { throw null; } set { } }
         public int? ValuesMaxCount { get { throw null; } set { } }
         public int? ValuesMinCount { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipAttributeDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -610,6 +638,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -625,6 +654,7 @@ namespace Azure.Analytics.Purview.DataMap
         public bool? IsLegacyAttribute { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Type { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipEndDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -636,6 +666,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal AtlasRelationshipWithExtInfo() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.Analytics.Purview.DataMap.AtlasEntityHeader> ReferredEntities { get { throw null; } }
         public Azure.Analytics.Purview.DataMap.AtlasRelationship Relationship { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -667,6 +698,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IDictionary<string, System.BinaryData> Attributes { get { throw null; } }
         public string LastModifiedTS { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasStruct System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasStruct>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasStruct>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasStruct System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasStruct>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -691,6 +723,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasStructDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasStructDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasStructDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasStructDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasStructDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -709,6 +742,7 @@ namespace Azure.Analytics.Purview.DataMap
         public Azure.Analytics.Purview.DataMap.AtlasTermAssignmentStatus? Status { get { throw null; } set { } }
         public string Steward { get { throw null; } set { } }
         public System.Guid? TermGuid { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasTermAssignmentHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -746,6 +780,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string DisplayText { get { throw null; } set { } }
         public System.Guid? RelationGuid { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.AtlasTermRelationshipStatus? Status { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasTermCategorizationHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -782,6 +817,7 @@ namespace Azure.Analytics.Purview.DataMap
         public int? DstSavings { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
         public int? RawOffset { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTimeZone System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTimeZone>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTimeZone>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTimeZone System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasTimeZone>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -816,6 +852,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } }
         public long? UpdateTime { get { throw null; } }
         public long? Version { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTypeDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTypeDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTypeDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTypeDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasTypeDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -828,6 +865,7 @@ namespace Azure.Analytics.Purview.DataMap
         public Azure.Analytics.Purview.DataMap.TypeCategory? Category { get { throw null; } }
         public string Guid { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasTypeDefHeader>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -844,6 +882,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasRelationshipDef> RelationshipDefs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasStructDef> StructDefs { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.TermTemplateDef> TermTemplateDefs { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTypesDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTypesDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AtlasTypesDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AtlasTypesDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AtlasTypesDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -856,6 +895,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.BinaryData Filter { get { throw null; } set { } }
         public string Keywords { get { throw null; } set { } }
         public int? Limit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AutoCompleteConfig System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AutoCompleteConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AutoCompleteConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AutoCompleteConfig System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -866,6 +906,7 @@ namespace Azure.Analytics.Purview.DataMap
     {
         internal AutoCompleteResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AutoCompleteResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AutoCompleteResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AutoCompleteResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AutoCompleteResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -877,17 +918,25 @@ namespace Azure.Analytics.Purview.DataMap
         internal AutoCompleteResultValue() { }
         public string QueryPlusText { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AutoCompleteResultValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.AutoCompleteResultValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.AutoCompleteResultValue>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAnalyticsPurviewDataMapContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAnalyticsPurviewDataMapContext() { }
+        public static Azure.Analytics.Purview.DataMap.AzureAnalyticsPurviewDataMapContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class BulkImportResult : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BulkImportResult>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BulkImportResult>
     {
         internal BulkImportResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.ImportInfo> FailedImportInfoList { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.ImportInfo> SuccessImportInfoList { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.BulkImportResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BulkImportResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BulkImportResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.BulkImportResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BulkImportResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -915,8 +964,9 @@ namespace Azure.Analytics.Purview.DataMap
     }
     public partial class BusinessMetadataOptions : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>
     {
-        public BusinessMetadataOptions(System.BinaryData file) { }
-        public System.BinaryData File { get { throw null; } }
+        public BusinessMetadataOptions(System.IO.Stream file) { }
+        public System.IO.Stream File { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.BusinessMetadataOptions System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.BusinessMetadataOptions System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.BusinessMetadataOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -947,6 +997,7 @@ namespace Azure.Analytics.Purview.DataMap
         public ClassificationAssociateConfig() { }
         public Azure.Analytics.Purview.DataMap.AtlasClassification Classification { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> EntityGuids { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -958,6 +1009,7 @@ namespace Azure.Analytics.Purview.DataMap
         public ContactInfo() { }
         public string Id { get { throw null; } set { } }
         public string Info { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ContactInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ContactInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ContactInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ContactInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ContactInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -970,6 +1022,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string ContactType { get { throw null; } }
         public string Id { get { throw null; } }
         public string Info { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ContactSearchResultValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ContactSearchResultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ContactSearchResultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ContactSearchResultValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ContactSearchResultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1001,26 +1054,26 @@ namespace Azure.Analytics.Purview.DataMap
     {
         protected Discovery() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AutoCompleteResult> AutoComplete(Azure.Analytics.Purview.DataMap.AutoCompleteConfig autoCompleteConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AutoCompleteResult> AutoComplete(Azure.Analytics.Purview.DataMap.AutoCompleteConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AutoComplete(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AutoCompleteResult>> AutoCompleteAsync(Azure.Analytics.Purview.DataMap.AutoCompleteConfig autoCompleteConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AutoCompleteResult>> AutoCompleteAsync(Azure.Analytics.Purview.DataMap.AutoCompleteConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AutoCompleteAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.QueryResult> Query(Azure.Analytics.Purview.DataMap.QueryConfig queryConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.QueryResult> Query(Azure.Analytics.Purview.DataMap.QueryConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Query(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.QueryResult>> QueryAsync(Azure.Analytics.Purview.DataMap.QueryConfig queryConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.QueryResult>> QueryAsync(Azure.Analytics.Purview.DataMap.QueryConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> QueryAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.SuggestResult> Suggest(Azure.Analytics.Purview.DataMap.SuggestConfig suggestConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.SuggestResult> Suggest(Azure.Analytics.Purview.DataMap.SuggestConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Suggest(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.SuggestResult>> SuggestAsync(Azure.Analytics.Purview.DataMap.SuggestConfig suggestConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.SuggestResult>> SuggestAsync(Azure.Analytics.Purview.DataMap.SuggestConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> SuggestAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     public partial class Entity
     {
         protected Entity() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response AddClassification(Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig classificationAssociateConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response AddClassification(Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response AddClassification(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationAsync(Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig classificationAssociateConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationAsync(Azure.Analytics.Purview.DataMap.ClassificationAssociateConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddClassificationAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddClassifications(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response AddClassifications(string guid, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.AtlasClassification> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1046,9 +1099,9 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response AddOrUpdateBusinessMetadataAttributes(string guid, string businessMetadataName, System.Collections.Generic.IDictionary<string, System.BinaryData> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string businessMetadataName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> AddOrUpdateBusinessMetadataAttributesAsync(string guid, string businessMetadataName, System.Collections.Generic.IDictionary<string, System.BinaryData> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> BatchCreateOrUpdate(Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> BatchCreateOrUpdate(Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo body, string collectionId = null, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response BatchCreateOrUpdate(Azure.Core.RequestContent content, string collectionId = null, string businessAttributeUpdateBehavior = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> BatchCreateOrUpdateAsync(Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo atlasEntitiesWithExtInfo, string collectionId = null, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> BatchCreateOrUpdateAsync(Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo body, string collectionId = null, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchCreateOrUpdateAsync(Azure.Core.RequestContent content, string collectionId = null, string businessAttributeUpdateBehavior = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response BatchDelete(System.Collections.Generic.IEnumerable<string> guid, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> BatchDelete(System.Collections.Generic.IEnumerable<string> guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1058,13 +1111,13 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo> BatchGetByUniqueAttributes(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo, bool? ignoreRelationships, string attrNQualifiedName, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntitiesWithExtInfo>> BatchGetByUniqueAttributesAsync(string typeName, bool? minExtInfo = default(bool?), bool? ignoreRelationships = default(bool?), string attrNQualifiedName = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> BatchSetClassifications(Azure.Analytics.Purview.DataMap.AtlasEntityHeaders atlasEntityHeaders, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<string>> BatchSetClassifications(Azure.Analytics.Purview.DataMap.AtlasEntityHeaders body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response BatchSetClassifications(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> BatchSetClassificationsAsync(Azure.Analytics.Purview.DataMap.AtlasEntityHeaders atlasEntityHeaders, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<string>>> BatchSetClassificationsAsync(Azure.Analytics.Purview.DataMap.AtlasEntityHeaders body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchSetClassificationsAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> CreateOrUpdate(Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo atlasEntityWithExtInfo, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), string collectionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> CreateOrUpdate(Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo body, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), string collectionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateOrUpdate(Azure.Core.RequestContent content, string businessAttributeUpdateBehavior = null, string collectionId = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> CreateOrUpdateAsync(Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo atlasEntityWithExtInfo, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), string collectionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> CreateOrUpdateAsync(Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo body, Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior? businessAttributeUpdateBehavior = default(Azure.Analytics.Purview.DataMap.BusinessAttributeUpdateBehavior?), string collectionId = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateOrUpdateAsync(Azure.Core.RequestContent content, string businessAttributeUpdateBehavior = null, string collectionId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string guid, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> Delete(string guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1102,14 +1155,14 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntityHeader> GetHeader(string guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetHeaderAsync(string guid, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> GetHeaderAsync(string guid, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions businessMetadataOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response ImportBusinessMetadata(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult> ImportBusinessMetadata(System.BinaryData file, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult>> ImportBusinessMetadataAsync(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions businessMetadataOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> MoveEntitiesToCollection(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig moveEntitiesConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.BulkImportResult>> ImportBusinessMetadataAsync(Azure.Analytics.Purview.DataMap.BusinessMetadataOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> ImportBusinessMetadataAsync(Azure.Core.RequestContent content, string contentType, Azure.RequestContext context = null) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> MoveEntitiesToCollection(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response MoveEntitiesToCollection(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig moveEntitiesConfig, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> MoveEntitiesToCollectionAsync(string collectionId, Azure.Analytics.Purview.DataMap.MoveEntitiesConfig body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> MoveEntitiesToCollectionAsync(string collectionId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveBusinessMetadata(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response RemoveBusinessMetadata(string guid, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IDictionary<string, System.BinaryData>> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1143,9 +1196,9 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> UpdateAttributeById(string guid, string name, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAttributeByIdAsync(string guid, string name, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> UpdateAttributeByIdAsync(string guid, string name, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> UpdateByUniqueAttribute(string typeName, Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult> UpdateByUniqueAttribute(string typeName, Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo body, string attribute = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateByUniqueAttribute(string typeName, Azure.Core.RequestContent content, string attribute = null, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo atlasEntityWithExtInfo, string attribute = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.EntityMutationResult>> UpdateByUniqueAttributeAsync(string typeName, Azure.Analytics.Purview.DataMap.AtlasEntityWithExtInfo body, string attribute = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateByUniqueAttributeAsync(string typeName, Azure.Core.RequestContent content, string attribute = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateClassifications(string guid, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response UpdateClassifications(string guid, System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.AtlasClassification> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1162,6 +1215,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IReadOnlyDictionary<string, string> GuidAssignments { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IList<Azure.Analytics.Purview.DataMap.AtlasEntityHeader>> MutatedEntities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AtlasEntityHeader> PartialUpdatedEntities { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.EntityMutationResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.EntityMutationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.EntityMutationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.EntityMutationResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.EntityMutationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1198,21 +1252,21 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AtlasGlossary>> BatchGet(int? limit = default(int?), int? offset = default(int?), string sort = null, bool? ignoreTermsAndCategories = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchGetAsync(int? limit, int? offset, string sort, bool? ignoreTermsAndCategories, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AtlasGlossary>>> BatchGetAsync(int? limit = default(int?), int? offset = default(int?), string sort = null, bool? ignoreTermsAndCategories = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary> Create(Azure.Analytics.Purview.DataMap.AtlasGlossary atlasGlossary, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary> Create(Azure.Analytics.Purview.DataMap.AtlasGlossary body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary>> CreateAsync(Azure.Analytics.Purview.DataMap.AtlasGlossary atlasGlossary, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary>> CreateAsync(Azure.Analytics.Purview.DataMap.AtlasGlossary body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateCategories(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> CreateCategories(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateCategoriesAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>>> CreateCategoriesAsync(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> CreateCategory(Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory atlasGlossaryCategory, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> CreateCategory(Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateCategory(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> CreateCategoryAsync(Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory atlasGlossaryCategory, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> CreateCategoryAsync(Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateCategoryAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> CreateTerm(Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> CreateTerm(Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateTerm(Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> CreateTermAsync(Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> CreateTermAsync(Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateTermAsync(Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response CreateTerms(Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> CreateTerms(System.Collections.Generic.IEnumerable<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1288,17 +1342,17 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> PartialUpdateTerm(string termId, System.Collections.Generic.IDictionary<string, string> body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PartialUpdateTermAsync(string termId, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> PartialUpdateTermAsync(string termId, System.Collections.Generic.IDictionary<string, string> body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary> Update(string glossaryId, Azure.Analytics.Purview.DataMap.AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary> Update(string glossaryId, Azure.Analytics.Purview.DataMap.AtlasGlossary body, bool? ignoreTermsAndCategories = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Update(string glossaryId, Azure.Core.RequestContent content, bool? ignoreTermsAndCategories = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary>> UpdateAsync(string glossaryId, Azure.Analytics.Purview.DataMap.AtlasGlossary atlasGlossary, bool? ignoreTermsAndCategories = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossary>> UpdateAsync(string glossaryId, Azure.Analytics.Purview.DataMap.AtlasGlossary body, bool? ignoreTermsAndCategories = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(string glossaryId, Azure.Core.RequestContent content, bool? ignoreTermsAndCategories = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> UpdateCategory(string categoryId, Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory atlasGlossaryCategory, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory> UpdateCategory(string categoryId, Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateCategory(string categoryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory atlasGlossaryCategory, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory>> UpdateCategoryAsync(string categoryId, Azure.Analytics.Purview.DataMap.AtlasGlossaryCategory body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateCategoryAsync(string categoryId, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> UpdateTerm(string termId, Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm> UpdateTerm(string termId, Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response UpdateTerm(string termId, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> UpdateTermAsync(string termId, Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm atlasGlossaryTerm, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm>> UpdateTermAsync(string termId, Azure.Analytics.Purview.DataMap.AtlasGlossaryTerm body, bool? includeTermHierarchy = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateTermAsync(string termId, Azure.Core.RequestContent content, bool? includeTermHierarchy = default(bool?), Azure.RequestContext context = null) { throw null; }
     }
     public partial class ImportInfo : System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ImportInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ImportInfo>
@@ -1308,6 +1362,7 @@ namespace Azure.Analytics.Purview.DataMap
         public Azure.Analytics.Purview.DataMap.ImportStatus? ImportStatus { get { throw null; } }
         public string ParentObjectName { get { throw null; } }
         public string Remarks { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ImportInfo System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ImportInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ImportInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ImportInfo System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ImportInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1374,6 +1429,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string FromEntityId { get { throw null; } }
         public string RelationshipId { get { throw null; } }
         public string ToEntityId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.LineageRelation System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.LineageRelation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.LineageRelation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.LineageRelation System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.LineageRelation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1384,6 +1440,7 @@ namespace Azure.Analytics.Purview.DataMap
     {
         public MoveEntitiesConfig() { }
         public System.Collections.Generic.IList<string> EntityGuids { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.MoveEntitiesConfig System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.MoveEntitiesConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.MoveEntitiesConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.MoveEntitiesConfig System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.MoveEntitiesConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1396,6 +1453,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string ChildEntityId { get { throw null; } }
         public string ParentEntityId { get { throw null; } }
         public string RelationshipId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ParentRelation System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ParentRelation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ParentRelation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ParentRelation System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ParentRelation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1413,6 +1471,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string ResourceId { get { throw null; } set { } }
         public string TypeName { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> UniqueAttributes { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.PurviewObjectId System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.PurviewObjectId>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.PurviewObjectId>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.PurviewObjectId System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.PurviewObjectId>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1429,6 +1488,7 @@ namespace Azure.Analytics.Purview.DataMap
         public int? Limit { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.BinaryData> Orderby { get { throw null; } }
         public Azure.Analytics.Purview.DataMap.SearchTaxonomySetting TaxonomySetting { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.QueryConfig System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.QueryConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.QueryConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.QueryConfig System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.QueryConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1443,6 +1503,7 @@ namespace Azure.Analytics.Purview.DataMap
         public bool? SearchCountApproximate { get { throw null; } }
         public Azure.Analytics.Purview.DataMap.SearchFacetResultValue SearchFacets { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.SearchResultValue> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.QueryResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.QueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.QueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.QueryResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.QueryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1453,9 +1514,9 @@ namespace Azure.Analytics.Purview.DataMap
     {
         protected Relationship() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship> Create(Azure.Analytics.Purview.DataMap.AtlasRelationship atlasRelationship, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship> Create(Azure.Analytics.Purview.DataMap.AtlasRelationship body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Create(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship>> CreateAsync(Azure.Analytics.Purview.DataMap.AtlasRelationship atlasRelationship, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship>> CreateAsync(Azure.Analytics.Purview.DataMap.AtlasRelationship body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string guid, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string guid, Azure.RequestContext context = null) { throw null; }
@@ -1463,9 +1524,9 @@ namespace Azure.Analytics.Purview.DataMap
         public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo> GetRelationship(string guid, bool? extendedInfo = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetRelationshipAsync(string guid, bool? extendedInfo, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationshipWithExtInfo>> GetRelationshipAsync(string guid, bool? extendedInfo = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship> Update(Azure.Analytics.Purview.DataMap.AtlasRelationship atlasRelationship, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship> Update(Azure.Analytics.Purview.DataMap.AtlasRelationship body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Update(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship>> UpdateAsync(Azure.Analytics.Purview.DataMap.AtlasRelationship atlasRelationship, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasRelationship>> UpdateAsync(Azure.Analytics.Purview.DataMap.AtlasRelationship body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> UpdateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -1492,6 +1553,7 @@ namespace Azure.Analytics.Purview.DataMap
         public ResourceLink() { }
         public string DisplayName { get { throw null; } set { } }
         public string Url { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ResourceLink System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ResourceLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.ResourceLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.ResourceLink System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.ResourceLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1528,6 +1590,7 @@ namespace Azure.Analytics.Purview.DataMap
         public int? Count { get { throw null; } set { } }
         public string Facet { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.SearchFacetSort Sort { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetItem System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetItem System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchFacetItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1539,6 +1602,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal SearchFacetItemValue() { }
         public int? Count { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetItemValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetItemValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetItemValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetItemValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchFacetItemValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1558,6 +1622,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> Term { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> TermStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.SearchFacetItemValue> TermTemplate { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetResultValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetResultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetResultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetResultValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchFacetResultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1569,6 +1634,7 @@ namespace Azure.Analytics.Purview.DataMap
         public SearchFacetSort() { }
         public Azure.Analytics.Purview.DataMap.SearchSortOrder? Count { get { throw null; } set { } }
         public Azure.Analytics.Purview.DataMap.SearchSortOrder? Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetSort System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetSort>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchFacetSort>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchFacetSort System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchFacetSort>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1583,6 +1649,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IReadOnlyList<string> Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> QualifiedName { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchHighlights System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchHighlights>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchHighlights>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchHighlights System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchHighlights>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1597,7 +1664,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.ContactSearchResultValue> Contact { get { throw null; } }
         public long? CreateTime { get { throw null; } }
         public string Description { get { throw null; } }
-        public string Endorsement { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Endorsement { get { throw null; } }
         public string EntityType { get { throw null; } }
         public string Glossary { get { throw null; } }
         public string GlossaryType { get { throw null; } }
@@ -1614,6 +1681,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string TermStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> TermTemplate { get { throw null; } }
         public long? UpdateTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchResultValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchResultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchResultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchResultValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchResultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1643,6 +1711,7 @@ namespace Azure.Analytics.Purview.DataMap
         public SearchTaxonomySetting() { }
         public System.Collections.Generic.IList<string> AssetTypes { get { throw null; } }
         public Azure.Analytics.Purview.DataMap.SearchFacetItem Facet { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchTaxonomySetting System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchTaxonomySetting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SearchTaxonomySetting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SearchTaxonomySetting System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SearchTaxonomySetting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1673,6 +1742,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.BinaryData Filter { get { throw null; } set { } }
         public string Keywords { get { throw null; } set { } }
         public int? Limit { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SuggestConfig System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SuggestConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SuggestConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SuggestConfig System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SuggestConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1683,6 +1753,7 @@ namespace Azure.Analytics.Purview.DataMap
     {
         internal SuggestResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.SuggestResultValue> Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SuggestResult System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SuggestResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SuggestResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SuggestResult System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SuggestResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1697,7 +1768,7 @@ namespace Azure.Analytics.Purview.DataMap
         public System.Collections.Generic.IReadOnlyList<Azure.Analytics.Purview.DataMap.ContactSearchResultValue> Contact { get { throw null; } }
         public long? CreateTime { get { throw null; } }
         public string Description { get { throw null; } }
-        public string Endorsement { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<string> Endorsement { get { throw null; } }
         public string EntityType { get { throw null; } }
         public string Glossary { get { throw null; } }
         public string GlossaryType { get { throw null; } }
@@ -1714,6 +1785,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string TermStatus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> TermTemplate { get { throw null; } }
         public long? UpdateTime { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SuggestResultValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SuggestResultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.SuggestResultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.SuggestResultValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.SuggestResultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1726,6 +1798,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string GlossaryName { get { throw null; } }
         public string Guid { get { throw null; } }
         public string Name { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.TermSearchResultValue System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.TermSearchResultValue>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.TermSearchResultValue>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.TermSearchResultValue System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.TermSearchResultValue>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1770,6 +1843,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string UpdatedBy { get { throw null; } set { } }
         public long? UpdateTime { get { throw null; } set { } }
         public long? Version { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.TermTemplateDef System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.TermTemplateDef>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.TermTemplateDef>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.TermTemplateDef System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.TermTemplateDef>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1782,6 +1856,7 @@ namespace Azure.Analytics.Purview.DataMap
         public string EndTime { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
         public string TimeZone { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.TimeBoundary System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.TimeBoundary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Analytics.Purview.DataMap.TimeBoundary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Analytics.Purview.DataMap.TimeBoundary System.ClientModel.Primitives.IPersistableModel<Azure.Analytics.Purview.DataMap.TimeBoundary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -1818,17 +1893,17 @@ namespace Azure.Analytics.Purview.DataMap
     {
         protected TypeDefinition() { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef> BatchCreate(Azure.Analytics.Purview.DataMap.AtlasTypesDef atlasTypesDef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef> BatchCreate(Azure.Analytics.Purview.DataMap.AtlasTypesDef body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response BatchCreate(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> BatchCreateAsync(Azure.Analytics.Purview.DataMap.AtlasTypesDef atlasTypesDef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> BatchCreateAsync(Azure.Analytics.Purview.DataMap.AtlasTypesDef body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchCreateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response BatchDelete(Azure.Analytics.Purview.DataMap.AtlasTypesDef atlasTypesDef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response BatchDelete(Azure.Analytics.Purview.DataMap.AtlasTypesDef body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response BatchDelete(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response> BatchDeleteAsync(Azure.Analytics.Purview.DataMap.AtlasTypesDef atlasTypesDef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> BatchDeleteAsync(Azure.Analytics.Purview.DataMap.AtlasTypesDef body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchDeleteAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef> BatchUpdate(Azure.Analytics.Purview.DataMap.AtlasTypesDef atlasTypesDef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef> BatchUpdate(Azure.Analytics.Purview.DataMap.AtlasTypesDef body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response BatchUpdate(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> BatchUpdateAsync(Azure.Analytics.Purview.DataMap.AtlasTypesDef atlasTypesDef, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Analytics.Purview.DataMap.AtlasTypesDef>> BatchUpdateAsync(Azure.Analytics.Purview.DataMap.AtlasTypesDef body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> BatchUpdateAsync(Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response Delete(string name, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteAsync(string name, Azure.RequestContext context = null) { throw null; }

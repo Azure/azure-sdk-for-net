@@ -1,0 +1,2 @@
+# This attribute should not have been added in the first place. Removing it does not impact binary compatibility.
+CannotRemoveAttribute : Attribute 'System.ComponentModel.EditorBrowsableAttribute' exists on 'Azure.Messaging.EventGrid.EventGridModelFactory.SubscriptionValidationResponse(System.String)' in the contract but not the implementation.

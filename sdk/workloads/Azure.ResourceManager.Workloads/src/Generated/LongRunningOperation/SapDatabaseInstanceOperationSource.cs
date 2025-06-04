@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Workloads
 
         SapDatabaseInstanceResource IOperationSource<SapDatabaseInstanceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SapDatabaseInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsContext.Default);
             return new SapDatabaseInstanceResource(_client, data);
         }
 
         async ValueTask<SapDatabaseInstanceResource> IOperationSource<SapDatabaseInstanceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SapDatabaseInstanceData.DeserializeSapDatabaseInstanceData(document.RootElement);
-            return new SapDatabaseInstanceResource(_client, data);
+            var data = ModelReaderWriter.Read<SapDatabaseInstanceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerWorkloadsContext.Default);
+            return await Task.FromResult(new SapDatabaseInstanceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

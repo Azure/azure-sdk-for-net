@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Environment variable name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Non-secret environment variable value. </summary>
+        [WirePath("value")]
         public string Value { get; set; }
         /// <summary> Name of the Container App secret from which to pull the environment variable value. </summary>
+        [WirePath("secretRef")]
         public string SecretRef { get; set; }
     }
 }

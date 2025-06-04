@@ -8,19 +8,25 @@ azure-arm: true
 csharp: true
 library-name: Hci
 namespace: Azure.ResourceManager.Hci
-tag: package-preview-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/07d286359f828bbc7901e86288a5d62b48ae2052/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/readme.md
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
+
+override-operation-name:
+  Offers_ListByCluster: GetHciClusterOffers
 
 format-by-name-rules:
   '*TenantId': 'uuid'
@@ -54,6 +60,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  SMB: Smb|smb
 
 prepend-rp-prefix:
   - Cluster
@@ -72,14 +79,16 @@ prepend-rp-prefix:
   - SkuList
   - SkuMappings
   - UpdateList
-  - PublisherCollection
-  - ExtensionInstanceView
   - StatusLevelTypes
 
 rename-mapping:
   Extension: ArcExtension
   Extension.properties.extensionParameters.autoUpgradeMinorVersion: ShouldAutoUpgradeMinorVersion
   Extension.properties.extensionParameters.type: ArcExtensionType
+  ExtensionInstanceView: ArcExtensionInstanceView
+  ExtensionInstanceViewStatus: ArcExtensionInstanceViewStatus
+  ExtensionManagedBy: ArcExtensionManagedBy
+  ExtensionUpgradeParameters: ArcExtensionUpgradeContent
   Status: HciClusterStatus
   ClusterReportedProperties.clusterId: -|uuid
   Cluster.properties.cloudId: -|uuid
@@ -99,12 +108,91 @@ rename-mapping:
   Severity: UpdateSeverity
   State: HciUpdateState
   Step: HciUpdateStep
-  OfferCollection: HciOfferCollection
-  OfferData: HciOfferData
   ClusterPatch.identity.type: ManagedServiceIdentityType
-  ExtensionPatchParameters: ExtensionPatchContent
-  ExtendedLocation: ArcVmExtendedLocation
-  ExtendedLocationTypes: ArcVmExtendedLocationTypes
+  ExtensionPatchParameters: ArcExtensionPatchContent
+  ExtensionPatchParameters.enableAutomaticUpgrade: IsAutomaticUpgradeEnabled
+  DeploymentSetting: HciClusterDeploymentSetting
+  DeploymentSetting.properties.arcNodeResourceIds: -|arm-id
+  OperationType: HciClusterOperationType
+  DeploymentConfiguration: HciClusterDeploymentConfiguration
+  HciEdgeDevice: HciArcEnabledEdgeDevice
+  HciEdgeDeviceProperties: HciArcEnabledEdgeDeviceProperties
+  EdgeDeviceProperties: HciEdgeDeviceProperties
+  EdgeDevice: HciEdgeDevice
+  SecuritySetting: HciClusterSecuritySetting
+  AccessLevel: HciClusterAccessLevel
+  ComplianceAssignmentType: HciClusterComplianceAssignmentType
+  ComplianceStatus: HciClusterComplianceStatus
+  ConnectivityStatus: HciClusterConnectivityStatus
+  DefaultExtensionDetails: ArcDefaultExtensionDetails
+  DeploymentCluster: HciDeploymentCluster
+  DeploymentData: HciClusterDeploymentInfo
+  DeploymentMode: EceDeploymentMode
+  DeploymentSecuritySettings: HciClusterDeploymentSecuritySettings
+  DeploymentSecuritySettings.hvciProtection: IsHvciProtectionEnabled
+  DeploymentSecuritySettings.drtmProtection: IsDrtmProtectionEnabled
+  DeploymentSecuritySettings.driftControlEnforced: IsDriftControlEnforced
+  DeploymentSecuritySettings.credentialGuardEnforced: IsCredentialGuardEnforced
+  DeploymentSecuritySettings.smbSigningEnforced: IsSmbSigningEnforced
+  DeploymentSecuritySettings.smbClusterEncryption: IsSmbClusterEncryptionEnabled
+  DeploymentSecuritySettings.sideChannelMitigationEnforced: IsSideChannelMitigationEnforced
+  DeploymentSecuritySettings.bitlockerBootVolume: IsBitlockerBootVolumeEnabled
+  DeploymentSecuritySettings.bitlockerDataVolumes: AreBitlockerDataVolumesEnabled
+  DeploymentSecuritySettings.wdacEnforced: IsWdacEnforced
+  DeploymentStep: HciClusterDeploymentStep
+  DeploymentStep.startTimeUtc: StartOn
+  DeploymentStep.endTimeUtc: EndOn
+  DeviceConfiguration: HciEdgeDeviceConfiguration
+  DeviceState: HciEdgeDeviceState
+  EceSecrets.AzureStackLCMUserCredential: AzureStackLcmUserCredential
+  EceSecrets.DefaultARBApplication: DefaultArbApplication
+  InfrastructureNetwork: DeploymentSettingInfrastructureNetwork
+  IpPools: DeploymentSettingIPPools
+  LogCollectionRequestProperties: LogCollectionContentProperties
+  NetworkController: DeploymentSettingNetworkController
+  NicDetail: HciEdgeDeviceNicDetail
+  NicDetail.ip4Address: IPv4Address
+  HciNicDetail.ip4Address: IPv4Address
+  Observability: DeploymentSettingObservability
+  Observability.streamingDataClient: IsStreamingDataClientEnabled
+  Observability.euLocation: IsEULocation
+  Observability.episodicDataUpload: IsEpisodicDataUploadEnabled
+  PhysicalNodes: DeploymentSettingPhysicalNodes
+  QosPolicyOverrides: DeploymentSettingQosPolicyOverrides
+  RemoteSupportRequestProperties: RemoteSupportContentProperties
+  RemoteSupportNodeSettings.arcResourceId: -|arm-id
+  RemoteSupportProperties.expirationTimeStamp: ExpireOn
+  RemoteSupportRequestProperties.expirationTimeStamp: ExpireOn
+  ReportedProperties: HciEdgeDeviceReportedProperties
+  ScaleUnits: DeploymentSettingScaleUnits
+  Storage: DeploymentSettingStorage
+  SwitchDetail: HciEdgeDeviceSwitchDetail
+  SwitchExtension: HciEdgeSwitchExtension
+  SwitchExtension.extensionEnabled: IsExtensionEnabled
+  ValidateRequest: HciEdgeDeviceValidateContent
+  ValidateRequest.edgeDeviceIds: -|arm-id
+  ValidateResponse: HciEdgeDeviceValidateResult
+  Offer: HciClusterOffer
+  Publisher: HciClusterPublisher
+  Update: HciClusterUpdate
+  UpdatePrerequisite: HciClusterUpdatePrerequisite
+  UpdateRun: HciClusterUpdateRun
+  UpdateSummaries: HciClusterUpdateSummary
+  UpdateSummariesPropertiesState: HciClusterUpdateState
+  PackageVersionInfo.lastUpdated: LastUpdatedOn
+  SecurityComplianceStatus.lastUpdated: LastUpdatedOn
+  SoftwareAssuranceProperties.lastUpdated: LastUpdatedOn
+  UpdateSummaries.properties.lastUpdated: LastUpdatedOn
+  UpdateSummaries.properties.lastChecked: LastCheckedOn
+  UpdateRun.properties.progress.lastUpdatedTimeUtc: LastCompletedOn
+  UpdateRun.properties.progress.startTimeUtc: StartOn
+  UpdateRun.properties.progress.endTimeUtc: EndOn
+  Step.lastUpdatedTimeUtc: LastUpdatedOn
+  Step.startTimeUtc: StartOn
+  Step.endTimeUtc: EndOn
+  DeviceKind: HciEdgeDeviceKind
+  ExtensionProfile: HciEdgeDeviceExtensionProfile
+  PerNodeExtensionState.instanceView: ExtensionInstanceView
 
 directive:
   - from: swagger-document
@@ -114,28 +202,24 @@ directive:
     where: $.definitions.UpdateRunProperties.properties
     transform: >
       $.duration['x-ms-format'] = 'string';
-```
-### Tag: package-preview-2023-09
-
-These settings apply only when `--tag=package-preview-2023-09` is specified on the command line.
-
-```yaml $(tag) == 'package-preview-2023-09'
-input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/galleryImages.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/logicalNetworks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/common.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/marketplaceGalleryImages.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/networkInterfaces.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/storageContainers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualHardDisks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/preview/2023-09-01-preview/virtualMachineInstances.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/arcSettings.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/clusters.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/extensions.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/offers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/publishers.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/skus.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updateRuns.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updateSummaries.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/784f4a4080974c9270fedf1dd24d81223a70a8f4/specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/stable/2023-02-01/updates.json
+  - from: edgeDevices.json
+    where: $.definitions
+    transform: >
+      $.ErrorDetail['x-ms-client-name'] = 'HciValidationFailureDetail';
+      $.Extension['x-ms-client-name'] = 'HciEdgeDeviceArcExtension';
+      $.Intents['x-ms-client-name'] = 'HciEdgeDeviceIntents';
+      $.HostNetwork['x-ms-client-name'] = 'HciEdgeDeviceHostNetwork';
+      $.StorageNetworks['x-ms-client-name'] = 'HciEdgeDeviceStorageNetworks';
+      $.StorageAdapterIPInfo['x-ms-client-name'] = 'HciEdgeDeviceStorageAdapterIPInfo';
+      $.AdapterPropertyOverrides['x-ms-client-name'] = 'HciEdgeDeviceAdapterPropertyOverrides';
+      $.VirtualSwitchConfigurationOverrides['x-ms-client-name'] = 'HciEdgeDeviceVirtualSwitchConfigurationOverrides';
+  - from: deploymentSettings.json
+    where: $.definitions
+    transform: >
+      $.Intents['x-ms-client-name'] = 'DeploymentSettingIntents';
+      $.HostNetwork['x-ms-client-name'] = 'DeploymentSettingHostNetwork';
+      $.StorageNetworks['x-ms-client-name'] = 'DeploymentSettingStorageNetworks';
+      $.StorageAdapterIPInfo['x-ms-client-name'] = 'DeploymentSettingStorageAdapterIPInfo';
+      $.AdapterPropertyOverrides['x-ms-client-name'] = 'DeploymentSettingAdapterPropertyOverrides';
+      $.VirtualSwitchConfigurationOverrides['x-ms-client-name'] = 'DeploymentSettingVirtualSwitchConfigurationOverrides';
 ```

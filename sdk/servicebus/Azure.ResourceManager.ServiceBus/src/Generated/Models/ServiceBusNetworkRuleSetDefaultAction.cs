@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
         public static bool operator ==(ServiceBusNetworkRuleSetDefaultAction left, ServiceBusNetworkRuleSetDefaultAction right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ServiceBusNetworkRuleSetDefaultAction"/> values are not the same. </summary>
         public static bool operator !=(ServiceBusNetworkRuleSetDefaultAction left, ServiceBusNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceBusNetworkRuleSetDefaultAction"/>. </summary>
         public static implicit operator ServiceBusNetworkRuleSetDefaultAction(string value) => new ServiceBusNetworkRuleSetDefaultAction(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

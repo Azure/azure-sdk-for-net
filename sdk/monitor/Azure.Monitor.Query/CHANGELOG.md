@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2024-12-03)
+
+### Features Added
+- Add 'StartTime' and 'EndTime' parameters to 'MetricsQueryResourcesOptions' to allow for querying a specific time range
+### Bugs Fixed
+- Fix bug in 'MetricsClient' QueryResourceAsync method where the 'QueryTimeRange' parameter was incorrectly set
+
+## 1.5.0 (2024-08-21)
+### Bugs Fixed
+- Fix bug in `LogsQueryClient` that defaulted to `Azure.PublicCloud`. `Audience` is now determined from the `endpoint` parameter.
+
+## 1.4.0 (2024-06-12)
+
+### Features Added
+- Add sovereign cloud support to `MetricsClient` for US Gov and China clouds
 
 ## 1.3.1 (2024-04-03)
 

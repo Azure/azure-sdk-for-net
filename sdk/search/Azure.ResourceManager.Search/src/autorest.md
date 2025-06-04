@@ -8,11 +8,12 @@ azure-arm: true
 csharp: true
 library-name: Search
 namespace: Azure.ResourceManager.Search
-require: https://github.com/Azure/azure-rest-api-specs/blob/26be3565da4173c800cd664e6a2bdae6119e6145/specification/search/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/5c73e496040fa9fec8725b7e26f8e45864211e62/specification/search/resource-manager/readme.md
+#tag: package-preview-2025-02-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -20,37 +21,55 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 rename-mapping:
   AadAuthFailureMode: SearchAadAuthFailureMode
   AdminKeyKind: SearchServiceAdminKeyKind
   AdminKeyResult: SearchServiceAdminKeyResult
   CheckNameAvailabilityInput: SearchServiceNameAvailabilityContent
   CheckNameAvailabilityOutput: SearchServiceNameAvailabilityResult
+  ComputeType: SearchServiceComputeType
   DataPlaneAuthOptions: SearchAadAuthDataPlaneAuthOptions
   EncryptionWithCmk: SearchEncryptionWithCmk
+  FeatureName: SearchServiceFeatureName
+  FeatureOffering: SearchServiceFeatureOffering
   HostingMode: SearchServiceHostingMode
   IpRule: SearchServiceIPRule
+  NetworkRuleSet: SearchServiceNetworkRuleSet
   PrivateEndpointConnectionProperties: SearchServicePrivateEndpointConnectionProperties
   PrivateEndpointConnectionPropertiesPrivateLinkServiceConnectionState: SearchServicePrivateLinkServiceConnectionState
   PrivateLinkServiceConnectionStatus: SearchServicePrivateLinkServiceConnectionStatus
   PrivateLinkServiceConnectionProvisioningState: SearchPrivateLinkServiceConnectionProvisioningState
   ProvisioningState: SearchServiceProvisioningState
-  PublicNetworkAccess: SearchServicePublicNetworkAccess
+  PublicNetworkAccess: SearchServicePublicInternetAccess
+  OfferingsByRegion: SearchServiceOfferingsByRegion
   QueryKey: SearchServiceQueryKey
   ResourceType: SearchServiceResourceType
   SearchEncryptionWithCmk: SearchEncryptionWithCmkEnforcement
   SearchService.properties.disableLocalAuth: isLocalAuthDisabled
+  SearchService.properties.publicNetworkAccess: PublicInternetAccess
+  SearchService.properties.upgradeAvailable: IsUpgradeAvailable
+  SearchService.sku: SearchSku
   SearchServiceUpdate.properties.disableLocalAuth: isLocalAuthDisabled
+  SearchServiceUpdate.properties.publicNetworkAccess: PublicInternetAccess
+  SearchServiceUpdate.properties.upgradeAvailable: IsUpgradeAvailable
+  SearchServiceUpdate.sku: SearchSku
   ShareablePrivateLinkResourceProperties: ShareableSearchServicePrivateLinkResourceProperties
   ShareablePrivateLinkResourceType: ShareableSearchServicePrivateLinkResourceType
   SharedPrivateLinkResource: SharedSearchServicePrivateLinkResource
   SharedPrivateLinkResourceProperties: SharedSearchServicePrivateLinkResourceProperties
   SharedPrivateLinkResourceProperties.privateLinkResourceId: -|arm-id
   SharedPrivateLinkResourceProperties.resourceRegion: -|azure-location
-  SharedPrivateLinkResourceProvisioningState: SharedSearchServicePrivateLinkResourceProvisioningState
-  SharedPrivateLinkResourceStatus: SharedSearchServicePrivateLinkResourceStatus
+  SharedPrivateLinkResourceProperties.status: SharedPrivateLinkResourceStatus
+  SharedPrivateLinkResourceProperties.provisioningState: SharedPrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceProvisioningState: SearchServiceSharedPrivateLinkResourceProvisioningState
+  SharedPrivateLinkResourceStatus: SearchServiceSharedPrivateLinkResourceStatus
+  SkuName: SearchServiceSkuName
+  SkuOffering: SearchServiceSkuOffering
+  SkuOfferingLimits: SearchServiceSkuOfferingLimits
   UnavailableNameReason: SearchServiceNameUnavailableReason
-
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -81,12 +100,13 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  ETag: ETag|eTag
+  NSP: Nsp|nsp
 
 override-operation-name:
   Services_CheckNameAvailability: CheckSearchServiceNameAvailability
 
 # Remove "stopped" enum from SearchServiceStatus
-
 directive:
   - from: search.json
     where: $.definitions.SearchServiceProperties.properties.status

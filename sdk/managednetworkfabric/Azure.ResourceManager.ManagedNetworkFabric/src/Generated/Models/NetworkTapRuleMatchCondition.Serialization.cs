@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     public partial class NetworkTapRuleMatchCondition : IUtf8JsonSerializable, IJsonModel<NetworkTapRuleMatchCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRuleMatchCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRuleMatchCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetworkTapRuleMatchCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(NetworkTapRuleMatchCondition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(EncapsulationType))
             {
                 writer.WritePropertyName("encapsulationType"u8);
@@ -34,44 +43,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(PortCondition))
             {
                 writer.WritePropertyName("portCondition"u8);
-                writer.WriteObjectValue<NetworkFabricPortCondition>(PortCondition, options);
+                writer.WriteObjectValue(PortCondition, options);
             }
-            if (Optional.IsCollectionDefined(ProtocolTypes))
-            {
-                writer.WritePropertyName("protocolTypes"u8);
-                writer.WriteStartArray();
-                foreach (var item in ProtocolTypes)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(VlanMatchCondition))
-            {
-                writer.WritePropertyName("vlanMatchCondition"u8);
-                writer.WriteObjectValue<VlanMatchCondition>(VlanMatchCondition, options);
-            }
-            if (Optional.IsDefined(IPCondition))
-            {
-                writer.WritePropertyName("ipCondition"u8);
-                writer.WriteObjectValue<IPMatchCondition>(IPCondition, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         NetworkTapRuleMatchCondition IJsonModel<NetworkTapRuleMatchCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -88,7 +61,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         internal static NetworkTapRuleMatchCondition DeserializeNetworkTapRuleMatchCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -175,7 +148,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkTapRuleMatchCondition)} does not support writing '{options.Format}' format.");
             }
@@ -189,7 +162,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkTapRuleMatchCondition(document.RootElement, options);
                     }
                 default:

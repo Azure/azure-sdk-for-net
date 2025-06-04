@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Enable or disable delegation for subscriptions. </summary>
+        [WirePath("enabled")]
         public bool? IsSubscriptionDelegationEnabled { get; set; }
     }
 }

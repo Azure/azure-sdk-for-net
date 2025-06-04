@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The DiskType. </summary>
+    /// <summary> The disk type. </summary>
     public readonly partial struct SiteRecoveryDiskAccountType : IEquatable<SiteRecoveryDiskAccountType>
     {
         private readonly string _value;
@@ -25,6 +25,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private const string StandardLrsValue = "Standard_LRS";
         private const string PremiumLrsValue = "Premium_LRS";
         private const string StandardSsdLrsValue = "StandardSSD_LRS";
+        private const string PremiumV2LrsValue = "PremiumV2_LRS";
+        private const string UltraSsdLrsValue = "UltraSSD_LRS";
+        private const string StandardSsdZRSValue = "StandardSSD_ZRS";
+        private const string PremiumZRSValue = "Premium_ZRS";
 
         /// <summary> Standard_LRS. </summary>
         public static SiteRecoveryDiskAccountType StandardLrs { get; } = new SiteRecoveryDiskAccountType(StandardLrsValue);
@@ -32,11 +36,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static SiteRecoveryDiskAccountType PremiumLrs { get; } = new SiteRecoveryDiskAccountType(PremiumLrsValue);
         /// <summary> StandardSSD_LRS. </summary>
         public static SiteRecoveryDiskAccountType StandardSsdLrs { get; } = new SiteRecoveryDiskAccountType(StandardSsdLrsValue);
+        /// <summary> PremiumV2_LRS. </summary>
+        public static SiteRecoveryDiskAccountType PremiumV2Lrs { get; } = new SiteRecoveryDiskAccountType(PremiumV2LrsValue);
+        /// <summary> UltraSSD_LRS. </summary>
+        public static SiteRecoveryDiskAccountType UltraSsdLrs { get; } = new SiteRecoveryDiskAccountType(UltraSsdLrsValue);
+        /// <summary> StandardSSD_ZRS. </summary>
+        public static SiteRecoveryDiskAccountType StandardSsdZRS { get; } = new SiteRecoveryDiskAccountType(StandardSsdZRSValue);
+        /// <summary> Premium_ZRS. </summary>
+        public static SiteRecoveryDiskAccountType PremiumZRS { get; } = new SiteRecoveryDiskAccountType(PremiumZRSValue);
         /// <summary> Determines if two <see cref="SiteRecoveryDiskAccountType"/> values are the same. </summary>
         public static bool operator ==(SiteRecoveryDiskAccountType left, SiteRecoveryDiskAccountType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteRecoveryDiskAccountType"/> values are not the same. </summary>
         public static bool operator !=(SiteRecoveryDiskAccountType left, SiteRecoveryDiskAccountType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SiteRecoveryDiskAccountType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryDiskAccountType"/>. </summary>
         public static implicit operator SiteRecoveryDiskAccountType(string value) => new SiteRecoveryDiskAccountType(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

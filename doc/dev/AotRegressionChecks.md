@@ -32,7 +32,7 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: [Name of package]
-      ExpectedAOTWarningsFilePath: None [or filepath of errors relative to the service directory]
+      ExpectedWarningsFilePath: None [or filepath of errors relative to the service directory]
 ```
 
 **Example**:
@@ -45,7 +45,7 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
-      ExpectedAOTWarningsFilepath: /Azure.Core/tests/aotcompatibility/ExpectedAotWarnings.txt
+      ExpectedWarningsFilepath: /Azure.Core/tests/aotcompatibility/ExpectedAotWarnings.txt
 ```
 **Example 2**:
 ```yml
@@ -57,9 +57,9 @@ extends:
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Core
-      ExpectedAOTWarningsFilepath: /Azure.Core/tests/aotcompatibility/ExpectedAotWarnings.txt
+      ExpectedWarningsFilepath: /Azure.Core/tests/aotcompatibility/ExpectedAotWarnings.txt
     - ArtifactName: Azure.Core.Experimental # For illustration only
-      ExpectedAOTWarningsFilepath: None
+      ExpectedWarningsFilepath: None
 ```
 
 ## How to resolve trimming warnings

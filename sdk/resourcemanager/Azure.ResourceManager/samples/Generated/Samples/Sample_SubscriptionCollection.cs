@@ -9,14 +9,14 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_SubscriptionCollection
     {
-        // GetASingleSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetASingleSubscription()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscription.json
@@ -27,9 +27,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this SubscriptionResource
             SubscriptionCollection collection = tenant.GetSubscriptions();
@@ -45,75 +43,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // GetASingleSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetASingleSubscription()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscription.json
-            // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SubscriptionResource
-            SubscriptionCollection collection = tenant.GetSubscriptions();
-
-            // invoke the operation
-            string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
-            bool result = await collection.ExistsAsync(subscriptionId);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // GetASingleSubscription
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetASingleSubscription()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscription.json
-            // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SubscriptionResource
-            SubscriptionCollection collection = tenant.GetSubscriptions();
-
-            // invoke the operation
-            string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
-            NullableResponse<SubscriptionResource> response = await collection.GetIfExistsAsync(subscriptionId);
-            SubscriptionResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SubscriptionData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // GetAllSubscriptions
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllSubscriptions()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscriptions.json
@@ -124,9 +55,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this SubscriptionResource
             SubscriptionCollection collection = tenant.GetSubscriptions();
@@ -141,7 +70,67 @@ namespace Azure.ResourceManager.Resources.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetASingleSubscription()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscription.json
+            // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this SubscriptionResource
+            SubscriptionCollection collection = tenant.GetSubscriptions();
+
+            // invoke the operation
+            string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
+            bool result = await collection.ExistsAsync(subscriptionId);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetASingleSubscription()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-12-01/examples/GetSubscription.json
+            // this example is just showing the usage of "Subscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this SubscriptionResource
+            SubscriptionCollection collection = tenant.GetSubscriptions();
+
+            // invoke the operation
+            string subscriptionId = "291bba3f-e0a5-47bc-a099-3bdcb2a50a05";
+            NullableResponse<SubscriptionResource> response = await collection.GetIfExistsAsync(subscriptionId);
+            SubscriptionResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SubscriptionData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

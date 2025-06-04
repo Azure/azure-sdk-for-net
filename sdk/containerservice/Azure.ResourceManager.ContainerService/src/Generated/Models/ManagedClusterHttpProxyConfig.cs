@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> The HTTP proxy server endpoint to use. </summary>
+        [WirePath("httpProxy")]
         public string HttpProxy { get; set; }
         /// <summary> The HTTPS proxy server endpoint to use. </summary>
+        [WirePath("httpsProxy")]
         public string HttpsProxy { get; set; }
         /// <summary> The endpoints that should not go through proxy. </summary>
+        [WirePath("noProxy")]
         public IList<string> NoProxy { get; }
         /// <summary> Alternative CA cert to use for connecting to proxy servers. </summary>
+        [WirePath("trustedCa")]
         public string TrustedCA { get; set; }
     }
 }

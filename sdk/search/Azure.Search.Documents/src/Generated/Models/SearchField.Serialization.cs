@@ -55,6 +55,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("facetable"u8);
                 writer.WriteBooleanValue(IsFacetable.Value);
             }
+            if (Optional.IsDefined(PermissionFilter))
+            {
+                if (PermissionFilter != null)
+                {
+                    writer.WritePropertyName("permissionFilter"u8);
+                    writer.WriteStringValue(PermissionFilter.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("permissionFilter");
+                }
+            }
             if (Optional.IsDefined(AnalyzerName))
             {
                 if (AnalyzerName != null)
@@ -127,6 +139,18 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("vectorSearchProfile");
                 }
             }
+            if (Optional.IsDefined(VectorEncodingFormat))
+            {
+                if (VectorEncodingFormat != null)
+                {
+                    writer.WritePropertyName("vectorEncoding"u8);
+                    writer.WriteStringValue(VectorEncodingFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("vectorEncoding");
+                }
+            }
             if (Optional.IsCollectionDefined(SynonymMapNames))
             {
                 writer.WritePropertyName("synonymMaps"u8);
@@ -165,12 +189,14 @@ namespace Azure.Search.Documents.Indexes.Models
             bool? filterable = default;
             bool? sortable = default;
             bool? facetable = default;
+            PermissionFilter? permissionFilter = default;
             LexicalAnalyzerName? analyzer = default;
             LexicalAnalyzerName? searchAnalyzer = default;
             LexicalAnalyzerName? indexAnalyzer = default;
             LexicalNormalizerName? normalizer = default;
             int? dimensions = default;
             string vectorSearchProfile = default;
+            VectorEncodingFormat? vectorEncoding = default;
             IList<string> synonymMaps = default;
             IList<SearchField> fields = default;
             foreach (var property in element.EnumerateObject())
@@ -248,6 +274,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     facetable = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("permissionFilter"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        permissionFilter = null;
+                        continue;
+                    }
+                    permissionFilter = new PermissionFilter(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("analyzer"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -308,6 +344,16 @@ namespace Azure.Search.Documents.Indexes.Models
                     vectorSearchProfile = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("vectorEncoding"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        vectorEncoding = null;
+                        continue;
+                    }
+                    vectorEncoding = new VectorEncodingFormat(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("synonymMaps"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -347,12 +393,14 @@ namespace Azure.Search.Documents.Indexes.Models
                 filterable,
                 sortable,
                 facetable,
+                permissionFilter,
                 analyzer,
                 searchAnalyzer,
                 indexAnalyzer,
                 normalizer,
                 dimensions,
                 vectorSearchProfile,
+                vectorEncoding,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
         }
@@ -361,15 +409,15 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchField FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchField(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<SearchField>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

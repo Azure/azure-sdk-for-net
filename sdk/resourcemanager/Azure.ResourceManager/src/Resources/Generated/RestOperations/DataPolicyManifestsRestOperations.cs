@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.Resources
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetByPolicyModeRequestUri(string policyMode)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/dataPolicyManifests/", false);
+            uri.AppendPath(policyMode, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByPolicyModeRequest(string policyMode)
         {
             var message = _pipeline.CreateMessage();
@@ -68,7 +78,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataPolicyManifestData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataPolicyManifestData.DeserializeDataPolicyManifestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,7 +105,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataPolicyManifestData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataPolicyManifestData.DeserializeDataPolicyManifestData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,6 +114,19 @@ namespace Azure.ResourceManager.Resources
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Authorization/dataPolicyManifests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, false);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string filter)
@@ -137,7 +160,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataPolicyManifestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataPolicyManifestListResult.DeserializeDataPolicyManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -158,13 +181,21 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataPolicyManifestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataPolicyManifestListResult.DeserializeDataPolicyManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string filter)
@@ -197,7 +228,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataPolicyManifestListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DataPolicyManifestListResult.DeserializeDataPolicyManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -222,7 +253,7 @@ namespace Azure.ResourceManager.Resources
                 case 200:
                     {
                         DataPolicyManifestListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DataPolicyManifestListResult.DeserializeDataPolicyManifestListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

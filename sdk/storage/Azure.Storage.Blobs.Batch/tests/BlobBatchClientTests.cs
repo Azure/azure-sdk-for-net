@@ -30,9 +30,10 @@ namespace Azure.Storage.Blobs.Test
         {
             // Batch delimiters are random so disable body comparison
             CompareBodies = false;
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)", SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"sig=(?<group>.*?)(?=\s+)")
             {
-                GroupForReplace = "group"
+                GroupForReplace = "group",
+                Value = SanitizeValue
             });
         }
 
@@ -388,6 +389,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task Delete_Basic_Convenience_OAuth()
+        {
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+            await using TestScenario scenario = Scenario(service);
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.DeleteBlobsAsync(uris);
+
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task Delete_Basic_Convenience_AccountSas()
         {
@@ -408,6 +424,22 @@ namespace Azure.Storage.Blobs.Test
         public async Task Delete_ContainerScoped_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
+            Response[] responses = await client.DeleteBlobsAsync(uris);
+
+            scenario.AssertStatus(202, responses);
+            await scenario.AssertDeleted(blobs);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task Delete_ContainerScoped_Basic_Convenience_OAuth()
+        {
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+            await using TestScenario scenario = Scenario(service);
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
             Uri[] uris = blobs.Select(b => b.Uri).ToArray();
 
@@ -796,6 +828,21 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task SetBlobAccessTier_Basic_Convenience_OAuth()
+        {
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+            await using TestScenario scenario = Scenario(service);
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient();
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2019_12_12)]
         public async Task SetBlobAccessTier_Basic_Convenience_AccountSas()
         {
@@ -816,6 +863,22 @@ namespace Azure.Storage.Blobs.Test
         public async Task SetBlobAccessTier_ContainerScoped_Basic_Convenience()
         {
             await using TestScenario scenario = Scenario();
+            BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
+            Uri[] uris = blobs.Select(b => b.Uri).ToArray();
+
+            BlobBatchClient client = scenario.GetBlobBatchClient(scenario.Containers[0].Container.Name);
+            Response[] responses = await client.SetBlobsAccessTierAsync(uris, AccessTier.Cool);
+
+            scenario.AssertStatus(200, responses);
+            await scenario.AssertTiers(AccessTier.Cool, blobs);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2020_04_08)]
+        public async Task SetBlobAccessTier_ContainerScoped_Basic_Convenience_OAuth()
+        {
+            BlobServiceClient service = BlobsClientBuilder.GetServiceClient_OAuth(TestEnvironment.Credential);
+            await using TestScenario scenario = Scenario(service);
             BlobClient[] blobs = await scenario.CreateBlobsAsync(3);
             Uri[] uris = blobs.Select(b => b.Uri).ToArray();
 

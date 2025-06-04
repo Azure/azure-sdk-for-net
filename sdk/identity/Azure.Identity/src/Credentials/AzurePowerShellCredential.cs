@@ -74,22 +74,24 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Obtains a access token from Azure PowerShell, using the access token to authenticate. This method id called by Azure SDK clients.
+        /// Obtains an access token from Azure PowerShell, using the access token to authenticate. This method is called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -250,11 +252,29 @@ if (! $m) {{
     Write-Output '{AzurePowerShellNoAzAccountModule}'
     exit
 }}
+$tenantId = '{tenantIdArg}'
+$params = @{{
+    ResourceUrl = '{resource}'
+    WarningAction = 'Ignore' }}
 
-$token = Get-AzAccessToken -ResourceUrl '{resource}'{tenantIdArg}
+if ($tenantId.Length -gt 0) {{
+    $params['TenantId'] = '{tenantId}'
+}}
+
+$useSecureString = $m.Version -ge [version]'2.17.0'
+if ($useSecureString) {{
+    $params['AsSecureString'] = $true
+}}
+
+$token = Get-AzAccessToken @params
+
 $customToken = New-Object -TypeName psobject
-$customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
-$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.ToUnixTimeSeconds()
+if ($useSecureString) {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value (ConvertFrom-SecureString -AsPlainText $token.Token)
+}} else {{
+    $customToken | Add-Member -MemberType NoteProperty -Name Token -Value $token.Token
+}}
+$customToken | Add-Member -MemberType NoteProperty -Name ExpiresOn -Value $token.ExpiresOn.UtcDateTime.Ticks
 
 $x = $customToken | ConvertTo-Xml
 return $x.Objects.FirstChild.OuterXml
@@ -294,7 +314,7 @@ return $x.Objects.FirstChild.OuterXml
                         break;
 
                     case "ExpiresOn":
-                        expiresOn = DateTimeOffset.FromUnixTimeSeconds(long.Parse(e.Value));
+                        expiresOn = new DateTimeOffset(long.Parse(e.Value), TimeSpan.Zero);
                         break;
                 }
 

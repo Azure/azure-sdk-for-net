@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Kusto
 
         KustoPrivateEndpointConnectionResource IOperationSource<KustoPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<KustoPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
             return new KustoPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<KustoPrivateEndpointConnectionResource> IOperationSource<KustoPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = KustoPrivateEndpointConnectionData.DeserializeKustoPrivateEndpointConnectionData(document.RootElement);
-            return new KustoPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<KustoPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKustoContext.Default);
+            return await Task.FromResult(new KustoPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

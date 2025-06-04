@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         }
 
         /// <summary> Name of the configuration. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Version of the configuration. </summary>
+        [WirePath("version")]
         public string Version { get; }
     }
 }

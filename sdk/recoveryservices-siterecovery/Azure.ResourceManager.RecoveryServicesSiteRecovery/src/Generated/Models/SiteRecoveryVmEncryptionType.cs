@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public static bool operator ==(SiteRecoveryVmEncryptionType left, SiteRecoveryVmEncryptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SiteRecoveryVmEncryptionType"/> values are not the same. </summary>
         public static bool operator !=(SiteRecoveryVmEncryptionType left, SiteRecoveryVmEncryptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SiteRecoveryVmEncryptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SiteRecoveryVmEncryptionType"/>. </summary>
         public static implicit operator SiteRecoveryVmEncryptionType(string value) => new SiteRecoveryVmEncryptionType(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

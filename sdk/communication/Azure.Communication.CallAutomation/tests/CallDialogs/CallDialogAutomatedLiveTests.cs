@@ -13,6 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallDialogs
 {
+    [Ignore("Dialog Bot disabled")]
     internal class CallDialogAutomatedLiveTests : CallAutomationClientAutomatedLiveTestsBase
     {
         private const string dialogId = "92e08834-b6ee-4ede-8956-9fefa27a691c";
@@ -38,29 +39,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CommunicationIdentifier target;
 
             // when in playback, use Sanatized values
-            if (Mode == RecordedTestMode.Playback)
-            {
-                sourcePhone = new PhoneNumberIdentifier("Sanitized");
-                target = new PhoneNumberIdentifier("Sanitized");
-            }
-            else
-            {
-                PhoneNumbersClient phoneNumbersClient = new PhoneNumbersClient(TestEnvironment.LiveTestStaticConnectionString);
-                var purchasedPhoneNumbers = phoneNumbersClient.GetPurchasedPhoneNumbersAsync();
-                List<string> phoneNumbers = new List<string>();
-                await foreach (var phoneNumber in purchasedPhoneNumbers)
-                {
-                    phoneNumbers.Add(phoneNumber.PhoneNumber);
-                    Console.WriteLine($"Phone number: {phoneNumber.PhoneNumber}, monthly cost: {phoneNumber.Cost}");
-                }
-                target = new PhoneNumberIdentifier(phoneNumbers[1]);
-                sourcePhone = new PhoneNumberIdentifier(phoneNumbers[0]);
-            }
+            GetPhoneNumbers(out sourcePhone, out target);
 
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
+            string uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
             CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
@@ -125,7 +109,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -169,7 +153,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
+            string uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
             CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
@@ -246,7 +230,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -290,7 +274,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
+            string uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
             CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
@@ -357,11 +341,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
         [RecordedTest]
+        [Ignore("Currently does not work - need service fix?")]
         public async Task IdenticalDialogsTest()
         {
             // ignores test if botAppId or PMA Endpoint is not set in environment variables
@@ -401,7 +386,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
+            string uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
             CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
@@ -467,7 +452,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -511,7 +496,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
+            string uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
             CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
@@ -590,7 +575,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
 
@@ -634,7 +619,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
 
             // setup service bus
-            var uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
+            string uniqueId = await ServiceBusWithNewCall(sourcePhone, target);
 
             // create call and assert response
             CallInvite invite = new CallInvite((PhoneNumberIdentifier)target, (PhoneNumberIdentifier)sourcePhone);
@@ -677,7 +662,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallDialogs
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
     }

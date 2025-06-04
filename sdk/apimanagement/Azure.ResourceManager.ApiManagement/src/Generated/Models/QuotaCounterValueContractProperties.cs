@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Number of times Counter was called. </summary>
+        [WirePath("callsCount")]
         public int? CallsCount { get; }
         /// <summary> Data Transferred in KiloBytes. </summary>
+        [WirePath("kbTransferred")]
         public double? KbTransferred { get; }
     }
 }

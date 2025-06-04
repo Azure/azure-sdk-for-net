@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public AssociationEntityProvisioningState? ProvisioningState { get; set; }
     }
 }

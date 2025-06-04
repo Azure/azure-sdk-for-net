@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.LabServices.Models
 {
     public partial class AvailableLabServicesSkuCost : IUtf8JsonSerializable, IJsonModel<AvailableLabServicesSkuCost>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableLabServicesSkuCost>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvailableLabServicesSkuCost>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AvailableLabServicesSkuCost>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AvailableLabServicesSkuCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.LabServices.Models
                 throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
@@ -49,14 +57,13 @@ namespace Azure.ResourceManager.LabServices.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AvailableLabServicesSkuCost IJsonModel<AvailableLabServicesSkuCost>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -73,7 +80,7 @@ namespace Azure.ResourceManager.LabServices.Models
 
         internal static AvailableLabServicesSkuCost DeserializeAvailableLabServicesSkuCost(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -121,7 +128,7 @@ namespace Azure.ResourceManager.LabServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLabServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvailableLabServicesSkuCost)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +142,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvailableLabServicesSkuCost(document.RootElement, options);
                     }
                 default:

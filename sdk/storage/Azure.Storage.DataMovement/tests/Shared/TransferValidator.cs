@@ -23,19 +23,19 @@ namespace Azure.Storage.DataMovement.Tests
 
         public TransferManager TransferManager { get; init; } = new(new TransferManagerOptions()
         {
-            ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+            ErrorMode = TransferErrorMode.ContinueOnFailure
         });
 
         public async Task TransferAndVerifyAsync(
-            StorageResourceContainer sourceResource,
-            StorageResourceContainer destinationResource,
+            StorageResource sourceResource,
+            StorageResource destinationResource,
             ListFilesAsync getSourceFilesAsync,
             ListFilesAsync getDestinationFilesAsync,
             int expectedItemTransferCount,
-            DataTransferOptions options = default,
+            TransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
-            options ??= new DataTransferOptions();
+            options ??= new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             if (cancellationToken == default)
@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken = cts.Token;
             }
 
-            DataTransfer transfer = await TransferManager.StartTransferAsync(
+            TransferOperation transfer = await TransferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options,
@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             await testEventsRaised.AssertContainerCompletedCheck(expectedItemTransferCount);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
 
             List<IResourceEnumerationItem> sourceFiles = await getSourceFilesAsync(cancellationToken);
             List<IResourceEnumerationItem> destinationFiles = await getDestinationFilesAsync(cancellationToken);
@@ -74,11 +74,11 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         public async Task TransferAndVerifyAsync(
-            StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
+            StorageResource sourceResource,
+            StorageResource destinationResource,
             Func<CancellationToken, Task<Stream>> openReadSourceAsync,
             Func<CancellationToken, Task<Stream>> openReadDestinationAsync,
-            DataTransferOptions options = default,
+            TransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
             if (cancellationToken == default)
@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken = cts.Token;
             }
 
-            DataTransfer transfer = await TransferManager.StartTransferAsync(
+            TransferOperation transfer = await TransferManager.StartTransferAsync(
                sourceResource,
                destinationResource,
                options,

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.5.0-beta.1 (Unreleased)
+## 4.6.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 4.6.0-beta.1 (2025-04-08)
+
+### Features Added
+
+- Added `StartPreRestore` and `StartPreBackup` operations to the `KeyVaultBackupClient`.
+
+### Other Changes
+
+- The default service version is now "7.6-preview.2".
+
+## 4.5.0 (2024-10-14)
+
+### Features Added
+
+- Support for Continuous Access Evaluation (CAE).
 
 ## 4.4.0 (2024-02-14)
 

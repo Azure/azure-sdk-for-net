@@ -8,7 +8,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     internal static class FilterInfoPredicateUtility
     {
-        public static Predicate? ToPredicate(FilterInfoPredicate? filterInfoPredicate)
+        public static Predicate? ToPredicate(PredicateType? filterInfoPredicate)
         {
             if (filterInfoPredicate == null)
             {

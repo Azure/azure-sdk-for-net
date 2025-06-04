@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.LabServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByLocationRequestUri(string subscriptionId, AzureLocation location, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.LabServices/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByLocationRequest(string subscriptionId, AzureLocation location, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -77,7 +94,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -104,13 +121,21 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByLocationNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByLocationNextPageRequest(string nextLink, string subscriptionId, AzureLocation location, string filter)
@@ -147,7 +172,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesUsageListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +201,7 @@ namespace Azure.ResourceManager.LabServices
                 case 200:
                     {
                         LabServicesUsageListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LabServicesUsageListResult.DeserializeLabServicesUsageListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

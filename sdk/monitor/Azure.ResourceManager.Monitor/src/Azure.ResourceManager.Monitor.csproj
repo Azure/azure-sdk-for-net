@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.4.0-beta.1</Version>
+    <Version>1.4.0-beta.4</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.3.0</ApiCompatVersion>
+    <ApiCompatVersion>1.3.1</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Monitor</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Microsoft.Insights.</Description>
     <PackageTags>azure;management;arm;resource manager;monitor</PackageTags>

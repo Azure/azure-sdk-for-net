@@ -46,8 +46,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The resource ID of task against which run has to be queued. </summary>
+        [WirePath("taskId")]
         public ResourceIdentifier TaskId { get; set; }
         /// <summary> Set of overridable parameters that can be passed when running a Task. </summary>
+        [WirePath("overrideTaskStepProperties")]
         public ContainerRegistryOverrideTaskStepProperties OverrideTaskStepProperties { get; set; }
     }
 }

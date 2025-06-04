@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> Storage properties. </summary>
-    internal partial class ManagedEnvironmentStorageProperties
+    public partial class ManagedEnvironmentStorageProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,20 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedEnvironmentStorageProperties"/>. </summary>
         /// <param name="azureFile"> Azure file properties. </param>
+        /// <param name="nfsAzureFile"> NFS Azure file properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ContainerAppNfsAzureFileProperties nfsAzureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureFile = azureFile;
+            NfsAzureFile = nfsAzureFile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Azure file properties. </summary>
+        [WirePath("azureFile")]
         public ContainerAppAzureFileProperties AzureFile { get; set; }
+        /// <summary> NFS Azure file properties. </summary>
+        [WirePath("nfsAzureFile")]
+        public ContainerAppNfsAzureFileProperties NfsAzureFile { get; set; }
     }
 }

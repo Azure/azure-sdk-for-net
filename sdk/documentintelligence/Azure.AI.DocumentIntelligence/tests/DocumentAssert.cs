@@ -9,7 +9,33 @@ namespace Azure.AI.DocumentIntelligence.Tests
 {
     internal static class DocumentAssert
     {
-        public static void AreEqual(AzureBlobContentSource expected, AzureBlobContentSource actual)
+        public static void AreEqual(AnalyzeBatchResult expected, AnalyzeBatchResult actual)
+        {
+            if (expected == null)
+            {
+                Assert.That(actual, Is.Null);
+                return;
+            }
+
+            Assert.That(actual, Is.Not.Null);
+
+            Assert.That(actual.SucceededCount, Is.EqualTo(expected.SucceededCount));
+            Assert.That(actual.FailedCount, Is.EqualTo(expected.FailedCount));
+            Assert.That(actual.SkippedCount, Is.EqualTo(expected.SkippedCount));
+
+            AreEquivalent(expected.Details, actual.Details);
+        }
+
+        public static void AreEqual(AnalyzeBatchResultDetails expected, AnalyzeBatchResultDetails actual)
+        {
+            Assert.That(actual.SourceUri.AbsoluteUri, Is.EqualTo(expected.SourceUri.AbsoluteUri));
+            Assert.That(actual.ResultUri.AbsoluteUri, Is.EqualTo(expected.ResultUri.AbsoluteUri));
+            Assert.That(actual.Status, Is.EqualTo(expected.Status));
+
+            AreEqual(expected.Error, actual.Error);
+        }
+
+        public static void AreEqual(BlobContentSource expected, BlobContentSource actual)
         {
             if (expected == null)
             {
@@ -21,14 +47,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // The URI returned by the service does not include query parameters, so we're
             // making sure they're not included in our comparison.
-            string expectedContainerUrl = expected.ContainerUrl.GetLeftPart(UriPartial.Path);
-            string containerUrl = actual.ContainerUrl.GetLeftPart(UriPartial.Path);
+            string expectedContainerUrl = expected.ContainerUri.GetLeftPart(UriPartial.Path);
+            string containerUrl = actual.ContainerUri.GetLeftPart(UriPartial.Path);
 
             Assert.That(containerUrl, Is.EqualTo(expectedContainerUrl));
             Assert.That(actual.Prefix, Is.EqualTo(expected.Prefix));
         }
 
-        public static void AreEqual(AzureBlobFileListContentSource expected, AzureBlobFileListContentSource actual)
+        public static void AreEqual(BlobFileListContentSource expected, BlobFileListContentSource actual)
         {
             if (expected == null)
             {
@@ -40,8 +66,8 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             // The URI returned by the service does not include query parameters, so we're
             // making sure they're not included in our comparison.
-            string expectedContainerUrl = expected.ContainerUrl.GetLeftPart(UriPartial.Path);
-            string containerUrl = actual.ContainerUrl.GetLeftPart(UriPartial.Path);
+            string expectedContainerUrl = expected.ContainerUri.GetLeftPart(UriPartial.Path);
+            string containerUrl = actual.ContainerUri.GetLeftPart(UriPartial.Path);
 
             Assert.That(containerUrl, Is.EqualTo(expectedContainerUrl));
             Assert.That(actual.FileList, Is.EqualTo(expected.FileList));
@@ -50,12 +76,13 @@ namespace Azure.AI.DocumentIntelligence.Tests
         public static void AreEqual(DocumentClassifierDetails expected, DocumentClassifierDetails actual)
         {
             Assert.AreEqual(expected.ClassifierId, actual.ClassifierId);
+            Assert.AreEqual(expected.BaseClassifierId, actual.BaseClassifierId);
             Assert.AreEqual(expected.Description, actual.Description);
             Assert.AreEqual(expected.ApiVersion, actual.ApiVersion);
             Assert.AreEqual(expected.CreatedOn, actual.CreatedOn);
             Assert.AreEqual(expected.ExpiresOn, actual.ExpiresOn);
 
-            AreEquivalent(expected.DocTypes, actual.DocTypes);
+            AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }
 
         public static void AreEqual(DocumentFieldSchema expected, DocumentFieldSchema actual)
@@ -68,12 +95,46 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             Assert.That(actual, Is.Not.Null);
 
-            Assert.That(actual.Type, Is.EqualTo(expected.Type));
+            Assert.That(actual.FieldType, Is.EqualTo(expected.FieldType));
             Assert.That(actual.Description, Is.EqualTo(expected.Description));
             Assert.That(actual.Example, Is.EqualTo(expected.Example));
 
             AreEqual(expected.Items, actual.Items);
             AreEquivalent(expected.Properties, actual.Properties);
+        }
+
+        public static void AreEqual(DocumentIntelligenceError expected, DocumentIntelligenceError actual)
+        {
+            if (expected == null)
+            {
+                Assert.That(actual, Is.Null);
+                return;
+            }
+
+            Assert.That(actual, Is.Not.Null);
+
+            Assert.That(actual.Code, Is.EqualTo(expected.Code));
+            Assert.That(actual.Message, Is.EqualTo(expected.Message));
+            Assert.That(actual.Target, Is.EqualTo(expected.Target));
+
+            AreEquivalent(expected.Details, actual.Details);
+            AreEqual(expected.InnerError, actual.InnerError);
+        }
+
+        public static void AreEqual(DocumentIntelligenceInnerError expected, DocumentIntelligenceInnerError actual)
+        {
+            if (expected == null)
+            {
+                Assert.That(actual, Is.Null);
+                return;
+            }
+
+            Assert.That(actual, Is.Not.Null);
+
+            Assert.That(actual.Code, Is.EqualTo(expected.Code));
+            Assert.That(actual.Message, Is.EqualTo(expected.Message));
+
+            AreEqual(expected.InnerError, actual.InnerError);
         }
 
         public static void AreEqual(DocumentModelDetails expected, DocumentModelDetails actual)
@@ -85,10 +146,10 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(actual.ExpiresOn, Is.EqualTo(expected.ExpiresOn));
             Assert.That(actual.Tags, Is.EquivalentTo(expected.Tags));
 
-            AreEqual(expected.AzureBlobSource, actual.AzureBlobSource);
-            AreEqual(expected.AzureBlobFileListSource, actual.AzureBlobFileListSource);
+            AreEqual(expected.BlobSource, actual.BlobSource);
+            AreEqual(expected.BlobFileListSource, actual.BlobFileListSource);
 
-            AreEquivalent(expected.DocTypes, actual.DocTypes);
+            AreEquivalent(expected.DocumentTypes, actual.DocumentTypes);
         }
 
         public static void AreEqual(DocumentTypeDetails expected, DocumentTypeDetails actual)
@@ -98,6 +159,26 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(actual.FieldConfidence, Is.EquivalentTo(expected.FieldConfidence));
 
             AreEquivalent(expected.FieldSchema, actual.FieldSchema);
+        }
+
+        public static void AreEquivalent(IReadOnlyList<AnalyzeBatchResultDetails> expected, IReadOnlyList<AnalyzeBatchResultDetails> actual)
+        {
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
+
+            for (int i = 0; i < actual.Count; i++)
+            {
+                AreEqual(expected[i], actual[i]);
+            }
+        }
+
+        public static void AreEquivalent(IReadOnlyList<DocumentIntelligenceError> expected, IReadOnlyList<DocumentIntelligenceError> actual)
+        {
+            Assert.That(actual.Count, Is.EqualTo(expected.Count));
+
+            for (int i = 0; i < actual.Count; i++)
+            {
+                AreEqual(expected[i], actual[i]);
+            }
         }
 
         public static void AreEquivalent(IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> expected, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> actual)
@@ -114,12 +195,12 @@ namespace Azure.AI.DocumentIntelligence.Tests
                     Assert.That(docType.SourceKind, Is.EqualTo(expectedDocType.SourceKind));
                 }
 
-                AreEqual(docType.AzureBlobSource, expectedDocType.AzureBlobSource);
-                AreEqual(docType.AzureBlobFileListSource, expectedDocType.AzureBlobFileListSource);
+                AreEqual(docType.BlobSource, expectedDocType.BlobSource);
+                AreEqual(docType.BlobFileListSource, expectedDocType.BlobFileListSource);
             }
         }
 
-        public static void AreEquivalent(IReadOnlyDictionary<string, DocumentFieldSchema> expected, IReadOnlyDictionary<string, DocumentFieldSchema> actual)
+        public static void AreEquivalent(IDictionary<string, DocumentFieldSchema> expected, IDictionary<string, DocumentFieldSchema> actual)
         {
             Assert.That(actual.Count, Is.EqualTo(expected.Count));
 

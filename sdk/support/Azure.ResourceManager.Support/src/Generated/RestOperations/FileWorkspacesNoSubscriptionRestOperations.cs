@@ -31,8 +31,18 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-06-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string fileWorkspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string fileWorkspaceName)
@@ -67,7 +77,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -94,7 +104,7 @@ namespace Azure.ResourceManager.Support
                 case 200:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -103,6 +113,16 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string fileWorkspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string fileWorkspaceName)
@@ -137,7 +157,7 @@ namespace Azure.ResourceManager.Support
                 case 201:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -162,7 +182,7 @@ namespace Azure.ResourceManager.Support
                 case 201:
                     {
                         FileWorkspaceDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = FileWorkspaceDetailData.DeserializeFileWorkspaceDetailData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

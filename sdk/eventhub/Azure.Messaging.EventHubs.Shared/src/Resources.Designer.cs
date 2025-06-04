@@ -243,18 +243,6 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        ///   Looks up a localized string similar to The Event Hubs emulator is only available locally.  The endpoint must reference to the local host..
-        /// </summary>
-        internal static string InvalidEmulatorEndpoint
-        {
-            get
-            {
-                return ResourceManager.GetString("InvalidEmulatorEndpoint", resourceCulture);
-            }
-        }
-
-
-        /// <summary>
         ///   Looks up a localized string similar to The string has an invalid encoding format..
         /// </summary>
         internal static string InvalidEncoding
@@ -860,6 +848,17 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///   Looks up a localized string similar to WARNING: A processor for a geo-replication-enabled Event Hub is trying to write a checkpoint without an offset.  Readers of geo-replicated Event Hubs cannot be positioned without an offset..
+        /// </summary>
+        internal static string ProcessorAttemptingToWriteCheckpointWithoutOffset
+        {
+            get
+            {
+                return ResourceManager.GetString("ProcessorLoadBalancingCycleSlowMask", resourceCulture);
+            }
+        }
+
+        /// <summary>
         ///   Looks up a localized string similar to WARNING: The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured for intervals that may cause stability issues with partition ownership.  It is recommended that the 'PartitionOwnershipExpirationInterval' be at least 3 times greater than the 'LoadBalancingUpdateInterval' and very strongly advised that it should be no less than twice as long.  It is advised to adjust the intervals in the processor options.  Load Balancing Interval '{1:0:00}' seconds.  Partition Ownership Interval '{1:0:00}' seconds..
         /// </summary>
         internal static string ProcessorLoadBalancingIntervalsTooCloseMask
@@ -933,6 +932,28 @@ namespace Azure.Messaging.EventHubs
             get
             {
                 return ResourceManager.GetString("BufferedProducerStartupTimeout", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The Event Hubs services does not return a numeric offset for GeoDR-enabled namespaces.  Please use 'OffsetString' instead..
+        /// </summary>
+        internal static string LongOffsetOffsetUnsupported
+        {
+            get
+            {
+                return ResourceManager.GetString("LongOffsetOffsetUnsupported", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The Event Hubs services does not return a numeric offset for GeoDR-enabled namespaces.  Please use 'LastEnqueuedOffsetString' instead..
+        /// </summary>
+        internal static string LongLastEnqueuedOffsetOffsetUnsupported
+        {
+            get
+            {
+                return ResourceManager.GetString("LongLastEnqueuedOffsetOffsetUnsupported", resourceCulture);
             }
         }
     }

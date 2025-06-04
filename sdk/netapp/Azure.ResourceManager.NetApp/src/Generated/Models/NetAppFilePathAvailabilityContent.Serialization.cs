@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.NetApp.Models
 {
     public partial class NetAppFilePathAvailabilityContent : IUtf8JsonSerializable, IJsonModel<NetAppFilePathAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppFilePathAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppFilePathAvailabilityContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<NetAppFilePathAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetAppFilePathAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,22 @@ namespace Azure.ResourceManager.NetApp.Models
                 throw new FormatException($"The model {nameof(NetAppFilePathAvailabilityContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
+            if (Optional.IsDefined(AvailabilityZone))
+            {
+                if (AvailabilityZone != null)
+                {
+                    writer.WritePropertyName("availabilityZone"u8);
+                    writer.WriteStringValue(AvailabilityZone);
+                }
+                else
+                {
+                    writer.WriteNull("availabilityZone");
+                }
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -38,14 +58,13 @@ namespace Azure.ResourceManager.NetApp.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         NetAppFilePathAvailabilityContent IJsonModel<NetAppFilePathAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -62,7 +81,7 @@ namespace Azure.ResourceManager.NetApp.Models
 
         internal static NetAppFilePathAvailabilityContent DeserializeNetAppFilePathAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -70,6 +89,7 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             string name = default;
             ResourceIdentifier subnetId = default;
+            string availabilityZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -84,13 +104,23 @@ namespace Azure.ResourceManager.NetApp.Models
                     subnetId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("availabilityZone"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        availabilityZone = null;
+                        continue;
+                    }
+                    availabilityZone = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetAppFilePathAvailabilityContent(name, subnetId, serializedAdditionalRawData);
+            return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetAppFilePathAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -100,7 +130,7 @@ namespace Azure.ResourceManager.NetApp.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppFilePathAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
@@ -114,7 +144,7 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppFilePathAvailabilityContent(document.RootElement, options);
                     }
                 default:

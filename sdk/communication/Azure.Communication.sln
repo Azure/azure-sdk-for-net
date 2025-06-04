@@ -32,10 +32,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Identit
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Identity.Tests", "Azure.Communication.Identity\tests\Azure.Communication.Identity.Tests.csproj", "{EB52F268-C8C0-4395-9925-E914923D586E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.NetworkTraversal", "Azure.Communication.NetworkTraversal\src\Azure.Communication.NetworkTraversal.csproj", "{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.NetworkTraversal.Tests", "Azure.Communication.NetworkTraversal\tests\Azure.Communication.NetworkTraversal.Tests.csproj", "{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNumbers", "Azure.Communication.PhoneNumbers\src\Azure.Communication.PhoneNumbers.csproj", "{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.PhoneNumbers.Tests", "Azure.Communication.PhoneNumbers\tests\Azure.Communication.PhoneNumbers.Tests.csproj", "{7A17601B-FDEC-49E7-BFD1-7AFE9C0B6A89}"
@@ -52,10 +48,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Email.Tests", "Azure.Communication.Email\tests\Azure.Communication.Email.Tests.csproj", "{F564FD34-F010-41FA-A58C-51558FB9FE89}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition", "Azure.Communication.MediaComposition\src\Azure.Communication.MediaComposition.csproj", "{D5445861-C735-4A13-900F-3745FBD9566A}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.MediaComposition.Tests", "Azure.Communication.MediaComposition\tests\Azure.Communication.MediaComposition.Tests.csproj", "{78DDAA7E-7DFE-41DD-B603-7874CC96A2A2}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms", "Azure.Communication.Rooms\src\Azure.Communication.Rooms.csproj", "{E4AE37FB-9A3F-45BE-9518-4EBCE2B95E0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Rooms.Tests", "Azure.Communication.Rooms\tests\Azure.Communication.Rooms.Tests.csproj", "{94DC6193-A7F1-4FCC-8A90-BA46B781E9F8}"
@@ -71,6 +63,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Messages", "Azure.Communication.Messages\src\Azure.Communication.Messages.csproj", "{EC7299A9-8563-4FF3-97E2-CB3DDE8AEFBE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.Messages.Tests", "Azure.Communication.Messages\tests\Azure.Communication.Messages.Tests.csproj", "{4232B393-700D-4AC5-9358-70ED4B98B0ED}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ProgrammableConnectivity", "Azure.Communication.ProgrammableConnectivity\src\Azure.Communication.ProgrammableConnectivity.csproj", "{28D9C703-0B74-403C-9503-71C602228843}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Communication.ProgrammableConnectivity.Tests", "Azure.Communication.ProgrammableConnectivity\tests\Azure.Communication.ProgrammableConnectivity.Tests.csproj", "{414C616C-56A8-4F6B-918F-2E0CB2859A52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -122,14 +118,6 @@ Global
 		{EB52F268-C8C0-4395-9925-E914923D586E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB52F268-C8C0-4395-9925-E914923D586E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB52F268-C8C0-4395-9925-E914923D586E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{38284EE4-B29B-48B2-8CCB-1E2469BE6E2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AE51BEF4-AAA3-4EAB-BC11-9BFA1182A3A5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F10D25F9-A415-43EE-8A62-76A38E7B7D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -202,6 +190,14 @@ Global
 		{4232B393-700D-4AC5-9358-70ED4B98B0ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4232B393-700D-4AC5-9358-70ED4B98B0ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4232B393-700D-4AC5-9358-70ED4B98B0ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D9C703-0B74-403C-9503-71C602228843}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D9C703-0B74-403C-9503-71C602228843}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D9C703-0B74-403C-9503-71C602228843}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D9C703-0B74-403C-9503-71C602228843}.Release|Any CPU.Build.0 = Release|Any CPU
+		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{414C616C-56A8-4F6B-918F-2E0CB2859A52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

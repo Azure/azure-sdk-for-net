@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         }
 
         /// <summary> Represents address prefix. </summary>
+        [WirePath("addressPrefix")]
         public string AddressPrefix { get; }
     }
 }

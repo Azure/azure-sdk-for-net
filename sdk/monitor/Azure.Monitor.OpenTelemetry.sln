@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Tests", "Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Tests\Azure.Monitor.OpenTelemetry.Exporter.Tests.csproj", "{14546496-6144-49A5-9431-09611F38D30E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests", "Azure.Monitor.OpenTelemetry.Exporter\tests\Integration.Tests\Azure.Monitor.OpenTelemetry.Exporter.Integration.Tests.csproj", "{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.Benchmarks", "Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.Benchmarks\Azure.Monitor.OpenTelemetry.Exporter.Benchmarks.csproj", "{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B1EBB34-30DC-40EE-BC3E-8871B2C22CE2}"
@@ -52,11 +50,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.Exporter.AotCompatibilityTestApp", "Azure.Monitor.OpenTelemetry.Exporter\tests\Azure.Monitor.OpenTelemetry.Exporter.AotCompatibilityTestApp\Azure.Monitor.OpenTelemetry.Exporter.AotCompatibilityTestApp.csproj", "{D2174A00-93CF-4337-8600-4CE758C7D4AC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.LiveMetrics", "Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj", "{C13C8648-2B37-4334-97DC-322344E8EE8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Demo", "Azure.Monitor.OpenTelemetry.AspNetCore\tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Demo\Azure.Monitor.OpenTelemetry.LiveMetrics.Demo.csproj", "{B18FEF9B-02E0-4BF0-9248-3C0C942948F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Tests", "Azure.Monitor.OpenTelemetry.LiveMetrics\tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.csproj", "{EA90D06D-D272-4A65-8DDA-6412B3F14572}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.AspNetCore.Benchmarks", "Azure.Monitor.OpenTelemetry.AspNetCore\tests\AspNetCore.Benchmarks\Azure.Monitor.OpenTelemetry.AspNetCore.Benchmarks.csproj", "{273FDDEB-62E9-4B29-B4C2-5F0F10E9B2C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Demo", "Azure.Monitor.OpenTelemetry.LiveMetrics\tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Demo\Azure.Monitor.OpenTelemetry.LiveMetrics.Demo.csproj", "{945FEC31-100B-410D-81D0-A38830A98B80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.AspNetCoreTestApp", "Azure.Monitor.OpenTelemetry.AspNetCore\tests\Azure.Monitor.AspNetCoreTestApp\Azure.Monitor.AspNetCoreTestApp.csproj", "{01657383-7C75-4C0A-9278-61755C4E3DC9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Monitor.OpenTelemetry.LiveMetrics", "Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj", "{0C961663-8E54-4560-A71A-74D33936586F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Monitor.OpenTelemetry.LiveMetrics.Tests", "Azure.Monitor.OpenTelemetry.LiveMetrics\tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests\Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.csproj", "{66AA4429-05EF-47AF-8590-F681EFE0FFC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,10 +82,6 @@ Global
 		{14546496-6144-49A5-9431-09611F38D30E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14546496-6144-49A5-9431-09611F38D30E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14546496-6144-49A5-9431-09611F38D30E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3CB1B19D-1155-4E4E-9D97-3A7B2926DE2E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D57D79BA-6D39-4E9E-970C-A5F73A4425BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -120,18 +118,26 @@ Global
 		{D2174A00-93CF-4337-8600-4CE758C7D4AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D2174A00-93CF-4337-8600-4CE758C7D4AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D2174A00-93CF-4337-8600-4CE758C7D4AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C13C8648-2B37-4334-97DC-322344E8EE8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA90D06D-D272-4A65-8DDA-6412B3F14572}.Release|Any CPU.Build.0 = Release|Any CPU
-		{945FEC31-100B-410D-81D0-A38830A98B80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{945FEC31-100B-410D-81D0-A38830A98B80}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{945FEC31-100B-410D-81D0-A38830A98B80}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{945FEC31-100B-410D-81D0-A38830A98B80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B18FEF9B-02E0-4BF0-9248-3C0C942948F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B18FEF9B-02E0-4BF0-9248-3C0C942948F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B18FEF9B-02E0-4BF0-9248-3C0C942948F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B18FEF9B-02E0-4BF0-9248-3C0C942948F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273FDDEB-62E9-4B29-B4C2-5F0F10E9B2C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273FDDEB-62E9-4B29-B4C2-5F0F10E9B2C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273FDDEB-62E9-4B29-B4C2-5F0F10E9B2C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273FDDEB-62E9-4B29-B4C2-5F0F10E9B2C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01657383-7C75-4C0A-9278-61755C4E3DC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01657383-7C75-4C0A-9278-61755C4E3DC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01657383-7C75-4C0A-9278-61755C4E3DC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01657383-7C75-4C0A-9278-61755C4E3DC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C961663-8E54-4560-A71A-74D33936586F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C961663-8E54-4560-A71A-74D33936586F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C961663-8E54-4560-A71A-74D33936586F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C961663-8E54-4560-A71A-74D33936586F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{66AA4429-05EF-47AF-8590-F681EFE0FFC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66AA4429-05EF-47AF-8590-F681EFE0FFC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66AA4429-05EF-47AF-8590-F681EFE0FFC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66AA4429-05EF-47AF-8590-F681EFE0FFC9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

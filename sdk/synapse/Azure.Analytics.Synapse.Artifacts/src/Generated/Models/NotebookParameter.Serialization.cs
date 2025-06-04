@@ -20,8 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue<object>(Value);
+                if (Value != null)
+                {
+                    writer.WritePropertyName("value"u8);
+                    writer.WriteObjectValue<object>(Value);
+                }
+                else
+                {
+                    writer.WriteNull("value");
+                }
             }
             if (Optional.IsDefined(Type))
             {
@@ -45,6 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        value = null;
                         continue;
                     }
                     value = property.Value.GetObject();
@@ -67,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static NotebookParameter FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeNotebookParameter(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<NotebookParameter>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -83,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, NotebookParameter model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<NotebookParameter>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override NotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

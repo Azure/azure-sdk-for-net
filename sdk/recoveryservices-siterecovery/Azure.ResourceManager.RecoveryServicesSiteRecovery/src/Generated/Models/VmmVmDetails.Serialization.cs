@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class VmmVmDetails : IUtf8JsonSerializable, IJsonModel<VmmVmDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmmVmDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmmVmDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmmVmDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmmVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,70 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 throw new FormatException($"The model {nameof(VmmVmDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(SourceItemId))
-            {
-                writer.WritePropertyName("sourceItemId"u8);
-                writer.WriteStringValue(SourceItemId);
-            }
-            if (Optional.IsDefined(Generation))
-            {
-                writer.WritePropertyName("generation"u8);
-                writer.WriteStringValue(Generation);
-            }
-            if (Optional.IsDefined(OSDetails))
-            {
-                writer.WritePropertyName("osDetails"u8);
-                writer.WriteObjectValue<SiteRecoveryOSDetails>(OSDetails, options);
-            }
-            if (Optional.IsCollectionDefined(DiskDetails))
-            {
-                writer.WritePropertyName("diskDetails"u8);
-                writer.WriteStartArray();
-                foreach (var item in DiskDetails)
-                {
-                    writer.WriteObjectValue<SiteRecoveryDiskDetails>(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(HasPhysicalDisk))
-            {
-                writer.WritePropertyName("hasPhysicalDisk"u8);
-                writer.WriteStringValue(HasPhysicalDisk.Value.ToString());
-            }
-            if (Optional.IsDefined(HasFibreChannelAdapter))
-            {
-                writer.WritePropertyName("hasFibreChannelAdapter"u8);
-                writer.WriteStringValue(HasFibreChannelAdapter.Value.ToString());
-            }
-            if (Optional.IsDefined(HasSharedVhd))
-            {
-                writer.WritePropertyName("hasSharedVhd"u8);
-                writer.WriteStringValue(HasSharedVhd.Value.ToString());
-            }
-            if (Optional.IsDefined(HyperVHostId))
-            {
-                writer.WritePropertyName("hyperVHostId"u8);
-                writer.WriteStringValue(HyperVHostId);
-            }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         VmmVmDetails IJsonModel<VmmVmDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -105,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static VmmVmDetails DeserializeVmmVmDetails(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -220,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VmmVmDetails)} does not support writing '{options.Format}' format.");
             }
@@ -234,7 +180,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVmmVmDetails(document.RootElement, options);
                     }
                 default:

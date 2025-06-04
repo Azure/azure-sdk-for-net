@@ -3,18 +3,13 @@
 
 using System;
 using System.Text.RegularExpressions;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.Data.SchemaRegistry.Tests
 {
-    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10, SchemaRegistryClientOptions.ServiceVersion.V2023_07)]
+    [ClientTestFixture(SchemaRegistryClientOptions.ServiceVersion.V2021_10, SchemaRegistryClientOptions.ServiceVersion.V2022_10, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01)]
     public class SchemaRegistryClientLiveTests : RecordedTestBase<SchemaRegistryClientTestEnvironment>
     {
         private readonly SchemaRegistryClientOptions.ServiceVersion _serviceVersion;
@@ -29,7 +24,7 @@ namespace Azure.Data.SchemaRegistry.Tests
             string endpoint;
             switch (format, _serviceVersion)
             {
-                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
                 case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -38,7 +33,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                 case (Avro, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointAvro2021;
                     break;
-                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Json, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointJson;
                     break;
                 case (Json, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -47,7 +42,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                 case (Json, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointJson2021;
                     break;
-                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom;
                     break;
                 case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -56,7 +51,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                 case (Custom, SchemaRegistryClientOptions.ServiceVersion.V2021_10):
                     endpoint = TestEnvironment.SchemaRegistryEndpointCustom2021;
                     break;
-                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2023_07):
+                case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2023_07_01):
                     endpoint = TestEnvironment.SchemaRegistryEndpointProtobuf;
                     break;
                 case (Protobuf, SchemaRegistryClientOptions.ServiceVersion.V2022_10):
@@ -66,7 +61,7 @@ namespace Azure.Data.SchemaRegistry.Tests
                     endpoint = TestEnvironment.SchemaRegistryEndpointProtobuf2021;
                     break;
                 default:
-                    endpoint= TestEnvironment.SchemaRegistryEndpointAvro;
+                    endpoint = TestEnvironment.SchemaRegistryEndpointAvro;
                     break;
             }
 
@@ -174,10 +169,10 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = StringToSchemaFormat(formatName);
             var content = StringToSchemaContent(formatName, 1);
 
-            var registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
+            SchemaProperties registerProperties = await client.RegisterSchemaAsync(groupName, schemaName, content, format);
             AssertSchemaProperties(registerProperties, schemaName, format);
 
-            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Value.Id);
+            SchemaRegistrySchema schema = await client.GetSchemaAsync(registerProperties.Id);
             AssertSchema(schema, schemaName, content, format);
             AssertPropertiesAreEqual(registerProperties, schema.Properties, format);
         }
@@ -234,8 +229,8 @@ namespace Azure.Data.SchemaRegistry.Tests
             var format = new SchemaFormat("UnknownType");
             Assert.That(
                 async () => await client.GetSchemaPropertiesAsync(groupName, schemaName, "Hello", format),
-                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(404)
-                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("ItemNotFound"));
+                Throws.InstanceOf<RequestFailedException>().And.Property(nameof(RequestFailedException.Status)).EqualTo(415)
+                    .And.Property(nameof(RequestFailedException.ErrorCode)).EqualTo("InvalidSchemaType"));
         }
 
         [RecordedTest]
@@ -310,8 +305,8 @@ namespace Azure.Data.SchemaRegistry.Tests
                     return SchemaFormat.Json;
                 case Custom:
                     return SchemaFormat.Custom;
-                case Protobuf:
-                    return SchemaFormat.Protobuf;
+                //case Protobuf:
+                //    return SchemaFormat.Protobuf;
                 default:
                     throw new ArgumentException("Format name was invalid.");
             }

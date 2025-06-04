@@ -36,6 +36,25 @@ namespace Azure.ResourceManager.DevCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByImageRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageName, true);
+            uri.AppendPath("/versions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByImageRequest(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
         {
             var message = _pipeline.CreateMessage();
@@ -85,7 +104,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ImageVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImageVersionListResult.DeserializeImageVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,13 +137,33 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ImageVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImageVersionListResult.DeserializeImageVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, string versionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/devcenters/", false);
+            uri.AppendPath(devCenterName, true);
+            uri.AppendPath("/galleries/", false);
+            uri.AppendPath(galleryName, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageName, true);
+            uri.AppendPath("/versions/", false);
+            uri.AppendPath(versionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName, string versionName)
@@ -179,7 +218,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ImageVersionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImageVersionData.DeserializeImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -216,7 +255,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ImageVersionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImageVersionData.DeserializeImageVersionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -225,6 +264,14 @@ namespace Azure.ResourceManager.DevCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByImageNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByImageNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string devCenterName, string galleryName, string imageName)
@@ -267,7 +314,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ImageVersionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ImageVersionListResult.DeserializeImageVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -302,7 +349,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 200:
                     {
                         ImageVersionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ImageVersionListResult.DeserializeImageVersionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

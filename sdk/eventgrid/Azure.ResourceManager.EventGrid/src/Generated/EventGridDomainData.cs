@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="location"> The location. </param>
         /// <param name="sku"> The Sku pricing tier for the Event Grid Domain resource. </param>
         /// <param name="identity"> Identity information for the Event Grid Domain resource. </param>
-        /// <param name="privateEndpointConnections"></param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="provisioningState"> Provisioning state of the Event Grid Domain Resource. </param>
         /// <param name="minimumTlsVersionAllowed"> Minimum TLS version of the publisher allowed to publish to this domain. </param>
         /// <param name="endpoint"> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </param>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.EventGrid
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
         /// </param>
         /// <param name="inboundIPRules"> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </param>
-        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </param>
+        /// <param name="isLocalAuthDisabled"> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </param>
         /// <param name="autoCreateTopicWithFirstSubscription">
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
         /// In this context, creation of domain topic can be auto-managed (when true) or self-managed (when false). The default value for this property is true.
@@ -138,6 +138,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <summary> The Sku pricing tier for the Event Grid Domain resource. </summary>
         internal ResourceSku Sku { get; set; }
         /// <summary> The Sku name of the resource. The possible values are: Basic or Premium. </summary>
+        [WirePath("sku.name")]
         public EventGridSku? SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -150,38 +151,50 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Identity information for the Event Grid Domain resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Gets the private endpoint connections. </summary>
+        /// <summary> List of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Provisioning state of the Event Grid Domain Resource. </summary>
+        [WirePath("properties.provisioningState")]
         public EventGridDomainProvisioningState? ProvisioningState { get; }
         /// <summary> Minimum TLS version of the publisher allowed to publish to this domain. </summary>
+        [WirePath("properties.minimumTlsVersionAllowed")]
         public TlsVersion? MinimumTlsVersionAllowed { get; set; }
         /// <summary> Endpoint for the Event Grid Domain Resource which is used for publishing the events. </summary>
+        [WirePath("properties.endpoint")]
         public Uri Endpoint { get; }
         /// <summary> This determines the format that Event Grid should expect for incoming events published to the Event Grid Domain Resource. </summary>
+        [WirePath("properties.inputSchema")]
         public EventGridInputSchema? InputSchema { get; set; }
         /// <summary>
         /// Event Type Information for the domain. This information is provided by the publisher and can be used by the
         /// subscriber to view different types of events that are published.
         /// </summary>
+        [WirePath("properties.eventTypeInfo")]
         public PartnerTopicEventTypeInfo EventTypeInfo { get; set; }
         /// <summary>
         /// Information about the InputSchemaMapping which specified the info about mapping event payload.
         /// Please note <see cref="EventGridInputSchemaMapping"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EventGridJsonInputSchemaMapping"/>.
         /// </summary>
+        [WirePath("properties.inputSchemaMapping")]
         public EventGridInputSchemaMapping InputSchemaMapping { get; set; }
         /// <summary> Metric resource id for the Event Grid Domain Resource. </summary>
+        [WirePath("properties.metricResourceId")]
         public string MetricResourceId { get; }
         /// <summary>
         /// This determines if traffic is allowed over public network. By default it is enabled.
         /// You can further restrict to specific IPs by configuring &lt;seealso cref="P:Microsoft.Azure.Events.ResourceProvider.Common.Contracts.DomainProperties.InboundIpRules" /&gt;
         /// </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public EventGridPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> This can be used to restrict traffic from specific IPs instead of all IPs. Note: These are considered only if PublicNetworkAccess is enabled. </summary>
+        [WirePath("properties.inboundIpRules")]
         public IList<EventGridInboundIPRule> InboundIPRules { get; }
-        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only AAD token will be used to authenticate if user is allowed to publish to the domain. </summary>
+        /// <summary> This boolean is used to enable or disable local auth. Default value is false. When the property is set to true, only Microsoft Entra ID token will be used to authenticate if user is allowed to publish to the domain. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? IsLocalAuthDisabled { get; set; }
         /// <summary>
         /// This Boolean is used to specify the creation mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
@@ -192,6 +205,7 @@ namespace Azure.ResourceManager.EventGrid
         /// flexibility to perform less operations and manage fewer resources by the user. Also, note that in auto-managed creation mode, user is allowed to create the
         /// domain topic on demand if needed.
         /// </summary>
+        [WirePath("properties.autoCreateTopicWithFirstSubscription")]
         public bool? AutoCreateTopicWithFirstSubscription { get; set; }
         /// <summary>
         /// This Boolean is used to specify the deletion mechanism for 'all' the Event Grid Domain Topics associated with this Event Grid Domain resource.
@@ -202,8 +216,10 @@ namespace Azure.ResourceManager.EventGrid
         /// control of when the domain topic needs to be deleted, while auto-managed mode provides the flexibility to perform less operations and manage fewer
         /// resources by the user.
         /// </summary>
+        [WirePath("properties.autoDeleteTopicWithLastSubscription")]
         public bool? AutoDeleteTopicWithLastSubscription { get; set; }
         /// <summary> Data Residency Boundary of the resource. </summary>
+        [WirePath("properties.dataResidencyBoundary")]
         public DataResidencyBoundary? DataResidencyBoundary { get; set; }
     }
 }

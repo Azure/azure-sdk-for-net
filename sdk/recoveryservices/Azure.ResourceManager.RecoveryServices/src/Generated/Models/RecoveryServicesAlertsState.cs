@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public static bool operator ==(RecoveryServicesAlertsState left, RecoveryServicesAlertsState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RecoveryServicesAlertsState"/> values are not the same. </summary>
         public static bool operator !=(RecoveryServicesAlertsState left, RecoveryServicesAlertsState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RecoveryServicesAlertsState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesAlertsState"/>. </summary>
         public static implicit operator RecoveryServicesAlertsState(string value) => new RecoveryServicesAlertsState(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

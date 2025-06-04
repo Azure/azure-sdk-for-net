@@ -24,22 +24,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         private const string CreateJobValue = "CreateJob";
         private const string InvokeBatchEndpointValue = "InvokeBatchEndpoint";
-        private const string ImportDataValue = "ImportData";
         private const string CreateMonitorValue = "CreateMonitor";
 
         /// <summary> CreateJob. </summary>
         public static ScheduleActionType CreateJob { get; } = new ScheduleActionType(CreateJobValue);
         /// <summary> InvokeBatchEndpoint. </summary>
         public static ScheduleActionType InvokeBatchEndpoint { get; } = new ScheduleActionType(InvokeBatchEndpointValue);
-        /// <summary> ImportData. </summary>
-        public static ScheduleActionType ImportData { get; } = new ScheduleActionType(ImportDataValue);
         /// <summary> CreateMonitor. </summary>
         public static ScheduleActionType CreateMonitor { get; } = new ScheduleActionType(CreateMonitorValue);
         /// <summary> Determines if two <see cref="ScheduleActionType"/> values are the same. </summary>
         public static bool operator ==(ScheduleActionType left, ScheduleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ScheduleActionType"/> values are not the same. </summary>
         public static bool operator !=(ScheduleActionType left, ScheduleActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ScheduleActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ScheduleActionType"/>. </summary>
         public static implicit operator ScheduleActionType(string value) => new ScheduleActionType(value);
 
         /// <inheritdoc />
@@ -50,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

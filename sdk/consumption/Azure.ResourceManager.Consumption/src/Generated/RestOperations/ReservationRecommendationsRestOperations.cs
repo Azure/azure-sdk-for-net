@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceScope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendations", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceScope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -73,7 +88,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ReservationRecommendationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReservationRecommendationsListResult.DeserializeReservationRecommendationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -100,7 +115,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ReservationRecommendationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReservationRecommendationsListResult.DeserializeReservationRecommendationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -109,6 +124,14 @@ namespace Azure.ResourceManager.Consumption
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceScope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceScope, string filter)
@@ -143,7 +166,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ReservationRecommendationsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ReservationRecommendationsListResult.DeserializeReservationRecommendationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -172,7 +195,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ReservationRecommendationsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ReservationRecommendationsListResult.DeserializeReservationRecommendationsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

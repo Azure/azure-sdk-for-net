@@ -20,28 +20,25 @@ namespace Azure.Storage.DataMovement.Blobs
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "PageBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.PageBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type for the storage resource.
-        /// </summary>
-        protected override DataTransferOrder TransferType => DataTransferOrder.Unordered;
+        protected override TransferOrder TransferType => TransferOrder.Unordered;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Page.MaxPageBlockBytes;
+
         protected override long MaxSupportedChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
+        protected override int MaxSupportedChunkCount => int.MaxValue;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        public PageBlobStorageResource()
+        {
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="PageBlobStorageResource"/>
@@ -314,23 +311,30 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointData(BlobType.Page);
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new BlobDestinationCheckpointData(
+            return new BlobDestinationCheckpointDetails(
+                isBlobTypeSet: true,
                 blobType: BlobType.Page,
-                contentType: _options?.ContentType,
-                contentEncoding: _options?.ContentEncoding,
-                contentLanguage: _options?.ContentLanguage,
-                contentDisposition: _options?.ContentDisposition,
-                cacheControl: _options?.CacheControl,
-                accessTier: _options?.AccessTier,
-                metadata: _options?.Metadata,
-                tags: default);
+                blobOptions: _options);
         }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

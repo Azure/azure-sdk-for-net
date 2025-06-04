@@ -7,7 +7,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
-    /// Attributes a ReadOnlyMemory&lt;float&gt; vector field, allowing its use with the VectorSearch indexes.
+    /// Attributes a Collection(<see cref="SearchFieldDataType.Single"/>) vector field, allowing its use with the VectorSearch indexes.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class VectorSearchFieldAttribute : Attribute, ISearchFieldAttribute
@@ -30,6 +30,10 @@ namespace Azure.Search.Documents.Indexes
         /// </summary>
         public bool IsHidden { get; set; }
 
+        /// <summary> The encoding format to interpret the field contents. </summary>
+        /// <value> String values from <see cref="VectorEncodingFormat.Values">LexicalAnalyzerName</see>. </value>
+        public string VectorEncodingFormat { get; set; }
+
         /// <inheritdoc/>
         void ISearchFieldAttribute.SetField(SearchField field) => SetField(field);
 
@@ -40,6 +44,10 @@ namespace Azure.Search.Documents.Indexes
             field.VectorSearchDimensions = VectorSearchDimensions;
             field.VectorSearchProfileName = VectorSearchProfileName;
             field.IsStored = IsStored;
+            if (VectorEncodingFormat != null)
+            {
+                field.VectorEncodingFormat = VectorEncodingFormat;
+            }
         }
     }
 }

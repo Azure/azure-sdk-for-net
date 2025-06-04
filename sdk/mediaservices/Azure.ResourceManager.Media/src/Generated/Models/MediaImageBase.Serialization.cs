@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class MediaImageBase : IUtf8JsonSerializable, IJsonModel<MediaImageBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaImageBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaImageBase>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MediaImageBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MediaImageBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
                 throw new FormatException($"The model {nameof(MediaImageBase)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("start"u8);
             writer.WriteStringValue(Start);
             if (Optional.IsDefined(Step))
@@ -38,44 +47,6 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("range"u8);
                 writer.WriteStringValue(Range);
             }
-            if (Optional.IsDefined(KeyFrameInterval))
-            {
-                writer.WritePropertyName("keyFrameInterval"u8);
-                writer.WriteStringValue(KeyFrameInterval.Value, "P");
-            }
-            if (Optional.IsDefined(StretchMode))
-            {
-                writer.WritePropertyName("stretchMode"u8);
-                writer.WriteStringValue(StretchMode.Value.ToString());
-            }
-            if (Optional.IsDefined(SyncMode))
-            {
-                writer.WritePropertyName("syncMode"u8);
-                writer.WriteStringValue(SyncMode.Value.ToString());
-            }
-            writer.WritePropertyName("@odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         MediaImageBase IJsonModel<MediaImageBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static MediaImageBase DeserializeMediaImageBase(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -195,7 +166,7 @@ namespace Azure.ResourceManager.Media.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MediaImageBase)} does not support writing '{options.Format}' format.");
             }
@@ -209,7 +180,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMediaImageBase(document.RootElement, options);
                     }
                 default:

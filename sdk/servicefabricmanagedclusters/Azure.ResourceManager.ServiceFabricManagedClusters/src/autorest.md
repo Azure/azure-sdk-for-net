@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: ServiceFabricManagedClusters
 namespace: Azure.ResourceManager.ServiceFabricManagedClusters
-require:  https://github.com/Azure/azure-rest-api-specs/blob/2ce7ebed8b2fbcce991d2839ba0ba712f9a0d12b/specification/servicefabricmanagedclusters/resource-manager/readme.md
-#tag: package-2023-12-preview
+require:  https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d858134ee68ef0d89635083b560/specification/servicefabricmanagedclusters/resource-manager/readme.md
+#tag: package-2024-09-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -69,12 +69,12 @@ acronym-mapping:
   SSD: Ssd
 
 override-operation-name:
-  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
+  managedAzResiliencyStatus_get: GetManagedAzResiliencyStatus
   NodeTypeSkus_List: GetAvailableSkus
   managedUnsupportedVMSizes_Get: GetManagedUnsupportedVmSize
   managedUnsupportedVMSizes_List: GetManagedUnsupportedVmSizes
   ManagedClusterVersion_GetByEnvironment: GetManagedClusterVersionByEnvironment
-  managedMaintenanceWindowStatus_Get: GetManagedMaintenanceWindowStatus
+  managedAzResiliencyStatus_Get: GetManagedAzResiliencyStatus
 
 rename-mapping:
   ApplicationResource: ServiceFabricManagedApplication
@@ -96,6 +96,7 @@ rename-mapping:
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
   ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
+
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
   Subnet.networkSecurityGroupId: -|arm-id
@@ -103,16 +104,12 @@ rename-mapping:
   ClientCertificate: ManagedClusterClientCertificate
   ClientCertificate.thumbprint: -|any
   ClientCertificate.issuerThumbprint: -|any
-  ClusterHealthPolicy: ManagedClusterHealthPolicy
-  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
   ClusterState: ServiceFabricManagedClusterState
   ClusterUpgradeCadence: ManagedClusterUpgradeCadence
-  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
   ClusterUpgradeMode: ManagedClusterUpgradeMode
-  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
   SettingsSectionDescription: ClusterFabricSettingsSection
   SettingsParameterDescription: ClusterFabricSettingsParameterDescription
-  IPTag: ManagedClusterIPTag
+  IpTag: ManagedClusterIPTag
   LoadBalancingRule: ManagedClusterLoadBalancingRule
   NetworkSecurityRule: ServiceFabricManagedNetworkSecurityRule
   Direction: ServiceFabricManagedNetworkSecurityRuleDirection
@@ -127,6 +124,7 @@ rename-mapping:
   NodeType.properties.enableOverProvisioning: IsOverProvisioningEnabled
   NodeType.properties.multiplePlacementGroups: HasMultiplePlacementGroups
   NodeType.properties.enableNodePublicIPv6: IsNodePublicIPv6Enabled
+  VmApplication : ServiceFabricManagedVmApplication
   VmssDataDisk: NodeTypeVmssDataDisk
   VmssDataDisk.diskSizeGB: DiskSizeInGB
   VmssExtension: NodeTypeVmssExtension
@@ -173,14 +171,17 @@ rename-mapping:
   ResourceAzStatus.resourceType: -|resource-type
   SecurityType: ServiceFabricManagedClusterSecurityType
   UpdateType: ServiceFabricManagedClusterUpdateType
+  ClusterHealthPolicy: ManagedClusterHealthPolicy
+  ClusterUpgradePolicy: ManagedClusterUpgradePolicy
+  ClusterUpgradeDeltaHealthPolicy: ManagedClusterUpgradeDeltaHealthPolicy
+  ClusterMonitoringPolicy: ManagedClusterMonitoringPolicy
+  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
+  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
   IpConfiguration: ServiceFabricManagedClusterIPConfiguration
   IpConfigurationPublicIPAddressConfiguration: ServiceFabricManagedClusterPublicIPAddressConfiguration
-  IpTag: ServiceFabricManagedClusterIPTag
   ManagedMaintenanceWindowStatus.lastWindowStatusUpdateAtUTC: LastWindowStatusUpdatedOn
   ManagedMaintenanceWindowStatus.lastWindowStartTimeUTC: LastWindowStartOn
   ManagedMaintenanceWindowStatus.lastWindowEndTimeUTC: LastWindowEndOn
-  PrivateIPAddressVersion: ServiceFabricManagedClusterPrivateIPAddressVersion
-  PublicIPAddressVersion: ServiceFabricManagedClusterPublicIPAddressVersion
 
 suppress-abstract-base-class:
 - ManagedServiceProperties

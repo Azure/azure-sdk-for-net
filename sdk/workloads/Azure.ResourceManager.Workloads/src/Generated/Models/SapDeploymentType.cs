@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         public static bool operator ==(SapDeploymentType left, SapDeploymentType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDeploymentType"/> values are not the same. </summary>
         public static bool operator !=(SapDeploymentType left, SapDeploymentType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapDeploymentType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDeploymentType"/>. </summary>
         public static implicit operator SapDeploymentType(string value) => new SapDeploymentType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Workloads.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

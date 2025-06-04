@@ -1,11 +1,13 @@
 # Template for all Python Scripts in this repository
-parameters: 
+parameters:
   SourceDirectory: ''
   BasePathLength: 49
+  Condition: succeeded()
 
 steps:
   - task: PythonScript@0
     displayName: Analyze Path Lengths
+    condition: ${{ parameters.Condition }}
     inputs:
       scriptSource: inline
       script: |

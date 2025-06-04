@@ -15,9 +15,18 @@ namespace Azure.Communication.Messages.Models.Channels
 {
     public partial class WhatsAppMessageTemplateBindingsComponent : IUtf8JsonSerializable, IJsonModel<WhatsAppMessageTemplateBindingsComponent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatsAppMessageTemplateBindingsComponent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WhatsAppMessageTemplateBindingsComponent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WhatsAppMessageTemplateBindingsComponent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.Communication.Messages.Models.Channels
                 throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("refValue"u8);
             writer.WriteStringValue(RefValue);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -36,14 +44,13 @@ namespace Azure.Communication.Messages.Models.Channels
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WhatsAppMessageTemplateBindingsComponent IJsonModel<WhatsAppMessageTemplateBindingsComponent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,7 +67,7 @@ namespace Azure.Communication.Messages.Models.Channels
 
         internal static WhatsAppMessageTemplateBindingsComponent DeserializeWhatsAppMessageTemplateBindingsComponent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,7 +99,7 @@ namespace Azure.Communication.Messages.Models.Channels
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WhatsAppMessageTemplateBindingsComponent)} does not support writing '{options.Format}' format.");
             }
@@ -106,7 +113,7 @@ namespace Azure.Communication.Messages.Models.Channels
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWhatsAppMessageTemplateBindingsComponent(document.RootElement, options);
                     }
                 default:
@@ -120,15 +127,15 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static WhatsAppMessageTemplateBindingsComponent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeWhatsAppMessageTemplateBindingsComponent(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<WhatsAppMessageTemplateBindingsComponent>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

@@ -7,27 +7,21 @@ extends:
     SDKType: client
     MaxParallel: 5
     TimeoutInMinutes: 240
-    SupportedClouds: 'Public,UsGov,Canary'
     CloudConfig:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
         ${{ if not(contains(variables['Build.DefinitionName'], 'tests-weekly')) }}:
           MatrixFilters:
             - ArmTemplateParameters=^(?!.*enableHsm.*true)
-      Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'centraluseuap'
-        # Managed HSM test resources are expensive and provisioning has not been reliable.
-        # Given test coverage of non-canary regions we probably don't need to test in canary.
-        MatrixFilters:
-         - ArmTemplateParameters=^(?!.*enableHsm.*true)
-        # Some resource providers required for attestation are not supported in canary.
-        MatrixReplace:
-         - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation \= $false$2'
-      UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
-        MatrixFilters:
-         - ArmTemplateParameters=^(?!.*enableHsm.*true)
+      # Canary regions are currently not supported in TME so disabling for now
+      # Canary:
+      #   Location: 'centraluseuap'
+      #   # Managed HSM test resources are expensive and provisioning has not been reliable.
+      #   # Given test coverage of non-canary regions we probably don't need to test in canary.
+      #   MatrixFilters:
+      #    - ArmTemplateParameters=^(?!.*enableHsm.*true)
+      #   # Some resource providers required for attestation are not supported in canary.
+      #   MatrixReplace:
+      #    - 'ArmTemplateParameters=(.*)enableAttestation.*?\$true(.*)/$1enableAttestation \= $false$2'
     MatrixConfigs:
       - Name: keyvault_test_matrix
         Path: sdk/keyvault/platform-matrix.json

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Databricks access token. </summary>
+        [WirePath("databricksAccessToken")]
         public string DatabricksAccessToken { get; set; }
         /// <summary> Workspace Url. </summary>
+        [WirePath("workspaceUrl")]
         public Uri WorkspaceUri { get; set; }
     }
 }

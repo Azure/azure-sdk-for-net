@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Relay.Models
         public static bool operator ==(RelaySkuName left, RelaySkuName right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RelaySkuName"/> values are not the same. </summary>
         public static bool operator !=(RelaySkuName left, RelaySkuName right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RelaySkuName"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RelaySkuName"/>. </summary>
         public static implicit operator RelaySkuName(string value) => new RelaySkuName(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Relay.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

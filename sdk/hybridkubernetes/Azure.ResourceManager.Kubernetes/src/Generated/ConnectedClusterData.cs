@@ -114,34 +114,49 @@ namespace Azure.ResourceManager.Kubernetes
         }
 
         /// <summary> The identity of the connected cluster. Current supported identity types: None, SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Base64 encoded public certificate used by the agent to do the initial handshake to the backend services in Azure. </summary>
+        [WirePath("properties.agentPublicKeyCertificate")]
         public string AgentPublicKeyCertificate { get; set; }
         /// <summary> The Kubernetes version of the connected cluster resource. </summary>
+        [WirePath("properties.kubernetesVersion")]
         public string KubernetesVersion { get; }
         /// <summary> Number of nodes present in the connected cluster resource. </summary>
+        [WirePath("properties.totalNodeCount")]
         public int? TotalNodeCount { get; }
         /// <summary> Number of CPU cores present in the connected cluster resource. </summary>
+        [WirePath("properties.totalCoreCount")]
         public int? TotalCoreCount { get; }
         /// <summary> Version of the agent running on the connected cluster resource. </summary>
+        [WirePath("properties.agentVersion")]
         public string AgentVersion { get; }
         /// <summary> Provisioning state of the connected cluster resource. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; set; }
         /// <summary> The Kubernetes distribution running on this connected cluster. </summary>
+        [WirePath("properties.distribution")]
         public string Distribution { get; set; }
         /// <summary> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </summary>
+        [WirePath("properties.infrastructure")]
         public string Infrastructure { get; set; }
         /// <summary> Connected cluster offering. </summary>
+        [WirePath("properties.offering")]
         public string Offering { get; }
         /// <summary> Expiration time of the managed identity certificate. </summary>
+        [WirePath("properties.managedIdentityCertificateExpirationTime")]
         public DateTimeOffset? ManagedIdentityCertificateExpirationOn { get; }
         /// <summary> Time representing the last instance when heart beat was received from the cluster. </summary>
+        [WirePath("properties.lastConnectivityTime")]
         public DateTimeOffset? LastConnectivityOn { get; }
         /// <summary> Represents the connectivity status of the connected cluster. </summary>
+        [WirePath("properties.connectivityStatus")]
         public ConnectivityStatus? ConnectivityStatus { get; }
         /// <summary> Property which describes the state of private link on a connected cluster resource. </summary>
+        [WirePath("properties.privateLinkState")]
         public PrivateLinkState? PrivateLinkState { get; set; }
         /// <summary> The resource id of the private link scope this connected cluster is assigned to, if any. </summary>
+        [WirePath("properties.privateLinkScopeResourceId")]
         public string PrivateLinkScopeResourceId { get; set; }
     }
 }

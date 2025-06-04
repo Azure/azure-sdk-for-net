@@ -36,6 +36,20 @@ namespace Azure.ResourceManager.DevCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string operationId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DevCenter/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/operationStatuses/", false);
+            uri.AppendPath(operationId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string operationId)
         {
             var message = _pipeline.CreateMessage();
@@ -76,7 +90,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 202:
                     {
                         DevCenterOperationStatus value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DevCenterOperationStatus.DeserializeDevCenterOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +119,7 @@ namespace Azure.ResourceManager.DevCenter
                 case 202:
                     {
                         DevCenterOperationStatus value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DevCenterOperationStatus.DeserializeDevCenterOperationStatus(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

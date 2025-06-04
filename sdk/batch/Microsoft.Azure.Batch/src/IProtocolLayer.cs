@@ -74,7 +74,8 @@ namespace Microsoft.Azure.Batch
             bool? allowTaskPreemption,
             Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo, 
-            Models.JobConstraints constraints, 
+            Models.JobConstraints constraints,
+            Models.JobNetworkConfiguration networkConfiguration,
             IList<Models.MetadataItem> metadata, 
             BehaviorManager bhMgr, CancellationToken cancellationToken);
 
@@ -165,6 +166,17 @@ namespace Microsoft.Azure.Batch
             Models.ApplicationPackageReference[] applicationPackageReferences,
             Models.MetadataItem[] metadata,
             Models.NodeCommunicationMode? targetNodeCommunicationMode,
+            string displayName,
+            string vmSize,
+            int? taskSlotsPerNode,
+            Models.TaskSchedulingPolicy taskSchedulingPolicy,
+            bool? enableInterNodeCommunication,
+            Models.VirtualMachineConfiguration virtualMachineConfiguration,
+            Models.NetworkConfiguration networkConfiguration,
+            IList<Models.UserAccount> userAccounts,
+            IList<Models.MountConfiguration> mountConfiguration,
+            Models.UpgradePolicy upgradePolicy,
+            IDictionary<string, string> resourceTags,
             BehaviorManager bhMgr,
             CancellationToken cancellationToken);
 
@@ -226,11 +238,13 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.ComputeNodeDeleteUserHeaders>> DeleteComputeNodeUser(string poolId, string nodeId, string userName, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
-        Task<AzureOperationHeaderResponse<Models.ComputeNodeGetRemoteDesktopHeaders>> GetComputeNodeRDPFile(string poolId, string nodeId, Stream rdpStream, BehaviorManager bhMgr, CancellationToken cancellationToken);
-
         Task<AzureOperationResponse<Models.ComputeNodeGetRemoteLoginSettingsResult, Models.ComputeNodeGetRemoteLoginSettingsHeaders>> GetRemoteLoginSettings(string poolId, string computeNodeId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.ComputeNodeRebootHeaders>> RebootComputeNode(string poolId, string nodeId, Common.ComputeNodeRebootOption? rebootOption, BehaviorManager bhMgr, CancellationToken cancellationToken);
+
+        Task<AzureOperationHeaderResponse<Models.ComputeNodeStartHeaders>> StartComputeNode(string poolId, string nodeId, BehaviorManager bhMgr, CancellationToken cancellationToken);
+
+        Task<AzureOperationHeaderResponse<Models.ComputeNodeDeallocateHeaders>> DeallocateComputeNode(string poolId, string nodeId, Common.ComputeNodeDeallocateOption? deallocateOption, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationHeaderResponse<Models.ComputeNodeReimageHeaders>> ReimageComputeNode(string poolId, string nodeId, Common.ComputeNodeReimageOption? reimageOption, BehaviorManager bhMgr, CancellationToken cancellationToken);
 

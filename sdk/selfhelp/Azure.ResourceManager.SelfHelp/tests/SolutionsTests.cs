@@ -13,12 +13,11 @@ namespace Azure.ResourceManager.SelfHelp.Tests
 
     public class SolutionsTests : SelfHelpManagementTestBase
     {
-        public SolutionsTests(bool isAsync) : base(isAsync)//, RecordedTestMode.Record)
+        public SolutionsTests(bool isAsync) : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
         [Test]
-        [RecordedTest]
         public async Task CreateAndGetSolutionsTest()
         {
             var subId = "6bded6d5-a6af-43e1-96d3-bf71f6f5f8ba";
@@ -26,20 +25,20 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             var resourceName = "DiagRpGwPubDev";
             var solutionResourceName = Recording.GenerateAssetName("testResource");
             ResourceIdentifier scope = new ResourceIdentifier($"/subscriptions/{subId}/resourceGroups/{resourceGroupName}/providers/Microsoft.KeyVault/vaults/{resourceName}");
-            SolutionResourceData resourceData = CreateSolutionResourceData(scope);
+            SelfHelpSolutionData resourceData = CreateSelfHelpSolutionData(scope);
 
-            var createSolutionData = await Client.GetSolutionResources(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
+            var createSolutionData = await Client.GetSelfHelpSolutions(scope).CreateOrUpdateAsync(WaitUntil.Started, solutionResourceName, resourceData);
             Assert.NotNull(createSolutionData);
 
-            var readSolutionData = await Client.GetSolutionResourceAsync(scope, solutionResourceName);
+            var readSolutionData = await Client.GetSelfHelpSolutionAsync(scope, solutionResourceName);
             Assert.NotNull(readSolutionData);
         }
 
-        private SolutionResourceData CreateSolutionResourceData(ResourceIdentifier scope)
+        private SelfHelpSolutionData CreateSelfHelpSolutionData(ResourceIdentifier scope)
         {
-            List<TriggerCriterion> triggerCriterionList = new List<TriggerCriterion>()
+            List<SolutionTriggerCriterion> triggerCriterionList = new List<SolutionTriggerCriterion>()
             {
-                new TriggerCriterion
+                new SolutionTriggerCriterion
                 {
                     Name = "SolutionId",
                     Value = "keyvault-lostdeletedkeys-apollo-solution"
@@ -51,10 +50,8 @@ namespace Azure.ResourceManager.SelfHelp.Tests
             };
 
             List<SelfHelpSection> sections = new List<SelfHelpSection>();
-            SolutionResourceProperties properties = new SolutionResourceProperties(triggerCriterionList, parameters, null, null, null, null, null, sections, null);
-            ;
             ResourceType resourceType = new ResourceType("Microsoft.KeyVault/vaults");
-            var data = new SolutionResourceData(scope, null, resourceType, null, properties, null);
+            var data = new SelfHelpSolutionData(scope, null, resourceType, null, triggerCriterionList, parameters, null, null, null, null, null, null, null);
 
             return data;
         }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerAzureADOnlyAuthenticationResource IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerAzureADOnlyAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerAzureADOnlyAuthenticationResource(_client, data);
         }
 
         async ValueTask<SqlServerAzureADOnlyAuthenticationResource> IOperationSource<SqlServerAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerAzureADOnlyAuthenticationData.DeserializeSqlServerAzureADOnlyAuthenticationData(document.RootElement);
-            return new SqlServerAzureADOnlyAuthenticationResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerAzureADOnlyAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new SqlServerAzureADOnlyAuthenticationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

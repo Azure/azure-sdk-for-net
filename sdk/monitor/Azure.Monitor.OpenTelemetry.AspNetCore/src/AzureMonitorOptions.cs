@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System.Runtime.Serialization;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
@@ -59,6 +60,16 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
         /// </summary>
         public string StorageDirectory { get; set; }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AzureMonitorOptions"/>.
+        /// </summary>
+        public AzureMonitorOptions()
+        {
+            // users can explicitly change it, but by default we don't want internal logs to be reported to Azure Monitor.
+            this.Diagnostics.IsDistributedTracingEnabled = false;
+            this.Diagnostics.IsLoggingEnabled = false;
+        }
+
         internal void SetValueToExporterOptions(AzureMonitorExporterOptions exporterOptions)
         {
             exporterOptions.ConnectionString = ConnectionString;
@@ -66,21 +77,28 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.SamplingRatio = SamplingRatio;
             exporterOptions.StorageDirectory = StorageDirectory;
+            exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
             if (Transport != null)
             {
                 exporterOptions.Transport = Transport;
             }
+            exporterOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+            exporterOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
         }
 
-        internal void SetValueToLiveMetricsExporterOptions(LiveMetricsExporterOptions liveMetricsExporterOptions)
-        {
-            liveMetricsExporterOptions.ConnectionString = ConnectionString;
-            liveMetricsExporterOptions.Credential = Credential;
-            liveMetricsExporterOptions.EnableLiveMetrics = EnableLiveMetrics;
-            if (Transport != null)
-            {
-                liveMetricsExporterOptions.Transport = Transport;
-            }
-        }
+        //internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
+        //{
+        //    liveMetricsOptions.ConnectionString = ConnectionString;
+        //    liveMetricsOptions.Credential = Credential;
+        //    liveMetricsOptions.EnableLiveMetrics = EnableLiveMetrics;
+
+        //    if (Transport != null)
+        //    {
+        //        liveMetricsOptions.Transport = Transport;
+        //    }
+
+        //    liveMetricsOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+        //    liveMetricsOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
+        //}
     }
 }

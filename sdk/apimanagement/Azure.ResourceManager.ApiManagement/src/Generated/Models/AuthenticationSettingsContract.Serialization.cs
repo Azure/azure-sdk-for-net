@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +17,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class AuthenticationSettingsContract : IUtf8JsonSerializable, IJsonModel<AuthenticationSettingsContract>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationSettingsContract>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthenticationSettingsContract>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AuthenticationSettingsContract>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,16 +36,35 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(OAuth2))
             {
                 writer.WritePropertyName("oAuth2"u8);
-                writer.WriteObjectValue<OAuth2AuthenticationSettingsContract>(OAuth2, options);
+                writer.WriteObjectValue(OAuth2, options);
             }
             if (Optional.IsDefined(OpenId))
             {
                 writer.WritePropertyName("openid"u8);
-                writer.WriteObjectValue<OpenIdAuthenticationSettingsContract>(OpenId, options);
+                writer.WriteObjectValue(OpenId, options);
+            }
+            if (Optional.IsCollectionDefined(OAuth2AuthenticationSettings))
+            {
+                writer.WritePropertyName("oAuth2AuthenticationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in OAuth2AuthenticationSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(OpenidAuthenticationSettings))
+            {
+                writer.WritePropertyName("openidAuthenticationSettings"u8);
+                writer.WriteStartArray();
+                foreach (var item in OpenidAuthenticationSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -44,14 +74,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AuthenticationSettingsContract IJsonModel<AuthenticationSettingsContract>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static AuthenticationSettingsContract DeserializeAuthenticationSettingsContract(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -76,6 +105,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             OAuth2AuthenticationSettingsContract oAuth2 = default;
             OpenIdAuthenticationSettingsContract openid = default;
+            IList<OAuth2AuthenticationSettingsContract> oAuth2AuthenticationSettings = default;
+            IList<OpenIdAuthenticationSettingsContract> openidAuthenticationSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,13 +129,132 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     openid = OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("oAuth2AuthenticationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OAuth2AuthenticationSettingsContract> array = new List<OAuth2AuthenticationSettingsContract>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OAuth2AuthenticationSettingsContract.DeserializeOAuth2AuthenticationSettingsContract(item, options));
+                    }
+                    oAuth2AuthenticationSettings = array;
+                    continue;
+                }
+                if (property.NameEquals("openidAuthenticationSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<OpenIdAuthenticationSettingsContract> array = new List<OpenIdAuthenticationSettingsContract>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(OpenIdAuthenticationSettingsContract.DeserializeOpenIdAuthenticationSettingsContract(item, options));
+                    }
+                    openidAuthenticationSettings = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AuthenticationSettingsContract(oAuth2, openid, serializedAdditionalRawData);
+            return new AuthenticationSettingsContract(oAuth2, openid, oAuth2AuthenticationSettings ?? new ChangeTrackingList<OAuth2AuthenticationSettingsContract>(), openidAuthenticationSettings ?? new ChangeTrackingList<OpenIdAuthenticationSettingsContract>(), serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OAuth2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  oAuth2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OAuth2))
+                {
+                    builder.Append("  oAuth2: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OAuth2, options, 2, false, "  oAuth2: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  openid: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(OpenId))
+                {
+                    builder.Append("  openid: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, OpenId, options, 2, false, "  openid: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OAuth2AuthenticationSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  oAuth2AuthenticationSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(OAuth2AuthenticationSettings))
+                {
+                    if (OAuth2AuthenticationSettings.Any())
+                    {
+                        builder.Append("  oAuth2AuthenticationSettings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in OAuth2AuthenticationSettings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  oAuth2AuthenticationSettings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OpenidAuthenticationSettings), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  openidAuthenticationSettings: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(OpenidAuthenticationSettings))
+                {
+                    if (OpenidAuthenticationSettings.Any())
+                    {
+                        builder.Append("  openidAuthenticationSettings: ");
+                        builder.AppendLine("[");
+                        foreach (var item in OpenidAuthenticationSettings)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  openidAuthenticationSettings: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AuthenticationSettingsContract>.Write(ModelReaderWriterOptions options)
@@ -114,7 +264,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(AuthenticationSettingsContract)} does not support writing '{options.Format}' format.");
             }
@@ -128,7 +280,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAuthenticationSettingsContract(document.RootElement, options);
                     }
                 default:

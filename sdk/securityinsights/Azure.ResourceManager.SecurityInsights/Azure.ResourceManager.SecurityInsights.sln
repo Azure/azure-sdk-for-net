@@ -1,19 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{5A14BEB3-319E-4A48-8E43-C3BE353D2764}") = "Azure.ResourceManager.SecurityInsights", "src\Azure.ResourceManager.SecurityInsights.csproj", "{85915CC6-6484-42BE-873B-249AE914E7F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.SecurityInsights", "src\Azure.ResourceManager.SecurityInsights.csproj", "{85915CC6-6484-42BE-873B-249AE914E7F6}"
 EndProject
-Project("{5A14BEB3-319E-4A48-8E43-C3BE353D2764}") = "Azure.ResourceManager.SecurityInsights.Tests", "tests\Azure.ResourceManager.SecurityInsights.Tests.csproj", "{D5D66B35-B40A-4EAA-92FC-9078825FF63A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.SecurityInsights.Tests", "tests\Azure.ResourceManager.SecurityInsights.Tests.csproj", "{D5D66B35-B40A-4EAA-92FC-9078825FF63A}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {A21D424F-757F-42E6-8ACB-193DB083A4E1}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -47,5 +41,11 @@ Global
 		{D5D66B35-B40A-4EAA-92FC-9078825FF63A}.Release|x64.Build.0 = Release|Any CPU
 		{D5D66B35-B40A-4EAA-92FC-9078825FF63A}.Release|x86.ActiveCfg = Release|Any CPU
 		{D5D66B35-B40A-4EAA-92FC-9078825FF63A}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A21D424F-757F-42E6-8ACB-193DB083A4E1}
 	EndGlobalSection
 EndGlobal

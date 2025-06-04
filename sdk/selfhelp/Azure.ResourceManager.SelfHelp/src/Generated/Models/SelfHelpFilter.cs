@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SelfHelpFilter"/>. </summary>
-        public SelfHelpFilter()
+        internal SelfHelpFilter()
         {
         }
 
@@ -64,10 +64,10 @@ namespace Azure.ResourceManager.SelfHelp.Models
         }
 
         /// <summary> Filter name. </summary>
-        public string Name { get; set; }
+        public string Name { get; }
         /// <summary> Filter values. </summary>
-        public string Values { get; set; }
+        public string Values { get; }
         /// <summary> Filter operator. </summary>
-        public string Operator { get; set; }
+        public string Operator { get; }
     }
 }

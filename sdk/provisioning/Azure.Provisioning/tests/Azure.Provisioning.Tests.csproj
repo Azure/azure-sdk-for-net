@@ -1,20 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <PropertyGroup>
+    <LangVersion>12</LangVersion>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.AppContainers\src\Azure.Provisioning.AppContainers.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.ContainerRegistry\src\Azure.Provisioning.ContainerRegistry.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.OperationalInsights\src\Azure.Provisioning.OperationalInsights.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.csproj" />
-    <ProjectReference Include="..\..\Azure.Provisioning.Resources\src\Azure.Provisioning.Resources.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Deployment\src\Azure.Provisioning.Deployment.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="ProvisioningTestBase.cs" />
-    <Compile Remove="ProvisioningTestEnvironment.cs" />
-    <Compile Remove="TestInfrastructure.cs" />
-  </ItemGroup>
-
 </Project>

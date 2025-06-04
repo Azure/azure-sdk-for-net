@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The WafRuleType. </summary>
+    /// <summary>
+    /// The WafRuleType.
+    /// Serialized Name: WafRuleType
+    /// </summary>
     public readonly partial struct WafRuleType : IEquatable<WafRuleType>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string CustomValue = "custom";
         private const string BotValue = "bot";
 
-        /// <summary> managed. </summary>
+        /// <summary>
+        /// managed
+        /// Serialized Name: WafRuleType.managed
+        /// </summary>
         public static WafRuleType Managed { get; } = new WafRuleType(ManagedValue);
-        /// <summary> custom. </summary>
+        /// <summary>
+        /// custom
+        /// Serialized Name: WafRuleType.custom
+        /// </summary>
         public static WafRuleType Custom { get; } = new WafRuleType(CustomValue);
-        /// <summary> bot. </summary>
+        /// <summary>
+        /// bot
+        /// Serialized Name: WafRuleType.bot
+        /// </summary>
         public static WafRuleType Bot { get; } = new WafRuleType(BotValue);
         /// <summary> Determines if two <see cref="WafRuleType"/> values are the same. </summary>
         public static bool operator ==(WafRuleType left, WafRuleType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WafRuleType"/> values are not the same. </summary>
         public static bool operator !=(WafRuleType left, WafRuleType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WafRuleType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WafRuleType"/>. </summary>
         public static implicit operator WafRuleType(string value) => new WafRuleType(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

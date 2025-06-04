@@ -13,11 +13,20 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable, IJsonModel<AgentPoolUpgradeSettings>
+    public partial class AgentPoolUpgradeSettings : IUtf8JsonSerializable, IJsonModel<AgentPoolUpgradeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpgradeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolUpgradeSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AgentPoolUpgradeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,11 +34,20 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            if (Optional.IsDefined(DrainTimeout))
+            {
+                writer.WritePropertyName("drainTimeout"u8);
+                writer.WriteNumberValue(DrainTimeout.Value);
+            }
             if (Optional.IsDefined(MaxSurge))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
+            }
+            if (Optional.IsDefined(MaxUnavailable))
+            {
+                writer.WritePropertyName("maxUnavailable"u8);
+                writer.WriteStringValue(MaxUnavailable);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -39,14 +57,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         AgentPoolUpgradeSettings IJsonModel<AgentPoolUpgradeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,20 +80,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
 
         internal static AgentPoolUpgradeSettings DeserializeAgentPoolUpgradeSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            long? drainTimeout = default;
             string maxSurge = default;
+            string maxUnavailable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("drainTimeout"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    drainTimeout = property.Value.GetInt64();
+                    continue;
+                }
                 if (property.NameEquals("maxSurge"u8))
                 {
                     maxSurge = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("maxUnavailable"u8))
+                {
+                    maxUnavailable = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -85,7 +118,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AgentPoolUpgradeSettings(maxSurge, serializedAdditionalRawData);
+            return new AgentPoolUpgradeSettings(drainTimeout, maxSurge, maxUnavailable, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolUpgradeSettings>.Write(ModelReaderWriterOptions options)
@@ -95,7 +128,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support writing '{options.Format}' format.");
             }
@@ -109,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAgentPoolUpgradeSettings(document.RootElement, options);
                     }
                 default:

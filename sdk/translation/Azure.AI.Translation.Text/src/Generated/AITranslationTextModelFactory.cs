@@ -13,28 +13,28 @@ namespace Azure.AI.Translation.Text
     /// <summary> Model factory for models. </summary>
     public static partial class AITranslationTextModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Text.GetLanguagesResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Text.GetSupportedLanguagesResult"/>. </summary>
         /// <param name="translation"> Languages that support translate API. </param>
         /// <param name="transliteration"> Languages that support transliteration API. </param>
         /// <param name="dictionary"> Languages that support dictionary API. </param>
-        /// <returns> A new <see cref="Text.GetLanguagesResult"/> instance for mocking. </returns>
-        public static GetLanguagesResult GetLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation = null, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = null, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = null)
+        /// <returns> A new <see cref="Text.GetSupportedLanguagesResult"/> instance for mocking. </returns>
+        public static GetSupportedLanguagesResult GetSupportedLanguagesResult(IReadOnlyDictionary<string, TranslationLanguage> translation = null, IReadOnlyDictionary<string, TransliterationLanguage> transliteration = null, IReadOnlyDictionary<string, SourceDictionaryLanguage> dictionary = null)
         {
             translation ??= new Dictionary<string, TranslationLanguage>();
             transliteration ??= new Dictionary<string, TransliterationLanguage>();
             dictionary ??= new Dictionary<string, SourceDictionaryLanguage>();
 
-            return new GetLanguagesResult(translation, transliteration, dictionary, serializedAdditionalRawData: null);
+            return new GetSupportedLanguagesResult(translation, transliteration, dictionary, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslationLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
-        public static TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, string dir = null)
+        public static TranslationLanguage TranslationLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default)
         {
-            return new TranslationLanguage(name, nativeName, dir, serializedAdditionalRawData: null);
+            return new TranslationLanguage(name, nativeName, directionality, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TransliterationLanguage"/>. </summary>
@@ -49,59 +49,59 @@ namespace Azure.AI.Translation.Text
             return new TransliterationLanguage(name, nativeName, scripts?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.CommonScriptModel"/>. </summary>
-        /// <param name="code"> Code identifying the script. </param>
-        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
-        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <returns> A new <see cref="Text.CommonScriptModel"/> instance for mocking. </returns>
-        public static CommonScriptModel CommonScriptModel(string code = null, string name = null, string nativeName = null, string dir = null)
-        {
-            return new CommonScriptModel(code, name, nativeName, dir, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Text.TransliterableScript"/>. </summary>
         /// <param name="code"> Code identifying the script. </param>
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
-        /// <param name="toScripts"> List of scripts available to convert text to. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="targetLanguageScripts"> List of scripts available to convert text to. </param>
         /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, string dir = null, IEnumerable<CommonScriptModel> toScripts = null)
+        public static TransliterableScript TransliterableScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> targetLanguageScripts = null)
         {
-            toScripts ??= new List<CommonScriptModel>();
+            targetLanguageScripts ??= new List<LanguageScript>();
 
             return new TransliterableScript(
                 code,
                 name,
                 nativeName,
-                dir,
+                directionality,
                 serializedAdditionalRawData: null,
-                toScripts?.ToList());
+                targetLanguageScripts?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Text.LanguageScript"/>. </summary>
+        /// <param name="code"> Code identifying the script. </param>
+        /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
+        /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
+        public static LanguageScript LanguageScript(string code = null, string name = null, string nativeName = null, LanguageDirectionality directionality = default)
+        {
+            return new LanguageScript(code, name, nativeName, directionality, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SourceDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="translations"> List of languages with alterative translations and examples for the query expressed in the source language. </param>
         /// <returns> A new <see cref="Text.SourceDictionaryLanguage"/> instance for mocking. </returns>
-        public static SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, string dir = null, IEnumerable<TargetDictionaryLanguage> translations = null)
+        public static SourceDictionaryLanguage SourceDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default, IEnumerable<TargetDictionaryLanguage> translations = null)
         {
             translations ??= new List<TargetDictionaryLanguage>();
 
-            return new SourceDictionaryLanguage(name, nativeName, dir, translations?.ToList(), serializedAdditionalRawData: null);
+            return new SourceDictionaryLanguage(name, nativeName, directionality, translations?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TargetDictionaryLanguage"/>. </summary>
         /// <param name="name"> Display name of the language in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for this language. </param>
-        /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="code"> Language code identifying the target language. </param>
         /// <returns> A new <see cref="Text.TargetDictionaryLanguage"/> instance for mocking. </returns>
-        public static TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, string dir = null, string code = null)
+        public static TargetDictionaryLanguage TargetDictionaryLanguage(string name = null, string nativeName = null, LanguageDirectionality directionality = default, string code = null)
         {
-            return new TargetDictionaryLanguage(name, nativeName, dir, code, serializedAdditionalRawData: null);
+            return new TargetDictionaryLanguage(name, nativeName, directionality, code, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextItem"/>. </summary>
@@ -117,40 +117,40 @@ namespace Azure.AI.Translation.Text
         /// converted into Arab script.
         /// </param>
         /// <returns> A new <see cref="Text.TranslatedTextItem"/> instance for mocking. </returns>
-        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = null, IEnumerable<Translation> translations = null, SourceText sourceText = null)
+        public static TranslatedTextItem TranslatedTextItem(DetectedLanguage detectedLanguage = null, IEnumerable<TranslationText> translations = null, SourceText sourceText = null)
         {
-            translations ??= new List<Translation>();
+            translations ??= new List<TranslationText>();
 
             return new TranslatedTextItem(detectedLanguage, translations?.ToList(), sourceText, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DetectedLanguage"/>. </summary>
         /// <param name="language"> A string representing the code of the detected language. </param>
-        /// <param name="score">
+        /// <param name="confidence">
         /// A float value indicating the confidence in the result.
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
         /// <returns> A new <see cref="Text.DetectedLanguage"/> instance for mocking. </returns>
-        public static DetectedLanguage DetectedLanguage(string language = null, float score = default)
+        public static DetectedLanguage DetectedLanguage(string language = null, float confidence = default)
         {
-            return new DetectedLanguage(language, score, serializedAdditionalRawData: null);
+            return new DetectedLanguage(language, confidence, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.Translation"/>. </summary>
-        /// <param name="to"> A string representing the language code of the target language. </param>
+        /// <summary> Initializes a new instance of <see cref="Text.TranslationText"/>. </summary>
+        /// <param name="targetLanguage"> A string representing the language code of the target language. </param>
         /// <param name="text"> A string giving the translated text. </param>
         /// <param name="transliteration"> An object giving the translated text in the script specified by the toScript parameter. </param>
         /// <param name="alignment"> Alignment information. </param>
-        /// <param name="sentLen"> Sentence boundaries in the input and output texts. </param>
-        /// <returns> A new <see cref="Text.Translation"/> instance for mocking. </returns>
-        public static Translation Translation(string to = null, string text = null, TransliteratedText transliteration = null, TranslatedTextAlignment alignment = null, SentenceLength sentLen = null)
+        /// <param name="sentenceBoundaries"> Sentence boundaries in the input and output texts. </param>
+        /// <returns> A new <see cref="Text.TranslationText"/> instance for mocking. </returns>
+        public static TranslationText TranslationText(string targetLanguage = null, string text = null, TransliteratedText transliteration = null, TranslatedTextAlignment alignment = null, SentenceBoundaries sentenceBoundaries = null)
         {
-            return new Translation(
-                to,
+            return new TranslationText(
+                targetLanguage,
                 text,
                 transliteration,
                 alignment,
-                sentLen,
+                sentenceBoundaries,
                 serializedAdditionalRawData: null);
         }
 
@@ -164,7 +164,7 @@ namespace Azure.AI.Translation.Text
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.TranslatedTextAlignment"/>. </summary>
-        /// <param name="proj">
+        /// <param name="projections">
         /// Maps input text to translated text. The alignment information is only provided when the request
         /// parameter includeAlignment is true. Alignment is returned as a string value of the following
         /// format: [[SourceTextStartIndex]:[SourceTextEndIndex]–[TgtTextStartIndex]:[TgtTextEndIndex]].
@@ -173,27 +173,27 @@ namespace Azure.AI.Translation.Text
         /// be non-contiguous. When no alignment information is available, the alignment element will be empty.
         /// </param>
         /// <returns> A new <see cref="Text.TranslatedTextAlignment"/> instance for mocking. </returns>
-        public static TranslatedTextAlignment TranslatedTextAlignment(string proj = null)
+        public static TranslatedTextAlignment TranslatedTextAlignment(string projections = null)
         {
-            return new TranslatedTextAlignment(proj, serializedAdditionalRawData: null);
+            return new TranslatedTextAlignment(projections, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Text.SentenceLength"/>. </summary>
-        /// <param name="srcSentLen">
+        /// <summary> Initializes a new instance of <see cref="Text.SentenceBoundaries"/>. </summary>
+        /// <param name="sourceSentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <param name="transSentLen">
+        /// <param name="translatedSentencesLengths">
         /// An integer array representing the lengths of the sentences in the translated text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
-        /// <returns> A new <see cref="Text.SentenceLength"/> instance for mocking. </returns>
-        public static SentenceLength SentenceLength(IEnumerable<int> srcSentLen = null, IEnumerable<int> transSentLen = null)
+        /// <returns> A new <see cref="Text.SentenceBoundaries"/> instance for mocking. </returns>
+        public static SentenceBoundaries SentenceBoundaries(IEnumerable<int> sourceSentencesLengths = null, IEnumerable<int> translatedSentencesLengths = null)
         {
-            srcSentLen ??= new List<int>();
-            transSentLen ??= new List<int>();
+            sourceSentencesLengths ??= new List<int>();
+            translatedSentencesLengths ??= new List<int>();
 
-            return new SentenceLength(srcSentLen?.ToList(), transSentLen?.ToList(), serializedAdditionalRawData: null);
+            return new SentenceBoundaries(sourceSentencesLengths?.ToList(), translatedSentencesLengths?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.SourceText"/>. </summary>
@@ -206,16 +206,16 @@ namespace Azure.AI.Translation.Text
 
         /// <summary> Initializes a new instance of <see cref="Text.BreakSentenceItem"/>. </summary>
         /// <param name="detectedLanguage"> The detectedLanguage property is only present in the result object when language auto-detection is requested. </param>
-        /// <param name="sentLen">
+        /// <param name="sentencesLengths">
         /// An integer array representing the lengths of the sentences in the input text.
         /// The length of the array is the number of sentences, and the values are the length of each sentence.
         /// </param>
         /// <returns> A new <see cref="Text.BreakSentenceItem"/> instance for mocking. </returns>
-        public static BreakSentenceItem BreakSentenceItem(DetectedLanguage detectedLanguage = null, IEnumerable<int> sentLen = null)
+        public static BreakSentenceItem BreakSentenceItem(DetectedLanguage detectedLanguage = null, IEnumerable<int> sentencesLengths = null)
         {
-            sentLen ??= new List<int>();
+            sentencesLengths ??= new List<int>();
 
-            return new BreakSentenceItem(detectedLanguage, sentLen?.ToList(), serializedAdditionalRawData: null);
+            return new BreakSentenceItem(detectedLanguage, sentencesLengths?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DictionaryLookupItem"/>. </summary>
@@ -292,7 +292,7 @@ namespace Azure.AI.Translation.Text
         /// A string giving the source term that is a back-translation of the target in a form best
         /// suited for end-user display.
         /// </param>
-        /// <param name="numExamples">
+        /// <param name="examplesCount">
         /// An integer representing the number of examples that are available for this translation pair.
         /// Actual examples must be retrieved with a separate call to lookup examples. The number is mostly
         /// intended to facilitate display in a UX. For example, a user interface may add a hyperlink
@@ -306,9 +306,9 @@ namespace Azure.AI.Translation.Text
         /// field is to provide a user interface with a means to sort back-translations so the most frequent terms are first.
         /// </param>
         /// <returns> A new <see cref="Text.BackTranslation"/> instance for mocking. </returns>
-        public static BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int numExamples = default, int frequencyCount = default)
+        public static BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int examplesCount = default, int frequencyCount = default)
         {
-            return new BackTranslation(normalizedText, displayText, numExamples, frequencyCount, serializedAdditionalRawData: null);
+            return new BackTranslation(normalizedText, displayText, examplesCount, frequencyCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Text.DictionaryExampleItem"/>. </summary>

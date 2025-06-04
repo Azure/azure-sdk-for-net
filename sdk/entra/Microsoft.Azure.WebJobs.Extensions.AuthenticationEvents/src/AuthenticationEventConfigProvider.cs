@@ -43,7 +43,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         [Obsolete("Is not obsolete marked by webjobs team, but chatted and this is correct. It is not being deprecated")]
         public void Initialize(ExtensionConfigContext context)
         {
-            context.AddBindingRule<AuthenticationEventsTriggerAttribute>()
+            context.AddBindingRule<WebJobsAuthenticationEventsTriggerAttribute>()
                     .BindToTrigger(new AuthenticationEventBindingProvider(this));
 
             _base_uri = context.GetWebhookHandler();
@@ -108,8 +108,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
                 //We create an event response handler and attach it to the income HTTP message, then on the trigger we set the function response
                 //in the event response handler and after the executor calls the functions we have reference to the function response.
-                AuthenticationEventResponseHandler eventsResponseHandler = new AuthenticationEventResponseHandler();
-                input.Properties.Add(AuthenticationEventResponseHandler.EventResponseProperty, eventsResponseHandler);
+                WebJobsAuthenticationEventResponseHandler eventsResponseHandler = new WebJobsAuthenticationEventResponseHandler();
+#if NET8_0_OR_GREATER
+                HttpRequestOptionsKey<WebJobsAuthenticationEventResponseHandler> httpRequestOptionsKey = new(WebJobsAuthenticationEventResponseHandler.EventResponseProperty);
+                input.Options.Set(httpRequestOptionsKey, eventsResponseHandler);
+#else
+                input.Properties.Add(WebJobsAuthenticationEventResponseHandler.EventResponseProperty, eventsResponseHandler);
+#endif
 
                 TriggeredFunctionData triggerData = new TriggeredFunctionData()
                 {

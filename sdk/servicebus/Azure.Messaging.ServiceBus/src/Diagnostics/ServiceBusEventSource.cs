@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Reflection;
@@ -197,6 +198,22 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int RunOperationExceptionVerboseEvent = 114;
         internal const int ReceiveMessageCanceledEvent = 115;
 
+        internal const int DeleteMessagesStartEvent = 116;
+        internal const int DeleteMessagesCompleteEvent = 117;
+        internal const int DeleteMessagesExceptionEvent = 118;
+        internal const int PurgeMessagesStartEvent = 119;
+        internal const int PurgeMessagesCompleteEvent = 120;
+        internal const int PurgeMessagesExceptionEvent = 121;
+
+        internal const int ReceiverAcceptSessionTimeoutEvent = 122;
+        internal const int ReceiverAcceptSessionCanceledEvent = 123;
+
+        internal const int DrainLinkStartEvent = 124;
+        internal const int DrainLinkCompleteEvent = 125;
+        internal const int DrainLinkExceptionEvent = 126;
+        internal const int CloseLinkStartEvent = 127;
+        internal const int CloseLinkCompleteEvent = 128;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -340,6 +357,27 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(ReceiveDeferredMessageExceptionEvent, identifier, exception);
             }
         }
+
+        [Event(ReceiverAcceptSessionCanceledEvent, Level = EventLevel.Verbose, Message = "An accept session operation for a receiver was canceled. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public void ReceiverAcceptSessionCanceled(string fullyQualifiedNamespace, string entityPath, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiverAcceptSessionCanceledEvent, fullyQualifiedNamespace, entityPath, exception);
+            }
+        }
+
+        [Event(ReceiverAcceptSessionTimeoutEvent, Level = EventLevel.Verbose, Message = "The receiver accept session call timed out. (Namespace '{0}', Entity path '{1}'). Error Message: '{2}'")]
+        public virtual void ReceiverAcceptSessionTimeout(
+            string fullyQualifiedNamespace,
+            string entityPath,
+            string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(ReceiverAcceptSessionTimeoutEvent, fullyQualifiedNamespace, entityPath, exception);
+            }
+        }
         #endregion
 
         #region Peeking
@@ -354,6 +392,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void PeekMessageStartCore(int eventId, string identifier, long? sequenceNumber, int messageCount)
         {
             fixed (char* identifierPtr = identifier)
@@ -639,6 +678,100 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         {
             WriteEvent(DeadLetterMessageExceptionEvent, identifier, exception, lockToken);
         }
+        #endregion
+
+        #region Batch delete
+
+        [NonEvent]
+        public virtual void DeleteMessagesStart(string identifier, int maxMessages, DateTimeOffset enqueuedTimeUtcOlderThan)
+        {
+            if (IsEnabled())
+            {
+                DeleteMessagesStartCore(identifier, maxMessages, enqueuedTimeUtcOlderThan.ToString());
+            }
+        }
+
+        [Event(DeleteMessagesStartEvent, Level = EventLevel.Informational, Message = "{0}: DeleteMessagesAsync start. MaxMessages = {1}, EnqueuedTimeUtcOlderThan = {2}")]
+        private void DeleteMessagesStartCore(string identifier, int messageCount, string enqueuedTimeUtcOlderThan)
+        {
+            WriteEvent(DeleteMessagesStartEvent, identifier, messageCount, enqueuedTimeUtcOlderThan);
+        }
+
+        [NonEvent]
+        public virtual void DeleteMessagesComplete(string identifier, int messagesDeleted)
+        {
+            if (IsEnabled())
+            {
+                DeleteMessagesCompleteCore(identifier, messagesDeleted);
+            }
+        }
+
+        [Event(DeleteMessagesCompleteEvent, Level = EventLevel.Informational, Message = "{0}: DeleteMessagesAsync done. Deleted '{1}' message(s).")]
+        private void DeleteMessagesCompleteCore(string identifier, int messagesDeleted)
+        {
+            WriteEvent(DeleteMessagesCompleteEvent, identifier, messagesDeleted);
+        }
+
+        [NonEvent]
+        public virtual void DeleteMessagesException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                DeleteMessagesExceptionCore(identifier, exception);
+            }
+        }
+
+        [Event(DeleteMessagesExceptionEvent, Level = EventLevel.Error, Message = "{0}: DeleteMessagesAsync Exception: {1}.")]
+        private void DeleteMessagesExceptionCore(string identifier, string exception)
+        {
+            WriteEvent(DeleteMessagesExceptionEvent, identifier, exception);
+        }
+
+        [NonEvent]
+        public virtual void PurgeMessagesStart(string identifier, DateTimeOffset enqueuedTimeUtcOlderThan)
+        {
+            if (IsEnabled())
+            {
+                PurgeMessagesStartCore(identifier, enqueuedTimeUtcOlderThan.ToString());
+            }
+        }
+
+        [Event(PurgeMessagesStartEvent, Level = EventLevel.Informational, Message = "{0}: PurgeMessagesAsync start. EnqueuedTimeUtcOlderThan = {1}")]
+        private void PurgeMessagesStartCore(string identifier, string enqueuedTimeUtcOlderThan)
+        {
+            WriteEvent(PurgeMessagesStartEvent, identifier, enqueuedTimeUtcOlderThan);
+        }
+
+        [NonEvent]
+        public virtual void PurgeMessagesComplete(string identifier, int messagesPurged)
+        {
+            if (IsEnabled())
+            {
+                PurgeMessagesCompleteCore(identifier, messagesPurged);
+            }
+        }
+
+        [Event(PurgeMessagesCompleteEvent, Level = EventLevel.Informational, Message = "{0}: PurgeMessagesAsync done. Purged '{1}' message(s).")]
+        private void PurgeMessagesCompleteCore(string identifier, int messagesPurged)
+        {
+            WriteEvent(PurgeMessagesCompleteEvent, identifier, messagesPurged);
+        }
+
+        [NonEvent]
+        public virtual void PurgeMessagesException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                PurgeMessagesExceptionCore(identifier, exception);
+            }
+        }
+
+        [Event(PurgeMessagesExceptionEvent, Level = EventLevel.Error, Message = "{0}: PurgeMessagesAsync Exception: {1}.")]
+        private void PurgeMessagesExceptionCore(string identifier, string exception)
+        {
+            WriteEvent(PurgeMessagesExceptionEvent, identifier, exception);
+        }
+
         #endregion
 
         #region Lock renewal
@@ -969,6 +1102,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void ProcessorMessageHandlerExceptionCore(int eventId, string identifier, long sequenceNumber, string exception, string lockToken)
         {
             fixed (char* identifierPtr = identifier)
@@ -1129,6 +1263,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void LinkStateLostCore(int eventId, string identifier, string receiveLinkName, string receiveLinkState, bool isSessionReceiver, string exception)
         {
             fixed (char* identifierPtr = identifier)
@@ -1413,6 +1548,51 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
                 WriteEvent(RequestAuthorizationExceptionEvent, identifier, endpoint, exception);
             }
         }
+
+        [Event(DrainLinkStartEvent, Level = EventLevel.Verbose, Message = "{0}: Starting drain operation.")]
+        public void DrainLinkStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkStartEvent, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(DrainLinkCompleteEvent, Level = EventLevel.Verbose, Message = "{0}: Drain operation completed.")]
+        public void DrainLinkComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkCompleteEvent, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(DrainLinkExceptionEvent, Level = EventLevel.Error, Message = "{0}: Drain operation failed with exception: {1}")]
+        public void DrainLinkException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkExceptionEvent, identifier ?? string.Empty, exception);
+            }
+        }
+
+        [Event(CloseLinkStartEvent, Level = EventLevel.Verbose, Message = "{0}: Starting closure of AMQP link.")]
+        public void CloseLinkStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkStartEvent, identifier ?? string.Empty);
+            }
+        }
+
+        [Event(CloseLinkCompleteEvent, Level = EventLevel.Verbose, Message = "{0}: Closing AMQP link completed.")]
+        public void CloseLinkComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkCompleteEvent, identifier ?? string.Empty);
+            }
+        }
         #endregion
 
         #region Retries
@@ -1682,6 +1862,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
 
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void TransactionDischargedCore(int eventId, string transactionId, string amqpTransactionId, bool rollback)
         {
             fixed (char* transactionIdPtr = transactionId)
@@ -1784,6 +1965,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg3">The third argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, int arg2, string arg3)
         {
             fixed (char* arg1Ptr = arg1)
@@ -1815,6 +1997,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg3">The third argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, long arg2, string arg3)
         {
             fixed (char* arg1Ptr = arg1)
@@ -1846,6 +2029,7 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         /// <param name="arg4">The fourth argument.</param>
         [NonEvent]
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026", Justification = EventSourceSuppressMessage)]
         private unsafe void WriteEvent(int eventId, string arg1, string arg2, string arg3, string arg4)
         {
             fixed (char* arg1Ptr = arg1)

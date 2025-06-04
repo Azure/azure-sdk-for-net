@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 {
     public partial class Sample_DataReplicationRecoveryPointResource
     {
-        // RecoveryPoints_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RecoveryPointsGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetsTheRecoveryPoint()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/RecoveryPoints_Get.json
-            // this example is just showing the usage of "RecoveryPoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/RecoveryPoints_Get.json
+            // this example is just showing the usage of "RecoveryPointModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

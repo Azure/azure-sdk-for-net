@@ -3,12 +3,12 @@
 ## Prerequisites:
 
 - Install Visual Studio 2022 (Community or higher) and make sure you have the latest updates (https://www.visualstudio.com/).
-  - Need at least .NET Framework 4.6.1 and 4.7 development tools
-- Install the **.NET cross-platform development** workloads in VisualStudio
-- Install **.NET 7.0.100 SDK** for your specific platform. (or a higher version within the 7.0.*** band)  (https://dotnet.microsoft.com/download/dotnet-core/7.0)
+  - Install the **.NET desktop development** workload in VisualStudio
+  - Need at least .NET Framework 4.6.2 and 4.7.1 development tools 
+- Install **.NET 9.0.102 SDK** for your specific [platform](https://dotnet.microsoft.com/download). (or a higher version within the 9.0.*** band)  
 - Install the latest version of git (https://git-scm.com/downloads)
-- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 6 or higher, if you plan to make public API changes or are working with generated code snippets.
-- Install [NodeJS](https://nodejs.org/) (16.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
+- Install [PowerShell](https://docs.microsoft.com/powershell/scripting/install/installing-powershell), version 7 or higher, if you plan to make public API changes or are working with generated code snippets.
+- Install [NodeJS](https://nodejs.org/) (22.x.x) if you plan to use [C# code generation](https://github.com/Azure/autorest.csharp).
 - [Fork the repository](https://docs.github.com/get-started/quickstart/fork-a-repo); work will be done on a [topic branch](https://docs.github.com/get-started/quickstart/github-flow#create-a-branch) in your fork and a [pull request opened](https://docs.github.com/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork) against the `main` branch of the Azure SDK for .NET repository when ready for review.
 
 ## GENERAL THINGS TO KNOW:
@@ -31,7 +31,7 @@
 
 ## TO BUILD:
 
-1.  Open any solution, eg "SDKs\Compute\Microsoft.Azure.Management.Compute.sln"
+1.  Open any solution, eg "SDKs\Compute\Azure.ResourceManager.Compute.sln"
 2.  Build solution from Visual Studio
 
 ### Single Service from Command Line
@@ -61,7 +61,7 @@ Run e.g. `msbuild eng\mgmt.proj /t:"Runtests" /p:Scope=Compute`
 In the above example _RunTests_ will build and run tests for Compute only or you can use command line CLI:
 
 ```dotnetcli
-dotnet test Compute\Microsoft.Azure.Management.Compute\tests\Microsoft.Azure.Management.Tests.csproj
+dotnet test Compute\Azure.ResourceManager.Compute\tests\Azure.ResourceManager.Compute.Tests.csproj
 ```
 
 ### Non-Windows command line build
@@ -249,7 +249,7 @@ dotnet build eng\service.proj /p:ServiceDirectory=eventhub /p:UpdateSourceOnBuil
 
 ## API Compatibility Verification
 
-.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/tree/main/src/Microsoft.DotNet.ApiCompat) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
+.NET is using the [ApiCompat tool](https://github.com/dotnet/arcade/pull/14328) to enforce API compatibility between versions. Builds of GA'ed libraries will fail locally and in CI if there are breaking changes.
 
 ### How it works
 Each library needs to provide a `ApiCompatVersion` property which is set to the last GA'ed version of the library that will be used to compare APIs with the current to ensure no breaks have been introduced. Projects with this property set will download the specified package and the ApiCompat (Microsoft.DotNet.ApiCompat) tools package as part of the restore step of the project. Then as a post build step of the project it will run ApiCompat to verify the current APIs are compatible with the last GA'ed version of the APIs. For libraries that wish to disable the APICompat check they can remove the `ApiCompatVersion` property from their project. Our version bump automation will automatically add or increment the `ApiCompatVersion` property to the project when it detects that the version it is changing was a GA version which usually indicates that we just shipped that GA version and so it should be the new baseline for API checks.
@@ -350,7 +350,7 @@ In `sdk\< Service Name >`, you will find projects for services that have already
 1. Client library projects needs to use the $(RequiredTargetFrameworks) *(defined in eng/Directory.Build.Data.props)* property in its TargetFramework while management library projects should use $(SdkTargetFx) *(defined in AzSdk.reference.props)*
 2. Projects of related packages are grouped together in a folder following the structure specified in [Repo Structure](https://github.com/Azure/azure-sdk/blob/main/docs/policies/repostructure.md).
    - Client library packages are in a folder name like ***Microsoft.Azure.< ServiceName >***
-   - Management library packages are in a folder named like ***Microsoft.Azure.Management.< Resource Provider Name >***
+   - Management library packages are in a folder named like ***Azure.ResourceManager.< Resource Provider Name >***
 3. Each shipping package contains a project for their **generated** and /or **Customization** code
    - The folder **'Generated'** contains the generated code
    - The folder **'Customizations'** contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
@@ -371,7 +371,7 @@ See [Data Plane Quick Start Tutorial](https://github.com/Azure/azure-sdk-for-net
 5. Generate the code. See [Generating Client Code](#generating-client-code) below.
 6. **MANDATORY**: Add or update tests for the newly generated code.
 7. Once added to the Azure SDK for .NET, build your local package using [client](#client-libraries) or [management](#management-libraries) library instructions shown in the above sections.
-8. For management libraries run `eng\scripts\Update-Mgmt-Yml.ps1` to update PR include paths in `eng\pipelines\mgmt.yml`
+8. For management libraries run `eng\scripts\Update-Mgmt-CI.ps1` to update PR include paths in `sdk\resourcemanager\ci.mgmt.yml`
 9. Opan a pull request with your changes against the `main` branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
 10. The pull requests will be reviewed and merged by the Azure SDK team
 

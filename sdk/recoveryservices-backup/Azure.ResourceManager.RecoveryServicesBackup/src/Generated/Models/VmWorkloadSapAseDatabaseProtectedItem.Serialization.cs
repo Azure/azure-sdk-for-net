@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     public partial class VmWorkloadSapAseDatabaseProtectedItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,201 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectedItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
-            {
-                writer.WritePropertyName("friendlyName"u8);
-                writer.WriteStringValue(FriendlyName);
-            }
-            if (Optional.IsDefined(ServerName))
-            {
-                writer.WritePropertyName("serverName"u8);
-                writer.WriteStringValue(ServerName);
-            }
-            if (Optional.IsDefined(ParentName))
-            {
-                writer.WritePropertyName("parentName"u8);
-                writer.WriteStringValue(ParentName);
-            }
-            if (Optional.IsDefined(ParentType))
-            {
-                writer.WritePropertyName("parentType"u8);
-                writer.WriteStringValue(ParentType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
-            {
-                writer.WritePropertyName("protectionStatus"u8);
-                writer.WriteStringValue(ProtectionStatus);
-            }
-            if (Optional.IsDefined(ProtectionState))
-            {
-                writer.WritePropertyName("protectionState"u8);
-                writer.WriteStringValue(ProtectionState.Value.ToString());
-            }
-            if (Optional.IsDefined(LastBackupStatus))
-            {
-                writer.WritePropertyName("lastBackupStatus"u8);
-                writer.WriteStringValue(LastBackupStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(LastBackupOn))
-            {
-                writer.WritePropertyName("lastBackupTime"u8);
-                writer.WriteStringValue(LastBackupOn.Value, "O");
-            }
-            if (Optional.IsDefined(LastBackupErrorDetail))
-            {
-                writer.WritePropertyName("lastBackupErrorDetail"u8);
-                writer.WriteObjectValue<BackupErrorDetail>(LastBackupErrorDetail, options);
-            }
-            if (Optional.IsDefined(ProtectedItemDataSourceId))
-            {
-                writer.WritePropertyName("protectedItemDataSourceId"u8);
-                writer.WriteStringValue(ProtectedItemDataSourceId);
-            }
-            if (Optional.IsDefined(ProtectedItemHealthStatus))
-            {
-                writer.WritePropertyName("protectedItemHealthStatus"u8);
-                writer.WriteStringValue(ProtectedItemHealthStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(ExtendedInfo))
-            {
-                writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue<VmWorkloadProtectedItemExtendedInfo>(ExtendedInfo, options);
-            }
-            if (Optional.IsCollectionDefined(KpisHealths))
-            {
-                writer.WritePropertyName("kpisHealths"u8);
-                writer.WriteStartObject();
-                foreach (var item in KpisHealths)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue<KpiResourceHealthDetails>(item.Value, options);
-                }
-                writer.WriteEndObject();
-            }
-            if (Optional.IsCollectionDefined(NodesList))
-            {
-                writer.WritePropertyName("nodesList"u8);
-                writer.WriteStartArray();
-                foreach (var item in NodesList)
-                {
-                    writer.WriteObjectValue<DistributedNodesInfo>(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WritePropertyName("protectedItemType"u8);
-            writer.WriteStringValue(ProtectedItemType);
-            if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
-            {
-                writer.WritePropertyName("backupManagementType"u8);
-                writer.WriteStringValue(BackupManagementType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(WorkloadType))
-            {
-                writer.WritePropertyName("workloadType"u8);
-                writer.WriteStringValue(WorkloadType.Value.ToString());
-            }
-            if (Optional.IsDefined(ContainerName))
-            {
-                writer.WritePropertyName("containerName"u8);
-                writer.WriteStringValue(ContainerName);
-            }
-            if (Optional.IsDefined(SourceResourceId))
-            {
-                writer.WritePropertyName("sourceResourceId"u8);
-                writer.WriteStringValue(SourceResourceId);
-            }
-            if (Optional.IsDefined(PolicyId))
-            {
-                writer.WritePropertyName("policyId"u8);
-                writer.WriteStringValue(PolicyId);
-            }
-            if (Optional.IsDefined(LastRecoverOn))
-            {
-                writer.WritePropertyName("lastRecoveryPoint"u8);
-                writer.WriteStringValue(LastRecoverOn.Value, "O");
-            }
-            if (Optional.IsDefined(BackupSetName))
-            {
-                writer.WritePropertyName("backupSetName"u8);
-                writer.WriteStringValue(BackupSetName);
-            }
-            if (Optional.IsDefined(CreateMode))
-            {
-                writer.WritePropertyName("createMode"u8);
-                writer.WriteStringValue(CreateMode.Value.ToString());
-            }
-            if (Optional.IsDefined(DeferredDeletedOn))
-            {
-                writer.WritePropertyName("deferredDeleteTimeInUTC"u8);
-                writer.WriteStringValue(DeferredDeletedOn.Value, "O");
-            }
-            if (Optional.IsDefined(IsScheduledForDeferredDelete))
-            {
-                writer.WritePropertyName("isScheduledForDeferredDelete"u8);
-                writer.WriteBooleanValue(IsScheduledForDeferredDelete.Value);
-            }
-            if (Optional.IsDefined(DeferredDeleteTimeRemaining))
-            {
-                writer.WritePropertyName("deferredDeleteTimeRemaining"u8);
-                writer.WriteStringValue(DeferredDeleteTimeRemaining);
-            }
-            if (Optional.IsDefined(IsDeferredDeleteScheduleUpcoming))
-            {
-                writer.WritePropertyName("isDeferredDeleteScheduleUpcoming"u8);
-                writer.WriteBooleanValue(IsDeferredDeleteScheduleUpcoming.Value);
-            }
-            if (Optional.IsDefined(IsRehydrate))
-            {
-                writer.WritePropertyName("isRehydrate"u8);
-                writer.WriteBooleanValue(IsRehydrate.Value);
-            }
-            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
-            {
-                writer.WritePropertyName("resourceGuardOperationRequests"u8);
-                writer.WriteStartArray();
-                foreach (var item in ResourceGuardOperationRequests)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(IsArchiveEnabled))
-            {
-                writer.WritePropertyName("isArchiveEnabled"u8);
-                writer.WriteBooleanValue(IsArchiveEnabled.Value);
-            }
-            if (Optional.IsDefined(PolicyName))
-            {
-                writer.WritePropertyName("policyName"u8);
-                writer.WriteStringValue(PolicyName);
-            }
-            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
-            {
-                writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
-                writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(VaultId))
-            {
-                writer.WritePropertyName("vaultId"u8);
-                writer.WriteStringValue(VaultId);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         VmWorkloadSapAseDatabaseProtectedItem IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -236,7 +51,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         internal static VmWorkloadSapAseDatabaseProtectedItem DeserializeVmWorkloadSapAseDatabaseProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -593,7 +408,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectedItem)} does not support writing '{options.Format}' format.");
             }
@@ -607,7 +422,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVmWorkloadSapAseDatabaseProtectedItem(document.RootElement, options);
                     }
                 default:

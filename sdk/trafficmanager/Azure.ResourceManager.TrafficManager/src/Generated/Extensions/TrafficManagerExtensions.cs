@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.TrafficManager
 
         /// <summary>
         /// Gets an object representing a <see cref="TrafficManagerUserMetricsResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="TrafficManagerUserMetricsResource.CreateResourceIdentifier(string)" /> to create a <see cref="TrafficManagerUserMetricsResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableTrafficManagerArmClient.GetTrafficManagerUserMetricsResource(ResourceIdentifier)"/> instead.</description>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.TrafficManager
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Profiles_checkTrafficManagerNameAvailabilityV2</description>
+        /// <description>Profiles_CheckTrafficManagerNameAvailabilityV2</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

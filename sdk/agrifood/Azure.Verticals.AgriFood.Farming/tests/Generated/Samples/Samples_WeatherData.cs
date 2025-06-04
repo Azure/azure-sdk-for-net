@@ -22,7 +22,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -47,7 +47,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -72,7 +72,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -170,7 +170,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient(apiVersion: "2022-11-01-preview");
+            WeatherData client = new FarmBeatsClient(endpoint, credential).GetWeatherDataClient();
 
             using RequestContent content = RequestContent.Create(new
             {

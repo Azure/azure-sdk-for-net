@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.SecurityInsights
         }
 
         /// <summary> Flag that indicates the status of the CMK setting. </summary>
+        [WirePath("properties.customerManagedKey")]
         public bool? IsCustomerManagedKeySet { get; set; }
         /// <summary> Etag of the azure resource. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

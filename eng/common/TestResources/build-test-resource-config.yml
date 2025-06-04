@@ -1,46 +1,53 @@
 parameters:
   - name: SubscriptionConfiguration
     type: string
-    default: $(sub-config-azure-cloud-test-resources)
+    default: '{}'
   - name: SubscriptionConfigurations
     type: object
     default: null
   # EnvVars is used to help diagnose variable conflict issues early
   - name: EnvVars
     type: object
+    default: {}
+  - name: SubscriptionConfigurationFilePaths
+    type: object
     default: null
 
 steps:
-  - ${{ if parameters.SubscriptionConfiguration }}:
-    - pwsh: |
-        $config = @'
-          ${{ parameters.SubscriptionConfiguration }}
-        '@ | ConvertFrom-Json -AsHashtable
+  - task: AzurePowerShell@5
+    displayName: Set Pipeline Subnet Info
+    condition: and(succeeded(), ne(variables['Pool'], ''))
+    env: ${{ parameters.EnvVars }}
+    inputs:
+      azureSubscription: azure-sdk-tests
+      azurePowerShellVersion: LatestVersion
+      pwsh: true
+      ScriptType: InlineScript
+      Inline: |
+        Set-AzContext 'Azure SDK Engineering System'
+        if ($env:Pool -eq 'Azure Pipelines') {
+          Write-Host "Skipping pool subnet lookup when running on an Azure Pipelines hosted pool"
+          Write-Host "##vso[task.setvariable variable=PoolSubnet;]"
+          exit 0
+        }
+        $poolSubnet = (Get-AzResource -ResourceGroupName azsdk-pools -Name $env:Pool -ExpandProperties).Properties.networkProfile.subnetId
+        Write-Host "Setting pipeline subnet env variable PoolSubnet to '$poolSubnet'"
+        Write-Host "##vso[task.setvariable variable=PoolSubnet;]$poolSubnet"
 
-        . ./eng/common/TestResources/SubConfig-Helpers.ps1
-        SetSubscriptionConfiguration $config
-      displayName: Initialize SubscriptionConfiguration variable
-      ${{ if parameters.EnvVars }}:
-        env: ${{ parameters.EnvVars }}
+  - pwsh: |
+      . ./eng/common/TestResources/SubConfig-Helpers.ps1
 
-  - ${{ if parameters.SubscriptionConfigurations }}:
-    - pwsh: |
-        Write-Host "##vso[task.setvariable variable=SubscriptionConfiguration;]{}"
-      displayName: Initialize SubscriptionConfiguration variable for merging
-      condition: eq(variables['SubscriptionConfiguration'], '')
+      $baseSubConfigJson = @'
+        ${{ parameters.SubscriptionConfiguration }}
+      '@.Trim()
 
-    - ${{ each config in parameters.SubscriptionConfigurations }}:
-      - pwsh: |
-          $configBase = @'
-            $(SubscriptionConfiguration)
-          '@ | ConvertFrom-Json -AsHashtable
-          $config = @'
-            ${{ config }}
-          '@ | ConvertFrom-Json -AsHashtable
+      $additionalSubConfigsJson = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurations) }}
+      '@.Trim() -replace '"{', '{' -replace '}"', '}'
 
-          . ./eng/common/TestResources/SubConfig-Helpers.ps1
-          UpdateSubscriptionConfiguration $configBase $config
+      $subConfigFilesJson = @'
+        ${{ convertToJson(parameters.SubscriptionConfigurationFilePaths) }}
+      '@.Trim()
 
-        displayName: Merge Test Resource Configurations
-        ${{ if parameters.EnvVars }}:
-          env: ${{ parameters.EnvVars }}
+      BuildAndSetSubscriptionConfig $baseSubConfigJson $additionalSubConfigsJson $subConfigFilesJson
+    displayName: Merge subscription configurations

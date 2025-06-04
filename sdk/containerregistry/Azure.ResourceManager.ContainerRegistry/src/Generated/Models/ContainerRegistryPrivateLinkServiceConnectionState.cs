@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public ContainerRegistryPrivateLinkServiceConnectionStatus? Status { get; set; }
         /// <summary> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> A message indicating if changes on the service provider require any updates on the consumer. </summary>
+        [WirePath("actionsRequired")]
         public ActionsRequiredForPrivateLinkServiceConsumer? ActionsRequired { get; set; }
     }
 }

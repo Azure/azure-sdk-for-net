@@ -1,0 +1,263 @@
+{
+ "$id": "1",
+ "name": "SpecialHeaders.Repeatability",
+ "apiVersions": [],
+ "enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "ImmediateSuccessResponseRepeatabilityResult",
+   "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.ResponseRepeatabilityResult.anonymous",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "accepted",
+     "value": "accepted",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "rejected",
+     "value": "rejected",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    }
+   ],
+   "namespace": "",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "Output",
+   "decorators": []
+  }
+ ],
+ "constants": [],
+ "models": [],
+ "clients": [
+  {
+   "$id": "8",
+   "kind": "client",
+   "name": "RepeatabilityClient",
+   "namespace": "SpecialHeaders.Repeatability",
+   "doc": "Illustrates OASIS repeatability headers",
+   "methods": [
+    {
+     "$id": "9",
+     "kind": "basic",
+     "name": "immediateSuccess",
+     "accessibility": "public",
+     "apiVersions": [],
+     "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
+     "operation": {
+      "$id": "10",
+      "name": "immediateSuccess",
+      "resourceName": "Repeatability",
+      "doc": "Check we recognize Repeatability-Request-ID and Repeatability-First-Sent.",
+      "accessibility": "public",
+      "parameters": [
+       {
+        "$id": "11",
+        "name": "repeatabilityRequestID",
+        "nameInRequest": "Repeatability-Request-ID",
+        "type": {
+         "$id": "12",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "13",
+        "name": "repeatabilityFirstSent",
+        "nameInRequest": "Repeatability-First-Sent",
+        "type": {
+         "$id": "14",
+         "kind": "utcDateTime",
+         "name": "utcDateTime",
+         "encode": "rfc7231",
+         "wireType": {
+          "$id": "15",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "16",
+        "statusCodes": [
+         204
+        ],
+        "headers": [
+         {
+          "$id": "17",
+          "name": "repeatabilityResult",
+          "nameInResponse": "Repeatability-Result",
+          "doc": "Indicates whether the repeatable request was accepted or rejected.",
+          "type": {
+           "$ref": "2"
+          }
+         }
+        ],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "POST",
+      "uri": "{endpoint}",
+      "path": "/special-headers/repeatability/immediateSuccess",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess",
+      "decorators": []
+     },
+     "parameters": [
+      {
+       "$id": "18",
+       "name": "repeatabilityRequestID",
+       "nameInRequest": "Repeatability-Request-ID",
+       "type": {
+        "$id": "19",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "20",
+       "name": "repeatabilityFirstSent",
+       "nameInRequest": "Repeatability-First-Sent",
+       "type": {
+        "$id": "21",
+        "kind": "utcDateTime",
+        "name": "utcDateTime",
+        "encode": "rfc7231",
+        "wireType": {
+         "$id": "22",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+        "decorators": []
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "23"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess"
+    }
+   ],
+   "parameters": [
+    {
+     "$id": "24",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Service host",
+     "type": {
+      "$id": "25",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client",
+     "defaultValue": {
+      "$id": "26",
+      "type": {
+       "$id": "27",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "value": "http://localhost:3000"
+     }
+    }
+   ],
+   "decorators": [],
+   "crossLanguageDefinitionId": "SpecialHeaders.Repeatability",
+   "apiVersions": []
+  }
+ ]
+}

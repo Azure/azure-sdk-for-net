@@ -8,11 +8,12 @@ azure-arm: true
 csharp: true
 library-name: EventGrid
 namespace: Azure.ResourceManager.EventGrid
-require: https://github.com/Azure/azure-rest-api-specs/blob/08bbb7fa323c7ac24eab4e4b884148ffb8c330ad/specification/eventgrid/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/79c3ab8586bd78947815ebf39b66584f67095c2f/specification/eventgrid/resource-manager/readme.md
+#tag: package-2025-04-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
   - Topics_ListEventTypes # because we use customized code to rewrite this operation
@@ -26,6 +27,10 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.EventGrid/{parentType}/{parentName}/privateEndpointConnections/{privateEndpointConnectionName}|Microsoft.EventGrid/topics/privateEndpointConnections: EventGridTopicPrivateEndpointConnection
@@ -118,7 +123,6 @@ rename-mapping:
   ClientGroup: EventGridNamespaceClientGroup
   Namespace: EventGridNamespace
   PermissionBinding: EventGridNamespacePermissionBinding
-  ClientAuthentication: EventGridNamespaceClientAuthentication
   ClientProvisioningState: EventGridNamespaceClientProvisioningState
   ClientState: EventGridNamespaceClientState
   Filter: EventGridFilter
@@ -145,6 +149,8 @@ rename-mapping:
   WebHookEventSubscriptionDestination.properties.endpointUrl: Endpoint|Uri
   WebHookEventSubscriptionDestination.properties.endpointBaseUrl: BaseEndpoint|Uri
   EventSubscriptionFullUrl.endpointUrl: Endpoint|Uri
+  Subscription.properties.expirationTimeUtc: ExpireOn
+  SubscriptionUpdateParameters.properties.expirationTimeUtc: ExpireOn
 
 directive:
   - from: EventGrid.json

@@ -91,18 +91,25 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> The complex type of the extended location. </summary>
+        [WirePath("extendedLocation")]
         public ContainerAppExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Provisioning state of the Kubernetes Environment. </summary>
+        [WirePath("properties.provisioningState")]
         public ContainerAppConnectedEnvironmentProvisioningState? ProvisioningState { get; }
         /// <summary> Any errors that occurred during deployment or deployment validation. </summary>
+        [WirePath("properties.deploymentErrors")]
         public string DeploymentErrors { get; }
         /// <summary> Default Domain Name for the cluster. </summary>
+        [WirePath("properties.defaultDomain")]
         public string DefaultDomain { get; }
         /// <summary> Static IP of the connectedEnvironment. </summary>
+        [WirePath("properties.staticIp")]
         public IPAddress StaticIP { get; set; }
         /// <summary> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </summary>
+        [WirePath("properties.daprAIConnectionString")]
         public string DaprAIConnectionString { get; set; }
         /// <summary> Custom domain configuration for the environment. </summary>
+        [WirePath("properties.customDomainConfiguration")]
         public ContainerAppCustomDomainConfiguration CustomDomainConfiguration { get; set; }
     }
 }

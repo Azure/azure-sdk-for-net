@@ -63,15 +63,18 @@ namespace Azure.ResourceManager.ApiManagement
         /// <param name="systemData"> The systemData. </param>
         /// <param name="title"> Backend Title. </param>
         /// <param name="description"> Backend Description. </param>
-        /// <param name="resourceUri"> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
+        /// <param name="resourceUri"> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </param>
         /// <param name="properties"> Backend Properties contract. </param>
         /// <param name="credentials"> Backend Credentials Contract Properties. </param>
-        /// <param name="proxy"> Backend Proxy Contract Properties. </param>
+        /// <param name="proxy"> Backend gateway Contract Properties. </param>
         /// <param name="tls"> Backend TLS Properties. </param>
+        /// <param name="circuitBreaker"> Backend Circuit Breaker Configuration. </param>
+        /// <param name="pool"></param>
+        /// <param name="typePropertiesType"> Type of the backend. A backend can be either Single or Pool. </param>
         /// <param name="uri"> Runtime Url of the Backend. </param>
         /// <param name="protocol"> Backend communication protocol. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ApiManagementBackendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string title, string description, Uri resourceUri, BackendProperties properties, BackendCredentialsContract credentials, BackendProxyContract proxy, BackendTlsProperties tls, BackendCircuitBreaker circuitBreaker, BackendBaseParametersPool pool, BackendType? typePropertiesType, Uri uri, BackendProtocol? protocol, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Title = title;
             Description = description;
@@ -80,20 +83,27 @@ namespace Azure.ResourceManager.ApiManagement
             Credentials = credentials;
             Proxy = proxy;
             Tls = tls;
+            CircuitBreaker = circuitBreaker;
+            Pool = pool;
+            TypePropertiesType = typePropertiesType;
             Uri = uri;
             Protocol = protocol;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Backend Title. </summary>
+        [WirePath("properties.title")]
         public string Title { get; set; }
         /// <summary> Backend Description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
-        /// <summary> Management Uri of the Resource in External System. This url can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        /// <summary> Management Uri of the Resource in External System. This URL can be the Arm Resource Id of Logic Apps, Function Apps or API Apps. </summary>
+        [WirePath("properties.resourceId")]
         public Uri ResourceUri { get; set; }
         /// <summary> Backend Properties contract. </summary>
         internal BackendProperties Properties { get; set; }
         /// <summary> Backend Service Fabric Cluster Properties. </summary>
+        [WirePath("properties.properties.serviceFabricCluster")]
         public BackendServiceFabricClusterProperties BackendServiceFabricCluster
         {
             get => Properties is null ? default : Properties.ServiceFabricCluster;
@@ -106,14 +116,50 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Backend Credentials Contract Properties. </summary>
+        [WirePath("properties.credentials")]
         public BackendCredentialsContract Credentials { get; set; }
-        /// <summary> Backend Proxy Contract Properties. </summary>
+        /// <summary> Backend gateway Contract Properties. </summary>
+        [WirePath("properties.proxy")]
         public BackendProxyContract Proxy { get; set; }
         /// <summary> Backend TLS Properties. </summary>
+        [WirePath("properties.tls")]
         public BackendTlsProperties Tls { get; set; }
+        /// <summary> Backend Circuit Breaker Configuration. </summary>
+        internal BackendCircuitBreaker CircuitBreaker { get; set; }
+        /// <summary> The rules for tripping the backend. </summary>
+        [WirePath("properties.circuitBreaker.rules")]
+        public IList<CircuitBreakerRule> CircuitBreakerRules
+        {
+            get
+            {
+                if (CircuitBreaker is null)
+                    CircuitBreaker = new BackendCircuitBreaker();
+                return CircuitBreaker.Rules;
+            }
+        }
+
+        /// <summary> Gets or sets the pool. </summary>
+        internal BackendBaseParametersPool Pool { get; set; }
+        /// <summary> The list of backend entities belonging to a pool. </summary>
+        [WirePath("properties.pool.services")]
+        public IList<BackendPoolItem> PoolServices
+        {
+            get
+            {
+                if (Pool is null)
+                    Pool = new BackendBaseParametersPool();
+                return Pool.Services;
+            }
+        }
+
+        /// <summary> Type of the backend. A backend can be either Single or Pool. </summary>
+        [WirePath("properties.type")]
+        public BackendType? TypePropertiesType { get; set; }
         /// <summary> Runtime Url of the Backend. </summary>
+        [WirePath("properties.url")]
         public Uri Uri { get; set; }
         /// <summary> Backend communication protocol. </summary>
+        [WirePath("properties.protocol")]
         public BackendProtocol? Protocol { get; set; }
     }
 }

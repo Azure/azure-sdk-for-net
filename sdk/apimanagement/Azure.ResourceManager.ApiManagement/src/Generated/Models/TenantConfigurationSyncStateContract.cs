@@ -86,26 +86,34 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> The name of Git branch. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary> The latest commit Id. </summary>
+        [WirePath("properties.commitId")]
         public string CommitId { get; set; }
         /// <summary> value indicating if last sync was save (true) or deploy (false) operation. </summary>
+        [WirePath("properties.isExport")]
         public bool? IsExported { get; set; }
         /// <summary> value indicating if last synchronization was later than the configuration change. </summary>
+        [WirePath("properties.isSynced")]
         public bool? IsSynced { get; set; }
         /// <summary> value indicating whether Git configuration access is enabled. </summary>
+        [WirePath("properties.isGitEnabled")]
         public bool? IsGitEnabled { get; set; }
         /// <summary>
         /// The date of the latest synchronization. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
+        [WirePath("properties.syncDate")]
         public DateTimeOffset? SyncOn { get; set; }
         /// <summary>
         /// The date of the latest configuration change. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard.
         ///
         /// </summary>
+        [WirePath("properties.configurationChangeDate")]
         public DateTimeOffset? ConfigurationChangeOn { get; set; }
         /// <summary> Most recent tenant configuration operation identifier. </summary>
+        [WirePath("properties.lastOperationId")]
         public string LastOperationId { get; set; }
     }
 }

@@ -56,7 +56,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextTask>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
@@ -81,7 +81,7 @@ namespace Azure.AI.TextAnalytics
                 case 200:
                     {
                         AnalyzeTextTaskResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeTextTaskResult.DeserializeAnalyzeTextTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,7 +110,7 @@ namespace Azure.AI.TextAnalytics
                 case 200:
                     {
                         AnalyzeTextTaskResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeTextTaskResult.DeserializeAnalyzeTextTaskResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -133,7 +133,7 @@ namespace Azure.AI.TextAnalytics
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AnalyzeTextJobsInput>(body);
+            content.JsonWriter.WriteObjectValue(body);
             request.Content = content;
             return message;
         }
@@ -230,7 +230,7 @@ namespace Azure.AI.TextAnalytics
                 case 200:
                     {
                         AnalyzeTextJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.AI.TextAnalytics
                 case 200:
                     {
                         AnalyzeTextJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeTextJobState.DeserializeAnalyzeTextJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

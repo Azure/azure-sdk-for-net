@@ -28,9 +28,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="storageAccountType">The storage account type for
         /// managed disk.</param>
-        public ManagedDisk(StorageAccountType? storageAccountType = default(StorageAccountType?))
+        /// <param name="securityProfile">Specifies the security profile
+        /// settings for the managed disk.</param>
+        public ManagedDisk(StorageAccountType? storageAccountType = default(StorageAccountType?), VMDiskSecurityProfile securityProfile = default(VMDiskSecurityProfile))
         {
             StorageAccountType = storageAccountType;
+            SecurityProfile = securityProfile;
             CustomInit();
         }
 
@@ -48,6 +51,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </remarks>
         [JsonProperty(PropertyName = "storageAccountType")]
         public StorageAccountType? StorageAccountType { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the security profile settings for the
+        /// managed disk.
+        /// </summary>
+        [JsonProperty(PropertyName = "securityProfile")]
+        public VMDiskSecurityProfile SecurityProfile { get; set; }
 
     }
 }

@@ -15,24 +15,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(ProcessName))
-            {
-                writer.WritePropertyName("ProcessName"u8);
-                writer.WriteStringValue(ProcessName);
-            }
-            if (Optional.IsDefined(CpuPercentage))
-            {
-                writer.WritePropertyName("CpuPercentage"u8);
-                writer.WriteNumberValue(CpuPercentage.Value);
-            }
+            writer.WritePropertyName("ProcessName"u8);
+            writer.WriteStringValue(ProcessName);
+            writer.WritePropertyName("CpuPercentage"u8);
+            writer.WriteNumberValue(CpuPercentage);
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ProcessCpuData>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

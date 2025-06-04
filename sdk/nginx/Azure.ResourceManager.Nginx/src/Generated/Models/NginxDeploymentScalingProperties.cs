@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Nginx.Models
 {
-    /// <summary> The NginxDeploymentScalingProperties. </summary>
-    internal partial class NginxDeploymentScalingProperties
+    /// <summary> Information on how the deployment will be scaled. </summary>
+    public partial class NginxDeploymentScalingProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,18 +48,23 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
         public NginxDeploymentScalingProperties()
         {
+            Profiles = new ChangeTrackingList<NginxScaleProfile>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentScalingProperties"/>. </summary>
         /// <param name="capacity"></param>
+        /// <param name="profiles"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentScalingProperties(int? capacity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxDeploymentScalingProperties(int? capacity, IList<NginxScaleProfile> profiles, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Capacity = capacity;
+            Profiles = profiles;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the capacity. </summary>
         public int? Capacity { get; set; }
+        /// <summary> Gets the profiles. </summary>
+        public IList<NginxScaleProfile> Profiles { get; }
     }
 }

@@ -13,6 +13,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
     public class CallAutomationEventParserTests
     {
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void EventParserShouldParseEventWithEventDataAndType()
         {
             // arrange
@@ -35,6 +36,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void EventParserShouldParseEventWithCloudEvent()
         {
             // arrange
@@ -62,6 +64,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void EventParserShouldParseEventWithBinaryData()
         {
             // arrange
@@ -89,6 +92,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void EventParserShouldParseEventsWithCloudEvents()
         {
             // arrange
@@ -132,6 +136,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void EventParserShouldParseEventsWithBinaryData()
         {
             // arrange
@@ -175,6 +180,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecordingStateChangedEventParsed_Test()
         {
             CallRecordingStateChanged @event = CommunicationCallingServerModelFactory.CallRecordingStateChanged(
@@ -201,6 +207,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void PlayCompletedEventParsed_Test()
         {
             PlayCompleted @event = CommunicationCallingServerModelFactory.PlayCompleted(
@@ -225,6 +232,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void PlayFailedEventParsed_Test()
         {
             PlayFailed @event = CommunicationCallingServerModelFactory.PlayFailed(
@@ -249,6 +257,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecognizeCompletedEventParsed_Test()
         {
             RecognizeCompleted @event = CommunicationCallingServerModelFactory.RecognizeCompleted(
@@ -282,6 +291,7 @@ namespace Azure.Communication.CallingServer.Tests.Events
         }
 
         [Test]
+        [Ignore("Disabling this test as the library is flagged for decomissioning.")]
         public void RecognizeFailedEventParsed_Test()
         {
             RecognizeFailed @event = CommunicationCallingServerModelFactory.RecognizeFailed(

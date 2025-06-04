@@ -7,7 +7,7 @@ This sample shows how to call GetPartyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = await client.GetPartyAsync("<partyId>", null);
 
@@ -18,7 +18,7 @@ This sample shows how to call GetPartyAsync with all parameters and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = await client.GetPartyAsync("<partyId>", null);
 
@@ -42,7 +42,7 @@ This sample shows how to call GetParty and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = client.GetParty("<partyId>", null);
 
@@ -53,7 +53,7 @@ This sample shows how to call GetParty with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = client.GetParty("<partyId>", null);
 
@@ -77,7 +77,7 @@ This sample shows how to call CreateOrUpdateAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = await client.CreateOrUpdateAsync("<partyId>", content);
@@ -89,7 +89,7 @@ This sample shows how to call CreateOrUpdateAsync with all parameters and reques
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -124,7 +124,7 @@ This sample shows how to call CreateOrUpdate and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 using RequestContent content = RequestContent.Create(new object());
 Response response = client.CreateOrUpdate("<partyId>", content);
@@ -136,7 +136,7 @@ This sample shows how to call CreateOrUpdate with all parameters and request con
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -171,7 +171,7 @@ This sample shows how to call DeleteAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = await client.DeleteAsync("<partyId>");
 
@@ -181,7 +181,7 @@ This sample shows how to call DeleteAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = await client.DeleteAsync("<partyId>");
 
@@ -194,7 +194,7 @@ This sample shows how to call Delete.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = client.Delete("<partyId>");
 
@@ -204,7 +204,7 @@ This sample shows how to call Delete with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = client.Delete("<partyId>");
 
@@ -217,7 +217,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync and parse the resu
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -230,7 +230,7 @@ This sample shows how to call GetCascadeDeleteJobDetailsAsync with all parameter
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = await client.GetCascadeDeleteJobDetailsAsync("<jobId>", null);
 
@@ -255,7 +255,7 @@ This sample shows how to call GetCascadeDeleteJobDetails and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -268,7 +268,7 @@ This sample shows how to call GetCascadeDeleteJobDetails with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Response response = client.GetCascadeDeleteJobDetails("<jobId>", null);
 
@@ -293,7 +293,7 @@ This sample shows how to call GetPartiesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 await foreach (BinaryData item in client.GetPartiesAsync(null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -305,7 +305,7 @@ This sample shows how to call GetPartiesAsync with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 await foreach (BinaryData item in client.GetPartiesAsync(new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -330,7 +330,7 @@ This sample shows how to call GetParties and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 foreach (BinaryData item in client.GetParties(null, null, null, null, null, null, null, null, null, null, null))
 {
@@ -342,7 +342,7 @@ This sample shows how to call GetParties with all parameters and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 foreach (BinaryData item in client.GetParties(new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
 {
@@ -367,7 +367,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", null);
 BinaryData responseData = operation.Value;
@@ -381,7 +381,7 @@ This sample shows how to call CreateCascadeDeleteJobAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Operation<BinaryData> operation = await client.CreateCascadeDeleteJobAsync(WaitUntil.Completed, "<jobId>", "<partyId>", null);
 BinaryData responseData = operation.Value;
@@ -407,7 +407,7 @@ This sample shows how to call CreateCascadeDeleteJob and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", null);
 BinaryData responseData = operation.Value;
@@ -421,7 +421,7 @@ This sample shows how to call CreateCascadeDeleteJob with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 TokenCredential credential = new DefaultAzureCredential();
-Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient(apiVersion: "2022-11-01-preview");
+Parties client = new FarmBeatsClient(endpoint, credential).GetPartiesClient();
 
 Operation<BinaryData> operation = client.CreateCascadeDeleteJob(WaitUntil.Completed, "<jobId>", "<partyId>", null);
 BinaryData responseData = operation.Value;

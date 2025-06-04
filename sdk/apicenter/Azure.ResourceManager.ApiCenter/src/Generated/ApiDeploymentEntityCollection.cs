@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = await _apiDeploymentEntityDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiCenterArmOperation<ApiDeploymentEntityResource>(Response.FromValue(new ApiDeploymentEntityResource(Client, response), response.GetRawResponse()));
+                var uri = _apiDeploymentEntityDeploymentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<ApiDeploymentEntityResource>(Response.FromValue(new ApiDeploymentEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.ApiCenter
             try
             {
                 var response = _apiDeploymentEntityDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data, cancellationToken);
-                var operation = new ApiCenterArmOperation<ApiDeploymentEntityResource>(Response.FromValue(new ApiDeploymentEntityResource(Client, response), response.GetRawResponse()));
+                var uri = _apiDeploymentEntityDeploymentsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, deploymentName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ApiCenterArmOperation<ApiDeploymentEntityResource>(Response.FromValue(new ApiDeploymentEntityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

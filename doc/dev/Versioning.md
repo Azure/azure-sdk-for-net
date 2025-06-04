@@ -45,8 +45,8 @@ They will use the following format which is also used by the .NET team:
 ```
 FILEMAJOR.FILEMINOR.FILEPATCH.FILEREVISION
 ```
-- `FILEMAJOR`: Specified in the first part of `VersionPrefix` property.
-- `FILEMINOR`: Set to `MINOR * 100 + PATCH / 100`, where `MINOR` and `PATCH` are the 2nd and 3rd parts of `VersionPrefix` property.
+- `FILEMAJOR`: Specified in the first part of `Version` property.
+- `FILEMINOR`: Set to `MINOR * 100 + PATCH / 100`, where `MINOR` and `PATCH` are the 2nd and 3rd parts of `Version` property.
 - `FILEPATCH`: Set to `(PATCH % 100) * 100 + yy`.
 - `FILEREVISION`: Set to `(50 * mm + dd) * 100 + r`. This algorithm makes it easy to parse the month and date from `FILEREVISION` while staying in the range of a short which is what a version element uses.
 

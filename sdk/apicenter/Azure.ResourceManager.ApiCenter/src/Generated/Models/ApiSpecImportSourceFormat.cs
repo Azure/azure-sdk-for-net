@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         public static bool operator ==(ApiSpecImportSourceFormat left, ApiSpecImportSourceFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ApiSpecImportSourceFormat"/> values are not the same. </summary>
         public static bool operator !=(ApiSpecImportSourceFormat left, ApiSpecImportSourceFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ApiSpecImportSourceFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ApiSpecImportSourceFormat"/>. </summary>
         public static implicit operator ApiSpecImportSourceFormat(string value) => new ApiSpecImportSourceFormat(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

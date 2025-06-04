@@ -51,8 +51,31 @@ namespace Azure.Messaging.ServiceBus
             lockTokenGuid, deliveryCount, lockedUntil, sequenceNumber, deadLetterSource, enqueuedSequenceNumber, enqueuedTime, ServiceBusMessageState.Active);
 
         /// <summary>
-        /// Creates a new ServiceBusReceivedMessage instance for mocking.
+        /// Creates a new <see cref="ServiceBus.ServiceBusReceivedMessage"/> instance for mocking.
         /// </summary>
+        /// <param name="body">The binary data to assign as the value of <see cref="ServiceBusReceivedMessage.Body"/>.</param>
+        /// <param name="messageId">The message identifier to assign as the value of <see cref="ServiceBusReceivedMessage.MessageId"/>.</param>
+        /// <param name="partitionKey">The partition key to assign as the value of <see cref="ServiceBusReceivedMessage.PartitionKey"/>.</param>
+        /// <param name="viaPartitionKey">The "via partition key" to assign as the value of <see cref="ServiceBusReceivedMessage.TransactionPartitionKey"/>.</param>
+        /// <param name="sessionId">The session identifier to assign as the value of <see cref="ServiceBusReceivedMessage.SessionId"/>.</param>
+        /// <param name="replyToSessionId">The "reply to" session identifier to assign as the value of <see cref="ServiceBusReceivedMessage.ReplyToSessionId"/>.</param>
+        /// <param name="timeToLive">The time interval to assign as the value of <see cref="ServiceBusReceivedMessage.TimeToLive"/>.</param>
+        /// <param name="correlationId">The correlation identifier to assign as the value of <see cref="ServiceBusReceivedMessage.CorrelationId"/>.</param>
+        /// <param name="subject">The subject to assign as the value of <see cref="ServiceBusReceivedMessage.Subject"/>.</param>
+        /// <param name="to">The "to" value to assign as the value of <see cref="ServiceBusReceivedMessage.To"/>.</param>
+        /// <param name="contentType">The content type to assign as the value of <see cref="ServiceBusReceivedMessage.ContentType"/>.</param>
+        /// <param name="replyTo">The "reply to" value to assign as the value of <see cref="ServiceBusReceivedMessage.ReplyTo"/>.</param>
+        /// <param name="scheduledEnqueueTime">The time stamp to assign as the value of <see cref="ServiceBusReceivedMessage.ScheduledEnqueueTime"/>.</param>
+        /// <param name="properties">The set of application properties to assign as the value of <see cref="ServiceBusReceivedMessage.ApplicationProperties"/>.</param>
+        /// <param name="lockTokenGuid">The token to assign as the value of <see cref="ServiceBusReceivedMessage.LockToken"/>.</param>
+        /// <param name="deliveryCount">The count to assign as the value of <see cref="ServiceBusReceivedMessage.DeliveryCount"/>.</param>
+        /// <param name="lockedUntil">The "locked until" time stamp to assign as the value of <see cref="ServiceBusReceivedMessage.LockedUntil"/>.</param>
+        /// <param name="sequenceNumber">The sequence number to assign as the value of <see cref="ServiceBusReceivedMessage.SequenceNumber"/>.</param>
+        /// <param name="deadLetterSource">The source to assign as the value of <see cref="ServiceBusReceivedMessage.DeadLetterSource"/>.</param>
+        /// <param name="enqueuedSequenceNumber">The sequence number to assign as the value of <see cref="ServiceBusReceivedMessage.EnqueuedSequenceNumber"/>.</param>
+        /// <param name="enqueuedTime">The time stamp to assign as the value of <see cref="ServiceBusReceivedMessage.EnqueuedTime"/>.</param>
+        /// <param name="serviceBusMessageState">The state of the message to assign as the value of <see cref="ServiceBusReceivedMessage.State"/>.</param>
+        /// <returns>The populated <see cref="ServiceBus.ServiceBusReceivedMessage"/> instance to use for mocking.</returns>
         public static ServiceBusReceivedMessage ServiceBusReceivedMessage(
             BinaryData body = default,
             string messageId = default,
@@ -141,8 +164,25 @@ namespace Azure.Messaging.ServiceBus
         }
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.QueueProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="QueueProperties.Name"/>.</param>
+        /// <param name="lockDuration">The duration to assign as the value of <see cref="QueueProperties.LockDuration"/>.</param>
+        /// <param name="maxSizeInMegabytes">The size to assign as the value of <see cref="QueueProperties.MaxSizeInMegabytes"/>.</param>
+        /// <param name="requiresDuplicateDetection">The boolean flag to assign as the value of <see cref="QueueProperties.RequiresDuplicateDetection"/>.</param>
+        /// <param name="requiresSession">The boolean flag to assign as the value of <see cref="QueueProperties.RequiresSession"/>.</param>
+        /// <param name="defaultMessageTimeToLive">The time interval to assign as the value of <see cref="QueueProperties.DefaultMessageTimeToLive"/>.</param>
+        /// <param name="autoDeleteOnIdle">The boolean flag to assign as the value of <see cref="QueueProperties.AutoDeleteOnIdle"/>.</param>
+        /// <param name="deadLetteringOnMessageExpiration">The boolean flag to assign as the value of <see cref="QueueProperties.DeadLetteringOnMessageExpiration"/>.</param>
+        /// <param name="duplicateDetectionHistoryTimeWindow">The time interval to assign as the value of <see cref="QueueProperties.DuplicateDetectionHistoryTimeWindow"/>.</param>
+        /// <param name="maxDeliveryCount">The count to assign as the value of <see cref="QueueProperties.MaxDeliveryCount"/>.</param>
+        /// <param name="enableBatchedOperations">The boolean flag to assign as the value of <see cref="QueueProperties.EnableBatchedOperations"/>.</param>
+        /// <param name="status">The status to assign as the value of <see cref="QueueProperties.Status"/>.</param>
+        /// <param name="forwardTo">The name of the "forward to" entity to assign as the value of <see cref="QueueProperties.ForwardTo"/>.</param>
+        /// <param name="forwardDeadLetteredMessagesTo">The name of the "forward to" entity to assign as the value of <see cref="QueueProperties.ForwardDeadLetteredMessagesTo"/>.</param>
+        /// <param name="userMetadata">The metadata to assign as the value of <see cref="QueueProperties.UserMetadata"/>.</param>
+        /// <param name="enablePartitioning">The boolean flag to assign as the value of <see cref="QueueProperties.EnablePartitioning"/>.</param>
+        /// <returns>The populated <see cref="Administration.QueueProperties"/> instance to use for mocking.</returns>
         public static QueueProperties QueueProperties(
             string name,
             TimeSpan lockDuration,
@@ -181,7 +221,7 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.QueueProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.QueueProperties"/> instance for mocking.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static QueueProperties QueueProperties(
@@ -224,7 +264,7 @@ namespace Azure.Messaging.ServiceBus
                 };
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.TopicProperties"/> instance for mocking.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TopicProperties TopicProperties(
@@ -251,8 +291,19 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.TopicProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.TopicProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="TopicProperties.Name"/>.</param>
+        /// <param name="maxSizeInMegabytes">The size to assign as the value of <see cref="TopicProperties.MaxSizeInMegabytes"/>.</param>
+        /// <param name="requiresDuplicateDetection">The boolean flag to assign as the value of <see cref="TopicProperties.RequiresDuplicateDetection"/>.</param>
+        /// <param name="defaultMessageTimeToLive">The time to live to assign as the value of <see cref="TopicProperties.DefaultMessageTimeToLive"/>.</param>
+        /// <param name="autoDeleteOnIdle">The time interval to assign as the value of <see cref="TopicProperties.AutoDeleteOnIdle"/>.</param>
+        /// <param name="duplicateDetectionHistoryTimeWindow">The time interval to assign as the value of <see cref="TopicProperties.DuplicateDetectionHistoryTimeWindow"/>.</param>
+        /// <param name="enableBatchedOperations">The boolean flag to assign as the value of <see cref="TopicProperties.EnableBatchedOperations"/>.</param>
+        /// <param name="status">The status to assign as the value of <see cref="TopicProperties.Status"/>.</param>
+        /// <param name="enablePartitioning">The boolean flag to assign as the value of <see cref="TopicProperties.EnablePartitioning"/>.</param>
+        /// <param name="maxMessageSizeInKilobytes">The message size to assign as the value of <see cref="TopicProperties.MaxMessageSizeInKilobytes"/>.</param>
+        /// <returns>The populated <see cref="Administration.TopicProperties"/> instance to use for mocking.</returns>
         public static TopicProperties TopicProperties(
             string name,
             long maxSizeInMegabytes = default,
@@ -279,8 +330,15 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.NamespaceProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.NamespaceProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="NamespaceProperties.Name"/>.</param>
+        /// <param name="createdTime">The time interval to assign as the value of <see cref="NamespaceProperties.CreatedTime"/>.</param>
+        /// <param name="modifiedTime">The time interval to assign as the value of <see cref="NamespaceProperties.ModifiedTime"/>.</param>
+        /// <param name="messagingSku">The SKU value to assign as the value of <see cref="NamespaceProperties.MessagingSku"/>.</param>
+        /// <param name="messagingUnits">The unit value to assign as the value of <see cref="NamespaceProperties.MessagingUnits"/>.</param>
+        /// <param name="alias">The alias to assign as the value of <see cref="NamespaceProperties.Alias"/>.</param>
+        /// <returns>The populated <see cref="Administration.NamespaceProperties"/> instance to use for mocking.</returns>
         public static NamespaceProperties NamespaceProperties(
             string name,
             DateTimeOffset createdTime,
@@ -300,8 +358,22 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.SubscriptionProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.SubscriptionProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="topicName">Name of the topic to assign as the value of <see cref="SubscriptionProperties.TopicName"/>.</param>
+        /// <param name="subscriptionName">Name of the subscription to assign as the value of <see cref="SubscriptionProperties.SubscriptionName"/>.</param>
+        /// <param name="lockDuration">Duration to assign as the value of <see cref="SubscriptionProperties.LockDuration"/>.</param>
+        /// <param name="requiresSession">The boolean flag to assign as the value of <see cref="SubscriptionProperties.RequiresSession"/>.</param>
+        /// <param name="defaultMessageTimeToLive">The time interval to assign as the value of <see cref="SubscriptionProperties.DefaultMessageTimeToLive"/>.</param>
+        /// <param name="autoDeleteOnIdle">The time interval to assign as the value of <see cref="SubscriptionProperties.AutoDeleteOnIdle"/>.</param>
+        /// <param name="deadLetteringOnMessageExpiration">The boolean flag to assign as the value of <see cref="SubscriptionProperties.DeadLetteringOnMessageExpiration"/>.</param>
+        /// <param name="maxDeliveryCount">The count to assign as the value of <see cref="SubscriptionProperties.MaxDeliveryCount"/>.</param>
+        /// <param name="enableBatchedOperations">The boolean flag to assign as the value of <see cref="SubscriptionProperties.EnableBatchedOperations"/>.</param>
+        /// <param name="status">The status to assign as the value of <see cref="SubscriptionProperties.Status"/>.</param>
+        /// <param name="forwardTo">The "forward to" entity to assign as the value of <see cref="SubscriptionProperties.ForwardTo"/>.</param>
+        /// <param name="forwardDeadLetteredMessagesTo">The "forward to" entity to assign as the value of <see cref="SubscriptionProperties.ForwardDeadLetteredMessagesTo"/>.</param>
+        /// <param name="userMetadata">The metadata to assign as the value of <see cref="SubscriptionProperties.UserMetadata"/>.</param>
+        /// <returns>The populated <see cref="Administration.SubscriptionProperties"/> instance to use for mocking.</returns>
         public static SubscriptionProperties SubscriptionProperties(
             string topicName,
             string subscriptionName,
@@ -332,8 +404,12 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="Azure.Messaging.ServiceBus.Administration.RuleProperties"/> instance for mocking.
+        /// Creates a new <see cref="Administration.RuleProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="RuleProperties.Name"/>.</param>
+        /// <param name="filter">The filter to assign as the value of <see cref="RuleProperties.Filter"/>.</param>
+        /// <param name="action">The action to assign as the value of <see cref="RuleProperties.Action"/>.</param>
+        /// <returns>The populated <see cref="Administration.RuleProperties"/> instance to use for mocking.</returns>
         public static RuleProperties RuleProperties(
             string name,
             RuleFilter filter = default,
@@ -344,8 +420,20 @@ namespace Azure.Messaging.ServiceBus
             };
 
         /// <summary>
-        /// Creates a new <see cref="QueueRuntimeProperties"/> instance for mocking.
+        /// Creates a new <see cref="QueueRuntimeProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="QueueRuntimeProperties.Name"/>.</param>
+        /// <param name="activeMessageCount">The count to assign as the value of <see cref="QueueRuntimeProperties.ActiveMessageCount"/>.</param>
+        /// <param name="scheduledMessageCount">The count to assign as the value of <see cref="QueueRuntimeProperties.ScheduledMessageCount"/>.</param>
+        /// <param name="deadLetterMessageCount">The count to assign as the value of <see cref="QueueRuntimeProperties.DeadLetterMessageCount"/>.</param>
+        /// <param name="transferDeadLetterMessageCount">The count to assign as the value of <see cref="QueueRuntimeProperties.TransferDeadLetterMessageCount"/>.</param>
+        /// <param name="transferMessageCount">The count to assign as the value of <see cref="QueueRuntimeProperties.TransferMessageCount"/>.</param>
+        /// <param name="totalMessageCount">The count to assign as the value of <see cref="QueueRuntimeProperties.TotalMessageCount"/>.</param>
+        /// <param name="sizeInBytes">The size to assign as the value of <see cref="QueueRuntimeProperties.SizeInBytes"/>.</param>
+        /// <param name="createdAt">The time stamp to assign as the value of <see cref="QueueRuntimeProperties.CreatedAt"/>.</param>
+        /// <param name="updatedAt">The time stamp to assign as the value of <see cref="QueueRuntimeProperties.UpdatedAt"/>.</param>
+        /// <param name="accessedAt">The time stamp to assign as the value of <see cref="QueueRuntimeProperties.AccessedAt"/>.</param>
+        /// <returns>The populated <see cref="Administration.QueueRuntimeProperties"/> instance to use for mocking.</returns>
         public static QueueRuntimeProperties QueueRuntimeProperties(
             string name,
             long activeMessageCount = default,
@@ -373,8 +461,16 @@ namespace Azure.Messaging.ServiceBus
                 };
 
         /// <summary>
-        /// Creates a new <see cref="TopicRuntimeProperties"/> instance for mocking.
+        /// Creates a new <see cref="TopicRuntimeProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="name">The name to assign as the value of <see cref="TopicRuntimeProperties.Name"/>.</param>
+        /// <param name="scheduledMessageCount">The count to assign as the value of <see cref="TopicRuntimeProperties.ScheduledMessageCount"/>.</param>
+        /// <param name="sizeInBytes">The size to assign as the value of <see cref="TopicRuntimeProperties.SizeInBytes"/>.</param>
+        /// <param name="subscriptionCount">The count to assign as the value of <see cref="TopicRuntimeProperties.SubscriptionCount"/>.</param>
+        /// <param name="createdAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.CreatedAt"/>.</param>
+        /// <param name="updatedAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.UpdatedAt"/>.</param>
+        /// <param name="accessedAt">The time stamp to assign as the value of <see cref="TopicRuntimeProperties.AccessedAt"/>.</param>
+        /// <returns>The populated <see cref="TopicRuntimeProperties"/> instance to use for mocking.</returns>
         public static TopicRuntimeProperties TopicRuntimeProperties(
             string name,
             long scheduledMessageCount = default,
@@ -394,8 +490,19 @@ namespace Azure.Messaging.ServiceBus
                 };
 
         /// <summary>
-        /// Creates a new <see cref="SubscriptionRuntimeProperties"/> instance for mocking.
+        /// Creates a new <see cref="SubscriptionRuntimeProperties" /> instance for mocking.
         /// </summary>
+        /// <param name="topicName">The name to assign as the value of <see cref="SubscriptionRuntimeProperties.TopicName"/>.</param>
+        /// <param name="subscriptionName">The name to assign as the value of <see cref="SubscriptionRuntimeProperties.SubscriptionName"/>.</param>
+        /// <param name="activeMessageCount">The count to assign as the value of <see cref="SubscriptionRuntimeProperties.ActiveMessageCount"/>.</param>
+        /// <param name="deadLetterMessageCount">The count to assign as the value of <see cref="SubscriptionRuntimeProperties.DeadLetterMessageCount"/>.</param>
+        /// <param name="transferDeadLetterMessageCount">The count to assign as the value of <see cref="SubscriptionRuntimeProperties.TransferDeadLetterMessageCount"/>.</param>
+        /// <param name="transferMessageCount">The count to assign as the value of <see cref="SubscriptionRuntimeProperties.TransferMessageCount"/>.</param>
+        /// <param name="totalMessageCount">The count to assign as the value of <see cref="SubscriptionRuntimeProperties.TotalMessageCount"/>.</param>
+        /// <param name="createdAt">The time stamp to assign as the value of <see cref="SubscriptionRuntimeProperties.CreatedAt"/>.</param>
+        /// <param name="updatedAt">The time stamp to assign as the value of <see cref="SubscriptionRuntimeProperties.UpdatedAt"/>.</param>
+        /// <param name="accessedAt">The time stamp to assign as the value of <see cref="SubscriptionRuntimeProperties.AccessedAt"/>.</param>
+        /// <returns>The populated <see cref="SubscriptionRuntimeProperties"/> instance to use for mocking.</returns>
         public static SubscriptionRuntimeProperties SubscriptionRuntimeProperties(
             string topicName,
             string subscriptionName,

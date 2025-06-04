@@ -51,27 +51,31 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningSkuCapacity"/>. </summary>
-        /// <param name="default"> Gets or sets the default capacity. </param>
-        /// <param name="maximum"> Gets or sets the maximum. </param>
         /// <param name="minimum"> Gets or sets the minimum. </param>
+        /// <param name="maximum"> Gets or sets the maximum. </param>
+        /// <param name="default"> Gets or sets the default capacity. </param>
         /// <param name="scaleType"> Gets or sets the type of the scale. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningSkuCapacity(int? @default, int? maximum, int? minimum, MachineLearningSkuScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningSkuCapacity(int? minimum, int? maximum, int? @default, MachineLearningSkuScaleType? scaleType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Default = @default;
-            Maximum = maximum;
             Minimum = minimum;
+            Maximum = maximum;
+            Default = @default;
             ScaleType = scaleType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the default capacity. </summary>
-        public int? Default { get; }
-        /// <summary> Gets or sets the maximum. </summary>
-        public int? Maximum { get; }
         /// <summary> Gets or sets the minimum. </summary>
+        [WirePath("minimum")]
         public int? Minimum { get; }
+        /// <summary> Gets or sets the maximum. </summary>
+        [WirePath("maximum")]
+        public int? Maximum { get; }
+        /// <summary> Gets or sets the default capacity. </summary>
+        [WirePath("default")]
+        public int? Default { get; }
         /// <summary> Gets or sets the type of the scale. </summary>
+        [WirePath("scaleType")]
         public MachineLearningSkuScaleType? ScaleType { get; }
     }
 }

@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<Using Include="System.Runtime.Serialization" />
+		<Using Include="System.ServiceModel" />
+		<Using Include="System.ServiceModel.Channels" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="System.ServiceModel.Primitives" />
+    <PackageReference Include="System.Formats.Asn1" />
+    <PackageReference Include="System.Security.Cryptography.Pkcs" />
+	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Microsoft.WCF.Azure.StorageQueues\src\Microsoft.WCF.Azure.StorageQueues.csproj" />
+  </ItemGroup>
+
+</Project>

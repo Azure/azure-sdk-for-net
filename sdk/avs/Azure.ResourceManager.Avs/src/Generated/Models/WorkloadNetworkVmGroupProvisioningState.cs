@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The provisioning state. </summary>
+    /// <summary> Workload Network VM Group provisioning state. </summary>
     public readonly partial struct WorkloadNetworkVmGroupProvisioningState : IEquatable<WorkloadNetworkVmGroupProvisioningState>
     {
         private readonly string _value;
@@ -24,28 +24,28 @@ namespace Azure.ResourceManager.Avs.Models
 
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
+        private const string CanceledValue = "Canceled";
         private const string BuildingValue = "Building";
         private const string DeletingValue = "Deleting";
         private const string UpdatingValue = "Updating";
-        private const string CanceledValue = "Canceled";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static WorkloadNetworkVmGroupProvisioningState Succeeded { get; } = new WorkloadNetworkVmGroupProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static WorkloadNetworkVmGroupProvisioningState Failed { get; } = new WorkloadNetworkVmGroupProvisioningState(FailedValue);
-        /// <summary> Building. </summary>
-        public static WorkloadNetworkVmGroupProvisioningState Building { get; } = new WorkloadNetworkVmGroupProvisioningState(BuildingValue);
-        /// <summary> Deleting. </summary>
-        public static WorkloadNetworkVmGroupProvisioningState Deleting { get; } = new WorkloadNetworkVmGroupProvisioningState(DeletingValue);
-        /// <summary> Updating. </summary>
-        public static WorkloadNetworkVmGroupProvisioningState Updating { get; } = new WorkloadNetworkVmGroupProvisioningState(UpdatingValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static WorkloadNetworkVmGroupProvisioningState Canceled { get; } = new WorkloadNetworkVmGroupProvisioningState(CanceledValue);
+        /// <summary> is building. </summary>
+        public static WorkloadNetworkVmGroupProvisioningState Building { get; } = new WorkloadNetworkVmGroupProvisioningState(BuildingValue);
+        /// <summary> is deleting. </summary>
+        public static WorkloadNetworkVmGroupProvisioningState Deleting { get; } = new WorkloadNetworkVmGroupProvisioningState(DeletingValue);
+        /// <summary> is updating. </summary>
+        public static WorkloadNetworkVmGroupProvisioningState Updating { get; } = new WorkloadNetworkVmGroupProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupProvisioningState"/> values are the same. </summary>
         public static bool operator ==(WorkloadNetworkVmGroupProvisioningState left, WorkloadNetworkVmGroupProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="WorkloadNetworkVmGroupProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(WorkloadNetworkVmGroupProvisioningState left, WorkloadNetworkVmGroupProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="WorkloadNetworkVmGroupProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="WorkloadNetworkVmGroupProvisioningState"/>. </summary>
         public static implicit operator WorkloadNetworkVmGroupProvisioningState(string value) => new WorkloadNetworkVmGroupProvisioningState(value);
 
         /// <inheritdoc />
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

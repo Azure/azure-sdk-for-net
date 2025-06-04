@@ -35,7 +35,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             DataFactoryLinkedServiceReference? store = default;
             DataFactoryElement<string>? secretName = default;
-            Optional<DataFactoryElement<string>> secretVersion = default;
+            DataFactoryElement<string>? secretVersion = default;
             string? type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,7 +64,7 @@ namespace Azure.Core.Expressions.DataFactory
                     continue;
                 }
             }
-            return new DataFactoryKeyVaultSecret(type, store, secretName, secretVersion.Value);
+            return new DataFactoryKeyVaultSecret(type, store, secretName, secretVersion);
         }
 
         internal partial class DataFactoryKeyVaultSecretConverter : JsonConverter<DataFactoryKeyVaultSecret?>

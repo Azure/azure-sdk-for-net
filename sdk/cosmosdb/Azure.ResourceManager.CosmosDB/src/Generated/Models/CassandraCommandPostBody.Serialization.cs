@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
 {
     public partial class CassandraCommandPostBody : IUtf8JsonSerializable, IJsonModel<CassandraCommandPostBody>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraCommandPostBody>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CassandraCommandPostBody>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<CassandraCommandPostBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CassandraCommandPostBody>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
             writer.WriteStringValue(Command);
             if (Optional.IsCollectionDefined(Arguments))
@@ -48,7 +56,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             if (Optional.IsDefined(AllowWrite))
             {
-                writer.WritePropertyName("readWrite"u8);
+                writer.WritePropertyName("readwrite"u8);
                 writer.WriteBooleanValue(AllowWrite.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -59,14 +67,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         CassandraCommandPostBody IJsonModel<CassandraCommandPostBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +90,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         internal static CassandraCommandPostBody DeserializeCassandraCommandPostBody(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -93,7 +100,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             IDictionary<string, string> arguments = default;
             string host = default;
             bool? cassandraStopStart = default;
-            bool? readWrite = default;
+            bool? readwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -131,13 +138,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     cassandraStopStart = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("readWrite"u8))
+                if (property.NameEquals("readwrite"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    readWrite = property.Value.GetBoolean();
+                    readwrite = property.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 arguments ?? new ChangeTrackingDictionary<string, string>(),
                 host,
                 cassandraStopStart,
-                readWrite,
+                readwrite,
                 serializedAdditionalRawData);
         }
 
@@ -162,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CassandraCommandPostBody)} does not support writing '{options.Format}' format.");
             }
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCassandraCommandPostBody(document.RootElement, options);
                     }
                 default:

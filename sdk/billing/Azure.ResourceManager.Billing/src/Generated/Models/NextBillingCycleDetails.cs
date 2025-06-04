@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    /// <summary> The next billing cycle details of the subscription. </summary>
+    /// <summary> Billing cycle details of the product. </summary>
     internal partial class NextBillingCycleDetails
     {
         /// <summary>
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NextBillingCycleDetails"/>. </summary>
-        /// <param name="nextBillingCycleBillingFrequency"> The billing frequency of the subscription in the next billing cycle. </param>
+        /// <param name="nextBillingCycleBillingFrequency"> Billing frequency of the product under the subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NextBillingCycleDetails(string nextBillingCycleBillingFrequency, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +59,8 @@ namespace Azure.ResourceManager.Billing.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The billing frequency of the subscription in the next billing cycle. </summary>
+        /// <summary> Billing frequency of the product under the subscription. </summary>
+        [WirePath("billingFrequency")]
         public string NextBillingCycleBillingFrequency { get; }
     }
 }

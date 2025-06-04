@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 {
     public partial class PropertyDefinition : IUtf8JsonSerializable, IJsonModel<PropertyDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PropertyDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PropertyDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 throw new FormatException($"The model {nameof(PropertyDefinition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(ArrayValueSeparator))
             {
                 writer.WritePropertyName("arrayValueSeparator"u8);
@@ -37,7 +45,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EnumValidValues)
                 {
-                    writer.WriteObjectValue<ProfileEnumValidValuesFormat>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +114,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in DataSourcePrecedenceRules)
                 {
-                    writer.WriteObjectValue<DataSourcePrecedence>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -118,14 +126,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         PropertyDefinition IJsonModel<PropertyDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -142,7 +149,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
 
         internal static PropertyDefinition DeserializePropertyDefinition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -335,7 +342,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCustomerInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PropertyDefinition)} does not support writing '{options.Format}' format.");
             }
@@ -349,7 +356,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePropertyDefinition(document.RootElement, options);
                     }
                 default:

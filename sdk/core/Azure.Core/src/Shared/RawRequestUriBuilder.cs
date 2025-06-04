@@ -4,8 +4,9 @@
 #nullable enable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
+using System.Linq;
 
 namespace Azure.Core
 {
@@ -187,6 +188,42 @@ namespace Azure.Core
             }
 
             AppendRaw(nextLink, escape);
+        }
+
+        public void AppendQuery(string name, bool value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, float value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, DateTimeOffset value, string format, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
+
+        public void AppendQuery(string name, TimeSpan value, string format, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
+
+        public void AppendQuery(string name, double value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, decimal value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, int value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, long value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, TimeSpan value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQuery(string name, byte[] value, string format, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value, format), escape);
+
+        public void AppendQuery(string name, Guid value, bool escape = true) => AppendQuery(name, TypeFormatters.ConvertToString(value), escape);
+
+        public void AppendQueryDelimited<T>(string name, IEnumerable<T> value, string delimiter, string? format = null, bool escape = true)
+        {
+            delimiter ??= ",";
+            IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
+            AppendQuery(name, string.Join(delimiter, stringValues), escape);
+        }
+
+        public void AppendPathDelimited<T>(IEnumerable<T> value, string delimiter, string? format = null, bool escape = true)
+        {
+            delimiter ??= ",";
+            IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
+            AppendPath(string.Join(delimiter, stringValues), escape);
         }
     }
 }

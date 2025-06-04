@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.PrivateDns.Models
         }
 
         /// <summary> The preference value for this MX record. </summary>
+        [WirePath("preference")]
         public int? Preference { get; set; }
         /// <summary> The domain name of the mail host for this MX record. </summary>
+        [WirePath("exchange")]
         public string Exchange { get; set; }
     }
 }

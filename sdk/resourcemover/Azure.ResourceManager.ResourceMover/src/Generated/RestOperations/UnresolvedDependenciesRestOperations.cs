@@ -36,6 +36,33 @@ namespace Azure.ResourceManager.ResourceMover
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Migrate/moveCollections/", false);
+            uri.AppendPath(moverResourceSetName, true);
+            uri.AppendPath("/unresolvedDependencies", false);
+            if (dependencyLevel != null)
+            {
+                uri.AppendQuery("dependencyLevel", dependencyLevel.Value.ToString(), true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -92,7 +119,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverUnresolvedDependencyList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -124,13 +151,21 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverUnresolvedDependencyList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateGetNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string moverResourceSetName, MoverDependencyLevel? dependencyLevel, string orderby, string filter)
@@ -172,7 +207,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverUnresolvedDependencyList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +241,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case 200:
                     {
                         MoverUnresolvedDependencyList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MoverUnresolvedDependencyList.DeserializeMoverUnresolvedDependencyList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

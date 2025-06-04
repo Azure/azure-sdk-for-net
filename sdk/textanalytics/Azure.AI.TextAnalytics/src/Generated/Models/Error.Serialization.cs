@@ -31,14 +31,14 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue<Error>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue<InnerErrorModel>(Innererror);
+                writer.WriteObjectValue(Innererror);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -117,15 +117,15 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static Error FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeError(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<Error>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

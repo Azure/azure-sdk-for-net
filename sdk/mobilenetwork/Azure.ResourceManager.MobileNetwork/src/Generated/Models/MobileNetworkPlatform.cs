@@ -48,6 +48,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
         public MobileNetworkPlatform()
         {
+            HaUpgradesAvailable = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
@@ -57,8 +58,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="maximumPlatformSoftwareVersion"> The maximum software version of the platform where this packet core version can be deployed. </param>
         /// <param name="recommendedVersion"> Indicates whether this is the recommended version for this platform. </param>
         /// <param name="obsoleteVersion"> Indicates whether this version is obsoleted for this platform. </param>
+        /// <param name="haUpgradesAvailable"> The list of versions to which a high availability upgrade from this version is supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MobileNetworkPlatform(MobileNetworkPlatformType? platformType, MobileNetworkVersionState? versionState, string minimumPlatformSoftwareVersion, string maximumPlatformSoftwareVersion, MobileNetworkRecommendedVersion? recommendedVersion, MobileNetworkObsoleteVersion? obsoleteVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MobileNetworkPlatform(MobileNetworkPlatformType? platformType, MobileNetworkVersionState? versionState, string minimumPlatformSoftwareVersion, string maximumPlatformSoftwareVersion, MobileNetworkRecommendedVersion? recommendedVersion, MobileNetworkObsoleteVersion? obsoleteVersion, IList<string> haUpgradesAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PlatformType = platformType;
             VersionState = versionState;
@@ -66,20 +68,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             MaximumPlatformSoftwareVersion = maximumPlatformSoftwareVersion;
             RecommendedVersion = recommendedVersion;
             ObsoleteVersion = obsoleteVersion;
+            HaUpgradesAvailable = haUpgradesAvailable;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The platform type where this version can be deployed. </summary>
+        [WirePath("platformType")]
         public MobileNetworkPlatformType? PlatformType { get; set; }
         /// <summary> The state of this packet core control plane version on this platform. </summary>
+        [WirePath("versionState")]
         public MobileNetworkVersionState? VersionState { get; set; }
         /// <summary> The minimum software version of the platform where this packet core version can be deployed. </summary>
+        [WirePath("minimumPlatformSoftwareVersion")]
         public string MinimumPlatformSoftwareVersion { get; set; }
         /// <summary> The maximum software version of the platform where this packet core version can be deployed. </summary>
+        [WirePath("maximumPlatformSoftwareVersion")]
         public string MaximumPlatformSoftwareVersion { get; set; }
         /// <summary> Indicates whether this is the recommended version for this platform. </summary>
+        [WirePath("recommendedVersion")]
         public MobileNetworkRecommendedVersion? RecommendedVersion { get; set; }
         /// <summary> Indicates whether this version is obsoleted for this platform. </summary>
+        [WirePath("obsoleteVersion")]
         public MobileNetworkObsoleteVersion? ObsoleteVersion { get; set; }
+        /// <summary> The list of versions to which a high availability upgrade from this version is supported. </summary>
+        [WirePath("haUpgradesAvailable")]
+        public IList<string> HaUpgradesAvailable { get; }
     }
 }

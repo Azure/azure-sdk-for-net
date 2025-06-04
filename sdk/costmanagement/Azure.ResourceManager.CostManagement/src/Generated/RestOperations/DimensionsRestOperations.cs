@@ -36,6 +36,33 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string filter, string expand, string skiptoken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/dimensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string filter, string expand, string skiptoken, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -88,7 +115,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementDimensionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,7 +145,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementDimensionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,6 +154,35 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateByExternalCloudProviderTypeRequestUri(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
+            uri.AppendPath(externalCloudProviderType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(externalCloudProviderId, true);
+            uri.AppendPath("/dimensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            if (skiptoken != null)
+            {
+                uri.AppendQuery("$skiptoken", skiptoken, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateByExternalCloudProviderTypeRequest(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, string filter, string expand, string skiptoken, int? top)
@@ -185,7 +241,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementDimensionsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -215,7 +271,7 @@ namespace Azure.ResourceManager.CostManagement
                 case 200:
                     {
                         CostManagementDimensionsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CostManagementDimensionsListResult.DeserializeCostManagementDimensionsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

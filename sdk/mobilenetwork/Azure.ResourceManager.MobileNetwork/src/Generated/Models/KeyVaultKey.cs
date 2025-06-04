@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </summary>
+        [WirePath("keyUrl")]
         public Uri KeyUri { get; set; }
     }
 }

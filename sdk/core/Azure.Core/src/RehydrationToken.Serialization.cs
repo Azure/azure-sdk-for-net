@@ -23,7 +23,7 @@ namespace Azure.Core
                 throw new InvalidOperationException("Cannot deserialize a null value to a non-nullable RehydrationToken");
             }
 
-            string? id = null;
+            string id = NextLinkOperationImplementation.NotSet;
             string version = string.Empty;
             string headerSource = string.Empty;
             string nextRequestUri = string.Empty;
@@ -40,7 +40,9 @@ namespace Azure.Core
                     {
                         continue;
                     }
-                    id = property.Value.GetString();
+                    var idString = property.Value.GetString();
+                    Debug.Assert(idString is not null);
+                    id = idString!;
                 }
                 if (property.NameEquals("version"u8))
                 {
@@ -138,7 +140,7 @@ namespace Azure.Core
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{options.Format}' format.");
             }

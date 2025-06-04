@@ -13,25 +13,15 @@ namespace Azure.AI.DocumentIntelligence
     /// <summary> Client options for Azure.AI.DocumentIntelligence library clients. </summary>
     public partial class DocumentIntelligenceClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_02_29_Preview;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_30;
 
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "2024-02-29-preview". </summary>
-            V2024_02_29_Preview = 1,
+            /// <summary> Service version "2024-11-30". </summary>
+            V2024_11_30 = 1,
         }
 
         internal string Version { get; }
-
-        /// <summary> Initializes new instance of DocumentIntelligenceClientOptions. </summary>
-        public DocumentIntelligenceClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V2024_02_29_Preview => "2024-02-29-preview",
-                _ => throw new NotSupportedException()
-            };
-        }
     }
 }

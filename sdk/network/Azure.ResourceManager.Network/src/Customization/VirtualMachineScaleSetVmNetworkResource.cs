@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.Network
 {
     [CodeGenSuppress("GetNetworkInterfaceVirtualMachineScaleSetAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetNetworkInterfaceVirtualMachineScaleSet", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSetsAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSets", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSetAsync", typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSet", typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSetsAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationsVirtualMachineScaleSets", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSetAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetIPConfigurationVirtualMachineScaleSet", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetPublicIPAddressesAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetPublicIPAddresses", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetPublicIPAddress", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
@@ -31,8 +31,6 @@ namespace Azure.ResourceManager.Network
     [CodeGenSuppress("GetNetworkInterface", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetIPConfigurationsAsync", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetIPConfigurations", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetIPConfigurationAsync", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetIPConfiguration", typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class VirtualMachineScaleSetVmNetworkResource
     {
         /// <summary>

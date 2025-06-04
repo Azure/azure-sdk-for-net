@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         public static bool operator ==(JsonOutputSerializationFormat left, JsonOutputSerializationFormat right) => left.Equals(right);
         /// <summary> Determines if two <see cref="JsonOutputSerializationFormat"/> values are not the same. </summary>
         public static bool operator !=(JsonOutputSerializationFormat left, JsonOutputSerializationFormat right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="JsonOutputSerializationFormat"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="JsonOutputSerializationFormat"/>. </summary>
         public static implicit operator JsonOutputSerializationFormat(string value) => new JsonOutputSerializationFormat(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

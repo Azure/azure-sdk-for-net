@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The OpenAIPageableListOfMessageFile_object. </summary>
+    /// <summary> The OpenAIPageableListOfMessageFileObject. </summary>
     internal readonly partial struct OpenAIPageableListOfMessageFileObject : IEquatable<OpenAIPageableListOfMessageFileObject>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(OpenAIPageableListOfMessageFileObject left, OpenAIPageableListOfMessageFileObject right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OpenAIPageableListOfMessageFileObject"/> values are not the same. </summary>
         public static bool operator !=(OpenAIPageableListOfMessageFileObject left, OpenAIPageableListOfMessageFileObject right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="OpenAIPageableListOfMessageFileObject"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="OpenAIPageableListOfMessageFileObject"/>. </summary>
         public static implicit operator OpenAIPageableListOfMessageFileObject(string value) => new OpenAIPageableListOfMessageFileObject(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

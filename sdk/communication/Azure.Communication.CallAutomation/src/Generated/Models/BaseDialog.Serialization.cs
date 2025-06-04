@@ -43,8 +43,8 @@ namespace Azure.Communication.CallAutomation
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureOpenAI": return AzureOpenAIDialog.DeserializeAzureOpenAIDialog(element);
-                    case "PowerVirtualAgents": return PowerVirtualAgentsDialog.DeserializePowerVirtualAgentsDialog(element);
+                    case "azureOpenAI": return AzureOpenAIDialog.DeserializeAzureOpenAIDialog(element);
+                    case "powerVirtualAgents": return PowerVirtualAgentsDialog.DeserializePowerVirtualAgentsDialog(element);
                 }
             }
             return UnknownDialog.DeserializeUnknownDialog(element);
@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BaseDialog FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBaseDialog(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<BaseDialog>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

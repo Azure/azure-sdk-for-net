@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Media.Models
 {
     public partial class H265Layer : IUtf8JsonSerializable, IJsonModel<H265Layer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H265Layer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<H265Layer>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<H265Layer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<H265Layer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.Media.Models
                 throw new FormatException($"The model {nameof(H265Layer)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
@@ -51,64 +60,6 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("referenceFrames"u8);
                 writer.WriteNumberValue(ReferenceFrames.Value);
             }
-            writer.WritePropertyName("bitrate"u8);
-            writer.WriteNumberValue(Bitrate);
-            if (Optional.IsDefined(MaxBitrate))
-            {
-                writer.WritePropertyName("maxBitrate"u8);
-                writer.WriteNumberValue(MaxBitrate.Value);
-            }
-            if (Optional.IsDefined(BFrames))
-            {
-                writer.WritePropertyName("bFrames"u8);
-                writer.WriteNumberValue(BFrames.Value);
-            }
-            if (Optional.IsDefined(FrameRate))
-            {
-                writer.WritePropertyName("frameRate"u8);
-                writer.WriteStringValue(FrameRate);
-            }
-            if (Optional.IsDefined(Slices))
-            {
-                writer.WritePropertyName("slices"u8);
-                writer.WriteNumberValue(Slices.Value);
-            }
-            if (Optional.IsDefined(UseAdaptiveBFrame))
-            {
-                writer.WritePropertyName("adaptiveBFrame"u8);
-                writer.WriteBooleanValue(UseAdaptiveBFrame.Value);
-            }
-            if (Optional.IsDefined(Width))
-            {
-                writer.WritePropertyName("width"u8);
-                writer.WriteStringValue(Width);
-            }
-            if (Optional.IsDefined(Height))
-            {
-                writer.WritePropertyName("height"u8);
-                writer.WriteStringValue(Height);
-            }
-            if (Optional.IsDefined(Label))
-            {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         H265Layer IJsonModel<H265Layer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -125,7 +76,7 @@ namespace Azure.ResourceManager.Media.Models
 
         internal static H265Layer DeserializeH265Layer(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -282,7 +233,7 @@ namespace Azure.ResourceManager.Media.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(H265Layer)} does not support writing '{options.Format}' format.");
             }
@@ -296,7 +247,7 @@ namespace Azure.ResourceManager.Media.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeH265Layer(document.RootElement, options);
                     }
                 default:

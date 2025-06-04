@@ -9,7 +9,7 @@ $workingFolder = $webappRoot;
 if ($null -ne $Env:AGENT_WORKFOLDER) {
   $workingFolder = $Env:AGENT_WORKFOLDER
 }
-az login --service-principal -u $DeploymentOutputs['IDENTITY_CLIENT_ID'] -p $DeploymentOutputs['IDENTITY_CLIENT_SECRET'] --tenant $DeploymentOutputs['IDENTITY_TENANT_ID']
+
 az account set --subscription $DeploymentOutputs['IDENTITY_SUBSCRIPTION_ID']
 
 # Deploy the webapp
@@ -28,7 +28,7 @@ az functionapp deployment source config-zip -g $DeploymentOutputs['IDENTITY_RESO
 # clean up
 Remove-Item -Force -Recurse "$workingFolder/Pub"
 
-$containerImage = 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:3080193'
+$containerImage = 'azsdkengsys.azurecr.io/dotnet/ubuntu_netcore_keyring:4484670'
 $MIClientId = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_CLIENT_ID']
 $MIName = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_NAME']
 $SaAccountName = 'workload-identity-sa'

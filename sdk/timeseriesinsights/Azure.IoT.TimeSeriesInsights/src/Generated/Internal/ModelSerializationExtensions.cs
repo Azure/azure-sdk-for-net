@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
@@ -17,6 +18,10 @@ namespace Azure.IoT.TimeSeriesInsights
 {
     internal static class ModelSerializationExtensions
     {
+        internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
+        internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
+        internal static readonly BinaryData SentinelValue = BinaryData.FromBytes("\"__EMPTY__\""u8.ToArray());
+
         public static object GetObject(this JsonElement element)
         {
             switch (element.ValueKind)
@@ -164,7 +169,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value)
         {
             switch (value)
             {
@@ -248,6 +253,13 @@ namespace Azure.IoT.TimeSeriesInsights
         public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
         {
             writer.WriteObjectValue<object>(value);
+        }
+
+        internal static bool IsSentinelValue(BinaryData value)
+        {
+            ReadOnlySpan<byte> sentinelSpan = SentinelValue.ToMemory().Span;
+            ReadOnlySpan<byte> valueSpan = value.ToMemory().Span;
+            return sentinelSpan.SequenceEqual(valueSpan);
         }
 
         internal static class TypeFormatters

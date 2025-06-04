@@ -16,9 +16,18 @@ namespace Azure.ResourceManager.Search.Models
 {
     internal partial class DataPlaneAadOrApiKeyAuthOption : IUtf8JsonSerializable, IJsonModel<DataPlaneAadOrApiKeyAuthOption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPlaneAadOrApiKeyAuthOption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPlaneAadOrApiKeyAuthOption>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataPlaneAadOrApiKeyAuthOption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataPlaneAadOrApiKeyAuthOption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -26,7 +35,6 @@ namespace Azure.ResourceManager.Search.Models
                 throw new FormatException($"The model {nameof(DataPlaneAadOrApiKeyAuthOption)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AadAuthFailureMode))
             {
                 writer.WritePropertyName("aadAuthFailureMode"u8);
@@ -40,14 +48,13 @@ namespace Azure.ResourceManager.Search.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DataPlaneAadOrApiKeyAuthOption IJsonModel<DataPlaneAadOrApiKeyAuthOption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -64,7 +71,7 @@ namespace Azure.ResourceManager.Search.Models
 
         internal static DataPlaneAadOrApiKeyAuthOption DeserializeDataPlaneAadOrApiKeyAuthOption(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -105,15 +112,16 @@ namespace Azure.ResourceManager.Search.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadAuthFailureMode), out propertyOverride);
-            if (Optional.IsDefined(AadAuthFailureMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  aadAuthFailureMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AadAuthFailureMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  aadAuthFailureMode: ");
                     builder.AppendLine($"'{AadAuthFailureMode.Value.ToSerialString()}'");
                 }
             }
@@ -129,7 +137,7 @@ namespace Azure.ResourceManager.Search.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -145,7 +153,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataPlaneAadOrApiKeyAuthOption(document.RootElement, options);
                     }
                 default:

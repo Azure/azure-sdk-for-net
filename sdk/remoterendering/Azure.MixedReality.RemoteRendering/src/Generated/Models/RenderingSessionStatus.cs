@@ -42,7 +42,7 @@ namespace Azure.MixedReality.RemoteRendering
         public static bool operator ==(RenderingSessionStatus left, RenderingSessionStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RenderingSessionStatus"/> values are not the same. </summary>
         public static bool operator !=(RenderingSessionStatus left, RenderingSessionStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RenderingSessionStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RenderingSessionStatus"/>. </summary>
         public static implicit operator RenderingSessionStatus(string value) => new RenderingSessionStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.MixedReality.RemoteRendering
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

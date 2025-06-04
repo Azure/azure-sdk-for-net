@@ -7,33 +7,19 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
-    internal partial class GeoJsonFeatureCollectionData : IUtf8JsonSerializable
+    internal partial class GeoJsonFeatureCollectionData
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("features"u8);
-            writer.WriteStartArray();
-            foreach (var item in Features)
-            {
-                writer.WriteObjectValue<GeoJsonFeature>(item);
-            }
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-        }
-
         internal static GeoJsonFeatureCollectionData DeserializeGeoJsonFeatureCollectionData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<GeoJsonFeature> features = default;
+            IReadOnlyList<GeoJsonFeature> features = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("features"u8))
@@ -54,16 +40,8 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static GeoJsonFeatureCollectionData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonFeatureCollectionData(document.RootElement);
-        }
-
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Common.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<GeoJsonFeatureCollectionData>(this);
-            return content;
         }
     }
 }

@@ -39,11 +39,14 @@ namespace Azure.Monitor.Query
 
             _clientDiagnostics = new ClientDiagnostics(options);
 
-            var scope = "https://metrics.monitor.azure.com/.default";
+            var authorizationScope = $"{(string.IsNullOrEmpty(options.Audience?.ToString()) ? MetricsClientAudience.AzurePublicCloud : options.Audience)}";
+            authorizationScope += "/.default";
+            var scopes = new List<string> { authorizationScope };
+
             Endpoint = endpoint;
 
             var pipeline = HttpPipelineBuilder.Build(options,
-                new BearerTokenAuthenticationPolicy(credential, scope));
+                new BearerTokenAuthenticationPolicy(credential, scopes));
 
             _metricBatchClient = new MetricsBatchRestClient(_clientDiagnostics, pipeline, endpoint);
         }
@@ -145,11 +148,24 @@ namespace Azure.Monitor.Query
 
             if (options != null)
             {
-                if (options.TimeRange != null)
+                if (options.TimeRange.HasValue)
                 {
-                    startTime = options.TimeRange.Value.Start.ToString();
-                    endTime = options.TimeRange.Value.End.ToString();
+                    startTime = options.TimeRange.Value.Start.ToIsoString();
+                    endTime = options.TimeRange.Value.End.ToIsoString();
                 }
+                else
+                {
+                    // Use values from Start and End TimeRange properties if they are set
+                    if (options.StartTime.HasValue)
+                    {
+                        startTime = options.StartTime.Value.ToIsoString();
+                    }
+                    if (options.EndTime.HasValue)
+                    {
+                        endTime = options.EndTime.Value.ToIsoString();
+                    }
+                }
+
                 aggregations = MetricsClientExtensions.CommaJoin(options.Aggregations);
                 top = options.Size;
                 orderBy = options.OrderBy;

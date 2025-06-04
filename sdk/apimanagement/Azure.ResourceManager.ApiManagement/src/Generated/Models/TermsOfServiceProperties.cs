@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> A terms of service text. </summary>
+        [WirePath("text")]
         public string Text { get; set; }
         /// <summary> Display terms of service during a sign-up process. </summary>
+        [WirePath("enabled")]
         public bool? IsDisplayEnabled { get; set; }
         /// <summary> Ask user for consent to the terms of service. </summary>
+        [WirePath("consentRequired")]
         public bool? IsConsentRequired { get; set; }
     }
 }

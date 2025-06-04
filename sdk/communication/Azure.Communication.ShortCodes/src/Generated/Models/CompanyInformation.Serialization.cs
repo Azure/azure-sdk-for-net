@@ -34,12 +34,12 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ContactInformation))
             {
                 writer.WritePropertyName("contactInformation"u8);
-                writer.WriteObjectValue<ContactInformation>(ContactInformation);
+                writer.WriteObjectValue(ContactInformation);
             }
             if (Optional.IsDefined(CustomerCareInformation))
             {
                 writer.WritePropertyName("customerCareInformation"u8);
-                writer.WriteObjectValue<CustomerCareInformation>(CustomerCareInformation);
+                writer.WriteObjectValue(CustomerCareInformation);
             }
             writer.WriteEndObject();
         }
@@ -102,15 +102,15 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CompanyInformation FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCompanyInformation(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CompanyInformation>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -54,16 +54,9 @@ parameters:
     type: object
     default:
       Public:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-      Preview:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources-preview)
-      Canary:
-        SubscriptionConfiguration: $(sub-config-azure-cloud-test-resources)
-        Location: 'eastus2euap'
-      UsGov:
-        SubscriptionConfiguration: $(sub-config-gov-test-resources)
-      China:
-        SubscriptionConfiguration: $(sub-config-cn-test-resources)
+      # Canary regions are currently not supported in TME so disabling for now
+      # Canary:
+      #   Location: 'eastus2euap'
   - name: MatrixConfigs
     type: object
     default:
@@ -105,11 +98,16 @@ parameters:
   - name: oneESTemplateTag
     type: string
     default: true
+  - name: UseFederatedAuth
+    type: boolean
+    default: true
+  - name: PersistOidcToken
+    type: boolean
+    default: false
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
   parameters:
-    UseOfficial: false
     oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     stages:
       - ${{ each cloud in parameters.CloudConfig }}:
@@ -145,6 +143,8 @@ extends:
                       Project: ${{ parameters.Project }}
                       TestSetupSteps: ${{ parameters.TestSetupSteps }}
                       DeployTestResources: ${{ parameters.DeployTestResources }}
+                      UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
+                      PersistOidcToken: ${{ parameters.PersistOidcToken }}
                     MatrixConfigs:
                       # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
                       - ${{ each config in parameters.MatrixConfigs }}:
@@ -161,7 +161,8 @@ extends:
                       - ${{ parameters.MatrixReplace }}
                     CloudConfig:
                       SubscriptionConfiguration: ${{ cloud.value.SubscriptionConfiguration }}
+                      ServiceConnection: ${{ coalesce(cloud.value.ServiceConnection, lower(format('azure-sdk-tests-{0}', cloud.key))) }}
+                      SubscriptionConfigurationFilePaths: ${{ cloud.value.SubscriptionConfigurationFilePaths }}
                       SubscriptionConfigurations: ${{ cloud.value.SubscriptionConfigurations }}
-                      Location: ${{ coalesce(parameters.Location, cloud.value.Location) }}
+                      Location: ${{ coalesce(cloud.value.Location, parameters.Location) }}
                       Cloud: ${{ cloud.key }}
-

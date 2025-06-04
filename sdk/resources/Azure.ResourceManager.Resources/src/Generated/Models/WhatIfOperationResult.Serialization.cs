@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Resources.Models
 {
     public partial class WhatIfOperationResult : IUtf8JsonSerializable, IJsonModel<WhatIfOperationResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatIfOperationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WhatIfOperationResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<WhatIfOperationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WhatIfOperationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.Resources.Models
                 throw new FormatException($"The model {nameof(WhatIfOperationResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -46,7 +54,27 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Changes)
                 {
-                    writer.WriteObjectValue<WhatIfChange>(item, options);
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PotentialChanges))
+            {
+                writer.WritePropertyName("potentialChanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in PotentialChanges)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
+            {
+                writer.WritePropertyName("diagnostics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Diagnostics)
+                {
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,14 +87,13 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         WhatIfOperationResult IJsonModel<WhatIfOperationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,7 +110,7 @@ namespace Azure.ResourceManager.Resources.Models
 
         internal static WhatIfOperationResult DeserializeWhatIfOperationResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,6 +119,8 @@ namespace Azure.ResourceManager.Resources.Models
             string status = default;
             ResponseError error = default;
             IReadOnlyList<WhatIfChange> changes = default;
+            IReadOnlyList<WhatIfChange> potentialChanges = default;
+            IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,6 +162,34 @@ namespace Azure.ResourceManager.Resources.Models
                             changes = array;
                             continue;
                         }
+                        if (property0.NameEquals("potentialChanges"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WhatIfChange> array = new List<WhatIfChange>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item, options));
+                            }
+                            potentialChanges = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("diagnostics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DeploymentDiagnosticsDefinition> array = new List<DeploymentDiagnosticsDefinition>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DeploymentDiagnosticsDefinition.DeserializeDeploymentDiagnosticsDefinition(item, options));
+                            }
+                            diagnostics = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -142,7 +199,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WhatIfOperationResult(status, error, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
+            return new WhatIfOperationResult(
+                status,
+                error,
+                changes ?? new ChangeTrackingList<WhatIfChange>(),
+                potentialChanges ?? new ChangeTrackingList<WhatIfChange>(),
+                diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -157,15 +220,16 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
-            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  status: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Status))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  status: ");
                     if (Status.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -179,15 +243,16 @@ namespace Azure.ResourceManager.Resources.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
-            if (Optional.IsDefined(Error) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  error: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Error))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  error: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
                 }
             }
@@ -195,21 +260,68 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Changes), out propertyOverride);
-            if (Optional.IsCollectionDefined(Changes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Changes.Any() || hasPropertyOverride)
+                builder.Append("    changes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Changes))
                 {
-                    builder.Append("    changes: ");
-                    if (hasPropertyOverride)
+                    if (Changes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    changes: ");
                         builder.AppendLine("[");
                         foreach (var item in Changes)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    changes: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PotentialChanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    potentialChanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PotentialChanges))
+                {
+                    if (PotentialChanges.Any())
+                    {
+                        builder.Append("    potentialChanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PotentialChanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    potentialChanges: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Diagnostics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    diagnostics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Diagnostics))
+                {
+                    if (Diagnostics.Any())
+                    {
+                        builder.Append("    diagnostics: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Diagnostics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    diagnostics: ");
                         }
                         builder.AppendLine("    ]");
                     }
@@ -228,7 +340,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -244,7 +356,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWhatIfOperationResult(document.RootElement, options);
                     }
                 default:

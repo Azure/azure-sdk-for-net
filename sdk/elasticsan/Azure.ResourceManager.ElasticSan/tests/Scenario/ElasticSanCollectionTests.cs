@@ -31,6 +31,13 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanData data = GetDefaultElasticSanParameters(TestLocation);
             data.Tags.Add("tag1", "value1");
             data.PublicNetworkAccess = Models.ElasticSanPublicNetworkAccess.Enabled;
+            data.ScaleUpProperties = new Models.ElasticSanScaleUpProperties
+            {
+                AutoScalePolicyEnforcement = Models.AutoScalePolicyEnforcement.Disabled,
+                CapacityUnitScaleUpLimitTiB  = 24,
+                IncreaseCapacityUnitByTiB = 1,
+                UnusedSizeTiB = 5
+            };
 
             string elasticSanName = Recording.GenerateAssetName("testsan-");
             ElasticSanResource elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, data)).Value;
@@ -40,6 +47,10 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.IsTrue(elasticSan1.Data.Tags.ContainsKey("tag1"));
             Assert.AreEqual("value1", elasticSan1.Data.Tags["tag1"]);
             Assert.AreEqual("Enabled", elasticSan1.Data.PublicNetworkAccess.Value.ToString());
+            Assert.AreEqual(elasticSan1.Data.ScaleUpProperties.AutoScalePolicyEnforcement, Models.AutoScalePolicyEnforcement.Disabled);
+            Assert.AreEqual(elasticSan1.Data.ScaleUpProperties.IncreaseCapacityUnitByTiB, 1);
+            Assert.AreEqual(elasticSan1.Data.ScaleUpProperties.CapacityUnitScaleUpLimitTiB, 24);
+            Assert.AreEqual(elasticSan1.Data.ScaleUpProperties.UnusedSizeTiB, 5);
             // Skip the validation for AvailabilityZone as the server won't return the property
 
             elasticSan1 = (await elasticSanCollection.CreateOrUpdateAsync(WaitUntil.Completed, elasticSanName, GetDefaultElasticSanParameters(TestLocation, 2, 7))).Value;
@@ -49,6 +60,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             Assert.IsEmpty(elasticSan1.Data.Tags);
             Assert.IsEmpty(elasticSan1.Data.AvailabilityZones);
             Assert.AreEqual(null, elasticSan1.Data.PublicNetworkAccess);
+            Assert.IsNull(elasticSan1.Data.ScaleUpProperties);
 
             await elasticSan1.DeleteAsync(WaitUntil.Completed);
         }

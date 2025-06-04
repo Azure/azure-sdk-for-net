@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ProviderHub
 
         DefaultRolloutResource IOperationSource<DefaultRolloutResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
+            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
             return new DefaultRolloutResource(_client, data);
         }
 
         async ValueTask<DefaultRolloutResource> IOperationSource<DefaultRolloutResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DefaultRolloutData.DeserializeDefaultRolloutData(document.RootElement);
-            return new DefaultRolloutResource(_client, data);
+            var data = ModelReaderWriter.Read<DefaultRolloutData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerProviderHubContext.Default);
+            return await Task.FromResult(new DefaultRolloutResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

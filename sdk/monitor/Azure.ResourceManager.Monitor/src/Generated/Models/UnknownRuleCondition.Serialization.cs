@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Monitor.Models
 {
     internal partial class UnknownRuleCondition : IUtf8JsonSerializable, IJsonModel<AlertRuleCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertRuleCondition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AlertRuleCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AlertRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,30 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 throw new FormatException($"The model {nameof(AlertRuleCondition)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("odata.type"u8);
-            writer.WriteStringValue(OdataType);
-            if (Optional.IsDefined(DataSource))
-            {
-                writer.WritePropertyName("dataSource"u8);
-                writer.WriteObjectValue<RuleDataSource>(DataSource, options);
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         AlertRuleCondition IJsonModel<AlertRuleCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,7 +51,7 @@ namespace Azure.ResourceManager.Monitor.Models
 
         internal static UnknownRuleCondition DeserializeUnknownRuleCondition(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -107,7 +93,7 @@ namespace Azure.ResourceManager.Monitor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMonitorContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AlertRuleCondition)} does not support writing '{options.Format}' format.");
             }
@@ -121,7 +107,7 @@ namespace Azure.ResourceManager.Monitor.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAlertRuleCondition(document.RootElement, options);
                     }
                 default:

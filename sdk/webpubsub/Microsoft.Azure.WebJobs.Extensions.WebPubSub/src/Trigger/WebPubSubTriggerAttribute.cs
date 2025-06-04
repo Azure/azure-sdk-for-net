@@ -3,8 +3,8 @@
 
 using System;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.Azure.WebPubSub.Common;
 using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebPubSub.Common;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
 {
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// <param name="eventType">Target event name of the request.</param>
         /// <param name="eventName">Target event type of the request.</param>
         public WebPubSubTriggerAttribute(WebPubSubEventType eventType, string eventName)
-            : this ("", eventType, eventName)
+            : this("", eventType, eventName)
         {
         }
 
@@ -86,5 +86,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// Allowed service upstream ConnectionString for Signature checks.
         /// </summary>
         public string[] Connections { get; }
+
+        /// <summary>
+        /// Specifies which client protocol can trigger the Web PubSub trigger functions. By default, it accepts all client protocols.
+        /// </summary>
+        public WebPubSubTriggerAcceptedClientProtocols ClientProtocols
+        {
+            get; set;
+        }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The InternalFileListResponse_object. </summary>
+    /// <summary> The InternalFileListResponseObject. </summary>
     internal readonly partial struct InternalFileListResponseObject : IEquatable<InternalFileListResponseObject>
     {
         private readonly string _value;
@@ -30,7 +30,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static bool operator ==(InternalFileListResponseObject left, InternalFileListResponseObject right) => left.Equals(right);
         /// <summary> Determines if two <see cref="InternalFileListResponseObject"/> values are not the same. </summary>
         public static bool operator !=(InternalFileListResponseObject left, InternalFileListResponseObject right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="InternalFileListResponseObject"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="InternalFileListResponseObject"/>. </summary>
         public static implicit operator InternalFileListResponseObject(string value) => new InternalFileListResponseObject(value);
 
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Azure.AI.OpenAI.Assistants
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

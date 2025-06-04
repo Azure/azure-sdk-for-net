@@ -147,6 +147,36 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimGroupData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="userAssignedIdentity"> The identity used to retrieve the encryption key from Azure key vault. </param>
+        /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
+        /// <param name="keyUri"> A key to encrypt the SIM data that belongs to this SIM group. </param>
+        /// <param name="mobileNetworkId"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
+        /// <returns> A new <see cref="MobileNetwork.MobileNetworkSimGroupData"/> instance for mocking. </returns>
+        public static MobileNetworkSimGroupData MobileNetworkSimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new MobileNetworkSimGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                userAssignedIdentity,
+                provisioningState,
+                keyUri != null ? new KeyVaultKey(keyUri, serializedAdditionalRawData: null) : null,
+                mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkPacketCaptureData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -233,11 +263,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <param name="diagnosticsUploadStorageAccountContainerUri"> Configuration for uploading packet core diagnostics. </param>
         /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
-        /// <param name="nasRerouteMacroMmeGroupId"> Signaling configuration for the packet core. </param>
+        /// <param name="signaling"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
         /// <param name="homeNetworkPrivateKeysProvisioningState"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
+        /// <param name="allowSupportTelemetryAccess"> The user consent configuration for the packet core. </param>
         /// <returns> A new <see cref="MobileNetwork.PacketCoreControlPlaneData"/> instance for mocking. </returns>
-        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInstallation installation = null, IEnumerable<WritableSubResource> sites = null, MobileNetworkPlatformConfiguration platform = null, MobileNetworkCoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, MobileNetworkBillingSku sku = default, int? ueMtu = null, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, MobileNetworkEventHubConfiguration eventHub = null, int? nasRerouteMacroMmeGroupId = null, BinaryData interopSettings = null, HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = null)
+        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, MobileNetworkInstallation installation = null, IEnumerable<WritableSubResource> sites = null, MobileNetworkPlatformConfiguration platform = null, MobileNetworkCoreNetworkType? coreNetworkTechnology = null, string version = null, string installedVersion = null, string rollbackVersion = null, MobileNetworkInterfaceProperties controlPlaneAccessInterface = null, IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses = null, MobileNetworkBillingSku sku = default, int? ueMtu = null, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess = null, Uri diagnosticsUploadStorageAccountContainerUri = null, MobileNetworkEventHubConfiguration eventHub = null, PacketCoreSignalingConfiguration signaling = null, BinaryData interopSettings = null, HomeNetworkPrivateKeysProvisioningState? homeNetworkPrivateKeysProvisioningState = null, bool? allowSupportTelemetryAccess = null)
         {
             tags ??= new Dictionary<string, string>();
             sites ??= new List<WritableSubResource>();
@@ -266,9 +297,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 localDiagnosticsAccess,
                 diagnosticsUploadStorageAccountContainerUri != null ? new DiagnosticsUploadConfiguration(diagnosticsUploadStorageAccountContainerUri, serializedAdditionalRawData: null) : null,
                 eventHub,
-                nasRerouteMacroMmeGroupId.HasValue ? new SignalingConfiguration(new NASRerouteConfiguration(nasRerouteMacroMmeGroupId.Value, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                signaling,
                 interopSettings,
                 homeNetworkPrivateKeysProvisioningState.HasValue ? new HomeNetworkPrivateKeysProvisioning(homeNetworkPrivateKeysProvisioningState.Value, serializedAdditionalRawData: null) : null,
+                allowSupportTelemetryAccess != null ? new UserConsentConfiguration(allowSupportTelemetryAccess, serializedAdditionalRawData: null) : null,
                 serializedAdditionalRawData: null);
         }
 
@@ -330,6 +362,32 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         public static MobileNetworkCertificateProvisioning MobileNetworkCertificateProvisioning(CertificateProvisioningState? state = null, string reason = null)
         {
             return new MobileNetworkCertificateProvisioning(state, reason, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkRoutingInfoData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="controlPlaneAccessRoutes"> A list of IPv4 routes. </param>
+        /// <param name="userPlaneAccessRoutes"> A list of IPv4 routes. </param>
+        /// <param name="userPlaneDataRoutes"> A list of attached data networks and their IPv4 routes. </param>
+        /// <returns> A new <see cref="MobileNetwork.MobileNetworkRoutingInfoData"/> instance for mocking. </returns>
+        public static MobileNetworkRoutingInfoData MobileNetworkRoutingInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<MobileNetworkIPv4Route> controlPlaneAccessRoutes = null, IEnumerable<MobileNetworkIPv4Route> userPlaneAccessRoutes = null, IEnumerable<UserPlaneDataRoutesItem> userPlaneDataRoutes = null)
+        {
+            controlPlaneAccessRoutes ??= new List<MobileNetworkIPv4Route>();
+            userPlaneAccessRoutes ??= new List<MobileNetworkIPv4Route>();
+            userPlaneDataRoutes ??= new List<UserPlaneDataRoutesItem>();
+
+            return new MobileNetworkRoutingInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                controlPlaneAccessRoutes?.ToList(),
+                userPlaneAccessRoutes?.ToList(),
+                userPlaneDataRoutes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.PacketCoreControlPlaneVersionData"/>. </summary>
@@ -529,36 +587,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="userAssignedIdentity"> The identity used to retrieve the encryption key from Azure key vault. </param>
-        /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
-        /// <param name="keyUri"> A key to encrypt the SIM data that belongs to this SIM group. </param>
-        /// <param name="mobileNetworkId"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
-        /// <returns> A new <see cref="MobileNetwork.MobileNetworkSimGroupData"/> instance for mocking. </returns>
-        public static MobileNetworkSimGroupData MobileNetworkSimGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MobileNetworkManagedServiceIdentity userAssignedIdentity = null, MobileNetworkProvisioningState? provisioningState = null, Uri keyUri = null, ResourceIdentifier mobileNetworkId = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new MobileNetworkSimGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                userAssignedIdentity,
-                provisioningState,
-                keyUri != null ? new KeyVaultKey(keyUri, serializedAdditionalRawData: null) : null,
-                mobileNetworkId != null ? ResourceManagerModelFactory.WritableSubResource(mobileNetworkId) : null,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="MobileNetwork.MobileNetworkSimPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -700,24 +728,27 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.MobileNetwork.MobileNetworkData" />. </summary>
+        /// <summary> Initializes a new instance of MobileNetworkPacketCaptureData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the mobile network resource. </param>
-        /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </param>
-        /// <param name="serviceKey"> The mobile network resource identifier. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.MobileNetwork.MobileNetworkData" /> instance for mocking. </returns>
+        /// <param name="provisioningState"> The provisioning state of the packet capture session resource. </param>
+        /// <param name="status"> The status of the packet capture session. </param>
+        /// <param name="reason"> The reason the current packet capture session state. </param>
+        /// <param name="captureStartOn"> The start time of the packet capture session. </param>
+        /// <param name="networkInterfaces"> List of network interfaces to capture on. </param>
+        /// <param name="bytesToCapturePerPacket"> Number of bytes captured per packet, the remaining bytes are truncated. The default "0" means the entire packet is captured. </param>
+        /// <param name="totalBytesPerSession"> Maximum size of the capture output. </param>
+        /// <param name="timeLimitInSeconds"> Maximum duration of the capture session in seconds. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.MobileNetwork.MobileNetworkPacketCaptureData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static MobileNetworkData MobileNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkPlmnId publicLandMobileNetworkIdentifier, string serviceKey)
+        public static MobileNetworkPacketCaptureData MobileNetworkPacketCaptureData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, MobileNetworkProvisioningState? provisioningState, MobileNetworkPacketCaptureStatus? status, string reason, DateTimeOffset? captureStartOn, IEnumerable<string> networkInterfaces, long? bytesToCapturePerPacket, long? totalBytesPerSession, int? timeLimitInSeconds)
         {
-            return MobileNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, provisioningState: provisioningState, publicLandMobileNetworkIdentifier: publicLandMobileNetworkIdentifier, publicLandMobileNetworks: default, serviceKey: serviceKey);
+            return MobileNetworkPacketCaptureData(id: id, name: name, resourceType: resourceType, systemData: systemData, provisioningState: provisioningState, status: status, reason: reason, captureStartOn: captureStartOn, networkInterfaces: networkInterfaces, bytesToCapturePerPacket: bytesToCapturePerPacket, totalBytesPerSession: totalBytesPerSession, timeLimitInSeconds: timeLimitInSeconds, outputFiles: default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData" />. </summary>
+        /// <summary> Initializes a new instance of PacketCoreControlPlaneData. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -734,19 +765,49 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <param name="installedVersion"> The currently installed version of the packet core software. </param>
         /// <param name="rollbackVersion"> The previous version of the packet core software that was deployed. Used when performing the rollback action. </param>
         /// <param name="controlPlaneAccessInterface"> The control plane interface on the access network. For 5G networks, this is the N2 interface. For 4G networks, this is the S1-MME interface. </param>
-        /// <param name="controlPlaneAccessVirtualIPv4Addresses"> The virtual IP address(es) for the control plane on the access network in a High Availability (HA) system. In an HA deployment the access network router should be configured to anycast traffic for this address to the control plane access interfaces on the active and standby nodes. In non-HA system this list should be omitted or empty. </param>
         /// <param name="sku"> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </param>
         /// <param name="ueMtu"> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </param>
         /// <param name="localDiagnosticsAccess"> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </param>
         /// <param name="diagnosticsUploadStorageAccountContainerUri"> Configuration for uploading packet core diagnostics. </param>
-        /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
-        /// <param name="nasRerouteMacroMmeGroupId"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
         /// <returns> A new <see cref="T:Azure.ResourceManager.MobileNetwork.PacketCoreControlPlaneData" /> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IEnumerable<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IEnumerable<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, Uri diagnosticsUploadStorageAccountContainerUri, MobileNetworkEventHubConfiguration eventHub, int? nasRerouteMacroMmeGroupId, BinaryData interopSettings)
+        public static PacketCoreControlPlaneData PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IEnumerable<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, Uri diagnosticsUploadStorageAccountContainerUri, BinaryData interopSettings)
         {
-            return PacketCoreControlPlaneData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, userAssignedIdentity: userAssignedIdentity, provisioningState: provisioningState, installation: installation, sites: sites, platform: platform, coreNetworkTechnology: coreNetworkTechnology, version: version, installedVersion: installedVersion, rollbackVersion: rollbackVersion, controlPlaneAccessInterface: controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses: controlPlaneAccessVirtualIPv4Addresses, sku: sku, ueMtu: ueMtu, localDiagnosticsAccess: localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri: diagnosticsUploadStorageAccountContainerUri, eventHub: eventHub, nasRerouteMacroMmeGroupId: nasRerouteMacroMmeGroupId, interopSettings: interopSettings, homeNetworkPrivateKeysProvisioningState: default);
+            return PacketCoreControlPlaneData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, userAssignedIdentity: userAssignedIdentity, provisioningState: provisioningState, installation: installation, sites: sites, platform: platform, coreNetworkTechnology: coreNetworkTechnology, version: version, installedVersion: installedVersion, rollbackVersion: rollbackVersion, controlPlaneAccessInterface: controlPlaneAccessInterface, controlPlaneAccessVirtualIPv4Addresses: default, sku: sku, ueMtu: ueMtu, localDiagnosticsAccess: localDiagnosticsAccess, diagnosticsUploadStorageAccountContainerUri: diagnosticsUploadStorageAccountContainerUri, eventHub: default, signaling: default, interopSettings: interopSettings, homeNetworkPrivateKeysProvisioningState: default, allowSupportTelemetryAccess: default);
+        }
+
+        /// <summary> Initializes a new instance of PacketCoreDataPlaneData. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the packet core data plane resource. </param>
+        /// <param name="userPlaneAccessInterface"> The user plane interface on the access network. For 5G networks, this is the N3 interface. For 4G networks, this is the S1-U interface. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.MobileNetwork.PacketCoreDataPlaneData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PacketCoreDataPlaneData PacketCoreDataPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkInterfaceProperties userPlaneAccessInterface)
+        {
+            return PacketCoreDataPlaneData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, userPlaneAccessInterface: userPlaneAccessInterface, userPlaneAccessVirtualIPv4Addresses: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.MobileNetwork.MobileNetworkData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the mobile network resource. </param>
+        /// <param name="publicLandMobileNetworkIdentifier"> The unique public land mobile network identifier for the network. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </param>
+        /// <param name="serviceKey"> The mobile network resource identifier. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.MobileNetwork.MobileNetworkData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static MobileNetworkData MobileNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, MobileNetworkPlmnId publicLandMobileNetworkIdentifier, string serviceKey)
+        {
+            return MobileNetworkData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: default, provisioningState: provisioningState, publicLandMobileNetworkIdentifier: publicLandMobileNetworkIdentifier, publicLandMobileNetworks: default, serviceKey: serviceKey);
         }
     }
 }

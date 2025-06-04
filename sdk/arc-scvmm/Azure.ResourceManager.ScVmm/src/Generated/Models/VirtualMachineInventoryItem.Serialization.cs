@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ScVmm.Models
 {
     public partial class VirtualMachineInventoryItem : IUtf8JsonSerializable, IJsonModel<VirtualMachineInventoryItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInventoryItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInventoryItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VirtualMachineInventoryItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInventoryItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.ScVmm.Models
                 throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
@@ -59,7 +68,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             if (Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
-                writer.WriteObjectValue<ScVmmInventoryItemDetails>(Cloud, options);
+                writer.WriteObjectValue(Cloud, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BiosGuid))
             {
@@ -71,44 +80,6 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WritePropertyName("managedMachineResourceId"u8);
                 writer.WriteStringValue(ManagedMachineResourceId);
             }
-            writer.WritePropertyName("inventoryType"u8);
-            writer.WriteStringValue(InventoryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
-            {
-                writer.WritePropertyName("managedResourceId"u8);
-                writer.WriteStringValue(ManagedResourceId);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Uuid))
-            {
-                writer.WritePropertyName("uuid"u8);
-                writer.WriteStringValue(Uuid);
-            }
-            if (options.Format != "W" && Optional.IsDefined(InventoryItemName))
-            {
-                writer.WritePropertyName("inventoryItemName"u8);
-                writer.WriteStringValue(InventoryItemName);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         VirtualMachineInventoryItem IJsonModel<VirtualMachineInventoryItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -125,7 +96,7 @@ namespace Azure.ResourceManager.ScVmm.Models
 
         internal static VirtualMachineInventoryItem DeserializeVirtualMachineInventoryItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -268,7 +239,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineInventoryItem)} does not support writing '{options.Format}' format.");
             }
@@ -282,7 +253,7 @@ namespace Azure.ResourceManager.ScVmm.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineInventoryItem(document.RootElement, options);
                     }
                 default:

@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> List of versions available for agent pool. </summary>
+        [WirePath("properties.agentPoolVersions")]
         public IReadOnlyList<AgentPoolAvailableVersion> AgentPoolVersions { get; }
     }
 }

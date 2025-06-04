@@ -19,28 +19,25 @@ namespace Azure.Storage.DataMovement.Blobs
         internal AppendBlobClient BlobClient { get; set; }
         internal AppendBlobStorageResourceOptions _options;
 
-        protected override string ResourceId => "AppendBlob";
+        protected override string ResourceId => DataMovementBlobConstants.ResourceId.AppendBlob;
 
         public override Uri Uri => BlobClient.Uri;
 
         public override string ProviderId => "blob";
 
-        /// <summary>
-        /// Defines the recommended Transfer Type for the storage resource.
-        /// </summary>
-        protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected override TransferOrder TransferType => TransferOrder.Sequential;
 
-        /// <summary>
-        /// Defines the maximum chunk size for the storage resource.
-        /// </summary>
+        protected override long MaxSupportedSingleTransferSize => Constants.Blob.Append.MaxAppendBlockBytes;
+
         protected override long MaxSupportedChunkSize => Constants.Blob.Append.MaxAppendBlockBytes;
 
-        /// <summary>
-        /// Length of the storage resource. This information is obtained during a GetStorageResources API call.
-        ///
-        /// Will return default if the length was not set by a GetStorageResources API call.
-        /// </summary>
+        protected override int MaxSupportedChunkCount => Constants.Blob.Append.MaxBlocks;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
+
+        internal AppendBlobStorageResource()
+        {
+        }
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="AppendBlobStorageResource"/>
@@ -303,23 +300,30 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointData(BlobType.Append);
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new BlobDestinationCheckpointData(
+            return new BlobDestinationCheckpointDetails(
+                isBlobTypeSet: true,
                 blobType: BlobType.Append,
-                contentType: _options?.ContentType,
-                contentEncoding: _options?.ContentEncoding,
-                contentLanguage: _options?.ContentLanguage,
-                contentDisposition: _options?.ContentDisposition,
-                cacheControl: _options?.CacheControl,
-                accessTier: _options?.AccessTier,
-                metadata:_options?.Metadata,
-                tags: default);
+                blobOptions: _options);
         }
+
+        // no-op for get permissions
+        protected override Task<string> GetPermissionsAsync(
+            StorageResourceItemProperties properties = default,
+            CancellationToken cancellationToken = default)
+            => Task.FromResult((string)default);
+
+        // no-op for set permissions
+        protected override Task SetPermissionsAsync(
+            StorageResourceItem sourceResource,
+            StorageResourceItemProperties sourceProperties,
+            CancellationToken cancellationToken = default)
+            => Task.CompletedTask;
     }
 }

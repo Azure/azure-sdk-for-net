@@ -68,7 +68,7 @@ namespace Azure.Maps.Routing
         public bool? ShouldReportEffectiveSettings { get; set; }
 
         /// <summary> Specifies which of the section types is reported in the route response. &lt;br&gt;&lt;br&gt;For example if sectionType = pedestrian the sections which are suited for pedestrians only are returned. Multiple types can be used. The default sectionType refers to the travelMode input. By default travelMode is set to car. </summary>
-        public SectionType? SectionFilter { get; set; }
+        public IList<SectionType> SectionFilter { get; } = new List<SectionType>();
 
         /// <summary> The type of route requested. </summary>
         public RouteType? RouteType { get; set; }
@@ -131,7 +131,7 @@ namespace Azure.Maps.Routing
         /// <summary> Whether the vehicle is used for commercial purposes. Commercial vehicles may not be allowed to drive on some roads. </summary>
         public bool? IsCommercialVehicle { get; set; }
 
-        /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
+        /// <summary> Types of cargo that may be classified as hazardous materials and restricted from some roads. Available vehicleLoadType values are US Hazmat classes 1 through 9, plus generic classifications for use in other countries/regions. Values beginning with USHazmat are for US routing while otherHazmat should be used for all other countries/regions. vehicleLoadType can be specified multiple times. This parameter is currently only considered for travelMode=truck. </summary>
         public VehicleLoadType? VehicleLoadType { get; set; }
 
         /// <summary> Engine type of the vehicle. When a detailed Consumption Model is specified, it must be consistent with the value of <c>vehicleEngineType</c>. </summary>

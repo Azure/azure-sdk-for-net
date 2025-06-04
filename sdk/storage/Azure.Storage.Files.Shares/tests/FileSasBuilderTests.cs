@@ -30,8 +30,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareSasBuilder fileSasBuilder = BuildFileSasBuilder(includeFilePath: true, constants, shareName, filePath);
             var signature = BuildSignature(includeFilePath: true, constants, shareName, filePath);
 
+            string stringToSign = null;
+
             // Act
-            var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential);
+            var sasQueryParameters = fileSasBuilder.ToSasQueryParameters(constants.Sas.SharedKeyCredential, out stringToSign);
 
             // Assert
             Assert.AreEqual(SasQueryParametersInternals.DefaultSasVersionInternal, sasQueryParameters.Version);
@@ -46,6 +48,7 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(Permissions, sasQueryParameters.Permissions);
             Assert.AreEqual(signature, sasQueryParameters.Signature);
             AssertResponseHeaders(constants, sasQueryParameters);
+            Assert.IsNotNull(stringToSign);
         }
 
         [RecordedTest]
@@ -238,6 +241,45 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(443, fileUriBuilder.Port);
 
             Assert.AreEqual(originalUri, newUri);
+        }
+
+        [RecordedTest]
+        public async Task SasCredentialRequiresUriWithoutSasError_RedactedSasUri()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+
+            ShareSasBuilder fileSasBuilder = new ShareSasBuilder
+            {
+                StartsOn = Recording.UtcNow.AddHours(-1),
+                ExpiresOn = Recording.UtcNow.AddHours(1),
+                ShareName = test.Share.Name
+            };
+
+            fileSasBuilder.SetPermissions(
+                rawPermissions: "LDWCR",
+                normalize: true);
+
+            StorageSharedKeyCredential sharedKeyCredential = new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey);
+
+            ShareUriBuilder fileUriBuilder = new ShareUriBuilder(test.Share.Uri)
+            {
+                Sas = fileSasBuilder.ToSasQueryParameters(sharedKeyCredential)
+            };
+
+            Uri sasUri = fileUriBuilder.ToUri();
+
+            UriBuilder uriBuilder = new UriBuilder(sasUri);
+            uriBuilder.Query = "[REDACTED]";
+            string redactedUri = uriBuilder.Uri.ToString();
+
+            ArgumentException ex = Errors.SasCredentialRequiresUriWithoutSas<ShareUriBuilder>(sasUri);
+
+            // Assert
+            Assert.IsTrue(ex.Message.Contains(redactedUri));
+            Assert.IsFalse(ex.Message.Contains("st="));
+            Assert.IsFalse(ex.Message.Contains("se="));
+            Assert.IsFalse(ex.Message.Contains("sig="));
         }
 
         private ShareSasBuilder BuildFileSasBuilder(bool includeFilePath, TestConstants constants, string shareName, string filePath)

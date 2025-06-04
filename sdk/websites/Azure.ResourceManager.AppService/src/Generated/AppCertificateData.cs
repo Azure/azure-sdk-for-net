@@ -80,13 +80,13 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cerBlob"> Raw bytes of .cer file. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the certificate. </param>
-        /// <param name="keyVaultId"> Key Vault Csm resource Id. </param>
-        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
+        /// <param name="keyVaultId"> Azure Key Vault Csm resource Id. </param>
+        /// <param name="keyVaultSecretName"> Azure Key Vault secret name. </param>
         /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
-        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan. </param>
         /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
         /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AppCertificateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string password, string friendlyName, string subjectName, IList<string> hostNames, byte[] pfxBlob, string siteName, string selfLink, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprintString, bool? isValid, byte[] cerBlob, string publicKeyHash, HostingEnvironmentProfile hostingEnvironmentProfile, ResourceIdentifier keyVaultId, string keyVaultSecretName, KeyVaultSecretStatus? keyVaultSecretStatus, ResourceIdentifier serverFarmId, string canonicalName, string domainValidationMethod, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -165,16 +165,16 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Specification for the App Service Environment to use for the certificate. </summary>
         [WirePath("properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; }
-        /// <summary> Key Vault Csm resource Id. </summary>
+        /// <summary> Azure Key Vault Csm resource Id. </summary>
         [WirePath("properties.keyVaultId")]
         public ResourceIdentifier KeyVaultId { get; set; }
-        /// <summary> Key Vault secret name. </summary>
+        /// <summary> Azure Key Vault secret name. </summary>
         [WirePath("properties.keyVaultSecretName")]
         public string KeyVaultSecretName { get; set; }
         /// <summary> Status of the Key Vault secret. </summary>
         [WirePath("properties.keyVaultSecretStatus")]
         public KeyVaultSecretStatus? KeyVaultSecretStatus { get; }
-        /// <summary> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </summary>
+        /// <summary> Resource ID of the associated App Service plan. </summary>
         [WirePath("properties.serverFarmId")]
         public ResourceIdentifier ServerFarmId { get; set; }
         /// <summary> CNAME of the certificate to be issued via free certificate. </summary>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService
         /// <summary> Method of domain validation for free cert. </summary>
         [WirePath("properties.domainValidationMethod")]
         public string DomainValidationMethod { get; set; }
-        /// <summary> Kind of resource. </summary>
+        /// <summary> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
     }

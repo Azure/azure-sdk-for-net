@@ -58,15 +58,15 @@ namespace Azure.Communication
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MicrosoftTeamsAppIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMicrosoftTeamsAppIdentifierModel(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new CallAutomation.Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MicrosoftTeamsAppIdentifierModel>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

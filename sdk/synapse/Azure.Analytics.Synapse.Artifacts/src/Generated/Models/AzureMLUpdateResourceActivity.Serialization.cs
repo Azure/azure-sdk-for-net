@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
+                writer.WriteObjectValue(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue<ActivityPolicy>(Policy);
+                writer.WriteObjectValue(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue<ActivityDependency>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue<UserProperty>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("trainedModelName"u8);
             writer.WriteObjectValue<object>(TrainedModelName);
             writer.WritePropertyName("trainedModelLinkedServiceName"u8);
-            writer.WriteObjectValue<LinkedServiceReference>(TrainedModelLinkedServiceName);
+            writer.WriteObjectValue(TrainedModelLinkedServiceName);
             writer.WritePropertyName("trainedModelFilePath"u8);
             writer.WriteObjectValue<object>(TrainedModelFilePath);
             writer.WriteEndObject();
@@ -236,15 +236,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AzureMLUpdateResourceActivity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAzureMLUpdateResourceActivity(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<AzureMLUpdateResourceActivity>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
 
@@ -252,7 +252,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureMLUpdateResourceActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue<AzureMLUpdateResourceActivity>(model);
+                writer.WriteObjectValue(model);
             }
 
             public override AzureMLUpdateResourceActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)

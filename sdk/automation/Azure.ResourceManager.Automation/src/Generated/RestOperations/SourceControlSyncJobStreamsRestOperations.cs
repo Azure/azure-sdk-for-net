@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySyncJobRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/sourceControls/", false);
+            uri.AppendPath(sourceControlName, true);
+            uri.AppendPath("/sourceControlSyncJobs/", false);
+            uri.AppendPath(sourceControlSyncJobId, true);
+            uri.AppendPath("/streams", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySyncJobRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -89,7 +112,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobStreamListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,13 +145,33 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobStreamListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/sourceControls/", false);
+            uri.AppendPath(sourceControlName, true);
+            uri.AppendPath("/sourceControlSyncJobs/", false);
+            uri.AppendPath(sourceControlSyncJobId, true);
+            uri.AppendPath("/streams/", false);
+            uri.AppendPath(streamId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string streamId)
@@ -182,7 +225,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobStreamResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJobStreamResult.DeserializeSourceControlSyncJobStreamResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -216,13 +259,21 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobStreamResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJobStreamResult.DeserializeSourceControlSyncJobStreamResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySyncJobNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySyncJobNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string sourceControlName, Guid sourceControlSyncJobId, string filter)
@@ -265,7 +316,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobStreamListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -300,7 +351,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         SourceControlSyncJobStreamListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SourceControlSyncJobStreamListResult.DeserializeSourceControlSyncJobStreamListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

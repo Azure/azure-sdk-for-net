@@ -201,47 +201,6 @@ namespace Microsoft.Azure.Batch
         /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
         /// </summary>
         /// <param name="poolId">The id of the pool.</param>
-        /// <param name="virtualMachineSize">
-        /// The size of virtual machines in the pool.  See https://azure.microsoft.com/documentation/articles/cloud-services-sizes-specs/ for sizes. Batch supports all Azure cloud service VM sizes except ExtraSmall, A1V2 and A2V2.</param>
-        /// <param name="cloudServiceConfiguration">The <see cref="CloudServiceConfiguration"/> for the pool.</param>
-        /// <param name="targetDedicatedComputeNodes">
-        /// The desired number of dedicated compute nodes in the pool.
-        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted,
-        /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
-        /// </param>
-        /// <param name="targetLowPriorityComputeNodes">
-        /// The desired number of low-priority compute nodes in the pool.
-        /// If <paramref name="targetDedicatedComputeNodes"/> and <paramref name="targetLowPriorityComputeNodes"/> are omitted,
-        /// you must set the <see cref="CloudPool.AutoScaleEnabled"/> and <see cref="CloudPool.AutoScaleFormula"/> properties.
-        /// </param>
-        /// <returns>A <see cref="CloudPool"/> representing a new pool that has not been added to the Batch service.
-        /// To add the pool to the Batch account, call <see cref="CloudPool.CommitAsync"/>.</returns>
-        /// <remarks>
-        /// <para>For information about Azure Guest OS families, see https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/ </para>
-        /// </remarks>
-        public CloudPool CreatePool(
-            string poolId,
-            string virtualMachineSize,
-            CloudServiceConfiguration cloudServiceConfiguration,
-            int? targetDedicatedComputeNodes = null,
-            int? targetLowPriorityComputeNodes = null)
-        {
-            CloudPool unboundPool = new CloudPool(ParentBatchClient, CustomBehaviors)
-                {
-                    CloudServiceConfiguration = cloudServiceConfiguration,
-                    Id = poolId,
-                    VirtualMachineSize = virtualMachineSize,
-                    TargetDedicatedComputeNodes = targetDedicatedComputeNodes,
-                    TargetLowPriorityComputeNodes = targetLowPriorityComputeNodes,
-                };
-
-            return unboundPool;
-        }
-
-        /// <summary>
-        /// Creates an instance of CloudPool that is unbound and does not have a consistency relationship to any pool in the Batch service.
-        /// </summary>
-        /// <param name="poolId">The id of the pool.</param>
         /// <param name="virtualMachineSize">The size of virtual machines in the pool.
         /// See https://azure.microsoft.com/documentation/articles/virtual-machines-windows-sizes/ for windows sizes and https://azure.microsoft.com/documentation/articles/virtual-machines-linux-sizes/ for linux sizes.
         /// </param>
@@ -1286,143 +1245,6 @@ namespace Microsoft.Azure.Batch
             asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
         }
 
-        /// <summary>
-        /// Gets a Remote Desktop Protocol (RDP) file for the specified node.
-        /// </summary>
-        /// <param name="poolId">The id of the pool that contains the compute node.</param>
-        /// <param name="computeNodeId">The id of the compute node for which to get a Remote Desktop file.</param>
-        /// <param name="rdpStream">The <see cref="Stream"/> into which the RDP file contents will be written.</param>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <remarks>
-        /// <para>This method does not close the <paramref name="rdpStream"/> stream, and it does not reset the position after writing.
-        /// It is the caller's responsibility to close the stream, or to reset the position if required.</para>
-        /// <para>The get RDP file operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
-        /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
-        /// </remarks>
-        public Task GetRDPFileAsync(
-            string poolId,
-            string computeNodeId,
-            Stream rdpStream,
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-
-            Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(
-                poolId,
-                computeNodeId,
-                rdpStream,
-                bhMgr,
-                cancellationToken);
-
-            return asyncTask;
-        }
-
-
-        /// <summary>
-        /// Gets a Remote Desktop Protocol (RDP) file for the specified node.
-        /// </summary>
-        /// <param name="poolId">The id of the pool that contains the compute node.</param>
-        /// <param name="computeNodeId">The id of the compute node for which to get a Remote Desktop file.</param>
-        /// <param name="rdpStream">The <see cref="Stream"/> into which the RDP file contents will be written.</param>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <remarks>
-        /// <para>This method does not close the <paramref name="rdpStream"/> stream, and it does not reset the position after writing.
-        /// It is the caller's responsibility to close the stream, or to reset the position if required.</para>
-        /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetRDPFileAsync(string, string, Stream, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
-        /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
-        /// </remarks>
-        public void GetRDPFile(string poolId, string computeNodeId, Stream rdpStream,
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            Task asyncTask = GetRDPFileAsync(poolId, computeNodeId, rdpStream, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
-        }
-
-        internal async Task GetRDPFileViaFileNameAsyncImpl(
-            string poolId,
-            string computeNodeId,
-            string rdpFileNameToCreate,
-            BehaviorManager bhMgr,
-            CancellationToken cancellationToken)
-        {
-            // create the file
-            using (FileStream rdpStream = File.Create(rdpFileNameToCreate))
-            {
-                Task asyncTask = _parentBatchClient.ProtocolLayer.GetComputeNodeRDPFile(poolId,
-                    computeNodeId, rdpStream, bhMgr, cancellationToken);
-
-                await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-                // stream has rdp contents, flush
-                await rdpStream.FlushAsync(cancellationToken).ConfigureAwait(continueOnCapturedContext: false);
-            }
-        }
-
-        /// <summary>
-        /// Gets a Remote Desktop Protocol file for the specified node.
-        /// </summary>
-        /// <param name="poolId">The id of the pool that contains the compute node.</param>
-        /// <param name="computeNodeId">The id of the compute node for which to get a Remote Desktop file.</param>
-        /// <param name="rdpFileNameToCreate">The file path at which to create the RDP file.</param>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
-        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
-        /// <remarks>
-        /// <para>If the file specified by <paramref name="rdpFileNameToCreate"/> already exists, it is overwritten.</para>
-        /// <para>The get RDP file operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
-        /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettingsAsync"/> must be used.</para>
-        /// </remarks>
-        public Task GetRDPFileAsync(
-            string poolId,
-            string computeNodeId,
-            string rdpFileNameToCreate,
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // create the behavior manager
-            BehaviorManager bhMgr = new BehaviorManager(CustomBehaviors, additionalBehaviors);
-
-            Task asyncTask = GetRDPFileViaFileNameAsyncImpl(
-                poolId,
-                computeNodeId,
-                rdpFileNameToCreate,
-                bhMgr,
-                cancellationToken);
-
-            return asyncTask;
-        }
-
-        /// <summary>
-        /// Gets a Remote Desktop Protocol file for the specified node.
-        /// </summary>
-        /// <param name="poolId">The id of the pool that contains the compute node.</param>
-        /// <param name="computeNodeId">The id of the compute node for which to get a Remote Desktop file.</param>
-        /// <param name="rdpFileNameToCreate">The file path at which to create the RDP file.</param>
-        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
-        /// <remarks>
-        /// <para>If the file specified by <paramref name="rdpFileNameToCreate"/> already exists, it is overwritten.</para>
-        /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetRDPFileAsync(string, string, string, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="CloudServiceConfiguration" /> property.
-        /// If this method is invoked on pools created with <see cref="VirtualMachineConfiguration"/>, then Batch service returns 409 (Conflict).
-        /// For pools with <see cref="VirtualMachineConfiguration"/> property, the new method <see cref="GetRemoteLoginSettings"/> must be used.</para>
-        /// </remarks>
-        public void GetRDPFile(string poolId, string computeNodeId, string rdpFileNameToCreate,
-            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
-        {
-            Task asyncTask = GetRDPFileAsync(poolId, computeNodeId, rdpFileNameToCreate, additionalBehaviors);
-            asyncTask.WaitAndUnaggregateException(CustomBehaviors, additionalBehaviors);
-        }
-
         internal async Task<RemoteLoginSettings> GetRemoteLoginSettingsImpl(string poolId, string computeNodeId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var asyncTask = _parentBatchClient.ProtocolLayer.GetRemoteLoginSettings(poolId, computeNodeId, bhMgr, cancellationToken);
@@ -1446,9 +1268,7 @@ namespace Microsoft.Azure.Batch
         /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
         /// <remarks>
         /// <para>The get remote login settings operation runs asynchronously.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.
-        /// If this method is invoked on pools created with <see cref="CloudServiceConfiguration" />, then Batch service returns 409 (Conflict).
-        /// For pools with a <see cref="CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
+        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.</para>
         /// </remarks>
         public Task<RemoteLoginSettings> GetRemoteLoginSettingsAsync(
             string poolId,
@@ -1476,9 +1296,7 @@ namespace Microsoft.Azure.Batch
         /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
         /// <remarks>
         /// <para>This is a blocking operation. For a non-blocking equivalent, see <see cref="GetRemoteLoginSettingsAsync(string, string, IEnumerable{BatchClientBehavior}, CancellationToken)"/>.</para>
-        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.
-        /// If this method is invoked on pools created with <see cref="CloudServiceConfiguration" />, then Batch service returns 409 (Conflict).
-        /// For pools with a <see cref="CloudServiceConfiguration" /> property, one of the GetRDPFileAsync/GetRDPFile methods must be used.</para>
+        /// <para>This method can be invoked only if the pool is created with a <see cref="VirtualMachineConfiguration"/> property.</para>
         /// </remarks>
         public RemoteLoginSettings GetRemoteLoginSettings(
             string poolId,

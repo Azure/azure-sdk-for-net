@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.Billing.Models
 {
     public partial class BillingSubscriptionSplitContent : IUtf8JsonSerializable, IJsonModel<BillingSubscriptionSplitContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionSplitContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingSubscriptionSplitContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BillingSubscriptionSplitContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,17 +34,6 @@ namespace Azure.ResourceManager.Billing.Models
                 throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(BillingFrequency))
-            {
-                writer.WritePropertyName("billingFrequency"u8);
-                writer.WriteStringValue(BillingFrequency);
-            }
-            if (Optional.IsDefined(Quantity))
-            {
-                writer.WritePropertyName("quantity"u8);
-                writer.WriteNumberValue(Quantity.Value);
-            }
             if (Optional.IsDefined(TargetProductTypeId))
             {
                 writer.WritePropertyName("targetProductTypeId"u8);
@@ -46,10 +44,20 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("targetSkuId"u8);
                 writer.WriteStringValue(TargetSkuId);
             }
+            if (Optional.IsDefined(Quantity))
+            {
+                writer.WritePropertyName("quantity"u8);
+                writer.WriteNumberValue(Quantity.Value);
+            }
             if (Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
+            }
+            if (Optional.IsDefined(BillingFrequency))
+            {
+                writer.WritePropertyName("billingFrequency"u8);
+                writer.WriteStringValue(BillingFrequency);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,14 +67,13 @@ namespace Azure.ResourceManager.Billing.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BillingSubscriptionSplitContent IJsonModel<BillingSubscriptionSplitContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -83,24 +90,29 @@ namespace Azure.ResourceManager.Billing.Models
 
         internal static BillingSubscriptionSplitContent DeserializeBillingSubscriptionSplitContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string billingFrequency = default;
-            int? quantity = default;
             string targetProductTypeId = default;
             string targetSkuId = default;
+            int? quantity = default;
             TimeSpan? termDuration = default;
+            string billingFrequency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("billingFrequency"u8))
+                if (property.NameEquals("targetProductTypeId"u8))
                 {
-                    billingFrequency = property.Value.GetString();
+                    targetProductTypeId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetSkuId"u8))
+                {
+                    targetSkuId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("quantity"u8))
@@ -112,16 +124,6 @@ namespace Azure.ResourceManager.Billing.Models
                     quantity = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("targetProductTypeId"u8))
-                {
-                    targetProductTypeId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("targetSkuId"u8))
-                {
-                    targetSkuId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("termDuration"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -131,6 +133,11 @@ namespace Azure.ResourceManager.Billing.Models
                     termDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (property.NameEquals("billingFrequency"u8))
+                {
+                    billingFrequency = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -138,11 +145,11 @@ namespace Azure.ResourceManager.Billing.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new BillingSubscriptionSplitContent(
-                billingFrequency,
-                quantity,
                 targetProductTypeId,
                 targetSkuId,
+                quantity,
                 termDuration,
+                billingFrequency,
                 serializedAdditionalRawData);
         }
 
@@ -153,7 +160,7 @@ namespace Azure.ResourceManager.Billing.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support writing '{options.Format}' format.");
             }
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBillingSubscriptionSplitContent(document.RootElement, options);
                     }
                 default:

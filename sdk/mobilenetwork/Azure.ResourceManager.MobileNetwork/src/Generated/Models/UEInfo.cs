@@ -82,12 +82,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> RAT Type. </summary>
+        [WirePath("properties.ratType")]
         public RatType RatType { get; set; }
         /// <summary> State of the UE. </summary>
+        [WirePath("properties.ueState")]
         public UEState UEState { get; set; }
         /// <summary> Gets the ueip addresses. </summary>
+        [WirePath("properties.ueIpAddresses")]
         public IList<DnnIPPair> UEIPAddresses { get; }
         /// <summary> The timestamp of last list UEs call to the packet core (UTC). </summary>
+        [WirePath("properties.lastReadAt")]
         public DateTimeOffset? LastReadOn { get; set; }
     }
 }

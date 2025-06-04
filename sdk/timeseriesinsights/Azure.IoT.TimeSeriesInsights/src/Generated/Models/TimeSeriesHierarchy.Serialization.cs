@@ -23,7 +23,7 @@ namespace Azure.IoT.TimeSeriesInsights
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue<TimeSeriesHierarchySource>(Source);
+            writer.WriteObjectValue(Source);
             writer.WriteEndObject();
         }
 
@@ -61,15 +61,15 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static TimeSeriesHierarchy FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTimeSeriesHierarchy(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TimeSeriesHierarchy>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

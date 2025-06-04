@@ -54,7 +54,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<TrainRequest>(trainRequest);
+            content.JsonWriter.WriteObjectValue(trainRequest);
             request.Content = content;
             return message;
         }
@@ -141,7 +141,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Model value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Model value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Model.DeserializeModel(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -323,7 +323,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
+                content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
             return message;
@@ -403,7 +403,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -426,7 +426,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -451,7 +451,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CopyRequest>(copyRequest);
+            content.JsonWriter.WriteObjectValue(copyRequest);
             request.Content = content;
             return message;
         }
@@ -538,7 +538,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         CopyOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -561,7 +561,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         CopyOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CopyOperationResult.DeserializeCopyOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -598,7 +598,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     {
                         CopyAuthorizationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -620,7 +620,7 @@ namespace Azure.AI.FormRecognizer
                 case 201:
                     {
                         CopyAuthorizationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CopyAuthorizationResult.DeserializeCopyAuthorizationResult(document.RootElement);
                         return ResponseWithHeaders.FromValue(value, headers, message.Response);
                     }
@@ -643,7 +643,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ComposeRequest>(composeRequest);
+            content.JsonWriter.WriteObjectValue(composeRequest);
             request.Content = content;
             return message;
         }
@@ -808,7 +808,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
+                content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
             return message;
@@ -885,7 +885,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -907,7 +907,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1020,7 +1020,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
+                content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1097,7 +1097,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1119,7 +1119,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1222,7 +1222,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
+                content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1297,7 +1297,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1319,7 +1319,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1432,7 +1432,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
+                content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1509,7 +1509,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1531,7 +1531,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1644,7 +1644,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
+                content.JsonWriter.WriteObjectValue(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1721,7 +1721,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1743,7 +1743,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         AnalyzeOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeOperationResult.DeserializeAnalyzeOperationResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1780,7 +1780,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1801,7 +1801,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1838,7 +1838,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1859,7 +1859,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1902,7 +1902,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1930,7 +1930,7 @@ namespace Azure.AI.FormRecognizer
                 case 200:
                     {
                         Models.Models value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = Models.Models.DeserializeModels(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -36,6 +36,27 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByNodeRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeId, true);
+            uri.AppendPath("/reports", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByNodeRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -86,7 +107,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,13 +139,31 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeId, true);
+            uri.AppendPath("/reports/", false);
+            uri.AppendPath(reportId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
@@ -175,7 +214,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReport value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeReport.DeserializeDscNodeReport(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,13 +247,32 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReport value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeReport.DeserializeDscNodeReport(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetContentRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/nodes/", false);
+            uri.AppendPath(nodeId, true);
+            uri.AppendPath("/reports/", false);
+            uri.AppendPath(reportId, true);
+            uri.AppendPath("/content", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetContentRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string reportId)
@@ -306,6 +364,14 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        internal RequestUriBuilder CreateListByNodeNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByNodeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName, string nodeId, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -345,7 +411,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -379,7 +445,7 @@ namespace Azure.ResourceManager.Automation
                 case 200:
                     {
                         DscNodeReportListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DscNodeReportListResult.DeserializeDscNodeReportListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -36,6 +36,18 @@ namespace Azure.ResourceManager.Authorization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string denyAssignmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/denyAssignments/", false);
+            uri.AppendPath(denyAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string scope, string denyAssignmentId)
         {
             var message = _pipeline.CreateMessage();
@@ -72,7 +84,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         DenyAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DenyAssignmentData.DeserializeDenyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -101,7 +113,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         DenyAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DenyAssignmentData.DeserializeDenyAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,6 +122,21 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/denyAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeRequest(string scope, string filter)
@@ -149,7 +176,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         DenyAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DenyAssignmentListResult.DeserializeDenyAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,13 +201,21 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         DenyAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DenyAssignmentListResult.DeserializeDenyAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForScopeNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string scope, string filter)
@@ -215,7 +250,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         DenyAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DenyAssignmentListResult.DeserializeDenyAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -242,7 +277,7 @@ namespace Azure.ResourceManager.Authorization
                 case 200:
                     {
                         DenyAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DenyAssignmentListResult.DeserializeDenyAssignmentListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

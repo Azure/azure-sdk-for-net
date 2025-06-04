@@ -297,9 +297,9 @@ namespace Azure.Messaging.EventHubs.Amqp
                             firstReceivedEvent = receivedEvents[0];
                             lastReceivedEvent = receivedEvents[receivedEventCount - 1];
 
-                            if (lastReceivedEvent.Offset > long.MinValue)
+                            if (!string.IsNullOrEmpty(lastReceivedEvent.OffsetString))
                             {
-                                CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.Offset, false);
+                                CurrentEventPosition = EventPosition.FromOffset(lastReceivedEvent.OffsetString, false);
                             }
 
                             if (TrackLastEnqueuedEventProperties)
@@ -495,7 +495,7 @@ namespace Azure.Messaging.EventHubs.Amqp
                     Interlocked.CompareExchange(ref _activePartitionStolenException, null, activeException);
                 }
 
-                EventHubsEventSource.Log.AmqpConsumerLinkCreateCapturedErrorThrow(EventHubName, consumerGroup, partitionId, ownerLevel?.ToString(CultureInfo.InvariantCulture), eventStartingPosition.ToString(), activeException.Message);
+                EventHubsEventSource.Log.AmqpConsumerLinkCreateCapturedErrorThrow(EventHubName, consumerGroup, partitionId, ownerLevel?.ToString(CultureInfo.InvariantCulture), eventStartingPosition.ToString(), activeException.Message, consumerIdentifier);
                 ExceptionDispatchInfo.Capture(activeException).Throw();
             }
 

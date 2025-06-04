@@ -80,12 +80,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> EPS bearer identifier. </summary>
+        [WirePath("ebi")]
         public int Ebi { get; set; }
         /// <summary> Access point name. </summary>
+        [WirePath("apn")]
         public string Apn { get; set; }
         /// <summary> Packet Data Network Type. </summary>
+        [WirePath("pdnType")]
         public PdnType PdnType { get; set; }
         /// <summary> IPv4 address. </summary>
+        [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
     }
 }

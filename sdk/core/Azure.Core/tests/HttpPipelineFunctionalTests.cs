@@ -571,7 +571,10 @@ namespace Azure.Core.Tests
             Assert.Throws<InvalidOperationException>(() => { var content = message.Response.Content; });
             var buffer = new byte[10];
             Assert.AreEqual(1, await responseContentStream.ReadAsync(buffer, 0, 1));
+
+#pragma warning disable CA2022 // The return value of ReadAsync is not needed for this test
             var exception = Assert.ThrowsAsync<TaskCanceledException>(async () => await responseContentStream.ReadAsync(buffer, 0, 10));
+#pragma warning restore CA2022
             Assert.AreEqual("The operation was cancelled because it exceeded the configured timeout of 0:00:00.5. " +
                             "Network timeout can be adjusted in ClientOptions.Retry.NetworkTimeout.", exception.Message);
 

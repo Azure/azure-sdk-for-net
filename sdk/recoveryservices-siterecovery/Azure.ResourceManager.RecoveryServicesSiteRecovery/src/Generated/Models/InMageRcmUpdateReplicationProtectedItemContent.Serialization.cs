@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
     public partial class InMageRcmUpdateReplicationProtectedItemContent : IUtf8JsonSerializable, IJsonModel<InMageRcmUpdateReplicationProtectedItemContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmUpdateReplicationProtectedItemContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmUpdateReplicationProtectedItemContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
@@ -77,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue<InMageRcmNicContent>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,24 +95,51 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(SqlServerLicenseType))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("sqlServerLicenseType"u8);
+                writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            writer.WriteEndObject();
+            if (Optional.IsDefined(LinuxLicenseType))
+            {
+                writer.WritePropertyName("linuxLicenseType"u8);
+                writer.WriteStringValue(LinuxLicenseType.Value.ToString());
+            }
+            if (Optional.IsDefined(UserSelectedOSName))
+            {
+                writer.WritePropertyName("userSelectedOSName"u8);
+                writer.WriteStringValue(UserSelectedOSName);
+            }
+            if (Optional.IsCollectionDefined(TargetVmTags))
+            {
+                writer.WritePropertyName("targetVmTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetVmTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            {
+                writer.WritePropertyName("targetManagedDiskTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetManagedDiskTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetNicTags))
+            {
+                writer.WritePropertyName("targetNicTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetNicTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
         }
 
         InMageRcmUpdateReplicationProtectedItemContent IJsonModel<InMageRcmUpdateReplicationProtectedItemContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -120,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         internal static InMageRcmUpdateReplicationProtectedItemContent DeserializeInMageRcmUpdateReplicationProtectedItemContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -137,6 +173,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier testNetworkId = default;
             IList<InMageRcmNicContent> vmNics = default;
             SiteRecoveryLicenseType? licenseType = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
+            string userSelectedOSName = default;
+            IList<UserCreatedResourceTag> targetVmTags = default;
+            IList<UserCreatedResourceTag> targetManagedDiskTags = default;
+            IList<UserCreatedResourceTag> targetNicTags = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -234,6 +276,71 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     licenseType = new SiteRecoveryLicenseType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("sqlServerLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("linuxLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("userSelectedOSName"u8))
+                {
+                    userSelectedOSName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetVmTags = array;
+                    continue;
+                }
+                if (property.NameEquals("targetManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetManagedDiskTags = array;
+                    continue;
+                }
+                if (property.NameEquals("targetNicTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetNicTags = array;
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -258,7 +365,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetNetworkId,
                 testNetworkId,
                 vmNics ?? new ChangeTrackingList<InMageRcmNicContent>(),
-                licenseType);
+                licenseType,
+                sqlServerLicenseType,
+                linuxLicenseType,
+                userSelectedOSName,
+                targetVmTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                targetManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>());
         }
 
         BinaryData IPersistableModel<InMageRcmUpdateReplicationProtectedItemContent>.Write(ModelReaderWriterOptions options)
@@ -268,7 +381,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmUpdateReplicationProtectedItemContent)} does not support writing '{options.Format}' format.");
             }
@@ -282,7 +395,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInMageRcmUpdateReplicationProtectedItemContent(document.RootElement, options);
                     }
                 default:

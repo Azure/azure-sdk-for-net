@@ -17,7 +17,7 @@ JobRouterAdministrationClient routerAdministrationClient = new JobRouterAdminist
 
 ## Create a Distribution Policy
 
-Use `RouterClient` to create a [Distribution Policy](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
+Use `RouterClient` to create a [Distribution Policy](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#distribution-policy) to control how jobs are to be distributed to workers with associated queue.
 
 For this example, we are going to create a __Longest Idle__ policy with an offer TTL set to 1 day.
 
@@ -32,7 +32,7 @@ Response<DistributionPolicy> distributionPolicy = routerAdministrationClient.Cre
 
 ## Create a Queue
 
-Use `RouterClient` to create a [Queue](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#queue).
+Use `RouterClient` to create a [Queue](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#queue).
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateQueue
 Response<RouterQueue> queue = routerAdministrationClient.CreateQueue(
@@ -44,7 +44,7 @@ Response<RouterQueue> queue = routerAdministrationClient.CreateQueue(
 
 ## Create a Job
 
-Now, we can submit a [Job](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#job) directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
+Now, we can submit a [Job](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#job) directly to that queue, with a worker selector the requires the worker to have the label `Some-Skill` greater than 10.
 
 ```C# Snippet:Azure_Communication_JobRouter_Tests_Samples_CreateJobDirectQAssign
 Response<RouterJob> job = routerClient.CreateJob(
@@ -80,7 +80,7 @@ Response<RouterWorker> worker = routerClient.CreateWorker(
 
 ## Check offers to a Worker
 
-Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://docs.microsoft.com/azure/communication-services/concepts/router/concepts#offer)
+Once the worker has been registered, Router will send an offer to the worker if the worker satisfies requirements for a job. See [Offer flow](https://learn.microsoft.com/azure/communication-services/concepts/router/concepts#offer)
 
 We should get a [RouterWorkerOfferIssued][offer_issued_event_schema] from our [EventGrid subscription][subscribe_events].
 
@@ -102,10 +102,10 @@ foreach (EventGridEvent egEvent in egEvents)
     switch (egEvent.EventType)
     {
         case "Microsoft.Communication.WorkerOfferIssued":
-            AcsRouterWorkerOfferIssuedEventData deserializedEventData =
+            AcsRouterWorkerOfferIssuedEventData? deserializedEventData =
                 egEvent.Data.ToObjectFromJson<AcsRouterWorkerOfferIssuedEventData>();
-            Console.Write(deserializedEventData.OfferId); // Offer Id
-            offerId = deserializedEventData.OfferId;
+            Console.Write(deserializedEventData?.OfferId); // Offer Id
+            offerId = deserializedEventData?.OfferId ?? string.Empty;
             break;
         // Handle any other custom event type
         default:
@@ -191,8 +191,8 @@ Console.WriteLine($"Updated job status: {updatedJob.Value.Status == RouterJobSta
 ```
 
 <!-- LINKS -->
-[subscribe_events]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
-[offer_issued_event_schema]: https://docs.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
+[subscribe_events]: https://learn.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events
+[offer_issued_event_schema]: https://learn.microsoft.com/azure/communication-services/how-tos/router-sdk/subscribe-events#microsoftcommunicationrouterworkerofferissued
 [deserialize_event_grid_event_data]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid#receiving-and-deserializing-events
-[event_grid_event_handlers]: https://docs.microsoft.com/azure/event-grid/event-handlers
-[webhook_event_grid_event_delivery]: https://docs.microsoft.com/azure/event-grid/webhook-event-delivery
+[event_grid_event_handlers]: https://learn.microsoft.com/azure/event-grid/event-handlers
+[webhook_event_grid_event_delivery]: https://learn.microsoft.com/azure/event-grid/webhook-event-delivery

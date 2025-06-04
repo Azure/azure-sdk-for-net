@@ -12,39 +12,48 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Provides a default <see cref="TokenCredential"/> authentication flow for applications that will be deployed to Azure.  The following credential
-    /// types if enabled will be tried, in order:
+    /// Simplifies authentication while developing apps that deploy to Azure by combining credentials used in Azure
+    /// hosting environments with credentials used in local development. In production, it's better to use something
+    /// else. See <see href="https://aka.ms/azsdk/net/identity/credential-chains#usage-guidance-for-defaultazurecredential">Usage guidance for DefaultAzureCredential</see>.
+    ///
+    /// Attempts to authenticate with each of these credentials, in the following order, stopping when one provides
+    /// a token:
     /// <list type="bullet">
     /// <item><description><see cref="EnvironmentCredential"/></description></item>
     /// <item><description><see cref="WorkloadIdentityCredential"/></description></item>
     /// <item><description><see cref="ManagedIdentityCredential"/></description></item>
     /// <item><description><see cref="SharedTokenCacheCredential"/></description></item>
     /// <item><description><see cref="VisualStudioCredential"/></description></item>
-    /// <item><description><see cref="VisualStudioCodeCredential"/></description></item>
     /// <item><description><see cref="AzureCliCredential"/></description></item>
     /// <item><description><see cref="AzurePowerShellCredential"/></description></item>
     /// <item><description><see cref="AzureDeveloperCliCredential"/></description></item>
     /// <item><description><see cref="InteractiveBrowserCredential"/></description></item>
     /// </list>
-    /// Consult the documentation of these credential types for more information on how they attempt authentication.
+    /// Consult the documentation of these credentials for more information on how they attempt authentication.
     /// </summary>
     /// <remarks>
-    /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default. Callers must explicitly enable this when
-    /// constructing the <see cref="DefaultAzureCredential"/> either by setting the includeInteractiveCredentials parameter to true, or the setting the
-    /// <see cref="DefaultAzureCredentialOptions.ExcludeInteractiveBrowserCredential"/> property to false when passing <see cref="DefaultAzureCredentialOptions"/>.
+    /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are excluded by default. Callers must explicitly enable this when
+    /// constructing <see cref="DefaultAzureCredential"/> either by setting the includeInteractiveCredentials parameter to <c>true</c>, or the setting the
+    /// <see cref="DefaultAzureCredentialOptions.ExcludeInteractiveBrowserCredential"/> property to <c>false</c> when passing <see cref="DefaultAzureCredentialOptions"/>.
     /// </remarks>
     /// <example>
     /// <para>
-    /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using the DefaultAzureCredential,
-    /// deployed to an Azure resource with a user assigned managed identity configured.
+    /// This example demonstrates authenticating the BlobClient from the Azure.Storage.Blobs client library using DefaultAzureCredential,
+    /// deployed to an Azure resource with a user-assigned managed identity configured.
     /// </para>
-    /// <code snippet="Snippet:UserAssignedManagedIdentity" language="csharp">
-    /// // When deployed to an azure host, the default azure credential will authenticate the specified user assigned managed identity.
+    /// <code snippet="Snippet:UserAssignedManagedIdentityWithClientId" language="csharp">
+    /// // When deployed to an Azure host, DefaultAzureCredential will authenticate the specified user-assigned managed identity.
     ///
-    /// string userAssignedClientId = &quot;&lt;your managed identity client Id&gt;&quot;;
-    /// var credential = new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = userAssignedClientId });
+    /// string userAssignedClientId = &quot;&lt;your managed identity client ID&gt;&quot;;
+    /// var credential = new DefaultAzureCredential(
+    ///     new DefaultAzureCredentialOptions
+    ///     {
+    ///         ManagedIdentityClientId = userAssignedClientId
+    ///     });
     ///
-    /// var blobClient = new BlobClient(new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;), credential);
+    /// var blobClient = new BlobClient(
+    ///     new Uri(&quot;https://myaccount.blob.core.windows.net/mycontainer/myblob&quot;),
+    ///     credential);
     /// </code>
     /// </example>
     public class DefaultAzureCredential : TokenCredential
@@ -58,7 +67,10 @@ namespace Azure.Identity
 
         internal TokenCredential[] _sources;
 
-        internal DefaultAzureCredential() : this(false) { }
+        /// <summary>
+        /// Protected constructor for <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
+        protected DefaultAzureCredential() : this(false) { }
 
         /// <summary>
         /// Creates an instance of the DefaultAzureCredential class.
@@ -88,36 +100,36 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order
-        /// <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>, and
-        /// <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. Acquired tokens
-        /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
-        /// instances to optimize cache effectiveness.
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the included credentials, returning the first successfully
+        /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
-        /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
+        /// Credentials requiring user interaction, such as <see cref="InteractiveBrowserCredential"/>, are excluded by default.
         /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the included credentials in the order
-        /// <see cref="EnvironmentCredential"/>, <see cref="ManagedIdentityCredential"/>, <see cref="SharedTokenCacheCredential"/>, and
-        /// <see cref="InteractiveBrowserCredential"/> returning the first successfully obtained <see cref="AccessToken"/>. Acquired tokens
-        /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
-        /// instances to optimize cache effectiveness.
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the included credentials, returning the first successfully
+        /// obtained <see cref="AccessToken"/>. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <remarks>
-        /// Note that credentials requiring user interaction, such as the <see cref="InteractiveBrowserCredential"/>, are not included by default.
+        /// Credentials requiring user interaction, such as <see cref="InteractiveBrowserCredential"/>, are excluded by default.
         /// </remarks>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);

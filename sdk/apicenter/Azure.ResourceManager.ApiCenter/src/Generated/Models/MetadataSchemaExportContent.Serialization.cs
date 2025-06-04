@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ApiCenter.Models
 {
     public partial class MetadataSchemaExportContent : IUtf8JsonSerializable, IJsonModel<MetadataSchemaExportContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataSchemaExportContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetadataSchemaExportContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MetadataSchemaExportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MetadataSchemaExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 throw new FormatException($"The model {nameof(MetadataSchemaExportContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(AssignedTo))
             {
                 writer.WritePropertyName("assignedTo"u8);
@@ -39,14 +47,13 @@ namespace Azure.ResourceManager.ApiCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MetadataSchemaExportContent IJsonModel<MetadataSchemaExportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -63,7 +70,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         internal static MetadataSchemaExportContent DeserializeMetadataSchemaExportContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -99,7 +106,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MetadataSchemaExportContent)} does not support writing '{options.Format}' format.");
             }
@@ -113,7 +120,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMetadataSchemaExportContent(document.RootElement, options);
                     }
                 default:

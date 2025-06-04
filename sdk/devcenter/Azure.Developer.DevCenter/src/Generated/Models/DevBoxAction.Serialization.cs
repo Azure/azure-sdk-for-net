@@ -15,9 +15,18 @@ namespace Azure.Developer.DevCenter.Models
 {
     public partial class DevBoxAction : IUtf8JsonSerializable, IJsonModel<DevBoxAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxAction>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevBoxAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DevBoxAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.Developer.DevCenter.Models
                 throw new FormatException($"The model {nameof(DevBoxAction)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
@@ -43,7 +51,7 @@ namespace Azure.Developer.DevCenter.Models
             if (Optional.IsDefined(NextAction))
             {
                 writer.WritePropertyName("next"u8);
-                writer.WriteObjectValue<DevBoxNextAction>(NextAction, options);
+                writer.WriteObjectValue(NextAction, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -53,14 +61,13 @@ namespace Azure.Developer.DevCenter.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         DevBoxAction IJsonModel<DevBoxAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,7 +84,7 @@ namespace Azure.Developer.DevCenter.Models
 
         internal static DevBoxAction DeserializeDevBoxAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +154,7 @@ namespace Azure.Developer.DevCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevBoxAction)} does not support writing '{options.Format}' format.");
             }
@@ -161,7 +168,7 @@ namespace Azure.Developer.DevCenter.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevBoxAction(document.RootElement, options);
                     }
                 default:
@@ -175,15 +182,15 @@ namespace Azure.Developer.DevCenter.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DevBoxAction FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDevBoxAction(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<DevBoxAction>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
         }
     }

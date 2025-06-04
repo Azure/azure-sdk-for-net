@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
-
+using Azure.Messaging.WebPubSub;
 using Microsoft.Azure.WebJobs.Description;
 
 namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
@@ -31,5 +31,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.WebPubSub
         /// </summary>
         [AutoResolve]
         public string UserId { get; set; }
+
+        /// <summary>
+        /// The client protocol.
+        /// </summary>
+        public WebPubSubClientProtocol ClientProtocol { get; set; } = WebPubSubClientProtocol.Default;
     }
 }

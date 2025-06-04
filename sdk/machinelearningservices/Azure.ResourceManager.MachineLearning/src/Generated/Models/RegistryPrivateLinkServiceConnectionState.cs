@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> User-defined message that, per NRP doc, may be used for approval-related message. </param>
         /// <param name="status"> Connection status of the service consumer with the service provider. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, MachineLearningPrivateEndpointServiceConnectionStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegistryPrivateLinkServiceConnectionState(string actionsRequired, string description, EndpointServiceConnectionStatus? status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ActionsRequired = actionsRequired;
             Description = description;
@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Some RP chose "None". Other RPs use this for region expansion. </summary>
+        [WirePath("actionsRequired")]
         public string ActionsRequired { get; set; }
         /// <summary> User-defined message that, per NRP doc, may be used for approval-related message. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary> Connection status of the service consumer with the service provider. </summary>
-        public MachineLearningPrivateEndpointServiceConnectionStatus? Status { get; set; }
+        [WirePath("status")]
+        public EndpointServiceConnectionStatus? Status { get; set; }
     }
 }

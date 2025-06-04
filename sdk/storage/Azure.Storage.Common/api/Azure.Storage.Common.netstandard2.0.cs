@@ -20,18 +20,18 @@ namespace Azure.Storage
         public bool AutoValidateChecksum { get { throw null; } set { } }
         public Azure.Storage.StorageChecksumAlgorithm ChecksumAlgorithm { get { throw null; } set { } }
     }
-    public enum ExpectContinueMode
+    public enum Request100ContinueMode
     {
-        ApplyOnThrottle = 0,
-        On = 1,
-        Off = 2,
+        Auto = 0,
+        Always = 1,
+        Never = 2,
     }
-    public partial class ExpectContinueOptions
+    public partial class Request100ContinueOptions
     {
-        public ExpectContinueOptions() { }
+        public Request100ContinueOptions() { }
+        public System.TimeSpan AutoInterval { get { throw null; } set { } }
         public long? ContentLengthThreshold { get { throw null; } set { } }
-        public Azure.Storage.ExpectContinueMode Mode { get { throw null; } set { } }
-        public System.TimeSpan ThrottleInterval { get { throw null; } set { } }
+        public Azure.Storage.Request100ContinueMode Mode { get { throw null; } set { } }
     }
     public enum StorageChecksumAlgorithm
     {
@@ -117,6 +117,7 @@ namespace Azure.Storage.Sas
         public void SetPermissions(Azure.Storage.Sas.AccountSasPermissions permissions) { }
         public void SetPermissions(string rawPermissions) { }
         public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential) { throw null; }
+        public Azure.Storage.Sas.SasQueryParameters ToSasQueryParameters(Azure.Storage.StorageSharedKeyCredential sharedKeyCredential, out string stringToSign) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
@@ -181,7 +182,7 @@ namespace Azure.Storage.Sas
     }
     public partial class SasQueryParameters
     {
-        public const string DefaultSasVersion = "2024-05-04";
+        public const string DefaultSasVersion = "2025-11-05";
         protected SasQueryParameters() { }
         protected SasQueryParameters(System.Collections.Generic.IDictionary<string, string> values) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]

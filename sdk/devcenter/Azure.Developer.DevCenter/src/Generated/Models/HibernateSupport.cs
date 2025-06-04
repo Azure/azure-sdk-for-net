@@ -36,7 +36,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(HibernateSupport left, HibernateSupport right) => left.Equals(right);
         /// <summary> Determines if two <see cref="HibernateSupport"/> values are not the same. </summary>
         public static bool operator !=(HibernateSupport left, HibernateSupport right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="HibernateSupport"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="HibernateSupport"/>. </summary>
         public static implicit operator HibernateSupport(string value) => new HibernateSupport(value);
 
         /// <inheritdoc />
@@ -47,7 +47,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

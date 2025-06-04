@@ -30,7 +30,11 @@ namespace Azure.Identity.Tests.samples
             string clientId = "00000000-0000-0000-0000-00000000";
 
             #region Snippet:Identity_CertificateCredenetial_CreateWithX509Cert
+#if NET9_0_OR_GREATER
+            var certificate = X509CertificateLoader.LoadPkcs12FromFile("./certs/cert-password-protected.pfx", "password");
+#else
             var certificate = new X509Certificate2("./certs/cert-password-protected.pfx", "password");
+#endif
 
             var credential = new ClientCertificateCredential(tenantId, clientId, certificate);
             #endregion
@@ -124,7 +128,12 @@ namespace Azure.Identity.Tests.samples
 
                     if (_credentialLastModified < certificateLastModified)
                     {
-                        _credential = new ClientCertificateCredential(_tenantId, _clientId, new X509Certificate2(_path));
+#if NET9_0_OR_GREATER
+                        var certificate = X509CertificateLoader.LoadCertificateFromFile(_path);
+#else
+                        var certificate = new X509Certificate2(_path);
+#endif
+                        _credential = new ClientCertificateCredential(_tenantId, _clientId, certificate);
 
                         _credentialLastModified = certificateLastModified;
                     }

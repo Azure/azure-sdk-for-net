@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Name of the last operation. </summary>
+        [WirePath("operationName")]
         public MachineLearningOperationName? OperationName { get; }
         /// <summary> Time of the last operation. </summary>
+        [WirePath("operationTime")]
         public DateTimeOffset? OperationOn { get; }
         /// <summary> Operation status. </summary>
+        [WirePath("operationStatus")]
         public MachineLearningOperationStatus? OperationStatus { get; }
         /// <summary> Trigger of operation. </summary>
+        [WirePath("operationTrigger")]
         public MachineLearningOperationTrigger? OperationTrigger { get; }
     }
 }

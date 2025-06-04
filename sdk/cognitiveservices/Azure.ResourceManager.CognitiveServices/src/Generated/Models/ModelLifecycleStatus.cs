@@ -22,18 +22,27 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string GenerallyAvailableValue = "GenerallyAvailable";
+        private const string StableValue = "Stable";
         private const string PreviewValue = "Preview";
+        private const string GenerallyAvailableValue = "GenerallyAvailable";
+        private const string DeprecatingValue = "Deprecating";
+        private const string DeprecatedValue = "Deprecated";
 
-        /// <summary> GenerallyAvailable. </summary>
-        public static ModelLifecycleStatus GenerallyAvailable { get; } = new ModelLifecycleStatus(GenerallyAvailableValue);
+        /// <summary> Stable. </summary>
+        public static ModelLifecycleStatus Stable { get; } = new ModelLifecycleStatus(StableValue);
         /// <summary> Preview. </summary>
         public static ModelLifecycleStatus Preview { get; } = new ModelLifecycleStatus(PreviewValue);
+        /// <summary> GenerallyAvailable. </summary>
+        public static ModelLifecycleStatus GenerallyAvailable { get; } = new ModelLifecycleStatus(GenerallyAvailableValue);
+        /// <summary> Deprecating. </summary>
+        public static ModelLifecycleStatus Deprecating { get; } = new ModelLifecycleStatus(DeprecatingValue);
+        /// <summary> Deprecated. </summary>
+        public static ModelLifecycleStatus Deprecated { get; } = new ModelLifecycleStatus(DeprecatedValue);
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are the same. </summary>
         public static bool operator ==(ModelLifecycleStatus left, ModelLifecycleStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ModelLifecycleStatus"/> values are not the same. </summary>
         public static bool operator !=(ModelLifecycleStatus left, ModelLifecycleStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ModelLifecycleStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ModelLifecycleStatus"/>. </summary>
         public static implicit operator ModelLifecycleStatus(string value) => new ModelLifecycleStatus(value);
 
         /// <inheritdoc />
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

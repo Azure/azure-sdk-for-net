@@ -17,9 +17,9 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
     {
         private static readonly TokenCredential s_tokenCredential = new ClientSecretCredential("foo", "bar", "baz");
         private static readonly PerfTestEnvironment s_testEnvironment = PerfTestEnvironment.Instance;
-        private static readonly Uri s_fileSystemUri = new DataLakeUriBuilder(s_testEnvironment.DataLakeServiceUri) { FileSystemName = "foo" }.ToUri();
-        private static readonly Uri s_directoryUri = new DataLakeUriBuilder(s_testEnvironment.DataLakeServiceUri) { FileSystemName = "foo", DirectoryOrFilePath = "bar" }.ToUri();
-        private static readonly Uri s_fileUri = new DataLakeUriBuilder(s_testEnvironment.DataLakeServiceUri) { FileSystemName = "foo", DirectoryOrFilePath = "bar/baz" }.ToUri();
+        private static readonly Uri s_fileSystemUri = new DataLakeUriBuilder(s_testEnvironment.StorageEndpoint) { FileSystemName = "foo" }.ToUri();
+        private static readonly Uri s_directoryUri = new DataLakeUriBuilder(s_testEnvironment.StorageEndpoint) { FileSystemName = "foo", DirectoryOrFilePath = "bar" }.ToUri();
+        private static readonly Uri s_fileUri = new DataLakeUriBuilder(s_testEnvironment.StorageEndpoint) { FileSystemName = "foo", DirectoryOrFilePath = "bar/baz" }.ToUri();
 
         public CreateClients(PerfOptions options) : base(options)
         {
@@ -28,9 +28,9 @@ namespace Azure.Storage.Files.DataLake.Perf.Scenarios
 #pragma warning disable CA1806 // Do not ignore method results
         public override void Run(CancellationToken cancellationToken)
         {
-            var serviceClient = new DataLakeServiceClient(s_testEnvironment.DataLakeServiceUri);
-            new DataLakeServiceClient(s_testEnvironment.DataLakeServiceUri, s_tokenCredential);
-            new DataLakeServiceClient(s_testEnvironment.DataLakeServiceUri, s_testEnvironment.DataLakeCredential);
+            var serviceClient = new DataLakeServiceClient(s_testEnvironment.StorageEndpoint);
+            new DataLakeServiceClient(s_testEnvironment.StorageEndpoint, s_tokenCredential);
+            new DataLakeServiceClient(s_testEnvironment.StorageEndpoint, new StorageSharedKeyCredential("s_testEnvironment.StorageAccountKey", Convert.ToBase64String(Guid.NewGuid().ToByteArray())));
 
             var fileSystemClient = new DataLakeFileSystemClient(s_fileSystemUri);
             new DataLakeFileSystemClient(s_fileSystemUri, s_tokenCredential);

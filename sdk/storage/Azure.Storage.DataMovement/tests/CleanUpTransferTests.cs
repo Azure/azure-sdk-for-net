@@ -23,18 +23,21 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns("BlockBlob");
             mock.Setup(b => b.ProviderId)
                 .Returns("blob");
-            mock.Setup(b => b.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(b => b.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(b => b.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(b => b.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: default,
-                    lastModifiedTime: DateTimeOffset.UtcNow,
-                    properties: default)));
+                .Returns(Task.FromResult(new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = default,
+                        LastModifiedTime = DateTimeOffset.UtcNow,
+                    }));
             mock.Setup(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<HttpAuthorization>(default));
+            mock.Setup(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(true));
             return mock;
         }
 
@@ -47,12 +50,14 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns("BlockBlob");
             mock.Setup(b => b.ProviderId)
                 .Returns("blob");
+            mock.Setup(b => b.MaxSupportedSingleTransferSize)
+                .Returns(Constants.GB);
             mock.Setup(b => b.MaxSupportedChunkSize)
                 .Returns(Constants.GB);
-            mock.Setup(b => b.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(b => b.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(b => b.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(b => b.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
             // Throw a failure when doing a CopyFromUri call to trigger a failed state
@@ -81,11 +86,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         private void AssertBaseSource(Mock<StorageResourceItem> source)
         {
-            source.Verify(b => b.Uri, Times.Exactly(6));
+            source.Verify(b => b.Uri, Times.Exactly(12));
             source.Verify(b => b.ProviderId, Times.Once());
-            source.Verify(b => b.ResourceId, Times.Once());
-            source.Verify(b => b.Length, Times.Once());
-            source.Verify(b => b.GetSourceCheckpointData(), Times.Once());
+            source.Verify(b => b.ResourceId, Times.Exactly(2));
+            source.Verify(b => b.IsContainer, Times.Once());
+            source.Verify(b => b.GetSourceCheckpointDetails(), Times.Once());
+            source.Verify(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()));
             source.Verify(b => b.GetPropertiesAsync(It.IsAny<CancellationToken>()));
             source.Verify(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()));
             source.VerifyNoOtherCalls();
@@ -101,9 +107,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             TransferManager transferManager = new();
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceMock.Object,
                 destMock.Object,
                 options);
@@ -111,11 +117,17 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             AssertBaseSource(sourceMock);
-            destMock.Verify(b => b.Uri, Times.Exactly(5));
+            destMock.Verify(b => b.Uri, Times.Exactly(6));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
-            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
-            destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
+            destMock.Verify(b => b.MaxSupportedSingleTransferSize, Times.Once());
+            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Once());
+            destMock.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
+            destMock.Verify(b => b.GetDestinationCheckpointDetails(), Times.Once());
+            destMock.Verify(b => b.SetPermissionsAsync(
+                sourceMock.Object,
+                It.IsAny<StorageResourceItemProperties>(),
+                It.IsAny<CancellationToken>()), Times.Once());
             destMock.Verify(b => b.CopyFromUriAsync(
                 sourceMock.Object,
                 false,
@@ -124,7 +136,7 @@ namespace Azure.Storage.DataMovement.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
-                Times.Once());
+                Times.Never());
             destMock.VerifyNoOtherCalls();
             await testEventsRaised.AssertSingleFailedCheck(1);
         }
@@ -140,9 +152,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             TransferManager transferManager = new();
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceMock.Object,
                 destMock.Object,
                 options);
@@ -150,11 +162,17 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Assert
             AssertBaseSource(sourceMock);
-            destMock.Verify(b => b.Uri, Times.Exactly(5));
+            destMock.Verify(b => b.Uri, Times.Exactly(6));
             destMock.Verify(b => b.ProviderId, Times.Once());
             destMock.Verify(b => b.ResourceId, Times.Once());
-            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Exactly(2));
-            destMock.Verify(b => b.GetDestinationCheckpointData(), Times.Once());
+            destMock.Verify(b => b.MaxSupportedSingleTransferSize, Times.Once());
+            destMock.Verify(b => b.MaxSupportedChunkSize, Times.Once());
+            destMock.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
+            destMock.Verify(b => b.GetDestinationCheckpointDetails(), Times.Once());
+            destMock.Verify(b => b.SetPermissionsAsync(
+                sourceMock.Object,
+                It.IsAny<StorageResourceItemProperties>(),
+                It.IsAny<CancellationToken>()), Times.Once());
             destMock.Verify(b => b.CopyFromUriAsync(
                 sourceMock.Object,
                 false,
@@ -163,9 +181,9 @@ namespace Azure.Storage.DataMovement.Tests
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
-                Times.Once());
+                Times.Never());
             destMock.VerifyNoOtherCalls();
-            await testEventsRaised.AssertSingleFailedCheck(2);
+            await testEventsRaised.AssertSingleFailedCheck(1);
         }
     }
 }

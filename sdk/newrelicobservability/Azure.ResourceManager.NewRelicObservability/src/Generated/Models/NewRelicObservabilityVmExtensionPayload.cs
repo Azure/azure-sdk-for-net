@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         }
 
         /// <summary> Ingestion key of the account. </summary>
+        [WirePath("ingestionKey")]
         public string IngestionKey { get; }
     }
 }

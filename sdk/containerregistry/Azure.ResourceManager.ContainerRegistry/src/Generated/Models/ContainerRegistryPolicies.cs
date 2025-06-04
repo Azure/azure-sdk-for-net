@@ -55,19 +55,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="trustPolicy"> The content trust policy for a container registry. </param>
         /// <param name="retentionPolicy"> The retention policy for a container registry. </param>
         /// <param name="exportPolicy"> The export policy for a container registry. </param>
+        /// <param name="azureADAuthenticationAsArmPolicy"> The policy for using ARM audience token for a container registry. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryPolicies(ContainerRegistryQuarantinePolicy quarantinePolicy, ContainerRegistryTrustPolicy trustPolicy, ContainerRegistryRetentionPolicy retentionPolicy, ContainerRegistryExportPolicy exportPolicy, AzureADAuthenticationAsArmPolicy azureADAuthenticationAsArmPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
             RetentionPolicy = retentionPolicy;
             ExportPolicy = exportPolicy;
+            AzureADAuthenticationAsArmPolicy = azureADAuthenticationAsArmPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The quarantine policy for a container registry. </summary>
         internal ContainerRegistryQuarantinePolicy QuarantinePolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("quarantinePolicy.status")]
         public ContainerRegistryPolicyStatus? QuarantineStatus
         {
             get => QuarantinePolicy is null ? default : QuarantinePolicy.Status;
@@ -80,12 +83,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The content trust policy for a container registry. </summary>
+        [WirePath("trustPolicy")]
         public ContainerRegistryTrustPolicy TrustPolicy { get; set; }
         /// <summary> The retention policy for a container registry. </summary>
+        [WirePath("retentionPolicy")]
         public ContainerRegistryRetentionPolicy RetentionPolicy { get; set; }
         /// <summary> The export policy for a container registry. </summary>
         internal ContainerRegistryExportPolicy ExportPolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("exportPolicy.status")]
         public ContainerRegistryExportPolicyStatus? ExportStatus
         {
             get => ExportPolicy is null ? default : ExportPolicy.Status;
@@ -94,6 +100,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 if (ExportPolicy is null)
                     ExportPolicy = new ContainerRegistryExportPolicy();
                 ExportPolicy.Status = value;
+            }
+        }
+
+        /// <summary> The policy for using ARM audience token for a container registry. </summary>
+        internal AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
+        /// <summary> The value that indicates whether the policy is enabled or not. </summary>
+        [WirePath("azureADAuthenticationAsArmPolicy.status")]
+        public AadAuthenticationAsArmPolicyStatus? AzureADAuthenticationAsArmStatus
+        {
+            get => AzureADAuthenticationAsArmPolicy is null ? default : AzureADAuthenticationAsArmPolicy.Status;
+            set
+            {
+                if (AzureADAuthenticationAsArmPolicy is null)
+                    AzureADAuthenticationAsArmPolicy = new AzureADAuthenticationAsArmPolicy();
+                AzureADAuthenticationAsArmPolicy.Status = value;
             }
         }
     }

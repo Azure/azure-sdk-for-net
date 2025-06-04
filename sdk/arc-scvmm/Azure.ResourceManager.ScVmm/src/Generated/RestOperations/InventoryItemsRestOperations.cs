@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,6 +36,22 @@ namespace Azure.ResourceManager.ScVmm
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, ScVmmInventoryItemData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
+            uri.AppendPath(vmmServerName, true);
+            uri.AppendPath("/inventoryItems/", false);
+            uri.AppendPath(inventoryItemResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName, ScVmmInventoryItemData data)
         {
             var message = _pipeline.CreateMessage();
@@ -57,7 +72,7 @@ namespace Azure.ResourceManager.ScVmm
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ScVmmInventoryItemData>(data, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -88,7 +103,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 201:
                     {
                         ScVmmInventoryItemData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScVmmInventoryItemData.DeserializeScVmmInventoryItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -122,13 +137,29 @@ namespace Azure.ResourceManager.ScVmm
                 case 201:
                     {
                         ScVmmInventoryItemData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScVmmInventoryItemData.DeserializeScVmmInventoryItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
+            uri.AppendPath(vmmServerName, true);
+            uri.AppendPath("/inventoryItems/", false);
+            uri.AppendPath(inventoryItemResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
@@ -175,7 +206,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmInventoryItemData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ScVmmInventoryItemData.DeserializeScVmmInventoryItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -208,7 +239,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         ScVmmInventoryItemData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ScVmmInventoryItemData.DeserializeScVmmInventoryItemData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,6 +248,22 @@ namespace Azure.ResourceManager.ScVmm
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
+            uri.AppendPath(vmmServerName, true);
+            uri.AppendPath("/inventoryItems/", false);
+            uri.AppendPath(inventoryItemResourceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vmmServerName, string inventoryItemResourceName)
@@ -295,6 +342,21 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateListByVmmServerRequestUri(string subscriptionId, string resourceGroupName, string vmmServerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ScVmm/vmmServers/", false);
+            uri.AppendPath(vmmServerName, true);
+            uri.AppendPath("/inventoryItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByVmmServerRequest(string subscriptionId, string resourceGroupName, string vmmServerName)
         {
             var message = _pipeline.CreateMessage();
@@ -336,7 +398,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         InventoryItemsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InventoryItemsList.DeserializeInventoryItemsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -365,13 +427,21 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         InventoryItemsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InventoryItemsList.DeserializeInventoryItemsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVmmServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string vmmServerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVmmServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vmmServerName)
@@ -410,7 +480,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         InventoryItemsList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = InventoryItemsList.DeserializeInventoryItemsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -441,7 +511,7 @@ namespace Azure.ResourceManager.ScVmm
                 case 200:
                     {
                         InventoryItemsList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = InventoryItemsList.DeserializeInventoryItemsList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -39,6 +39,5 @@
     <RequiredTargetFrameworks>import-required-properties</RequiredTargetFrameworks>
   </PropertyGroup>
 
-  <Import Project="$(RepoEngPath)\mgmt\Directory.Build.Mgmt.props" Condition="'$(IsLegacyMgmtProject)' == 'true'" />
   <Import Project="$(RepoEngPath)\Directory.Build.Common.props" Condition="'$(ImportRepoCommonSettings)' == 'true'" />
 </Project>

@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Access Information type ('access' or 'gitAccess'). </summary>
+        [WirePath("id")]
         public string AccessInfoType { get; }
         /// <summary> Principal (User) Identifier. </summary>
+        [WirePath("principalId")]
         public string PrincipalId { get; }
         /// <summary> Primary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("primaryKey")]
         public string PrimaryKey { get; }
         /// <summary> Secondary access key. This property will not be filled on 'GET' operations! Use '/listSecrets' POST request to get the value. </summary>
+        [WirePath("secondaryKey")]
         public string SecondaryKey { get; }
         /// <summary> Determines whether direct access is enabled. </summary>
+        [WirePath("enabled")]
         public bool? IsDirectAccessEnabled { get; }
     }
 }

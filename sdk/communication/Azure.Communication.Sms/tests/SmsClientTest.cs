@@ -16,6 +16,8 @@ namespace Azure.Communication.Sms.Tests
 {
     public class SmsClientTest
     {
+        public string TestConnectionString = "Endpoint=https://your-acs-endpoint.com/;AccessKey=your-access-key;AccessKeySecret=your-access-key-secret";
+
         [Test]
         public void SmsClient_ThrowsWithNullKeyCredential()
         {
@@ -61,9 +63,45 @@ namespace Azure.Communication.Sms.Tests
         [Test]
         public void SmsClientOptions_ThrowsWithInvalidVersion()
         {
-            var invalidServiceVersion = (SmsClientOptions.ServiceVersion)2;
+            var invalidServiceVersion = (SmsClientOptions.ServiceVersion)99;
 
             Assert.Throws<ArgumentOutOfRangeException>(() => new SmsClientOptions(invalidServiceVersion));
+        }
+
+        [Test]
+        public void SmsClient_InitializesOptOutsClient_SingleArgConstructor()
+        {
+            var smsClient = new SmsClient(TestConnectionString);
+
+            Assert.NotNull(smsClient.OptOuts);
+        }
+
+        [Test]
+        public void SmsClient_InitializesOptOutsClient_TwoArgConstructor()
+        {
+            var smsClient = new SmsClient(TestConnectionString, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
+
+            Assert.NotNull(smsClient.OptOuts);
+        }
+
+        [Test]
+        public void SmsClient_InitializesOptOutsClient_ThreeArgConstructor()
+        {
+            AzureKeyCredential mockCredential = new AzureKeyCredential("mockKey");
+            Uri endpoint = new Uri("http://localhost");
+            var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
+
+            Assert.NotNull(smsClient.OptOuts);
+        }
+
+        [Test]
+        public void SmsClient_InitializesOptOutsClient_ThreeArgConstructor_WithTokenCredential()
+        {
+            TokenCredential mockCredential = new MockCredential();
+            Uri endpoint = new Uri("http://localhost");
+            var smsClient = new SmsClient(endpoint, mockCredential, new SmsClientOptions(SmsClientOptions.ServiceVersion.V2021_03_07));
+
+            Assert.NotNull(smsClient.OptOuts);
         }
 
         [TestCaseSource(nameof(TestDataForSingleSms))]

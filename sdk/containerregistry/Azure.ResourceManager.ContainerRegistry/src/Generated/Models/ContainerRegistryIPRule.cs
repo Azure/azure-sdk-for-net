@@ -72,8 +72,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The action of IP ACL rule. </summary>
+        [WirePath("action")]
         public ContainerRegistryIPRuleAction? Action { get; set; }
         /// <summary> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </summary>
+        [WirePath("value")]
         public string IPAddressOrRange { get; set; }
     }
 }

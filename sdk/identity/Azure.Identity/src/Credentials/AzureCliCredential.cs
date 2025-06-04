@@ -48,6 +48,7 @@ namespace Azure.Identity
         private readonly bool _logPII;
         private readonly bool _logAccountDetails;
         internal string TenantId { get; }
+        internal string Subscription { get; }
         internal string[] AdditionallyAllowedTenantIds { get; }
         internal bool _isChainedCredential;
         internal TenantIdResolverBase TenantIdResolver { get; }
@@ -75,6 +76,7 @@ namespace Azure.Identity
             _path = !string.IsNullOrEmpty(EnvironmentVariables.Path) ? EnvironmentVariables.Path : DefaultPath;
             _processService = processService ?? ProcessService.Default;
             TenantId = Validations.ValidateTenantId(options?.TenantId, $"{nameof(options)}.{nameof(options.TenantId)}", true);
+            Subscription = options?.Subscription;
             TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
             ProcessTimeout = options?.ProcessTimeout ?? TimeSpan.FromSeconds(13);
@@ -84,9 +86,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure CLI credential, using this access token to authenticate. This method called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
@@ -95,9 +98,10 @@ namespace Azure.Identity
         /// <summary>
         /// Obtains a access token from Azure CLI service, using the access token to authenticate. This method id called by Azure SDK clients.
         /// </summary>
-        /// <param name="requestContext"></param>
-        /// <param name="cancellationToken"></param>
-        /// <returns></returns>
+        /// <param name="requestContext">The details of the authentication request.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <returns>An <see cref="AccessToken"/> which can be used to authenticate service client calls.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
         {
             return await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
@@ -114,7 +118,7 @@ namespace Azure.Identity
             }
             catch (Exception e)
             {
-                throw scope.FailWrapAndThrow(e);
+                throw scope.FailWrapAndThrow(e, isCredentialUnavailable: _isChainedCredential);
             }
         }
 
@@ -126,9 +130,9 @@ namespace Azure.Identity
             Validations.ValidateTenantId(tenantId, nameof(context.TenantId), true);
             ScopeUtilities.ValidateScope(resource);
 
-            GetFileNameAndArguments(resource, tenantId, out string fileName, out string argument);
+            GetFileNameAndArguments(resource, tenantId, Subscription, out string fileName, out string argument);
             ProcessStartInfo processStartInfo = GetAzureCliProcessStartInfo(fileName, argument);
-            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, cancellationToken);
+            using var processRunner = new ProcessRunner(_processService.Create(processStartInfo), ProcessTimeout, _logPII, redirectStandardInput: true, cancellationToken);
 
             string output;
             try
@@ -207,13 +211,18 @@ namespace Azure.Identity
                 Environment = { { "PATH", _path } }
             };
 
-        private static void GetFileNameAndArguments(string resource, string tenantId, out string fileName, out string argument)
+        private static void GetFileNameAndArguments(string resource, string tenantId, string subscriptionId, out string fileName, out string argument)
         {
             string command = tenantId switch
             {
                 null => $"az account get-access-token --output json --resource {resource}",
                 _ => $"az account get-access-token --output json --resource {resource} --tenant {tenantId}"
             };
+
+            if (!string.IsNullOrEmpty(subscriptionId))
+            {
+                command += $" --subscription \"{subscriptionId}\"";
+            }
 
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

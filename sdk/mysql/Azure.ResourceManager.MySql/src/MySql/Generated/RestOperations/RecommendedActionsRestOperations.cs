@@ -36,6 +36,24 @@ namespace Azure.ResourceManager.MySql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string recommendedActionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advisors/", false);
+            uri.AppendPath(advisorName, true);
+            uri.AppendPath("/recommendedActions/", false);
+            uri.AppendPath(recommendedActionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string recommendedActionName)
         {
             var message = _pipeline.CreateMessage();
@@ -84,7 +102,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -119,7 +137,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlRecommendationActionData.DeserializeMySqlRecommendationActionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -128,6 +146,27 @@ namespace Azure.ResourceManager.MySql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServerRequestUri(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advisors/", false);
+            uri.AppendPath(advisorName, true);
+            uri.AppendPath("/recommendedActions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (sessionId != null)
+            {
+                uri.AppendQuery("sessionId", sessionId, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByServerRequest(string subscriptionId, string resourceGroupName, string serverName, string advisorName, string sessionId)
@@ -180,7 +219,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -212,13 +251,21 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string advisorName, string sessionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName, string advisorName, string sessionId)
@@ -260,7 +307,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -294,7 +341,7 @@ namespace Azure.ResourceManager.MySql
                 case 200:
                     {
                         MySqlRecommendationActionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlRecommendationActionListResult.DeserializeMySqlRecommendationActionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

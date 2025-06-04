@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Location of service. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Network status in Location. </summary>
+        [WirePath("networkStatus")]
         public NetworkStatusContract NetworkStatus { get; }
     }
 }

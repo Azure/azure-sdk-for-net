@@ -1,7 +1,10 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: documentintelligence
-    SupportedClouds: 'Public'
+    TimeoutInMinutes: 120
+    CloudConfig:
+      Public:
+        Location: 'eastus'

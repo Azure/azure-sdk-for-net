@@ -23,7 +23,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -37,7 +37,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -51,7 +51,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = client.GetNutrientAnalysis("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -87,7 +87,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = await client.GetNutrientAnalysisAsync("<partyId>", "<nutrientAnalysisId>", null);
 
@@ -123,7 +123,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.CreateOrUpdate("<partyId>", "<nutrientAnalysisId>", content);
@@ -138,7 +138,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.CreateOrUpdateAsync("<partyId>", "<nutrientAnalysisId>", content);
@@ -153,7 +153,7 @@ namespace Azure.Verticals.AgriFood.Farming.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -217,7 +217,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -281,7 +281,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 
@@ -294,7 +294,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -307,7 +307,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = client.Delete("<partyId>", "<nutrientAnalysisId>");
 
@@ -320,7 +320,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             Response response = await client.DeleteAsync("<partyId>", "<nutrientAnalysisId>");
 
@@ -333,7 +333,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             foreach (BinaryData item in client.GetNutrientAnalyses(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -348,7 +348,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             await foreach (BinaryData item in client.GetNutrientAnalysesAsync(null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -363,7 +363,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             foreach (BinaryData item in client.GetNutrientAnalyses("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -400,7 +400,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             await foreach (BinaryData item in client.GetNutrientAnalysesAsync("<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -437,7 +437,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             foreach (BinaryData item in client.GetNutrientAnalysesByPartyId("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -452,7 +452,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             await foreach (BinaryData item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", null, null, null, null, null, null, null, null, null, null, null, null, null, null))
             {
@@ -467,7 +467,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             foreach (BinaryData item in client.GetNutrientAnalysesByPartyId("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {
@@ -504,7 +504,7 @@ product = "<product>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient(apiVersion: "2022-11-01-preview");
+            NutrientAnalyses client = new FarmBeatsClient(endpoint, credential).GetNutrientAnalysesClient();
 
             await foreach (BinaryData item in client.GetNutrientAnalysesByPartyIdAsync("<partyId>", "<parentType>", new string[] { "<parentIds>" }, new string[] { "<classifications>" }, new string[] { "<ids>" }, new string[] { "<names>" }, new string[] { "<propertyFilters>" }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"), 1234, "<skipToken>", null))
             {

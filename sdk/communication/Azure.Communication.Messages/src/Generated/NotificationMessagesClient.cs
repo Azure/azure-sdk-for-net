@@ -19,6 +19,7 @@ namespace Azure.Communication.Messages
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
+        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
@@ -74,8 +75,8 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await SendAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }
@@ -89,8 +90,8 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(notificationContent, nameof(notificationContent));
 
-            RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = notificationContent.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
             Response response = Send(content, context);
             return Response.FromValue(SendMessageResult.FromResponse(response), response);
         }

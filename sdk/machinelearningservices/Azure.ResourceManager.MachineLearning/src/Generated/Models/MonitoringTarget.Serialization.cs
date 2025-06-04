@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class MonitoringTarget : IUtf8JsonSerializable, IJsonModel<MonitoringTarget>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTarget>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitoringTarget>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<MonitoringTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,19 +35,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(MonitoringTarget)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DeploymentId))
-            {
-                if (DeploymentId != null)
-                {
-                    writer.WritePropertyName("deploymentId"u8);
-                    writer.WriteStringValue(DeploymentId);
-                }
-                else
-                {
-                    writer.WriteNull("deploymentId");
-                }
-            }
             if (Optional.IsDefined(ModelId))
             {
                 if (ModelId != null)
@@ -50,6 +47,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelId");
                 }
             }
+            if (Optional.IsDefined(DeploymentId))
+            {
+                if (DeploymentId != null)
+                {
+                    writer.WritePropertyName("deploymentId"u8);
+                    writer.WriteStringValue(DeploymentId);
+                }
+                else
+                {
+                    writer.WriteNull("deploymentId");
+                }
+            }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -60,14 +69,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         MonitoringTarget IJsonModel<MonitoringTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -84,29 +92,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static MonitoringTarget DeserializeMonitoringTarget(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string deploymentId = default;
             string modelId = default;
+            string deploymentId = default;
             ModelTaskType taskType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("deploymentId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        deploymentId = null;
-                        continue;
-                    }
-                    deploymentId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("modelId"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -115,6 +113,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     modelId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("deploymentId"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        deploymentId = null;
+                        continue;
+                    }
+                    deploymentId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("taskType"u8))
@@ -128,7 +136,80 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MonitoringTarget(deploymentId, modelId, taskType, serializedAdditionalRawData);
+            return new MonitoringTarget(modelId, deploymentId, taskType, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModelId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  modelId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ModelId))
+                {
+                    builder.Append("  modelId: ");
+                    if (ModelId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ModelId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ModelId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DeploymentId), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  deploymentId: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(DeploymentId))
+                {
+                    builder.Append("  deploymentId: ");
+                    if (DeploymentId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DeploymentId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DeploymentId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TaskType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  taskType: ");
+                builder.AppendLine($"'{TaskType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<MonitoringTarget>.Write(ModelReaderWriterOptions options)
@@ -138,7 +219,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(MonitoringTarget)} does not support writing '{options.Format}' format.");
             }
@@ -152,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMonitoringTarget(document.RootElement, options);
                     }
                 default:

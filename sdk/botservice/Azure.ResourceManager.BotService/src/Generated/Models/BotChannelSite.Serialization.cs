@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.BotService.Models
 {
     public partial class BotChannelSite : IUtf8JsonSerializable, IJsonModel<BotChannelSite>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelSite>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelSite>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<BotChannelSite>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.BotService.Models
                 throw new FormatException($"The model {nameof(BotChannelSite)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -135,14 +143,13 @@ namespace Azure.ResourceManager.BotService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         BotChannelSite IJsonModel<BotChannelSite>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -159,7 +166,7 @@ namespace Azure.ResourceManager.BotService.Models
 
         internal static BotChannelSite DeserializeBotChannelSite(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.BotService.Models
             bool? isDetailedLoggingEnabled = default;
             bool? isBlockUserUploadEnabled = default;
             bool? isNoStorageEnabled = default;
-            ETag? eTag = default;
+            ETag? etag = default;
             string appId = default;
             bool? isV1Enabled = default;
             bool? isV3Enabled = default;
@@ -274,7 +281,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    eTag = new ETag(property.Value.GetString());
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("appId"u8))
@@ -359,7 +366,7 @@ namespace Azure.ResourceManager.BotService.Models
                 isDetailedLoggingEnabled,
                 isBlockUserUploadEnabled,
                 isNoStorageEnabled,
-                eTag,
+                etag,
                 appId,
                 isV1Enabled,
                 isV3Enabled,
@@ -377,7 +384,7 @@ namespace Azure.ResourceManager.BotService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BotChannelSite)} does not support writing '{options.Format}' format.");
             }
@@ -391,7 +398,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBotChannelSite(document.RootElement, options);
                     }
                 default:

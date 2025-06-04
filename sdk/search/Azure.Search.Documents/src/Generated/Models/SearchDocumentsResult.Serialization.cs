@@ -22,11 +22,13 @@ namespace Azure.Search.Documents.Models
             double? searchCoverage = default;
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyList<QueryAnswerResult> searchAnswers = default;
+            DebugInfo searchDebug = default;
             SearchOptions searchNextPageParameters = default;
-            SemanticErrorReason? searchSemanticPartialResponseReason = default;
-            SemanticSearchResultsType? searchSemanticPartialResponseType = default;
             IReadOnlyList<SearchResult> value = default;
             string odataNextLink = default;
+            SemanticErrorReason? searchSemanticPartialResponseReason = default;
+            SemanticSearchResultsType? searchSemanticPartialResponseType = default;
+            SemanticQueryRewritesResultType? searchSemanticQueryRewritesResultType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.count"u8))
@@ -88,6 +90,16 @@ namespace Azure.Search.Documents.Models
                     searchAnswers = array;
                     continue;
                 }
+                if (property.NameEquals("@search.debug"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        searchDebug = null;
+                        continue;
+                    }
+                    searchDebug = DebugInfo.DeserializeDebugInfo(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("@search.nextPageParameters"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -95,6 +107,21 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     searchNextPageParameters = SearchOptions.DeserializeSearchOptions(property.Value);
+                    continue;
+                }
+                if (property.NameEquals("value"u8))
+                {
+                    List<SearchResult> array = new List<SearchResult>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(SearchResult.DeserializeSearchResult(item));
+                    }
+                    value = array;
+                    continue;
+                }
+                if (property.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("@search.semanticPartialResponseReason"u8))
@@ -115,19 +142,13 @@ namespace Azure.Search.Documents.Models
                     searchSemanticPartialResponseType = new SemanticSearchResultsType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("value"u8))
+                if (property.NameEquals("@search.semanticQueryRewritesResultType"u8))
                 {
-                    List<SearchResult> array = new List<SearchResult>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        continue;
                     }
-                    value = array;
-                    continue;
-                }
-                if (property.NameEquals("@odata.nextLink"u8))
-                {
-                    odataNextLink = property.Value.GetString();
+                    searchSemanticQueryRewritesResultType = new SemanticQueryRewritesResultType(property.Value.GetString());
                     continue;
                 }
             }
@@ -136,18 +157,20 @@ namespace Azure.Search.Documents.Models
                 searchCoverage,
                 searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(),
                 searchAnswers ?? new ChangeTrackingList<QueryAnswerResult>(),
+                searchDebug,
                 searchNextPageParameters,
+                value,
+                odataNextLink,
                 searchSemanticPartialResponseReason,
                 searchSemanticPartialResponseType,
-                value,
-                odataNextLink);
+                searchSemanticQueryRewritesResultType);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchDocumentsResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchDocumentsResult(document.RootElement);
         }
     }

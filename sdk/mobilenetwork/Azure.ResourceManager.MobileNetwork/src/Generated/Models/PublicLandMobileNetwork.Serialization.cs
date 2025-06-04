@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     public partial class PublicLandMobileNetwork : IUtf8JsonSerializable, IJsonModel<PublicLandMobileNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicLandMobileNetwork>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PublicLandMobileNetwork>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<PublicLandMobileNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PublicLandMobileNetwork>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,32 +35,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 throw new FormatException($"The model {nameof(PublicLandMobileNetwork)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(HomeNetworkPublicKeys))
             {
                 writer.WritePropertyName("homeNetworkPublicKeys"u8);
-                writer.WriteObjectValue<PublicLandMobileNetworkHomeNetworkPublicKeys>(HomeNetworkPublicKeys, options);
+                writer.WriteObjectValue(HomeNetworkPublicKeys, options);
             }
-            writer.WritePropertyName("mcc"u8);
-            writer.WriteStringValue(Mcc);
-            writer.WritePropertyName("mnc"u8);
-            writer.WriteStringValue(Mnc);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         PublicLandMobileNetwork IJsonModel<PublicLandMobileNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 
         internal static PublicLandMobileNetwork DeserializePublicLandMobileNetwork(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -108,6 +98,82 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             return new PublicLandMobileNetwork(mcc, mnc, serializedAdditionalRawData, homeNetworkPublicKeys);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeNetworkPublicKeys), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  homeNetworkPublicKeys: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(HomeNetworkPublicKeys))
+                {
+                    builder.Append("  homeNetworkPublicKeys: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, HomeNetworkPublicKeys, options, 2, false, "  homeNetworkPublicKeys: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mcc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mcc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mcc))
+                {
+                    builder.Append("  mcc: ");
+                    if (Mcc.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Mcc}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Mcc}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mnc), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  mnc: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Mnc))
+                {
+                    builder.Append("  mnc: ");
+                    if (Mnc.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Mnc}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Mnc}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PublicLandMobileNetwork>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PublicLandMobileNetwork>)this).GetFormatFromOptions(options) : options.Format;
@@ -115,7 +181,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(PublicLandMobileNetwork)} does not support writing '{options.Format}' format.");
             }
@@ -129,7 +197,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePublicLandMobileNetwork(document.RootElement, options);
                     }
                 default:

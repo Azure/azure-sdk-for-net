@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 input-file:
-    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/5da3c08b92d05858b728b013b69502dc93485373/specification/storage/data-plane/Microsoft.BlobStorage/stable/2021-12-02/blob.json
+    - https://raw.githubusercontent.com/Azure/azure-rest-api-specs/596d8d2a8c1c50bd6ebe60036143f4c4787fc816/specification/storage/data-plane/Microsoft.BlobStorage/stable/2025-11-05/blob.json
 generation1-convenience-client: true
 # https://github.com/Azure/autorest/issues/4075
 skip-semantics-validation: true
@@ -129,25 +129,6 @@ directive:
     delete $.EncryptionKeySha256["x-ms-parameter-grouping"];
     delete $.EncryptionAlgorithm["x-ms-parameter-grouping"];
     delete $.EncryptionScope["x-ms-parameter-grouping"];
-```
-
-### Remove Container_GetAccountInfo and Blob_GetAccountInfo. Unused and clashes with Service_GetAccountInfo after removal of path params.
-``` yaml
-directive:
-- from: swagger-document
-  where: $["x-ms-paths"]
-  transform: >
-    for (const property in $)
-    {
-        if (property.includes('/{containerName}?restype=account&comp=properties'))
-        {
-            delete $[property];
-        }
-        if (property.includes('/{containerName}/{blob}?restype=account&comp=properties'))
-        {
-            delete $[property];
-        }
-    }
 ```
 
 ### Fix 304s

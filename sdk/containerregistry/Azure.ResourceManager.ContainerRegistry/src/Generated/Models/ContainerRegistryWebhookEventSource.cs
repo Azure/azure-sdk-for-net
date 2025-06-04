@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </summary>
+        [WirePath("addr")]
         public string Addr { get; }
         /// <summary> The running instance of an application. Changes after each restart. </summary>
+        [WirePath("instanceID")]
         public string InstanceId { get; }
     }
 }

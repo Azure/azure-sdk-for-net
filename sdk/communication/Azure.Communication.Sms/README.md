@@ -44,7 +44,8 @@ SmsClient client = new SmsClient(new Uri(endpoint), tokenCredential);
 ```
 
 ## Examples
-### Send a 1:1 SMS Message
+### SMS
+#### Send a 1:1 SMS Message
 To send a SMS message, call the `Send` or `SendAsync` function from the `SmsClient`.
 ```C# Snippet:Azure_Communication_Sms_Tests_SendAsync
 SmsSendResult sendResult = await smsClient.SendAsync(
@@ -53,9 +54,9 @@ SmsSendResult sendResult = await smsClient.SendAsync(
     message: "Hi");
 Console.WriteLine($"Sms id: {sendResult.MessageId}");
 ```
-### Send a 1:N SMS Message
+#### Send a 1:N SMS Message
 To send a SMS message to a list of recipients, call the `Send` or `SendAsync` function from the `SmsClient` with a list of recipient's phone numbers.
-You may also add pass in an options object to specify whether the delivery report should be enabled and set custom tags.
+You can also provide an options object to configure various settings, such as enabling the delivery report, adding custom tags, or specifying parameters for connecting with the Messaging Connect Partner to deliver SMS.
 ```C# Snippet:Azure_Communication_SmsClient_Send_GroupSmsWithOptionsAsync
 var response = await smsClient.SendAsync(
     from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
@@ -64,6 +65,7 @@ var response = await smsClient.SendAsync(
     options: new SmsSendOptions(enableDeliveryReport: true) // OPTIONAL
     {
         Tag = "marketing", // custom tags
+        DeliveryReportTimeoutInSeconds = 90
     });
 foreach (SmsSendResult result in response.Value)
 {
@@ -71,6 +73,45 @@ foreach (SmsSendResult result in response.Value)
     Console.WriteLine($"Send Result Successful: {result.Successful}");
 }
 ```
+### Opt Out Management
+#### Check if a list of recipients is in the Opt Out list
+To check if the recipients are in the Opt Out list, call the function from the `SmsClient.OptOuts.Check` or  `SmsClient.OptOuts.CheckAsync` with a list of recipient phone numbers.
+```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_CheckAsync
+var optOutCheckResults = await smsClient.OptOuts.CheckAsync(
+   from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+   to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
+foreach (var result in optOutCheckResults.Value)
+{
+    Console.WriteLine($"{result.To}: {result.IsOptedOut}");
+}
+```
+#### Add a list of recipients to Opt Out list
+To add the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Add` or `SmsClient.OptOuts.AddAsync` with a list of recipient phone numbers.
+```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_AddAsync
+var optOutAddResults = await smsClient.OptOuts.AddAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
+foreach (var result in optOutAddResults.Value)
+{
+    Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
+}
+```
+
+#### Remove a list of recipients from Opt Out list
+To remove the list of recipients to Opt Out list, call the function from the `SmsClient.OptOuts.Remove` or `SmsClient.OptOuts.RemoveAsync` with a list of recipient phone numbers.
+```C# Snippet:Azure_Communication_Sms_OptOuts_Tests_Samples_RemoveAsync
+var optOutRemoveResults = await smsClient.OptOuts.RemoveAsync(
+    from: "<from-phone-number>", // Your E.164 formatted from phone number used to send SMS
+    to: new string[] { "<to-phone-number-1>", "<to-phone-number-2>" }); // E.164 formatted recipient phone numbers
+
+foreach (var result in optOutRemoveResults.Value)
+{
+    Console.WriteLine($"{result.To}: {result.HttpStatusCode}");
+}
+```
+
+
+
 ## Troubleshooting
 SMS operations will throw an exception if the request to the server fails.
 Exceptions will not be thrown if the error is caused by an individual message, only if something fails with the overall request.
@@ -122,13 +163,13 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-[communication_resource_docs]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_portal]:  https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
-[communication_resource_create_power_shell]: https://docs.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
-[communication_resource_create_net]: https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
-[handle_sms_events]: https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/handle-sms-events
+[communication_resource_docs]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_portal]:  https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp
+[communication_resource_create_power_shell]: https://learn.microsoft.com/powershell/module/az.communication/new-azcommunicationservice
+[communication_resource_create_net]: https://learn.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-net
+[handle_sms_events]: https://learn.microsoft.com/azure/communication-services/quickstarts/telephony-sms/handle-sms-events
 [package]: https://www.nuget.org/packages/Azure.Communication.Sms
-[product_docs]: https://docs.microsoft.com/azure/communication-services/overview
-[nextsteps]:https://docs.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
+[product_docs]: https://learn.microsoft.com/azure/communication-services/overview
+[nextsteps]:https://learn.microsoft.com/azure/communication-services/quickstarts/telephony-sms/send?pivots=programming-language-csharp
 [nuget]: https://www.nuget.org/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/communication/Azure.Communication.Sms/src

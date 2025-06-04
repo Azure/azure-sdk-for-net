@@ -28,7 +28,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="coding"> Code defined by a terminology system. </param>
         /// <param name="text"> Plain text representation of the concept. </param>
-        internal FhirR4CodeableConcept(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FhirR4Coding> coding, string text) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4CodeableConcept(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<FhirR4Coding> coding, string text) : base(id, extension, serializedAdditionalRawData)
         {
             Coding = coding;
             Text = text;

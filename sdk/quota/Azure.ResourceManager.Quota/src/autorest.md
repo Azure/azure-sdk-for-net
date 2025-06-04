@@ -8,17 +8,21 @@ azure-arm: true
 csharp: true
 library-name: Quota
 namespace: Azure.ResourceManager.Quota
-# default tag is a preview version
-require: https://github.com/Azure/azure-rest-api-specs/blob/57e0f495d521002e883f5357db0dfdfdaaff0208/specification/quota/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/8abab3c9c1ff7c4f9d393c2ddb00e5f735289b37/specification/quota/resource-manager/readme.md
+#tag: package-2025-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -65,8 +69,17 @@ rename-mapping:
   UsagesProperties.resourceType: ResourceTypeName
   QuotaProperties.resourceType: ResourceTypeName
   SubRequest.resourceType: ResourceTypeName
-  # QuotaRequestStatusDetails.resourceType: ResourceTypeName
-  # quotaRequestOneResourceProperties.resourceType: ResourceTypeName
+  GroupQuotasEntity: GroupQuotaEntity
+  GroupQuotasEntityBase: GroupQuotaEntityBase
+  GroupQuotaSubscriptionId: GroupQuotaSubscription
+  GroupQuotaSubscriptionIdProperties: GroupQuotaSubscriptionProperties
+  QuotaAllocationRequestStatus.properties.requestSubmitTime: RequestSubmittedOn
+  SubmittedResourceRequestStatus: GroupQuotaRequestStatus
+  SubmittedResourceRequestStatusProperties: GroupQuotaRequestStatusProperties
+  SubmittedResourceRequestStatusProperties.requestSubmitTime: RequestSubmittedOn
+  AllocatedToSubscription: SubscriptionAllocatedQuota
+  RequestState: QuotaRequestStatus
+  ResourceUsages: GroupQuotaResourceUsages
 
 directive:
 # Correct the type of properties
@@ -75,5 +88,9 @@ directive:
     transform: >
       $.QuotaProperties.properties.quotaPeriod['format'] = 'duration';
       $.UsagesProperties.properties.quotaPeriod['format'] = 'duration';
+
+list-exception:
+- /providers/Microsoft.Management/managementGroups/{managementGroupId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/groupQuotaRequests/{requestId}
+- /providers/Microsoft.Management/managementGroups/{managementGroupId}/subscriptions/{subscriptionId}/providers/Microsoft.Quota/groupQuotas/{groupQuotaName}/quotaAllocationRequests/{allocationId}
 
 ```

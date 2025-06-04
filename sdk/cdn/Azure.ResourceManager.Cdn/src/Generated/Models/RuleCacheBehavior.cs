@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Caching behavior for the requests. </summary>
+    /// <summary>
+    /// Caching behavior for the requests
+    /// Serialized Name: RuleCacheBehavior
+    /// </summary>
     public readonly partial struct RuleCacheBehavior : IEquatable<RuleCacheBehavior>
     {
         private readonly string _value;
@@ -26,17 +29,26 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OverrideAlwaysValue = "OverrideAlways";
         private const string OverrideIfOriginMissingValue = "OverrideIfOriginMissing";
 
-        /// <summary> HonorOrigin. </summary>
+        /// <summary>
+        /// HonorOrigin
+        /// Serialized Name: RuleCacheBehavior.HonorOrigin
+        /// </summary>
         public static RuleCacheBehavior HonorOrigin { get; } = new RuleCacheBehavior(HonorOriginValue);
-        /// <summary> OverrideAlways. </summary>
+        /// <summary>
+        /// OverrideAlways
+        /// Serialized Name: RuleCacheBehavior.OverrideAlways
+        /// </summary>
         public static RuleCacheBehavior OverrideAlways { get; } = new RuleCacheBehavior(OverrideAlwaysValue);
-        /// <summary> OverrideIfOriginMissing. </summary>
+        /// <summary>
+        /// OverrideIfOriginMissing
+        /// Serialized Name: RuleCacheBehavior.OverrideIfOriginMissing
+        /// </summary>
         public static RuleCacheBehavior OverrideIfOriginMissing { get; } = new RuleCacheBehavior(OverrideIfOriginMissingValue);
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are the same. </summary>
         public static bool operator ==(RuleCacheBehavior left, RuleCacheBehavior right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RuleCacheBehavior"/> values are not the same. </summary>
         public static bool operator !=(RuleCacheBehavior left, RuleCacheBehavior right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="RuleCacheBehavior"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="RuleCacheBehavior"/>. </summary>
         public static implicit operator RuleCacheBehavior(string value) => new RuleCacheBehavior(value);
 
         /// <inheritdoc />
@@ -47,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

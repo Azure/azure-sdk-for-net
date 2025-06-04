@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.ManagedServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -73,7 +88,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         MarketplaceRegistrationDefinitionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceRegistrationDefinitionList.DeserializeMarketplaceRegistrationDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -98,13 +113,25 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         MarketplaceRegistrationDefinitionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceRegistrationDefinitionList.DeserializeMarketplaceRegistrationDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string marketplaceIdentifier)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedServices/marketplaceRegistrationDefinitions/", false);
+            uri.AppendPath(marketplaceIdentifier, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string marketplaceIdentifier)
@@ -143,7 +170,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesMarketplaceRegistrationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -172,7 +199,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         ManagedServicesMarketplaceRegistrationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ManagedServicesMarketplaceRegistrationData.DeserializeManagedServicesMarketplaceRegistrationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -181,6 +208,14 @@ namespace Azure.ResourceManager.ManagedServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string filter)
@@ -215,7 +250,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         MarketplaceRegistrationDefinitionList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MarketplaceRegistrationDefinitionList.DeserializeMarketplaceRegistrationDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -242,7 +277,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case 200:
                     {
                         MarketplaceRegistrationDefinitionList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MarketplaceRegistrationDefinitionList.DeserializeMarketplaceRegistrationDefinitionList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

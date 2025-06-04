@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using ClientModel.Tests;
+using ClientModel.Tests.Mocks;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Pipeline;
 
@@ -47,7 +47,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     {
         ClientPipelineOptions options = new()
         {
-            Transport = new MockPipelineTransport("Transport", i => 500)
+            Transport = new MockPipelineTransport("Transport", _ => new MockPipelineResponse(500))
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -76,7 +76,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         ClientPipelineOptions options = new()
         {
             RetryPolicy = new MockRetryPolicy(maxRetryCount, i => TimeSpan.FromMilliseconds(10)),
-            Transport = new MockPipelineTransport("Transport", i => 500)
+            Transport = new MockPipelineTransport("Transport", _ => new MockPipelineResponse(500))
         };
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
@@ -130,19 +130,56 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     }
 
     [Test]
+    [TestCaseSource(nameof(RetryAfterTestValues))]
+    public void RespectsRetryAfterHeader(string headerName, string headerValue, double expected)
+    {
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineMessage message = new();
+        MockPipelineResponse response = new();
+        response.SetHeader(headerName, headerValue);
+        message.SetResponse(response);
+
+        // Default delay with exponential backoff for second try is 1600 ms.
+        double delayMillis = retryPolicy.GetNextDelayMilliseconds(message, 2);
+        Assert.AreEqual(expected, delayMillis);
+    }
+
+    [Test]
+    public void RespectsRetryAfterDateHeader()
+    {
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineMessage message = new();
+        MockPipelineResponse response = new();
+
+        // Retry after 100 seconds from now
+        response.SetHeader(
+            "Retry-After",
+            (DateTimeOffset.Now + TimeSpan.FromSeconds(100)).ToString("R"));
+        message.SetResponse(response);
+
+        // Default delay with exponential backoff for second try is 1600 ms.
+        double delayMillis = retryPolicy.GetNextDelayMilliseconds(message, 2);
+
+        // Retry-After header is larger - wait the Retry-After time, which
+        // should be approx 100s, so test for > 20s.
+        Assert.GreaterOrEqual(delayMillis, 20 * 1000);
+    }
+
+    [Test]
     public async Task ShouldRetryIsCalledOnlyForErrors()
     {
         Exception retriableException = new IOException();
+        int retryCount = 0;
 
-        MockRetryPolicy retryPolicy = new MockRetryPolicy();
-        MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineTransport transport = new("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        MockPipelineResponse responseFactory(PipelineMessage m)
+            => retryCount++ switch
             {
-                0 => 500,
+                0 => new MockPipelineResponse(500),
                 1 => throw retriableException,
-                2 => 200,
+                2 => new MockPipelineResponse(200),
                 _ => throw new InvalidOperationException(),
             };
 
@@ -154,9 +191,9 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         ClientPipeline pipeline = ClientPipeline.Create(options);
 
         // Validate the state of the retry policy at the transport.
-        transport.OnSendingRequest = i =>
+        transport.OnSendingRequest = _ =>
         {
-            switch (i)
+            switch (retryCount)
             {
                 case 0:
                     Assert.IsFalse(retryPolicy.ShouldRetryCalled);
@@ -201,16 +238,17 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
     public async Task CallbacksAreCalledForErrorResponseAndException()
     {
         Exception retriableException = new IOException();
+        int retryCount = 0;
 
-        MockRetryPolicy retryPolicy = new MockRetryPolicy();
-        MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
+        MockRetryPolicy retryPolicy = new();
+        MockPipelineTransport transport = new("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        MockPipelineResponse responseFactory(PipelineMessage m)
+            => retryCount++ switch
             {
-                0 => 500,
+                0 => new MockPipelineResponse(500),
                 1 => throw retriableException,
-                2 => 200,
+                2 => new MockPipelineResponse(200),
                 _ => throw new InvalidOperationException(),
             };
 
@@ -224,7 +262,7 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         // Validate the state of the retry policy at the transport.
         transport.OnSendingRequest = i =>
         {
-            switch (i)
+            switch (retryCount)
             {
                 case 0:
                     Assert.IsTrue(retryPolicy.OnSendingRequestCalled);
@@ -302,17 +340,18 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
             new IOException(),
             new IOException(),
             new IOException() };
+        int retryCount = 0;
 
         MockRetryPolicy retryPolicy = new MockRetryPolicy();
         MockPipelineTransport transport = new MockPipelineTransport("Transport", responseFactory);
 
-        int responseFactory(int i)
-            => i switch
+        MockPipelineResponse responseFactory(PipelineMessage i)
+            => retryCount++ switch
             {
-                0 => throw exceptions[i],
-                1 => throw exceptions[i],
-                2 => throw exceptions[i],
-                3 => throw exceptions[i],
+                0 => throw exceptions[0],
+                1 => throw exceptions[1],
+                2 => throw exceptions[2],
+                3 => throw exceptions[3],
                 _ => throw new InvalidOperationException(),
             };
 
@@ -356,4 +395,26 @@ public class ClientRetryPolicyTests : SyncAsyncTestBase
         Assert.ThrowsAsync<TaskCanceledException>(async () =>
             await retryPolicy.WaitSyncOrAsync(delay, cts.Token, IsAsync));
     }
+
+    #region Helpers
+    public static IEnumerable<object[]> RetryAfterTestValues()
+    {
+        // Retry-After header is larger - wait Retry-After time
+        yield return new object[] { "Retry-After", "5", 5000 };
+
+        // Retry-After header is smaller - wait exponential backoff time
+        yield return new object[] { "Retry-After", "1", 1600 };
+
+        // Not standard HTTP header - wait exponential backoff time
+        yield return new object[] { "retry-after-ms", "5", 1600 };
+
+        // No Retry-After header - wait exponential backoff time
+        yield return new object[] { "Content-Type", "application/json", 1600 };
+
+        // Retry-After header is smaller - wait exponential backoff
+        yield return new object[] { "Retry-After",
+            (DateTimeOffset.Now + TimeSpan.FromSeconds(1)).ToString("R"),
+            1600 };
+    }
+    #endregion
 }

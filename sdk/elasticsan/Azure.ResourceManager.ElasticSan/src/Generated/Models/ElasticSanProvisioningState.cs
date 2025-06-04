@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
         private const string CreatingValue = "Creating";
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
+        private const string DeletedValue = "Deleted";
+        private const string RestoringValue = "Restoring";
+        private const string SoftDeletingValue = "SoftDeleting";
 
         /// <summary> Invalid. </summary>
         public static ElasticSanProvisioningState Invalid { get; } = new ElasticSanProvisioningState(InvalidValue);
@@ -47,11 +50,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
         public static ElasticSanProvisioningState Updating { get; } = new ElasticSanProvisioningState(UpdatingValue);
         /// <summary> Deleting. </summary>
         public static ElasticSanProvisioningState Deleting { get; } = new ElasticSanProvisioningState(DeletingValue);
+        /// <summary> Deleted. </summary>
+        public static ElasticSanProvisioningState Deleted { get; } = new ElasticSanProvisioningState(DeletedValue);
+        /// <summary> Restoring. </summary>
+        public static ElasticSanProvisioningState Restoring { get; } = new ElasticSanProvisioningState(RestoringValue);
+        /// <summary> SoftDeleting. </summary>
+        public static ElasticSanProvisioningState SoftDeleting { get; } = new ElasticSanProvisioningState(SoftDeletingValue);
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ElasticSanProvisioningState left, ElasticSanProvisioningState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ElasticSanProvisioningState"/> values are not the same. </summary>
         public static bool operator !=(ElasticSanProvisioningState left, ElasticSanProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="ElasticSanProvisioningState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="ElasticSanProvisioningState"/>. </summary>
         public static implicit operator ElasticSanProvisioningState(string value) => new ElasticSanProvisioningState(value);
 
         /// <inheritdoc />
@@ -62,7 +71,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

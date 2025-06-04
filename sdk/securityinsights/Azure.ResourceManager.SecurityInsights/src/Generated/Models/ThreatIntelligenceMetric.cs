@@ -69,12 +69,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> Last updated indicator metric. </summary>
+        [WirePath("lastUpdatedTimeUtc")]
         public string LastUpdatedOn { get; }
         /// <summary> Threat type metrics. </summary>
+        [WirePath("threatTypeMetrics")]
         public IReadOnlyList<ThreatIntelligenceMetricEntity> ThreatTypeMetrics { get; }
         /// <summary> Pattern type metrics. </summary>
+        [WirePath("patternTypeMetrics")]
         public IReadOnlyList<ThreatIntelligenceMetricEntity> PatternTypeMetrics { get; }
         /// <summary> Source metrics. </summary>
+        [WirePath("sourceMetrics")]
         public IReadOnlyList<ThreatIntelligenceMetricEntity> SourceMetrics { get; }
     }
 }

@@ -36,6 +36,18 @@ namespace Azure.ResourceManager.Orbital
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByCapabilityRequestUri(string subscriptionId, GroundStationCapability capability)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/availableGroundStations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("capability", capability.ToString(), true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByCapabilityRequest(string subscriptionId, GroundStationCapability capability)
         {
             var message = _pipeline.CreateMessage();
@@ -71,7 +83,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -97,13 +109,25 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string groundStationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Orbital/availableGroundStations/", false);
+            uri.AppendPath(groundStationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string groundStationName)
@@ -142,7 +166,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableGroundStationData.DeserializeAvailableGroundStationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -171,7 +195,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableGroundStationData.DeserializeAvailableGroundStationData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -180,6 +204,14 @@ namespace Azure.ResourceManager.Orbital
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByCapabilityNextPageRequestUri(string nextLink, string subscriptionId, GroundStationCapability capability)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByCapabilityNextPageRequest(string nextLink, string subscriptionId, GroundStationCapability capability)
@@ -215,7 +247,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -243,7 +275,7 @@ namespace Azure.ResourceManager.Orbital
                 case 200:
                     {
                         AvailableGroundStationListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AvailableGroundStationListResult.DeserializeAvailableGroundStationListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 
         VMwareVCenterResource IOperationSource<VMwareVCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = VMwareVCenterData.DeserializeVMwareVCenterData(document.RootElement);
+            var data = ModelReaderWriter.Read<VMwareVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
             return new VMwareVCenterResource(_client, data);
         }
 
         async ValueTask<VMwareVCenterResource> IOperationSource<VMwareVCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = VMwareVCenterData.DeserializeVMwareVCenterData(document.RootElement);
-            return new VMwareVCenterResource(_client, data);
+            var data = ModelReaderWriter.Read<VMwareVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+            return await Task.FromResult(new VMwareVCenterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

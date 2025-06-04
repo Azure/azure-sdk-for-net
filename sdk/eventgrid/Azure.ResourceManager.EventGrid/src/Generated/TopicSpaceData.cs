@@ -81,6 +81,7 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Description for the Topic Space resource. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The topic filters in the topic space.
@@ -89,8 +90,10 @@ namespace Azure.ResourceManager.EventGrid
         ///               "devices/topic1/+",
         ///               "devices/${principal.name}/${principal.attributes.keyName}" ].
         /// </summary>
+        [WirePath("properties.topicTemplates")]
         public IList<string> TopicTemplates { get; }
         /// <summary> Provisioning state of the TopicSpace resource. </summary>
+        [WirePath("properties.provisioningState")]
         public TopicSpaceProvisioningState? ProvisioningState { get; }
     }
 }

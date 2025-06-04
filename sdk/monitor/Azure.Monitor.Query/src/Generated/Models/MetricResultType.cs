@@ -33,7 +33,7 @@ namespace Azure.Monitor.Query.Models
         public static bool operator ==(MetricResultType left, MetricResultType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MetricResultType"/> values are not the same. </summary>
         public static bool operator !=(MetricResultType left, MetricResultType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="MetricResultType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="MetricResultType"/>. </summary>
         public static implicit operator MetricResultType(string value) => new MetricResultType(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.Monitor.Query.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

@@ -26,6 +26,8 @@ namespace Azure.Identity.Tests
             LegacyExcludedHeaders.Add("x-client-SKU");
             LegacyExcludedHeaders.Add("x-client-CPU");
             LegacyExcludedHeaders.Add("x-client-Ver");
+            LegacyExcludedHeaders.Add("x-app-name");
+            LegacyExcludedHeaders.Add("x-app-ver");
             // x-ms-PKeyAuth is only added on MAC and Linux so recordings made on windows will fail on these platforms and vice-versa
             // ignoring this header as CI must run on all platforms
             LegacyExcludedHeaders.Add("x-ms-PKeyAuth");
@@ -37,14 +39,14 @@ namespace Azure.Identity.Tests
             SanitizedHeaders.Add("secret");
             JsonPathSanitizers.Add("$..refresh_token");
             JsonPathSanitizers.Add("$..access_token");
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+", "=" + SanitizeValue)
+            BodyRegexSanitizers.Add(new BodyRegexSanitizer(@"=[^&|}|""]+")
             {
-                Condition = new Condition { UriRegex = ".*/token([?].*)?$" }
+                Condition = new Condition { UriRegex = ".*/token([?].*)?$" },
+                Value = "=" + SanitizeValue
             });
-            HeaderTransforms.Add(new HeaderTransform(
-                "WWW-Authenticate",
-                $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}")
+            HeaderTransforms.Add(new HeaderTransform("WWW-Authenticate")
             {
+                Value = $"Basic realm={Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "mock-arc-mi-key.key")}",
                 Condition = new Condition
                 {
                     ResponseHeader = new HeaderCondition

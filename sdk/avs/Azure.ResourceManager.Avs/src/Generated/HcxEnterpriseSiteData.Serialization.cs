@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class HcxEnterpriseSiteData : IUtf8JsonSerializable, IJsonModel<HcxEnterpriseSiteData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HcxEnterpriseSiteData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HcxEnterpriseSiteData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<HcxEnterpriseSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<HcxEnterpriseSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,29 +36,14 @@ namespace Azure.ResourceManager.Avs
                 throw new FormatException($"The model {nameof(HcxEnterpriseSiteData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
-            }
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ActivationKey))
             {
                 writer.WritePropertyName("activationKey"u8);
@@ -59,22 +53,6 @@ namespace Azure.ResourceManager.Avs
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
             }
             writer.WriteEndObject();
         }
@@ -93,7 +71,7 @@ namespace Azure.ResourceManager.Avs
 
         internal static HcxEnterpriseSiteData DeserializeHcxEnterpriseSiteData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -103,6 +81,7 @@ namespace Azure.ResourceManager.Avs
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
+            HcxEnterpriseSiteProvisioningState? provisioningState = default;
             string activationKey = default;
             HcxEnterpriseSiteStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,6 +121,15 @@ namespace Azure.ResourceManager.Avs
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new HcxEnterpriseSiteProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("activationKey"u8))
                         {
                             activationKey = property0.Value.GetString();
@@ -170,6 +158,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
+                provisioningState,
                 activationKey,
                 status,
                 serializedAdditionalRawData);
@@ -182,7 +171,7 @@ namespace Azure.ResourceManager.Avs
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAvsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HcxEnterpriseSiteData)} does not support writing '{options.Format}' format.");
             }
@@ -196,7 +185,7 @@ namespace Azure.ResourceManager.Avs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHcxEnterpriseSiteData(document.RootElement, options);
                     }
                 default:

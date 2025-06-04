@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Specifies the resource ID. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Region of the AML workspace in the id. </summary>
+        [WirePath("amlWorkspaceLocation")]
         public string AmlWorkspaceLocation { get; }
         /// <summary> Specifies the resource type. </summary>
+        [WirePath("type")]
         public string ResourceQuotaType { get; }
         /// <summary> Name of the resource. </summary>
+        [WirePath("name")]
         public MachineLearningResourceName Name { get; }
         /// <summary> The maximum permitted quota of the resource. </summary>
+        [WirePath("limit")]
         public long? Limit { get; }
         /// <summary> An enum describing the unit of quota measurement. </summary>
+        [WirePath("unit")]
         public MachineLearningQuotaUnit? Unit { get; }
     }
 }

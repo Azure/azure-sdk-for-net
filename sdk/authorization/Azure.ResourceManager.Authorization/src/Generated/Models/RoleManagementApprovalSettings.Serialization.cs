@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.Authorization.Models
 {
     public partial class RoleManagementApprovalSettings : IUtf8JsonSerializable, IJsonModel<RoleManagementApprovalSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementApprovalSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleManagementApprovalSettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RoleManagementApprovalSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementApprovalSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.Authorization.Models
                 throw new FormatException($"The model {nameof(RoleManagementApprovalSettings)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("isApprovalRequired"u8);
@@ -54,7 +62,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WriteStartArray();
                 foreach (var item in ApprovalStages)
                 {
-                    writer.WriteObjectValue<RoleManagementApprovalStage>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,14 +74,13 @@ namespace Azure.ResourceManager.Authorization.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         RoleManagementApprovalSettings IJsonModel<RoleManagementApprovalSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -90,7 +97,7 @@ namespace Azure.ResourceManager.Authorization.Models
 
         internal static RoleManagementApprovalSettings DeserializeRoleManagementApprovalSettings(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -182,76 +189,81 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequired), out propertyOverride);
-            if (Optional.IsDefined(IsApprovalRequired) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isApprovalRequired: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsApprovalRequired))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isApprovalRequired: ");
                     var boolValue = IsApprovalRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApprovalRequiredForExtension), out propertyOverride);
-            if (Optional.IsDefined(IsApprovalRequiredForExtension) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isApprovalRequiredForExtension: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsApprovalRequiredForExtension))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isApprovalRequiredForExtension: ");
                     var boolValue = IsApprovalRequiredForExtension.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRequestorJustificationRequired), out propertyOverride);
-            if (Optional.IsDefined(IsRequestorJustificationRequired) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  isRequestorJustificationRequired: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRequestorJustificationRequired))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  isRequestorJustificationRequired: ");
                     var boolValue = IsRequestorJustificationRequired.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalMode), out propertyOverride);
-            if (Optional.IsDefined(ApprovalMode) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  approvalMode: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApprovalMode))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  approvalMode: ");
                     builder.AppendLine($"'{ApprovalMode.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApprovalStages), out propertyOverride);
-            if (Optional.IsCollectionDefined(ApprovalStages) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ApprovalStages.Any() || hasPropertyOverride)
+                builder.Append("  approvalStages: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ApprovalStages))
                 {
-                    builder.Append("  approvalStages: ");
-                    if (hasPropertyOverride)
+                    if (ApprovalStages.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  approvalStages: ");
                         builder.AppendLine("[");
                         foreach (var item in ApprovalStages)
                         {
@@ -273,7 +285,7 @@ namespace Azure.ResourceManager.Authorization.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -289,7 +301,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRoleManagementApprovalSettings(document.RootElement, options);
                     }
                 default:

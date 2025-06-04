@@ -41,7 +41,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="upperLimit"> Upper limit of detection. </param>
         /// <param name="dimensions"> Number of sample points at each time point. </param>
         /// <param name="data"> Decimal values with spaces, or "E" | "U" | "L". </param>
-        internal FhirR4SampledData(string id, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Quantity origin, double period, double? factor, double? lowerLimit, double? upperLimit, int dimensions, string data) : base(id, extension, serializedAdditionalRawData)
+        internal FhirR4SampledData(string id, IList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, FhirR4Quantity origin, double period, double? factor, double? lowerLimit, double? upperLimit, int dimensions, string data) : base(id, extension, serializedAdditionalRawData)
         {
             Origin = origin;
             Period = period;

@@ -42,7 +42,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(PoolHealthStatus left, PoolHealthStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PoolHealthStatus"/> values are not the same. </summary>
         public static bool operator !=(PoolHealthStatus left, PoolHealthStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PoolHealthStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PoolHealthStatus"/>. </summary>
         public static implicit operator PoolHealthStatus(string value) => new PoolHealthStatus(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

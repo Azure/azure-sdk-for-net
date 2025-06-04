@@ -21,7 +21,7 @@ namespace Azure.Messaging.ServiceBus.Administration
         public string Name { get; internal set; }
 
         /// <summary>
-        /// The <see cref="DateTime"/> when the entity was last accessed.
+        /// The <see cref="DateTime"/> at which a message was last sent to the topic.
         /// </summary>
         public DateTimeOffset AccessedAt { get; internal set; }
 

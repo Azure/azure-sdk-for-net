@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Peering
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateInvokeRequestUri(string subscriptionId, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Peering/lookingGlass", false);
+            uri.AppendQuery("command", command.ToString(), true);
+            uri.AppendQuery("sourceType", sourceType.ToString(), true);
+            uri.AppendQuery("sourceLocation", sourceLocation, true);
+            uri.AppendQuery("destinationIP", destinationIP, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateInvokeRequest(string subscriptionId, LookingGlassCommand command, LookingGlassSourceType sourceType, string sourceLocation, string destinationIP)
         {
             var message = _pipeline.CreateMessage();
@@ -79,7 +94,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         LookingGlassOutput value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LookingGlassOutput.DeserializeLookingGlassOutput(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -110,7 +125,7 @@ namespace Azure.ResourceManager.Peering
                 case 200:
                     {
                         LookingGlassOutput value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LookingGlassOutput.DeserializeLookingGlassOutput(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

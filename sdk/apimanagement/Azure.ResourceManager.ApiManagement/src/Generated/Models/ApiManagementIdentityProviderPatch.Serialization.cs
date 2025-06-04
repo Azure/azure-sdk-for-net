@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
 {
     public partial class ApiManagementIdentityProviderPatch : IUtf8JsonSerializable, IJsonModel<ApiManagementIdentityProviderPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementIdentityProviderPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementIdentityProviderPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ApiManagementIdentityProviderPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementIdentityProviderPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(IdentityProviderType))
@@ -73,6 +81,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("passwordResetPolicyName"u8);
                 writer.WriteStringValue(PasswordResetPolicyName);
             }
+            if (Optional.IsDefined(ClientLibrary))
+            {
+                writer.WritePropertyName("clientLibrary"u8);
+                writer.WriteStringValue(ClientLibrary);
+            }
             if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
@@ -92,14 +105,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ApiManagementIdentityProviderPatch IJsonModel<ApiManagementIdentityProviderPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -116,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         internal static ApiManagementIdentityProviderPatch DeserializeApiManagementIdentityProviderPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,6 +142,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string signinPolicyName = default;
             string profileEditingPolicyName = default;
             string passwordResetPolicyName = default;
+            string clientLibrary = default;
             string clientId = default;
             string clientSecret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -198,6 +211,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
                             passwordResetPolicyName = property0.Value.GetString();
                             continue;
                         }
+                        if (property0.NameEquals("clientLibrary"u8))
+                        {
+                            clientLibrary = property0.Value.GetString();
+                            continue;
+                        }
                         if (property0.NameEquals("clientId"u8))
                         {
                             clientId = property0.Value.GetString();
@@ -226,6 +244,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 signinPolicyName,
                 profileEditingPolicyName,
                 passwordResetPolicyName,
+                clientLibrary,
                 clientId,
                 clientSecret,
                 serializedAdditionalRawData);
@@ -238,7 +257,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementIdentityProviderPatch)} does not support writing '{options.Format}' format.");
             }
@@ -252,7 +271,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeApiManagementIdentityProviderPatch(document.RootElement, options);
                     }
                 default:

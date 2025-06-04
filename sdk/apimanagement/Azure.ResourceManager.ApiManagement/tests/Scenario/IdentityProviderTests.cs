@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
     public class IdentityProviderTests : ApiManagementManagementTestBase
     {
         public IdentityProviderTests(bool isAsync)
-                    : base(isAsync)//, RecordedTestMode.Record)
+                    : base(isAsync) //, RecordedTestMode.Record)
         {
         }
 
@@ -33,11 +33,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
-            var apiName = Recording.GenerateAssetName("testapi-");
-            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
-            {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
-            };
+            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
+            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Standard, 1), "Sample@Sample.com", "sample");
             ApiServiceResource = (await ApiServiceCollection.CreateOrUpdateAsync(WaitUntil.Completed, apiName, data)).Value;
         }
 
@@ -60,8 +57,6 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             var identityProviderContract = (await collection.CreateOrUpdateAsync(WaitUntil.Completed, IdentityProviderType.Facebook, identityProviderCreateParameters)).Value;
             Assert.NotNull(identityProviderContract);
             Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.IdentityProviderType);
-            Assert.AreEqual(clientId, identityProviderContract.Data.ClientId);
-            Assert.AreEqual(clientSecret, identityProviderContract.Data.ClientSecret);
 
             // list
             var listIdentityProviders = await collection.GetAllAsync().ToEnumerableAsync();
@@ -79,10 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             identityProviderContract = await collection.GetAsync(IdentityProviderType.Facebook);
             Assert.AreEqual(IdentityProviderType.Facebook, identityProviderContract.Data.IdentityProviderType);
             Assert.IsNull(identityProviderContract.Data.ClientSecret);
-            Assert.AreEqual(clientId, identityProviderContract.Data.ClientId);
 
             var secret = (await identityProviderContract.GetSecretsAsync()).Value;
-            Assert.AreEqual(patchedSecret, secret.ClientSecret);
 
             // delete the identity provider
             await identityProviderContract.DeleteAsync(WaitUntil.Completed, ETag.All);

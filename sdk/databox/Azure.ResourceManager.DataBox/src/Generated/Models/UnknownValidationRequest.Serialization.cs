@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.DataBox.Models
 {
     internal partial class UnknownValidationRequest : IUtf8JsonSerializable, IJsonModel<DataBoxValidationContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxValidationContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<DataBoxValidationContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,32 +34,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            writer.WritePropertyName("validationCategory"u8);
-            writer.WriteStringValue(ValidationCategory.ToString());
-            writer.WritePropertyName("individualRequestDetails"u8);
-            writer.WriteStartArray();
-            foreach (var item in IndividualRequestDetails)
-            {
-                writer.WriteObjectValue<DataBoxValidationInputContent>(item, options);
-            }
-            writer.WriteEndArray();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
+            base.JsonModelWriteCore(writer, options);
         }
 
         DataBoxValidationContent IJsonModel<DataBoxValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
 
         internal static UnknownValidationRequest DeserializeUnknownValidationRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -110,7 +94,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxValidationContent)} does not support writing '{options.Format}' format.");
             }
@@ -124,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxValidationContent(document.RootElement, options);
                     }
                 default:

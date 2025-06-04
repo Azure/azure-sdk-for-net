@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string billingAccountId, string billingProfileId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountId, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileId, true);
+            uri.AppendPath("/providers/Microsoft.Consumption/credits/balanceSummary", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string billingAccountId, string billingProfileId)
         {
             var message = _pipeline.CreateMessage();
@@ -73,7 +86,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionCreditSummary value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ConsumptionCreditSummary.DeserializeConsumptionCreditSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -102,7 +115,7 @@ namespace Azure.ResourceManager.Consumption
                 case 200:
                     {
                         ConsumptionCreditSummary value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ConsumptionCreditSummary.DeserializeConsumptionCreditSummary(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

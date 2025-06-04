@@ -62,9 +62,20 @@ var client = new MetricsClient(
 
 #### Configure client for Azure sovereign cloud
 
-By default, `LogsQueryClient` and `MetricsQueryClient` are configured to use the Azure Public Cloud. To use a sovereign cloud instead, set the `Audience` property on the `Options` class. For example:
+By default, `LogsQueryClient`, `MetricsQueryClient`, and `MetricsClient` are configured to use the Azure Public Cloud. To use a sovereign cloud instead, set the `Audience` property on the appropriate `Options`-suffixed class. For example:
 
 ```C# Snippet:CreateClientsWithOptions
+// MetricsClient
+var metricsClientOptions = new MetricsClientOptions
+{
+    Audience = MetricsClientAudience.AzureGovernment
+};
+var metricsClient = new MetricsClient(
+    new Uri("https://usgovvirginia.metrics.monitor.azure.us"),
+    new DefaultAzureCredential(),
+    metricsClientOptions);
+
+// MetricsQueryClient
 var metricsQueryClientOptions = new MetricsQueryClientOptions
 {
     Audience = MetricsQueryAudience.AzureGovernment
@@ -73,11 +84,16 @@ var metricsQueryClient = new MetricsQueryClient(
     new DefaultAzureCredential(),
     metricsQueryClientOptions);
 
+// LogsQueryClient - by default, Azure Public Cloud is used
+var logsQueryClient = new LogsQueryClient(
+    new DefaultAzureCredential());
+
+// LogsQueryClient With Audience Set
 var logsQueryClientOptions = new LogsQueryClientOptions
 {
     Audience = LogsQueryAudience.AzureChina
 };
-var logsQueryClient = new LogsQueryClient(
+var logsQueryClientChina = new LogsQueryClient(
     new DefaultAzureCredential(),
     logsQueryClientOptions);
 ```
@@ -122,6 +138,8 @@ All client instance methods are thread-safe and independent of each other ([guid
 ## Examples
 
 - [Logs query](#logs-query)
+  - [Workspace-centric logs query](#workspace-centric-logs-query)
+  - [Resource-centric logs query](#resource-centric-logs-query)
   - [Handle logs query response](#handle-logs-query-response)
   - [Map logs query results to a model](#map-logs-query-results-to-a-model)
   - [Map logs query results to a primitive](#map-logs-query-results-to-a-primitive)
@@ -142,9 +160,9 @@ All client instance methods are thread-safe and independent of each other ([guid
 
 ### Logs query
 
-You can query logs by workspace ID or resource ID. The result is returned as a table with a collection of rows.
+You can query logs by Log Analytics workspace ID or Azure resource ID. The result is returned as a table with a collection of rows.
 
-**Workspace-centric logs query**
+#### Workspace-centric logs query
 
 To query by workspace ID, use the [LogsQueryClient.QueryWorkspaceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryworkspaceasync) method:
 
@@ -165,7 +183,7 @@ foreach (var row in table.Rows)
 }
 ```
 
-**Resource-centric logs query**
+#### Resource-centric logs query
 
 To query by resource ID, use the [LogsQueryClient.QueryResourceAsync](https://learn.microsoft.com/dotnet/api/azure.monitor.query.logsqueryclient.queryresourceasync) method.
 
@@ -651,7 +669,10 @@ Each Azure resource must reside in:
 - The same region as the endpoint specified when creating the client.
 - The same Azure subscription.
 
-Furthermore, the metric namespace containing the metrics to be queried must be provided. For a list of metric namespaces, see [Supported metrics and log categories by resource type][metric_namespaces].
+Furthermore:
+
+- The user must be authorized to read monitoring data at the Azure subscription level. For example, the [Monitoring Reader role](https://learn.microsoft.com/azure/role-based-access-control/built-in-roles/monitor#monitoring-reader) on the subscription to be queried.
+- The metric namespace containing the metrics to be queried must be provided. For a list of metric namespaces, see [Supported metrics and log categories by resource type][metric_namespaces].
 
 ```C# Snippet:QueryResourcesMetrics
 string resourceId =
@@ -683,6 +704,34 @@ var client = new MetricsClient(
     new DefaultAzureCredential());
 var options = new MetricsQueryResourcesOptions
 {
+    OrderBy = "sum asc",
+    Size = 10
+};
+
+Response<MetricsQueryResourcesResult> result = await client.QueryResourcesAsync(
+    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
+    metricNames: new List<string> { "Ingress" },
+    metricNamespace: "Microsoft.Storage/storageAccounts",
+    options).ConfigureAwait(false);
+
+MetricsQueryResourcesResult metricsQueryResults = result.Value;
+foreach (MetricsQueryResult value in metricsQueryResults.Values)
+{
+    Console.WriteLine(value.Metrics.Count);
+}
+```
+
+The `MetricsQueryResourcesOptions`-typed argument also has a `StartTime` and `EndTime` property to allow for querying a specific time range. If only the `StartTime` is set, the `EndTime` default becomes the current time. When the `EndTime` is specified, the `StartTime` is necessary as well. The following example demonstrates the use of these properties:
+```C# Snippet:QueryResourcesMetricsWithOptionsStartTimeEndTime
+string resourceId =
+    "/subscriptions/<id>/resourceGroups/<rg-name>/providers/<source>/storageAccounts/<resource-name-1>";
+var client = new MetricsClient(
+    new Uri("https://<region>.metrics.monitor.azure.com"),
+    new DefaultAzureCredential());
+var options = new MetricsQueryResourcesOptions
+{
+    StartTime = DateTimeOffset.Now.AddHours(-4),
+    EndTime = DateTimeOffset.Now.AddHours(-1),
     OrderBy = "sum asc",
     Size = 10
 };
@@ -744,5 +793,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc]. For m
 [coc]: https://opensource.microsoft.com/codeofconduct/
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [coc_contact]: mailto:opencode@microsoft.com
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fmonitor%2FAzure.Monitor.Query%2FREADME.png)

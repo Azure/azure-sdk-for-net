@@ -25,6 +25,7 @@ namespace Azure.Identity.Tests
 
         [TestCase(true)]
         [TestCase(false)]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task FromCertificatePath(bool usePem)
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
@@ -60,11 +61,17 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
+        [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
         public async Task FromX509Certificate2()
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
+
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(TestEnvironment.ServicePrincipalCertificatePfxPath, null);
+#else
             var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#endif
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
@@ -123,7 +130,12 @@ namespace Azure.Identity.Tests
 
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
-            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, new X509Certificate2(certPath), options));
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(certPath, null);
+#else
+            var cert = new X509Certificate2(certPath);
+#endif
+            var credential = InstrumentClient(new ClientCertificateCredential(tenantId, clientId, cert, options));
 
             var tokenRequestContext = new TokenRequestContext(new[] { AzureAuthorityHosts.GetDefaultScope(new Uri(TestEnvironment.AuthorityHostUrl)) });
 

@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -22,11 +23,11 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         {
             string resourceGroupName = TestEnvironment.ResourceGroup;
             string subscriptionId = TestEnvironment.SubscriptionId;
-            ResourceIdentifier l3NetworkId = new ResourceIdentifier(TestEnvironment.L3IsolationDomainId);
+            ResourceIdentifier l3NetworkId = new ResourceIdentifier(TestEnvironment.L3NAttachmentId);
             ResourceIdentifier cloudServicesNetworkId = new ResourceIdentifier(TestEnvironment.CloudServicesNetworkId);
 
             string kubernetesClusterName = Recording.GenerateAssetName("kubernetesCluster");
-            string SshPublicKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCjxBjt9iSrZqTJOp+LqGLJN/6x5BhbkReh1F9WtKY5I30NMm8NyJpoTef5tRKWJOFenyhHv92Q1CVbjIOfToM1o+0omzruJnWvzNOIqRfktBgpaAvI3NBW8jyP88dU370R79pCcHS258sEsYZu7Pt3bPHWnJynqqpi3e/icJ902gwR0ZCHWkLS+Kojn6+60TdxnPBlACi/QDQcXE9BtuEO6O9Owtzd9j9q2WdaQTElZHyrjBudDcv8DGVErOl2yPRD9a2kGF3zE9OFemq75UH4YeXDb0FgUdgxq9vvXWlWSm7banZ681MgdMYksYUDuSfvtrnwQl9LBcxvk+Z3eHCaAcHHQ/S5h/lAG5xbGaeE6A9woTMKrnqzXvL/XCg02gM01smgUxO7aIIcMquPaTJBc8rSd4wSihg1iRY93OAMVvj4U8ZqLwIt03Z8aIhrVvAmzkmlZ9YwvSXYBDg0KdMNKG4zrnRqWP7ge7ayb+hPxN6UZ0E7Z3VoVw+2R2NxjHE= fakesuser@fakehost";
+            string SshPublicKey = "ssh-rsa REDACTED";
 
             // Create ResourceIds
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
@@ -51,7 +52,6 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                             "pool1"
                         })
                         {
-                            AdvertiseToFabric = AdvertiseToFabric.True,
                             Communities = { "64512:100" },
                             Peers = { "peer1" },
                         }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
 
             InitialAgentPoolConfiguration[] initialAgentPoolConfigurationsArray = new InitialAgentPoolConfiguration[]
             {
-                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G4_v1")
+                new InitialAgentPoolConfiguration(1, NetworkCloudAgentPoolMode.System, "agentPoolConfig", "NC_G2_8_v1")
                 {
                     AgentOptions = new NetworkCloudAgentConfiguration(4)
                     {
@@ -96,17 +96,17 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudKubernetesClusterData createData = new NetworkCloudKubernetesClusterData(
                 TestEnvironment.Location,
                 new ExtendedLocation(TestEnvironment.ClusterExtendedLocation, "CustomLocation"),
-                new ControlPlaneNodeConfiguration(1, "NC_G4_v1")
+                new ControlPlaneNodeConfiguration(1, "NC_G2_8_v1")
                 {
                     AdministratorConfiguration = administratorConfiguration,
                 },
                 initialAgentPoolConfigurationsArray,
-                "1.24.9",
+                TestEnvironment.KubernetesVersion,
                 networkConfiguration)
             {
                 AadAdminGroupObjectIds = new List<string>() { "3d4c8620-ac8c-4bd6-9a92-f2b75923ef9f" },
                 AdministratorConfiguration = administratorConfiguration,
-                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation("East US"), kubernetesClusterName + "-MRG", null)
+                ManagedResourceGroupConfiguration = new ManagedResourceGroupConfiguration(new AzureLocation(TestEnvironment.Location), kubernetesClusterName + "-MRG", null)
             };
 
             ArmOperation<NetworkCloudKubernetesClusterResource> createResult = await collection.CreateOrUpdateAsync(WaitUntil.Completed, kubernetesClusterName, createData);
@@ -120,8 +120,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update KubernetesCluster
             NetworkCloudKubernetesClusterPatch updateData = new NetworkCloudKubernetesClusterPatch()
             {
-                ControlPlaneNodeCount = 3,
-                KubernetesVersion = "1.25.4-1",
+                ControlPlaneNodeCount = 1,
+                KubernetesVersion = TestEnvironment.KubernetesVersionUpdate,
                 Tags = { { "test", "patch" } },
             };
             ArmOperation<NetworkCloudKubernetesClusterResource> updateResult = await kubernetesCluster.UpdateAsync(WaitUntil.Completed, updateData);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listBySubscriptionResult);
 
             // Delete KubernetesCluster
-            var deleteResult = await kubernetesCluster.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await kubernetesCluster.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

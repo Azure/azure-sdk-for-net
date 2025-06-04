@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in ReviewNotes)
                 {
-                    writer.WriteObjectValue<ReviewNote>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue<ShortCodeCost>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,22 +62,22 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
-                writer.WriteObjectValue<ProgramDetails>(ProgramDetails);
+                writer.WriteObjectValue(ProgramDetails);
             }
             if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
-                writer.WriteObjectValue<CompanyInformation>(CompanyInformation);
+                writer.WriteObjectValue(CompanyInformation);
             }
             if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
-                writer.WriteObjectValue<MessageDetails>(MessageDetails);
+                writer.WriteObjectValue(MessageDetails);
             }
             if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
-                writer.WriteObjectValue<TrafficDetails>(TrafficDetails);
+                writer.WriteObjectValue(TrafficDetails);
             }
             writer.WriteEndObject();
         }
@@ -221,15 +221,15 @@ namespace Azure.Communication.ShortCodes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static USProgramBrief FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUSProgramBrief(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<USProgramBrief>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

@@ -69,6 +69,7 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary> Redirect Anonymous users to the Sign-In page. </summary>
+        [WirePath("properties.enabled")]
         public bool? IsRedirectEnabled { get; set; }
     }
 }

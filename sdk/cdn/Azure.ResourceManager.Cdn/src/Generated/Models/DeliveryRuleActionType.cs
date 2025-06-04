@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> The name of the action for the delivery rule. </summary>
+    /// <summary>
+    /// The name of the action for the delivery rule.
+    /// Serialized Name: DeliveryRuleActionType
+    /// </summary>
     internal readonly partial struct DeliveryRuleActionType : IEquatable<DeliveryRuleActionType>
     {
         private readonly string _value;
@@ -32,29 +35,56 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string OriginGroupOverrideValue = "OriginGroupOverride";
         private const string RouteConfigurationOverrideValue = "RouteConfigurationOverride";
 
-        /// <summary> CacheExpiration. </summary>
+        /// <summary>
+        /// CacheExpiration
+        /// Serialized Name: DeliveryRuleActionType.CacheExpiration
+        /// </summary>
         public static DeliveryRuleActionType CacheExpiration { get; } = new DeliveryRuleActionType(CacheExpirationValue);
-        /// <summary> CacheKeyQueryString. </summary>
+        /// <summary>
+        /// CacheKeyQueryString
+        /// Serialized Name: DeliveryRuleActionType.CacheKeyQueryString
+        /// </summary>
         public static DeliveryRuleActionType CacheKeyQueryString { get; } = new DeliveryRuleActionType(CacheKeyQueryStringValue);
-        /// <summary> ModifyRequestHeader. </summary>
+        /// <summary>
+        /// ModifyRequestHeader
+        /// Serialized Name: DeliveryRuleActionType.ModifyRequestHeader
+        /// </summary>
         public static DeliveryRuleActionType ModifyRequestHeader { get; } = new DeliveryRuleActionType(ModifyRequestHeaderValue);
-        /// <summary> ModifyResponseHeader. </summary>
+        /// <summary>
+        /// ModifyResponseHeader
+        /// Serialized Name: DeliveryRuleActionType.ModifyResponseHeader
+        /// </summary>
         public static DeliveryRuleActionType ModifyResponseHeader { get; } = new DeliveryRuleActionType(ModifyResponseHeaderValue);
-        /// <summary> UrlRedirect. </summary>
+        /// <summary>
+        /// UrlRedirect
+        /// Serialized Name: DeliveryRuleActionType.UrlRedirect
+        /// </summary>
         public static DeliveryRuleActionType UriRedirect { get; } = new DeliveryRuleActionType(UriRedirectValue);
-        /// <summary> UrlRewrite. </summary>
+        /// <summary>
+        /// UrlRewrite
+        /// Serialized Name: DeliveryRuleActionType.UrlRewrite
+        /// </summary>
         public static DeliveryRuleActionType UriRewrite { get; } = new DeliveryRuleActionType(UriRewriteValue);
-        /// <summary> UrlSigning. </summary>
+        /// <summary>
+        /// UrlSigning
+        /// Serialized Name: DeliveryRuleActionType.UrlSigning
+        /// </summary>
         public static DeliveryRuleActionType UriSigning { get; } = new DeliveryRuleActionType(UriSigningValue);
-        /// <summary> OriginGroupOverride. </summary>
+        /// <summary>
+        /// OriginGroupOverride
+        /// Serialized Name: DeliveryRuleActionType.OriginGroupOverride
+        /// </summary>
         public static DeliveryRuleActionType OriginGroupOverride { get; } = new DeliveryRuleActionType(OriginGroupOverrideValue);
-        /// <summary> RouteConfigurationOverride. </summary>
+        /// <summary>
+        /// RouteConfigurationOverride
+        /// Serialized Name: DeliveryRuleActionType.RouteConfigurationOverride
+        /// </summary>
         public static DeliveryRuleActionType RouteConfigurationOverride { get; } = new DeliveryRuleActionType(RouteConfigurationOverrideValue);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are the same. </summary>
         public static bool operator ==(DeliveryRuleActionType left, DeliveryRuleActionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DeliveryRuleActionType"/> values are not the same. </summary>
         public static bool operator !=(DeliveryRuleActionType left, DeliveryRuleActionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DeliveryRuleActionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DeliveryRuleActionType"/>. </summary>
         public static implicit operator DeliveryRuleActionType(string value) => new DeliveryRuleActionType(value);
 
         /// <inheritdoc />
@@ -65,7 +95,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

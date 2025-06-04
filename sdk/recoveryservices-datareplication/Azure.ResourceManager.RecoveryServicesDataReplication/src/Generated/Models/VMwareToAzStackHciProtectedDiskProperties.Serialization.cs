@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     public partial class VMwareToAzStackHciProtectedDiskProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciProtectedDiskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciProtectedDiskProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciProtectedDiskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<VMwareToAzStackHciProtectedDiskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,7 +34,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedDiskProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(StorageContainerId))
             {
                 writer.WritePropertyName("storageContainerId"u8);
@@ -81,6 +89,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
+            if (options.Format != "W" && Optional.IsDefined(DiskBlockSize))
+            {
+                writer.WritePropertyName("diskBlockSize"u8);
+                writer.WriteNumberValue(DiskBlockSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiskLogicalSectorSize))
+            {
+                writer.WritePropertyName("diskLogicalSectorSize"u8);
+                writer.WriteNumberValue(DiskLogicalSectorSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiskPhysicalSectorSize))
+            {
+                writer.WritePropertyName("diskPhysicalSectorSize"u8);
+                writer.WriteNumberValue(DiskPhysicalSectorSize.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,14 +112,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         VMwareToAzStackHciProtectedDiskProperties IJsonModel<VMwareToAzStackHciProtectedDiskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 
         internal static VMwareToAzStackHciProtectedDiskProperties DeserializeVMwareToAzStackHciProtectedDiskProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -130,6 +152,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             long? capacityInBytes = default;
             bool? isDynamic = default;
             string diskType = default;
+            long? diskBlockSize = default;
+            long? diskLogicalSectorSize = default;
+            long? diskPhysicalSectorSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,6 +230,33 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     diskType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("diskBlockSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskBlockSize = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("diskLogicalSectorSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskLogicalSectorSize = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("diskPhysicalSectorSize"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskPhysicalSectorSize = property.Value.GetInt64();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -223,6 +275,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 capacityInBytes,
                 isDynamic,
                 diskType,
+                diskBlockSize,
+                diskLogicalSectorSize,
+                diskPhysicalSectorSize,
                 serializedAdditionalRawData);
         }
 
@@ -233,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedDiskProperties)} does not support writing '{options.Format}' format.");
             }
@@ -247,7 +302,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVMwareToAzStackHciProtectedDiskProperties(document.RootElement, options);
                     }
                 default:

@@ -18,9 +18,18 @@ namespace Azure.ResourceManager.EventHubs.Models
 {
     public partial class EventHubsNspAccessRuleProperties : IUtf8JsonSerializable, IJsonModel<EventHubsNspAccessRuleProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNspAccessRuleProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubsNspAccessRuleProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<EventHubsNspAccessRuleProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsNspAccessRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -28,7 +37,6 @@ namespace Azure.ResourceManager.EventHubs.Models
                 throw new FormatException($"The model {nameof(EventHubsNspAccessRuleProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Direction))
             {
                 writer.WritePropertyName("direction"u8);
@@ -60,7 +68,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityPerimeters)
                 {
-                    writer.WriteObjectValue<EventHubsNetworkSecurityPerimeter>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,14 +90,13 @@ namespace Azure.ResourceManager.EventHubs.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         EventHubsNspAccessRuleProperties IJsonModel<EventHubsNspAccessRuleProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -106,7 +113,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         internal static EventHubsNspAccessRuleProperties DeserializeEventHubsNspAccessRuleProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -213,31 +220,33 @@ namespace Azure.ResourceManager.EventHubs.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Direction), out propertyOverride);
-            if (Optional.IsDefined(Direction) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  direction: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Direction))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  direction: ");
                     builder.AppendLine($"'{Direction.Value.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressPrefixes), out propertyOverride);
-            if (Optional.IsCollectionDefined(AddressPrefixes) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (AddressPrefixes.Any() || hasPropertyOverride)
+                builder.Append("  addressPrefixes: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(AddressPrefixes))
                 {
-                    builder.Append("  addressPrefixes: ");
-                    if (hasPropertyOverride)
+                    if (AddressPrefixes.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  addressPrefixes: ");
                         builder.AppendLine("[");
                         foreach (var item in AddressPrefixes)
                         {
@@ -262,17 +271,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subscriptions), out propertyOverride);
-            if (Optional.IsCollectionDefined(Subscriptions) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (Subscriptions.Any() || hasPropertyOverride)
+                builder.Append("  subscriptions: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Subscriptions))
                 {
-                    builder.Append("  subscriptions: ");
-                    if (hasPropertyOverride)
+                    if (Subscriptions.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  subscriptions: ");
                         builder.AppendLine("[");
                         foreach (var item in Subscriptions)
                         {
@@ -284,17 +294,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkSecurityPerimeters), out propertyOverride);
-            if (Optional.IsCollectionDefined(NetworkSecurityPerimeters) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (NetworkSecurityPerimeters.Any() || hasPropertyOverride)
+                builder.Append("  networkSecurityPerimeters: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(NetworkSecurityPerimeters))
                 {
-                    builder.Append("  networkSecurityPerimeters: ");
-                    if (hasPropertyOverride)
+                    if (NetworkSecurityPerimeters.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  networkSecurityPerimeters: ");
                         builder.AppendLine("[");
                         foreach (var item in NetworkSecurityPerimeters)
                         {
@@ -306,17 +317,18 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FullyQualifiedDomainNames), out propertyOverride);
-            if (Optional.IsCollectionDefined(FullyQualifiedDomainNames) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (FullyQualifiedDomainNames.Any() || hasPropertyOverride)
+                builder.Append("  fullyQualifiedDomainNames: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(FullyQualifiedDomainNames))
                 {
-                    builder.Append("  fullyQualifiedDomainNames: ");
-                    if (hasPropertyOverride)
+                    if (FullyQualifiedDomainNames.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  fullyQualifiedDomainNames: ");
                         builder.AppendLine("[");
                         foreach (var item in FullyQualifiedDomainNames)
                         {
@@ -351,7 +363,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -367,7 +379,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEventHubsNspAccessRuleProperties(document.RootElement, options);
                     }
                 default:

@@ -17,11 +17,11 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue<TimeSeriesExpression>(Value);
+            writer.WriteObjectValue(Value);
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue<TimeSeriesInterpolation>(Interpolation);
+                writer.WriteObjectValue(Interpolation);
             }
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -29,18 +29,18 @@ namespace Azure.IoT.TimeSeriesInsights
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue<TimeSeriesAggregateCategory>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("defaultCategory"u8);
-            writer.WriteObjectValue<TimeSeriesDefaultCategory>(DefaultCategory);
+            writer.WriteObjectValue(DefaultCategory);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
+                writer.WriteObjectValue(Filter);
             }
             writer.WriteEndObject();
         }
@@ -120,15 +120,15 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new CategoricalVariable FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCategoricalVariable(document.RootElement);
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<CategoricalVariable>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

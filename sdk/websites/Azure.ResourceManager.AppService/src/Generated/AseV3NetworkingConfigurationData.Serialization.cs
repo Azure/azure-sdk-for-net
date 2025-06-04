@@ -19,9 +19,18 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class AseV3NetworkingConfigurationData : IUtf8JsonSerializable, IJsonModel<AseV3NetworkingConfigurationData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AseV3NetworkingConfigurationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AseV3NetworkingConfigurationData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AseV3NetworkingConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AseV3NetworkingConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -29,31 +38,11 @@ namespace Azure.ResourceManager.AppService
                 throw new FormatException($"The model {nameof(AseV3NetworkingConfigurationData)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
-            }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(ResourceType);
-            }
-            if (options.Format != "W" && Optional.IsDefined(SystemData))
-            {
-                writer.WritePropertyName("systemData"u8);
-                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -122,21 +111,20 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("allowNewPrivateEndpointConnections"u8);
                 writer.WriteBooleanValue(AllowNewPrivateEndpointConnections.Value);
             }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(IsFtpEnabled))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("ftpEnabled"u8);
+                writer.WriteBooleanValue(IsFtpEnabled.Value);
+            }
+            if (Optional.IsDefined(IsRemoteDebugEnabled))
+            {
+                writer.WritePropertyName("remoteDebugEnabled"u8);
+                writer.WriteBooleanValue(IsRemoteDebugEnabled.Value);
+            }
+            if (Optional.IsDefined(InboundIPAddressOverride))
+            {
+                writer.WritePropertyName("inboundIpAddressOverride"u8);
+                writer.WriteStringValue(InboundIPAddressOverride);
             }
             writer.WriteEndObject();
         }
@@ -155,7 +143,7 @@ namespace Azure.ResourceManager.AppService
 
         internal static AseV3NetworkingConfigurationData DeserializeAseV3NetworkingConfigurationData(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -171,6 +159,9 @@ namespace Azure.ResourceManager.AppService
             IReadOnlyList<IPAddress> externalInboundIPAddresses = default;
             IReadOnlyList<IPAddress> internalInboundIPAddresses = default;
             bool? allowNewPrivateEndpointConnections = default;
+            bool? ftpEnabled = default;
+            bool? remoteDebugEnabled = default;
+            string inboundIPAddressOverride = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -306,6 +297,29 @@ namespace Azure.ResourceManager.AppService
                             allowNewPrivateEndpointConnections = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("ftpEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            ftpEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("remoteDebugEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            remoteDebugEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("inboundIpAddressOverride"u8))
+                        {
+                            inboundIPAddressOverride = property0.Value.GetString();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -325,6 +339,9 @@ namespace Azure.ResourceManager.AppService
                 externalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 internalInboundIPAddresses ?? new ChangeTrackingList<IPAddress>(),
                 allowNewPrivateEndpointConnections,
+                ftpEnabled,
+                remoteDebugEnabled,
+                inboundIPAddressOverride,
                 kind,
                 serializedAdditionalRawData);
         }
@@ -341,15 +358,16 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  name: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Name))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  name: ");
                     if (Name.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -363,15 +381,16 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  kind: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Kind))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  kind: ");
                     if (Kind.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
@@ -385,29 +404,31 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  id: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Id))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  id: ");
                     builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
-            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  systemData: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SystemData))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  systemData: ");
                     builder.AppendLine($"'{SystemData.ToString()}'");
                 }
             }
@@ -415,17 +436,18 @@ namespace Azure.ResourceManager.AppService
             builder.Append("  properties:");
             builder.AppendLine(" {");
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WindowsOutboundIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(WindowsOutboundIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (WindowsOutboundIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("    windowsOutboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(WindowsOutboundIPAddresses))
                 {
-                    builder.Append("    windowsOutboundIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (WindowsOutboundIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    windowsOutboundIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in WindowsOutboundIPAddresses)
                         {
@@ -442,17 +464,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinuxOutboundIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(LinuxOutboundIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (LinuxOutboundIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("    linuxOutboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(LinuxOutboundIPAddresses))
                 {
-                    builder.Append("    linuxOutboundIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (LinuxOutboundIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    linuxOutboundIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in LinuxOutboundIPAddresses)
                         {
@@ -469,17 +492,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExternalInboundIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(ExternalInboundIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (ExternalInboundIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("    externalInboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(ExternalInboundIPAddresses))
                 {
-                    builder.Append("    externalInboundIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (ExternalInboundIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    externalInboundIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in ExternalInboundIPAddresses)
                         {
@@ -496,17 +520,18 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalInboundIPAddresses), out propertyOverride);
-            if (Optional.IsCollectionDefined(InternalInboundIPAddresses) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (InternalInboundIPAddresses.Any() || hasPropertyOverride)
+                builder.Append("    internalInboundIpAddresses: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(InternalInboundIPAddresses))
                 {
-                    builder.Append("    internalInboundIpAddresses: ");
-                    if (hasPropertyOverride)
+                    if (InternalInboundIPAddresses.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("    internalInboundIpAddresses: ");
                         builder.AppendLine("[");
                         foreach (var item in InternalInboundIPAddresses)
                         {
@@ -523,17 +548,73 @@ namespace Azure.ResourceManager.AppService
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowNewPrivateEndpointConnections), out propertyOverride);
-            if (Optional.IsDefined(AllowNewPrivateEndpointConnections) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("    allowNewPrivateEndpointConnections: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(AllowNewPrivateEndpointConnections))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("    allowNewPrivateEndpointConnections: ");
                     var boolValue = AllowNewPrivateEndpointConnections.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsFtpEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    ftpEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsFtpEnabled))
+                {
+                    builder.Append("    ftpEnabled: ");
+                    var boolValue = IsFtpEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRemoteDebugEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    remoteDebugEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsRemoteDebugEnabled))
+                {
+                    builder.Append("    remoteDebugEnabled: ");
+                    var boolValue = IsRemoteDebugEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InboundIPAddressOverride), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    inboundIpAddressOverride: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(InboundIPAddressOverride))
+                {
+                    builder.Append("    inboundIpAddressOverride: ");
+                    if (InboundIPAddressOverride.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{InboundIPAddressOverride}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{InboundIPAddressOverride}'");
+                    }
                 }
             }
 
@@ -549,7 +630,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -565,7 +646,7 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAseV3NetworkingConfigurationData(document.RootElement, options);
                     }
                 default:

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Property level error code. </summary>
+        [WirePath("code")]
         public string Code { get; set; }
         /// <summary> Human-readable representation of property-level error. </summary>
+        [WirePath("message")]
         public string Message { get; set; }
         /// <summary> Property name. </summary>
+        [WirePath("target")]
         public string Target { get; set; }
     }
 }

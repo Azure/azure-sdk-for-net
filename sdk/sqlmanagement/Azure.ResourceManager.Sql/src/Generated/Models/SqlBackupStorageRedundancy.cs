@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    /// <summary> The storage redundancy type of the backup. </summary>
+    /// <summary> The storage account type used to store backups for this database. </summary>
     public readonly partial struct SqlBackupStorageRedundancy : IEquatable<SqlBackupStorageRedundancy>
     {
         private readonly string _value;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Sql.Models
         public static bool operator ==(SqlBackupStorageRedundancy left, SqlBackupStorageRedundancy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SqlBackupStorageRedundancy"/> values are not the same. </summary>
         public static bool operator !=(SqlBackupStorageRedundancy left, SqlBackupStorageRedundancy right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SqlBackupStorageRedundancy"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SqlBackupStorageRedundancy"/>. </summary>
         public static implicit operator SqlBackupStorageRedundancy(string value) => new SqlBackupStorageRedundancy(value);
 
         /// <inheritdoc />
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

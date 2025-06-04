@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Test.Shared;
 using ShareClientBuilder = Azure.Storage.Test.Shared.ClientBuilder<
@@ -45,11 +46,11 @@ namespace Azure.Storage.Files.Shares.Tests
             => clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigDefault, options);
 
         public static ShareServiceClient GetServiceClient_OAuth(
-            this ShareClientBuilder clientBuilder, ShareClientOptions options = default)
+            this ShareClientBuilder clientBuilder, TokenCredential tokenCredential, ShareClientOptions options = default)
         {
             options ??= clientBuilder.GetOptions();
             options.ShareTokenIntent = ShareTokenIntent.Backup;
-            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, options);
+            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigOAuth, tokenCredential, options);
         }
 
         public static ShareServiceClient GetServiceClient_OAuthAccount_SharedKey(this ShareClientBuilder clientBuilder) =>
@@ -57,6 +58,16 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public static ShareServiceClient GetServiceClient_PremiumFile(this ShareClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigPremiumFile);
+
+        public static ShareServiceClient GetServiceClient_PremiumFileOAuth(
+            this ShareClientBuilder clientBuilder,
+            TokenCredential tokenCredential,
+            ShareClientOptions options = default)
+        {
+            options ??= clientBuilder.GetOptions();
+            options.ShareTokenIntent = ShareTokenIntent.Backup;
+            return clientBuilder.GetServiceClientFromOauthConfig(clientBuilder.Tenants.TestConfigPremiumFile, tokenCredential, options);
+        }
 
         public static ShareServiceClient GetServiceClient_SoftDelete(this ShareClientBuilder clientBuilder) =>
             clientBuilder.GetServiceClientFromSharedKeyConfig(clientBuilder.Tenants.TestConfigSoftDelete);
@@ -66,13 +77,14 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareServiceClient service = default,
             string shareName = default,
             IDictionary<string, string> metadata = default,
-            ShareClientOptions options = default)
+            ShareClientOptions options = default,
+            bool nfs = false)
         {
-            service ??= clientBuilder.GetServiceClient_SharedKey(options);
+            service ??= nfs ? clientBuilder.GetServiceClient_PremiumFile() : clientBuilder.GetServiceClient_SharedKey(options);
             metadata ??= new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             shareName ??= clientBuilder.GetNewShareName();
             ShareClient share = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(service.GetShareClient(shareName));
-            return await DisposingShare.CreateAsync(share, metadata);
+            return await DisposingShare.CreateAsync(share, metadata, nfs);
         }
 
         public static async Task<DisposingDirectory> GetTestDirectoryAsync(
@@ -80,9 +92,10 @@ namespace Azure.Storage.Files.Shares.Tests
             ShareServiceClient service = default,
             string shareName = default,
             string directoryName = default,
-            ShareClientOptions options = default)
+            ShareClientOptions options = default,
+            bool nfs = false)
         {
-            DisposingShare test = await clientBuilder.GetTestShareAsync(service, shareName, options: options);
+            DisposingShare test = await clientBuilder.GetTestShareAsync(service, shareName, options: options, nfs: nfs);
             directoryName ??= clientBuilder.GetNewDirectoryName();
 
             ShareDirectoryClient directory = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(test.Share.GetDirectoryClient(directoryName));
@@ -95,9 +108,10 @@ namespace Azure.Storage.Files.Shares.Tests
             string shareName = default,
             string directoryName = default,
             string fileName = default,
-            ShareClientOptions options = default)
+            ShareClientOptions options = default,
+            bool nfs = false)
         {
-            DisposingDirectory test = await clientBuilder.GetTestDirectoryAsync(service, shareName, directoryName, options);
+            DisposingDirectory test = await clientBuilder.GetTestDirectoryAsync(service, shareName, directoryName, options, nfs: nfs);
             fileName ??= clientBuilder.GetNewFileName();
             ShareFileClient file = clientBuilder.AzureCoreRecordedTestBase.InstrumentClient(test.Directory.GetFileClient(fileName));
             return await DisposingFile.CreateAsync(test, file);

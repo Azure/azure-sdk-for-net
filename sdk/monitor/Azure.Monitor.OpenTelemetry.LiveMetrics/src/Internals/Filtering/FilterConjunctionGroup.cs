@@ -5,13 +5,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
     /// <summary>
     /// Defines an AND group of filters.
     /// </summary>
-    internal class FilterConjunctionGroup<TTelemetry>
+    internal class FilterConjunctionGroup<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry> where TTelemetry : DocumentIngress
     {
         private readonly FilterConjunctionGroupInfo info;
 
@@ -26,14 +27,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
             this.info = info;
 
-            this.CreateFilters(out errors);
+            CreateFilters(out errors);
         }
 
         public bool CheckFilters(TTelemetry document, out CollectionConfigurationError[] errors)
         {
-            var errorList = new List<CollectionConfigurationError>(this.filters.Count);
+            var errorList = new List<CollectionConfigurationError>(filters.Count);
 
-            foreach (Filter<TTelemetry> filter in this.filters)
+            foreach (Filter<TTelemetry> filter in filters)
             {
                 bool filterPassed;
                 try
@@ -66,12 +67,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
         private void CreateFilters(out CollectionConfigurationError[] errors)
         {
             var errorList = new List<CollectionConfigurationError>();
-            foreach (FilterInfo filterInfo in this.info.Filters)
+            foreach (FilterInfo filterInfo in info.Filters)
             {
                 try
                 {
                     var filter = new Filter<TTelemetry>(filterInfo);
-                    this.filters.Add(filter);
+                    filters.Add(filter);
                 }
                 catch (System.Exception e)
                 {
@@ -81,7 +82,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                             string.Format(CultureInfo.InvariantCulture, "Failed to create a filter {0}.", filterInfo),
                             e,
                             Tuple.Create("FilterFieldName", filterInfo.FieldName),
-                            Tuple.Create("FilterPredicate", filterInfo.Predicate?.ToString() ?? "null"),
+                            Tuple.Create("FilterPredicate", filterInfo.Predicate.ToString()),
                             Tuple.Create("FilterComparand", filterInfo.Comparand)));
                 }
             }

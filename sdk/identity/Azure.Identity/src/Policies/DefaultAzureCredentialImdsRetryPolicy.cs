@@ -10,20 +10,24 @@ namespace Azure.Identity
 {
     internal class DefaultAzureCredentialImdsRetryPolicy : RetryPolicy
     {
+        private static ManagedIdentityResponseClassifier classifier = new ManagedIdentityResponseClassifier();
+
         public DefaultAzureCredentialImdsRetryPolicy(RetryOptions retryOptions, DelayStrategy delayStrategy = null) : base(retryOptions.MaxRetries,
                     delayStrategy ?? DelayStrategy.CreateExponentialDelayStrategy(retryOptions.Delay, retryOptions.MaxDelay))
         { }
 
         protected override bool ShouldRetry(HttpMessage message, Exception exception)
         {
+            message.ResponseClassifier = classifier;
             // For IMDS requests, do not retry until we have observed the first response cycle
-            return !ImdsManagedIdentitySource.IsProbRequest(message) ? base.ShouldRetry(message, exception) : false;
+            return !ImdsManagedIdentityProbeSource.IsProbRequest(message) ? base.ShouldRetry(message, exception) : false;
         }
 
         protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
         {
+            message.ResponseClassifier = classifier;
             // For IMDS requests, do not retry until we have observed the first response cycle
-            return !ImdsManagedIdentitySource.IsProbRequest(message) ? base.ShouldRetryAsync(message, exception) : default;
+            return !ImdsManagedIdentityProbeSource.IsProbRequest(message) ? base.ShouldRetryAsync(message, exception) : default;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

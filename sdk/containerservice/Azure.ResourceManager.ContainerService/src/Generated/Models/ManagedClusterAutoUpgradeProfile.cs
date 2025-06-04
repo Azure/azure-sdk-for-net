@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> For more information see [setting the AKS cluster auto-upgrade channel](https://docs.microsoft.com/azure/aks/upgrade-cluster#set-auto-upgrade-channel). </summary>
+        [WirePath("upgradeChannel")]
         public UpgradeChannel? UpgradeChannel { get; set; }
         /// <summary> Manner in which the OS on your nodes is updated. The default is NodeImage. </summary>
+        [WirePath("nodeOSUpgradeChannel")]
         public ManagedClusterNodeOSUpgradeChannel? NodeOSUpgradeChannel { get; set; }
     }
 }

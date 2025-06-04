@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <summary> The reason's description. </summary>
+        [WirePath("reason")]
         public string Reason { get; }
         /// <summary> The type (category) of the reason. </summary>
+        [WirePath("reasonType")]
         public string ReasonType { get; }
     }
 }

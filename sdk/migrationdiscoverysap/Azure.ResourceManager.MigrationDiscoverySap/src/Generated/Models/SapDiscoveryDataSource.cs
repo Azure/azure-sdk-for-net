@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         public static bool operator ==(SapDiscoveryDataSource left, SapDiscoveryDataSource right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SapDiscoveryDataSource"/> values are not the same. </summary>
         public static bool operator !=(SapDiscoveryDataSource left, SapDiscoveryDataSource right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SapDiscoveryDataSource"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryDataSource"/>. </summary>
         public static implicit operator SapDiscoveryDataSource(string value) => new SapDiscoveryDataSource(value);
 
         /// <inheritdoc />
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

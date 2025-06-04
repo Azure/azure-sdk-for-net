@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Whether to force upgrade the cluster. Note that this option instructs upgrade operation to bypass upgrade protections such as checking for deprecated API usage. Enable this option only with caution. </summary>
+        [WirePath("forceUpgrade")]
         public bool? ForceUpgrade { get; set; }
         /// <summary> Until when the overrides are effective. Note that this only matches the start time of an upgrade, and the effectiveness won't change once an upgrade starts even if the `until` expires as upgrade proceeds. This field is not set by default. It must be set for the overrides to take effect. </summary>
+        [WirePath("until")]
         public DateTimeOffset? Until { get; set; }
     }
 }

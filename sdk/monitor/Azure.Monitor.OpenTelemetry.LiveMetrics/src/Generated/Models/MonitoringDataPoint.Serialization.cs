@@ -15,36 +15,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("Version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsDefined(InvariantVersion))
-            {
-                writer.WritePropertyName("InvariantVersion"u8);
-                writer.WriteNumberValue(InvariantVersion.Value);
-            }
-            if (Optional.IsDefined(Instance))
-            {
-                writer.WritePropertyName("Instance"u8);
-                writer.WriteStringValue(Instance);
-            }
-            if (Optional.IsDefined(RoleName))
-            {
-                writer.WritePropertyName("RoleName"u8);
-                writer.WriteStringValue(RoleName);
-            }
-            if (Optional.IsDefined(MachineName))
-            {
-                writer.WritePropertyName("MachineName"u8);
-                writer.WriteStringValue(MachineName);
-            }
-            if (Optional.IsDefined(StreamId))
-            {
-                writer.WritePropertyName("StreamId"u8);
-                writer.WriteStringValue(StreamId);
-            }
+            writer.WritePropertyName("Version"u8);
+            writer.WriteStringValue(Version);
+            writer.WritePropertyName("InvariantVersion"u8);
+            writer.WriteNumberValue(InvariantVersion);
+            writer.WritePropertyName("Instance"u8);
+            writer.WriteStringValue(Instance);
+            writer.WritePropertyName("RoleName"u8);
+            writer.WriteStringValue(RoleName);
+            writer.WritePropertyName("MachineName"u8);
+            writer.WriteStringValue(MachineName);
+            writer.WritePropertyName("StreamId"u8);
+            writer.WriteStringValue(StreamId);
             if (Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("Timestamp"u8);
@@ -55,23 +37,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WritePropertyName("TransmissionTime"u8);
                 writer.WriteStringValue(TransmissionTime.Value, "O");
             }
-            if (Optional.IsDefined(IsWebApp))
-            {
-                writer.WritePropertyName("IsWebApp"u8);
-                writer.WriteBooleanValue(IsWebApp.Value);
-            }
-            if (Optional.IsDefined(PerformanceCollectionSupported))
-            {
-                writer.WritePropertyName("PerformanceCollectionSupported"u8);
-                writer.WriteBooleanValue(PerformanceCollectionSupported.Value);
-            }
+            writer.WritePropertyName("IsWebApp"u8);
+            writer.WriteBooleanValue(IsWebApp);
+            writer.WritePropertyName("PerformanceCollectionSupported"u8);
+            writer.WriteBooleanValue(PerformanceCollectionSupported);
             if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("Metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue<MetricPoint>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +57,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue<DocumentIngress>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in TopCpuProcesses)
                 {
-                    writer.WriteObjectValue<ProcessCpuData>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -101,18 +77,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in CollectionConfigurationErrors)
                 {
-                    writer.WriteObjectValue<CollectionConfigurationError>(item);
+                    writer.WriteObjectValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
-        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<MonitoringDataPoint>(this);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

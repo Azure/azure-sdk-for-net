@@ -42,7 +42,7 @@ namespace Azure.Developer.DevCenter.Models
         public static bool operator ==(PowerState left, PowerState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PowerState"/> values are not the same. </summary>
         public static bool operator !=(PowerState left, PowerState right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PowerState"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PowerState"/>. </summary>
         public static implicit operator PowerState(string value) => new PowerState(value);
 
         /// <inheritdoc />
@@ -53,7 +53,7 @@ namespace Azure.Developer.DevCenter.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

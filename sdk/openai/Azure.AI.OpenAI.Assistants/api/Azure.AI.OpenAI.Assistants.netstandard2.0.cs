@@ -12,6 +12,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string Model { get { throw null; } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.ToolDefinition> Tools { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.Assistant System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.Assistant>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.Assistant>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.Assistant System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.Assistant>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -28,6 +29,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string Model { get { throw null; } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> Tools { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantCreationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantCreationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantCreationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantCreationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantCreationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -40,6 +42,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string AssistantId { get { throw null; } }
         public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantFile System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -58,19 +61,19 @@ namespace Azure.AI.OpenAI.Assistants
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> CancelRun(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> CancelRunAsync(string threadId, string runId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> CreateAssistant(Azure.AI.OpenAI.Assistants.AssistantCreationOptions assistantCreationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.Assistant>> CreateAssistantAsync(Azure.AI.OpenAI.Assistants.AssistantCreationOptions assistantCreationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage> CreateMessage(string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, string content, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage>> CreateMessageAsync(string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, string content, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> CreateAssistant(Azure.AI.OpenAI.Assistants.AssistantCreationOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.Assistant>> CreateAssistantAsync(Azure.AI.OpenAI.Assistants.AssistantCreationOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage> CreateMessage(string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, string content, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage>> CreateMessageAsync(string threadId, Azure.AI.OpenAI.Assistants.MessageRole role, string content, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> CreateRun(Azure.AI.OpenAI.Assistants.AssistantThread thread, Azure.AI.OpenAI.Assistants.Assistant assistant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> CreateRun(string threadId, Azure.AI.OpenAI.Assistants.CreateRunOptions createRunOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> CreateRunAsync(Azure.AI.OpenAI.Assistants.AssistantThread thread, Azure.AI.OpenAI.Assistants.Assistant assistant, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> CreateRunAsync(string threadId, Azure.AI.OpenAI.Assistants.CreateRunOptions createRunOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> CreateThread(Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions assistantThreadCreationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> CreateThread(Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> CreateThread(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> CreateThreadAndRun(Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions createAndRunThreadOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> CreateThreadAndRunAsync(Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions createAndRunThreadOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> CreateThreadAsync(Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions assistantThreadCreationOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> CreateThreadAndRun(Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> CreateThreadAndRunAsync(Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> CreateThreadAsync(Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> CreateThreadAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> DeleteAssistant(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> DeleteAssistantAsync(string assistantId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -120,17 +123,19 @@ namespace Azure.AI.OpenAI.Assistants
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> SubmitToolOutputsToRunAsync(string threadId, string runId, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolOutput> toolOutputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<bool> UnlinkAssistantFile(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> UnlinkAssistantFileAsync(string assistantId, string fileId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> UpdateAssistant(string assistantId, Azure.AI.OpenAI.Assistants.UpdateAssistantOptions updateAssistantOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.Assistant>> UpdateAssistantAsync(string assistantId, Azure.AI.OpenAI.Assistants.UpdateAssistantOptions updateAssistantOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage> UpdateMessage(string threadId, string messageId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> UpdateRun(string threadId, string runId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> UpdateRunAsync(string threadId, string runId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> UpdateThread(string threadId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> UpdateThreadAsync(string threadId, System.Collections.Generic.IDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile> UploadFile(System.BinaryData data, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, string filename = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.Assistant> UpdateAssistant(string assistantId, Azure.AI.OpenAI.Assistants.UpdateAssistantOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.Assistant>> UpdateAssistantAsync(string assistantId, Azure.AI.OpenAI.Assistants.UpdateAssistantOptions body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage> UpdateMessage(string threadId, string messageId, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadMessage>> UpdateMessageAsync(string threadId, string messageId, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun> UpdateRun(string threadId, string runId, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.ThreadRun>> UpdateRunAsync(string threadId, string runId, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread> UpdateThread(string threadId, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.AssistantThread>> UpdateThreadAsync(string threadId, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile> UploadFile(Azure.AI.OpenAI.Assistants.UploadFileRequest file, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile> UploadFile(System.IO.Stream data, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, string filename = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile> UploadFile(string localFilePath, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile>> UploadFileAsync(System.BinaryData data, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, string filename = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile>> UploadFileAsync(Azure.AI.OpenAI.Assistants.UploadFileRequest file, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile>> UploadFileAsync(System.IO.Stream data, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, string filename = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.OpenAI.Assistants.OpenAIFile>> UploadFileAsync(string localFilePath, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class AssistantsClientOptions : Azure.Core.ClientOptions
@@ -176,6 +181,7 @@ namespace Azure.AI.OpenAI.Assistants
         public static Azure.AI.OpenAI.Assistants.ThreadInitializationMessage ThreadInitializationMessage(Azure.AI.OpenAI.Assistants.MessageRole role = default(Azure.AI.OpenAI.Assistants.MessageRole), string content = null, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.OpenAI.Assistants.ThreadMessage ThreadMessage(string id = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), string threadId = null, Azure.AI.OpenAI.Assistants.MessageRole role = default(Azure.AI.OpenAI.Assistants.MessageRole), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.MessageContent> contentItems = null, string assistantId = null, string runId = null, System.Collections.Generic.IEnumerable<string> fileIds = null, System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
         public static Azure.AI.OpenAI.Assistants.ThreadRun ThreadRun(string id = null, string threadId = null, string assistantId = null, Azure.AI.OpenAI.Assistants.RunStatus status = default(Azure.AI.OpenAI.Assistants.RunStatus), Azure.AI.OpenAI.Assistants.RequiredAction requiredAction = null, Azure.AI.OpenAI.Assistants.RunError lastError = null, string model = null, string instructions = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.Assistants.ToolDefinition> tools = null, System.Collections.Generic.IEnumerable<string> fileIds = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), System.DateTimeOffset? expiresAt = default(System.DateTimeOffset?), System.DateTimeOffset? startedAt = default(System.DateTimeOffset?), System.DateTimeOffset? completedAt = default(System.DateTimeOffset?), System.DateTimeOffset? cancelledAt = default(System.DateTimeOffset?), System.DateTimeOffset? failedAt = default(System.DateTimeOffset?), System.Collections.Generic.IReadOnlyDictionary<string, string> metadata = null) { throw null; }
+        public static Azure.AI.OpenAI.Assistants.UploadFileRequest UploadFileRequest(System.IO.Stream data = null, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose = default(Azure.AI.OpenAI.Assistants.OpenAIFilePurpose), string filename = null) { throw null; }
     }
     public partial class AssistantThread : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantThread>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantThread>
     {
@@ -183,6 +189,7 @@ namespace Azure.AI.OpenAI.Assistants
         public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantThread System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantThread>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantThread>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantThread System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantThread>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -194,15 +201,23 @@ namespace Azure.AI.OpenAI.Assistants
         public AssistantThreadCreationOptions() { }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ThreadInitializationMessage> Messages { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class AzureAIOpenAIAssistantsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIOpenAIAssistantsContext() { }
+        public static Azure.AI.OpenAI.Assistants.AzureAIOpenAIAssistantsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CodeInterpreterToolDefinition : Azure.AI.OpenAI.Assistants.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition>
     {
         public CodeInterpreterToolDefinition() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.CodeInterpreterToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -218,6 +233,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string OverrideModelName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> OverrideTools { get { throw null; } }
         public Azure.AI.OpenAI.Assistants.AssistantThreadCreationOptions Thread { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.CreateAndRunThreadOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -233,6 +249,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string OverrideInstructions { get { throw null; } set { } }
         public string OverrideModelName { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> OverrideTools { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.CreateRunOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CreateRunOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.CreateRunOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.CreateRunOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.CreateRunOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -248,6 +265,7 @@ namespace Azure.AI.OpenAI.Assistants
         public System.BinaryData Parameters { get { throw null; } }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.FunctionToolDefinition functionToolDefinition, Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall functionToolCall) { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.FunctionToolDefinition functionToolDefinition, Azure.AI.OpenAI.Assistants.RunStepFunctionToolCall functionToolCall) { throw null; }
         public static bool operator ==(Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall functionToolCall, Azure.AI.OpenAI.Assistants.FunctionToolDefinition functionToolDefinition) { throw null; }
@@ -283,6 +301,7 @@ namespace Azure.AI.OpenAI.Assistants
     public abstract partial class MessageContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageContent>
     {
         protected MessageContent() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageContent System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -295,6 +314,7 @@ namespace Azure.AI.OpenAI.Assistants
         public System.DateTimeOffset CreatedAt { get { throw null; } }
         public string Id { get { throw null; } }
         public string MessageId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageFile System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -305,6 +325,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal MessageImageFileContent() { }
         public string FileId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageImageFileContent System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageImageFileContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageImageFileContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageImageFileContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageImageFileContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -335,6 +356,7 @@ namespace Azure.AI.OpenAI.Assistants
         public int EndIndex { get { throw null; } }
         public int StartIndex { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextAnnotation System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextAnnotation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextAnnotation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextAnnotation System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageTextAnnotation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -346,6 +368,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal MessageTextContent() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.MessageTextAnnotation> Annotations { get { throw null; } }
         public string Text { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextContent System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageTextContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -357,6 +380,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal MessageTextFileCitationAnnotation() : base (default(string), default(int), default(int)) { }
         public string FileId { get { throw null; } }
         public string Quote { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextFileCitationAnnotation System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextFileCitationAnnotation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextFileCitationAnnotation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextFileCitationAnnotation System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageTextFileCitationAnnotation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -367,6 +391,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal MessageTextFilePathAnnotation() : base (default(string), default(int), default(int)) { }
         public string FileId { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextFilePathAnnotation System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextFilePathAnnotation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.MessageTextFilePathAnnotation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.MessageTextFilePathAnnotation System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.MessageTextFilePathAnnotation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -381,6 +406,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string Id { get { throw null; } }
         public Azure.AI.OpenAI.Assistants.OpenAIFilePurpose Purpose { get { throw null; } }
         public int Size { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.OpenAIFile System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.OpenAIFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.OpenAIFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.OpenAIFile System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.OpenAIFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -421,6 +447,7 @@ namespace Azure.AI.OpenAI.Assistants
     public abstract partial class RequiredAction : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RequiredAction>
     {
         protected RequiredAction() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RequiredAction System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RequiredAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RequiredAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -432,6 +459,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal RequiredFunctionToolCall() : base (default(string)) { }
         public string Arguments { get { throw null; } }
         public string Name { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RequiredFunctionToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -442,6 +470,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         protected RequiredToolCall(string id) { }
         public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RequiredToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RequiredToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RequiredToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RequiredToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -451,6 +480,7 @@ namespace Azure.AI.OpenAI.Assistants
     public partial class RetrievalToolDefinition : Azure.AI.OpenAI.Assistants.ToolDefinition, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RetrievalToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RetrievalToolDefinition>
     {
         public RetrievalToolDefinition() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RetrievalToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RetrievalToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RetrievalToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RetrievalToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RetrievalToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -462,6 +492,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal RunError() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunError System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunError System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -509,6 +540,7 @@ namespace Azure.AI.OpenAI.Assistants
         public Azure.AI.OpenAI.Assistants.RunStepDetails StepDetails { get { throw null; } }
         public string ThreadId { get { throw null; } }
         public Azure.AI.OpenAI.Assistants.RunStepType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStep System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStep>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStep>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStep System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStep>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -519,6 +551,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepCodeInterpreterImageOutput() { }
         public Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageReference Image { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -529,6 +562,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepCodeInterpreterImageReference() { }
         public string FileId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageReference System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterImageReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -539,6 +573,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepCodeInterpreterLogOutput() { }
         public string Logs { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterLogOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterLogOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterLogOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterLogOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterLogOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -550,6 +585,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal RunStepCodeInterpreterToolCall() : base (default(string)) { }
         public string Input { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput> Outputs { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -559,6 +595,7 @@ namespace Azure.AI.OpenAI.Assistants
     public abstract partial class RunStepCodeInterpreterToolCallOutput : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput>
     {
         protected RunStepCodeInterpreterToolCallOutput() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepCodeInterpreterToolCallOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -568,6 +605,7 @@ namespace Azure.AI.OpenAI.Assistants
     public abstract partial class RunStepDetails : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepDetails>
     {
         protected RunStepDetails() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -579,6 +617,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal RunStepError() { }
         public Azure.AI.OpenAI.Assistants.RunStepErrorCode Code { get { throw null; } }
         public string Message { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepError System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepError System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -609,6 +648,7 @@ namespace Azure.AI.OpenAI.Assistants
         public string Arguments { get { throw null; } }
         public string Name { get { throw null; } }
         public string Output { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepFunctionToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepFunctionToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepFunctionToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepFunctionToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepFunctionToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -619,6 +659,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepMessageCreationDetails() { }
         public Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference MessageCreation { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepMessageCreationDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepMessageCreationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepMessageCreationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepMessageCreationDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepMessageCreationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -629,6 +670,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepMessageCreationReference() { }
         public string MessageId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepMessageCreationReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -639,6 +681,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepRetrievalToolCall() : base (default(string)) { }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Retrieval { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepRetrievalToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepRetrievalToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepRetrievalToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepRetrievalToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepRetrievalToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -670,6 +713,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         protected RunStepToolCall(string id) { }
         public string Id { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepToolCall System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepToolCall>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepToolCall>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepToolCall System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepToolCall>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -680,6 +724,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal RunStepToolCallDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.RunStepToolCall> ToolCalls { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepToolCallDetails System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepToolCallDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.RunStepToolCallDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.RunStepToolCallDetails System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.RunStepToolCallDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -708,6 +753,7 @@ namespace Azure.AI.OpenAI.Assistants
     {
         internal SubmitToolOutputsAction() { }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.RequiredToolCall> ToolCalls { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.SubmitToolOutputsAction System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.SubmitToolOutputsAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.SubmitToolOutputsAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.SubmitToolOutputsAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.SubmitToolOutputsAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -721,6 +767,7 @@ namespace Azure.AI.OpenAI.Assistants
         public System.Collections.Generic.IList<string> FileIds { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
         public Azure.AI.OpenAI.Assistants.MessageRole Role { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ThreadInitializationMessage System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ThreadInitializationMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ThreadInitializationMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ThreadInitializationMessage System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.ThreadInitializationMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -739,6 +786,7 @@ namespace Azure.AI.OpenAI.Assistants
         public Azure.AI.OpenAI.Assistants.MessageRole Role { get { throw null; } }
         public string RunId { get { throw null; } }
         public string ThreadId { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ThreadMessage System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ThreadMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ThreadMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ThreadMessage System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.ThreadMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -765,6 +813,7 @@ namespace Azure.AI.OpenAI.Assistants
         public Azure.AI.OpenAI.Assistants.RunStatus Status { get { throw null; } }
         public string ThreadId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.OpenAI.Assistants.ToolDefinition> Tools { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ThreadRun System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ThreadRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ThreadRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ThreadRun System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.ThreadRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -774,6 +823,7 @@ namespace Azure.AI.OpenAI.Assistants
     public abstract partial class ToolDefinition : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ToolDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.ToolDefinition>
     {
         protected ToolDefinition() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ToolDefinition System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ToolDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ToolDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ToolDefinition System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.ToolDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -789,6 +839,7 @@ namespace Azure.AI.OpenAI.Assistants
         public ToolOutput(string toolCallId, string output) { }
         public string Output { get { throw null; } set { } }
         public string ToolCallId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ToolOutput System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ToolOutput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.ToolOutput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.ToolOutput System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.ToolOutput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -805,11 +856,25 @@ namespace Azure.AI.OpenAI.Assistants
         public string Model { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.OpenAI.Assistants.ToolDefinition> Tools { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.UpdateAssistantOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.UpdateAssistantOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.UpdateAssistantOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.OpenAI.Assistants.UpdateAssistantOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UpdateAssistantOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UpdateAssistantOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UpdateAssistantOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class UploadFileRequest : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>
+    {
+        public UploadFileRequest(System.IO.Stream data, Azure.AI.OpenAI.Assistants.OpenAIFilePurpose purpose) { }
+        public System.IO.Stream Data { get { throw null; } }
+        public string Filename { get { throw null; } set { } }
+        public Azure.AI.OpenAI.Assistants.OpenAIFilePurpose Purpose { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.Assistants.UploadFileRequest System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.OpenAI.Assistants.UploadFileRequest System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.Assistants.UploadFileRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Microsoft.Extensions.Azure

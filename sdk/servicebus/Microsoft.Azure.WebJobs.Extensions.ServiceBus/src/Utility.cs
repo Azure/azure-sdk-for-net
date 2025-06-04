@@ -14,7 +14,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus
         public static int GetProcessorCount()
         {
             string skuValue = Environment.GetEnvironmentVariable(Constants.AzureWebsiteSku);
-            return string.Equals(skuValue, Constants.DynamicSku, StringComparison.OrdinalIgnoreCase) ? 1 : Environment.ProcessorCount;
+            return string.Equals(skuValue, Constants.DynamicSku, StringComparison.OrdinalIgnoreCase) || string.Equals(skuValue, Constants.FlexConsumptionSku, StringComparison.OrdinalIgnoreCase)
+                ? 1 : Environment.ProcessorCount;
         }
     }
 }

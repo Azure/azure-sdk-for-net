@@ -137,7 +137,7 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.CosmosTable)
+            if (_endpointType == TableEndpointType.CosmosTable || _endpointType == TableEndpointType.CosmosTableAAD)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
@@ -171,7 +171,7 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.CosmosTable)
+            if (_endpointType == TableEndpointType.CosmosTable || _endpointType == TableEndpointType.CosmosTableAAD)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
@@ -235,7 +235,7 @@ namespace Azure.Data.Tables.Tests
                 async () =>
                     await sasTableclient.UpsertEntityAsync(CreateTableEntities("partition", 1).First(), TableUpdateMode.Replace).ConfigureAwait(false));
             Assert.That(ex.Status, Is.EqualTo((int)HttpStatusCode.Forbidden));
-            if (_endpointType == TableEndpointType.CosmosTable)
+            if (_endpointType == TableEndpointType.CosmosTable || _endpointType == TableEndpointType.CosmosTableAAD)
             {
                 Assert.That(ex.ErrorCode, Is.EqualTo(TableErrorCode.Forbidden.ToString()));
             }
@@ -937,6 +937,29 @@ namespace Azure.Data.Tables.Tests
             Assert.That(updatedEntity[propertyName], Is.EqualTo(updatedValue), $"The property value should be {updatedValue}");
         }
 
+        [RecordedTest]
+        public async Task TimespanPropertyInCustomEntityCanBeUpsertedAndRead()
+        {
+            const string rowKeyValue = "1";
+            DateTime date1 = new DateTime(2010, 1, 1, 8, 0, 15);
+            DateTime date2 = new DateTime(2010, 8, 18, 13, 30, 30);
+            TimeSpan interval = date2 - date1;
+            var entity = new TimeSpanTestEntity { PartitionKey = PartitionKeyValue, RowKey = rowKeyValue, TimespanProperty = interval, };
+
+            // Create the new entity.
+            await client.UpsertEntityAsync(entity, TableUpdateMode.Replace).ConfigureAwait(false);
+
+            // Fetch the created entity from the service.
+            var retrievedEntity = (await client.QueryAsync<TimeSpanTestEntity>($"PartitionKey eq '{PartitionKeyValue}' and RowKey eq '{rowKeyValue}'")
+                .ToEnumerableAsync()
+                .ConfigureAwait(false)).Single();
+
+            Assert.IsNotNull(retrievedEntity, "The entity should not be null");
+            Assert.IsTrue(TimeSpan.Compare(
+                retrievedEntity!.TimespanProperty.Value, interval) == 0,
+                "The property value should be equal to the original value");
+        }
+
         /// <summary>
         /// Validates the functionality of the TableClient.
         /// </summary>
@@ -1478,7 +1501,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(ex.Message.Contains(nameof(TableTransactionFailedException.FailedTransactionActionIndex)));
 
             // Cosmos allows batches larger than 100.
-            if (_endpointType != TableEndpointType.CosmosTable)
+            if (_endpointType != TableEndpointType.CosmosTable && _endpointType != TableEndpointType.CosmosTableAAD)
             {
                 // Try submitting a batch larger than 100 items
                 batch = new List<TableTransactionAction>(

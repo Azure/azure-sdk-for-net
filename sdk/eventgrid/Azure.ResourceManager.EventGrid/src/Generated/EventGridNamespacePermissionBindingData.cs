@@ -84,20 +84,25 @@ namespace Azure.ResourceManager.EventGrid
         }
 
         /// <summary> Description for the Permission Binding resource. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The name of the Topic Space resource that the permission is bound to.
         /// The Topic space needs to be a resource under the same namespace the permission binding is a part of.
         /// </summary>
+        [WirePath("properties.topicSpaceName")]
         public string TopicSpaceName { get; set; }
         /// <summary> The allowed permission. </summary>
+        [WirePath("properties.permission")]
         public PermissionType? Permission { get; set; }
         /// <summary>
         /// The name of the client group resource that the permission is bound to.
         /// The client group needs to be a resource under the same namespace the permission binding is a part of.
         /// </summary>
+        [WirePath("properties.clientGroupName")]
         public string ClientGroupName { get; set; }
         /// <summary> Provisioning state of the PermissionBinding resource. </summary>
+        [WirePath("properties.provisioningState")]
         public PermissionBindingProvisioningState? ProvisioningState { get; }
     }
 }

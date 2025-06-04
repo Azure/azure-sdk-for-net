@@ -58,13 +58,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="favoriteId"> Internally assigned unique id of the favorite definition. </param>
         /// <param name="favoriteType"> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
         /// <param name="sourceType"> The source of the favorite definition. </param>
-        /// <param name="timeModified"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
+        /// <param name="modifiedOn"> Date and time in UTC of the last modification that was made to this favorite definition. </param>
         /// <param name="tags"> A list of 0 or more tags that are associated with this favorite definition. </param>
         /// <param name="category"> Favorite category, as defined by the user at creation time. </param>
         /// <param name="isGeneratedFromTemplate"> Flag denoting wether or not this favorite was generated from a template. </param>
         /// <param name="userId"> Unique user id of the specific user that owns this favorite. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentFavorite(string name, string config, string version, string favoriteId, FavoriteType? favoriteType, string sourceType, string timeModified, IList<string> tags, string category, bool? isGeneratedFromTemplate, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationInsightsComponentFavorite(string name, string config, string version, string favoriteId, ComponentFavoriteType? favoriteType, string sourceType, DateTimeOffset? modifiedOn, IList<string> tags, string category, bool? isGeneratedFromTemplate, string userId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Config = config;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             FavoriteId = favoriteId;
             FavoriteType = favoriteType;
             SourceType = sourceType;
-            TimeModified = timeModified;
+            ModifiedOn = modifiedOn;
             Tags = tags;
             Category = category;
             IsGeneratedFromTemplate = isGeneratedFromTemplate;
@@ -94,13 +94,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string FavoriteId { get; }
         /// <summary> Enum indicating if this favorite definition is owned by a specific user or is shared between all users with access to the Application Insights component. </summary>
         [WirePath("FavoriteType")]
-        public FavoriteType? FavoriteType { get; set; }
+        public ComponentFavoriteType? FavoriteType { get; set; }
         /// <summary> The source of the favorite definition. </summary>
         [WirePath("SourceType")]
         public string SourceType { get; set; }
         /// <summary> Date and time in UTC of the last modification that was made to this favorite definition. </summary>
         [WirePath("TimeModified")]
-        public string TimeModified { get; }
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> A list of 0 or more tags that are associated with this favorite definition. </summary>
         [WirePath("Tags")]
         public IList<string> Tags { get; }

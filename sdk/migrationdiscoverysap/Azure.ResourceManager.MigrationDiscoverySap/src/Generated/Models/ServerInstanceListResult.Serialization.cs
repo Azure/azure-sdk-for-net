@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
     internal partial class ServerInstanceListResult : IUtf8JsonSerializable, IJsonModel<ServerInstanceListResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerInstanceListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerInstanceListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<ServerInstanceListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServerInstanceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,12 +34,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<SapDiscoveryServerInstanceData>(item, options);
+                writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -46,14 +54,13 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         ServerInstanceListResult IJsonModel<ServerInstanceListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +77,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 
         internal static ServerInstanceListResult DeserializeServerInstanceListResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -117,7 +124,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ServerInstanceListResult)} does not support writing '{options.Format}' format.");
             }
@@ -131,7 +138,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeServerInstanceListResult(document.RootElement, options);
                     }
                 default:

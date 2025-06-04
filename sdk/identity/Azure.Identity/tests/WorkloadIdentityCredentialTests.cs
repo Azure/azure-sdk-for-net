@@ -47,7 +47,11 @@ namespace Azure.Identity.Tests
         public override TokenCredential GetTokenCredential(TokenCredentialOptions options)
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             var workloadOptions = options.Clone<WorkloadIdentityCredentialOptions>();
 
@@ -72,7 +76,11 @@ namespace Azure.Identity.Tests
             }
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
+#if NET9_0_OR_GREATER
+            var mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+#else
             var mockCert = new X509Certificate2(certificatePath);
+#endif
 
             var workloadOptions = config.Clone<WorkloadIdentityCredentialOptions>();
 
@@ -80,6 +88,7 @@ namespace Azure.Identity.Tests
             workloadOptions.ClientId = ClientId;
             workloadOptions.TokenFilePath = _tempFiles.GetTempFilePath();
             workloadOptions.MsalClient = config.MockConfidentialMsalClient;
+            workloadOptions.AuthorityHost = config.AuthorityHost;
 
             string assertion = CredentialTestHelpers.CreateClientAssertionJWT(workloadOptions.AuthorityHost, workloadOptions.ClientId, workloadOptions.TenantId, mockCert);
 

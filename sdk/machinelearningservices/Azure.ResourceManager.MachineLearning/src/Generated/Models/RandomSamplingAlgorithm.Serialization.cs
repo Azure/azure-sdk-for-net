@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,9 +16,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
 {
     public partial class RandomSamplingAlgorithm : IUtf8JsonSerializable, IJsonModel<RandomSamplingAlgorithm>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RandomSamplingAlgorithm>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RandomSamplingAlgorithm>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<RandomSamplingAlgorithm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RandomSamplingAlgorithm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,24 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Logbase))
-            {
-                if (Logbase != null)
-                {
-                    writer.WritePropertyName("logbase"u8);
-                    writer.WriteStringValue(Logbase);
-                }
-                else
-                {
-                    writer.WriteNull("logbase");
-                }
-            }
-            if (Optional.IsDefined(Rule))
-            {
-                writer.WritePropertyName("rule"u8);
-                writer.WriteStringValue(Rule.Value.ToString());
-            }
+            base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Seed))
             {
                 if (Seed != null)
@@ -55,24 +48,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("seed");
                 }
             }
-            writer.WritePropertyName("samplingAlgorithmType"u8);
-            writer.WriteStringValue(SamplingAlgorithmType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(Rule))
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
+                writer.WritePropertyName("rule"u8);
+                writer.WriteStringValue(Rule.Value.ToString());
             }
-            writer.WriteEndObject();
         }
 
         RandomSamplingAlgorithm IJsonModel<RandomSamplingAlgorithm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -89,28 +69,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         internal static RandomSamplingAlgorithm DeserializeRandomSamplingAlgorithm(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string logbase = default;
-            RandomSamplingAlgorithmRule? rule = default;
             int? seed = default;
+            RandomSamplingAlgorithmRule? rule = default;
             SamplingAlgorithmType samplingAlgorithmType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("logbase"u8))
+                if (property.NameEquals("seed"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        logbase = null;
+                        seed = null;
                         continue;
                     }
-                    logbase = property.Value.GetString();
+                    seed = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("rule"u8))
@@ -120,16 +99,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     rule = new RandomSamplingAlgorithmRule(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("seed"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        seed = null;
-                        continue;
-                    }
-                    seed = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("samplingAlgorithmType"u8))
@@ -143,7 +112,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, logbase, rule, seed);
+            return new RandomSamplingAlgorithm(samplingAlgorithmType, serializedAdditionalRawData, seed, rule);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Seed), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  seed: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Seed))
+                {
+                    builder.Append("  seed: ");
+                    builder.AppendLine($"{Seed.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Rule), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  rule: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Rule))
+                {
+                    builder.Append("  rule: ");
+                    builder.AppendLine($"'{Rule.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamplingAlgorithmType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  samplingAlgorithmType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                builder.Append("  samplingAlgorithmType: ");
+                builder.AppendLine($"'{SamplingAlgorithmType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RandomSamplingAlgorithm>.Write(ModelReaderWriterOptions options)
@@ -153,7 +179,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
                     throw new FormatException($"The model {nameof(RandomSamplingAlgorithm)} does not support writing '{options.Format}' format.");
             }
@@ -167,7 +195,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRandomSamplingAlgorithm(document.RootElement, options);
                     }
                 default:

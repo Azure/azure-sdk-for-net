@@ -15,9 +15,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
 {
     public partial class AppPlatformAzureFileVolume : IUtf8JsonSerializable, IJsonModel<AppPlatformAzureFileVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAzureFileVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAzureFileVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<AppPlatformAzureFileVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -25,44 +34,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
+            base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(UnderlyingResourceType.ToString());
-            writer.WritePropertyName("mountPath"u8);
-            writer.WriteStringValue(MountPath);
-            if (Optional.IsDefined(IsReadOnly))
-            {
-                writer.WritePropertyName("readOnly"u8);
-                writer.WriteBooleanValue(IsReadOnly.Value);
-            }
-            if (Optional.IsCollectionDefined(MountOptions))
-            {
-                writer.WritePropertyName("mountOptions"u8);
-                writer.WriteStartArray();
-                foreach (var item in MountOptions)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
         }
 
         AppPlatformAzureFileVolume IJsonModel<AppPlatformAzureFileVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -79,7 +53,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
 
         internal static AppPlatformAzureFileVolume DeserializeAppPlatformAzureFileVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppPlatformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AppPlatformAzureFileVolume)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +142,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAppPlatformAzureFileVolume(document.RootElement, options);
                     }
                 default:

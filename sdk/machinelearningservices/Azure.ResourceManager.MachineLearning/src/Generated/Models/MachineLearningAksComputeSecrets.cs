@@ -34,10 +34,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
+        [WirePath("userKubeConfig")]
         public string UserKubeConfig { get; }
         /// <summary> Content of kubeconfig file that can be used to connect to the Kubernetes cluster. </summary>
+        [WirePath("adminKubeConfig")]
         public string AdminKubeConfig { get; }
         /// <summary> Image registry pull secret. </summary>
+        [WirePath("imagePullSecretName")]
         public string ImagePullSecretName { get; }
     }
 }

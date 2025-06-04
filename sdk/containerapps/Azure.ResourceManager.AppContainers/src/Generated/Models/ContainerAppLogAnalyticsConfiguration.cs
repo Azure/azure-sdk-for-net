@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <summary> Log analytics customer id. </summary>
+        [WirePath("customerId")]
         public string CustomerId { get; set; }
         /// <summary> Log analytics customer key. </summary>
+        [WirePath("sharedKey")]
         public string SharedKey { get; set; }
     }
 }

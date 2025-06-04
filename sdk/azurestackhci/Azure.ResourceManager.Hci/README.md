@@ -39,7 +39,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
@@ -182,7 +182,7 @@ string targetVersion = "1.0.18062.0"; //replace with extension version you want 
 ResourceIdentifier arcExtensionResourceId = ArcExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName, "default", extensionName);
 ArcExtensionResource arcExtension = client.GetArcExtensionResource(arcExtensionResourceId);
 // Invoke Upgrade operation
-ExtensionUpgradeContent content = new ExtensionUpgradeContent()
+ArcExtensionUpgradeContent content = new ArcExtensionUpgradeContent()
 {
     TargetVersion = targetVersion,
 };

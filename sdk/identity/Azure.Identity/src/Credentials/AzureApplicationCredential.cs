@@ -39,29 +39,33 @@ namespace Azure.Identity
         {
             _credential = new ChainedTokenCredential(
                 environmentCredential ?? new EnvironmentCredential(options),
-                managedIdentityCredential ?? new ManagedIdentityCredential(options.ManagedIdentityClientId)
+                managedIdentityCredential ?? new ManagedIdentityCredential(options.ManagedIdentityId._userAssignedId)
             );
         }
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the specified sources, returning the first successfully obtained
         /// <see cref="AccessToken"/>. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled
-        /// automatically. Where possible, reuse credential instances to optimize cache effectiveness.
+        /// automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
             => GetTokenImplAsync(false, requestContext, cancellationToken).EnsureCompleted();
 
         /// <summary>
-        /// Sequentially calls <see cref="TokenCredential.GetToken"/> on all the specified sources, returning the first successfully obtained
+        /// Sequentially calls <see cref="TokenCredential.GetToken(TokenRequestContext, CancellationToken)"/> on all the specified sources, returning the first successfully obtained
         /// <see cref="AccessToken"/>. Acquired tokens are cached by the credential instance. Token lifetime and refreshing is handled
-        /// automatically. Where possible,reuse credential instances to optimize cache effectiveness.
+        /// automatically. Where possible,<see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The first <see cref="AccessToken"/> returned by the specified sources. Any credential which raises a <see cref="CredentialUnavailableException"/> will be skipped.</returns>
+        /// <exception cref="AuthenticationFailedException">Thrown when the authentication failed.</exception>
         public override async ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken = default)
             => await GetTokenImplAsync(true, requestContext, cancellationToken).ConfigureAwait(false);
 

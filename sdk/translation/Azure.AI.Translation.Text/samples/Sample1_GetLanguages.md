@@ -9,8 +9,8 @@ This will return language metadata from all supported scopes.
 ```C# Snippet:GetTextTranslationLanguagesMetadata
 try
 {
-    Response<GetLanguagesResult> response = client.GetLanguages();
-    GetLanguagesResult languages = response.Value;
+    Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages();
+    GetSupportedLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operation: {languages.Translation.Count}.");
     Console.WriteLine($"Number of supported languages for transliterate operation: {languages.Transliteration.Count}.");
@@ -49,8 +49,8 @@ You can limit the scope of the response of the languages API by providing the op
 try
 {
     string scope = "translation";
-    Response<GetLanguagesResult> response = client.GetLanguages(scope: scope);
-    GetLanguagesResult languages = response.Value;
+    Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(scope: scope);
+    GetSupportedLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");
@@ -90,8 +90,8 @@ Names are provided in the English language when a target language is not specifi
 try
 {
     string acceptLanguage = "es";
-    Response<GetLanguagesResult> response = client.GetLanguages(acceptLanguage: acceptLanguage);
-    GetLanguagesResult languages = response.Value;
+    Response<GetSupportedLanguagesResult> response = client.GetSupportedLanguages(acceptLanguage: acceptLanguage);
+    GetSupportedLanguagesResult languages = response.Value;
 
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Translation.Count}.");
     Console.WriteLine($"Number of supported languages for translate operations: {languages.Transliteration.Count}.");

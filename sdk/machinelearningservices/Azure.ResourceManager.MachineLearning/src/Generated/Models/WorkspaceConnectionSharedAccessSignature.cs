@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Gets or sets the sas. </summary>
+        [WirePath("sas")]
         public string Sas { get; set; }
     }
 }

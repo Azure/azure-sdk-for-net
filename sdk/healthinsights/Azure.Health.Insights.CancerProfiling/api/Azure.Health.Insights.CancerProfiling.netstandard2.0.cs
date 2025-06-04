@@ -1,5 +1,11 @@
 namespace Azure.Health.Insights.CancerProfiling
 {
+    public partial class AzureHealthInsightsCancerProfilingContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureHealthInsightsCancerProfilingContext() { }
+        public static Azure.Health.Insights.CancerProfiling.AzureHealthInsightsCancerProfilingContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CancerProfilingClient
     {
         protected CancerProfilingClient() { }
@@ -7,9 +13,9 @@ namespace Azure.Health.Insights.CancerProfiling
         public CancerProfilingClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.Health.Insights.CancerProfiling.CancerProfilingClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Operation<System.BinaryData> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults> InferCancerProfile(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation<System.BinaryData>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData oncoPhenotypeData, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Operation<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>> InferCancerProfileAsync(Azure.WaitUntil waitUntil, Azure.Health.Insights.CancerProfiling.OncoPhenotypeData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class CancerProfilingClientOptions : Azure.Core.ClientOptions
     {
@@ -26,6 +32,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public string Name { get { throw null; } set { } }
         public string System { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.ClinicalCodedElement System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.ClinicalCodedElement>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.ClinicalCodedElement>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.ClinicalCodedElement System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.ClinicalCodedElement>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -63,6 +70,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public int Length { get { throw null; } }
         public int Offset { get { throw null; } }
         public string Text { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -74,6 +82,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public DocumentContent(Azure.Health.Insights.CancerProfiling.DocumentContentSourceType sourceType, string value) { }
         public Azure.Health.Insights.CancerProfiling.DocumentContentSourceType SourceType { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.DocumentContent System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.DocumentContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.DocumentContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.DocumentContent System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.DocumentContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -134,6 +143,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public float? Importance { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.ClinicalNoteEvidence PatientDataEvidence { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.ClinicalCodedElement PatientInfoEvidence { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.InferenceEvidence System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.InferenceEvidence>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.InferenceEvidence>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.InferenceEvidence System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.InferenceEvidence>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -145,6 +155,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public OncoPhenotypeData(System.Collections.Generic.IEnumerable<Azure.Health.Insights.CancerProfiling.PatientRecord> patients) { }
         public Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration Configuration { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Health.Insights.CancerProfiling.PatientRecord> Patients { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeData System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeData System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -160,6 +171,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.CancerProfiling.InferenceEvidence> Evidence { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.OncoPhenotypeInferenceType Type { get { throw null; } }
         public string Value { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -197,6 +209,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public bool? IncludeEvidence { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInferenceType> InferenceTypes { get { throw null; } }
         public bool? Verbose { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeModelConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -208,6 +221,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal OncoPhenotypePatientResult() { }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.CancerProfiling.OncoPhenotypeInference> Inferences { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -219,6 +233,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal OncoPhenotypeResults() { }
         public string ModelVersion { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.Health.Insights.CancerProfiling.OncoPhenotypePatientResult> Patients { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.OncoPhenotypeResults>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -234,6 +249,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public string Id { get { throw null; } }
         public string Language { get { throw null; } set { } }
         public Azure.Health.Insights.CancerProfiling.DocumentType Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.PatientDocument System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.PatientDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.PatientDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.PatientDocument System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.PatientDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -246,6 +262,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public System.DateTimeOffset? BirthDate { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Health.Insights.CancerProfiling.ClinicalCodedElement> ClinicalInfo { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.PatientInfoSex? Sex { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.PatientInfo System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.PatientInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.PatientInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.PatientInfo System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.PatientInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -277,6 +294,7 @@ namespace Azure.Health.Insights.CancerProfiling
         public System.Collections.Generic.IList<Azure.Health.Insights.CancerProfiling.PatientDocument> Data { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.Health.Insights.CancerProfiling.PatientInfo Info { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.PatientRecord System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.PatientRecord>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.Health.Insights.CancerProfiling.PatientRecord>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Health.Insights.CancerProfiling.PatientRecord System.ClientModel.Primitives.IPersistableModel<Azure.Health.Insights.CancerProfiling.PatientRecord>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

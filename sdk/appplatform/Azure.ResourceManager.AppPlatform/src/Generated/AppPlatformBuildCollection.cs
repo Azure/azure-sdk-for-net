@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = await _appPlatformBuildBuildServiceRestClient.CreateOrUpdateBuildAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()));
+                var uri = _appPlatformBuildBuildServiceRestClient.CreateCreateOrUpdateBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.AppPlatform
             try
             {
                 var response = _appPlatformBuildBuildServiceRestClient.CreateOrUpdateBuild(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data, cancellationToken);
-                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()));
+                var uri = _appPlatformBuildBuildServiceRestClient.CreateCreateOrUpdateBuildRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, buildName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppPlatformArmOperation<AppPlatformBuildResource>(Response.FromValue(new AppPlatformBuildResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

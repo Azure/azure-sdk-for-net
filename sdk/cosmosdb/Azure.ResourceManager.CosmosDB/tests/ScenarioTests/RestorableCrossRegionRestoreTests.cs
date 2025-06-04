@@ -40,22 +40,26 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         [TearDown]
         public async Task TearDown()
         {
-            if (_restorableDatabaseAccount != null)
+            if (Mode != RecordedTestMode.Playback)
             {
-                await _restorableDatabaseAccount.DeleteAsync(WaitUntil.Completed);
-            }
+                if (_restorableDatabaseAccount != null)
+                {
+                    await _restorableDatabaseAccount.DeleteAsync(WaitUntil.Completed);
+                }
 
-            if (_restoredDatabaseAccount != null)
-            {
-                await _restoredDatabaseAccount.DeleteAsync(WaitUntil.Completed);
-            }
+                if (_restoredDatabaseAccount != null)
+                {
+                    await _restoredDatabaseAccount.DeleteAsync(WaitUntil.Completed);
+                }
 
-            _restorableDatabaseAccount = null;
-            _restoredDatabaseAccount = null;
+                _restorableDatabaseAccount = null;
+                _restoredDatabaseAccount = null;
+            }
         }
 
         [Test]
         [RecordedTest]
+        [Ignore("Cross region restore is not supported for Continuous backup, need further investigation.")]
         public async Task TestCrossRegionRestore()
         {
             _restorableDatabaseAccount = await GetDatabaseAccountForSpecificAPI(AccountType.PitrSql, AzureLocation.WestCentralUS);
@@ -211,7 +215,9 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     {
                                         new CosmosDBSpatialType("Point")
                                     }, null),
-                        }, null)
+                        },
+                        new List<CosmosDBVectorIndex>(),
+                        serializedAdditionalRawData: new Dictionary<string, BinaryData>())
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

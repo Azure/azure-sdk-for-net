@@ -17,9 +17,18 @@ namespace Azure.ResourceManager.AppService.Models
 {
     public partial class SiteCloneability : IUtf8JsonSerializable, IJsonModel<SiteCloneability>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteCloneability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteCloneability>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
         void IJsonModel<SiteCloneability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteCloneability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -27,7 +36,6 @@ namespace Azure.ResourceManager.AppService.Models
                 throw new FormatException($"The model {nameof(SiteCloneability)} does not support writing '{format}' format.");
             }
 
-            writer.WriteStartObject();
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
@@ -39,7 +47,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingFeatures)
                 {
-                    writer.WriteObjectValue<SiteCloneabilityCriterion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +57,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in UnsupportedFeatures)
                 {
-                    writer.WriteObjectValue<SiteCloneabilityCriterion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in BlockingCharacteristics)
                 {
-                    writer.WriteObjectValue<SiteCloneabilityCriterion>(item, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,14 +79,13 @@ namespace Azure.ResourceManager.AppService.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
 #endif
                 }
             }
-            writer.WriteEndObject();
         }
 
         SiteCloneability IJsonModel<SiteCloneability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -95,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         internal static SiteCloneability DeserializeSiteCloneability(JsonElement element, ModelReaderWriterOptions options = null)
         {
-            options ??= new ModelReaderWriterOptions("W");
+            options ??= ModelSerializationExtensions.WireOptions;
 
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -181,31 +188,33 @@ namespace Azure.ResourceManager.AppService.Models
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Result), out propertyOverride);
-            if (Optional.IsDefined(Result) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
                 builder.Append("  result: ");
-                if (hasPropertyOverride)
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Result))
                 {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
+                    builder.Append("  result: ");
                     builder.AppendLine($"'{Result.Value.ToSerialString()}'");
                 }
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingFeatures), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlockingFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlockingFeatures.Any() || hasPropertyOverride)
+                builder.Append("  blockingFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlockingFeatures))
                 {
-                    builder.Append("  blockingFeatures: ");
-                    if (hasPropertyOverride)
+                    if (BlockingFeatures.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blockingFeatures: ");
                         builder.AppendLine("[");
                         foreach (var item in BlockingFeatures)
                         {
@@ -217,17 +226,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnsupportedFeatures), out propertyOverride);
-            if (Optional.IsCollectionDefined(UnsupportedFeatures) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (UnsupportedFeatures.Any() || hasPropertyOverride)
+                builder.Append("  unsupportedFeatures: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(UnsupportedFeatures))
                 {
-                    builder.Append("  unsupportedFeatures: ");
-                    if (hasPropertyOverride)
+                    if (UnsupportedFeatures.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  unsupportedFeatures: ");
                         builder.AppendLine("[");
                         foreach (var item in UnsupportedFeatures)
                         {
@@ -239,17 +249,18 @@ namespace Azure.ResourceManager.AppService.Models
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlockingCharacteristics), out propertyOverride);
-            if (Optional.IsCollectionDefined(BlockingCharacteristics) || hasPropertyOverride)
+            if (hasPropertyOverride)
             {
-                if (BlockingCharacteristics.Any() || hasPropertyOverride)
+                builder.Append("  blockingCharacteristics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(BlockingCharacteristics))
                 {
-                    builder.Append("  blockingCharacteristics: ");
-                    if (hasPropertyOverride)
+                    if (BlockingCharacteristics.Any())
                     {
-                        builder.AppendLine($"{propertyOverride}");
-                    }
-                    else
-                    {
+                        builder.Append("  blockingCharacteristics: ");
                         builder.AppendLine("[");
                         foreach (var item in BlockingCharacteristics)
                         {
@@ -271,7 +282,7 @@ namespace Azure.ResourceManager.AppService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -287,7 +298,7 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSiteCloneability(document.RootElement, options);
                     }
                 default:

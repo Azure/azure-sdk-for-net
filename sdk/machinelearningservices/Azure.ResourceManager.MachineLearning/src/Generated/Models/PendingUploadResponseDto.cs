@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Container level read, write, list SAS. </summary>
+        [WirePath("blobReferenceForConsumption")]
         public BlobReferenceForConsumptionDto BlobReferenceForConsumption { get; }
         /// <summary> ID for this upload request. </summary>
+        [WirePath("pendingUploadId")]
         public string PendingUploadId { get; }
         /// <summary> TemporaryBlobReference is the only supported type. </summary>
+        [WirePath("pendingUploadType")]
         public PendingUploadType? PendingUploadType { get; }
     }
 }

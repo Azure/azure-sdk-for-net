@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Data network name. </summary>
+        [WirePath("dnn")]
         public string Dnn { get; set; }
         /// <summary> IPv4 address. </summary>
+        [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
     }
 }

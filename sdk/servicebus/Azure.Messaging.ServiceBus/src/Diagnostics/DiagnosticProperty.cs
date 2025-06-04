@@ -76,6 +76,16 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         public static string DeferActivityName { get; } = "ServiceBusReceiver.Defer";
 
         /// <summary>
+        ///   The activity name associated with the delete operation.
+        /// </summary>
+        public static string DeleteActivityName { get; } = "ServiceBusReceiver.Delete";
+
+        /// <summary>
+        ///   The activity name associated with the purge operation.
+        /// </summary>
+        public static string PurgeActivityName { get; } = "ServiceBusReceiver.Purge";
+
+        /// <summary>
         ///   The activity name associated with the renew message lock operation.
         /// </summary>
         public static string RenewMessageLockActivityName { get; } = "ServiceBusReceiver.RenewMessageLock";

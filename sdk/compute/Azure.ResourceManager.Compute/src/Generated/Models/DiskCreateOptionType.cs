@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> Specifies how the virtual machine should be created. Possible values are: **Attach.** This value is used when you are using a specialized disk to create the virtual machine. **FromImage.** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you also use the imageReference element described above. If you are using a marketplace image, you also use the plan element previously described. </summary>
+    /// <summary> Specifies how the virtual machine disk should be created. Possible values are **Attach:** This value is used when you are using a specialized disk to create the virtual machine. **FromImage:** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. **Empty:** This value is used when creating an empty data disk. **Copy:** This value is used to create a data disk from a snapshot or another disk. **Restore:** This value is used to create a data disk from a disk restore point. </summary>
     public readonly partial struct DiskCreateOptionType : IEquatable<DiskCreateOptionType>
     {
         private readonly string _value;
@@ -25,6 +25,8 @@ namespace Azure.ResourceManager.Compute.Models
         private const string FromImageValue = "FromImage";
         private const string EmptyValue = "Empty";
         private const string AttachValue = "Attach";
+        private const string CopyValue = "Copy";
+        private const string RestoreValue = "Restore";
 
         /// <summary> FromImage. </summary>
         public static DiskCreateOptionType FromImage { get; } = new DiskCreateOptionType(FromImageValue);
@@ -32,11 +34,15 @@ namespace Azure.ResourceManager.Compute.Models
         public static DiskCreateOptionType Empty { get; } = new DiskCreateOptionType(EmptyValue);
         /// <summary> Attach. </summary>
         public static DiskCreateOptionType Attach { get; } = new DiskCreateOptionType(AttachValue);
+        /// <summary> Copy. </summary>
+        public static DiskCreateOptionType Copy { get; } = new DiskCreateOptionType(CopyValue);
+        /// <summary> Restore. </summary>
+        public static DiskCreateOptionType Restore { get; } = new DiskCreateOptionType(RestoreValue);
         /// <summary> Determines if two <see cref="DiskCreateOptionType"/> values are the same. </summary>
         public static bool operator ==(DiskCreateOptionType left, DiskCreateOptionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DiskCreateOptionType"/> values are not the same. </summary>
         public static bool operator !=(DiskCreateOptionType left, DiskCreateOptionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="DiskCreateOptionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DiskCreateOptionType"/>. </summary>
         public static implicit operator DiskCreateOptionType(string value) => new DiskCreateOptionType(value);
 
         /// <inheritdoc />
@@ -47,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
         /// <inheritdoc />
         public override string ToString() => _value;
     }

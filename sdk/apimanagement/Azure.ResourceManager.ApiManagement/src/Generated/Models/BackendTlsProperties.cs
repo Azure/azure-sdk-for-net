@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Flag indicating whether SSL certificate chain validation should be done when using self-signed certificates for this backend host. </summary>
+        [WirePath("validateCertificateChain")]
         public bool? ShouldValidateCertificateChain { get; set; }
         /// <summary> Flag indicating whether SSL certificate name validation should be done when using self-signed certificates for this backend host. </summary>
+        [WirePath("validateCertificateName")]
         public bool? ShouldValidateCertificateName { get; set; }
     }
 }

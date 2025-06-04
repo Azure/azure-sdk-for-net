@@ -61,16 +61,20 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="displayName"> Display name of the VM. </param>
         /// <param name="vmType"> Virtual machine type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, WorkloadNetworkVmType? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkProvisioningState? provisioningState, string displayName, WorkloadNetworkVmType? vmType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
+            ProvisioningState = provisioningState;
             DisplayName = displayName;
             VmType = vmType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> The provisioning state of the resource. </summary>
+        public WorkloadNetworkProvisioningState? ProvisioningState { get; }
         /// <summary> Display name of the VM. </summary>
         public string DisplayName { get; set; }
         /// <summary> Virtual machine type. </summary>

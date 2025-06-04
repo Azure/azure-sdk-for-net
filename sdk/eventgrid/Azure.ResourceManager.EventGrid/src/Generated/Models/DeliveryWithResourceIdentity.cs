@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <param name="identity"> The identity to use when delivering events. </param>
         /// <param name="destination">
         /// Information about the destination where events have to be delivered for the event subscription.
-        /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
+        /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery.
         /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </param>
@@ -67,13 +67,15 @@ namespace Azure.ResourceManager.EventGrid.Models
         }
 
         /// <summary> The identity to use when delivering events. </summary>
+        [WirePath("identity")]
         public EventSubscriptionIdentity Identity { get; set; }
         /// <summary>
         /// Information about the destination where events have to be delivered for the event subscription.
-        /// Uses Azure Event Grid's identity to acquire the authentication tokens being used during delivery / dead-lettering.
+        /// Uses the managed identity setup on the parent resource (namely, topic or domain) to acquire the authentication tokens being used during delivery.
         /// Please note <see cref="EventSubscriptionDestination"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureFunctionEventSubscriptionDestination"/>, <see cref="EventHubEventSubscriptionDestination"/>, <see cref="HybridConnectionEventSubscriptionDestination"/>, <see cref="MonitorAlertEventSubscriptionDestination"/>, <see cref="NamespaceTopicEventSubscriptionDestination"/>, <see cref="PartnerEventSubscriptionDestination"/>, <see cref="ServiceBusQueueEventSubscriptionDestination"/>, <see cref="ServiceBusTopicEventSubscriptionDestination"/>, <see cref="StorageQueueEventSubscriptionDestination"/> and <see cref="WebHookEventSubscriptionDestination"/>.
         /// </summary>
+        [WirePath("destination")]
         public EventSubscriptionDestination Destination { get; set; }
     }
 }

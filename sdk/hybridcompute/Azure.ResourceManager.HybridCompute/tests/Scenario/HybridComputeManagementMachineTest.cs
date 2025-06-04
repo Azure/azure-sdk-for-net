@@ -50,16 +50,6 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
 
         [TestCase]
         [RecordedTest]
-        public async Task CanUpdateMachine()
-        {
-            HybridComputeMachineData resourceData = await updateMachine();
-
-            Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
-            Assert.AreEqual(machineName, resourceData.Name.ToString());
-        }
-
-        [TestCase]
-        [RecordedTest]
         public async Task CanInstallPatch(){
             MachineInstallPatchesResult resourceData = await installPatch();
 
@@ -72,6 +62,17 @@ namespace Azure.ResourceManager.HybridCompute.Tests.Scenario
             MachineAssessPatchesResult resourceData = await assessPatch();
 
             Assert.AreEqual("Succeeded", resourceData.Status.ToString());
+        }
+
+        // have to have a valid private link scope before running this function
+        [TestCase]
+        [RecordedTest]
+        public async Task CanUpdateMachine()
+        {
+            HybridComputeMachineData resourceData = await updateMachine();
+
+            Debug.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Assert.AreEqual(machineName, resourceData.Name.ToString());
         }
 
         [TestCase]

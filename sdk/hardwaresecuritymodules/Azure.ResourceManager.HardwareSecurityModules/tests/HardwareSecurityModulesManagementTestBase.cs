@@ -45,15 +45,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Tests
             }
             //TODO will initialize resource groups here as well
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync();
-            Location = isDedicatedHsm ? AzureLocation.NorthCentralUS : AzureLocation.EastUS2;
+            Location = isDedicatedHsm ? AzureLocation.NorthCentralUS : AzureLocation.UKWest;
             GenericResourceCollection = Client.GetGenericResources();
-            ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "sdkTestsRg", Location);
+            ResourceGroupResource = await CreateResourceGroup(DefaultSubscription, "chsmSdkTest", Location);
         }
 
         protected async Task<ResourceGroupResource> CreateResourceGroup(SubscriptionResource subscription, string rgNamePrefix, AzureLocation location)
         {
             string rgName = Recording.GenerateAssetName(rgNamePrefix);
-            ResourceGroupData input = new ResourceGroupData(location);
+            ResourceGroupData input = new ResourceGroupData(AzureLocation.EastUS);
             var lro = await subscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;
         }

@@ -91,8 +91,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
-            this(logRecord.Exception != null ? "Exception" : "Message", FormatUtcTimestamp(logRecord.Timestamp))
+        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey) :
+            this(name, FormatUtcTimestamp(logRecord.Timestamp))
         {
             if (logRecord.TraceId != default)
             {
@@ -122,9 +122,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private void SetResourceSdkVersionAndIkey(AzureMonitorResource? resource, string instrumentationKey)
         {
             InstrumentationKey = instrumentationKey;
-            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
-            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance.Truncate(SchemaConstants.Tags_AiCloudRoleInstance_MaxLength);
-            Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion.Truncate(SchemaConstants.Tags_AiApplicationVer_MaxLength);
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = resource?.RoleName_Truncated;
+            Tags[ContextTagKeys.AiCloudRoleInstance.ToString()] = resource?.RoleInstance_Truncated;
+            Tags[ContextTagKeys.AiApplicationVer.ToString()] = resource?.ServiceVersion_Truncated;
             Tags[ContextTagKeys.AiInternalSdkVersion.ToString()] = SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength);
         }
 

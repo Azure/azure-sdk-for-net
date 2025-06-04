@@ -19,9 +19,9 @@ namespace Azure.Maps.Routing.Models
 
         /// <summary> Length In Meters property. </summary>
         public int? LengthInMeters { get; }
-        /// <summary> The estimated departure time for the route or leg. </summary>
+        /// <summary> The estimated departure time for the route or leg. Time is in UTC. </summary>
         public DateTimeOffset? DepartureTime { get; }
-        /// <summary> The estimated arrival time for the route or leg. </summary>
+        /// <summary> The estimated arrival time for the route or leg. Time is in UTC. </summary>
         public DateTimeOffset? ArrivalTime { get; }
     }
 }

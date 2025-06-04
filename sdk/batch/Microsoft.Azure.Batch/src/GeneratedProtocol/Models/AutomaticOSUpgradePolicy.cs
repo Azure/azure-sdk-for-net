@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// a rolling fashion when a newer version of the OS image becomes
         /// available. &lt;br /&gt;&lt;br /&gt; If this is set to true for
         /// Windows based pools,
-        /// [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/en-us/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration)
+        /// [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration)
         /// cannot be set to true.</param>
         /// <param name="useRollingUpgradePolicy">Indicates whether rolling
         /// upgrade policy should be used during Auto OS Upgrade. Auto OS
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// version of the OS image becomes available. &amp;lt;br
         /// /&amp;gt;&amp;lt;br /&amp;gt; If this is set to true for Windows
         /// based pools,
-        /// [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/en-us/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration)
+        /// [WindowsConfiguration.enableAutomaticUpdates](https://learn.microsoft.com/rest/api/batchservice/pool/add?tabs=HTTP#windowsconfiguration)
         /// cannot be set to true.
         /// </summary>
         [JsonProperty(PropertyName = "enableAutomaticOSUpgrade")]

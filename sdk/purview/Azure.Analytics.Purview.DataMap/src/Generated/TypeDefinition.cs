@@ -1777,48 +1777,38 @@ namespace Azure.Analytics.Purview.DataMap
             }
         }
 
-        /// <summary>
-        /// Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
-        /// </summary>
-        /// <param name="atlasTypesDef"> The definitions of types. </param>
+        /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreateAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasTypesDef>> BatchCreateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = await BatchCreateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
-        /// <summary>
-        /// Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
-        /// </summary>
-        /// <param name="atlasTypesDef"> The definitions of types. </param>
+        /// <summary> Create all atlas type definitions in bulk. Please avoid recreating existing types. </summary>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchCreate(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasTypesDef> BatchCreate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = BatchCreate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
 
         /// <summary>
-        /// [Protocol Method] Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
+        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1857,9 +1847,7 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary>
-        /// [Protocol Method] Create all atlas type definitions in bulk, only new definitions will be
-        /// created.
-        /// Any changes to the existing definitions will be discarded.
+        /// [Protocol Method] Create all atlas type definitions in bulk. Please avoid recreating existing types.
         /// <list type="bullet">
         /// <item>
         /// <description>
@@ -1901,16 +1889,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
         /// </summary>
-        /// <param name="atlasTypesDef"> The definitions of types. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdateAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AtlasTypesDef>> BatchUpdateAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = await BatchUpdateAsync(content, context).ConfigureAwait(false);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -1919,16 +1907,16 @@ namespace Azure.Analytics.Purview.DataMap
         /// Update all types in bulk, changes detected in the type definitions would be
         /// persisted.
         /// </summary>
-        /// <param name="atlasTypesDef"> The definitions of types. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchUpdate(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
+        public virtual Response<AtlasTypesDef> BatchUpdate(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = BatchUpdate(content, context);
             return Response.FromValue(AtlasTypesDef.FromResponse(response), response);
         }
@@ -2014,31 +2002,31 @@ namespace Azure.Analytics.Purview.DataMap
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="atlasTypesDef"> The definitions of types. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDeleteAsync(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> BatchDeleteAsync(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = await BatchDeleteAsync(content, context).ConfigureAwait(false);
             return response;
         }
 
         /// <summary> Delete API for all types in bulk. </summary>
-        /// <param name="atlasTypesDef"> The definitions of types. </param>
+        /// <param name="body"> Body parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="atlasTypesDef"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
         /// <include file="Docs/TypeDefinition.xml" path="doc/members/member[@name='BatchDelete(AtlasTypesDef,CancellationToken)']/*" />
-        public virtual Response BatchDelete(AtlasTypesDef atlasTypesDef, CancellationToken cancellationToken = default)
+        public virtual Response BatchDelete(AtlasTypesDef body, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(atlasTypesDef, nameof(atlasTypesDef));
+            Argument.AssertNotNull(body, nameof(body));
 
+            using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = atlasTypesDef.ToRequestContent();
             Response response = BatchDelete(content, context);
             return response;
         }
@@ -2135,7 +2123,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetHeadersAsync(includeTermTemplate, type?.ToString(), context).ConfigureAwait(false);
             IReadOnlyList<AtlasTypeDefHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -2159,7 +2147,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetHeaders(includeTermTemplate, type?.ToString(), context);
             IReadOnlyList<AtlasTypeDefHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

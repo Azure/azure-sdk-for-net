@@ -71,16 +71,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Virtual Machine size. </summary>
+        [WirePath("virtualMachineSize")]
         public string VirtualMachineSize { get; set; }
         /// <summary> Port open for ssh connections. </summary>
+        [WirePath("sshPort")]
         public int? SshPort { get; set; }
         /// <summary> Notebook server port open for ssh connections. </summary>
+        [WirePath("notebookServerPort")]
         public int? NotebookServerPort { get; set; }
         /// <summary> Public IP address of the virtual machine. </summary>
+        [WirePath("address")]
         public IPAddress Address { get; set; }
         /// <summary> Admin credentials for virtual machine. </summary>
+        [WirePath("administratorAccount")]
         public MachineLearningVmSshCredentials AdministratorAccount { get; set; }
         /// <summary> Indicates whether this compute will be used for running notebooks. </summary>
+        [WirePath("isNotebookInstanceCompute")]
         public bool? IsNotebookInstanceCompute { get; set; }
     }
 }

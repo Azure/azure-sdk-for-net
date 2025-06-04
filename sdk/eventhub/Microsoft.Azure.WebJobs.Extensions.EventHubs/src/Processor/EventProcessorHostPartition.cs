@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
         public async Task CheckpointAsync(EventData checkpointEvent)
         {
             await ProcessorHost.CheckpointAsync(PartitionId, checkpointEvent).ConfigureAwait(false);
-            Checkpoint = new CheckpointInfo(checkpointEvent.Offset, checkpointEvent.SequenceNumber, DateTimeOffset.UtcNow);
+            Checkpoint = new CheckpointInfo(checkpointEvent.OffsetString, checkpointEvent.SequenceNumber, DateTimeOffset.UtcNow);
         }
 
         private class EventProcessorHostPartitionContext : TriggerPartitionContext

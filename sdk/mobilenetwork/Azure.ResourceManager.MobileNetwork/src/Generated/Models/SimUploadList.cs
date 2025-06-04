@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> A list of SIMs to upload. </summary>
+        [WirePath("sims")]
         public IList<SimNameAndProperties> Sims { get; }
     }
 }
