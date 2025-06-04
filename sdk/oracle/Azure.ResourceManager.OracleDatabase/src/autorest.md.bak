@@ -1,3 +1,5 @@
+# This file has been deprecated as SDK generation has transitioned to MPG, which now generates SDKs directly from TypeSpec.
+
 # Generated code configuration
 
 Run `dotnet build /t:GenerateCode` to generate code.
