@@ -13,23 +13,35 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class ConfigurationClientGetLabelsCollectionResult : Pageable<BinaryData>
+    internal partial class ConfigurationClientGetConfigurationSettingsCollectionResult : Pageable<BinaryData>
     {
         private readonly ConfigurationClient _client;
         private readonly Uri _nextPage;
         private readonly string _accept;
-        private readonly string _name;
+        private readonly string _key;
+        private readonly string _label;
         private readonly string _syncToken;
         private readonly string _after;
         private readonly string _acceptDatetime;
-        private readonly IEnumerable<LabelFields> _select;
+        private readonly IEnumerable<KeyValueFields> _select;
+        private readonly string _snapshot;
+        private readonly string _ifMatch;
+        private readonly string _ifNoneMatch;
+        private readonly IEnumerable<string> _tags;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ConfigurationClientGetLabelsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ConfigurationClientGetConfigurationSettingsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="accept"></param>
-        /// <param name="name"> A filter for the name of the returned labels. </param>
+        /// <param name="key">
+        /// A filter used to match keys. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
+        /// <param name="label">
+        /// A filter used to match labels. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="after">
         /// Instructs the server to return elements that appear after the element referred
@@ -40,27 +52,48 @@ namespace Azure.Data.AppConfiguration
         /// time.
         /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot">
+        /// A filter used get key-values for a snapshot. The value should be the name of
+        /// the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="ifNoneMatch">
+        /// Used to perform an operation only if the targeted resource's etag does not
+        /// match the value provided.
+        /// </param>
+        /// <param name="tags">
+        /// A filter used to query by tags. Syntax reference:
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
+        /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetLabelsCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> @select, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetConfigurationSettingsCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
             _client = client;
             _nextPage = nextPage;
             _accept = accept;
-            _name = name;
+            _key = key;
+            _label = label;
             _syncToken = syncToken;
             _after = after;
             _acceptDatetime = acceptDatetime;
             _select = @select;
+            _snapshot = snapshot;
+            _ifMatch = ifMatch;
+            _ifNoneMatch = ifNoneMatch;
+            _tags = tags;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ConfigurationClientGetLabelsCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConfigurationClientGetConfigurationSettingsCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationClientGetLabelsCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of ConfigurationClientGetConfigurationSettingsCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
@@ -71,7 +104,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     yield break;
                 }
-                LabelListResult responseWithType = (LabelListResult)response;
+                KeyValueListResult responseWithType = (KeyValueListResult)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Items)
                 {
@@ -88,8 +121,8 @@ namespace Azure.Data.AppConfiguration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetLabelsRequest(nextLink, _accept, _name, _syncToken, _after, _acceptDatetime, _select, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetLabels");
+            HttpMessage message = _client.CreateGetConfigurationSettingsRequest(nextLink, _accept, _key, _label, _syncToken, _after, _acceptDatetime, _select, _snapshot, _ifMatch, _ifNoneMatch, _tags, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettings");
             scope.Start();
             try
             {

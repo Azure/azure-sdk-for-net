@@ -11,7 +11,7 @@ namespace Azure.Data.AppConfiguration
     /// <summary>
     /// Options that allow users to configure the requests sent to the App Configuration service.
     /// </summary>
-    [CodeGenType("ConfigurationClientOptions")]
+    [CodeGenSuppress("ConfigurationClientOptions", typeof(ServiceVersion))]
     public partial class ConfigurationClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_11_01;
@@ -39,7 +39,7 @@ namespace Azure.Data.AppConfiguration
             /// <summary>
             /// Version 2023-11-01.
             /// </summary>
-            V2023_11_01 = 2
+            V2023_11_01 = 2,
         }
 
         /// <summary>
