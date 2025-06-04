@@ -16,7 +16,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
     {
         /// <param name="enumerable"></param>
         public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable)
-            where T : notnull 
+            where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="span"></param>
         public static RequestContent FromEnumerable<T>(ReadOnlySpan<T> span)
-            where T : notnull 
+            where T : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="dictionary"></param>
         public static RequestContent FromDictionary<TValue>(IDictionary<string, TValue> dictionary)
-            where TValue : notnull 
+            where TValue : notnull
         {
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteStartObject();

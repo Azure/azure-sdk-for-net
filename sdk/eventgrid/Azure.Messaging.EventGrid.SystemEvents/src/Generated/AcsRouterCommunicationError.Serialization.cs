@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsRouterCommunicationError : IUtf8JsonSerializable, IJsonModel<AcsRouterCommunicationError>
+    internal partial class AcsRouterCommunicationError : IUtf8JsonSerializable, IJsonModel<AcsRouterCommunicationError>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterCommunicationError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 

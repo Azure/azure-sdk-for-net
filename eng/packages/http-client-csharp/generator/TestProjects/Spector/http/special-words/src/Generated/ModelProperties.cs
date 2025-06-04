@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using SpecialWords._ModelProperties;
 
-namespace SpecialWords
+namespace SpecialWords._ModelProperties
 {
     public partial class ModelProperties
     {

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiManagementGatewayTokenNearExpiryEventDataConverter))]
     public partial class ApiManagementGatewayTokenNearExpiryEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementGatewayTokenNearExpiryEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,9 +37,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("gatewayInfo"u8);
-            writer.WriteObjectValue(GatewayInfo, options);
+            writer.WriteObjectValue(Gateway, options);
             writer.WritePropertyName("tokenInfo"u8);
-            writer.WriteObjectValue(TokenInfo, options);
+            writer.WriteObjectValue(Token, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,7 +78,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             ApiManagementGatewayProperties gatewayInfo = default;
-            ApiManagementNearExpiryGatewayTokenProperties tokenInfo = default;
+            ApiManagementGatewayTokenNearExpiryProperties tokenInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +90,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("tokenInfo"u8))
                 {
-                    tokenInfo = ApiManagementNearExpiryGatewayTokenProperties.DeserializeApiManagementNearExpiryGatewayTokenProperties(property.Value, options);
+                    tokenInfo = ApiManagementGatewayTokenNearExpiryProperties.DeserializeApiManagementGatewayTokenNearExpiryProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,6 +147,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiManagementGatewayTokenNearExpiryEventDataConverter : JsonConverter<ApiManagementGatewayTokenNearExpiryEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiManagementGatewayTokenNearExpiryEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiManagementGatewayTokenNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementGatewayTokenNearExpiryEventData(document.RootElement);
+            }
         }
     }
 }
