@@ -298,22 +298,15 @@ namespace Azure.AI.Language.Text
         /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
         /// <param name="displayName"> Name for the task. </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
-        /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)']/*" />
-        public virtual async Task<Operation> AnalyzeTextSubmitOperationAsync(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)']/*" />
+        public virtual async Task<Operation> AnalyzeTextSubmitOperationAsync(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest = new AnalyzeTextSubmitJobRequest(
-                displayName,
-                textInput,
-                actions.ToList(),
-                defaultLanguage,
-                cancelAfter,
-                null);
+            AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             return await AnalyzeTextSubmitOperationAsync(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context).ConfigureAwait(false);
         }
@@ -324,22 +317,15 @@ namespace Azure.AI.Language.Text
         /// <param name="actions"> List of tasks to be performed as part of the LRO. </param>
         /// <param name="displayName"> Name for the task. </param>
         /// <param name="defaultLanguage"> Default language to use for records requesting automatic language detection. </param>
-        /// <param name="cancelAfter"> Optional duration in seconds after which the job will be canceled if not completed. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="textInput"/> or <paramref name="actions"/> is null. </exception>
-        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)']/*" />
-        public virtual Operation AnalyzeTextSubmitOperation(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, float? cancelAfter = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/TextAnalysisClient.xml" path="doc/members/member[@name='AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)']/*" />
+        public virtual Operation AnalyzeTextSubmitOperation(WaitUntil waitUntil, MultiLanguageTextInput textInput, IEnumerable<AnalyzeTextOperationAction> actions, string displayName = null, string defaultLanguage = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(textInput, nameof(textInput));
             Argument.AssertNotNull(actions, nameof(actions));
 
-            AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest = new AnalyzeTextSubmitJobRequest(
-                displayName,
-                textInput,
-                actions.ToList(),
-                defaultLanguage,
-                cancelAfter,
-                null);
+            AnalyzeTextSubmitJobRequest analyzeTextSubmitJobRequest = new AnalyzeTextSubmitJobRequest(displayName, textInput, actions.ToList(), defaultLanguage, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             return AnalyzeTextSubmitOperation(waitUntil, analyzeTextSubmitJobRequest.ToRequestContent(), context);
         }
@@ -354,7 +340,7 @@ namespace Azure.AI.Language.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeTextSubmitOperationAsync(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -394,7 +380,7 @@ namespace Azure.AI.Language.Text
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,float?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AnalyzeTextSubmitOperation(WaitUntil,MultiLanguageTextInput,IEnumerable{AnalyzeTextOperationAction},string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
