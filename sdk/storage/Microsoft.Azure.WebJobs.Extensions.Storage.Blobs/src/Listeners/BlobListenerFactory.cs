@@ -107,7 +107,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                     new SharedBlobListenerFactory(hostId, _hostBlobServiceClient, _exceptionHandler, _blobWrittenWatcherSetter, _loggerFactory.CreateLogger<BlobListener>()));
 
                 // Register the blob container we wish to monitor with the shared blob listener.
-                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, primaryBlobClient,
+                await RegisterWithSharedBlobListenerAsync(hostId, sharedBlobListener, targetBlobClient,
                     blobTriggerQueueWriter, cancellationToken).ConfigureAwait(false);
             }
 
