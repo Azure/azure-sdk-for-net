@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Key-value fields. </summary>
-    public readonly partial struct KeyValueFields : IEquatable<KeyValueFields>
+    internal readonly partial struct KeyValueFields : IEquatable<KeyValueFields>
     {
         private readonly string _value;
         /// <summary> Key field. </summary>

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
@@ -13,25 +12,5 @@ namespace Azure.Data.AppConfiguration
     /// <summary> Client options for <see cref="ConfigurationClient"/>. </summary>
     public partial class ConfigurationClientOptions : ClientOptions
     {
-        /// <summary> Initializes a new instance of ConfigurationClientOptions. </summary>
-        /// <param name="version"> The service version. </param>
-        public ConfigurationClientOptions(ConfigurationClientOptions.ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ConfigurationClientOptions.ServiceVersion.V2023_11_01 => "2023-11-01",
-                ConfigurationClientOptions.ServiceVersion.V2024_09_01 => "2024-09-01",
-                _ => throw new NotSupportedException()
-            };
-        }
-
-        /// <summary> The version of the service to use. </summary>
-        internal enum ServiceVersion
-        {
-            /// <summary> The 2023-11-01 API version. </summary>
-            V2023_11_01 = 1,
-            /// <summary> The 2024-09-01 API version. </summary>
-            V2024_09_01 = 2
-        }
     }
 }

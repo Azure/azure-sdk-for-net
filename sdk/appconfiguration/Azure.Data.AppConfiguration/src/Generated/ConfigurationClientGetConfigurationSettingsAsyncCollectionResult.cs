@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class ConfigurationClientGetKeyValuesCollectionResult : Pageable<BinaryData>
+    internal partial class ConfigurationClientGetConfigurationSettingsAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly ConfigurationClient _client;
         private readonly Uri _nextPage;
@@ -30,7 +31,7 @@ namespace Azure.Data.AppConfiguration
         private readonly IEnumerable<string> _tags;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ConfigurationClientGetKeyValuesCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ConfigurationClientGetConfigurationSettingsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="accept"></param>
@@ -70,7 +71,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetKeyValuesCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetConfigurationSettingsAsyncCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
@@ -90,16 +91,16 @@ namespace Azure.Data.AppConfiguration
             _context = context;
         }
 
-        /// <summary> Gets the pages of ConfigurationClientGetKeyValuesCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConfigurationClientGetConfigurationSettingsAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationClientGetKeyValuesCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ConfigurationClientGetConfigurationSettingsAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
             do
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
@@ -119,14 +120,14 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetKeyValuesRequest(nextLink, _accept, _key, _label, _syncToken, _after, _acceptDatetime, _select, _snapshot, _ifMatch, _ifNoneMatch, _tags, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetKeyValues");
+            HttpMessage message = _client.CreateGetConfigurationSettingsRequest(nextLink, _accept, _key, _label, _syncToken, _after, _acceptDatetime, _select, _snapshot, _ifMatch, _ifNoneMatch, _tags, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettings");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

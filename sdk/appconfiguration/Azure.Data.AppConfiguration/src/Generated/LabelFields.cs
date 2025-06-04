@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> Label fields. </summary>
-    public readonly partial struct LabelFields : IEquatable<LabelFields>
+    internal readonly partial struct LabelFields : IEquatable<LabelFields>
     {
         private readonly string _value;
         /// <summary> Name field. </summary>
