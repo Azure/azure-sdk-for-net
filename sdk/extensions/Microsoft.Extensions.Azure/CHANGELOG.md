@@ -4,6 +4,16 @@
 
 ### Features Added
 
+- Added support for [federated managed identity](https://learn.microsoft.com/entra/workload-id/workload-identity-federation-config-app-trust-managed-identity?tabs=microsoft-entra-admin-center#azureidentity) support in the client factory by specifying configuration item `credential` as "managedidentityasfederatedidentity" and providing the following named configuration items:
+
+  - `tenantId` : The tenant where the target resource was created
+  - `clientId` : The client identifier for the application, which must be granted access on the target resource
+  - `managedIdentityClientId` : The managed identity which you configured as a Federated Identity Credential (FIC)
+  - `federatedAudience`: One of the following token audiences, specific to the cloud that you're running in:
+    - `api://AzureADTokenExchange` for Entra ID Global cloud
+    - `api://AzureADTokenExchangeUSGov` for Entra ID US Government
+    - `api://AzureADTokenExchangeChina` for Entra ID China operated by 21Vianet
+
 ### Breaking Changes
 
 ### Bugs Fixed

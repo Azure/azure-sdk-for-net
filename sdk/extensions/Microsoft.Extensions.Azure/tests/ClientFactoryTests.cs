@@ -692,6 +692,94 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CreatesManagedFederatedIdentityCredential_WithAllRequiredOptions()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("federatedAudience", "api://AzureADTokenExchange")
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+            // Validate via reflection that the fields are set as expected
+            var mic = typeof(Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)
+                .GetField("_managedIdentityCredential", BindingFlags.NonPublic | BindingFlags.Instance)
+                .GetValue(mfCredential);
+            Assert.IsInstanceOf<ManagedIdentityCredential>(mic);
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredential_ThrowsWhenMissingOptions()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId")
+                // missing managedIdentityClientId and federatedAudience
+            );
+
+            Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
+        }
+
+        [Test]
+        public void CreatesManagedFederatedIdentityCredential_ThrowsWhenAnyOptionMissing()
+        {
+            // Try all combinations of missing required fields
+            var requiredKeys = new[] { "tenantId", "clientId", "managedIdentityClientId", "federatedAudience" };
+            foreach (var missingKey in requiredKeys)
+            {
+                var items = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity")
+                };
+                foreach (var key in requiredKeys)
+                {
+                    if (key != missingKey)
+                    {
+                        items.Add(new KeyValuePair<string, string>(key, "value"));
+                    }
+                }
+                IConfiguration configuration = GetConfiguration(items.ToArray());
+                Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration), $"Should throw when missing {missingKey}");
+            }
+        }
+
+        [Test]
+        [TestCase("*")]
+        [TestCase("tenantId1;tenantId2;tenantId3")]
+        [TestCase("tenantId1;tenantId2;;tenantId3")]
+        [TestCase("tenantId1;tenantId2; ;tenantId3")]
+        [TestCase("tenantId1; tenantId2; tenantId3")]
+        public void CreatesManagedFederatedIdentityCredential_AdditionalTenants(string additionalTenants)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("credential", "managedidentityasfederatedidentity"),
+                new KeyValuePair<string, string>("tenantId", "TestTenantId"),
+                new KeyValuePair<string, string>("clientId", "TestClientId"),
+                new KeyValuePair<string, string>("managedIdentityClientId", "TestManagedIdentityClientId"),
+                new KeyValuePair<string, string>("federatedAudience", "api://AzureADTokenExchange"),
+                new KeyValuePair<string, string>("additionallyAllowedTenants", additionalTenants)
+            );
+
+            var credential = ClientFactory.CreateCredential(configuration);
+
+            Assert.IsInstanceOf<Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential>(credential);
+            var mfCredential = (Microsoft.Extensions.Azure.Internal.ManagedFederatedIdentityCredential)credential;
+
+            var expectedTenants = additionalTenants.Split(';')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .ToList();
+
+            Assert.AreEqual(expectedTenants, mfCredential.AdditionallyAllowedTenants);
+        }
+
+        [Test]
         public void IgnoresConstructorWhenCredentialsNull()
         {
             IConfiguration configuration = GetConfiguration(new KeyValuePair<string, string>("uri", "http://localhost"));
