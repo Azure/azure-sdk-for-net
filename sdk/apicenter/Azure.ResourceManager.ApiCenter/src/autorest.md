@@ -23,29 +23,38 @@ use-model-reader-writer: true
 #  show-serialized-names: true
 
 rename-mapping:
-  Api: ApiEntity
-  ApiProperties: ApiEntityProperties
-  ApiDefinition: ApiDefinitionEntity
-  ApiDefinitionProperties: ApiDefinitionEntityProperties
-  ApiVersion: ApiVersionEntity
-  ApiVersionProperties: ApiVersionEntityProperties
-  Contact: ApiContact
-  Deployment: ApiDeploymentEntity
-  DeploymentProperties: ApiDeploymentEntityProperties
-  Environment: EnvironmentEntity
-  EnvironmentProperties: EnvironmentEntityProperties
-  License: ApiLicense
-  MetadataSchema: MetadataSchemaEntity
-  MetadataSchemaProperties: MetadataSchemaEntityProperties
-  Onboarding: EnvironmentOnboarding
-  Service: ServiceEntity
-  ServiceProperties: ServiceEntityProperties
-  Workspace: WorkspaceEntity
-  WorkspaceProperties: WorkspaceEntityProperties
-  ApiDefinitionPropertiesSpecification: ApiSpecification
+  Contact: ApiContactInformation
+  License: ApiLicenseInformation
+  Onboarding: EnvironmentOnboardingInformation
+  ApiDefinitionPropertiesSpecification: ApiSpecificationDetails
+  ExternalDocumentation: ApiExternalDocumentation
+  LifecycleStage: ApiLifecycleStage
+  DeploymentProperties.environmentId: -|arm-id
+  DeploymentProperties.definitionId: -|arm-id
 
 prepend-rp-prefix:
   - ProvisioningState
+  - Service
+  - ServiceProperties
+  - Workspace
+  - WorkspaceProperties
+  - Environment
+  - EnvironmentProperties
+  - EnvironmentKind
+  - EnvironmentServer
+  - Deployment
+  - DeploymentProperties
+  - DeploymentServer
+  - DeploymentState
+  - Api
+  - ApiProperties
+  - ApiDefinition
+  - ApiDefinitionProperties
+  - ApiVersion
+  - ApiVersionProperties
+  - MetadataSchema
+  - MetadataSchemaProperties
+  - MetadataAssignment
 
 format-by-name-rules:
   'tenantId': 'uuid'

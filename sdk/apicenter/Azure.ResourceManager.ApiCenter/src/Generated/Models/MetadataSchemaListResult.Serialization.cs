@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            IReadOnlyList<MetadataSchemaEntityData> value = default;
+            IReadOnlyList<ApiCenterMetadataSchemaData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<MetadataSchemaEntityData> array = new List<MetadataSchemaEntityData>();
+                    List<ApiCenterMetadataSchemaData> array = new List<ApiCenterMetadataSchemaData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetadataSchemaEntityData.DeserializeMetadataSchemaEntityData(item, options));
+                        array.Add(ApiCenterMetadataSchemaData.DeserializeApiCenterMetadataSchemaData(item, options));
                     }
                     value = array;
                     continue;

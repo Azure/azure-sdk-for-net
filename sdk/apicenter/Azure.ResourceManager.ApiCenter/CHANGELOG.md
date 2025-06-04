@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2024-04-09)
+## 1.0.0 (2025-06-06)
 
 This release is the first stable release of the Azure API Center library.
 

@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiDeploymentEntityData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiCenterDeploymentData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -227,13 +227,13 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 case 200:
                     {
-                        ApiDeploymentEntityData value = default;
+                        ApiCenterDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApiDeploymentEntityData.DeserializeApiDeploymentEntityData(document.RootElement);
+                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiDeploymentEntityData)null, message.Response);
+                    return Response.FromValue((ApiCenterDeploymentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiDeploymentEntityData> Get(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
+        public Response<ApiCenterDeploymentData> Get(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -264,19 +264,19 @@ namespace Azure.ResourceManager.ApiCenter
             {
                 case 200:
                     {
-                        ApiDeploymentEntityData value = default;
+                        ApiCenterDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApiDeploymentEntityData.DeserializeApiDeploymentEntityData(document.RootElement);
+                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ApiDeploymentEntityData)null, message.Response);
+                    return Response.FromValue((ApiCenterDeploymentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiDeploymentEntityData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ApiCenter
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiDeploymentEntityData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/>, <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApiDeploymentEntityData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiDeploymentEntityData data, CancellationToken cancellationToken = default)
+        public async Task<Response<ApiCenterDeploymentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -354,9 +354,9 @@ namespace Azure.ResourceManager.ApiCenter
                 case 200:
                 case 201:
                     {
-                        ApiDeploymentEntityData value = default;
+                        ApiCenterDeploymentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApiDeploymentEntityData.DeserializeApiDeploymentEntityData(document.RootElement);
+                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ApiCenter
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/>, <paramref name="deploymentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="serviceName"/>, <paramref name="workspaceName"/>, <paramref name="apiName"/> or <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApiDeploymentEntityData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiDeploymentEntityData data, CancellationToken cancellationToken = default)
+        public Response<ApiCenterDeploymentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string serviceName, string workspaceName, string apiName, string deploymentName, ApiCenterDeploymentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -392,9 +392,9 @@ namespace Azure.ResourceManager.ApiCenter
                 case 200:
                 case 201:
                     {
-                        ApiDeploymentEntityData value = default;
+                        ApiCenterDeploymentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApiDeploymentEntityData.DeserializeApiDeploymentEntityData(document.RootElement);
+                        value = ApiCenterDeploymentData.DeserializeApiCenterDeploymentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="MetadataSchemaListResult"/>. </summary>
         /// <param name="value"> The MetadataSchema items on this page. </param>
-        internal MetadataSchemaListResult(IEnumerable<MetadataSchemaEntityData> value)
+        internal MetadataSchemaListResult(IEnumerable<ApiCenterMetadataSchemaData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="value"> The MetadataSchema items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MetadataSchemaListResult(IReadOnlyList<MetadataSchemaEntityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MetadataSchemaListResult(IReadOnlyList<ApiCenterMetadataSchemaData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The MetadataSchema items on this page. </summary>
-        public IReadOnlyList<MetadataSchemaEntityData> Value { get; }
+        public IReadOnlyList<ApiCenterMetadataSchemaData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

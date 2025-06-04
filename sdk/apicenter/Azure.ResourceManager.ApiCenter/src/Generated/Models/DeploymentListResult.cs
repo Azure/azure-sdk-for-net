@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
 
         /// <summary> Initializes a new instance of <see cref="DeploymentListResult"/>. </summary>
         /// <param name="value"> The Deployment items on this page. </param>
-        internal DeploymentListResult(IEnumerable<ApiDeploymentEntityData> value)
+        internal DeploymentListResult(IEnumerable<ApiCenterDeploymentData> value)
         {
             Value = value.ToList();
         }
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <param name="value"> The Deployment items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentListResult(IReadOnlyList<ApiDeploymentEntityData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentListResult(IReadOnlyList<ApiCenterDeploymentData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <summary> The Deployment items on this page. </summary>
-        public IReadOnlyList<ApiDeploymentEntityData> Value { get; }
+        public IReadOnlyList<ApiCenterDeploymentData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

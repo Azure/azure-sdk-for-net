@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.ApiCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetServiceEntities_ServicesListBySubscription()
+        public async Task GetApiCenterServices_ServicesListBySubscription()
         {
             // Generated from example definition: specification/apicenter/resource-manager/Microsoft.ApiCenter/stable/2024-03-01/examples/Services_ListBySubscription.json
             // this example is just showing the usage of "Services_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.ApiCenter.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ServiceEntityResource item in subscriptionResource.GetServiceEntitiesAsync())
+            await foreach (ApiCenterServiceResource item in subscriptionResource.GetApiCenterServicesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ServiceEntityData resourceData = item.Data;
+                ApiCenterServiceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

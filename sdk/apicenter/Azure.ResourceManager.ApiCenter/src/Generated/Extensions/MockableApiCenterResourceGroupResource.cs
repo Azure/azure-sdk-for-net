@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ServiceEntityResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of ServiceEntityResources and their operations over a ServiceEntityResource. </returns>
-        public virtual ServiceEntityCollection GetServiceEntities()
+        /// <summary> Gets a collection of ApiCenterServiceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
+        public virtual ApiCenterServiceCollection GetApiCenterServices()
         {
-            return GetCachedClient(client => new ServiceEntityCollection(client, Id));
+            return GetCachedClient(client => new ApiCenterServiceCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ServiceEntityResource>> GetServiceEntityAsync(string serviceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(string serviceName, CancellationToken cancellationToken = default)
         {
-            return await GetServiceEntities().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetApiCenterServices().GetAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ServiceEntityResource> GetServiceEntity(string serviceName, CancellationToken cancellationToken = default)
+        public virtual Response<ApiCenterServiceResource> GetApiCenterService(string serviceName, CancellationToken cancellationToken = default)
         {
-            return GetServiceEntities().Get(serviceName, cancellationToken);
+            return GetApiCenterServices().Get(serviceName, cancellationToken);
         }
     }
 }

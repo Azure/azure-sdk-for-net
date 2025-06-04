@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableApiCenterSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _serviceEntityServicesClientDiagnostics;
-        private ServicesRestOperations _serviceEntityServicesRestClient;
+        private ClientDiagnostics _apiCenterServiceServicesClientDiagnostics;
+        private ServicesRestOperations _apiCenterServiceServicesRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableApiCenterSubscriptionResource"/> class for mocking. </summary>
         protected MockableApiCenterSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         {
         }
 
-        private ClientDiagnostics ServiceEntityServicesClientDiagnostics => _serviceEntityServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ServiceEntityResource.ResourceType.Namespace, Diagnostics);
-        private ServicesRestOperations ServiceEntityServicesRestClient => _serviceEntityServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ServiceEntityResource.ResourceType));
+        private ClientDiagnostics ApiCenterServiceServicesClientDiagnostics => _apiCenterServiceServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiCenter", ApiCenterServiceResource.ResourceType.Namespace, Diagnostics);
+        private ServicesRestOperations ApiCenterServiceServicesRestClient => _apiCenterServiceServicesRestClient ??= new ServicesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ApiCenterServiceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ServiceEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ServiceEntityResource> GetServiceEntitiesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEntityServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceEntityServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ServiceEntityResource(Client, ServiceEntityData.DeserializeServiceEntityData(e)), ServiceEntityServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetServiceEntities", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.ApiCenter.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ServiceEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ServiceEntityResource> GetServiceEntities(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ApiCenterServiceResource> GetApiCenterServices(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceEntityServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceEntityServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ServiceEntityResource(Client, ServiceEntityData.DeserializeServiceEntityData(e)), ServiceEntityServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetServiceEntities", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ApiCenterServiceServicesRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApiCenterServiceResource(Client, ApiCenterServiceData.DeserializeApiCenterServiceData(e)), ApiCenterServiceServicesClientDiagnostics, Pipeline, "MockableApiCenterSubscriptionResource.GetApiCenterServices", "value", "nextLink", cancellationToken);
         }
     }
 }

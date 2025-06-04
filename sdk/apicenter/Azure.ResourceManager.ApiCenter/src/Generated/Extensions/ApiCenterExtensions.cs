@@ -33,172 +33,172 @@ namespace Azure.ResourceManager.ApiCenter
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ServiceEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ServiceEntityResource.CreateResourceIdentifier" /> to create a <see cref="ServiceEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterServiceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterServiceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterServiceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetServiceEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterServiceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ServiceEntityResource"/> object. </returns>
-        public static ServiceEntityResource GetServiceEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterServiceResource"/> object. </returns>
+        public static ApiCenterServiceResource GetApiCenterServiceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetServiceEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterServiceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MetadataSchemaEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MetadataSchemaEntityResource.CreateResourceIdentifier" /> to create a <see cref="MetadataSchemaEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterMetadataSchemaResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterMetadataSchemaResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterMetadataSchemaResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetMetadataSchemaEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterMetadataSchemaResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="MetadataSchemaEntityResource"/> object. </returns>
-        public static MetadataSchemaEntityResource GetMetadataSchemaEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterMetadataSchemaResource"/> object. </returns>
+        public static ApiCenterMetadataSchemaResource GetApiCenterMetadataSchemaResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetMetadataSchemaEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterMetadataSchemaResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="WorkspaceEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkspaceEntityResource.CreateResourceIdentifier" /> to create a <see cref="WorkspaceEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterWorkspaceResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetWorkspaceEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="WorkspaceEntityResource"/> object. </returns>
-        public static WorkspaceEntityResource GetWorkspaceEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterWorkspaceResource"/> object. </returns>
+        public static ApiCenterWorkspaceResource GetApiCenterWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetWorkspaceEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterWorkspaceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiEntityResource.CreateResourceIdentifier" /> to create an <see cref="ApiEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterApiResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterApiResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterApiResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiEntityResource"/> object. </returns>
-        public static ApiEntityResource GetApiEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterApiResource"/> object. </returns>
+        public static ApiCenterApiResource GetApiCenterApiResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetApiEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterApiResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiDeploymentEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiDeploymentEntityResource.CreateResourceIdentifier" /> to create an <see cref="ApiDeploymentEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterDeploymentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterDeploymentResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterDeploymentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiDeploymentEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterDeploymentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiDeploymentEntityResource"/> object. </returns>
-        public static ApiDeploymentEntityResource GetApiDeploymentEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterDeploymentResource"/> object. </returns>
+        public static ApiCenterDeploymentResource GetApiCenterDeploymentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetApiDeploymentEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterDeploymentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiVersionEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiVersionEntityResource.CreateResourceIdentifier" /> to create an <see cref="ApiVersionEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterApiVersionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterApiVersionResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiVersionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiVersionEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterApiVersionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiVersionEntityResource"/> object. </returns>
-        public static ApiVersionEntityResource GetApiVersionEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterApiVersionResource"/> object. </returns>
+        public static ApiCenterApiVersionResource GetApiCenterApiVersionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetApiVersionEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterApiVersionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="ApiDefinitionEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ApiDefinitionEntityResource.CreateResourceIdentifier" /> to create an <see cref="ApiDefinitionEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterApiDefinitionResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterApiDefinitionResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterApiDefinitionResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiDefinitionEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterApiDefinitionResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ApiDefinitionEntityResource"/> object. </returns>
-        public static ApiDefinitionEntityResource GetApiDefinitionEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterApiDefinitionResource"/> object. </returns>
+        public static ApiCenterApiDefinitionResource GetApiCenterApiDefinitionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetApiDefinitionEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterApiDefinitionResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="EnvironmentEntityResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="EnvironmentEntityResource.CreateResourceIdentifier" /> to create an <see cref="EnvironmentEntityResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="ApiCenterEnvironmentResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApiCenterEnvironmentResource.CreateResourceIdentifier" /> to create an <see cref="ApiCenterEnvironmentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetEnvironmentEntityResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterArmClient.GetApiCenterEnvironmentResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="EnvironmentEntityResource"/> object. </returns>
-        public static EnvironmentEntityResource GetEnvironmentEntityResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApiCenterEnvironmentResource"/> object. </returns>
+        public static ApiCenterEnvironmentResource GetApiCenterEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableApiCenterArmClient(client).GetEnvironmentEntityResource(id);
+            return GetMockableApiCenterArmClient(client).GetApiCenterEnvironmentResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of ServiceEntityResources in the ResourceGroupResource.
+        /// Gets a collection of ApiCenterServiceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetServiceEntities()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterServices()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of ServiceEntityResources and their operations over a ServiceEntityResource. </returns>
-        public static ServiceEntityCollection GetServiceEntities(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of ApiCenterServiceResources and their operations over a ApiCenterServiceResource. </returns>
+        public static ApiCenterServiceCollection GetApiCenterServices(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetServiceEntities();
+            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterServices();
         }
 
         /// <summary>
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetServiceEntityAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterServiceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<ServiceEntityResource>> GetServiceEntityAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ApiCenterServiceResource>> GetApiCenterServiceAsync(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetServiceEntityAsync(serviceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterServiceAsync(serviceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,12 +256,12 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetServiceEntity(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterResourceGroupResource.GetApiCenterService(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.ApiCenter
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="serviceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<ServiceEntityResource> GetServiceEntity(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
+        public static Response<ApiCenterServiceResource> GetApiCenterService(this ResourceGroupResource resourceGroupResource, string serviceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetServiceEntity(serviceName, cancellationToken);
+            return GetMockableApiCenterResourceGroupResource(resourceGroupResource).GetApiCenterService(serviceName, cancellationToken);
         }
 
         /// <summary>
@@ -294,23 +294,23 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetServiceEntities(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetApiCenterServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ServiceEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ServiceEntityResource> GetServiceEntitiesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ApiCenterServiceResource> GetApiCenterServicesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetServiceEntitiesAsync(cancellationToken);
+            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterServicesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -330,23 +330,23 @@ namespace Azure.ResourceManager.ApiCenter
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ServiceEntityResource"/></description>
+        /// <description><see cref="ApiCenterServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetServiceEntities(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableApiCenterSubscriptionResource.GetApiCenterServices(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="ServiceEntityResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ServiceEntityResource> GetServiceEntities(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ApiCenterServiceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ApiCenterServiceResource> GetApiCenterServices(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetServiceEntities(cancellationToken);
+            return GetMockableApiCenterSubscriptionResource(subscriptionResource).GetApiCenterServices(cancellationToken);
         }
     }
 }
