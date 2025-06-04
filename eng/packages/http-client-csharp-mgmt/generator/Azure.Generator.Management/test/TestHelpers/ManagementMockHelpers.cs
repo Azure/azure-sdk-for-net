@@ -31,7 +31,8 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             Func<IReadOnlyList<InputClient>>? clients = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
-            HttpMessageApi? httpMessageApi = null)
+            HttpMessageApi? httpMessageApi = null,
+            string? primaryNamespace = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
             IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
@@ -41,7 +42,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var mgmtInstance = typeof(ManagementClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
-                "Samples",
+                primaryNamespace ?? "Samples",
                 inputNsApiVersions,
                 inputNsLiterals,
                 inputNsEnums,
@@ -51,10 +52,9 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             var mockInputLibrary = new Mock<ManagementInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
-            Mock<ManagementTypeFactory>? mockTypeFactory = null;
+            Mock<ManagementTypeFactory> mockTypeFactory = new Mock<ManagementTypeFactory>() { CallBase = true };
             if (createCSharpTypeCore is not null)
             {
-                mockTypeFactory = new Mock<ManagementTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
             }
 
@@ -72,11 +72,7 @@ namespace Azure.Generator.Management.Tests.TestHelpers
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);
             mockPluginInstance.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
-
-            if (mockTypeFactory is not null)
-            {
-                mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
-            }
+            mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
 
             var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);

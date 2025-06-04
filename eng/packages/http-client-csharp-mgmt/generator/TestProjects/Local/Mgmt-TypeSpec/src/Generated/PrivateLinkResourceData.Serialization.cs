@@ -180,15 +180,15 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="privateLinkResourceData"> The <see cref="PrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PrivateLinkResourceData privateLinkResourceData)
+        /// <param name="data"> The <see cref="PrivateLinkResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(PrivateLinkResourceData data)
         {
-            if (privateLinkResourceData == null)
+            if (data == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(privateLinkResourceData, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
             return content;
         }
 

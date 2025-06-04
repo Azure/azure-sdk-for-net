@@ -16,13 +16,10 @@ namespace Azure.Communication.CallAutomation
         /// Initializes a new instance of the <see cref="PostProcessingOptions"/> class.
         /// </summary>
         public PostProcessingOptions(
-            TranscriptionSettings transcriptionSettings,
-            SummarizationSettings summarizationSettings = null,
-            string cognitiveServicesEndpoint = null)
+            TranscriptionSettings transcription
+        )
         {
-            this.CognitiveServicesEndpoint = cognitiveServicesEndpoint;
-            this.SummarizationSettings = summarizationSettings;
-            this.TranscriptionSettings = transcriptionSettings;
+            this.Transcription = transcription;
         }
 
         /// <summary>
@@ -31,26 +28,8 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public string CognitiveServicesEndpoint { get; set; }
         /// <summary> Define options of the transcription for the post recording processing. </summary>
-        public TranscriptionSettings TranscriptionSettings { get; set;}
+        public TranscriptionSettings Transcription { get; }
         /// <summary> Define options of the summarization for the post recording processing. </summary>
-        public SummarizationSettings SummarizationSettings { get; set; }
-
-        /// <summary>
-        /// Set the transcription settings for the post recording processing.
-        /// </summary>
-        /// <param name="enableTranscription"></param>
-        public void setTranscriptionSettings(bool enableTranscription)
-        {
-            this.TranscriptionSettings = new TranscriptionSettings(enableTranscription);
-        }
-
-        /// <summary>
-        /// Set the summarization settings for the post recording processing.
-        /// </summary>
-        /// <param name="enableSummarization"></param>
-        public void setSummarizationSettings(bool enableSummarization)
-        {
-            this.Summarization = new SummarizationSettings(enableSummarization);
-        }
+        public SummarizationSettings Summarization { get; set; }
     }
 }
