@@ -41,18 +41,31 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private readonly ILogger<QueueListener> _logger;
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly string _functionId;
-        private readonly CancellationTokenSource _shutdownCancellationTokenSource;
-        private readonly CancellationTokenSource _executionCancellationTokenSource;
         private readonly Lazy<QueueTargetScaler> _targetScaler;
         private readonly Lazy<QueueScaleMonitor> _scaleMonitor;
         private readonly IDrainModeManager _drainModeManager;
-
+        private readonly ConcurrencyManager _concurrencyManager;
+        private readonly string _details;
         private bool? _queueExists;
         private bool _foundMessageSinceLastDelay;
         private bool _disposed;
         private TaskCompletionSource<object> _stopWaitingTaskSource;
-        private ConcurrencyManager _concurrencyManager;
-        private string _details;
+
+        /// <summary>
+        /// CancellationTokenSource for forced, non-graceful shutdowns.
+        /// - Cancelled when the host requests an immediate stop (not drain mode).
+        /// - Used to cancel polling, message fetching, and in-flight processing when a hard stop is required.
+        /// - Not cancelled during drain mode, so in-flight processing can complete.
+        /// </summary>
+        private readonly CancellationTokenSource _shutdownCancellationTokenSource;
+
+        /// <summary>
+        /// CancellationTokenSource for function execution cancellation.
+        /// - Cancelled when the host requests a stop and drain mode is NOT enabled.
+        /// - Used to cancel function execution (user code) only.
+        /// - Not cancelled during drain mode, so in-flight function executions can complete.
+        /// </summary>
+        private readonly CancellationTokenSource _executionCancellationTokenSource;
 
         // for mock testing only
         internal QueueListener()
@@ -113,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             // if the function runs longer than this, the invisibility will be updated
             // on a timer periodically for the duration of the function execution
-            _visibilityTimeout = TimeSpan.FromMinutes(10);
+            _visibilityTimeout = _queueOptions.VisibilityTimeout;
 
             if (sharedWatcher != null)
             {
@@ -169,17 +182,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_drainModeManager?.IsDrainModeEnabled ?? false)
+            if (_drainModeManager == null || !_drainModeManager.IsDrainModeEnabled)
             {
+                _logger.LogDebug($"Drain mode is not enabled, storage queue listener will stop immediately ({_details})");
+                // Non-drain mode: cancel execution and link host cancellation to shutdown
                 _executionCancellationTokenSource.Cancel();
+                using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
+                {
+                    ThrowIfDisposed();
+                    _timer.Cancel();
+                    await Task.WhenAll(_processing).ConfigureAwait(false);
+                    await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
+                    _logger.LogDebug($"Drain mode is not enabled, storage queue listener stopped ({_details})");
+                }
             }
-            using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
+            else
             {
+                // Drain mode: do NOT link host cancellation to shutdown token so that the listener can complete processing
+                _logger.LogDebug($"Drain mode is enabled, storage queue listener will stop after processing current messages ({_details})");
                 ThrowIfDisposed();
                 _timer.Cancel();
                 await Task.WhenAll(_processing).ConfigureAwait(false);
                 await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
-                _logger.LogDebug($"Storage queue listener stopped ({_details})");
+                _logger.LogDebug($"Drain mode is enabled, storage queue listener stopped ({_details})");
             }
         }
 
@@ -392,12 +417,24 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             }
         }
 
+        /// <summary>
+        /// Processes a single queue message.
+        ///
+        /// CancellationToken usage summary:
+        /// - cancellationToken: Provided by the host, signals host-initiated shutdown or scale-in.
+        /// - _shutdownCancellationTokenSource.Token: Signals a forced, non-graceful shutdown (not cancelled in drain mode).
+        /// - _executionCancellationTokenSource.Token: Cancels function execution (user code) on non-drain shutdown.
+        /// - linkedCts.Token: Combines cancellationToken and _shutdownCancellationTokenSource.Token, used for polling and message fetching.
+        /// - No cancellation token is used for message completion (dequeue, release, poison): always best-effort to complete.
+        /// </summary>
         internal async Task ProcessMessageAsync(QueueMessage message, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
         {
             try
             {
+                // linkedCts.Token: cancels on host shutdown or forced listener shutdown (non-drain mode)
                 using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _shutdownCancellationTokenSource.Token))
                 {
+                    // linkedCts.Token ensures BeginProcessingMessageAsync stops on host or forced shutdown
                     if (!await _queueProcessor.BeginProcessingMessageAsync(message, linkedCts.Token).ConfigureAwait(false))
                     {
                         return;
@@ -409,15 +446,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     {
                         timer.Start();
 
+                        // _executionCancellationTokenSource.Token: cancels function execution on non-drain shutdown
                         result = await _triggerExecutor.ExecuteAsync(message, _executionCancellationTokenSource.Token).ConfigureAwait(false);
 
+                        // linkedCts.Token: ensures timer stops on host or forced shutdown
                         await timer.StopAsync(linkedCts.Token).ConfigureAwait(false);
                     }
 
-                    // Use a different cancellation token for shutdown to allow graceful shutdown.
-                    // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
-                    // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
-                    await _queueProcessor.CompleteProcessingMessageAsync(message, result, linkedCts.Token).ConfigureAwait(false);
+                    // No cancellation token for message completion: always best-effort to complete
+                    await _queueProcessor.CompleteProcessingMessageAsync(message, result).ConfigureAwait(false);
                 }
             }
             catch (TaskCanceledException)

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             QueueMessage message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
 
             FunctionResult result = new FunctionResult(true);
-            await _processor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
+            await _processor.CompleteProcessingMessageAsync(message, result);
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
             Assert.Null(message);
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             string id = message.MessageId;
 
             FunctionResult result = new FunctionResult(false);
-            await _processor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
+            await _processor.CompleteProcessingMessageAsync(message, result);
 
             // make the message visible again so we can verify it wasn't deleted
             await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, visibilityTimeout: TimeSpan.Zero);
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             for (int i = 0; i < context.Options.MaxDequeueCount; i++)
             {
                 message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-                await localProcessor.CompleteProcessingMessageAsync(message, result, CancellationToken.None);
+                await localProcessor.CompleteProcessingMessageAsync(message, result);
             }
 
             message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             var functionResult = new FunctionResult(false);
             QueueMessage message = (await _queue.ReceiveMessagesAsync(1)).Value.FirstOrDefault();
-            await localProcessor.CompleteProcessingMessageAsync(message, functionResult, CancellationToken.None);
+            await localProcessor.CompleteProcessingMessageAsync(message, functionResult);
 
             Assert.AreEqual(queuesOptions.VisibilityTimeout, updatedVisibilityTimeout);
         }

@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (message.DequeueCount > QueuesOptions.MaxDequeueCount)
             {
-                await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                await HandlePoisonMessageAsync(message).ConfigureAwait(false);
                 return await Task.FromResult<bool>(false).ConfigureAwait(false);
             }
             return await Task.FromResult<bool>(true).ConfigureAwait(false);
@@ -83,23 +83,22 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </remarks>
         /// <param name="message">The message to complete processing for.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
-        internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
+        internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result)
         {
             if (result.Succeeded)
             {
-                await DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                await DeleteMessageAsync(message).ConfigureAwait(false);
             }
             else if (_poisonQueue != null)
             {
                 if (message.DequeueCount >= QueuesOptions.MaxDequeueCount)
                 {
-                    await HandlePoisonMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                    await HandlePoisonMessageAsync(message).ConfigureAwait(false);
                 }
                 else
                 {
-                    await ReleaseMessageAsync(message, result, QueuesOptions.VisibilityTimeout, cancellationToken).ConfigureAwait(false);
+                    await ReleaseMessageAsync(message, result, QueuesOptions.VisibilityTimeout).ConfigureAwait(false);
                 }
             }
             else
@@ -110,12 +109,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             }
         }
 
-        internal async Task HandlePoisonMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+        internal async Task HandlePoisonMessageAsync(QueueMessage message)
         {
             if (_poisonQueue != null)
             {
-                await CopyMessageToPoisonQueueAsync(message, _poisonQueue, cancellationToken).ConfigureAwait(false);
-                await DeleteMessageAsync(message, cancellationToken).ConfigureAwait(false);
+                await CopyMessageToPoisonQueueAsync(message, _poisonQueue).ConfigureAwait(false);
+                await DeleteMessageAsync(message).ConfigureAwait(false);
             }
         }
 
@@ -124,14 +123,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         /// <param name="message">The poison message.</param>
         /// <param name="poisonQueue">The poison queue to copy the message to.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
-        protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
+        protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue)
         {
             string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", QueuesOptions.MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);
 
-            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.Body, cancellationToken).ConfigureAwait(false);
+            await poisonQueue.AddMessageAndCreateIfNotExistsAsync(message.Body, CancellationToken.None).ConfigureAwait(false);
 
             var eventArgs = new PoisonMessageEventArgs(message, poisonQueue);
             await OnMessageAddedToPoisonQueueAsync(eventArgs).ConfigureAwait(false);
@@ -143,14 +141,13 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to release</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="visibilityTimeout">The visibility timeout to set for the message.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
-        protected virtual async Task ReleaseMessageAsync(QueueMessage message, FunctionResult result, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
+        protected virtual async Task ReleaseMessageAsync(QueueMessage message, FunctionResult result, TimeSpan visibilityTimeout)
         {
             try
             {
                 // We couldn't process the message. Let someone else try.
-                await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, visibilityTimeout: visibilityTimeout, cancellationToken: cancellationToken).ConfigureAwait(false);
+                await _queue.UpdateMessageAsync(message.MessageId, message.PopReceipt, visibilityTimeout: visibilityTimeout, cancellationToken: CancellationToken.None).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
             {
@@ -176,13 +173,12 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// Delete the specified message.
         /// </summary>
         /// <param name="message">The message to delete.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
-        protected virtual async Task DeleteMessageAsync(QueueMessage message, CancellationToken cancellationToken)
+        protected virtual async Task DeleteMessageAsync(QueueMessage message)
         {
             try
             {
-                await _queue.DeleteMessageAsync(message.MessageId, message.PopReceipt, cancellationToken).ConfigureAwait(false);
+                await _queue.DeleteMessageAsync(message.MessageId, message.PopReceipt).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
             {
