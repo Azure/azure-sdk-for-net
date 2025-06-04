@@ -1,14 +1,15 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.5.0-beta.1 (2025-05-30)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added resource management based on the 2025-04-01-preview Management API:
+  - Cognitive Services Account Connections
+  - Cognitive Services Account Projects
+  - Cognitive Services Account Capability Hosts
+  - Cognitive Services Project Connections
+  - Cognitive Services Project Capability Hosts
 
 ## 1.4.0 (2024-11-19)
 
