@@ -83,8 +83,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </remarks>
         /// <param name="message">The message to complete processing for.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
+        ///  <param name="cancellationToken">Should not be used in this method</param>
         /// <returns></returns>
-        internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result)
+        internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
             if (result.Succeeded)
             {
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (_poisonQueue != null)
             {
-                await CopyMessageToPoisonQueueAsync(message, _poisonQueue).ConfigureAwait(false);
+                await CopyMessageToPoisonQueueAsync(message, _poisonQueue, CancellationToken.None).ConfigureAwait(false);
                 await DeleteMessageAsync(message).ConfigureAwait(false);
             }
         }
@@ -123,8 +124,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         /// <param name="message">The poison message.</param>
         /// <param name="poisonQueue">The poison queue to copy the message to.</param>
+        /// /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use, should not be set here</param>
         /// <returns></returns>
-        protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue)
+        protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
             string msg = string.Format(CultureInfo.InvariantCulture, "Message has reached MaxDequeueCount of {0}. Moving message to queue '{1}'.", QueuesOptions.MaxDequeueCount, poisonQueue.Name);
             _logger?.LogWarning(msg);

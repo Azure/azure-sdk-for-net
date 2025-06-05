@@ -448,7 +448,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                     }
 
                     // No cancellation token for message completion: always best-effort to complete
-                    await _queueProcessor.CompleteProcessingMessageAsync(message, result).ConfigureAwait(false);
+                    await _queueProcessor.CompleteProcessingMessageAsync(message, result, CancellationToken.None).ConfigureAwait(false);
                 }
             }
             catch (TaskCanceledException)
