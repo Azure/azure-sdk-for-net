@@ -9,7 +9,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests;
@@ -28,15 +27,15 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        PersistentAgentsClient client = new(projectEndpoint, new AzureCliCredential());
+        PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
         #endregion
         #region Snippet:AgentsUploadAgentFilesToUse
         // Upload a file and wait for it to be processed
         System.IO.File.WriteAllText(
-            path: "samplé_filé_for_upload.txt",
+            path: "sample_file_for_upload.txt",
             contents: "The word 'apple' uses the code 442345, while the word 'banana' uses the code 673457.");
         PersistentAgentFileInfo uploadedAgentFile = await client.Files.UploadFileAsync(
-            filePath: "samplé_filé_for_upload.txt",
+            filePath: "sample_file_for_upload.txt",
             purpose: PersistentAgentFilePurpose.Agents);
         Dictionary<string, string> fileIds = new()
         {
