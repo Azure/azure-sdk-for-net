@@ -5,8 +5,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Core;
-using Azure.ResourceManager;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -29,7 +27,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             _resourceClientProvider = resourceClientProvider;
             _enclosingType = resourceClientProvider;
             _signature = CreateSignature();            _bodyStatements = BuildBodyStatements();
-        }        private MethodSignature CreateSignature()
+        }
+
+        private MethodSignature CreateSignature()
         {
             var returnType = new CSharpType(typeof(Azure.Response<>), _resourceClientProvider.ResourceClientCSharpType);
             return new MethodSignature(
@@ -48,8 +48,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         private ParameterProvider[] BuildParameters()
         {
-            var keyParameter = new ParameterProvider("key", $"The tag key.", new CSharpType(typeof(string)));
-            var valueParameter = new ParameterProvider("value", $"The tag value.", new CSharpType(typeof(string)));
+            var keyParameter = new ParameterProvider("key", $"The tag key.", new CSharpType(typeof(string)), validation: ParameterValidationType.AssertNotNull);
+            var valueParameter = new ParameterProvider("value", $"The tag value.", new CSharpType(typeof(string)), validation: ParameterValidationType.AssertNotNull);
             var cancellationTokenParameter = new ParameterProvider("cancellationToken", $"The cancellation token to use.", new CSharpType(typeof(CancellationToken)), defaultValue: Default);
 
             return [keyParameter, valueParameter, cancellationTokenParameter];
@@ -81,79 +81,14 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // if (CanUseTagResource(cancellationToken: cancellationToken))
             var canUseTagResourceCondition = This.Invoke("CanUseTagResource", [cancellationTokenParam]);
 
-            // Primary path (if branch)
-            var primaryPath = new List<MethodBodyStatement>
-            {
-                // var originalTags = GetTagResource().Get(cancellationToken);
-                Declare("originalTags", typeof(object), This.Invoke("GetTagResource").Invoke("Get", [cancellationTokenParam]), out var originalTagsVar),
+            // Create if-else statement with primary path in if block and secondary path in else block
+            var ifElseStatement = new IfElseStatement(
+                canUseTagResourceCondition,
+                BuildIfStatement(keyParam, valueParam, cancellationTokenParam),
+                BuildElseStatement(keyParam, valueParam, cancellationTokenParam)
+            );
 
-                // originalTags.Value.Data.TagValues[key] = value;
-                new IndexerExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
-                    .Assign(valueParam).Terminate(),
-
-                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                This.Invoke("GetTagResource").Invoke("CreateOrUpdate", [
-                    Static(typeof(Azure.WaitUntil)).Property("Completed"),
-                    originalTagsVar.Property("Value").Property("Data"),
-                    cancellationTokenParam
-                ]).Terminate(),
-
-                // var originalResponse = _restClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                Declare("originalResponse", typeof(object), _resourceClientProvider.GetRestClientField().Invoke("Get", [
-                        This.Property("Id").Property("SubscriptionId"),
-                        This.Property("Id").Property("ResourceGroupName"),
-                        This.Property("Id").Property("Name"),
-                        cancellationTokenParam
-                    ]), out var originalResponseVar),
-
-                // return Response.FromValue(new ResourceType(Client, originalResponse.Value), originalResponse.GetRawResponse());
-                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
-                    New.Instance(_resourceClientProvider.ResourceClientCSharpType, [
-                        This.Property("Client"),
-                        originalResponseVar.Property("Value")
-                    ]),
-                    originalResponseVar.Invoke("GetRawResponse")
-                ]))
-            };
-
-            // Secondary path (else branch)
-            var secondaryPath = new List<MethodBodyStatement>
-            {
-                // var current = Get(cancellationToken: cancellationToken).Value.Data;
-                Declare("current", typeof(object), This.Invoke("Get", [cancellationTokenParam])
-                        .Property("Value").Property("Data"), out var currentVar),
-
-                // current.Tags[key] = value;
-                new IndexerExpression(currentVar.Property("Tags"), keyParam)
-                    .Assign(valueParam).Terminate(),
-
-                // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                Declare("result", typeof(object), This.Invoke("Update", [
-                        Static(typeof(Azure.WaitUntil)).Property("Completed"),
-                        currentVar,
-                        cancellationTokenParam
-                    ]), out var resultVar),
-
-                // return Response.FromValue(result.Value, result.GetRawResponse());
-                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
-                    resultVar.Property("Value"),
-                    resultVar.Invoke("GetRawResponse")
-                ]))
-            };
-
-            var ifStatement = new IfStatement(canUseTagResourceCondition)
-            {
-                // Primary path statements
-                primaryPath[0], primaryPath[1], primaryPath[2], primaryPath[3], primaryPath[4]
-            };
-
-            // Add else block for secondary path
-            foreach (var statement in secondaryPath)
-            {
-                ifStatement.Add(statement);
-            }
-
-            tryStatements.Add(ifStatement);
+            tryStatements.Add(ifElseStatement);
 
             // Build catch block
             var catchBlock = Catch(
@@ -169,6 +104,94 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 catchBlock));
 
             return [.. statements];
+        }
+
+        private List<MethodBodyStatement> BuildIfStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
+        {
+            // Primary path (if branch)
+            var primaryPath = new List<MethodBodyStatement>
+            {
+                // var originalTags = GetTagResource().Get(cancellationToken);
+                Declare("originalTags", new CSharpType(typeof(Azure.Response<>), typeof(Azure.ResourceManager.Resources.TagResource)), This.Invoke("GetTagResource").Invoke("Get", [cancellationTokenParam]), out var originalTagsVar),
+
+                // originalTags.Value.Data.TagValues[key] = value;
+                new IndexerExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
+                    .Assign(valueParam).Terminate(),
+
+                // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                This.Invoke("GetTagResource").Invoke("CreateOrUpdate", [
+                    Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                    originalTagsVar.Property("Value").Property("Data"),
+                    cancellationTokenParam
+                ]).Terminate(),
+
+                // RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                Declare("context", typeof(Azure.RequestContext), New.Instance(typeof(Azure.RequestContext)), out var contextVar),
+
+                // context.CancellationToken = cancellationToken;
+                contextVar.Property("CancellationToken").Assign(cancellationTokenParam).Terminate(),
+
+                // HttpMessage message = _restClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Declare("message", typeof(Azure.Core.HttpMessage),
+                    _resourceClientProvider.GetRestClientField().Invoke("CreateGetRequest", [
+                        Static(typeof(Guid)).Invoke("Parse", [This.Property("Id").Property("SubscriptionId")]),
+                        This.Property("Id").Property("ResourceGroupName"),
+                        This.Property("Id").Property("Name"),
+                        contextVar
+                    ]), out var messageVar),
+
+                // Response result = Pipeline.ProcessMessage(message, context);
+                Declare("result", typeof(Azure.Response),
+                    This.Property("Pipeline").Invoke("ProcessMessage", [messageVar, contextVar]), out var originalResultVar),
+
+                // Response<ResourceData> response = Response.FromValue((ResourceData)originalResult, originalResult);
+                Declare("response", new CSharpType(typeof(Azure.Response<>), _resourceClientProvider.ResourceData.Type),
+                    Static(typeof(Azure.Response)).Invoke("FromValue", [
+                        originalResultVar.CastTo(_resourceClientProvider.ResourceData.Type),
+                        originalResultVar
+                    ]), out var originalResponseVar),
+
+                // return Response.FromValue(new ResourceType(Client, response.Value), response.GetRawResponse());
+                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
+                    New.Instance(_resourceClientProvider.ResourceClientCSharpType, [
+                        This.Property("Client"),
+                        originalResponseVar.Property("Value")
+                    ]),
+                    originalResponseVar.Invoke("GetRawResponse")
+                ]))
+            };
+
+            return primaryPath;
+        }
+
+        private List<MethodBodyStatement> BuildElseStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
+        {
+            // Secondary path (else branch)
+            var secondaryPath = new List<MethodBodyStatement>
+            {
+                // var current = Get(cancellationToken: cancellationToken).Value.Data;
+                Declare("current", _resourceClientProvider.ResourceData.Type, This.Invoke("Get", [cancellationTokenParam])
+                        .Property("Value").Property("Data"), out var currentVar),
+
+                // current.Tags[key] = value;
+                new IndexerExpression(currentVar.Property("Tags"), keyParam)
+                    .Assign(valueParam).Terminate(),
+
+                // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                Declare("result", new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType), This.Invoke("Update", [
+                        Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                        currentVar,
+                        cancellationTokenParam
+                    ]), out var resultVar),
+
+                // return Response.FromValue(result.Value, result.GetRawResponse());
+                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
+                    resultVar.Property("Value"),
+                    resultVar.Invoke("GetRawResponse")
+                ]))
+            };
+
+            return secondaryPath;
         }
 
         private ValueExpression[] BuildGetMethodParameters(ParameterProvider cancellationTokenParam)
