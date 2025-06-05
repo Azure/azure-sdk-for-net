@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterJobWorkerSelectorsExpiredEventDataConverter))]
     public partial class AcsRouterJobWorkerSelectorsExpiredEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobWorkerSelectorsExpiredEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobWorkerSelectorsExpiredEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -212,6 +214,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterJobWorkerSelectorsExpiredEventDataConverter : JsonConverter<AcsRouterJobWorkerSelectorsExpiredEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterJobWorkerSelectorsExpiredEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterJobWorkerSelectorsExpiredEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterJobWorkerSelectorsExpiredEventData(document.RootElement);
+            }
         }
     }
 }

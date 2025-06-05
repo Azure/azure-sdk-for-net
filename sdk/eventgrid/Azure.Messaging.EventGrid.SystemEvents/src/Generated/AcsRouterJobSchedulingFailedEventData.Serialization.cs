@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterJobSchedulingFailedEventDataConverter))]
     public partial class AcsRouterJobSchedulingFailedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobSchedulingFailedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobSchedulingFailedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -256,6 +258,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterJobSchedulingFailedEventDataConverter : JsonConverter<AcsRouterJobSchedulingFailedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterJobSchedulingFailedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterJobSchedulingFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterJobSchedulingFailedEventData(document.RootElement);
+            }
         }
     }
 }

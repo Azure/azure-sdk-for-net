@@ -962,6 +962,12 @@
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
 
+# PRLabel: %API Center
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @azaslonov
+
+# ServiceLabel: %API Center %Mgmt
+# ServiceOwners:                                                   @alexyaang @azaslonov
+
 # PRLabel: %ARM
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners
 

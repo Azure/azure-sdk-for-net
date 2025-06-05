@@ -550,10 +550,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.FileMode, directoryProperties.PosixProperties.FileMode);
             }
-            return new StorageResourceContainerProperties()
-            {
-                RawProperties = rawProperties
-            };
+            return new StorageResourceContainerProperties(rawProperties);
         }
 
         internal static void AddToStorageResourceContainerProperties(
@@ -702,10 +699,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, destinationPermissionKey);
             }
-            return new StorageResourceContainerProperties()
-            {
-                RawProperties = properties
-            };
+            return new StorageResourceContainerProperties(properties);
         }
 
         private static string[] ConvertContentPropertyObjectToStringArray(string contentPropertyName, object contentPropertyValue)

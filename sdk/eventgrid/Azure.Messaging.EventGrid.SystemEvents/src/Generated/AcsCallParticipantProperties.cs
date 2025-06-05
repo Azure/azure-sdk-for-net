@@ -54,7 +54,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="communicationIdentifier"> The communication identifier of the participant user. </param>
         /// <param name="role"> The role of the participant. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallParticipantRoleKind? role, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsCallParticipantProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallParticipantKind? role, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommunicationIdentifier = communicationIdentifier;
             Role = role;
@@ -64,6 +64,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The communication identifier of the participant user. </summary>
         public CommunicationIdentifierModel CommunicationIdentifier { get; }
         /// <summary> The role of the participant. </summary>
-        public AcsCallParticipantRoleKind? Role { get; }
+        public AcsCallParticipantKind? Role { get; }
     }
 }
