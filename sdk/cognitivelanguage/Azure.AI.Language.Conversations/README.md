@@ -99,8 +99,8 @@ Note that regional endpoints do not support AAD authentication. Instead, create 
 The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
 |SDK version  |Supported API version of service
-|-------------|-----------------------------------------------------
-|2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview (default)
+|-------------|-----------------------------------------------------------------------------------
+|2.0.0-beta.1 | 2022-05-01, 2023-04-01, 2024-05-01, 2024-05-15-preview, 2025-05-15-preview (default)
 |1.1.0 | 2022-05-01, 2023-04-01 (default)
 |1.0.0 | 2022-05-01 (default)
 
@@ -207,6 +207,112 @@ foreach (ConversationEntity entity in conversationPrediction.Entities)
                 Console.WriteLine();
             }
         }
+    }
+}
+```
+
+To analyze an AI Conversation, you can call the `AnalyzeConversation()` method:
+
+```C# Snippet:ConversationAnalysis_AnalyzeAIConversation
+string projectName = TestEnvironment.ProjectName;
+string deploymentName = TestEnvironment.DeploymentName;
+
+AnalyzeConversationInput data = new ConversationalAITask(
+    new ConversationalAIAnalysisInput(
+        conversations: new AIConversation[] {
+            new AIConversation(
+                id: "order",
+                modality: InputModality.Text,
+                language: "en-GB",
+                conversationItems: new ConversationalAIItem[]
+                {
+                    new ConversationalAIItem(id: "1", participantId: "user", text: "Hi"),
+                    new ConversationalAIItem(id: "2", participantId: "bot", text: "Hello, how can I help you?"),
+                    new ConversationalAIItem(id: "3", participantId: "user", text: "I would like to book a flight.")
+                }
+            )
+        }),
+    new AIConversationLanguageUnderstandingActionContent(projectName, deploymentName)
+    {
+        // Use Utf16CodeUnit for strings in .NET.
+        StringIndexType = StringIndexType.Utf16CodeUnit,
+    });
+
+Response<AnalyzeConversationActionResult> response = client.AnalyzeConversation(data);
+ConversationalAITaskResult ConversationalAITaskResult = response.Value as ConversationalAITaskResult;
+ConversationalAIResult conversationalAIResult = ConversationalAITaskResult.Result;
+
+foreach (var conversation in conversationalAIResult?.Conversations ?? Enumerable.Empty<ConversationalAIAnalysis>())
+{
+    Console.WriteLine($"Conversation ID: {conversation.Id}");
+
+    Console.WriteLine("Intents:");
+    foreach (var intent in conversation.Intents ?? Enumerable.Empty<ConversationalAIIntent>())
+    {
+        Console.WriteLine($"Name: {intent.Name}");
+        Console.WriteLine($"Type: {intent.Type}");
+
+        Console.WriteLine("Conversation Item Ranges:");
+        foreach (var range in intent.ConversationItemRanges ?? Enumerable.Empty<ConversationItemRange>())
+        {
+            Console.WriteLine($" - Offset: {range.Offset}, Count: {range.Count}");
+        }
+
+        Console.WriteLine("Entities (Scoped to Intent):");
+        foreach (var entity in intent.Entities ?? Enumerable.Empty<ConversationalAIEntity>())
+        {
+            Console.WriteLine($"Name: {entity.Name}");
+            Console.WriteLine($"Text: {entity.Text}");
+            Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
+            Console.WriteLine($"Offset: {entity.Offset}, Length: {entity.Length}");
+            Console.WriteLine($"Conversation Item ID: {entity.ConversationItemId}, Index: {entity.ConversationItemIndex}");
+
+            if (entity.Resolutions != null)
+            {
+                foreach (var res in entity.Resolutions.OfType<DateTimeResolution>())
+                {
+                    Console.WriteLine($" - [DateTimeResolution] SubKind: {res.DateTimeSubKind}, Timex: {res.Timex}, Value: {res.Value}");
+                }
+            }
+
+            if (entity.ExtraInformation != null)
+            {
+                foreach (var extra in entity.ExtraInformation.OfType<EntitySubtype>())
+                {
+                    Console.WriteLine($" - [EntitySubtype] Value: {extra.Value}");
+                    foreach (var tag in extra.Tags ?? Enumerable.Empty<EntityTag>())
+                    {
+                        Console.WriteLine($"   • Tag: {tag.Name}, Confidence: {tag.ConfidenceScore}");
+                    }
+                }
+            }
+
+            Console.WriteLine();
+        }
+    }
+
+    Console.WriteLine("Global Entities:");
+    foreach (var entity in conversation.Entities ?? Enumerable.Empty<ConversationalAIEntity>())
+    {
+        Console.WriteLine($"Name: {entity.Name}");
+        Console.WriteLine($"Text: {entity.Text}");
+        Console.WriteLine($"Confidence: {entity.ConfidenceScore}");
+        Console.WriteLine($"Offset: {entity.Offset}, Length: {entity.Length}");
+        Console.WriteLine($"Conversation Item ID: {entity.ConversationItemId}, Index: {entity.ConversationItemIndex}");
+
+        if (entity.ExtraInformation != null)
+        {
+            foreach (var extra in entity.ExtraInformation.OfType<EntitySubtype>())
+            {
+                Console.WriteLine($" - [EntitySubtype] Value: {extra.Value}");
+                foreach (var tag in extra.Tags ?? Enumerable.Empty<EntityTag>())
+                {
+                    Console.WriteLine($"   • Tag: {tag.Name}, Confidence: {tag.ConfidenceScore}");
+                }
+            }
+        }
+
+        Console.WriteLine();
     }
 }
 ```
