@@ -72,6 +72,8 @@ var projectEndpoint = Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 PersistentAgentsClient projectClient = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
+**Note:** Support for project connection string and hub-based projects has been discontinued. We recommend creating a new Azure AI Foundry resource utilizing project endpoint. If this is not possible, please pin the version of `Azure.AI.Agents.Persistent` to version `1.0.0-beta.2` or earlier.
+
 ## Examples
 
 ### Agents
@@ -739,7 +741,6 @@ namespace FunctionProj
 
     public class Arguments
     {
-        public required string OutputQueueUri { get; set; }
         public required string CorrelationId { get; set; }
     }
 
@@ -753,16 +754,11 @@ namespace FunctionProj
         }
 
         [Function("Foo")]
-        public void Run([QueueTrigger("azure-function-foo-input")] Arguments input, FunctionContext executionContext)
+        [QueueOutput("azure-function-tool-output", Connection = "AzureWebJobsStorage")]
+        public string Run([QueueTrigger("azure-function-foo-input")] Arguments input, FunctionContext executionContext)
         {
             var logger = executionContext.GetLogger("Foo");
             logger.LogInformation("C# Queue function processed a request.");
-
-            // We have to provide the Managed identity for function resource
-            // and allow this identity a Queue Data Contributor role on the storage account.
-            var cred = new DefaultAzureCredential();
-            var queueClient = new QueueClient(new Uri(input.OutputQueueUri), cred,
-                    new QueueClientOptions { MessageEncoding = QueueMessageEncoding.Base64 });
 
             var response = new Response
             {
@@ -771,14 +767,13 @@ namespace FunctionProj
                 CorrelationId = input.CorrelationId
             };
 
-            var jsonResponse = JsonSerializer.Serialize(response);
-            queueClient.SendMessage(jsonResponse);
+            return JsonSerializer.Serialize(response);
         }
     }
 }
 ```
 
-In this code we define function input and output class: `Arguments` and `Response` respectively. These two data classes will be serialized in JSON. It is important that these both contain field `CorrelationId`, which is the same between input and output.
+In this code we define function input and output classes: `Arguments` and `Response` respectively. These two data classes will be serialized in JSON. It is important that the both contain field `CorrelationId`, which is the same between input and output. `Connection` contains the name of environment variable `AzureWebJobsStorage` on function app resource. This variable contains connection string to the storage account, with input and output queue. It can be found in the Settings>Environment variables section of the function app resource in Azure portal.
 
 In our example the function will be stored in the storage account, created with the AI hub. For that we need to allow key access to that storage. In Azure portal go to Storage account > Settings > Configuration and set "Allow storage account key access" to Enabled. If it is not done, the error will be displayed "The remote server returned an error: (403) Forbidden." To create the function resource that will host our function, install [azure-cli](https://pypi.org/project/azure-cli/) python package and run the next command:
 
@@ -788,14 +783,11 @@ az login
 az functionapp create --resource-group your-resource-group --consumption-plan-location region --runtime dotnet-isolated --functions-version 4 --name function_name --storage-account storage_account_already_present_in_resource_group --app-insights existing_or_new_application_insights_name
 ```
 
-This function writes data to the output queue and hence needs to be authenticated to Azure, so we will need to assign the function system identity and provide it `Storage Queue Data Contributor`. To do that in Azure portal select the function, located in `your-resource-group` resource group and in Settings>Identity, switch it on and click Save. After that assign the `Storage Queue Data Contributor` permission on storage account used by our function (`storage_account_already_present_in_resource_group` in the script above) for just assigned System Managed identity.
-
 Now we will create the function itself. Install [.NET](https://dotnet.microsoft.com/download) and [Core Tools](https://go.microsoft.com/fwlink/?linkid=2174087) and create the function project using next commands. 
 ```
 func init FunctionProj --worker-runtime dotnet-isolated --target-framework net8.0
 cd FunctionProj
 func new --name foo --template "HTTP trigger" --authlevel "anonymous"
-dotnet add package Azure.Identity
 dotnet add package Microsoft.Azure.Functions.Worker.Extensions.Storage.Queues --prerelease
 ```
 

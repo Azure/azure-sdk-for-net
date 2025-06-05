@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HDInsight.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-08-01-preview</description>
+        /// <description>2025-01-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

@@ -37,13 +37,13 @@
     "dist/**"
   ],
   "dependencies": {
-    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20250515.2"
+    "@azure-typespec/http-client-csharp": "1.0.0-alpha.20250527.2"
   },
   "devDependencies": {
     "@azure-tools/azure-http-specs": "0.1.0-alpha.17",
     "@azure-tools/typespec-azure-core": "0.56.0",
     "@azure-tools/typespec-azure-resource-manager": "0.56.0",
-    "@azure-tools/typespec-client-generator-core": "0.56.0",
+    "@azure-tools/typespec-client-generator-core": "0.56.2",
     "@eslint/js": "^9.2.0",
     "@types/node": "~22.7.5",
     "@types/prettier": "^2.6.3",

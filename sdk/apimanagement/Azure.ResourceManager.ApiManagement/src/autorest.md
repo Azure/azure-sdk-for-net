@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: ApiManagement
 namespace: Azure.ResourceManager.ApiManagement
-require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/apimanagement/resource-manager/readme.md
-tag: package-preview-2023-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/86d7e7d7c7ea9428a3a8e983d746a270f0581bc7/specification/apimanagement/resource-manager/readme.md
+tag: package-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
   skipped-operations:
     - ApiProduct_ListByApis
@@ -64,6 +64,11 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/namedValues/{namedValueId}: ApiManagementNamedValue
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}: ApiManagementGroup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/schemas/{schemaId}: ApiManagementGlobalSchema
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/backends/{backendId}: ApiManagementBackend
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/certificates/{certificateId}: ApiManagementCertificate
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/loggers/{loggerId}: ApiManagementLogger
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}: ApiGateway
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/gateways/{gatewayName}/configConnections/{configConnectionName}: ApiGatewayConfigConnection
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -139,7 +144,6 @@ rename-mapping:
   GatewayHostnameConfigurationContract.properties.negotiateClientCertificate: IsClientCertificateRequired
   SubscriptionsDelegationSettingsProperties.enabled: IsSubscriptionDelegationEnabled
   RegistrationDelegationSettingsProperties.enabled: IsUserRegistrationDelegationEnabled
-  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
   BackendTlsProperties.validateCertificateChain: ShouldValidateCertificateChain
   BackendTlsProperties.validateCertificateName: ShouldValidateCertificateName
   HostnameConfiguration.defaultSslBinding: IsDefaultSslBindingEnabled
@@ -171,10 +175,12 @@ rename-mapping:
   AccessIdName.access: TenantAccess
   AccessIdName.gitAccess: TenantGitAccess
   ApiContract: Api
-  ApiCollection: ApiListResult
   NetworkStatusContractByLocation: NetworkStatusContractWithLocation
   ApiManagementServiceResource: ApiManagementService
   ApiReleaseContract: ApiRelease
+  BackendUpdateParameters: ApiManagementBackendPatch
+  CertificateCreateOrUpdateParameters: ApiManagementCertificateCreateOrUpdateContent
+  LoggerUpdateContract: ApiManagementLoggerPatch
   OperationContract: ApiOperation
   SchemaContract: ApiSchema
   TagDescriptionContract: ApiTagDescription
@@ -316,9 +322,20 @@ rename-mapping:
   ApiVersionSetUpdateParameters: ApiVersionSetPatch
   OperationUpdateContract: ApiOperationPatch
   NamedValueCreateContract: ApiManagementNamedValueCreateOrUpdateContent
+  ApiManagementGatewayConfigConnectionResource: ApiGatewayConfigConnection
+  ApiManagementGatewayResource: ApiGateway
+  ApiManagementWorkspaceLinksResource: ApiManagementWorkspaceLinks
+  SoapApiType.grpc: Grpc
+  AllPoliciesContract.properties.referencePolicyId: -|arm-id
+  DiagnosticUpdateContract.properties.logClientIp: IsLogClientIPEnabled
+  DiagnosticContract.properties.logClientIp: IsLogClientIPEnabled
+
+keep-plural-resource-data:
+  - ApiManagementWorkspaceLinks
 
 directive:
   - remove-operation: 'ApiManagementOperations_List'
+  - remove-operation: 'OperationStatus_Get'
   - from: definitions.json
     where: $.definitions
     transform: >

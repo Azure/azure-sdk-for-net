@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <PackageIcon>Icon.png</PackageIcon>
-    <RequiredTargetFrameworks>net6.0</RequiredTargetFrameworks>
-    <TargetFrameworks>net6.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <TargetFrameworks>net8.0</TargetFrameworks>
     <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
     <Version>1.0.0-beta.1</Version>
   </PropertyGroup>

@@ -8,7 +8,7 @@
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <Nullable>enable</Nullable>
     <DefineConstants>$(DefineConstants);AZURE_NULLABLE;HAS_INTERNALS_VISIBLE_CORE</DefineConstants>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net462;net472;net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks);net462;net472</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
     <EnableBannedApiAnalyzers>false</EnableBannedApiAnalyzers>
@@ -20,7 +20,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
-    <PackageReference Include="System.ClientModel" />
+    <!-- <PackageReference Include="System.ClientModel" /> -->
+    <ProjectReference Include="..\..\System.ClientModel\src\System.ClientModel.csproj"/>
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Threading.Tasks.Extensions" />
@@ -28,6 +29,12 @@
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
+
+<!-- Remove when the package reference is restored to System.ClientModel -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\System.ClientModel\gen\System.ClientModel.SourceGeneration.csproj" ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+  </ItemGroup>
+<!-- End remove -->
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
     <Reference Include="System.Net.Http" />

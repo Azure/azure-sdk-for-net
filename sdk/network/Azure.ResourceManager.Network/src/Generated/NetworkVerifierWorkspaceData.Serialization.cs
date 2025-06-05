@@ -42,6 +42,11 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
         }
 
         NetworkVerifierWorkspaceData IJsonModel<NetworkVerifierWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,6 +70,7 @@ namespace Azure.ResourceManager.Network
                 return null;
             }
             NetworkVerifierWorkspaceProperties properties = default;
+            ETag? etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -82,6 +88,15 @@ namespace Azure.ResourceManager.Network
                         continue;
                     }
                     properties = NetworkVerifierWorkspaceProperties.DeserializeNetworkVerifierWorkspaceProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -141,6 +156,7 @@ namespace Azure.ResourceManager.Network
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                etag,
                 serializedAdditionalRawData);
         }
 

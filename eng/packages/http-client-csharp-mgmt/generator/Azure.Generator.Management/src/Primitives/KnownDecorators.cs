@@ -11,8 +11,10 @@ namespace Azure.Generator.Management.Primitives
         public const string ResourceMetadata = "Azure.ClientGenerator.Core.@resourceSchema";
         public const string ArmResourceInternal = "Azure.ResourceManager.Private.@armResourceInternal";
 
+        public const string ResourceClient = "resourceClient";
         public const string ResourceModel = "resourceModel";
         public const string ResourceType = "resourceType";
         public const string IsSingleton = "isSingleton";
+        public const string ResourceScope = "resourceScope";
     }
 }

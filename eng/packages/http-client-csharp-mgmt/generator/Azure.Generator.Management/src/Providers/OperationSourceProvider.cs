@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
-using Azure.Generator.Primitives;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.Primitives;
