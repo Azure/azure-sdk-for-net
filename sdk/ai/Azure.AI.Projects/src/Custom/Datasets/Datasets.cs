@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+# nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,6 +11,7 @@ using Azure.Storage.Blobs;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System.Runtime.InteropServices.ComTypes;
+using System.Reflection;
 
 namespace Azure.AI.Projects
 {
@@ -17,31 +20,43 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
         /// </summary>
-        private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion)
+        private (BlobContainerClient ContainerClient, string OutputVersion) CreateDatasetAndGetContainerClient(string name, string inputVersion, string? connectionName = null)
         {
+            var pendingUploadRequest = new PendingUploadRequest(
+                pendingUploadId: null,
+                connectionName: connectionName,
+                pendingUploadType: PendingUploadType.BlobReference,
+                serializedAdditionalRawData: null);
+
             var pendingUploadResponse = PendingUpload(
-                name,
-                inputVersion,
-                new PendingUploadRequest(null, null, PendingUploadType.BlobReference, null)
+                name: name,
+                version: inputVersion,
+                body: pendingUploadRequest
             );
 
             string outputVersion = inputVersion;
 
-            //if (pendingUploadResponse.Value.BlobReferenceForConsumption == null ||
-            //    pendingUploadResponse.Value.BlobReferenceForConsumption.Credential?.Type != CredentialType.SAS ||
-            //    string.IsNullOrEmpty(pendingUploadResponse.Value.BlobReferenceForConsumption.BlobUri))
-            //{
-            //    throw new InvalidOperationException("Invalid blob reference for consumption.");
-            //}
+            if (pendingUploadResponse.Value.BlobReference == null)
+            {
+                throw new InvalidOperationException("Blob reference is not present.");
+            }
+            if (pendingUploadResponse.Value.BlobReference.Credential == null)
+            {
+                throw new InvalidOperationException("SAS credential are not present.");
+            }
+            if (pendingUploadResponse.Value.BlobReference.Credential.SasUri == null)
+            {
+                throw new InvalidOperationException("SAS URI is missing or empty.");
+            }
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.BlobUri));
+            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.Credential.SasUri));
             return (containerClient, outputVersion);
         }
 
         /// <summary>
         /// Uploads a file to blob storage and creates a dataset that references this file.
         /// </summary>
-        public Response UploadFile(string name, string version, string filePath)
+        public DatasetVersion UploadFile(string name, string version, string filePath, string? connectionName = null)
         {
             if (!File.Exists(filePath))
             {
@@ -49,7 +64,7 @@ namespace Azure.AI.Projects
                 throw new ArgumentException($"The provided file does not exist: {filePath}.");
             }
 
-            var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version);
+            var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version, connectionName);
 
             using (var fileStream = File.OpenRead(filePath))
             {
@@ -57,20 +72,21 @@ namespace Azure.AI.Projects
                 var blobClient = containerClient.GetBlobClient(blobName);
                 blobClient.Upload(fileStream);
 
-                RequestContent content = RequestContent.Create(new FileDatasetVersion(dataUri: blobClient.Uri.AbsoluteUri));
+                var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
+                var dataUri = uriBuilder.Uri.AbsoluteUri;
 
-                return CreateOrUpdate(
-                    name,
-                    outputVersion,
-                    content
-                );
+                RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
+
+                CreateOrUpdate(name, outputVersion, content);
+
+                return GetDataset(name, outputVersion);
             }
         }
 
         /// <summary>
         /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
         /// </summary>
-        public Response UploadFolder(string name, string version, string folderPath)
+        public DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null)
         {
             if (!Directory.Exists(folderPath))
             {
@@ -78,15 +94,16 @@ namespace Azure.AI.Projects
                 throw new ArgumentException($"The provided folder does not exist: {folderPath}");
             }
 
-            var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version);
+            var (containerClient, outputVersion) = CreateDatasetAndGetContainerClient(name, version, connectionName);
 
             var filesUploaded = false;
+            BlobClient? blobClient = null;
             foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
             {
-                var relativePath = GetRelativePath(folderPath, filePath);
+                var relativePath = new Uri(folderPath).MakeRelativeUri(new Uri(filePath));
                 using (var fileStream = File.OpenRead(filePath))
                 {
-                    var blobClient = containerClient.GetBlobClient(relativePath);
+                    blobClient = containerClient.GetBlobClient(relativePath.OriginalString);
                     blobClient.Upload(fileStream);
                     filesUploaded = true;
                 }
@@ -97,35 +114,119 @@ namespace Azure.AI.Projects
                 throw new ArgumentException("The provided folder is empty.");
             }
 
-            RequestContent content = RequestContent.Create(new FolderDatasetVersion(dataUri: containerClient.Uri.AbsoluteUri));
-            return CreateOrUpdate(
-                name,
-                outputVersion,
-                content
-            );
+            var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
+            var dataUri = uriBuilder.Uri.AbsoluteUri;
+
+            RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
+            CreateOrUpdate(name, outputVersion, content);
+
+            return GetDataset(name, outputVersion);
         }
-        public static string GetRelativePath(string folderPath, string filePath)
+
+        /// <summary>
+        /// Internal helper method to create a new dataset and return a BlobContainerClient to the dataset's blob storage.
+        /// </summary>
+        private async Task<(BlobContainerClient ContainerClient, string OutputVersion)> CreateDatasetAndGetContainerClientAsync(string name, string inputVersion, string? connectionName = null)
         {
-            if (string.IsNullOrEmpty(folderPath))
-                throw new ArgumentNullException(nameof(folderPath));
-            if (string.IsNullOrEmpty(filePath))
-                throw new ArgumentNullException(nameof(filePath));
+            var pendingUploadRequest = new PendingUploadRequest(
+                pendingUploadId: null,
+                connectionName: connectionName,
+                pendingUploadType: PendingUploadType.BlobReference,
+                serializedAdditionalRawData: null);
 
-            Uri folderUri = new Uri(folderPath);
-            Uri fileUri = new Uri(filePath);
+            var pendingUploadResponse = await PendingUploadAsync(
+                name: name,
+                version: inputVersion,
+                body: pendingUploadRequest
+            ).ConfigureAwait(false);
 
-            if (folderUri.Scheme != fileUri.Scheme)
-            { return filePath; } // path can't be made relative.
+            string outputVersion = inputVersion;
 
-            Uri relativeUri = folderUri.MakeRelativeUri(fileUri);
-            string relativePath = Uri.UnescapeDataString(relativeUri.AbsoluteUri);
-
-            if (fileUri.Scheme.Equals("file", StringComparison.InvariantCultureIgnoreCase))
+            if (pendingUploadResponse.Value.BlobReference == null)
             {
-                relativePath = relativePath.Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+                throw new InvalidOperationException("Blob reference is not present.");
+            }
+            if (pendingUploadResponse.Value.BlobReference.Credential == null)
+            {
+                throw new InvalidOperationException("SAS credential are not present.");
+            }
+            if (pendingUploadResponse.Value.BlobReference.Credential.SasUri == null)
+            {
+                throw new InvalidOperationException("SAS URI is missing or empty.");
             }
 
-            return relativePath;
+            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.Credential.SasUri));
+            return (containerClient, outputVersion);
+        }
+
+        /// <summary>
+        /// Uploads a file to blob storage and creates a dataset that references this file.
+        /// </summary>
+        public async Task<DatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null)
+        {
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine($"File path: {filePath}");
+                throw new ArgumentException($"The provided file does not exist: {filePath}.");
+            }
+
+            var (containerClient, outputVersion) = await CreateDatasetAndGetContainerClientAsync(name, version, connectionName).ConfigureAwait(false);
+
+            using (var fileStream = File.OpenRead(filePath))
+            {
+                var blobName = Path.GetFileName(filePath);
+                var blobClient = containerClient.GetBlobClient(blobName);
+                await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
+
+                var uriBuilder = new UriBuilder(blobClient.Uri) { Query = "" };
+                var dataUri = uriBuilder.Uri.AbsoluteUri;
+
+                RequestContent content = new FileDatasetVersion(dataUri: dataUri).ToRequestContent();
+
+                await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+
+                return await GetDatasetAsync(name, outputVersion).ConfigureAwait(false);
+            }
+        }
+
+        /// <summary>
+        /// Uploads all files in a folder to blob storage and creates a dataset that references this folder.
+        /// </summary>
+        public async Task<DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                Console.WriteLine($"File path: {folderPath}");
+                throw new ArgumentException($"The provided folder does not exist: {folderPath}");
+            }
+
+            var (containerClient, outputVersion) = await CreateDatasetAndGetContainerClientAsync(name, version, connectionName).ConfigureAwait(false);
+
+            var filesUploaded = false;
+            BlobClient? blobClient = null;
+            foreach (var filePath in Directory.EnumerateFiles(folderPath, "*", SearchOption.AllDirectories))
+            {
+                var relativePath = new Uri(folderPath).MakeRelativeUri(new Uri(filePath));
+                using (var fileStream = File.OpenRead(filePath))
+                {
+                    blobClient = containerClient.GetBlobClient(relativePath.OriginalString);
+                    await blobClient.UploadAsync(fileStream).ConfigureAwait(false);
+                    filesUploaded = true;
+                }
+            }
+
+            if (!filesUploaded)
+            {
+                throw new ArgumentException("The provided folder is empty.");
+            }
+
+            var uriBuilder = new UriBuilder(blobClient!.Uri) { Query = "" };
+            var dataUri = uriBuilder.Uri.AbsoluteUri;
+
+            RequestContent content = new FolderDatasetVersion(dataUri: dataUri).ToRequestContent();
+            await CreateOrUpdateAsync(name, outputVersion, content).ConfigureAwait(false);
+
+            return await GetDatasetAsync(name, outputVersion).ConfigureAwait(false);
         }
     }
 }
