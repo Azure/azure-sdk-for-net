@@ -4,18 +4,26 @@
 #nullable disable
 
 using System;
-using Azure.Identity;
 using NUnit.Framework;
 using System.Threading.Tasks;
-using Azure.AI.Inference;
 using Azure.Core.TestFramework;
 using System.IO;
-using System.Reflection;
+using System.Runtime.CompilerServices;
+using Azure.Identity;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Projects.Tests
 {
     public class Sample_Datasets : SamplesBase<AIProjectsTestEnvironment>
     {
+        private static string GetFile([CallerFilePath] string pth = "", string file="")
+        {
+            var dirName = Path.GetDirectoryName(pth) ?? "";
+            return Path.Combine(dirName, file);
+        }
+
         [Test]
         [SyncOnly]
         public void DatasetsExample()
@@ -28,14 +36,16 @@ namespace Azure.AI.Projects.Tests
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var datasetName = TestEnvironment.DATASETNAME;
 #endif
-            AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+            AIProjectClient projectClient = new(new Uri(endpoint), new AzureCliCredential());
+            //Pageable<Connection> conns = projectClient.GetConnectionsClient().GetConnections();
+            //IEnumerable<Connection> lstConn = conns.ToList();
             Datasets datasets = projectClient.GetDatasetsClient();
 
             Console.WriteLine("Uploading a single file to create Dataset version '1'...");
             var datasetResponse = datasets.UploadFile(
                 name: datasetName,
                 version: "1",
-                filePath: "sample_folder/sample_file1.txt"
+                filePath: GetFile(file: "sample_folder/sample_file1.txt")
                 );
             Console.WriteLine(datasetResponse);
 
@@ -43,7 +53,7 @@ namespace Azure.AI.Projects.Tests
             datasetResponse = datasets.UploadFolder(
                 name: datasetName,
                 version: "2",
-                folderPath: "sample_folder"
+                folderPath: GetFile("sample_folder")
             );
             Console.WriteLine(datasetResponse);
 
@@ -60,6 +70,11 @@ namespace Azure.AI.Projects.Tests
             Console.WriteLine($"Listing latest versions for all datasets:");
             foreach (var ds in datasets.GetDatasetVersions())
             {
+                AssetCredentialResponse credentials = datasets.GetCredentials(
+                    name: ds.Name,
+                    version: ds.Version
+                );
+                Console.WriteLine($"Blob URI: {credentials.BlobReference.BlobUri}");
                 Console.WriteLine(ds);
             }
 

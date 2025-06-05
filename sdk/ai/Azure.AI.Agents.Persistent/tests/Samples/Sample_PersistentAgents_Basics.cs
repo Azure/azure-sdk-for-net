@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Agents.Persistent.Tests;
@@ -27,7 +28,7 @@ public partial class Sample_PersistentAgents_Basics : SamplesBase<AIAgentsTestEn
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
+        PersistentAgentsClient client = new(projectEndpoint, new AzureCliCredential());
         #endregion
 
         // Step 1: Create an agent
