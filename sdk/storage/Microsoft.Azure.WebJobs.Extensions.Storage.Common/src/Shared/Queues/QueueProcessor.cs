@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         /// <param name="message">The poison message.</param>
         /// <param name="poisonQueue">The poison queue to copy the message to.</param>
-        /// /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// Delete the specified message.
         /// </summary>
         /// <param name="message">The message to delete.</param>
-        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use, should not be set here</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use</param>
         /// <returns></returns>
         protected virtual async Task DeleteMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
