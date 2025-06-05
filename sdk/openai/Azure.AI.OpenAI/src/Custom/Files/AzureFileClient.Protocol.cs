@@ -1,13 +1,103 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Files;
 
 internal partial class AzureFileClient : OpenAIFileClient
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientResult DeleteFile(string fileId, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+        using PipelineMessage message = CreateDeleteRequestMessage(fileId, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override async Task<ClientResult> DeleteFileAsync(string fileId, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+        using PipelineMessage message = CreateDeleteRequestMessage(fileId, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientResult DownloadFile(string fileId, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+        using PipelineMessage message = CreateDownloadContentRequestMessage(fileId, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override async Task<ClientResult> DownloadFileAsync(string fileId, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+        using PipelineMessage message = CreateDownloadContentRequestMessage(fileId, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientResult GetFile(string fileId, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+        using PipelineMessage message = CreateGetFileRequestMessage(fileId, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override async Task<ClientResult> GetFileAsync(string fileId, RequestOptions options)
+    {
+        Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+
+        using PipelineMessage message = CreateGetFileRequestMessage(fileId, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientResult GetFiles(string purpose, RequestOptions options)
+    {
+        using PipelineMessage message = CreateGetFilesRequestMessage(purpose, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override async Task<ClientResult> GetFilesAsync(string purpose, RequestOptions options)
+    {
+        using PipelineMessage message = CreateGetFilesRequestMessage(purpose, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientResult UploadFile(BinaryContent content, string contentType, RequestOptions options = null)
+    {
+        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+        using PipelineMessage message = CreateUploadRequestMessage(content, contentType, options);
+        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
+    }
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override async Task<ClientResult> UploadFileAsync(BinaryContent content, string contentType, RequestOptions options = null)
+    {
+        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNullOrEmpty(contentType, nameof(contentType));
+
+        using PipelineMessage message = CreateUploadRequestMessage(content, contentType, options);
+        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+    }
+
     public override async Task<ClientResult> CreateUploadAsync(BinaryContent content, RequestOptions options = null)
     {
         Argument.AssertNotNull(content, nameof(content));
@@ -60,34 +150,7 @@ internal partial class AzureFileClient : OpenAIFileClient
         return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
     }
 
-    public override async Task<ClientResult> CompleteUploadAsync(string uploadId, BinaryContent content, RequestOptions options = null)
-    {
-        Argument.AssertNotNullOrEmpty(uploadId, nameof(uploadId));
-        Argument.AssertNotNull(content, nameof(content));
-
-        using PipelineMessage message = CreateCompleteUploadRequestMessage(uploadId, content, options);
-        return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
-    }
-
-    public override ClientResult CompleteUpload(string uploadId, BinaryContent content, RequestOptions options = null)
-    {
-        Argument.AssertNotNullOrEmpty(uploadId, nameof(uploadId));
-        Argument.AssertNotNull(content, nameof(content));
-
-        using PipelineMessage message = CreateCompleteUploadRequestMessage(uploadId, content, options);
-        return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-    }
-
-    internal override PipelineMessage CreateCreateFileRequest(BinaryContent content, string contentType, RequestOptions options)
-        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
-            .WithMethod("POST")
-            .WithPath("files")
-            .WithContent(content, contentType)
-            .WithAccept("application/json")
-            .WithOptions(options)
-            .Build();
-
-    internal override PipelineMessage CreateDeleteFileRequest(string fileId, RequestOptions options)
+    private PipelineMessage CreateDeleteRequestMessage(string fileId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("DELETE")
             .WithPath("files", fileId)
@@ -95,7 +158,7 @@ internal partial class AzureFileClient : OpenAIFileClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateDownloadFileRequest(string fileId, RequestOptions options)
+    private PipelineMessage CreateDownloadContentRequestMessage(string fileId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
             .WithPath("files", fileId, "content")
@@ -103,7 +166,7 @@ internal partial class AzureFileClient : OpenAIFileClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateRetrieveFileRequest(string fileId, RequestOptions options)
+    private PipelineMessage CreateGetFileRequestMessage(string fileId, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
             .WithPath("files", fileId)
@@ -111,12 +174,21 @@ internal partial class AzureFileClient : OpenAIFileClient
             .WithOptions(options)
             .Build();
 
-    internal override PipelineMessage CreateListFilesRequest(string purpose, RequestOptions options)
+    private PipelineMessage CreateGetFilesRequestMessage(string purpose, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("GET")
             .WithPath("files")
             .WithAccept("application/json")
             .WithOptionalQueryParameter("purpose", purpose)
+            .WithOptions(options)
+            .Build();
+
+    private PipelineMessage CreateUploadRequestMessage(BinaryContent content, string contentType, RequestOptions options)
+        => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
+            .WithMethod("POST")
+            .WithPath("files")
+            .WithContent(content, contentType)
+            .WithAccept("application/json")
             .WithOptions(options)
             .Build();
 
@@ -129,7 +201,7 @@ internal partial class AzureFileClient : OpenAIFileClient
             .WithOptions(options)
             .Build();
 
-    private PipelineMessage CreateAddUploadPartRequestMessage(string uploadId, BinaryContent content, string contentType, RequestOptions options)
+    internal PipelineMessage CreateAddUploadPartRequestMessage(string uploadId, BinaryContent content, string contentType, RequestOptions options)
         => new AzureOpenAIPipelineMessageBuilder(Pipeline, _endpoint, _apiVersion)
             .WithMethod("POST")
             .WithPath($"uploads/{uploadId}/parts")

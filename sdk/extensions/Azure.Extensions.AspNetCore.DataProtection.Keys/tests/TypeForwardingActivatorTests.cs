@@ -1,11 +1,11 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Azure.Core.TestFramework;
+using Azure.Identity;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.DataProtection.Internal;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,17 +20,16 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
         {
             // Arrange
             var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDataProtection().ProtectKeysWithAzureKeyVault(new Uri("http://localhost"), new MockCredential());
-
+            serviceCollection.AddDataProtection().ProtectKeysWithAzureKeyVault(new Uri("http://localhost"), new DefaultAzureCredential());
             var services = serviceCollection.BuildServiceProvider();
             var activator = services.GetRequiredService<IActivator>();
 
             // Act
-            const string name = "Microsoft.AspNetCore.DataProtection.AzureKeyVault.AzureKeyVaultXmlDecryptor, Microsoft.AspNetCore.DataProtection.AzureKeyVault, Version=1.0.0.0";
+            var name = "Microsoft.AspNetCore.DataProtection.AzureKeyVault.AzureKeyVaultXmlDecryptor, Microsoft.AspNetCore.DataProtection.AzureKeyVault, Version=1.0.0.0";
             var instance = activator.CreateInstance(typeof(object), name);
 
             // Assert
-            Assert.IsInstanceOf<AzureKeyVaultXmlDecryptor>(instance);
+            Assert.IsInstanceOf<Azure.Extensions.AspNetCore.DataProtection.Keys.AzureKeyVaultXmlDecryptor>(instance);
         }
 
         [Test]
@@ -39,15 +38,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             // Arrange
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddDataProtection();
-
             var services = serviceCollection.BuildServiceProvider();
             var activator = services.GetRequiredService<IActivator>();
 
             // Act & Assert
-            const string name = "Microsoft.AspNet.DataProtection.TypeForwardingActivatorTests+NonExistentClassWithParameterlessCtor, Microsoft.AspNet.DataProtection.Tests";
-            var ex = Assert.Throws<FileNotFoundException>(() => activator.CreateInstance(typeof(object), name));
-            Assert.IsNotNull(ex);
-            StringAssert.Contains("Microsoft.AspNet.DataProtection.Test", ex.Message);
+            var name = "Microsoft.AspNet.DataProtection.TypeForwardingActivatorTests+NonExistentClassWithParameterlessCtor, Microsoft.AspNet.DataProtection.Tests";
+            var exception = Assert.Throws<FileNotFoundException>(() => activator.CreateInstance(typeof(object), name));
+
+            StringAssert.Contains("Microsoft.AspNet.DataProtection.Test", exception.Message);
         }
 
         [TestCase(typeof(GenericType<GenericType<ClassWithParameterlessCtor>>))]
@@ -64,7 +62,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var name = type.AssemblyQualifiedName;
 
             // Act & Assert
-            Assert.IsNotNull(name);
             Assert.IsInstanceOf(type, activator.CreateInstance(typeof(object), name));
         }
 
@@ -77,7 +74,6 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             var name = type.AssemblyQualifiedName;
 
             // Act & Assert
-            Assert.IsNotNull(name);
             Assert.Throws<ArgumentException>(() => activator.CreateInstance(typeof(object), name));
         }
 
@@ -109,7 +105,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             CreateInstance_ForwardsAcrossVersionChangesImpl(version);
         }
 
-        private static void CreateInstance_ForwardsAcrossVersionChangesImpl(Version newVersion)
+        private void CreateInstance_ForwardsAcrossVersionChangesImpl(Version newVersion)
         {
             var activator = new DecryptorTypeForwardingActivator(null);
 
@@ -125,15 +121,18 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Keys.Tests
             Assert.True(forwarded);
         }
 
-        public static IEnumerable<Version[]> AssemblyVersions
+        public static Version[][] AssemblyVersions
         {
             get
             {
-                var current = typeof(ClassWithParameterlessCtor).Assembly.GetName().Version!;
-                yield return [new Version(Math.Max(0, current.Major - 1), 0, 0, 0)];
-                yield return [new Version(current.Major + 1, 0, 0, 0)];
-                yield return [new Version(current.Major, current.Minor + 1, 0, 0)];
-                yield return [new Version(current.Major, current.Minor, current.Build + 1, 0)];
+                var current = typeof(ClassWithParameterlessCtor).Assembly.GetName().Version;
+                return new[]
+                {
+                    new[] { new Version(Math.Max(0, current.Major - 1), 0, 0, 0)},
+                    new[] { new Version(current.Major + 1, 0, 0, 0)},
+                    new[] { new Version(current.Major, current.Minor + 1, 0, 0)},
+                    new[] { new Version(current.Major, current.Minor, current.Build + 1, 0)}
+                };
             }
         }
 

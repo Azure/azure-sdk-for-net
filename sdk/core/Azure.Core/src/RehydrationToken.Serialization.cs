@@ -140,7 +140,7 @@ namespace Azure.Core
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCoreContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(RehydrationToken)} does not support '{options.Format}' format.");
             }

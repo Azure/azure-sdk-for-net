@@ -60,11 +60,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("acquireStorageAccountLock"u8);
                 writer.WriteStringValue(AcquireStorageAccountLock.Value.ToString());
             }
-            if (Optional.IsDefined(OperationType))
-            {
-                writer.WritePropertyName("operationType"u8);
-                writer.WriteStringValue(OperationType.Value.ToString());
-            }
         }
 
         StorageContainer IJsonModel<StorageContainer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -92,7 +87,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string resourceGroup = default;
             long? protectedItemCount = default;
             AcquireStorageAccountLock? acquireStorageAccountLock = default;
-            WorkloadOperationType? operationType = default;
             string friendlyName = default;
             BackupManagementType? backupManagementType = default;
             string registrationStatus = default;
@@ -138,15 +132,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     acquireStorageAccountLock = new AcquireStorageAccountLock(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("operationType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    operationType = new WorkloadOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("friendlyName"u8))
@@ -201,8 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 storageAccountVersion,
                 resourceGroup,
                 protectedItemCount,
-                acquireStorageAccountLock,
-                operationType);
+                acquireStorageAccountLock);
         }
 
         BinaryData IPersistableModel<StorageContainer>.Write(ModelReaderWriterOptions options)
@@ -212,7 +196,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageContainer)} does not support writing '{options.Format}' format.");
             }

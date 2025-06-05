@@ -46,25 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
-        /// <param name="experimentId"> The ID of the experiment that the Machine Learning Run belongs to. </param>
-        /// <param name="experimentName"> The name of the experiment that the Machine Learning Run belongs to. </param>
-        /// <param name="runId"> The ID of the Machine Learning Run. </param>
-        /// <param name="runType"> The Run Type of the Machine Learning Run. </param>
-        /// <param name="runStatus"> The status of the Machine Learning Run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentId"/>, <paramref name="experimentName"/>, <paramref name="runId"/>, <paramref name="runType"/> or <paramref name="runStatus"/> is null. </exception>
-        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, string runStatus)
+        /// <param name="runTags"> The tags of the Machine Learning Run. </param>
+        /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runTags"/> or <paramref name="runProperties"/> is null. </exception>
+        internal MachineLearningServicesRunStatusChangedEventData(IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties)
         {
-            Argument.AssertNotNull(experimentId, nameof(experimentId));
-            Argument.AssertNotNull(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(runId, nameof(runId));
-            Argument.AssertNotNull(runType, nameof(runType));
-            Argument.AssertNotNull(runStatus, nameof(runStatus));
+            Argument.AssertNotNull(runTags, nameof(runTags));
+            Argument.AssertNotNull(runProperties, nameof(runProperties));
 
-            ExperimentId = experimentId;
-            ExperimentName = experimentName;
-            RunId = runId;
-            RunType = runType;
-            RunStatus = runStatus;
+            RunTags = runTags;
+            RunProperties = runProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunStatusChangedEventData"/>. </summary>
@@ -76,7 +67,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runProperties"> The properties of the Machine Learning Run. </param>
         /// <param name="runStatus"> The status of the Machine Learning Run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, string runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningServicesRunStatusChangedEventData(string experimentId, string experimentName, string runId, string runType, IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties, string runStatus, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExperimentId = experimentId;
             ExperimentName = experimentName;
@@ -101,6 +92,68 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string RunId { get; }
         /// <summary> The Run Type of the Machine Learning Run. </summary>
         public string RunType { get; }
+        /// <summary>
+        /// The tags of the Machine Learning Run.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> RunTags { get; }
+        /// <summary>
+        /// The properties of the Machine Learning Run.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> RunProperties { get; }
         /// <summary> The status of the Machine Learning Run. </summary>
         public string RunStatus { get; }
     }

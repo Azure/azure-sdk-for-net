@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlConfigurationResource IOperationSource<PostgreSqlConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<PostgreSqlConfigurationData>(response.Content);
             return new PostgreSqlConfigurationResource(_client, data);
         }
 
         async ValueTask<PostgreSqlConfigurationResource> IOperationSource<PostgreSqlConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<PostgreSqlConfigurationData>(response.Content);
             return await Task.FromResult(new PostgreSqlConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

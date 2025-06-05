@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningComputeContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ErrorResponseWrapper)} does not support writing '{options.Format}' format.");
             }

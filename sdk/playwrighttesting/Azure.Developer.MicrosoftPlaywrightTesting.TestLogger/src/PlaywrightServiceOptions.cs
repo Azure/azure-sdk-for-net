@@ -89,6 +89,10 @@ public class PlaywrightServiceOptions
         {
             return new VisualStudioCredential();
         }
+        else if (azureTokenCredentialType == AzureTokenCredentialType.VisualStudioCodeCredential)
+        {
+            return new VisualStudioCodeCredential();
+        }
         else if (azureTokenCredentialType == AzureTokenCredentialType.InteractiveBrowserCredential)
         {
             return new InteractiveBrowserCredential();

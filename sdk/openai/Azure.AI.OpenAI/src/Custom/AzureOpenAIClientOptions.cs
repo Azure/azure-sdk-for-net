@@ -3,7 +3,6 @@
 
 using Azure.AI.OpenAI.Files;
 using Azure.AI.OpenAI.RealtimeConversation;
-using Azure.AI.OpenAI.Responses;
 using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI;
@@ -90,7 +89,6 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
 #if !AZURE_OPENAI_GA
         V2024_12_01_Preview = 5,
         V2025_01_01_Preview = 6,
-        V2025_03_01_Preview = 8,
 #endif
     }
 
@@ -108,7 +106,6 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
 #if !AZURE_OPENAI_GA
             ServiceVersion.V2024_12_01_Preview => "2024-12-01-preview",
             ServiceVersion.V2025_01_01_Preview => "2025-01-01-preview",
-            ServiceVersion.V2025_03_01_Preview => "2025-03-01-preview",
 #endif
             _ => throw new NotSupportedException($"The specified {nameof(ServiceVersion)} value ({version}) is not supported.")
         };
@@ -131,7 +128,7 @@ public partial class AzureOpenAIClientOptions : ClientPipelineOptions
 #endif
 #if !AZURE_OPENAI_GA
                 // Standard default for beta libraries: latest preview version
-                _ => ServiceVersion.V2025_03_01_Preview,
+                _ => ServiceVersion.V2025_01_01_Preview,
 #else
                 // Standard default for GA libraries: latest stable version
                 _ => ServiceVersion.V2024_10_21,

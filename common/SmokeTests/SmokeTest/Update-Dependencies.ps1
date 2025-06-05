@@ -15,7 +15,6 @@ param(
 $packageExcludeSet = @(
     "Microsoft.Azure.WebPubSub.AspNetCore",
     "Microsoft.WCF.Azure.StorageQueues",
-    "Azure.Projects.Web",
     "OpenAI"
 )
 

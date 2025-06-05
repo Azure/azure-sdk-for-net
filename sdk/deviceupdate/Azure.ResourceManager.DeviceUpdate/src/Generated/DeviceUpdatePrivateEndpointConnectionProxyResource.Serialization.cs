@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DeviceUpdate
 {
     public partial class DeviceUpdatePrivateEndpointConnectionProxyResource : IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>
     {
-        private static DeviceUpdatePrivateEndpointConnectionProxyData s_dataDeserializationInstance;
-        private static DeviceUpdatePrivateEndpointConnectionProxyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>)Data).Write(writer, options);
 
-        DeviceUpdatePrivateEndpointConnectionProxyData IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>)DataDeserializationInstance).Create(ref reader, options);
+        DeviceUpdatePrivateEndpointConnectionProxyData IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionProxyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeviceUpdatePrivateEndpointConnectionProxyData>(Data, options, AzureResourceManagerDeviceUpdateContext.Default);
+        BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeviceUpdatePrivateEndpointConnectionProxyData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionProxyData>(data, options, AzureResourceManagerDeviceUpdateContext.Default);
+        DeviceUpdatePrivateEndpointConnectionProxyData IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeviceUpdatePrivateEndpointConnectionProxyData>(data, options);
 
-        string IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>)Data).GetFormatFromOptions(options);
     }
 }

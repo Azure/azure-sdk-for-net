@@ -35,13 +35,13 @@ namespace Azure.Health.Deidentification
             }
 
             writer.WritePropertyName("successful"u8);
-            writer.WriteNumberValue(SuccessfulCount);
+            writer.WriteNumberValue(Successful);
             writer.WritePropertyName("failed"u8);
-            writer.WriteNumberValue(FailedCount);
+            writer.WriteNumberValue(Failed);
             writer.WritePropertyName("canceled"u8);
-            writer.WriteNumberValue(CanceledCount);
+            writer.WriteNumberValue(Canceled);
             writer.WritePropertyName("total"u8);
-            writer.WriteNumberValue(TotalCount);
+            writer.WriteNumberValue(Total);
             writer.WritePropertyName("bytesProcessed"u8);
             writer.WriteNumberValue(BytesProcessed);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -137,7 +137,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeidentificationJobSummary)} does not support writing '{options.Format}' format.");
             }

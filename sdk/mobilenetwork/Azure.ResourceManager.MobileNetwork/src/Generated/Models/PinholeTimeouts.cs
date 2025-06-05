@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second. </summary>
+    /// <summary>
+    /// Expiry times of inactive NAPT pinholes, in seconds. All timers must be at least 1 second.
+    /// Serialized Name: PinholeTimeouts
+    /// </summary>
     public partial class PinholeTimeouts
     {
         /// <summary>
@@ -51,9 +54,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PinholeTimeouts"/>. </summary>
-        /// <param name="tcp"> Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes. </param>
-        /// <param name="udp"> Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds. </param>
-        /// <param name="icmp"> Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds. </param>
+        /// <param name="tcp">
+        /// Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes.
+        /// Serialized Name: PinholeTimeouts.tcp
+        /// </param>
+        /// <param name="udp">
+        /// Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds.
+        /// Serialized Name: PinholeTimeouts.udp
+        /// </param>
+        /// <param name="icmp">
+        /// Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds.
+        /// Serialized Name: PinholeTimeouts.icmp
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PinholeTimeouts(int? tcp, int? udp, int? icmp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,13 +75,22 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes. </summary>
+        /// <summary>
+        /// Pinhole timeout for TCP pinholes in seconds. Default for TCP is 3 minutes.
+        /// Serialized Name: PinholeTimeouts.tcp
+        /// </summary>
         [WirePath("tcp")]
         public int? Tcp { get; set; }
-        /// <summary> Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds. </summary>
+        /// <summary>
+        /// Pinhole timeout for UDP pinholes in seconds. Default for UDP is 30 seconds.
+        /// Serialized Name: PinholeTimeouts.udp
+        /// </summary>
         [WirePath("udp")]
         public int? Udp { get; set; }
-        /// <summary> Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds. </summary>
+        /// <summary>
+        /// Pinhole timeout for ICMP pinholes in seconds. Default for ICMP Echo is 30 seconds.
+        /// Serialized Name: PinholeTimeouts.icmp
+        /// </summary>
         [WirePath("icmp")]
         public int? Icmp { get; set; }
     }

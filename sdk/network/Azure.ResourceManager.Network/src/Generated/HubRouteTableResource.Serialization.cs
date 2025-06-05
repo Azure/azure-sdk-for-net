@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class HubRouteTableResource : IJsonModel<HubRouteTableData>
     {
-        private static HubRouteTableData s_dataDeserializationInstance;
-        private static HubRouteTableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HubRouteTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HubRouteTableData>)Data).Write(writer, options);
 
-        HubRouteTableData IJsonModel<HubRouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubRouteTableData>)DataDeserializationInstance).Create(ref reader, options);
+        HubRouteTableData IJsonModel<HubRouteTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HubRouteTableData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HubRouteTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HubRouteTableData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<HubRouteTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HubRouteTableData IPersistableModel<HubRouteTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubRouteTableData>(data, options, AzureResourceManagerNetworkContext.Default);
+        HubRouteTableData IPersistableModel<HubRouteTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HubRouteTableData>(data, options);
 
-        string IPersistableModel<HubRouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubRouteTableData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HubRouteTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HubRouteTableData>)Data).GetFormatFromOptions(options);
     }
 }

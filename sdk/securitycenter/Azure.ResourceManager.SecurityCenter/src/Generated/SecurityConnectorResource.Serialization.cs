@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityConnectorResource : IJsonModel<SecurityConnectorData>
     {
-        private static SecurityConnectorData s_dataDeserializationInstance;
-        private static SecurityConnectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityConnectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorData>)Data).Write(writer, options);
 
-        SecurityConnectorData IJsonModel<SecurityConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityConnectorData IJsonModel<SecurityConnectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityConnectorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityConnectorData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityConnectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityConnectorData IPersistableModel<SecurityConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityConnectorData IPersistableModel<SecurityConnectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityConnectorData>(data, options);
 
-        string IPersistableModel<SecurityConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityConnectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityConnectorData>)Data).GetFormatFromOptions(options);
     }
 }

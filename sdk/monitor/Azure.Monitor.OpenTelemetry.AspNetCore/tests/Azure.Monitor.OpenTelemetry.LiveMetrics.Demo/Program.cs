@@ -2,76 +2,63 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry;
-using OpenTelemetry.Resources;
-using Azure.Monitor.OpenTelemetry.Exporter;
-using System.Threading;
-using System.Diagnostics.Metrics;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 {
     internal class Program
     {
         private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
-        private const string MeterName = "MyCompany.MyProduct.MyLibrary";
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
-        private static readonly Meter s_meter = new(MeterName);
-        private static ILogger? s_logger;
+        private static ILogger? _logger;
 
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
-        private static readonly Random s_random = new();
+        private static readonly Random _random = new();
 
-        private const int ChunkSizeMB = 100;
-        private static long s_totalMemoryAllocated = 0;
+        private const int chunkSizeMB = 100;
+        private static long totalMemoryAllocated = 0;
 
         public static async Task Main(string[] args)
         {
-            HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+            var options = new AzureMonitorLiveMetricsOptions
+            {
+                ConnectionString = ConnectionString
+            };
 
-            builder.Services.AddOpenTelemetry()
-                .ConfigureResource(r => r.AddAttributes(new Dictionary<string, object>
-                {
-                    { "service.name", "my-service" },
-                    { "service.namespace", "my-namespace" },
-                    { "service.instance.id", "my-instance" },
-                    { "service.version", "1.0.0-demo" },
-                }))
-                .UseAzureMonitorExporter(o => o.ConnectionString = ConnectionString)
-                .WithTracing(tracing => tracing.AddSource(ActivitySourceName))
-                .WithMetrics(metrics => metrics.AddMeter(MeterName));
+            var manager = new LiveMetricsClientManager(options, new DefaultPlatformLiveMetrics());
 
-            using var host = builder.Build();
-            using var cancellationTokenSource = new CancellationTokenSource();
-            var hostLifetime = host.RunAsync(cancellationTokenSource.Token);
+            using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
+                .AddSource(ActivitySourceName)
+                .AddProcessor(new LiveMetricsActivityProcessor(manager))
+                .Build();
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder.AddOpenTelemetry(options => options.AddProcessor(new LiveMetricsLogProcessor(manager)));
+            });
+            _logger = loggerFactory.CreateLogger<Program>();
 
             Console.WriteLine("Press any key to stop the loop.");
-
-            // Get the logger from the host's service provider
-            s_logger = host.Services.GetRequiredService<ILogger<Program>>();
 
             // Loop until a key is pressed
             while (!Console.KeyAvailable)
             {
                 await GenerateTelemetry();
-                await GenerateMetrics();
-                Task.Delay(200).Wait();
+                System.Threading.Thread.Sleep(200);
             }
 
             Console.WriteLine("Key pressed. Exiting the loop.");
-
-            // Signal the host to stop
-            cancellationTokenSource.Cancel();
-            await hostLifetime;
         }
 
-        private static bool GetRandomBool(int percent) => percent > s_random.Next(0, 100);
+        private static bool GetRandomBool(int percent) => percent > _random.Next(0, 100);
 
         private static async Task GenerateTelemetry()
         {
@@ -79,9 +66,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             if (GetRandomBool(percent: 50))
             {
                 // this will generate memory pressure
-                memoryChunk = new byte[ChunkSizeMB * 1024 * 1024];
-                s_totalMemoryAllocated += memoryChunk.Length;
-                Console.WriteLine("Total memory allocated: " + s_totalMemoryAllocated / 1024 / 1024 + " MB");
+                memoryChunk = new byte[chunkSizeMB * 1024 * 1024];
+                totalMemoryAllocated += memoryChunk.Length;
+                Console.WriteLine("Total memory allocated: " + totalMemoryAllocated / 1024 / 1024 + " MB");
             }
 
             if (GetRandomBool(percent: 5))
@@ -153,7 +140,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             {
                 Console.WriteLine("Log");
 
-                s_logger?.Log(
+                _logger?.Log(
                     logLevel: LogLevel.Information,
                     eventId: 1,
                     exception: null,
@@ -170,7 +157,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                     }
                     catch (Exception ex)
                     {
-                        s_logger?.Log(
+                        _logger?.Log(
                             logLevel: LogLevel.Error,
                             eventId: 2,
                             exception: ex,
@@ -206,46 +193,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
             }
 
             await Task.WhenAll(tasks);
-        }
-
-        private static Task GenerateMetrics()
-        {
-            return Task.Run(() =>
-            {
-                // Counter Example
-                Counter<long> myFruitCounter = s_meter.CreateCounter<long>("MyFruitCounter");
-
-                myFruitCounter.Add(1, new("name", "apple"), new("color", "red"));
-                myFruitCounter.Add(2, new("name", "lemon"), new("color", "yellow"));
-                myFruitCounter.Add(1, new("name", "lemon"), new("color", "yellow"));
-                myFruitCounter.Add(2, new("name", "apple"), new("color", "green"));
-                myFruitCounter.Add(5, new("name", "apple"), new("color", "red"));
-                myFruitCounter.Add(4, new("name", "lemon"), new("color", "yellow"));
-
-                // Histogram Example
-                Histogram<long> myFruitSalePrice = s_meter.CreateHistogram<long>("MyFruitSalePrice");
-
-                var random = new Random();
-                myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
-                myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
-                myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
-                myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "green"));
-                myFruitSalePrice.Record(random.Next(1, 1000), new("name", "apple"), new("color", "red"));
-                myFruitSalePrice.Record(random.Next(1, 1000), new("name", "lemon"), new("color", "yellow"));
-
-                // Gauge Example
-                var process = Process.GetCurrentProcess();
-
-                ObservableGauge<int> myObservableGauge = s_meter.CreateObservableGauge("Thread.State", () => GetThreadState(process));
-            });
-        }
-
-        private static IEnumerable<Measurement<int>> GetThreadState(Process process)
-        {
-            foreach (ProcessThread thread in process.Threads)
-            {
-                yield return new((int)thread.ThreadState, new("ProcessId", process.Id), new("ThreadId", thread.Id));
-            }
         }
     }
 }

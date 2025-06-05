@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteCustomDomainOverviewResource IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(response.Content);
             return new StaticSiteCustomDomainOverviewResource(_client, data);
         }
 
         async ValueTask<StaticSiteCustomDomainOverviewResource> IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(response.Content);
             return await Task.FromResult(new StaticSiteCustomDomainOverviewResource(_client, data)).ConfigureAwait(false);
         }
     }

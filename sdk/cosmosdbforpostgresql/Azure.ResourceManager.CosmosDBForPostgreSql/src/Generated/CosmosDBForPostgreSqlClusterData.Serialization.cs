@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBForPostgreSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlClusterData)} does not support writing '{options.Format}' format.");
             }

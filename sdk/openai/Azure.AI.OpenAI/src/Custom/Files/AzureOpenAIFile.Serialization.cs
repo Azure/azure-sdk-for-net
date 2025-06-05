@@ -74,7 +74,7 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
                 }
                 writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
                 using (JsonDocument document = JsonDocument.Parse(item.Value))
                 {
@@ -87,22 +87,18 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
     }
 
     // CUSTOM: Recovered the deserialization of SerializedAdditionalRawData. See https://github.com/Azure/autorest.csharp/issues/4636.
-    internal static AzureOpenAIFile DeserializeAzureOpenAIFile(JsonElement element, ModelReaderWriterOptions options)
+    internal static AzureOpenAIFile DeserializeAzureOpenAIFile(JsonElement element, ModelReaderWriterOptions options = null)
     {
-        if (element.ValueKind == JsonValueKind.Null)
-        {
-            return null;
-        }
         string id = default;
         int? bytes = default;
         DateTimeOffset createdAt = default;
-        DateTimeOffset? expiresAt = default;
         string filename = default;
-        string statusDetails = default;
-        AzureOpenAIFileStatus azureStatus = default;
-        string purpose = default;
         string @object = default;
-        IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+        string purpose = default;
+        string statusDetails = default;
+        AzureOpenAIFileStatus status = default;
+        IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+        Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
         foreach (var property in element.EnumerateObject())
         {
             if (property.NameEquals("id"u8))
@@ -125,18 +121,19 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
                 createdAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
                 continue;
             }
-            if (property.NameEquals("expires_at"u8))
-            {
-                if (property.Value.ValueKind == JsonValueKind.Null)
-                {
-                    continue;
-                }
-                expiresAt = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
-                continue;
-            }
             if (property.NameEquals("filename"u8))
             {
                 filename = property.Value.GetString();
+                continue;
+            }
+            if (property.NameEquals("object"u8))
+            {
+                @object = property.Value.GetString();
+                continue;
+            }
+            if (property.NameEquals("purpose"u8))
+            {
+                purpose = property.Value.GetString();
                 continue;
             }
             if (property.NameEquals("status_details"u8))
@@ -146,35 +143,26 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
             }
             if (property.NameEquals("status"u8))
             {
-                azureStatus = property.Value.GetString().ToAzureOpenAIFileStatus();
+                status = property.Value.GetString().ToAzureOpenAIFileStatus();
                 continue;
             }
-            if (property.NameEquals("purpose"u8))
+            if (options.Format != "W")
             {
-                purpose = property.Value.GetString();
-                continue;
-            }
-            if (property.NameEquals("object"u8))
-            {
-                @object = property.Value.GetString();
-                continue;
-            }
-            // if (options.Format != "W")
-            {
-                additionalBinaryDataProperties.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                rawDataDictionary ??= new Dictionary<string, BinaryData>();
+                rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
         }
+        serializedAdditionalRawData = rawDataDictionary;
         return new AzureOpenAIFile(
             id,
             bytes,
             createdAt,
-            expiresAt,
             filename,
             @object,
             purpose,
             statusDetails,
-            azureStatus,
-            additionalBinaryDataProperties);
+            status,
+            serializedAdditionalRawData);
     }
 
     void IJsonModel<AzureOpenAIFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -196,7 +184,7 @@ internal partial class AzureOpenAIFile : IJsonModel<AzureOpenAIFile>
     internal static AzureOpenAIFile FromResponse(PipelineResponse response)
     {
         using var document = JsonDocument.Parse(response.Content);
-        return DeserializeAzureOpenAIFile(document.RootElement, ModelSerializationExtensions.WireOptions);
+        return DeserializeAzureOpenAIFile(document.RootElement);
     }
 
     /// <summary> Convert into a <see cref="BinaryContent"/>. </summary>

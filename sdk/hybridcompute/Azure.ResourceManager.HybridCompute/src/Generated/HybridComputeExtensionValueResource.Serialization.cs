@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputeExtensionValueResource : IJsonModel<HybridComputeExtensionValueData>
     {
-        private static HybridComputeExtensionValueData s_dataDeserializationInstance;
-        private static HybridComputeExtensionValueData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HybridComputeExtensionValueData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeExtensionValueData>)Data).Write(writer, options);
 
-        HybridComputeExtensionValueData IJsonModel<HybridComputeExtensionValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeExtensionValueData>)DataDeserializationInstance).Create(ref reader, options);
+        HybridComputeExtensionValueData IJsonModel<HybridComputeExtensionValueData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputeExtensionValueData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridComputeExtensionValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputeExtensionValueData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
+        BinaryData IPersistableModel<HybridComputeExtensionValueData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HybridComputeExtensionValueData IPersistableModel<HybridComputeExtensionValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeExtensionValueData>(data, options, AzureResourceManagerHybridComputeContext.Default);
+        HybridComputeExtensionValueData IPersistableModel<HybridComputeExtensionValueData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputeExtensionValueData>(data, options);
 
-        string IPersistableModel<HybridComputeExtensionValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeExtensionValueData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HybridComputeExtensionValueData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputeExtensionValueData>)Data).GetFormatFromOptions(options);
     }
 }

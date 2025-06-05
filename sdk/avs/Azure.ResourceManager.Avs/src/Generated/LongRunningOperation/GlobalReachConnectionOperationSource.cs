@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         GlobalReachConnectionResource IOperationSource<GlobalReachConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalReachConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<GlobalReachConnectionData>(response.Content);
             return new GlobalReachConnectionResource(_client, data);
         }
 
         async ValueTask<GlobalReachConnectionResource> IOperationSource<GlobalReachConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GlobalReachConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<GlobalReachConnectionData>(response.Content);
             return await Task.FromResult(new GlobalReachConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

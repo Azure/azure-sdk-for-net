@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AzureResourceInfo)} does not support writing '{options.Format}' format.");
             }

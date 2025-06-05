@@ -148,7 +148,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SqlMISink": return SqlMISink.DeserializeSqlMISink(element, options);
                     case "SqlServerSink": return SqlServerSink.DeserializeSqlServerSink(element, options);
                     case "SqlSink": return SqlSink.DeserializeSqlSink(element, options);
-                    case "TeradataSink": return TeradataSink.DeserializeTeradataSink(element, options);
                     case "WarehouseSink": return WarehouseSink.DeserializeWarehouseSink(element, options);
                 }
             }
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CopySink)} does not support writing '{options.Format}' format.");
             }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteBuildResource : IJsonModel<StaticSiteBuildData>
     {
-        private static StaticSiteBuildData s_dataDeserializationInstance;
-        private static StaticSiteBuildData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<StaticSiteBuildData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBuildData>)Data).Write(writer, options);
 
-        StaticSiteBuildData IJsonModel<StaticSiteBuildData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBuildData>)DataDeserializationInstance).Create(ref reader, options);
+        StaticSiteBuildData IJsonModel<StaticSiteBuildData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteBuildData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteBuildData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteBuildData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<StaticSiteBuildData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StaticSiteBuildData IPersistableModel<StaticSiteBuildData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBuildData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        StaticSiteBuildData IPersistableModel<StaticSiteBuildData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteBuildData>(data, options);
 
-        string IPersistableModel<StaticSiteBuildData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteBuildData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<StaticSiteBuildData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteBuildData>)Data).GetFormatFromOptions(options);
     }
 }

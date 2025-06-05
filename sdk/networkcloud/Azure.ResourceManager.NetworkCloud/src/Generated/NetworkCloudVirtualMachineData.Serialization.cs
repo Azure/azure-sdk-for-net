@@ -37,11 +37,6 @@ namespace Azure.ResourceManager.NetworkCloud
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(ETag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag.Value.ToString());
-            }
             writer.WritePropertyName("extendedLocation"u8);
             writer.WriteObjectValue(ExtendedLocation, options);
             writer.WritePropertyName("properties"u8);
@@ -69,11 +64,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
-            }
-            if (Optional.IsDefined(ConsoleExtendedLocation))
-            {
-                writer.WritePropertyName("consoleExtendedLocation"u8);
-                writer.WriteObjectValue(ConsoleExtendedLocation, options);
             }
             writer.WritePropertyName("cpuCores"u8);
             writer.WriteNumberValue(CpuCores);
@@ -201,7 +191,6 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 return null;
             }
-            ETag? etag = default;
             ExtendedLocation extendedLocation = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
@@ -215,7 +204,6 @@ namespace Azure.ResourceManager.NetworkCloud
             VirtualMachineBootMethod? bootMethod = default;
             NetworkAttachment cloudServicesNetworkAttachment = default;
             ResourceIdentifier clusterId = default;
-            ExtendedLocation consoleExtendedLocation = default;
             long cpuCores = default;
             VirtualMachineDetailedStatus? detailedStatus = default;
             string detailedStatusMessage = default;
@@ -238,15 +226,6 @@ namespace Azure.ResourceManager.NetworkCloud
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("extendedLocation"u8))
                 {
                     extendedLocation = ExtendedLocation.DeserializeExtendedLocation(property.Value, options);
@@ -344,15 +323,6 @@ namespace Azure.ResourceManager.NetworkCloud
                                 continue;
                             }
                             clusterId = new ResourceIdentifier(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("consoleExtendedLocation"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            consoleExtendedLocation = ExtendedLocation.DeserializeExtendedLocation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("cpuCores"u8))
@@ -532,7 +502,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                etag,
                 extendedLocation,
                 adminUsername,
                 availabilityZone,
@@ -540,7 +509,6 @@ namespace Azure.ResourceManager.NetworkCloud
                 bootMethod,
                 cloudServicesNetworkAttachment,
                 clusterId,
-                consoleExtendedLocation,
                 cpuCores,
                 detailedStatus,
                 detailedStatusMessage,
@@ -569,7 +537,7 @@ namespace Azure.ResourceManager.NetworkCloud
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkCloudVirtualMachineData)} does not support writing '{options.Format}' format.");
             }

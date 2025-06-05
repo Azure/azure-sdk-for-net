@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="perimeterGuid"> Resource guid of the NSP supplied. </param>
         /// <param name="location"> Location of the NSP supplied. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterBasedAccessRule(ResourceIdentifier id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkSecurityPerimeterBasedAccessRule(string id, Guid? perimeterGuid, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             PerimeterGuid = perimeterGuid;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
         }
 
         /// <summary> NSP id in the ARM id format. </summary>
-        public ResourceIdentifier Id { get; }
+        public string Id { get; }
         /// <summary> Resource guid of the NSP supplied. </summary>
         public Guid? PerimeterGuid { get; }
         /// <summary> Location of the NSP supplied. </summary>

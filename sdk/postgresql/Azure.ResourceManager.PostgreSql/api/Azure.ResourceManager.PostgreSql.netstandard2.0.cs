@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.PostgreSql
 {
-    public partial class AzureResourceManagerPostgreSqlContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerPostgreSqlContext() { }
-        public static Azure.ResourceManager.PostgreSql.AzureResourceManagerPostgreSqlContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class PostgreSqlConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PostgreSql.PostgreSqlConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PostgreSql.PostgreSqlConfigurationResource>, System.Collections.IEnumerable
     {
         protected PostgreSqlConfigurationCollection() { }

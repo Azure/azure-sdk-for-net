@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The HomeNetworkPrivateKeysProvisioning. </summary>
+    /// <summary>
+    /// The HomeNetworkPrivateKeysProvisioning.
+    /// Serialized Name: HomeNetworkPrivateKeysProvisioning
+    /// </summary>
     internal partial class HomeNetworkPrivateKeysProvisioning
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HomeNetworkPrivateKeysProvisioning"/>. </summary>
-        /// <param name="state"> The provisioning state of the private keys for SUPI concealment. </param>
+        /// <param name="state">
+        /// The provisioning state of the private keys for SUPI concealment.
+        /// Serialized Name: HomeNetworkPrivateKeysProvisioning.state
+        /// </param>
         internal HomeNetworkPrivateKeysProvisioning(HomeNetworkPrivateKeysProvisioningState state)
         {
             State = state;
         }
 
         /// <summary> Initializes a new instance of <see cref="HomeNetworkPrivateKeysProvisioning"/>. </summary>
-        /// <param name="state"> The provisioning state of the private keys for SUPI concealment. </param>
+        /// <param name="state">
+        /// The provisioning state of the private keys for SUPI concealment.
+        /// Serialized Name: HomeNetworkPrivateKeysProvisioning.state
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HomeNetworkPrivateKeysProvisioning(HomeNetworkPrivateKeysProvisioningState state, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> The provisioning state of the private keys for SUPI concealment. </summary>
+        /// <summary>
+        /// The provisioning state of the private keys for SUPI concealment.
+        /// Serialized Name: HomeNetworkPrivateKeysProvisioning.state
+        /// </summary>
         [WirePath("state")]
         public HomeNetworkPrivateKeysProvisioningState State { get; }
     }

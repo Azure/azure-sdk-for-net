@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.Core.Extensions;
 
 namespace Azure.Communication.JobRouter.Models
@@ -35,8 +34,6 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -45,8 +42,6 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageClassTypeProperties)} does not support writing '{options.Format}' format.");
             }

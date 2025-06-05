@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MonitorPrivateEndpointConnectionResource : IJsonModel<MonitorPrivateEndpointConnectionData>
     {
-        private static MonitorPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static MonitorPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<MonitorPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        MonitorPrivateEndpointConnectionData IJsonModel<MonitorPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        MonitorPrivateEndpointConnectionData IJsonModel<MonitorPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MonitorPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MonitorPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MonitorPrivateEndpointConnectionData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<MonitorPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MonitorPrivateEndpointConnectionData IPersistableModel<MonitorPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(data, options, AzureResourceManagerMonitorContext.Default);
+        MonitorPrivateEndpointConnectionData IPersistableModel<MonitorPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MonitorPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<MonitorPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MonitorPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MonitorPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

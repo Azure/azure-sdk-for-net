@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CustomerInsights
 
         RoleAssignmentResourceFormatResource IOperationSource<RoleAssignmentResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RoleAssignmentResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
+            var data = ModelReaderWriter.Read<RoleAssignmentResourceFormatData>(response.Content);
             return new RoleAssignmentResourceFormatResource(_client, data);
         }
 
         async ValueTask<RoleAssignmentResourceFormatResource> IOperationSource<RoleAssignmentResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RoleAssignmentResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
+            var data = ModelReaderWriter.Read<RoleAssignmentResourceFormatData>(response.Content);
             return await Task.FromResult(new RoleAssignmentResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The SIMs to upload. The SIM credentials must be encrypted. </summary>
+    /// <summary>
+    /// The SIMs to upload. The SIM credentials must be encrypted.
+    /// Serialized Name: EncryptedSimUploadList
+    /// </summary>
     public partial class EncryptedSimUploadList
     {
         /// <summary>
@@ -47,12 +50,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EncryptedSimUploadList"/>. </summary>
-        /// <param name="version"> The upload file format version. </param>
-        /// <param name="azureKeyIdentifier"> An identifier for the Azure SIM onboarding public key used for encrypted upload. </param>
-        /// <param name="vendorKeyFingerprint"> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </param>
-        /// <param name="encryptedTransportKey"> The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key. </param>
-        /// <param name="signedTransportKey"> The encrypted transport key, signed using the SIM vendor private key. </param>
-        /// <param name="sims"> A list of SIMs to upload, with encrypted properties. </param>
+        /// <param name="version">
+        /// The upload file format version.
+        /// Serialized Name: EncryptedSimUploadList.version
+        /// </param>
+        /// <param name="azureKeyIdentifier">
+        /// An identifier for the Azure SIM onboarding public key used for encrypted upload.
+        /// Serialized Name: EncryptedSimUploadList.azureKeyIdentifier
+        /// </param>
+        /// <param name="vendorKeyFingerprint">
+        /// The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key.
+        /// Serialized Name: EncryptedSimUploadList.vendorKeyFingerprint
+        /// </param>
+        /// <param name="encryptedTransportKey">
+        /// The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key.
+        /// Serialized Name: EncryptedSimUploadList.encryptedTransportKey
+        /// </param>
+        /// <param name="signedTransportKey">
+        /// The encrypted transport key, signed using the SIM vendor private key.
+        /// Serialized Name: EncryptedSimUploadList.signedTransportKey
+        /// </param>
+        /// <param name="sims">
+        /// A list of SIMs to upload, with encrypted properties.
+        /// Serialized Name: EncryptedSimUploadList.sims
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vendorKeyFingerprint"/>, <paramref name="encryptedTransportKey"/>, <paramref name="signedTransportKey"/> or <paramref name="sims"/> is null. </exception>
         public EncryptedSimUploadList(int version, int azureKeyIdentifier, string vendorKeyFingerprint, string encryptedTransportKey, string signedTransportKey, IEnumerable<SimNameAndEncryptedProperties> sims)
         {
@@ -70,12 +91,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptedSimUploadList"/>. </summary>
-        /// <param name="version"> The upload file format version. </param>
-        /// <param name="azureKeyIdentifier"> An identifier for the Azure SIM onboarding public key used for encrypted upload. </param>
-        /// <param name="vendorKeyFingerprint"> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </param>
-        /// <param name="encryptedTransportKey"> The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key. </param>
-        /// <param name="signedTransportKey"> The encrypted transport key, signed using the SIM vendor private key. </param>
-        /// <param name="sims"> A list of SIMs to upload, with encrypted properties. </param>
+        /// <param name="version">
+        /// The upload file format version.
+        /// Serialized Name: EncryptedSimUploadList.version
+        /// </param>
+        /// <param name="azureKeyIdentifier">
+        /// An identifier for the Azure SIM onboarding public key used for encrypted upload.
+        /// Serialized Name: EncryptedSimUploadList.azureKeyIdentifier
+        /// </param>
+        /// <param name="vendorKeyFingerprint">
+        /// The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key.
+        /// Serialized Name: EncryptedSimUploadList.vendorKeyFingerprint
+        /// </param>
+        /// <param name="encryptedTransportKey">
+        /// The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key.
+        /// Serialized Name: EncryptedSimUploadList.encryptedTransportKey
+        /// </param>
+        /// <param name="signedTransportKey">
+        /// The encrypted transport key, signed using the SIM vendor private key.
+        /// Serialized Name: EncryptedSimUploadList.signedTransportKey
+        /// </param>
+        /// <param name="sims">
+        /// A list of SIMs to upload, with encrypted properties.
+        /// Serialized Name: EncryptedSimUploadList.sims
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal EncryptedSimUploadList(int version, int azureKeyIdentifier, string vendorKeyFingerprint, string encryptedTransportKey, string signedTransportKey, IList<SimNameAndEncryptedProperties> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -93,22 +132,40 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> The upload file format version. </summary>
+        /// <summary>
+        /// The upload file format version.
+        /// Serialized Name: EncryptedSimUploadList.version
+        /// </summary>
         [WirePath("version")]
         public int Version { get; }
-        /// <summary> An identifier for the Azure SIM onboarding public key used for encrypted upload. </summary>
+        /// <summary>
+        /// An identifier for the Azure SIM onboarding public key used for encrypted upload.
+        /// Serialized Name: EncryptedSimUploadList.azureKeyIdentifier
+        /// </summary>
         [WirePath("azureKeyIdentifier")]
         public int AzureKeyIdentifier { get; }
-        /// <summary> The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key. </summary>
+        /// <summary>
+        /// The fingerprint of the SIM vendor public key. The private counterpart is used for signing the encrypted transport key.
+        /// Serialized Name: EncryptedSimUploadList.vendorKeyFingerprint
+        /// </summary>
         [WirePath("vendorKeyFingerprint")]
         public string VendorKeyFingerprint { get; }
-        /// <summary> The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key. </summary>
+        /// <summary>
+        /// The transport key used for encrypting SIM credentials, encrypted using the SIM onboarding public key.
+        /// Serialized Name: EncryptedSimUploadList.encryptedTransportKey
+        /// </summary>
         [WirePath("encryptedTransportKey")]
         public string EncryptedTransportKey { get; }
-        /// <summary> The encrypted transport key, signed using the SIM vendor private key. </summary>
+        /// <summary>
+        /// The encrypted transport key, signed using the SIM vendor private key.
+        /// Serialized Name: EncryptedSimUploadList.signedTransportKey
+        /// </summary>
         [WirePath("signedTransportKey")]
         public string SignedTransportKey { get; }
-        /// <summary> A list of SIMs to upload, with encrypted properties. </summary>
+        /// <summary>
+        /// A list of SIMs to upload, with encrypted properties.
+        /// Serialized Name: EncryptedSimUploadList.sims
+        /// </summary>
         [WirePath("sims")]
         public IList<SimNameAndEncryptedProperties> Sims { get; }
     }

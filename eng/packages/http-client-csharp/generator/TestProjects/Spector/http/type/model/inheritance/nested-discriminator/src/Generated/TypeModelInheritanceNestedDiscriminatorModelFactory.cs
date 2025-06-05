@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace _Type.Model.Inheritance.NestedDiscriminator
+namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
     public static partial class TypeModelInheritanceNestedDiscriminatorModelFactory
     {

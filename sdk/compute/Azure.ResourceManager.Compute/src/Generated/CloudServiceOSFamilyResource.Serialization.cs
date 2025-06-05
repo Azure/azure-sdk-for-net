@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceOSFamilyResource : IJsonModel<CloudServiceOSFamilyData>
     {
-        private static CloudServiceOSFamilyData s_dataDeserializationInstance;
-        private static CloudServiceOSFamilyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CloudServiceOSFamilyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSFamilyData>)Data).Write(writer, options);
 
-        CloudServiceOSFamilyData IJsonModel<CloudServiceOSFamilyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSFamilyData>)DataDeserializationInstance).Create(ref reader, options);
+        CloudServiceOSFamilyData IJsonModel<CloudServiceOSFamilyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceOSFamilyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceOSFamilyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceOSFamilyData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<CloudServiceOSFamilyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CloudServiceOSFamilyData IPersistableModel<CloudServiceOSFamilyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSFamilyData>(data, options, AzureResourceManagerComputeContext.Default);
+        CloudServiceOSFamilyData IPersistableModel<CloudServiceOSFamilyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceOSFamilyData>(data, options);
 
-        string IPersistableModel<CloudServiceOSFamilyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceOSFamilyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CloudServiceOSFamilyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceOSFamilyData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -53,13 +53,11 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <summary> Initializes a new instance of <see cref="DataBoxSkuCapacity"/>. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
-        /// <param name="individualSkuUsable"> Maximum capacity per device in TB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxSkuCapacity(string usable, string maximum, string individualSkuUsable, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataBoxSkuCapacity(string usable, string maximum, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Usable = usable;
             Maximum = maximum;
-            IndividualSkuUsable = individualSkuUsable;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,7 +65,5 @@ namespace Azure.ResourceManager.DataBox.Models
         public string Usable { get; }
         /// <summary> Maximum capacity in TB. </summary>
         public string Maximum { get; }
-        /// <summary> Maximum capacity per device in TB. </summary>
-        public string IndividualSkuUsable { get; }
     }
 }

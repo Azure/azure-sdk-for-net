@@ -21,13 +21,11 @@ namespace Azure.Communication.Sms
         /// <param name="enableDeliveryReport"> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </param>
         /// <param name="tag"> Use this field to provide metadata that will then be sent back in the corresponding Delivery Report. </param>
         /// <param name="deliveryReportTimeoutInSeconds"> Time to wait for a delivery report. After this time a delivery report with timeout error code is generated. </param>
-        /// <param name="messagingConnect"> Defines optional parameters for connecting with the Messaging Connect Partner to deliver SMS. </param>
-        internal SmsSendOptions(bool enableDeliveryReport, string tag, int? deliveryReportTimeoutInSeconds, MessagingConnectOptions messagingConnect)
+        internal SmsSendOptions(bool enableDeliveryReport, string tag, int? deliveryReportTimeoutInSeconds)
         {
             EnableDeliveryReport = enableDeliveryReport;
             Tag = tag;
             DeliveryReportTimeoutInSeconds = deliveryReportTimeoutInSeconds;
-            MessagingConnect = messagingConnect;
         }
 
         /// <summary> Enable this flag to receive a delivery report for this message on the Azure Resource EventGrid. </summary>
@@ -36,7 +34,5 @@ namespace Azure.Communication.Sms
         public string Tag { get; set; }
         /// <summary> Time to wait for a delivery report. After this time a delivery report with timeout error code is generated. </summary>
         public int? DeliveryReportTimeoutInSeconds { get; set; }
-        /// <summary> Defines optional parameters for connecting with the Messaging Connect Partner to deliver SMS. </summary>
-        public MessagingConnectOptions MessagingConnect { get; set; }
     }
 }

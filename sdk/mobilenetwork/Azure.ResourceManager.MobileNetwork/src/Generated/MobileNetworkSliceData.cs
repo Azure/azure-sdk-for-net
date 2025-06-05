@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the MobileNetworkSlice data model.
     /// Network slice resource. Must be created in the same location as its parent mobile network.
+    /// Serialized Name: Slice
     /// </summary>
     public partial class MobileNetworkSliceData : TrackedResourceData
     {
@@ -53,7 +54,10 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
+        /// <param name="snssai">
+        /// Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network.
+        /// Serialized Name: Slice.properties.snssai
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="snssai"/> is null. </exception>
         public MobileNetworkSliceData(AzureLocation location, Snssai snssai) : base(location)
         {
@@ -69,9 +73,18 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the network slice resource. </param>
-        /// <param name="snssai"> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </param>
-        /// <param name="description"> An optional description for this network slice. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the network slice resource.
+        /// Serialized Name: Slice.properties.provisioningState
+        /// </param>
+        /// <param name="snssai">
+        /// Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network.
+        /// Serialized Name: Slice.properties.snssai
+        /// </param>
+        /// <param name="description">
+        /// An optional description for this network slice.
+        /// Serialized Name: Slice.properties.description
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkSliceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, Snssai snssai, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -86,13 +99,22 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> The provisioning state of the network slice resource. </summary>
+        /// <summary>
+        /// The provisioning state of the network slice resource.
+        /// Serialized Name: Slice.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network. </summary>
+        /// <summary>
+        /// Single-network slice selection assistance information (S-NSSAI). Unique at the scope of a mobile network.
+        /// Serialized Name: Slice.properties.snssai
+        /// </summary>
         [WirePath("properties.snssai")]
         public Snssai Snssai { get; set; }
-        /// <summary> An optional description for this network slice. </summary>
+        /// <summary>
+        /// An optional description for this network slice.
+        /// Serialized Name: Slice.properties.description
+        /// </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
     }

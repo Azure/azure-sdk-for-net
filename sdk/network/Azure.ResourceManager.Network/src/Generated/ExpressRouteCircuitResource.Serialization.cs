@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCircuitResource : IJsonModel<ExpressRouteCircuitData>
     {
-        private static ExpressRouteCircuitData s_dataDeserializationInstance;
-        private static ExpressRouteCircuitData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ExpressRouteCircuitData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitData>)Data).Write(writer, options);
 
-        ExpressRouteCircuitData IJsonModel<ExpressRouteCircuitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitData>)DataDeserializationInstance).Create(ref reader, options);
+        ExpressRouteCircuitData IJsonModel<ExpressRouteCircuitData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCircuitData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ExpressRouteCircuitData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ExpressRouteCircuitData IPersistableModel<ExpressRouteCircuitData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitData>(data, options);
 
-        string IPersistableModel<ExpressRouteCircuitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRouteCircuitData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitData>)Data).GetFormatFromOptions(options);
     }
 }

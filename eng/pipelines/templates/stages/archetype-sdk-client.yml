@@ -54,9 +54,6 @@ parameters:
   - name: oneESTemplateTag
     type: string
     default: true
-  - name: ExcludePaths
-    type: object
-    default: []
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -104,10 +101,7 @@ extends:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             DependsOn:
               - Build
-            Artifacts:
-              - ${{ each artifact in parameters.Artifacts }}:
-                 - ${{ if ne(artifact.createReleaseStage, 'false') }}:
-                    - ${{ artifact }}
+            Artifacts: ${{ parameters.Artifacts }}
             ${{ if eq(parameters.ServiceDirectory, 'template') }}:
               TestPipeline: true
             ArtifactName: packages

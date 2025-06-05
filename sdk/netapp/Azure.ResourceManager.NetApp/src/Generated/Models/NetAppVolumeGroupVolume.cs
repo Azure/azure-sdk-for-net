@@ -265,6 +265,8 @@ namespace Azure.ResourceManager.NetApp.Models
         public string VolumeType { get; set; }
         /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
         public NetAppVolumeDataProtection DataProtection { get; set; }
+        /// <summary> Restoring. </summary>
+        public bool? IsRestoring { get; set; }
         /// <summary> If enabled (true) the volume will contain a read-only snapshot directory which provides access to each of the volume's snapshots (defaults to true). </summary>
         public bool? IsSnapshotDirectoryVisible { get; set; }
         /// <summary> Describe if a volume is KerberosEnabled. To be use with swagger version 2020-05-01 or later. </summary>

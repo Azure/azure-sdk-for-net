@@ -54,11 +54,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("capacityInBytes"u8);
                 writer.WriteNumberValue(CapacityInBytes.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskState))
-            {
-                writer.WritePropertyName("diskState"u8);
-                writer.WriteStringValue(DiskState.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(LogStorageAccountId))
             {
                 writer.WritePropertyName("logStorageAccountId"u8);
@@ -114,16 +109,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("resyncDetails"u8);
                 writer.WriteObjectValue(ResyncDetails, options);
             }
-            if (Optional.IsDefined(CustomTargetDiskName))
-            {
-                writer.WritePropertyName("customTargetDiskName"u8);
-                writer.WriteStringValue(CustomTargetDiskName);
-            }
-            if (Optional.IsDefined(SectorSizeInBytes))
-            {
-                writer.WritePropertyName("sectorSizeInBytes"u8);
-                writer.WriteNumberValue(SectorSizeInBytes.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -165,7 +150,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string diskName = default;
             string isOSDisk = default;
             long? capacityInBytes = default;
-            RecoveryServicesSiteRecoveryDiskState? diskState = default;
             ResourceIdentifier logStorageAccountId = default;
             ResourceIdentifier diskEncryptionSetId = default;
             string seedManagedDiskId = default;
@@ -177,8 +161,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string isInitialReplicationComplete = default;
             InMageRcmSyncDetails irDetails = default;
             InMageRcmSyncDetails resyncDetails = default;
-            string customTargetDiskName = default;
-            int? sectorSizeInBytes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,15 +187,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         continue;
                     }
                     capacityInBytes = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("diskState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskState = new RecoveryServicesSiteRecoveryDiskState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("logStorageAccountId"u8))
@@ -303,20 +276,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("customTargetDiskName"u8))
-                {
-                    customTargetDiskName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("sectorSizeInBytes"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sectorSizeInBytes = property.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -328,7 +287,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 diskName,
                 isOSDisk,
                 capacityInBytes,
-                diskState,
                 logStorageAccountId,
                 diskEncryptionSetId,
                 seedManagedDiskId,
@@ -340,8 +298,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 isInitialReplicationComplete,
                 irDetails,
                 resyncDetails,
-                customTargetDiskName,
-                sectorSizeInBytes,
                 serializedAdditionalRawData);
         }
 
@@ -352,7 +308,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support writing '{options.Format}' format.");
             }

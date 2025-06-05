@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class VirtualMachineScaleSetResource : IJsonModel<VirtualMachineScaleSetData>
     {
-        private static VirtualMachineScaleSetData s_dataDeserializationInstance;
-        private static VirtualMachineScaleSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VirtualMachineScaleSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetData>)Data).Write(writer, options);
 
-        VirtualMachineScaleSetData IJsonModel<VirtualMachineScaleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetData>)DataDeserializationInstance).Create(ref reader, options);
+        VirtualMachineScaleSetData IJsonModel<VirtualMachineScaleSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualMachineScaleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineScaleSetData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<VirtualMachineScaleSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VirtualMachineScaleSetData IPersistableModel<VirtualMachineScaleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetData>(data, options, AzureResourceManagerComputeContext.Default);
+        VirtualMachineScaleSetData IPersistableModel<VirtualMachineScaleSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetData>(data, options);
 
-        string IPersistableModel<VirtualMachineScaleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualMachineScaleSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetData>)Data).GetFormatFromOptions(options);
     }
 }

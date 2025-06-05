@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerRegistryFileTaskStepUpdateContent)} does not support writing '{options.Format}' format.");
             }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridNetwork
 
         NetworkServiceDesignVersionResource IOperationSource<NetworkServiceDesignVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkServiceDesignVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NetworkServiceDesignVersionData>(response.Content);
             return new NetworkServiceDesignVersionResource(_client, data);
         }
 
         async ValueTask<NetworkServiceDesignVersionResource> IOperationSource<NetworkServiceDesignVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkServiceDesignVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NetworkServiceDesignVersionData>(response.Content);
             return await Task.FromResult(new NetworkServiceDesignVersionResource(_client, data)).ConfigureAwait(false);
         }
     }

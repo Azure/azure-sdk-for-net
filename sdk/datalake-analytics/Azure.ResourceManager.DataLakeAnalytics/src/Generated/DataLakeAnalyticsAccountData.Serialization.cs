@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeAnalyticsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support writing '{options.Format}' format.");
             }

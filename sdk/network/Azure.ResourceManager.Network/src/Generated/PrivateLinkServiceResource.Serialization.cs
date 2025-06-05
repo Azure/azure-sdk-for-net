@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class PrivateLinkServiceResource : IJsonModel<PrivateLinkServiceData>
     {
-        private static PrivateLinkServiceData s_dataDeserializationInstance;
-        private static PrivateLinkServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PrivateLinkServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateLinkServiceData>)Data).Write(writer, options);
 
-        PrivateLinkServiceData IJsonModel<PrivateLinkServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateLinkServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        PrivateLinkServiceData IJsonModel<PrivateLinkServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateLinkServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateLinkServiceData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<PrivateLinkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PrivateLinkServiceData IPersistableModel<PrivateLinkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateLinkServiceData>(data, options, AzureResourceManagerNetworkContext.Default);
+        PrivateLinkServiceData IPersistableModel<PrivateLinkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateLinkServiceData>(data, options);
 
-        string IPersistableModel<PrivateLinkServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateLinkServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PrivateLinkServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateLinkServiceData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Model.Inheritance.Recursive.Models;
 
 namespace _Type.Model.Inheritance.Recursive
 {
@@ -20,7 +21,7 @@ namespace _Type.Model.Inheritance.Recursive
 
         public RecursiveClient(Uri endpoint, RecursiveClientOptions options) => throw null;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public HttpPipeline Pipeline => throw null;
 
         public virtual Response Put(RequestContent content, RequestContext context = null) => throw null;
 

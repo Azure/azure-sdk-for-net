@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkCloud
 
         NetworkCloudKubernetesClusterFeatureResource IOperationSource<NetworkCloudKubernetesClusterFeatureResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            var data = ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(response.Content);
             return new NetworkCloudKubernetesClusterFeatureResource(_client, data);
         }
 
         async ValueTask<NetworkCloudKubernetesClusterFeatureResource> IOperationSource<NetworkCloudKubernetesClusterFeatureResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkCloudContext.Default);
+            var data = ModelReaderWriter.Read<NetworkCloudKubernetesClusterFeatureData>(response.Content);
             return await Task.FromResult(new NetworkCloudKubernetesClusterFeatureResource(_client, data)).ConfigureAwait(false);
         }
     }

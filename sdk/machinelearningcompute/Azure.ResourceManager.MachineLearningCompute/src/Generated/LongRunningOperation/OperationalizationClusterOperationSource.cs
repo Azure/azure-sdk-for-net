@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MachineLearningCompute
 
         OperationalizationClusterResource IOperationSource<OperationalizationClusterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalizationClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningComputeContext.Default);
+            var data = ModelReaderWriter.Read<OperationalizationClusterData>(response.Content);
             return new OperationalizationClusterResource(_client, data);
         }
 
         async ValueTask<OperationalizationClusterResource> IOperationSource<OperationalizationClusterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OperationalizationClusterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMachineLearningComputeContext.Default);
+            var data = ModelReaderWriter.Read<OperationalizationClusterData>(response.Content);
             return await Task.FromResult(new OperationalizationClusterResource(_client, data)).ConfigureAwait(false);
         }
     }

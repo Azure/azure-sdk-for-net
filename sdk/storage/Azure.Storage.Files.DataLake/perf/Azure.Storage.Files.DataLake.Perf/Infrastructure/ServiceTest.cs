@@ -16,16 +16,12 @@ namespace Azure.Storage.Files.DataLake.Perf
                 ? clientOptionsProvider.ClientOptions
                 : new DataLakeClientOptions();
             DataLakeServiceClient = new DataLakeServiceClient(
-                PerfTestEnvironment.Instance.StorageEndpoint,
-                PerfTestEnvironment.Instance.Credential,
+                PerfTestEnvironment.Instance.DataLakeServiceUri,
+                PerfTestEnvironment.Instance.DataLakeCredential,
                 ConfigureClientOptions(clientOptions));
 
-            // Can't do shared key tests if shared key wasn't provided
-            if (PerfTestEnvironment.Instance.StorageAccountKey != null)
-            {
-                StorageSharedKeyCredential = new StorageSharedKeyCredential(
-                    PerfTestEnvironment.Instance.StorageAccountName, PerfTestEnvironment.Instance.StorageAccountKey);
-            }
+            StorageSharedKeyCredential = new StorageSharedKeyCredential(
+                PerfTestEnvironment.Instance.DataLakeAccountName, PerfTestEnvironment.Instance.DataLakeAccountKey);
         }
     }
 }

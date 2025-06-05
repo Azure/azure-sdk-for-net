@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (Optional.IsDefined(NetworkInterfaceIPConfigurationResourceId))
+            if (Optional.IsDefined(NetworkInterfaceIPConfigurationId))
             {
                 writer.WritePropertyName("networkInterfaceIPConfigurationId"u8);
-                writer.WriteStringValue(NetworkInterfaceIPConfigurationResourceId);
+                writer.WriteObjectValue(NetworkInterfaceIPConfigurationId, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ipAddress = default;
-            ResourceIdentifier networkInterfaceIPConfigurationId = default;
+            NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId = default;
             string state = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterfaceIPConfigurationId = new ResourceIdentifier(property.Value.GetString());
+                    networkInterfaceIPConfigurationId = NetworkInterfaceIPConfigurationData.DeserializeNetworkInterfaceIPConfigurationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancerHealthPerRulePerBackendAddress)} does not support writing '{options.Format}' format.");
             }

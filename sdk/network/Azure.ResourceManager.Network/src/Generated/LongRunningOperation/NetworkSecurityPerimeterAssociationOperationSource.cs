@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         NetworkSecurityPerimeterAssociationResource IOperationSource<NetworkSecurityPerimeterAssociationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterAssociationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterAssociationData>(response.Content);
             return new NetworkSecurityPerimeterAssociationResource(_client, data);
         }
 
         async ValueTask<NetworkSecurityPerimeterAssociationResource> IOperationSource<NetworkSecurityPerimeterAssociationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterAssociationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterAssociationData>(response.Content);
             return await Task.FromResult(new NetworkSecurityPerimeterAssociationResource(_client, data)).ConfigureAwait(false);
         }
     }

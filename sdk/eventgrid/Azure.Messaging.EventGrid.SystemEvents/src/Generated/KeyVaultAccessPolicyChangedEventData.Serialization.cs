@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(KeyVaultAccessPolicyChangedEventDataConverter))]
     public partial class KeyVaultAccessPolicyChangedEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultAccessPolicyChangedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultAccessPolicyChangedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -46,15 +44,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(ObjectName);
             writer.WritePropertyName("Version"u8);
             writer.WriteStringValue(Version);
-            if (Optional.IsDefined(Nbf))
+            if (Optional.IsDefined(NBF))
             {
                 writer.WritePropertyName("NBF"u8);
-                writer.WriteNumberValue(Nbf.Value);
+                writer.WriteNumberValue(NBF.Value);
             }
-            if (Optional.IsDefined(Exp))
+            if (Optional.IsDefined(EXP))
             {
                 writer.WritePropertyName("EXP"u8);
-                writer.WriteNumberValue(Exp.Value);
+                writer.WriteNumberValue(EXP.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -171,7 +169,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultAccessPolicyChangedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -209,20 +207,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class KeyVaultAccessPolicyChangedEventDataConverter : JsonConverter<KeyVaultAccessPolicyChangedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, KeyVaultAccessPolicyChangedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override KeyVaultAccessPolicyChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeKeyVaultAccessPolicyChangedEventData(document.RootElement);
-            }
         }
     }
 }

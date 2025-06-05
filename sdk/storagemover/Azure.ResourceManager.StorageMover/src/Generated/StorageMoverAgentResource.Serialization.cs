@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.StorageMover
 {
     public partial class StorageMoverAgentResource : IJsonModel<StorageMoverAgentData>
     {
-        private static StorageMoverAgentData s_dataDeserializationInstance;
-        private static StorageMoverAgentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<StorageMoverAgentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverAgentData>)Data).Write(writer, options);
 
-        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverAgentData>)DataDeserializationInstance).Create(ref reader, options);
+        StorageMoverAgentData IJsonModel<StorageMoverAgentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageMoverAgentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageMoverAgentData>(Data, options, AzureResourceManagerStorageMoverContext.Default);
+        BinaryData IPersistableModel<StorageMoverAgentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StorageMoverAgentData IPersistableModel<StorageMoverAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverAgentData>(data, options, AzureResourceManagerStorageMoverContext.Default);
+        StorageMoverAgentData IPersistableModel<StorageMoverAgentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageMoverAgentData>(data, options);
 
-        string IPersistableModel<StorageMoverAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverAgentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<StorageMoverAgentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageMoverAgentData>)Data).GetFormatFromOptions(options);
     }
 }

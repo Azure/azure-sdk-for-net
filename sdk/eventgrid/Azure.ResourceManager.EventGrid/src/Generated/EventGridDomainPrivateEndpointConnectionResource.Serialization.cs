@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridDomainPrivateEndpointConnectionResource : IJsonModel<EventGridPrivateEndpointConnectionData>
     {
-        private static EventGridPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static EventGridPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EventGridPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        EventGridPrivateEndpointConnectionData IJsonModel<EventGridPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        EventGridPrivateEndpointConnectionData IJsonModel<EventGridPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventGridPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridPrivateEndpointConnectionData>(Data, options, AzureResourceManagerEventGridContext.Default);
+        BinaryData IPersistableModel<EventGridPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventGridPrivateEndpointConnectionData IPersistableModel<EventGridPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(data, options, AzureResourceManagerEventGridContext.Default);
+        EventGridPrivateEndpointConnectionData IPersistableModel<EventGridPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<EventGridPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

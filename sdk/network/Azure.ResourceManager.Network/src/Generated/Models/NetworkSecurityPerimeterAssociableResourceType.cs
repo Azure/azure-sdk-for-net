@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Resource that is onboarded to use network security perimeter. Also referred as perimeter associable resource. </summary>
-    public partial class NetworkSecurityPerimeterAssociableResourceType : ResourceData
+    public partial class NetworkSecurityPerimeterAssociableResourceType : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,7 +48,8 @@ namespace Azure.ResourceManager.Network.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociableResourceType"/>. </summary>
-        internal NetworkSecurityPerimeterAssociableResourceType()
+        /// <param name="location"> The location. </param>
+        public NetworkSecurityPerimeterAssociableResourceType(AzureLocation location) : base(location)
         {
             PublicDnsZones = new ChangeTrackingList<string>();
         }
@@ -58,14 +59,21 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
         /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<string> publicDnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetworkSecurityPerimeterAssociableResourceType(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, IReadOnlyList<string> publicDnsZones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             PublicDnsZones = publicDnsZones;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NetworkSecurityPerimeterAssociableResourceType"/> for deserialization. </summary>
+        internal NetworkSecurityPerimeterAssociableResourceType()
+        {
         }
 
         /// <summary> A friendly name for the properties of perimeter associable resources. </summary>

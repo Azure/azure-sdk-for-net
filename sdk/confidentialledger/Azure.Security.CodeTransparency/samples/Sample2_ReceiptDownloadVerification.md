@@ -12,8 +12,8 @@ To get started, you'll need a url of the service.
 To create a new `CodeTransparencyClient` that will interact with the service, without explicit credentials if the service allows it or if you 
 want to get the publicly accessible data only. Then use a subclient to work with entries:
 
-```C# Snippet:CodeTransparencySample_CreateClient
-CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
+```C# Snippet:CodeTransparencySample2_CreateClient
+CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"), null);
 ```
 
 ## Download receipt
@@ -24,8 +24,8 @@ The receipt on its own contains only the inclusion proof and the signature. You 
 
 The easiest way is to download the receipt and the signature together which was stored after the submission. The receipt will be added to the unprotected header of the signature.
 
-```C# Snippet:CodeTransparencySample2_GetEntryStatement
-Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStatementAsync(entryId);
+```C# Snippet:CodeTransparencySample2_GetEntryWithEmbeddedReceipt
+Response<BinaryData> signatureWithReceipt = await client.GetEntryAsync("2.34", true);
 ```
 
 ### Raw receipt
@@ -33,7 +33,7 @@ Response<BinaryData> signatureWithReceiptResponse = await client.GetEntryStateme
 If you have the signature as a separate file already then you can download the raw receipt file.
 
 ```C# Snippet:CodeTransparencySample2_GetRawReceipt
-Response<BinaryData> receipt = await client.GetEntryAsync(entryId);
+Response<BinaryData> receipt = await client.GetEntryReceiptAsync("2.34");
 ```
 
 ## Verify
@@ -46,33 +46,14 @@ The following examples will use a default public key resolver to get the keys fo
 
 When receipt is embedded in the signature then passing just the signature is enough.
 
-```C# Snippet:CodeTransparencyVerification
-Response<BinaryData> transparentStatement = client.GetEntryStatement(entryId);
-byte[] transparentStatementBytes = transparentStatement.Value.ToArray();
-
-try
-{
-    client.RunTransparentStatementVerification(transparentStatementBytes);
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.Message);
-}
+```C# Snippet:CodeTransparencySample2_VerifyEntryWithEmbeddedReceipt
+CcfReceiptVerifier.RunVerification(signatureWithReceipt.Value.ToArray());
 ```
 
-Alternatively, you can provide your own JsonWebKey, the receipt and the corresponding signed claims
+### Raw receipt
 
-```C# Snippet:CodeTransparencySample2_VerifyReceiptAndInputSignedStatement
-// Create a JsonWebKey
-JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
-byte[] inputSignedStatement = readFileBytes("<input_signed_claims");
+If the receipt is a separate file then it needs to be passed as a second argument next to the signature.
 
-try
-{
-    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, signatureWithReceiptBytes, inputSignedStatement);
-}
-catch (Exception e)
-{
-    Console.WriteLine(e.Message);
-}
+```C# Snippet:CodeTransparencySample2_VerifyEntryAndReceipt
+CcfReceiptVerifier.RunVerification(receipt.Value.ToArray(), signatureBytes);
 ```

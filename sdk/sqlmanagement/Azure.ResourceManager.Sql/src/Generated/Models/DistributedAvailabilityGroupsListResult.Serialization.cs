@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 return null;
             }
-            IReadOnlyList<SqlDistributedAvailabilityGroupData> value = default;
+            IReadOnlyList<DistributedAvailabilityGroupData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    List<SqlDistributedAvailabilityGroupData> array = new List<SqlDistributedAvailabilityGroupData>();
+                    List<DistributedAvailabilityGroupData> array = new List<DistributedAvailabilityGroupData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlDistributedAvailabilityGroupData.DeserializeSqlDistributedAvailabilityGroupData(item, options));
+                        array.Add(DistributedAvailabilityGroupData.DeserializeDistributedAvailabilityGroupData(item, options));
                     }
                     value = array;
                     continue;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DistributedAvailabilityGroupsListResult(value ?? new ChangeTrackingList<SqlDistributedAvailabilityGroupData>(), nextLink, serializedAdditionalRawData);
+            return new DistributedAvailabilityGroupsListResult(value ?? new ChangeTrackingList<DistributedAvailabilityGroupData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

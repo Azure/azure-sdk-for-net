@@ -71,6 +71,8 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -81,6 +83,25 @@ namespace Azure.ResourceManager.Network
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -138,6 +159,8 @@ namespace Azure.ResourceManager.Network
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 accessRulesVersion,
                 diagnosticSettingsVersion,
                 serializedAdditionalRawData);
@@ -150,7 +173,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterProfileData)} does not support writing '{options.Format}' format.");
             }

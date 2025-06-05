@@ -34,9 +34,9 @@ namespace Azure.ResourceManager.Sql.Models
         public bool? IsActive { get; set; }
         /// <summary> The number of elements in the collection to skip. </summary>
         [WirePath("skip")]
-        public long? Skip { get; set; }
+        public int? Skip { get; set; }
         /// <summary> The number of elements to return from the collection. </summary>
         [WirePath("top")]
-        public long? Top { get; set; }
+        public int? Top { get; set; }
     }
 }

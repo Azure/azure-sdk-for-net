@@ -193,7 +193,6 @@ namespace Azure.Storage.Files.Shares
             Argument.AssertNotNullOrWhiteSpace(shareName, nameof(shareName));
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            ShareErrors.AssertNotDevelopment(conn, nameof(connectionString));
             ShareUriBuilder uriBuilder =
                 new ShareUriBuilder(conn.FileEndpoint)
                 {

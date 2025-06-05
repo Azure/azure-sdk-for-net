@@ -30,22 +30,22 @@ var data = new
 
 try
 {
-    var getTestRunResponse = loadTestRunClient.GetTestRun(testRunId);
-    var testRun = getTestRunResponse.Value;
+    Response getTestRunResponse = loadTestRunClient.GetTestRun(testRunId);
+    JsonDocument testRunJson = JsonDocument.Parse(getTestRunResponse.Content.ToString());
 
-    var getMetricNamespaces = loadTestRunClient.GetMetricNamespaces(testRunId);
-    var metricNamespaces = getMetricNamespaces.Value;
+    Response getMetricNamespaces = loadTestRunClient.GetMetricNamespaces(testRunId);
+    JsonDocument metricNamespacesJson = JsonDocument.Parse(getMetricNamespaces.Content.ToString());
 
-    var getMetricDefinitions = loadTestRunClient.GetMetricDefinitions(
-        testRunId, metricNamespaces.Value.First().Name
+    Response getMetricDefinitions = loadTestRunClient.GetMetricDefinitions(
+        testRunId, metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").ToString()
         );
-    var metricDefinitions = getMetricDefinitions.Value;
+    JsonDocument metricDefinitionsJson = JsonDocument.Parse(getMetricDefinitions.Content.ToString());
 
-    var metrics = loadTestRunClient.GetMetrics(
+    Pageable<BinaryData> metrics = loadTestRunClient.GetMetrics(
             testRunId,
-            metricNamespaces.Value.First().Name,
-            metricDefinitions.Value.First().Name,
-            testRun.StartDateTime.Value.ToString("o") + "/" + testRun.EndDateTime.Value.ToString("o")
+            metricNamespacesJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
+            metricDefinitionsJson.RootElement.GetProperty("value")[0].GetProperty("name").GetString(),
+            testRunJson.RootElement.GetProperty("startDateTime").GetString() + "/" + testRunJson.RootElement.GetProperty("endDateTime")
         );
 }
 catch (Exception ex)

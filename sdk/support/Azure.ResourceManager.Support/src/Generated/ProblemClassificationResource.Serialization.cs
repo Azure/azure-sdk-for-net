@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Support
 {
     public partial class ProblemClassificationResource : IJsonModel<ProblemClassificationData>
     {
-        private static ProblemClassificationData s_dataDeserializationInstance;
-        private static ProblemClassificationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ProblemClassificationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProblemClassificationData>)Data).Write(writer, options);
 
-        ProblemClassificationData IJsonModel<ProblemClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProblemClassificationData>)DataDeserializationInstance).Create(ref reader, options);
+        ProblemClassificationData IJsonModel<ProblemClassificationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProblemClassificationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProblemClassificationData>(Data, options, AzureResourceManagerSupportContext.Default);
+        BinaryData IPersistableModel<ProblemClassificationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProblemClassificationData IPersistableModel<ProblemClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProblemClassificationData>(data, options, AzureResourceManagerSupportContext.Default);
+        ProblemClassificationData IPersistableModel<ProblemClassificationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProblemClassificationData>(data, options);
 
-        string IPersistableModel<ProblemClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProblemClassificationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ProblemClassificationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProblemClassificationData>)Data).GetFormatFromOptions(options);
     }
 }

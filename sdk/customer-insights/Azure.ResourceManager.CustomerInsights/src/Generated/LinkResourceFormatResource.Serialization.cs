@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.CustomerInsights
 {
     public partial class LinkResourceFormatResource : IJsonModel<LinkResourceFormatData>
     {
-        private static LinkResourceFormatData s_dataDeserializationInstance;
-        private static LinkResourceFormatData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LinkResourceFormatData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LinkResourceFormatData>)Data).Write(writer, options);
 
-        LinkResourceFormatData IJsonModel<LinkResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LinkResourceFormatData>)DataDeserializationInstance).Create(ref reader, options);
+        LinkResourceFormatData IJsonModel<LinkResourceFormatData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LinkResourceFormatData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LinkResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LinkResourceFormatData>(Data, options, AzureResourceManagerCustomerInsightsContext.Default);
+        BinaryData IPersistableModel<LinkResourceFormatData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LinkResourceFormatData IPersistableModel<LinkResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LinkResourceFormatData>(data, options, AzureResourceManagerCustomerInsightsContext.Default);
+        LinkResourceFormatData IPersistableModel<LinkResourceFormatData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LinkResourceFormatData>(data, options);
 
-        string IPersistableModel<LinkResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LinkResourceFormatData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LinkResourceFormatData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LinkResourceFormatData>)Data).GetFormatFromOptions(options);
     }
 }

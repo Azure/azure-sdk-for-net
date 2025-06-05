@@ -52,8 +52,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointData"/>. </summary>
-        internal DataReplicationRecoveryPointData()
+        /// <param name="properties"> Recovery point model properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        internal DataReplicationRecoveryPointData(DataReplicationRecoveryPointProperties properties)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointData"/>. </summary>
@@ -61,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"> Recovery point model properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationRecoveryPointData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataReplicationRecoveryPointProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
@@ -69,7 +74,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataReplicationRecoveryPointData"/> for deserialization. </summary>
+        internal DataReplicationRecoveryPointData()
+        {
+        }
+
+        /// <summary> Recovery point model properties. </summary>
         public DataReplicationRecoveryPointProperties Properties { get; }
     }
 }

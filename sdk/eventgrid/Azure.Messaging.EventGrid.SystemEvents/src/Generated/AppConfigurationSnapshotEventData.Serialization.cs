@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AppConfigurationSnapshotEventDataConverter))]
     public partial class AppConfigurationSnapshotEventData : IUtf8JsonSerializable, IJsonModel<AppConfigurationSnapshotEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationSnapshotEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -36,12 +34,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AppConfigurationSnapshotEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
-            writer.WritePropertyName("etag"u8);
-            writer.WriteStringValue(ETag);
-            writer.WritePropertyName("syncToken"u8);
-            writer.WriteStringValue(SyncToken);
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Etag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(Etag);
+            }
+            if (Optional.IsDefined(SyncToken))
+            {
+                writer.WritePropertyName("syncToken"u8);
+                writer.WriteStringValue(SyncToken);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -117,7 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AppConfigurationSnapshotEventData)} does not support writing '{options.Format}' format.");
             }
@@ -155,20 +162,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AppConfigurationSnapshotEventDataConverter : JsonConverter<AppConfigurationSnapshotEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AppConfigurationSnapshotEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AppConfigurationSnapshotEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAppConfigurationSnapshotEventData(document.RootElement);
-            }
         }
     }
 }

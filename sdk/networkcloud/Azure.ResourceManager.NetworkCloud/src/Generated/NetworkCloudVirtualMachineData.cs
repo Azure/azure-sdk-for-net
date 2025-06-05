@@ -89,7 +89,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="etag"> Resource ETag. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
         /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
@@ -97,7 +96,6 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
         /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
-        /// <param name="consoleExtendedLocation"> The extended location to use for creation of a VM console resource. </param>
         /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
         /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
@@ -117,9 +115,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
         /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, ExtendedLocation consoleExtendedLocation, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IList<NetworkAttachment> networkAttachments, string networkData, IList<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IList<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IReadOnlyList<ResourceIdentifier> volumes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IList<NetworkAttachment> networkAttachments, string networkData, IList<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IList<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IReadOnlyList<ResourceIdentifier> volumes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            ETag = etag;
             ExtendedLocation = extendedLocation;
             AdminUsername = adminUsername;
             AvailabilityZone = availabilityZone;
@@ -127,7 +124,6 @@ namespace Azure.ResourceManager.NetworkCloud
             BootMethod = bootMethod;
             CloudServicesNetworkAttachment = cloudServicesNetworkAttachment;
             ClusterId = clusterId;
-            ConsoleExtendedLocation = consoleExtendedLocation;
             CpuCores = cpuCores;
             DetailedStatus = detailedStatus;
             DetailedStatusMessage = detailedStatusMessage;
@@ -154,8 +150,6 @@ namespace Azure.ResourceManager.NetworkCloud
         {
         }
 
-        /// <summary> Resource ETag. </summary>
-        public ETag? ETag { get; }
         /// <summary> The extended location of the cluster associated with the resource. </summary>
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> The name of the administrator to which the ssh public keys will be added into the authorized keys. </summary>
@@ -170,8 +164,6 @@ namespace Azure.ResourceManager.NetworkCloud
         public NetworkAttachment CloudServicesNetworkAttachment { get; set; }
         /// <summary> The resource ID of the cluster the virtual machine is created for. </summary>
         public ResourceIdentifier ClusterId { get; }
-        /// <summary> The extended location to use for creation of a VM console resource. </summary>
-        public ExtendedLocation ConsoleExtendedLocation { get; set; }
         /// <summary> The number of CPU cores in the virtual machine. </summary>
         public long CpuCores { get; set; }
         /// <summary> The more detailed status of the virtual machine. </summary>

@@ -35,30 +35,30 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(TotalKeyCount))
+            if (Optional.IsDefined(TotalKeys))
             {
-                writer.WritePropertyName("totalKeyCount"u8);
-                writer.WriteNumberValue(TotalKeyCount.Value);
+                writer.WritePropertyName("totalKeys"u8);
+                writer.WriteNumberValue(TotalKeys.Value);
             }
-            if (Optional.IsDefined(PublicKeyCount))
+            if (Optional.IsDefined(PublicKeys))
             {
-                writer.WritePropertyName("publicKeyCount"u8);
-                writer.WriteNumberValue(PublicKeyCount.Value);
+                writer.WritePropertyName("publicKeys"u8);
+                writer.WriteNumberValue(PublicKeys.Value);
             }
-            if (Optional.IsDefined(PrivateKeyCount))
+            if (Optional.IsDefined(PrivateKeys))
             {
-                writer.WritePropertyName("privateKeyCount"u8);
-                writer.WriteNumberValue(PrivateKeyCount.Value);
+                writer.WritePropertyName("privateKeys"u8);
+                writer.WriteNumberValue(PrivateKeys.Value);
             }
-            if (Optional.IsDefined(PairedKeyCount))
+            if (Optional.IsDefined(PairedKeys))
             {
-                writer.WritePropertyName("pairedKeyCount"u8);
-                writer.WriteNumberValue(PairedKeyCount.Value);
+                writer.WritePropertyName("pairedKeys"u8);
+                writer.WriteNumberValue(PairedKeys.Value);
             }
-            if (Optional.IsDefined(ShortKeySizeCount))
+            if (Optional.IsDefined(ShortKeySize))
             {
-                writer.WritePropertyName("shortKeySizeCount"u8);
-                writer.WriteNumberValue(ShortKeySizeCount.Value);
+                writer.WritePropertyName("shortKeySize"u8);
+                writer.WriteNumberValue(ShortKeySize.Value);
             }
         }
 
@@ -82,74 +82,64 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            long? totalKeyCount = default;
-            long? publicKeyCount = default;
-            long? privateKeyCount = default;
-            long? pairedKeyCount = default;
-            long? shortKeySizeCount = default;
+            long? totalKeys = default;
+            long? publicKeys = default;
+            long? privateKeys = default;
+            long? pairedKeys = default;
+            long? shortKeySize = default;
             FirmwareAnalysisSummaryType summaryType = default;
-            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("totalKeyCount"u8))
+                if (property.NameEquals("totalKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalKeyCount = property.Value.GetInt64();
+                    totalKeys = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("publicKeyCount"u8))
+                if (property.NameEquals("publicKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicKeyCount = property.Value.GetInt64();
+                    publicKeys = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("privateKeyCount"u8))
+                if (property.NameEquals("privateKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateKeyCount = property.Value.GetInt64();
+                    privateKeys = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("pairedKeyCount"u8))
+                if (property.NameEquals("pairedKeys"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    pairedKeyCount = property.Value.GetInt64();
+                    pairedKeys = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("shortKeySizeCount"u8))
+                if (property.NameEquals("shortKeySize"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    shortKeySizeCount = property.Value.GetInt64();
+                    shortKeySize = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,13 +150,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new CryptoKeySummary(
                 summaryType,
-                provisioningState,
                 serializedAdditionalRawData,
-                totalKeyCount,
-                publicKeyCount,
-                privateKeyCount,
-                pairedKeyCount,
-                shortKeySizeCount);
+                totalKeys,
+                publicKeys,
+                privateKeys,
+                pairedKeys,
+                shortKeySize);
         }
 
         BinaryData IPersistableModel<CryptoKeySummary>.Write(ModelReaderWriterOptions options)
@@ -176,7 +165,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CryptoKeySummary)} does not support writing '{options.Format}' format.");
             }

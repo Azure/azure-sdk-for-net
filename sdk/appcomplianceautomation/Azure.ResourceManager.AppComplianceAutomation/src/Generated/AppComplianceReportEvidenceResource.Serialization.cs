@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 {
     public partial class AppComplianceReportEvidenceResource : IJsonModel<AppComplianceReportEvidenceData>
     {
-        private static AppComplianceReportEvidenceData s_dataDeserializationInstance;
-        private static AppComplianceReportEvidenceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AppComplianceReportEvidenceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportEvidenceData>)Data).Write(writer, options);
 
-        AppComplianceReportEvidenceData IJsonModel<AppComplianceReportEvidenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportEvidenceData>)DataDeserializationInstance).Create(ref reader, options);
+        AppComplianceReportEvidenceData IJsonModel<AppComplianceReportEvidenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppComplianceReportEvidenceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppComplianceReportEvidenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppComplianceReportEvidenceData>(Data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+        BinaryData IPersistableModel<AppComplianceReportEvidenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppComplianceReportEvidenceData IPersistableModel<AppComplianceReportEvidenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportEvidenceData>(data, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+        AppComplianceReportEvidenceData IPersistableModel<AppComplianceReportEvidenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppComplianceReportEvidenceData>(data, options);
 
-        string IPersistableModel<AppComplianceReportEvidenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportEvidenceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AppComplianceReportEvidenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppComplianceReportEvidenceData>)Data).GetFormatFromOptions(options);
     }
 }

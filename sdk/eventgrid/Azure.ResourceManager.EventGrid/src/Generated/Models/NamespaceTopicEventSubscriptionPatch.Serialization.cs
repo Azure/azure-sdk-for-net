@@ -56,17 +56,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("expirationTimeUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +98,6 @@ namespace Azure.ResourceManager.EventGrid.Models
             DeliverySchema? eventDeliverySchema = default;
             FiltersConfiguration filtersConfiguration = default;
             DateTimeOffset? expirationTimeUtc = default;
-            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,20 +147,6 @@ namespace Azure.ResourceManager.EventGrid.Models
                             expirationTimeUtc = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("tags"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                            foreach (var property1 in property0.Value.EnumerateObject())
-                            {
-                                dictionary.Add(property1.Name, property1.Value.GetString());
-                            }
-                            tags = dictionary;
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -182,13 +156,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NamespaceTopicEventSubscriptionPatch(
-                deliveryConfiguration,
-                eventDeliverySchema,
-                filtersConfiguration,
-                expirationTimeUtc,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData);
+            return new NamespaceTopicEventSubscriptionPatch(deliveryConfiguration, eventDeliverySchema, filtersConfiguration, expirationTimeUtc, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NamespaceTopicEventSubscriptionPatch>.Write(ModelReaderWriterOptions options)
@@ -198,7 +166,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NamespaceTopicEventSubscriptionPatch)} does not support writing '{options.Format}' format.");
             }

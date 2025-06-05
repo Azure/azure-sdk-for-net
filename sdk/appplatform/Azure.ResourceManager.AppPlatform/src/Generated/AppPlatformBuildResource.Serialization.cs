@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformBuildResource : IJsonModel<AppPlatformBuildData>
     {
-        private static AppPlatformBuildData s_dataDeserializationInstance;
-        private static AppPlatformBuildData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AppPlatformBuildData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildData>)Data).Write(writer, options);
 
-        AppPlatformBuildData IJsonModel<AppPlatformBuildData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildData>)DataDeserializationInstance).Create(ref reader, options);
+        AppPlatformBuildData IJsonModel<AppPlatformBuildData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformBuildData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformBuildData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
+        BinaryData IPersistableModel<AppPlatformBuildData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppPlatformBuildData IPersistableModel<AppPlatformBuildData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformBuildData>(data, options, AzureResourceManagerAppPlatformContext.Default);
+        AppPlatformBuildData IPersistableModel<AppPlatformBuildData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformBuildData>(data, options);
 
-        string IPersistableModel<AppPlatformBuildData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformBuildData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformBuildData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformBuildData>)Data).GetFormatFromOptions(options);
     }
 }

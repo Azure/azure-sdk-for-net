@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.DataFactory
 {
-    public partial class AzureResourceManagerDataFactoryContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerDataFactoryContext() { }
-        public static Azure.ResourceManager.DataFactory.AzureResourceManagerDataFactoryContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class DataFactoryChangeDataCaptureCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DataFactory.DataFactoryChangeDataCaptureResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DataFactory.DataFactoryChangeDataCaptureResource>, System.Collections.IEnumerable
     {
         protected DataFactoryChangeDataCaptureCollection() { }
@@ -971,45 +965,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AmazonMwsSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AmazonMwsSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AmazonRdsForOracleAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AmazonRdsForOracleAuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType Basic { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType left, Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class AmazonRdsForOracleLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService>
     {
-        public AmazonRdsForOracleLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public AmazonRdsForOracleLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
-        public Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CryptoChecksumClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CryptoChecksumTypesClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableBulkLoad { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EncryptionClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EncryptionTypesClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> FetchSize { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> FetchTswtzAsTimestamp { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> InitializationString { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> InitialLobFetchSize { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret Password { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> StatementCacheSize { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> SupportV1DataTypes { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AmazonRdsForOracleLinkedService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1763,7 +1724,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactorySecret AccessToken { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Authentication { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> DataSecurityMode { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Domain { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ExistingClusterId { get { throw null; } set { } }
@@ -2276,10 +2236,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzurePostgreSqlLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlLinkedService>
     {
         public AzurePostgreSqlLinkedService() { }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AzureCloudType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> CommandTimeout { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DataFactoryCredentialReference Credential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Database { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Encoding { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
@@ -2287,13 +2245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> ReadBufferSize { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalCredentialType { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalEmbeddedCert { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalEmbeddedCertPassword { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalId { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalKey { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> SslMode { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Tenant { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Timeout { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Timezone { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> TrustServerCertificate { get { throw null; } set { } }
@@ -2309,8 +2261,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public AzurePostgreSqlSink() { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> PreCopyScript { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<System.Collections.Generic.IList<string>> UpsertKeys { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum? WriteMethod { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -2341,25 +2291,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlTableDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct AzurePostgreSqlWriteMethodEnum : System.IEquatable<Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public AzurePostgreSqlWriteMethodEnum(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum BulkInsert { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum CopyCommand { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum Upsert { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum left, Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum left, Azure.ResourceManager.DataFactory.Models.AzurePostgreSqlWriteMethodEnum right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class AzureQueueSink : Azure.ResourceManager.DataFactory.Models.CopySink, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.AzureQueueSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.AzureQueueSink>
     {
@@ -2998,8 +2929,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public CommonDataServiceForAppsSink(Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior writeBehavior) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AlternateKeyName { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> BypassBusinessLogicExecution { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> BypassPowerAutomateFlows { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> IgnoreNullValues { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior WriteBehavior { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4334,7 +4263,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public DataFactoryScriptActivity(string name) : base (default(string)) { }
         public Azure.ResourceManager.DataFactory.Models.ScriptActivityTypeLogSettings LogSettings { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> ReturnMultistatementResult { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ScriptBlockExecutionTimeout { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DataFactory.Models.ScriptActivityScriptBlock> Scripts { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -4860,24 +4788,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatasetSchemaDataElement>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatasetSchemaDataElement>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct DatasetSourceValueType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public DatasetSourceValueType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType Actual { get { throw null; } }
-        public static Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType Display { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType left, Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType left, Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public abstract partial class DatasetStorageFormat : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatasetStorageFormat>
     {
         protected DatasetStorageFormat() { }
@@ -5299,8 +5209,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public DynamicsCrmSink(Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior writeBehavior) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AlternateKeyName { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> BypassBusinessLogicExecution { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> BypassPowerAutomateFlows { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> IgnoreNullValues { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior WriteBehavior { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -5361,8 +5269,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public DynamicsSink(Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior writeBehavior) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> AlternateKeyName { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> BypassBusinessLogicExecution { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> BypassPowerAutomateFlows { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> IgnoreNullValues { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.DynamicsSinkWriteBehavior WriteBehavior { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6299,37 +6205,12 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.GoogleSheetsLinkedService>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.GoogleSheetsLinkedService>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct GreenplumAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public GreenplumAuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType Basic { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType left, Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class GreenplumLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.GreenplumLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.GreenplumLinkedService>
     {
         public GreenplumLinkedService() { }
-        public Azure.ResourceManager.DataFactory.Models.GreenplumAuthenticationType? AuthenticationType { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> CommandTimeout { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> ConnectionTimeout { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Database { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Host { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret Password { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> SslMode { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.GreenplumLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.GreenplumLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.GreenplumLinkedService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -8768,9 +8649,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Office365LinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> office365TenantId, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> servicePrincipalTenantId, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> servicePrincipalId, Azure.Core.Expressions.DataFactory.DataFactorySecret servicePrincipalKey) { }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Office365TenantId { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalCredentialType { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalEmbeddedCert { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalEmbeddedCertPassword { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalId { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ServicePrincipalKey { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ServicePrincipalTenantId { get { throw null; } set { } }
@@ -8807,23 +8685,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.Office365TableOutputColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.Office365TableOutputColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.Office365TableOutputColumn>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.Office365TableOutputColumn>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct OracleAuthenticationType : System.IEquatable<Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public OracleAuthenticationType(string value) { throw null; }
-        public static Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType Basic { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType left, Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType left, Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType right) { throw null; }
-        public override string ToString() { throw null; }
     }
     public partial class OracleCloudStorageLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.OracleCloudStorageLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.OracleCloudStorageLinkedService>
     {
@@ -8873,26 +8734,10 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class OracleLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>
     {
-        public OracleLinkedService() { }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public OracleLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> connectionString) { }
-        public Azure.ResourceManager.DataFactory.Models.OracleAuthenticationType? AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CryptoChecksumClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CryptoChecksumTypesClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableBulkLoad { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EncryptionClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> EncryptionTypesClient { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> FetchSize { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> FetchTswtzAsTimestamp { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> InitializationString { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> InitialLobFetchSize { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryKeyVaultSecret Password { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> StatementCacheSize { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> SupportV1DataTypes { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.OracleLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.OracleLinkedService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -9539,14 +9384,11 @@ namespace Azure.ResourceManager.DataFactory.Models
     }
     public partial class PrestoLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.PrestoLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.PrestoLinkedService>
     {
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public PrestoLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> host, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> serverVersion, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
-        public PrestoLinkedService(Azure.Core.Expressions.DataFactory.DataFactoryElement<string> host, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> catalog, Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType authenticationType) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowHostNameCNMismatch { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowSelfSignedServerCert { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.PrestoAuthenticationType AuthenticationType { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Catalog { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableServerCertificateValidation { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableSsl { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Host { get { throw null; } set { } }
@@ -10513,9 +10355,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> MessageServerService { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret Password { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> SncFlag { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncLibraryPath { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMode { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMyName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncPartnerName { get { throw null; } set { } }
@@ -10617,9 +10457,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> MessageServerService { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret Password { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> SncFlag { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncLibraryPath { get { throw null; } set { } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMode { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncMyName { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SncPartnerName { get { throw null; } set { } }
@@ -11018,7 +10856,6 @@ namespace Azure.ResourceManager.DataFactory.Models
     {
         public ServiceNowV2ObjectDataset(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference linkedServiceName) : base (default(Azure.Core.Expressions.DataFactory.DataFactoryLinkedServiceReference)) { }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> TableName { get { throw null; } set { } }
-        public Azure.ResourceManager.DataFactory.Models.DatasetSourceValueType? ValueType { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.ServiceNowV2ObjectDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2ObjectDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ServiceNowV2ObjectDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -11370,8 +11207,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactorySecret Password { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret PrivateKey { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret PrivateKeyPassphrase { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Role { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Schema { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Scope { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> TenantId { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> User { get { throw null; } set { } }
@@ -12439,31 +12274,14 @@ namespace Azure.ResourceManager.DataFactory.Models
         public static bool operator !=(Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType left, Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TeradataImportCommand : Azure.ResourceManager.DataFactory.Models.ImportSettings, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>
-    {
-        public TeradataImportCommand() { }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<System.Collections.Generic.IDictionary<string, string>> AdditionalFormatOptions { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataFactory.Models.TeradataImportCommand System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataFactory.Models.TeradataImportCommand System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataImportCommand>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class TeradataLinkedService : Azure.ResourceManager.DataFactory.Models.DataFactoryLinkedServiceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataLinkedService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataLinkedService>
     {
         public TeradataLinkedService() { }
         public Azure.ResourceManager.DataFactory.Models.TeradataAuthenticationType? AuthenticationType { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> CharacterSet { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> ConnectionString { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> HttpsPortNumber { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> MaxRespSize { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret Password { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> PortNumber { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Server { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> SslMode { get { throw null; } set { } }
-        public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> UseDataEncryption { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.TeradataLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -12484,17 +12302,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.TeradataPartitionSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataPartitionSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataPartitionSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataPartitionSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TeradataSink : Azure.ResourceManager.DataFactory.Models.CopySink, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>
-    {
-        public TeradataSink() { }
-        public Azure.ResourceManager.DataFactory.Models.TeradataImportCommand ImportSettings { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataFactory.Models.TeradataSink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DataFactory.Models.TeradataSink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataSink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TeradataSource : Azure.ResourceManager.DataFactory.Models.TabularSource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.TeradataSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.TeradataSource>
     {

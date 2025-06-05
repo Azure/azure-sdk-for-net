@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class AutonomousDBVersionResource : IJsonModel<AutonomousDBVersionData>
     {
-        private static AutonomousDBVersionData s_dataDeserializationInstance;
-        private static AutonomousDBVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AutonomousDBVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDBVersionData>)Data).Write(writer, options);
 
-        AutonomousDBVersionData IJsonModel<AutonomousDBVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDBVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        AutonomousDBVersionData IJsonModel<AutonomousDBVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDBVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutonomousDBVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutonomousDBVersionData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
+        BinaryData IPersistableModel<AutonomousDBVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutonomousDBVersionData IPersistableModel<AutonomousDBVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDBVersionData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
+        AutonomousDBVersionData IPersistableModel<AutonomousDBVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDBVersionData>(data, options);
 
-        string IPersistableModel<AutonomousDBVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDBVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AutonomousDBVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDBVersionData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridNetwork
 
         ConfigurationGroupValueResource IOperationSource<ConfigurationGroupValueResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfigurationGroupValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ConfigurationGroupValueData>(response.Content);
             return new ConfigurationGroupValueResource(_client, data);
         }
 
         async ValueTask<ConfigurationGroupValueResource> IOperationSource<ConfigurationGroupValueResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConfigurationGroupValueData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ConfigurationGroupValueData>(response.Content);
             return await Task.FromResult(new ConfigurationGroupValueResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 return null;
             }
             DataReplicationProvisioningState? provisioningState = default;
-            DataReplicationPolicyCustomProperties customProperties = default;
+            PolicyModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationPolicyCustomProperties.DeserializeDataReplicationPolicyCustomProperties(property.Value, options);
+                    customProperties = PolicyModelCustomProperties.DeserializePolicyModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationPolicyProperties)} does not support writing '{options.Format}' format.");
             }

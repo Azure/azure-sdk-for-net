@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareHostResource : IJsonModel<VMwareHostData>
     {
-        private static VMwareHostData s_dataDeserializationInstance;
-        private static VMwareHostData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VMwareHostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VMwareHostData>)Data).Write(writer, options);
 
-        VMwareHostData IJsonModel<VMwareHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareHostData>)DataDeserializationInstance).Create(ref reader, options);
+        VMwareHostData IJsonModel<VMwareHostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareHostData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareHostData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+        BinaryData IPersistableModel<VMwareHostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VMwareHostData IPersistableModel<VMwareHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareHostData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+        VMwareHostData IPersistableModel<VMwareHostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareHostData>(data, options);
 
-        string IPersistableModel<VMwareHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareHostData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VMwareHostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareHostData>)Data).GetFormatFromOptions(options);
     }
 }

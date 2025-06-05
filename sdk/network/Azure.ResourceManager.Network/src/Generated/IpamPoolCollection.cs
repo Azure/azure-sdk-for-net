@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -75,11 +75,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="poolName"> IP Address Manager Pool resource name. </param>
         /// <param name="data"> Pool resource object to create/update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<IpamPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, IpamPoolData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IpamPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string poolName, IpamPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNull(data, nameof(data));
@@ -88,8 +87,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = await _ipamPoolRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new NetworkArmOperation<IpamPoolResource>(new IpamPoolOperationSource(Client), _ipamPoolClientDiagnostics, Pipeline, _ipamPoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _ipamPoolRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NetworkArmOperation<IpamPoolResource>(new IpamPoolOperationSource(Client), _ipamPoolClientDiagnostics, Pipeline, _ipamPoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +124,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="poolName"> IP Address Manager Pool resource name. </param>
         /// <param name="data"> Pool resource object to create/update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<IpamPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, IpamPoolData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IpamPoolResource> CreateOrUpdate(WaitUntil waitUntil, string poolName, IpamPoolData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolName, nameof(poolName));
             Argument.AssertNotNull(data, nameof(data));
@@ -138,8 +136,8 @@ namespace Azure.ResourceManager.Network
             scope.Start();
             try
             {
-                var response = _ipamPoolRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch, cancellationToken);
-                var operation = new NetworkArmOperation<IpamPoolResource>(new IpamPoolOperationSource(Client), _ipamPoolClientDiagnostics, Pipeline, _ipamPoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, ifMatch).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _ipamPoolRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data, cancellationToken);
+                var operation = new NetworkArmOperation<IpamPoolResource>(new IpamPoolOperationSource(Client), _ipamPoolClientDiagnostics, Pipeline, _ipamPoolRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, poolName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -209,7 +207,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -254,7 +252,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -289,7 +287,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -324,7 +322,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -367,7 +365,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -410,7 +408,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -455,7 +453,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-07-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

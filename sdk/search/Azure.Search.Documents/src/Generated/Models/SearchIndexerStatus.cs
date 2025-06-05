@@ -29,14 +29,12 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="lastResult"> The result of the most recent or an in-progress indexer execution. </param>
         /// <param name="executionHistory"> History of the recent indexer executions, sorted in reverse chronological order. </param>
         /// <param name="limits"> The execution limits for the indexer. </param>
-        /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
-        internal SearchIndexerStatus(IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState)
+        internal SearchIndexerStatus(IndexerStatus status, IndexerExecutionResult lastResult, IReadOnlyList<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits)
         {
             Status = status;
             LastResult = lastResult;
             ExecutionHistory = executionHistory;
             Limits = limits;
-            CurrentState = currentState;
         }
 
         /// <summary> Overall indexer status. </summary>
@@ -47,7 +45,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public IReadOnlyList<IndexerExecutionResult> ExecutionHistory { get; }
         /// <summary> The execution limits for the indexer. </summary>
         public SearchIndexerLimits Limits { get; }
-        /// <summary> All of the state that defines and dictates the indexer's current execution. </summary>
-        public IndexerState CurrentState { get; }
     }
 }

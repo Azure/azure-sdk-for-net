@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class WorkspaceManagerAssignmentJobResource : IJsonModel<WorkspaceManagerAssignmentJobData>
     {
-        private static WorkspaceManagerAssignmentJobData s_dataDeserializationInstance;
-        private static WorkspaceManagerAssignmentJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<WorkspaceManagerAssignmentJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerAssignmentJobData>)Data).Write(writer, options);
 
-        WorkspaceManagerAssignmentJobData IJsonModel<WorkspaceManagerAssignmentJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerAssignmentJobData>)DataDeserializationInstance).Create(ref reader, options);
+        WorkspaceManagerAssignmentJobData IJsonModel<WorkspaceManagerAssignmentJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerAssignmentJobData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkspaceManagerAssignmentJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceManagerAssignmentJobData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        BinaryData IPersistableModel<WorkspaceManagerAssignmentJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        WorkspaceManagerAssignmentJobData IPersistableModel<WorkspaceManagerAssignmentJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerAssignmentJobData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        WorkspaceManagerAssignmentJobData IPersistableModel<WorkspaceManagerAssignmentJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerAssignmentJobData>(data, options);
 
-        string IPersistableModel<WorkspaceManagerAssignmentJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerAssignmentJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<WorkspaceManagerAssignmentJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerAssignmentJobData>)Data).GetFormatFromOptions(options);
     }
 }

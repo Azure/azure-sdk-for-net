@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace _Type.Model.Inheritance.SingleDiscriminator
+namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
     public static partial class TypeModelInheritanceSingleDiscriminatorModelFactory
     {

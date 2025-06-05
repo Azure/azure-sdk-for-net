@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppManagedCertificateResource IOperationSource<ContainerAppManagedCertificateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppManagedCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            var data = ModelReaderWriter.Read<ContainerAppManagedCertificateData>(response.Content);
             return new ContainerAppManagedCertificateResource(_client, data);
         }
 
         async ValueTask<ContainerAppManagedCertificateResource> IOperationSource<ContainerAppManagedCertificateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppManagedCertificateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            var data = ModelReaderWriter.Read<ContainerAppManagedCertificateData>(response.Content);
             return await Task.FromResult(new ContainerAppManagedCertificateResource(_client, data)).ConfigureAwait(false);
         }
     }

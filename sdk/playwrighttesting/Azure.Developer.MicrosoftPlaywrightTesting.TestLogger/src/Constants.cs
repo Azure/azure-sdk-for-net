@@ -100,6 +100,11 @@ internal class AzureTokenCredentialType
     public static readonly string VisualStudioCredential = "VisualStudioCredential";
 
     /// <summary>
+    /// Visual Studio Code Credential.
+    /// </summary>
+    public static readonly string VisualStudioCodeCredential = "VisualStudioCodeCredential";
+
+    /// <summary>
     /// Azure CLI Credential.
     /// </summary>
     public static readonly string AzureCliCredential = "AzureCliCredential";

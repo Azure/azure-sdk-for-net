@@ -23,10 +23,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
            : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
 
-        private async Task SetUpContainerForListing(BlobContainerClient container)
-        {
-            string[] blobNames =
-            [
+        private string[] BlobNames
+            => new[]
+            {
                 "foo",
                 "bar",
                 "baz",
@@ -35,7 +34,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 "baz/foo",
                 "baz/foo/bar",
                 "baz/bar/foo"
-            ];
+            };
+
+        private async Task SetUpContainerForListing(BlobContainerClient container)
+        {
+            var blobNames = BlobNames;
 
             var data = GetRandomBuffer(Constants.KB);
 
@@ -99,12 +102,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task GetStorageResourcesAsync_Empty()
         {
             // Arrange
-            Dictionary<string, List<(string, bool)>> blobHierarchy = new()
-            {
-                { "foo/", []},
-            };
             Uri uri = new Uri("https://storageaccount.blob.core.windows.net/container");
-            TestGetBlobsContainerClient testContainer = new(uri, blobHierarchy);
+            List<string> emptyList = new();
+            TestGetBlobsContainerClient testContainer = new(uri, emptyList);
 
             string prefix = "foo";
             StorageResourceContainer container = new BlobStorageResourceContainer(
@@ -136,33 +136,27 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task GetStorageResourcesAsync_EmptyPrefix()
         {
             // Arrange
-            Dictionary<string, List<(string Path, bool IsPrefix)>> blobHierarchy = new()
-            {
-                { string.Empty, [("baz/", true), ("foo/", true), ("bar", false)]},
-                { "foo/", [("foo/bar", false), ("foo/foo", false)]},
-                { "baz/", [("baz/bar/", true), ("baz/foo/", true)]},
-                { "baz/foo/", [("baz/foo/bar", false)]},
-                { "baz/bar/", [("baz/bar/foo", false)]},
-            };
-
             Uri uri = new Uri("https://storageaccount.blob.core.windows.net/container");
-            TestGetBlobsContainerClient testContainer = new(uri, blobHierarchy);
+            TestGetBlobsContainerClient testContainer = new(uri, BlobNames.ToList());
 
-            List<string> expectedBlobNames =
-            [
-                "bar",
-                "foo/bar",
-                "foo/foo",
-                "baz/bar/foo",
-                "baz/foo/bar",
-            ];
-            List<string> expectedDirectories =
-            [
-                "baz",
+            List<string> expectedBlobNames = new()
+            {
                 "foo",
-                "baz/bar",
+                "bar",
+                "baz",
+                "foo/foo",
+                "foo/bar",
                 "baz/foo",
-            ];
+                "baz/foo/bar",
+                "baz/bar/foo"
+            };
+            List<string> expectedDirectories = new()
+            {
+                "foo",
+                "baz",
+                "baz/foo",
+                "baz/bar"
+            };
 
             StorageResourceContainer container = new BlobStorageResourceContainer(testContainer);
 
@@ -192,21 +186,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         public async Task GetStorageResourcesAsync_SubDirectories()
         {
             // Arrange
-            Dictionary<string, List<(string Path, bool IsPrefix)>> blobHierarchy = new()
-            {
-                { "foo/", [("foo/folder1/", true), ("foo/otherfolder/", true), ("foo/blob", false), ("foo/moon", false), ("foo/star", false), ("foo/sun", false)]},
-                { "foo/folder1/", [("foo/folder1/subdir/", true)]},
-                { "foo/otherfolder/", [("foo/otherfolder/hello", false)]},
-                { "foo/folder1/subdir/", [("foo/folder1/subdir/earth", false), ("foo/folder1/subdir/rocket", false)]},
-            };
             Uri uri = new Uri("https://storageaccount.blob.core.windows.net/container");
-            TestGetBlobsContainerClient testContainer = new(uri, blobHierarchy);
-
+            List<string> prefixFooNames = new()
+            {
+                "foo/blob",
+                "foo/moon",
+                "foo/star",
+                "foo/sun",
+                "foo/folder1/subdir/earth",
+                "foo/folder1/subdir/rocket",
+                "foo/otherfolder/hello",
+            };
             List<string> expectedDirectories = new()
             {
                 "folder1",
-                "otherfolder",
                 "folder1/subdir",
+                "otherfolder",
             };
             List<string> expectedBlobNames = new()
             {
@@ -214,10 +209,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 "moon",
                 "star",
                 "sun",
-                "otherfolder/hello",
                 "folder1/subdir/earth",
                 "folder1/subdir/rocket",
+                "otherfolder/hello",
             };
+            TestGetBlobsContainerClient testContainer = new(uri, prefixFooNames);
 
             string prefix = "foo";
             StorageResourceContainer container = new BlobStorageResourceContainer(

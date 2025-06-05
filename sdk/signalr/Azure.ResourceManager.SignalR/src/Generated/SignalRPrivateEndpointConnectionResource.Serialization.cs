@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SignalR
 {
     public partial class SignalRPrivateEndpointConnectionResource : IJsonModel<SignalRPrivateEndpointConnectionData>
     {
-        private static SignalRPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static SignalRPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SignalRPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        SignalRPrivateEndpointConnectionData IJsonModel<SignalRPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        SignalRPrivateEndpointConnectionData IJsonModel<SignalRPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRPrivateEndpointConnectionData>(Data, options, AzureResourceManagerSignalRContext.Default);
+        BinaryData IPersistableModel<SignalRPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SignalRPrivateEndpointConnectionData IPersistableModel<SignalRPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRPrivateEndpointConnectionData>(data, options, AzureResourceManagerSignalRContext.Default);
+        SignalRPrivateEndpointConnectionData IPersistableModel<SignalRPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<SignalRPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SignalRPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

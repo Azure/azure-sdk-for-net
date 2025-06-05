@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseIPFirewallRuleInfoResource : IJsonModel<SynapseIPFirewallRuleInfoData>
     {
-        private static SynapseIPFirewallRuleInfoData s_dataDeserializationInstance;
-        private static SynapseIPFirewallRuleInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseIPFirewallRuleInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIPFirewallRuleInfoData>)Data).Write(writer, options);
 
-        SynapseIPFirewallRuleInfoData IJsonModel<SynapseIPFirewallRuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIPFirewallRuleInfoData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseIPFirewallRuleInfoData IJsonModel<SynapseIPFirewallRuleInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseIPFirewallRuleInfoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseIPFirewallRuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseIPFirewallRuleInfoData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseIPFirewallRuleInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseIPFirewallRuleInfoData IPersistableModel<SynapseIPFirewallRuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseIPFirewallRuleInfoData IPersistableModel<SynapseIPFirewallRuleInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseIPFirewallRuleInfoData>(data, options);
 
-        string IPersistableModel<SynapseIPFirewallRuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseIPFirewallRuleInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseIPFirewallRuleInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseIPFirewallRuleInfoData>)Data).GetFormatFromOptions(options);
     }
 }

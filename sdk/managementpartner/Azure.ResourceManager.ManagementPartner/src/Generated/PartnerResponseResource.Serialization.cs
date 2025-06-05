@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagementPartner
 {
     public partial class PartnerResponseResource : IJsonModel<PartnerResponseData>
     {
-        private static PartnerResponseData s_dataDeserializationInstance;
-        private static PartnerResponseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PartnerResponseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PartnerResponseData>)Data).Write(writer, options);
 
-        PartnerResponseData IJsonModel<PartnerResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerResponseData>)DataDeserializationInstance).Create(ref reader, options);
+        PartnerResponseData IJsonModel<PartnerResponseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PartnerResponseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PartnerResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PartnerResponseData>(Data, options, AzureResourceManagerManagementPartnerContext.Default);
+        BinaryData IPersistableModel<PartnerResponseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PartnerResponseData IPersistableModel<PartnerResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerResponseData>(data, options, AzureResourceManagerManagementPartnerContext.Default);
+        PartnerResponseData IPersistableModel<PartnerResponseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PartnerResponseData>(data, options);
 
-        string IPersistableModel<PartnerResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerResponseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PartnerResponseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PartnerResponseData>)Data).GetFormatFromOptions(options);
     }
 }

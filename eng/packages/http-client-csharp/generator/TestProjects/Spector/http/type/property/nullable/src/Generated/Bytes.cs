@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Property.Nullable.Models;
 
 namespace _Type.Property.Nullable
 {
@@ -17,7 +18,7 @@ namespace _Type.Property.Nullable
     {
         protected Bytes() => throw null;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public HttpPipeline Pipeline => throw null;
 
         public virtual Response GetNonNull(RequestContext context) => throw null;
 

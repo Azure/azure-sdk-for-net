@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingRequestResource : IJsonModel<BillingRequestData>
     {
-        private static BillingRequestData s_dataDeserializationInstance;
-        private static BillingRequestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<BillingRequestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingRequestData>)Data).Write(writer, options);
 
-        BillingRequestData IJsonModel<BillingRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingRequestData>)DataDeserializationInstance).Create(ref reader, options);
+        BillingRequestData IJsonModel<BillingRequestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingRequestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingRequestData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<BillingRequestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BillingRequestData IPersistableModel<BillingRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingRequestData>(data, options, AzureResourceManagerBillingContext.Default);
+        BillingRequestData IPersistableModel<BillingRequestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingRequestData>(data, options);
 
-        string IPersistableModel<BillingRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingRequestData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<BillingRequestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingRequestData>)Data).GetFormatFromOptions(options);
     }
 }

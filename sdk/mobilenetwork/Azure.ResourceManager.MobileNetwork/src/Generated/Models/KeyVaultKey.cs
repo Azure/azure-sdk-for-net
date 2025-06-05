@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> An Azure key vault key. </summary>
+    /// <summary>
+    /// An Azure key vault key.
+    /// Serialized Name: KeyVaultKey
+    /// </summary>
     internal partial class KeyVaultKey
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyVaultKey"/>. </summary>
-        /// <param name="keyUri"> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </param>
+        /// <param name="keyUri">
+        /// The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey.
+        /// Serialized Name: KeyVaultKey.keyUrl
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal KeyVaultKey(Uri keyUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </summary>
+        /// <summary>
+        /// The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey.
+        /// Serialized Name: KeyVaultKey.keyUrl
+        /// </summary>
         [WirePath("keyUrl")]
         public Uri KeyUri { get; set; }
     }

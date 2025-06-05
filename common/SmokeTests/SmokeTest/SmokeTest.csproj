@@ -24,13 +24,13 @@
       The static set is included here to allow for local testing of the smoke tests project
       without the need to run CI scripts to rewrite package references.
     -->
-    <PackageReference Include="Azure.Identity" Version="1.13.2" />
-    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.12.1" />
-    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.12.1" />
-    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.7.0" />
-    <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
-    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.6.11" />
-    <PackageReference Include="Microsoft.Azure.Devices" Version="1.40.0" />
+    <PackageReference Include="Azure.Identity" Version="1.11.3" />
+    <PackageReference Include="Azure.Messaging.EventHubs" Version="5.11.3" />
+    <PackageReference Include="Azure.Messaging.EventHubs.Processor" Version="5.11.3" />
+    <PackageReference Include="Azure.Security.Keyvault.Secrets" Version="4.6.0" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.20.0" />
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.6.7" />
+    <PackageReference Include="Microsoft.Azure.Devices" Version="1.39.1" />
     <PackageReference Include="Microsoft.Azure.DocumentDB.Core" Version="2.22.0" />
     <PackageReference Include="Azure.Template" Version="1.0.3-beta.1218030" />
 
@@ -38,7 +38,7 @@
     <PackageReference Include="System.Net.NameResolution" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'netcoreapp3.1'))">
     <!-- This package supports netcoreapp3.1 -->
     <PackageReference Remove="Microsoft.Azure.WebPubSub.AspNetCore" />
   </ItemGroup>

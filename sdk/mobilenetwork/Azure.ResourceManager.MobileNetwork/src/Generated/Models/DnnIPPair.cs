@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> DNN and UE IP address. </summary>
+    /// <summary>
+    /// DNN and UE IP address
+    /// Serialized Name: DnnIpPair
+    /// </summary>
     public partial class DnnIPPair
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DnnIPPair"/>. </summary>
-        /// <param name="dnn"> Data network name. </param>
-        /// <param name="ipV4Addr"> IPv4 address. </param>
+        /// <param name="dnn">
+        /// Data network name
+        /// Serialized Name: DnnIpPair.dnn
+        /// </param>
+        /// <param name="ipV4Addr">
+        /// IPv4 address.
+        /// Serialized Name: DnnIpPair.ueIpAddress.ipV4Addr
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DnnIPPair(string dnn, string ipV4Addr, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Data network name. </summary>
+        /// <summary>
+        /// Data network name
+        /// Serialized Name: DnnIpPair.dnn
+        /// </summary>
         [WirePath("dnn")]
         public string Dnn { get; set; }
-        /// <summary> IPv4 address. </summary>
+        /// <summary>
+        /// IPv4 address.
+        /// Serialized Name: DnnIpPair.ueIpAddress.ipV4Addr
+        /// </summary>
         [WirePath("ueIpAddress.ipV4Addr")]
         public string IPV4Addr { get; set; }
     }

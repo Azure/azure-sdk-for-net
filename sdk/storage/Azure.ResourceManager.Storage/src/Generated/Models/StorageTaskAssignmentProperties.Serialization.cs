@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Storage.Models
             writer.WriteObjectValue(ExecutionContext, options);
             writer.WritePropertyName("report"u8);
             writer.WriteObjectValue(Report, options);
-            if (options.Format != "W" && Optional.IsDefined(StorageTaskAssignmentProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(StorageTaskAssignmentProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (Optional.IsDefined(RunStatus))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Storage.Models
             string description = default;
             StorageTaskAssignmentExecutionContext executionContext = default;
             StorageTaskAssignmentReport report = default;
-            StorageTaskAssignmentProvisioningState? provisioningState = default;
+            StorageProvisioningState? provisioningState = default;
             StorageTaskReportProperties runStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    provisioningState = new StorageTaskAssignmentProvisioningState(property.Value.GetString());
+                    provisioningState = property.Value.GetString().ToStorageProvisioningState();
                     continue;
                 }
                 if (property.NameEquals("runStatus"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageTaskAssignmentProvisioningState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  provisioningState: ");
@@ -266,10 +266,10 @@ namespace Azure.ResourceManager.Storage.Models
             }
             else
             {
-                if (Optional.IsDefined(StorageTaskAssignmentProvisioningState))
+                if (Optional.IsDefined(ProvisioningState))
                 {
                     builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{StorageTaskAssignmentProvisioningState.Value.ToString()}'");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
                 }
             }
 
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

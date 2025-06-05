@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsTheEmailConfigurationSetting()
+        public async Task Get_EmailConfigurationGet()
         {
-            // Generated from example definition: 2024-09-01/EmailConfiguration_Get.json
-            // this example is just showing the usage of "EmailConfigurationModel_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_Get.json
+            // this example is just showing the usage of "EmailConfiguration_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationEmailConfigurationResource created on azure
             // for more information of creating DataReplicationEmailConfigurationResource, please refer to the document of DataReplicationEmailConfigurationResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgswagger_2024-09-01";
+            string resourceGroupName = "rgrecoveryservicesdatareplication";
             string vaultName = "4";
             string emailConfigurationName = "0";
             ResourceIdentifier dataReplicationEmailConfigurationResourceId = DataReplicationEmailConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, emailConfigurationName);
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreatesEmailConfigurationSettings()
+        public async Task Update_EmailConfigurationCreate()
         {
-            // Generated from example definition: 2024-09-01/EmailConfiguration_Create.json
-            // this example is just showing the usage of "EmailConfigurationModel_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/EmailConfiguration_Create.json
+            // this example is just showing the usage of "EmailConfiguration_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -62,21 +62,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationEmailConfigurationResource created on azure
             // for more information of creating DataReplicationEmailConfigurationResource, please refer to the document of DataReplicationEmailConfigurationResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgswagger_2024-09-01";
+            string resourceGroupName = "rgrecoveryservicesdatareplication";
             string vaultName = "4";
             string emailConfigurationName = "0";
             ResourceIdentifier dataReplicationEmailConfigurationResourceId = DataReplicationEmailConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, emailConfigurationName);
             DataReplicationEmailConfigurationResource dataReplicationEmailConfiguration = client.GetDataReplicationEmailConfigurationResource(dataReplicationEmailConfigurationResourceId);
 
             // invoke the operation
-            DataReplicationEmailConfigurationData data = new DataReplicationEmailConfigurationData
+            DataReplicationEmailConfigurationData data = new DataReplicationEmailConfigurationData(new DataReplicationEmailConfigurationProperties(true)
             {
-                Properties = new DataReplicationEmailConfigurationProperties(true)
-                {
-                    CustomEmailAddresses = { "ketvbducyailcny" },
-                    Locale = "vpnjxjvdqtebnucyxiyrjiko",
-                },
-            };
+                CustomEmailAddresses = { "ketvbducyailcny" },
+                Locale = "vpnjxjvdqtebnucyxiyrjiko",
+            });
             ArmOperation<DataReplicationEmailConfigurationResource> lro = await dataReplicationEmailConfiguration.UpdateAsync(WaitUntil.Completed, data);
             DataReplicationEmailConfigurationResource result = lro.Value;
 

@@ -142,10 +142,25 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("dnsConfiguration"u8);
                 writer.WriteObjectValue(DnsConfiguration, options);
             }
-            if (Optional.IsDefined(OutboundVnetRouting))
+            if (Optional.IsDefined(IsVnetRouteAllEnabled))
             {
-                writer.WritePropertyName("outboundVnetRouting"u8);
-                writer.WriteObjectValue(OutboundVnetRouting, options);
+                writer.WritePropertyName("vnetRouteAllEnabled"u8);
+                writer.WriteBooleanValue(IsVnetRouteAllEnabled.Value);
+            }
+            if (Optional.IsDefined(IsVnetImagePullEnabled))
+            {
+                writer.WritePropertyName("vnetImagePullEnabled"u8);
+                writer.WriteBooleanValue(IsVnetImagePullEnabled.Value);
+            }
+            if (Optional.IsDefined(IsVnetContentShareEnabled))
+            {
+                writer.WritePropertyName("vnetContentShareEnabled"u8);
+                writer.WriteBooleanValue(IsVnetContentShareEnabled.Value);
+            }
+            if (Optional.IsDefined(IsVnetBackupRestoreEnabled))
+            {
+                writer.WritePropertyName("vnetBackupRestoreEnabled"u8);
+                writer.WriteBooleanValue(IsVnetBackupRestoreEnabled.Value);
             }
             if (Optional.IsDefined(SiteConfig))
             {
@@ -216,16 +231,6 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(IsClientAffinityPartitioningEnabled))
-            {
-                writer.WritePropertyName("clientAffinityPartitioningEnabled"u8);
-                writer.WriteBooleanValue(IsClientAffinityPartitioningEnabled.Value);
-            }
-            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
-            {
-                writer.WritePropertyName("clientAffinityProxyEnabled"u8);
-                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
-            }
             if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
@@ -250,11 +255,6 @@ namespace Azure.ResourceManager.AppService
             {
                 writer.WritePropertyName("endToEndEncryptionEnabled"u8);
                 writer.WriteBooleanValue(IsEndToEndEncryptionEnabled.Value);
-            }
-            if (Optional.IsDefined(IsSshEnabled))
-            {
-                writer.WritePropertyName("sshEnabled"u8);
-                writer.WriteBooleanValue(IsSshEnabled.Value);
             }
             if (Optional.IsDefined(IsHostNameDisabled))
             {
@@ -452,7 +452,10 @@ namespace Azure.ResourceManager.AppService
             bool? hyperV = default;
             DateTimeOffset? lastModifiedTimeUtc = default;
             SiteDnsConfig dnsConfiguration = default;
-            OutboundVnetRouting outboundVnetRouting = default;
+            bool? vnetRouteAllEnabled = default;
+            bool? vnetImagePullEnabled = default;
+            bool? vnetContentShareEnabled = default;
+            bool? vnetBackupRestoreEnabled = default;
             SiteConfigProperties siteConfig = default;
             FunctionAppConfig functionAppConfig = default;
             AppDaprConfig daprConfig = default;
@@ -463,14 +466,11 @@ namespace Azure.ResourceManager.AppService
             string targetSwapSlot = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             bool? clientAffinityEnabled = default;
-            bool? clientAffinityPartitioningEnabled = default;
-            bool? clientAffinityProxyEnabled = default;
             bool? clientCertEnabled = default;
             ClientCertMode? clientCertMode = default;
             string clientCertExclusionPaths = default;
             AppServiceIPMode? ipMode = default;
             bool? endToEndEncryptionEnabled = default;
-            bool? sshEnabled = default;
             bool? hostNamesDisabled = default;
             string customDomainVerificationId = default;
             string outboundIPAddresses = default;
@@ -706,13 +706,40 @@ namespace Azure.ResourceManager.AppService
                             dnsConfiguration = SiteDnsConfig.DeserializeSiteDnsConfig(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("outboundVnetRouting"u8))
+                        if (property0.NameEquals("vnetRouteAllEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            outboundVnetRouting = OutboundVnetRouting.DeserializeOutboundVnetRouting(property0.Value, options);
+                            vnetRouteAllEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetImagePullEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetImagePullEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetContentShareEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetContentShareEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("vnetBackupRestoreEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vnetBackupRestoreEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("siteConfig"u8))
@@ -804,24 +831,6 @@ namespace Azure.ResourceManager.AppService
                             clientAffinityEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("clientAffinityPartitioningEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientAffinityPartitioningEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("clientAffinityProxyEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientAffinityProxyEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("clientCertEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -861,15 +870,6 @@ namespace Azure.ResourceManager.AppService
                                 continue;
                             }
                             endToEndEncryptionEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("sshEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sshEnabled = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("hostNamesDisabled"u8))
@@ -1080,7 +1080,10 @@ namespace Azure.ResourceManager.AppService
                 hyperV,
                 lastModifiedTimeUtc,
                 dnsConfiguration,
-                outboundVnetRouting,
+                vnetRouteAllEnabled,
+                vnetImagePullEnabled,
+                vnetContentShareEnabled,
+                vnetBackupRestoreEnabled,
                 siteConfig,
                 functionAppConfig,
                 daprConfig,
@@ -1091,14 +1094,11 @@ namespace Azure.ResourceManager.AppService
                 targetSwapSlot,
                 hostingEnvironmentProfile,
                 clientAffinityEnabled,
-                clientAffinityPartitioningEnabled,
-                clientAffinityProxyEnabled,
                 clientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
                 ipMode,
                 endToEndEncryptionEnabled,
-                sshEnabled,
                 hostNamesDisabled,
                 customDomainVerificationId,
                 outboundIPAddresses,
@@ -1575,18 +1575,67 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutboundVnetRouting), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetRouteAllEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    outboundVnetRouting: ");
+                builder.Append("    vnetRouteAllEnabled: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(OutboundVnetRouting))
+                if (Optional.IsDefined(IsVnetRouteAllEnabled))
                 {
-                    builder.Append("    outboundVnetRouting: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, OutboundVnetRouting, options, 4, false, "    outboundVnetRouting: ");
+                    builder.Append("    vnetRouteAllEnabled: ");
+                    var boolValue = IsVnetRouteAllEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetImagePullEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetImagePullEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetImagePullEnabled))
+                {
+                    builder.Append("    vnetImagePullEnabled: ");
+                    var boolValue = IsVnetImagePullEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetContentShareEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetContentShareEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetContentShareEnabled))
+                {
+                    builder.Append("    vnetContentShareEnabled: ");
+                    var boolValue = IsVnetContentShareEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsVnetBackupRestoreEnabled), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    vnetBackupRestoreEnabled: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsVnetBackupRestoreEnabled))
+                {
+                    builder.Append("    vnetBackupRestoreEnabled: ");
+                    var boolValue = IsVnetBackupRestoreEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -1779,38 +1828,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityPartitioningEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clientAffinityPartitioningEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsClientAffinityPartitioningEnabled))
-                {
-                    builder.Append("    clientAffinityPartitioningEnabled: ");
-                    var boolValue = IsClientAffinityPartitioningEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityProxyEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clientAffinityProxyEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsClientAffinityProxyEnabled))
-                {
-                    builder.Append("    clientAffinityProxyEnabled: ");
-                    var boolValue = IsClientAffinityProxyEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientCertEnabled), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -1892,22 +1909,6 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("    endToEndEncryptionEnabled: ");
                     var boolValue = IsEndToEndEncryptionEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSshEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sshEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsSshEnabled))
-                {
-                    builder.Append("    sshEnabled: ");
-                    var boolValue = IsSshEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
@@ -2346,7 +2347,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

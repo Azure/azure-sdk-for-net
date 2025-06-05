@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.GuestConfiguration
 {
     public partial class GuestConfigurationHcrpAssignmentResource : IJsonModel<GuestConfigurationAssignmentData>
     {
-        private static GuestConfigurationAssignmentData s_dataDeserializationInstance;
-        private static GuestConfigurationAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<GuestConfigurationAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GuestConfigurationAssignmentData>)Data).Write(writer, options);
 
-        GuestConfigurationAssignmentData IJsonModel<GuestConfigurationAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GuestConfigurationAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        GuestConfigurationAssignmentData IJsonModel<GuestConfigurationAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GuestConfigurationAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GuestConfigurationAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GuestConfigurationAssignmentData>(Data, options, AzureResourceManagerGuestConfigurationContext.Default);
+        BinaryData IPersistableModel<GuestConfigurationAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        GuestConfigurationAssignmentData IPersistableModel<GuestConfigurationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GuestConfigurationAssignmentData>(data, options, AzureResourceManagerGuestConfigurationContext.Default);
+        GuestConfigurationAssignmentData IPersistableModel<GuestConfigurationAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GuestConfigurationAssignmentData>(data, options);
 
-        string IPersistableModel<GuestConfigurationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GuestConfigurationAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<GuestConfigurationAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GuestConfigurationAssignmentData>)Data).GetFormatFromOptions(options);
     }
 }

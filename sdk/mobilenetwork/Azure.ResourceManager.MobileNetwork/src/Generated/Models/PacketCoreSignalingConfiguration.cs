@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Signaling configuration for the packet core. </summary>
+    /// <summary>
+    /// Signaling configuration for the packet core.
+    /// Serialized Name: SignalingConfiguration
+    /// </summary>
     public partial class PacketCoreSignalingConfiguration
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreSignalingConfiguration"/>. </summary>
-        /// <param name="nasReroute"> Configuration enabling 4G NAS reroute. </param>
-        /// <param name="nasEncryption"> An ordered list of NAS encryption algorithms, used to encrypt control plane traffic between the UE and packet core, in order from most to least preferred. If not specified, the packet core will use a built-in default ordering. </param>
+        /// <param name="nasReroute">
+        /// Configuration enabling 4G NAS reroute.
+        /// Serialized Name: SignalingConfiguration.nasReroute
+        /// </param>
+        /// <param name="nasEncryption">
+        /// An ordered list of NAS encryption algorithms, used to encrypt control plane traffic between the UE and packet core, in order from most to least preferred. If not specified, the packet core will use a built-in default ordering.
+        /// Serialized Name: SignalingConfiguration.nasEncryption
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreSignalingConfiguration(NASRerouteConfiguration nasReroute, IList<MobileNetworkNasEncryptionType> nasEncryption, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Configuration enabling 4G NAS reroute. </summary>
+        /// <summary>
+        /// Configuration enabling 4G NAS reroute.
+        /// Serialized Name: SignalingConfiguration.nasReroute
+        /// </summary>
         internal NASRerouteConfiguration NasReroute { get; set; }
-        /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>
+        /// <summary>
+        /// The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute.
+        /// Serialized Name: NASRerouteConfiguration.macroMmeGroupId
+        /// </summary>
         [WirePath("nasReroute.macroMmeGroupId")]
         public int? NasRerouteMacroMmeGroupId
         {
@@ -75,7 +90,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> An ordered list of NAS encryption algorithms, used to encrypt control plane traffic between the UE and packet core, in order from most to least preferred. If not specified, the packet core will use a built-in default ordering. </summary>
+        /// <summary>
+        /// An ordered list of NAS encryption algorithms, used to encrypt control plane traffic between the UE and packet core, in order from most to least preferred. If not specified, the packet core will use a built-in default ordering.
+        /// Serialized Name: SignalingConfiguration.nasEncryption
+        /// </summary>
         [WirePath("nasEncryption")]
         public IList<MobileNetworkNasEncryptionType> NasEncryption { get; }
     }

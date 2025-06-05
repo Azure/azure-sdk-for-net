@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenType("AzureContentFilterResultForChoiceProtectedMaterialCodeCitation")]
+[CodeGenModel("AzureContentFilterResultForChoiceProtectedMaterialCodeCitation")]
 public partial class ContentFilterProtectedMaterialCitationResult
 {
     // CUSTOM: Renamed for Uri type.

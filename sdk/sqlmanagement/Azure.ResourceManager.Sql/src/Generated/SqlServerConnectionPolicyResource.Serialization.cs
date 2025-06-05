@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerConnectionPolicyResource : IJsonModel<SqlServerConnectionPolicyData>
     {
-        private static SqlServerConnectionPolicyData s_dataDeserializationInstance;
-        private static SqlServerConnectionPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SqlServerConnectionPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerConnectionPolicyData>)Data).Write(writer, options);
 
-        SqlServerConnectionPolicyData IJsonModel<SqlServerConnectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerConnectionPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        SqlServerConnectionPolicyData IJsonModel<SqlServerConnectionPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerConnectionPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerConnectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerConnectionPolicyData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<SqlServerConnectionPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SqlServerConnectionPolicyData IPersistableModel<SqlServerConnectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerConnectionPolicyData>(data, options, AzureResourceManagerSqlContext.Default);
+        SqlServerConnectionPolicyData IPersistableModel<SqlServerConnectionPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerConnectionPolicyData>(data, options);
 
-        string IPersistableModel<SqlServerConnectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerConnectionPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerConnectionPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerConnectionPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

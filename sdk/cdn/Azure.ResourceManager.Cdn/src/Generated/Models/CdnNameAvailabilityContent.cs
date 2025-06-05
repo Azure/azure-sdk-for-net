@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Input of CheckNameAvailability API.
-    /// Serialized Name: CheckNameAvailabilityInput
-    /// </summary>
+    /// <summary> Input of CheckNameAvailability API. </summary>
     public partial class CdnNameAvailabilityContent
     {
         /// <summary>
@@ -49,14 +46,8 @@ namespace Azure.ResourceManager.Cdn.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// The resource name to validate.
-        /// Serialized Name: CheckNameAvailabilityInput.name
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the resource whose name is to be validated.
-        /// Serialized Name: CheckNameAvailabilityInput.type
-        /// </param>
+        /// <param name="name"> The resource name to validate. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public CdnNameAvailabilityContent(string name, CdnResourceType resourceType)
         {
@@ -67,14 +58,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// The resource name to validate.
-        /// Serialized Name: CheckNameAvailabilityInput.name
-        /// </param>
-        /// <param name="resourceType">
-        /// The type of the resource whose name is to be validated.
-        /// Serialized Name: CheckNameAvailabilityInput.type
-        /// </param>
+        /// <param name="name"> The resource name to validate. </param>
+        /// <param name="resourceType"> The type of the resource whose name is to be validated. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnNameAvailabilityContent(string name, CdnResourceType resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -88,15 +73,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// The resource name to validate.
-        /// Serialized Name: CheckNameAvailabilityInput.name
-        /// </summary>
+        /// <summary> The resource name to validate. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The type of the resource whose name is to be validated.
-        /// Serialized Name: CheckNameAvailabilityInput.type
-        /// </summary>
+        /// <summary> The type of the resource whose name is to be validated. </summary>
         public CdnResourceType ResourceType { get; }
     }
 }

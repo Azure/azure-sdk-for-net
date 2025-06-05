@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PairedKeyId))
+            if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("pairedKeyId"u8);
-                writer.WriteStringValue(PairedKeyId);
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(PairedKeyType))
             {
@@ -81,15 +81,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            string pairedKeyId = default;
+            string id = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("pairedKeyId"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    pairedKeyId = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CryptoPairedKey(pairedKeyId, type, serializedAdditionalRawData);
+            return new CryptoPairedKey(id, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CryptoPairedKey>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CryptoPairedKey)} does not support writing '{options.Format}' format.");
             }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class OracleDnsPrivateViewResource : IJsonModel<OracleDnsPrivateViewData>
     {
-        private static OracleDnsPrivateViewData s_dataDeserializationInstance;
-        private static OracleDnsPrivateViewData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<OracleDnsPrivateViewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OracleDnsPrivateViewData>)Data).Write(writer, options);
 
-        OracleDnsPrivateViewData IJsonModel<OracleDnsPrivateViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDnsPrivateViewData>)DataDeserializationInstance).Create(ref reader, options);
+        OracleDnsPrivateViewData IJsonModel<OracleDnsPrivateViewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OracleDnsPrivateViewData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OracleDnsPrivateViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OracleDnsPrivateViewData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
+        BinaryData IPersistableModel<OracleDnsPrivateViewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        OracleDnsPrivateViewData IPersistableModel<OracleDnsPrivateViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDnsPrivateViewData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
+        OracleDnsPrivateViewData IPersistableModel<OracleDnsPrivateViewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OracleDnsPrivateViewData>(data, options);
 
-        string IPersistableModel<OracleDnsPrivateViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDnsPrivateViewData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<OracleDnsPrivateViewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OracleDnsPrivateViewData>)Data).GetFormatFromOptions(options);
     }
 }

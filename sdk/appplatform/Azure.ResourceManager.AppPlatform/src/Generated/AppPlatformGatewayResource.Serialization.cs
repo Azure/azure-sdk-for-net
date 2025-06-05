@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformGatewayResource : IJsonModel<AppPlatformGatewayData>
     {
-        private static AppPlatformGatewayData s_dataDeserializationInstance;
-        private static AppPlatformGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AppPlatformGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayData>)Data).Write(writer, options);
 
-        AppPlatformGatewayData IJsonModel<AppPlatformGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayData>)DataDeserializationInstance).Create(ref reader, options);
+        AppPlatformGatewayData IJsonModel<AppPlatformGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformGatewayData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
+        BinaryData IPersistableModel<AppPlatformGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppPlatformGatewayData IPersistableModel<AppPlatformGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayData>(data, options, AzureResourceManagerAppPlatformContext.Default);
+        AppPlatformGatewayData IPersistableModel<AppPlatformGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayData>(data, options);
 
-        string IPersistableModel<AppPlatformGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayData>)Data).GetFormatFromOptions(options);
     }
 }

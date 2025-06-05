@@ -30,7 +30,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ImportJobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-10-31")
+        public ImportJobsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-06-30")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -304,7 +304,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Deletes an import job. This is simply used to remove a job id, so it may be reused later. It can not be used to stop entities from being imported.
+        /// Deletes an import job.
         /// Status codes:
         /// * 204 No Content
         /// * 400 Bad Request
@@ -333,7 +333,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Deletes an import job. This is simply used to remove a job id, so it may be reused later. It can not be used to stop entities from being imported.
+        /// Deletes an import job.
         /// Status codes:
         /// * 204 No Content
         /// * 400 Bad Request
@@ -378,7 +378,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Cancels an import job that is currently running. Service will stop any import operations triggered by the current import job that are in progress, and go to a cancelled state. Please note that this will leave your instance in an unknown state as there won't be any rollback operation.
+        /// Cancels an import job.
         /// Status codes:
         /// * 200 Request Accepted
         /// * 400 Bad Request
@@ -412,7 +412,7 @@ namespace Azure.DigitalTwins.Core
         }
 
         /// <summary>
-        /// Cancels an import job that is currently running. Service will stop any import operations triggered by the current import job that are in progress, and go to a cancelled state. Please note that this will leave your instance in an unknown state as there won't be any rollback operation.
+        /// Cancels an import job.
         /// Status codes:
         /// * 200 Request Accepted
         /// * 400 Bad Request

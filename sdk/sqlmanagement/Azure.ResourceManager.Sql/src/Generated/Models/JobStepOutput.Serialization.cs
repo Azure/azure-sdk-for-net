@@ -61,11 +61,8 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("tableName"u8);
             writer.WriteStringValue(TableName);
-            if (Optional.IsDefined(Credential))
-            {
-                writer.WritePropertyName("credential"u8);
-                writer.WriteStringValue(Credential);
-            }
+            writer.WritePropertyName("credential"u8);
+            writer.WriteStringValue(Credential);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -371,7 +368,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsChatThreadPropertiesUpdatedEventDataConverter))]
     public partial class AcsChatThreadPropertiesUpdatedEventData : IUtf8JsonSerializable, IJsonModel<AcsChatThreadPropertiesUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatThreadPropertiesUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -54,7 +52,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue<object>(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
             writer.WritePropertyName("metadata"u8);
@@ -89,7 +94,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             CommunicationIdentifierModel editedByCommunicationIdentifier = default;
             DateTimeOffset? editTime = default;
-            IReadOnlyDictionary<string, object> properties = default;
+            IReadOnlyDictionary<string, BinaryData> properties = default;
             IReadOnlyDictionary<string, string> metadata = default;
             DateTimeOffset? createTime = default;
             long? version = default;
@@ -115,7 +120,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -124,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
                     properties = dictionary;
@@ -193,7 +198,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatThreadPropertiesUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -231,20 +236,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AcsChatThreadPropertiesUpdatedEventDataConverter : JsonConverter<AcsChatThreadPropertiesUpdatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsChatThreadPropertiesUpdatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AcsChatThreadPropertiesUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatThreadPropertiesUpdatedEventData(document.RootElement);
-            }
         }
     }
 }

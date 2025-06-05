@@ -83,11 +83,6 @@ namespace Azure.ResourceManager.DataBox
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DelayedStage))
-            {
-                writer.WritePropertyName("delayedStage"u8);
-                writer.WriteStringValue(DelayedStage.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
@@ -122,11 +117,6 @@ namespace Azure.ResourceManager.DataBox
             {
                 writer.WritePropertyName("isCancellableWithoutFee"u8);
                 writer.WriteBooleanValue(IsCancellableWithoutFee.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AreAllDevicesLost))
-            {
-                writer.WritePropertyName("allDevicesLost"u8);
-                writer.WriteBooleanValue(AreAllDevicesLost.Value);
             }
             writer.WriteEndObject();
         }
@@ -167,7 +157,6 @@ namespace Azure.ResourceManager.DataBox
             ReverseTransportPreferenceEditStatus? reverseTransportPreferenceUpdate = default;
             bool? isPrepareToShipEnabled = default;
             DataBoxStageName? status = default;
-            DataBoxStageName? delayedStage = default;
             DateTimeOffset? startTime = default;
             ResponseError error = default;
             DataBoxBasicJobDetails details = default;
@@ -175,7 +164,6 @@ namespace Azure.ResourceManager.DataBox
             JobDeliveryType? deliveryType = default;
             JobDeliveryInfo deliveryInfo = default;
             bool? isCancellableWithoutFee = default;
-            bool? allDevicesLost = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -314,15 +302,6 @@ namespace Azure.ResourceManager.DataBox
                             status = new DataBoxStageName(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("delayedStage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            delayedStage = new DataBoxStageName(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("startTime"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -382,15 +361,6 @@ namespace Azure.ResourceManager.DataBox
                             isCancellableWithoutFee = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("allDevicesLost"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            allDevicesLost = property0.Value.GetBoolean();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -415,7 +385,6 @@ namespace Azure.ResourceManager.DataBox
                 reverseTransportPreferenceUpdate,
                 isPrepareToShipEnabled,
                 status,
-                delayedStage,
                 startTime,
                 error,
                 details,
@@ -423,7 +392,6 @@ namespace Azure.ResourceManager.DataBox
                 deliveryType,
                 deliveryInfo,
                 isCancellableWithoutFee,
-                allDevicesLost,
                 sku,
                 identity,
                 serializedAdditionalRawData);
@@ -436,7 +404,7 @@ namespace Azure.ResourceManager.DataBox
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxJobData)} does not support writing '{options.Format}' format.");
             }

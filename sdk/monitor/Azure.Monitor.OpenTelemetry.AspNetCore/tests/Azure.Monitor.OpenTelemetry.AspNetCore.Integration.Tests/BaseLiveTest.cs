@@ -50,12 +50,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Integration.Tests
             ));
         }
 
-        public override void GlobalTimeoutTearDown()
-        {
-            // Turn off global timeout errors because these tests can be slower
-            // base.GlobalTimeoutTearDown();
-        }
-
         internal async Task QueryAndVerifyDependency(string workspaceId, string description, string query, ExpectedAppDependency expectedAppDependency)
         {
             LogsTable? logsTable = await _logsQueryClient!.QueryTelemetryAsync(workspaceId, description, query);

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Round-Robin load balancing settings for a backend pool
-    /// Serialized Name: LoadBalancingSettingsParameters
-    /// </summary>
+    /// <summary> Round-Robin load balancing settings for a backend pool. </summary>
     public partial class LoadBalancingSettings
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancingSettings"/>. </summary>
-        /// <param name="sampleSize">
-        /// The number of samples to consider for load balancing decisions
-        /// Serialized Name: LoadBalancingSettingsParameters.sampleSize
-        /// </param>
-        /// <param name="successfulSamplesRequired">
-        /// The number of samples within the sample period that must succeed
-        /// Serialized Name: LoadBalancingSettingsParameters.successfulSamplesRequired
-        /// </param>
-        /// <param name="additionalLatencyInMilliseconds">
-        /// The additional latency in milliseconds for probes to fall into the lowest latency bucket
-        /// Serialized Name: LoadBalancingSettingsParameters.additionalLatencyInMilliseconds
-        /// </param>
+        /// <param name="sampleSize"> The number of samples to consider for load balancing decisions. </param>
+        /// <param name="successfulSamplesRequired"> The number of samples within the sample period that must succeed. </param>
+        /// <param name="additionalLatencyInMilliseconds"> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal LoadBalancingSettings(int? sampleSize, int? successfulSamplesRequired, int? additionalLatencyInMilliseconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The number of samples to consider for load balancing decisions
-        /// Serialized Name: LoadBalancingSettingsParameters.sampleSize
-        /// </summary>
+        /// <summary> The number of samples to consider for load balancing decisions. </summary>
         public int? SampleSize { get; set; }
-        /// <summary>
-        /// The number of samples within the sample period that must succeed
-        /// Serialized Name: LoadBalancingSettingsParameters.successfulSamplesRequired
-        /// </summary>
+        /// <summary> The number of samples within the sample period that must succeed. </summary>
         public int? SuccessfulSamplesRequired { get; set; }
-        /// <summary>
-        /// The additional latency in milliseconds for probes to fall into the lowest latency bucket
-        /// Serialized Name: LoadBalancingSettingsParameters.additionalLatencyInMilliseconds
-        /// </summary>
+        /// <summary> The additional latency in milliseconds for probes to fall into the lowest latency bucket. </summary>
         public int? AdditionalLatencyInMilliseconds { get; set; }
     }
 }

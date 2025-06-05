@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DnsResolver
 {
     public partial class DnsResolverDomainListResource : IJsonModel<DnsResolverDomainListData>
     {
-        private static DnsResolverDomainListData s_dataDeserializationInstance;
-        private static DnsResolverDomainListData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DnsResolverDomainListData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverDomainListData>)Data).Write(writer, options);
 
-        DnsResolverDomainListData IJsonModel<DnsResolverDomainListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverDomainListData>)DataDeserializationInstance).Create(ref reader, options);
+        DnsResolverDomainListData IJsonModel<DnsResolverDomainListData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DnsResolverDomainListData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DnsResolverDomainListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DnsResolverDomainListData>(Data, options, AzureResourceManagerDnsResolverContext.Default);
+        BinaryData IPersistableModel<DnsResolverDomainListData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DnsResolverDomainListData IPersistableModel<DnsResolverDomainListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverDomainListData>(data, options, AzureResourceManagerDnsResolverContext.Default);
+        DnsResolverDomainListData IPersistableModel<DnsResolverDomainListData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DnsResolverDomainListData>(data, options);
 
-        string IPersistableModel<DnsResolverDomainListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverDomainListData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DnsResolverDomainListData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DnsResolverDomainListData>)Data).GetFormatFromOptions(options);
     }
 }

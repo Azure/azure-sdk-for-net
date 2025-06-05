@@ -126,7 +126,6 @@ public class BatchTests : AoaiTestBase<BatchClient>
     [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
 #endif
     [TestCase(null)]
-    [Ignore("Disabled pending revisited long-running test recording strategy")]
     [Category("LongRunning")] // observed live runtime typically varies from 6 - 15 minutes
     public async Task SimpleBatchCompletionsTest(AzureOpenAIClientOptions.ServiceVersion? version)
     {

@@ -1,92 +1,142 @@
 # Azure Projects client library for .NET
 
-Azure.Projects is an set of libraries and tools for rapid application development on Azure.
-If you cannot get an app running in 10 minutes, let us know that we failed!
-
-These libraries and tools make it easier to start building an application, by:
-- Relying on opinionated defaults whenever possible.
-- Using the Azure.Provisioning libraries for provisioning resources in code (in C#).
-- Exposing simplified APIs for the most commonly used Azure services.
-
-At the same time, Azure.Projects supports break-glass scenarios where, if needed, you can override the defaults, use powerful tools (like bicep, azd), or the full featured Azure SDK libraries. 
-In other words, Azure.Projects provides smart, simplified APIs but will never block you from using the full power of the Azure platform, if you choose to. 
+Write Azure apps in 5 minutes
 
 ## Getting started
 
-### Prerequisites
+### Install the packages
 
-* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
-* You must have [.NET 8](https://dotnet.microsoft.com/download) (or higher) installed
-* You must have [Azure Developer CLI](https://learn.microsoft.com/azure/developer/azure-developer-cli/install-azd) (azd) installed
-* You must be logged into Azure Developer CLI (`azd auth login`)
-
-### Walkthrough
-
-#### Create a console application
-
-In a command line window type
-
-```dotnetcli
-mkdir cmdemo
-cd cmdemo
-dotnet new console
-```
-
-#### Install Required Packages
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
 dotnet add package Azure.Projects --prerelease
 dotnet add package Azure.Projects.Provisioning --prerelease
-dotnet add package Azure.Projects.AI --prerelease
+dotnet add package Azure.Projects.OpenAI --prerelease
 ```
 
-#### Write, Provision, and Run the Application
+### Authenticate the Client
 
-Open `Program.cs` file and change the code to the following
+### Prerequisites
+
+* You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have .NET 8 (or higher) installed
+* You must have Azure CLI (az) installed
+* You must have Azure Developer CLI (azd) installed
+* You must have npm installed
+* You must be logged into Azure CLI and Azure Developer CLI
+
+## Key concepts
+
+Write Azure apps in 5 minutes using simplified opinionated APIs and declarative resource provisioning.
+
+### Walkthrough
+
+#### Create Server Project
+
+In a command line window type
+```dotnetcli
+mkdir cmdemo
+cd cmdemo
+mkdir server
+cd server
+dotnet new web
+```
+
+Add `Azure.Projects.All` package
+```dotnetcli
+dotnet add package Azure.Projects.Provisioning --prerelease
+dotnet add package Azure.Projects.OpenAI --prerelease
+```
+#### Use Azure Developer CLI to provision Projects
+
+Open `Program.cs` file and add the following two lines of code to the top of the file
 ```csharp
-using Azure.AI.OpenAI;
 using Azure.Projects;
-using Azure.Projects.Tooling;
-using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();
-infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
-
-if (args.Length > 0 && args[0] == "-bicep")
-{
-    Azd.Init(infrastructure);
-    return;
-}
-
-ProjectClient project = new();
-ChatClient chat = project.GetOpenAIChatClient();
-Console.WriteLine(chat.CompleteChat("list all noble gasses.").AsText());
-
+if (infrastructure.TryExecuteCommand(args)) return;
 ```
 
-You can now provision Azure resources for this application by executing the following three commands.
-
+The `TryExecuteCommand` call allows running the app with a `-init` switch, which will generate bicep files required to provision project resources in Azure. Let's generate these bicep files now.
 ```dotnetcli
 dotnet run -bicep
+```
+As you can see, a folder called `infra` was created with several bicep files in it. Let's now initialize the project.
+
+```dotnetcli
 azd init
+```
+type 'demo' as the environment name, and then let's provision the resources (select `eastus` as the region):
+```dotnetcli
 azd provision
 ```
-The first command created a folder called `infra` with several bicep files in it. The files will be used by azd to provision Azure resources. 
-The second command sets initializes the project as an azd project. Select 'create minimal project' when asked to choose a template, and type 'demo' as the environment name. 
-The last command actually provisions resources described by the bicep files. When provisioning finishes, you should see something like the following in the console output
+When provisioning finishes, you should see something like the following in the console output
 ```dotnetcli
  (✓) Done: Resource group: cm125957681369428 (627ms)
 ```
-You can now run the app
+And if you go to your Azure portal, or execute the following az command, you can see the resource group created. The resource group will contain resources such as Storage, ServiceBus, and EventGrid.
+```dotnetcli
+az resource list --resource-group <resource_group_from_command_line> --output table
+```
 
+#### Use CDK to add resources to the Project
+
+Since we are writing an AI application, we need to provision Azure OpenAI resources. To do this, add the following line of code right below where the infrastructure instance is created:
+```csharp
+infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+```
+Now regenerate the bicep files and re-provision
+```dotnetcli
+dotnet run -bicep
+azd provision
+```
+
+#### Add ProjectClient to ASP.NET DI Container
+You will be using `ProjectClient` to access resources provisioned in the cloud machine. Let's add such client to the DI container such that it is avaliable to ASP.NET handlers
+```dotnetcli
+builder.AddAzureProjectClient(infrastructure);
+```
+#### Call ProjectClient APIs
+
+You are now ready to call Azure OpenAI service from the app. To do this, change the line of code that maps the application root to the following:
+
+```csharp
+app.MapGet("/", (ProjectClient client) => client.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
+```
+
+The full program should now look like the following:
+```csharp
+using Azure.Projects;
+using Azure.Projects.OpenAI;
+
+ProjectInfrastructure infrastructure = new();
+infrastructure.AddFeature(new OpenAIModelFeature("gpt-4o-mini", "2024-07-18"));
+if (infrastructure.TryExecuteCommand(args)) return;
+
+var builder = WebApplication.CreateBuilder(args);
+builder.AddAzureProjectClient(infrastructure);
+
+var app = builder.Build();
+
+app.MapGet("/", (ProjectClient client) => client.GetOpenAIChatClient().CompleteChat("list all noble gases").AsText());
+
+app.Run();
+```
+
+You can now start the application
 ```dotnetcli
 dotnet run
 ```
+and navigate to the URL printed in the console.
+
+## Examples
 
 ## Troubleshooting
 
 -   File an issue via [GitHub Issues](https://github.com/Azure/azure-sdk-for-net/issues).
 -   Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on Stack Overflow using Azure and .NET tags.
+
+## Next steps
 
 ## Contributing
 

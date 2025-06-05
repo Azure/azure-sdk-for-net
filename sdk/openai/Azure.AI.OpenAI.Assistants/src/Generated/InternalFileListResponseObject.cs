@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The InternalFileListResponseObject. </summary>
+    /// <summary> The InternalFileListResponse_object. </summary>
     internal readonly partial struct InternalFileListResponseObject : IEquatable<InternalFileListResponseObject>
     {
         private readonly string _value;

@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverrideActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -35,9 +35,25 @@ namespace Azure.ResourceManager.Cdn.Models
                 throw new FormatException($"The model {nameof(OriginGroupOverrideActionProperties)} does not support writing '{format}' format.");
             }
 
-            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("typeName"u8);
+            writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("originGroup"u8);
             JsonSerializer.Serialize(writer, OriginGroup);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         OriginGroupOverrideActionProperties IJsonModel<OriginGroupOverrideActionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -60,20 +76,20 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
+            OriginGroupOverrideActionType typeName = default;
             WritableSubResource originGroup = default;
-            DeliveryRuleActionParametersType typeName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("typeName"u8))
+                {
+                    typeName = new OriginGroupOverrideActionType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("originGroup"u8))
                 {
                     originGroup = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("typeName"u8))
-                {
-                    typeName = new DeliveryRuleActionParametersType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -82,7 +98,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OriginGroupOverrideActionProperties(typeName, serializedAdditionalRawData, originGroup);
+            return new OriginGroupOverrideActionProperties(typeName, originGroup, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OriginGroupOverrideActionProperties>.Write(ModelReaderWriterOptions options)
@@ -92,7 +108,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OriginGroupOverrideActionProperties)} does not support writing '{options.Format}' format.");
             }

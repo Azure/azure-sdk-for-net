@@ -234,357 +234,6 @@ namespace Azure.AI.Language.Text.Authoring
             return new TextAuthoringTrainingConfigVersion(trainingConfigVersion, modelExpiredOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringImportProjectState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringImportProjectState"/> instance for mocking. </returns>
-        public static TextAuthoringImportProjectState TextAuthoringImportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringImportProjectState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportProjectState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="resultUrl"> The URL to use in order to download the exported project. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportProjectState"/> instance for mocking. </returns>
-        public static TextAuthoringExportProjectState TextAuthoringExportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUrl = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringExportProjectState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                resultUrl,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCreateProjectDetails"/>. </summary>
-        /// <param name="projectKind"> The project kind. </param>
-        /// <param name="storageInputContainerName"> The storage container name. </param>
-        /// <param name="settings"> The project settings. </param>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
-        /// <param name="description"> The project description. </param>
-        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCreateProjectDetails"/> instance for mocking. </returns>
-        public static TextAuthoringCreateProjectDetails TextAuthoringCreateProjectDetails(TextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
-        {
-            return new TextAuthoringCreateProjectDetails(
-                projectKind,
-                storageInputContainerName,
-                settings,
-                projectName,
-                multilingual,
-                description,
-                language,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringProjectDeletionState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringProjectDeletionState"/> instance for mocking. </returns>
-        public static TextAuthoringProjectDeletionState TextAuthoringProjectDeletionState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringProjectDeletionState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCopyProjectState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCopyProjectState"/> instance for mocking. </returns>
-        public static TextAuthoringCopyProjectState TextAuthoringCopyProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringCopyProjectState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedProject"/>. </summary>
-        /// <param name="projectFileVersion"> The version of the exported file. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <param name="metadata"> Represents the project metadata. </param>
-        /// <param name="assets">
-        /// Represents the project assets.
-        /// Please note <see cref="TextAuthoringExportedProjectAsset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/> and <see cref="CustomTextSentimentProjectAssets"/>.
-        /// </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedProject"/> instance for mocking. </returns>
-        public static TextAuthoringExportedProject TextAuthoringExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, TextAuthoringCreateProjectDetails metadata = null, TextAuthoringExportedProjectAsset assets = null)
-        {
-            return new TextAuthoringExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
-        /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
-        /// <param name="location"> The location of the document in the storage. </param>
-        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
-        /// <returns> A new <see cref="Authoring.ExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
-        public static ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null)
-        {
-            return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringTrainingJobDetails"/>. </summary>
-        /// <param name="modelLabel"> Represents the output model label. </param>
-        /// <param name="trainingConfigVersion"> Represents training config version. </param>
-        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
-        /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringTrainingJobDetails"/> instance for mocking. </returns>
-        public static TextAuthoringTrainingJobDetails TextAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, TextAuthoringEvaluationDetails evaluationOptions = null, DataGenerationSetting dataGenerationSettings = null)
-        {
-            return new TextAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.DataGenerationConnectionInfo"/>. </summary>
-        /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure Open AI. </param>
-        /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
-        /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
-        /// <returns> A new <see cref="Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
-        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
-        {
-            return new DataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringUnassignDeploymentResourcesState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringUnassignDeploymentResourcesState"/> instance for mocking. </returns>
-        public static TextAuthoringUnassignDeploymentResourcesState TextAuthoringUnassignDeploymentResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringUnassignDeploymentResourcesState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringAssignDeploymentResourcesState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringAssignDeploymentResourcesState"/> instance for mocking. </returns>
-        public static TextAuthoringAssignDeploymentResourcesState TextAuthoringAssignDeploymentResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringAssignDeploymentResourcesState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringSwapDeploymentsState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringSwapDeploymentsState"/> instance for mocking. </returns>
-        public static TextAuthoringSwapDeploymentsState TextAuthoringSwapDeploymentsState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringSwapDeploymentsState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringDeploymentState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentState"/> instance for mocking. </returns>
-        public static TextAuthoringDeploymentState TextAuthoringDeploymentState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringDeploymentState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringDeploymentDeleteFromResourcesState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentDeleteFromResourcesState"/> instance for mocking. </returns>
-        public static TextAuthoringDeploymentDeleteFromResourcesState TextAuthoringDeploymentDeleteFromResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringDeploymentDeleteFromResourcesState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/>. </summary>
-        /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
-        public static TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
-        {
-            assignedResourceIds ??= new List<string>();
-
-            return new TextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedModelState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringExportedModelState"/> instance for mocking. </returns>
-        public static TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new TextAuthoringExportedModelState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.ExportedModelManifest"/>. </summary>
-        /// <param name="modelFiles"> The model files belonging to this model. </param>
-        /// <returns> A new <see cref="Authoring.ExportedModelManifest"/> instance for mocking. </returns>
-        public static ExportedModelManifest ExportedModelManifest(IEnumerable<TextAuthoringModelFile> modelFiles = null)
-        {
-            modelFiles ??= new List<TextAuthoringModelFile>();
-
-            return new ExportedModelManifest(modelFiles?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringModelFile"/>. </summary>
-        /// <param name="name"> The name of the file. </param>
-        /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
-        /// <returns> A new <see cref="Authoring.TextAuthoringModelFile"/> instance for mocking. </returns>
-        public static TextAuthoringModelFile TextAuthoringModelFile(string name = null, Uri contentUri = null)
-        {
-            return new TextAuthoringModelFile(name, contentUri, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringEvaluationJobResult"/>. </summary>
         /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
         /// <param name="modelLabel"> Represents trained model label. </param>
@@ -1080,6 +729,357 @@ namespace Azure.AI.Language.Text.Authoring
                 trueNegativeCount,
                 falsePositiveCount,
                 falseNegativeCount,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedModelState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringExportedModelState"/> instance for mocking. </returns>
+        public static TextAuthoringExportedModelState TextAuthoringExportedModelState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringExportedModelState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ExportedModelManifest"/>. </summary>
+        /// <param name="modelFiles"> The model files belonging to this model. </param>
+        /// <returns> A new <see cref="Authoring.ExportedModelManifest"/> instance for mocking. </returns>
+        public static ExportedModelManifest ExportedModelManifest(IEnumerable<TextAuthoringModelFile> modelFiles = null)
+        {
+            modelFiles ??= new List<TextAuthoringModelFile>();
+
+            return new ExportedModelManifest(modelFiles?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringModelFile"/>. </summary>
+        /// <param name="name"> The name of the file. </param>
+        /// <param name="contentUri"> The URI to retrieve the content of the file. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringModelFile"/> instance for mocking. </returns>
+        public static TextAuthoringModelFile TextAuthoringModelFile(string name = null, Uri contentUri = null)
+        {
+            return new TextAuthoringModelFile(name, contentUri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringDeploymentState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentState"/> instance for mocking. </returns>
+        public static TextAuthoringDeploymentState TextAuthoringDeploymentState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringDeploymentState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringDeploymentDeleteFromResourcesState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringDeploymentDeleteFromResourcesState"/> instance for mocking. </returns>
+        public static TextAuthoringDeploymentDeleteFromResourcesState TextAuthoringDeploymentDeleteFromResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringDeploymentDeleteFromResourcesState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/>. </summary>
+        /// <param name="trainedModelLabel"> Represents the trained model label. </param>
+        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringCreateDeploymentDetails"/> instance for mocking. </returns>
+        public static TextAuthoringCreateDeploymentDetails TextAuthoringCreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        {
+            assignedResourceIds ??= new List<string>();
+
+            return new TextAuthoringCreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringImportProjectState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringImportProjectState"/> instance for mocking. </returns>
+        public static TextAuthoringImportProjectState TextAuthoringImportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringImportProjectState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportProjectState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <param name="resultUrl"> The URL to use in order to download the exported project. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringExportProjectState"/> instance for mocking. </returns>
+        public static TextAuthoringExportProjectState TextAuthoringExportProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUrl = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringExportProjectState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                resultUrl,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCreateProjectDetails"/>. </summary>
+        /// <param name="projectKind"> The project kind. </param>
+        /// <param name="storageInputContainerName"> The storage container name. </param>
+        /// <param name="settings"> The project settings. </param>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
+        /// <param name="description"> The project description. </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringCreateProjectDetails"/> instance for mocking. </returns>
+        public static TextAuthoringCreateProjectDetails TextAuthoringCreateProjectDetails(TextAuthoringProjectKind projectKind = default, string storageInputContainerName = null, TextAuthoringProjectSettings settings = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        {
+            return new TextAuthoringCreateProjectDetails(
+                projectKind,
+                storageInputContainerName,
+                settings,
+                projectName,
+                multilingual,
+                description,
+                language,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringProjectDeletionState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringProjectDeletionState"/> instance for mocking. </returns>
+        public static TextAuthoringProjectDeletionState TextAuthoringProjectDeletionState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringProjectDeletionState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringCopyProjectState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringCopyProjectState"/> instance for mocking. </returns>
+        public static TextAuthoringCopyProjectState TextAuthoringCopyProjectState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringCopyProjectState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringExportedProject"/>. </summary>
+        /// <param name="projectFileVersion"> The version of the exported file. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="metadata"> Represents the project metadata. </param>
+        /// <param name="assets">
+        /// Represents the project assets.
+        /// Please note <see cref="TextAuthoringExportedProjectAsset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="ExportedCustomAbstractiveSummarizationProjectAsset"/>, <see cref="ExportedCustomEntityRecognitionProjectAsset"/>, <see cref="ExportedCustomHealthcareProjectAsset"/>, <see cref="ExportedCustomMultiLabelClassificationProjectAsset"/>, <see cref="ExportedCustomSingleLabelClassificationProjectAsset"/> and <see cref="CustomTextSentimentProjectAssets"/>.
+        /// </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringExportedProject"/> instance for mocking. </returns>
+        public static TextAuthoringExportedProject TextAuthoringExportedProject(string projectFileVersion = null, StringIndexType stringIndexType = default, TextAuthoringCreateProjectDetails metadata = null, TextAuthoringExportedProjectAsset assets = null)
+        {
+            return new TextAuthoringExportedProject(projectFileVersion, stringIndexType, metadata, assets, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.ExportedCustomAbstractiveSummarizationDocument"/>. </summary>
+        /// <param name="summaryLocation"> Represents the summary file location in the blob store container associated with the project. </param>
+        /// <param name="location"> The location of the document in the storage. </param>
+        /// <param name="language"> Represents the document language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <param name="dataset"> The dataset for this document. Allowed values are 'Train' and 'Test'. </param>
+        /// <returns> A new <see cref="Authoring.ExportedCustomAbstractiveSummarizationDocument"/> instance for mocking. </returns>
+        public static ExportedCustomAbstractiveSummarizationDocument ExportedCustomAbstractiveSummarizationDocument(string summaryLocation = null, string location = null, string language = null, string dataset = null)
+        {
+            return new ExportedCustomAbstractiveSummarizationDocument(summaryLocation, location, language, dataset, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringTrainingJobDetails"/>. </summary>
+        /// <param name="modelLabel"> Represents the output model label. </param>
+        /// <param name="trainingConfigVersion"> Represents training config version. </param>
+        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
+        /// <param name="dataGenerationSettings"> Represents the settings for using data generation as part of training a custom model. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringTrainingJobDetails"/> instance for mocking. </returns>
+        public static TextAuthoringTrainingJobDetails TextAuthoringTrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, TextAuthoringEvaluationDetails evaluationOptions = null, DataGenerationSetting dataGenerationSettings = null)
+        {
+            return new TextAuthoringTrainingJobDetails(modelLabel, trainingConfigVersion, evaluationOptions, dataGenerationSettings, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.DataGenerationConnectionInfo"/>. </summary>
+        /// <param name="kind"> Connection type for data generation settings. Currently only supports Azure Open AI. </param>
+        /// <param name="resourceId"> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </param>
+        /// <param name="deploymentName"> Deployment name of model to be used for synthetic data generation. </param>
+        /// <returns> A new <see cref="Authoring.DataGenerationConnectionInfo"/> instance for mocking. </returns>
+        public static DataGenerationConnectionInfo DataGenerationConnectionInfo(DataGenerationConnectionInfoKind kind = default, string resourceId = null, string deploymentName = null)
+        {
+            return new DataGenerationConnectionInfo(kind, resourceId, deploymentName, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringUnassignDeploymentResourcesState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringUnassignDeploymentResourcesState"/> instance for mocking. </returns>
+        public static TextAuthoringUnassignDeploymentResourcesState TextAuthoringUnassignDeploymentResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringUnassignDeploymentResourcesState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringAssignDeploymentResourcesState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringAssignDeploymentResourcesState"/> instance for mocking. </returns>
+        public static TextAuthoringAssignDeploymentResourcesState TextAuthoringAssignDeploymentResourcesState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringAssignDeploymentResourcesState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Authoring.TextAuthoringSwapDeploymentsState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Authoring.TextAuthoringSwapDeploymentsState"/> instance for mocking. </returns>
+        public static TextAuthoringSwapDeploymentsState TextAuthoringSwapDeploymentsState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, TextAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TextAuthoringSwapDeploymentsState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
                 serializedAdditionalRawData: null);
         }
     }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryChangeDataCaptureResource : IJsonModel<DataFactoryChangeDataCaptureData>
     {
-        private static DataFactoryChangeDataCaptureData s_dataDeserializationInstance;
-        private static DataFactoryChangeDataCaptureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataFactoryChangeDataCaptureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryChangeDataCaptureData>)Data).Write(writer, options);
 
-        DataFactoryChangeDataCaptureData IJsonModel<DataFactoryChangeDataCaptureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryChangeDataCaptureData>)DataDeserializationInstance).Create(ref reader, options);
+        DataFactoryChangeDataCaptureData IJsonModel<DataFactoryChangeDataCaptureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryChangeDataCaptureData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryChangeDataCaptureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryChangeDataCaptureData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
+        BinaryData IPersistableModel<DataFactoryChangeDataCaptureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataFactoryChangeDataCaptureData IPersistableModel<DataFactoryChangeDataCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryChangeDataCaptureData>(data, options, AzureResourceManagerDataFactoryContext.Default);
+        DataFactoryChangeDataCaptureData IPersistableModel<DataFactoryChangeDataCaptureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryChangeDataCaptureData>(data, options);
 
-        string IPersistableModel<DataFactoryChangeDataCaptureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryChangeDataCaptureData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataFactoryChangeDataCaptureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryChangeDataCaptureData>)Data).GetFormatFromOptions(options);
     }
 }

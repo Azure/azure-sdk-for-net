@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (options.Format != "W" && Optional.IsDefined(AssociatedOn))
             {
                 writer.WritePropertyName("associateDate"u8);
-                writer.WriteStringValue(AssociatedOn.Value, "O");
+                writer.WriteStringValue(AssociatedOn.Value, "R");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    associateDate = property.Value.GetDateTimeOffset("O");
+                    associateDate = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
                 if (options.Format != "W")
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

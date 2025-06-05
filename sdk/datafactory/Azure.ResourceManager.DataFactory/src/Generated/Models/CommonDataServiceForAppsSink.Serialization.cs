@@ -48,16 +48,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("alternateKeyName"u8);
                 JsonSerializer.Serialize(writer, AlternateKeyName);
             }
-            if (Optional.IsDefined(BypassBusinessLogicExecution))
-            {
-                writer.WritePropertyName("bypassBusinessLogicExecution"u8);
-                JsonSerializer.Serialize(writer, BypassBusinessLogicExecution);
-            }
-            if (Optional.IsDefined(BypassPowerAutomateFlows))
-            {
-                writer.WritePropertyName("bypassPowerAutomateFlows"u8);
-                JsonSerializer.Serialize(writer, BypassPowerAutomateFlows);
-            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -95,8 +85,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DynamicsSinkWriteBehavior writeBehavior = default;
             DataFactoryElement<bool> ignoreNullValues = default;
             DataFactoryElement<string> alternateKeyName = default;
-            DataFactoryElement<string> bypassBusinessLogicExecution = default;
-            DataFactoryElement<bool> bypassPowerAutomateFlows = default;
             string type = default;
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
@@ -129,24 +117,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     alternateKeyName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("bypassBusinessLogicExecution"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bypassBusinessLogicExecution = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("bypassPowerAutomateFlows"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bypassPowerAutomateFlows = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -222,9 +192,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 writeBehavior,
                 ignoreNullValues,
-                alternateKeyName,
-                bypassBusinessLogicExecution,
-                bypassPowerAutomateFlows);
+                alternateKeyName);
         }
 
         BinaryData IPersistableModel<CommonDataServiceForAppsSink>.Write(ModelReaderWriterOptions options)
@@ -234,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CommonDataServiceForAppsSink)} does not support writing '{options.Format}' format.");
             }

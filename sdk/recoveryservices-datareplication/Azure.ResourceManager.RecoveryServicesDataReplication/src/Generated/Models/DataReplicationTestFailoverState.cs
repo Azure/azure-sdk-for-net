@@ -32,23 +32,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string TestFailoverCleanupCompletingValue = "TestFailoverCleanupCompleting";
         private const string MarkedForDeletionValue = "MarkedForDeletion";
 
-        /// <summary> Test failover is not active. </summary>
+        /// <summary> None. </summary>
         public static DataReplicationTestFailoverState None { get; } = new DataReplicationTestFailoverState(NoneValue);
-        /// <summary> Test failover has been initiated. </summary>
+        /// <summary> TestFailoverInitiated. </summary>
         public static DataReplicationTestFailoverState TestFailoverInitiated { get; } = new DataReplicationTestFailoverState(TestFailoverInitiatedValue);
-        /// <summary> Preparing test protected entities is in progress. </summary>
+        /// <summary> TestFailoverCompleting. </summary>
         public static DataReplicationTestFailoverState TestFailoverCompleting { get; } = new DataReplicationTestFailoverState(TestFailoverCompletingValue);
-        /// <summary> Test failover has been completed successfully. </summary>
+        /// <summary> TestFailoverCompleted. </summary>
         public static DataReplicationTestFailoverState TestFailoverCompleted { get; } = new DataReplicationTestFailoverState(TestFailoverCompletedValue);
-        /// <summary> Test failover initiation failed.. </summary>
+        /// <summary> TestFailoverFailed. </summary>
         public static DataReplicationTestFailoverState TestFailoverFailed { get; } = new DataReplicationTestFailoverState(TestFailoverFailedValue);
-        /// <summary> Preparing test protected entities failed. </summary>
+        /// <summary> TestFailoverCompletionFailed. </summary>
         public static DataReplicationTestFailoverState TestFailoverCompletionFailed { get; } = new DataReplicationTestFailoverState(TestFailoverCompletionFailedValue);
-        /// <summary> Test failover cleanup has been initiated. </summary>
+        /// <summary> TestFailoverCleanupInitiated. </summary>
         public static DataReplicationTestFailoverState TestFailoverCleanupInitiated { get; } = new DataReplicationTestFailoverState(TestFailoverCleanupInitiatedValue);
-        /// <summary> Cleaning up test protected entities is in progress. </summary>
+        /// <summary> TestFailoverCleanupCompleting. </summary>
         public static DataReplicationTestFailoverState TestFailoverCleanupCompleting { get; } = new DataReplicationTestFailoverState(TestFailoverCleanupCompletingValue);
-        /// <summary> Test failover cleanup has completed/failed. This is a transient state before the state is moved back to None. </summary>
+        /// <summary> MarkedForDeletion. </summary>
         public static DataReplicationTestFailoverState MarkedForDeletion { get; } = new DataReplicationTestFailoverState(MarkedForDeletionValue);
         /// <summary> Determines if two <see cref="DataReplicationTestFailoverState"/> values are the same. </summary>
         public static bool operator ==(DataReplicationTestFailoverState left, DataReplicationTestFailoverState right) => left.Equals(right);

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ConfidentialLedger
 {
     public partial class ManagedCcfResource : IJsonModel<ManagedCcfData>
     {
-        private static ManagedCcfData s_dataDeserializationInstance;
-        private static ManagedCcfData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ManagedCcfData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedCcfData>)Data).Write(writer, options);
 
-        ManagedCcfData IJsonModel<ManagedCcfData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedCcfData>)DataDeserializationInstance).Create(ref reader, options);
+        ManagedCcfData IJsonModel<ManagedCcfData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedCcfData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedCcfData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedCcfData>(Data, options, AzureResourceManagerConfidentialLedgerContext.Default);
+        BinaryData IPersistableModel<ManagedCcfData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedCcfData IPersistableModel<ManagedCcfData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedCcfData>(data, options, AzureResourceManagerConfidentialLedgerContext.Default);
+        ManagedCcfData IPersistableModel<ManagedCcfData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedCcfData>(data, options);
 
-        string IPersistableModel<ManagedCcfData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedCcfData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedCcfData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedCcfData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Packet core control plane collect diagnostics package options. </summary>
+    /// <summary>
+    /// Packet core control plane collect diagnostics package options
+    /// Serialized Name: PacketCoreControlPlaneCollectDiagnosticsPackage
+    /// </summary>
     public partial class PacketCoreControlPlaneCollectDiagnosticsPackage
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneCollectDiagnosticsPackage"/>. </summary>
-        /// <param name="storageAccountBlobUri"> The Storage Account Blob URL to upload the diagnostics package to. </param>
+        /// <param name="storageAccountBlobUri">
+        /// The Storage Account Blob URL to upload the diagnostics package to.
+        /// Serialized Name: PacketCoreControlPlaneCollectDiagnosticsPackage.storageAccountBlobUrl
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageAccountBlobUri"/> is null. </exception>
         public PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri)
         {
@@ -56,7 +62,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneCollectDiagnosticsPackage"/>. </summary>
-        /// <param name="storageAccountBlobUri"> The Storage Account Blob URL to upload the diagnostics package to. </param>
+        /// <param name="storageAccountBlobUri">
+        /// The Storage Account Blob URL to upload the diagnostics package to.
+        /// Serialized Name: PacketCoreControlPlaneCollectDiagnosticsPackage.storageAccountBlobUrl
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreControlPlaneCollectDiagnosticsPackage(Uri storageAccountBlobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +78,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> The Storage Account Blob URL to upload the diagnostics package to. </summary>
+        /// <summary>
+        /// The Storage Account Blob URL to upload the diagnostics package to.
+        /// Serialized Name: PacketCoreControlPlaneCollectDiagnosticsPackage.storageAccountBlobUrl
+        /// </summary>
         [WirePath("storageAccountBlobUrl")]
         public Uri StorageAccountBlobUri { get; }
     }

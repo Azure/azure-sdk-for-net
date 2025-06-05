@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -23,26 +22,12 @@ namespace Azure.ResourceManager.Search.Tests
         : base(isAsync, mode)
         {
             JsonPathSanitizers.Add("$.value.[*].key");
-            JsonPathSanitizers.Add("$..key");
-
-            UriRegexSanitizers.Add(new UriRegexSanitizer("deleteQueryKey/(?<key>[^/]+)\\?api-version")
-            {
-                GroupForReplace = "key",
-                Value = "{sanitized-query-key}"
-            });
         }
 
         protected SearchManagementTestBase(bool isAsync)
             : base(isAsync)
         {
             JsonPathSanitizers.Add("$.value.[*].key");
-            JsonPathSanitizers.Add("$..key");
-
-            UriRegexSanitizers.Add(new UriRegexSanitizer("deleteQueryKey/(?<key>[^/]+)\\?api-version")
-            {
-                GroupForReplace = "key",
-                Value = "{sanitized-query-key}"
-            });
         }
 
         [SetUp]
@@ -54,7 +39,7 @@ namespace Azure.ResourceManager.Search.Tests
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
         {
-            string rgName = Recording.GenerateAssetName("Search-SDK-Test");
+            string rgName = Recording.GenerateAssetName("sdk-test");
             ResourceGroupData input = new ResourceGroupData(DefaultLocation);
             var lro = await DefaultLSubscription.GetResourceGroups().CreateOrUpdateAsync(WaitUntil.Completed, rgName, input);
             return lro.Value;

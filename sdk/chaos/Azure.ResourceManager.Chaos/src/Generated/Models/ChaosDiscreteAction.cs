@@ -27,20 +27,20 @@ namespace Azure.ResourceManager.Chaos.Models
 
             Parameters = parameters.ToList();
             SelectorId = selectorId;
-            Type = ExperimentActionType.Discrete;
+            ActionType = "discrete";
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosDiscreteAction"/>. </summary>
+        /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="type"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> List of key value pairs. </param>
         /// <param name="selectorId"> String that represents a selector. </param>
-        internal ChaosDiscreteAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ChaosKeyValuePair> parameters, string selectorId) : base(name, type, serializedAdditionalRawData)
+        internal ChaosDiscreteAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ChaosKeyValuePair> parameters, string selectorId) : base(actionType, name, serializedAdditionalRawData)
         {
             Parameters = parameters;
             SelectorId = selectorId;
-            Type = type;
+            ActionType = actionType ?? "discrete";
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosDiscreteAction"/> for deserialization. </summary>

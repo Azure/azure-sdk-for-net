@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MsixImageUri)} does not support writing '{options.Format}' format.");
             }

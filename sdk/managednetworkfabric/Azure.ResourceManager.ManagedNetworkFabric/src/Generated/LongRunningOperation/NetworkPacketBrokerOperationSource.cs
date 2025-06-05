@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkPacketBrokerResource IOperationSource<NetworkPacketBrokerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content);
             return new NetworkPacketBrokerResource(_client, data);
         }
 
         async ValueTask<NetworkPacketBrokerResource> IOperationSource<NetworkPacketBrokerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkPacketBrokerData>(response.Content);
             return await Task.FromResult(new NetworkPacketBrokerResource(_client, data)).ConfigureAwait(false);
         }
     }

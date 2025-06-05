@@ -76,6 +76,8 @@
   <!-- Add references for TEST projects -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true' and '$(IsClientLibrary)' == 'true'">
     <PackageReference Include="BenchmarkDotNet" />
+    <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
   

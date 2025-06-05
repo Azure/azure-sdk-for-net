@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsRouterJobQueuedEventDataConverter))]
     public partial class AcsRouterJobQueuedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobQueuedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobQueuedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -42,26 +40,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (options.Format != "W")
+            writer.WritePropertyName("attachedWorkerSelectors"u8);
+            writer.WriteStartArray();
+            foreach (var item in AttachedWorkerSelectors)
             {
-                writer.WritePropertyName("attachedWorkerSelectors"u8);
-                writer.WriteStartArray();
-                foreach (var item in AttachedWorkerSelectors)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W")
+            writer.WriteEndArray();
+            writer.WritePropertyName("requestedWorkerSelectors"u8);
+            writer.WriteStartArray();
+            foreach (var item in RequestedWorkerSelectors)
             {
-                writer.WritePropertyName("requestedWorkerSelectors"u8);
-                writer.WriteStartArray();
-                foreach (var item in RequestedWorkerSelectors)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
         }
 
         AcsRouterJobQueuedEventData IJsonModel<AcsRouterJobQueuedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -192,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterJobQueuedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -230,20 +222,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AcsRouterJobQueuedEventDataConverter : JsonConverter<AcsRouterJobQueuedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsRouterJobQueuedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AcsRouterJobQueuedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRouterJobQueuedEventData(document.RootElement);
-            }
         }
     }
 }

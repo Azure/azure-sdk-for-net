@@ -7,7 +7,6 @@ using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(updateResult.Data.Tags, patch.Tags);
 
             // Delete
-            var deleteResponse = await l3Network.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            var deleteResponse = await l3Network.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResponse.HasCompleted);
         }
     }

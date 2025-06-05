@@ -41,15 +41,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
             if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
-                if (UserAssignedIdentityResourceId != null)
-                {
-                    writer.WritePropertyName("userAssignedIdentityResourceId"u8);
-                    writer.WriteStringValue(UserAssignedIdentityResourceId);
-                }
-                else
-                {
-                    writer.WriteNull("userAssignedIdentityResourceId");
-                }
+                writer.WritePropertyName("userAssignedIdentityResourceId"u8);
+                writer.WriteStringValue(UserAssignedIdentityResourceId);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,7 +100,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        userAssignedIdentityResourceId = null;
                         continue;
                     }
                     userAssignedIdentityResourceId = new ResourceIdentifier(property.Value.GetString());
@@ -129,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkCloudContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ManagedServiceIdentitySelector)} does not support writing '{options.Format}' format.");
             }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     public partial class DataReplicationFabricResource : IJsonModel<DataReplicationFabricData>
     {
-        private static DataReplicationFabricData s_dataDeserializationInstance;
-        private static DataReplicationFabricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataReplicationFabricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationFabricData>)Data).Write(writer, options);
 
-        DataReplicationFabricData IJsonModel<DataReplicationFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationFabricData>)DataDeserializationInstance).Create(ref reader, options);
+        DataReplicationFabricData IJsonModel<DataReplicationFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationFabricData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataReplicationFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationFabricData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+        BinaryData IPersistableModel<DataReplicationFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataReplicationFabricData IPersistableModel<DataReplicationFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationFabricData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+        DataReplicationFabricData IPersistableModel<DataReplicationFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationFabricData>(data, options);
 
-        string IPersistableModel<DataReplicationFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationFabricData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataReplicationFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationFabricData>)Data).GetFormatFromOptions(options);
     }
 }

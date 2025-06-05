@@ -8,7 +8,6 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using Azure.AI.OpenAI.Tests.Utils.Config;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Utils;
@@ -124,13 +123,15 @@ internal class TestConfig
     protected static string ToKey<TClient>()
     {
         string fullName = typeof(TClient).Name;
-        fullName = Regex.Replace(fullName, "^(OpenAI)?(.*?)(Client)?$", "$2");
+        int stopAt = fullName.LastIndexOf("Client");
+        stopAt = stopAt == -1 ? fullName.Length : stopAt;
 
         StringBuilder builder = new(fullName.Length);
         bool prevWasUpper = true;
 
-        foreach (char c in fullName)
+        for (int i = 0; i < stopAt; i++)
         {
+            char c = fullName[i];
             if (char.IsUpper(c))
             {
                 if (prevWasUpper)

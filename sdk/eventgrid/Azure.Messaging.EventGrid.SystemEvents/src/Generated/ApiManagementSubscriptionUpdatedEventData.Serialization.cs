@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(ApiManagementSubscriptionUpdatedEventDataConverter))]
     public partial class ApiManagementSubscriptionUpdatedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementSubscriptionUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementSubscriptionUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -104,7 +102,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementSubscriptionUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -142,20 +140,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class ApiManagementSubscriptionUpdatedEventDataConverter : JsonConverter<ApiManagementSubscriptionUpdatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, ApiManagementSubscriptionUpdatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override ApiManagementSubscriptionUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeApiManagementSubscriptionUpdatedEventData(document.RootElement);
-            }
         }
     }
 }

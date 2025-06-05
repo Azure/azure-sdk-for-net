@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAlertsManagementContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceAlertSummaryGroupItemInfo)} does not support writing '{options.Format}' format.");
             }

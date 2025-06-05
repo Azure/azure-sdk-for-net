@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlPrivateEndpointConnectionResource : IJsonModel<PostgreSqlPrivateEndpointConnectionData>
     {
-        private static PostgreSqlPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static PostgreSqlPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PostgreSqlPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        PostgreSqlPrivateEndpointConnectionData IJsonModel<PostgreSqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        PostgreSqlPrivateEndpointConnectionData IJsonModel<PostgreSqlPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlPrivateEndpointConnectionData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PostgreSqlPrivateEndpointConnectionData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
+        PostgreSqlPrivateEndpointConnectionData IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

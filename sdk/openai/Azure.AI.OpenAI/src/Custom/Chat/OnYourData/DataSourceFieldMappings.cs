@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("AzureSearchChatDataSourceParametersFieldsMapping")]
+[CodeGenModel("AzureSearchChatDataSourceParametersFieldsMapping")]
 [Experimental("AOAI001")]
 public partial class DataSourceFieldMappings
 {

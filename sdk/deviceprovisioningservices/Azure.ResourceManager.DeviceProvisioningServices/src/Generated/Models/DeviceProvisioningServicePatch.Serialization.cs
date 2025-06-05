@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeviceProvisioningServicePatch)} does not support writing '{options.Format}' format.");
             }

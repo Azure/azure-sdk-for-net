@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
-        /// <param name="value"> The list of endpoint. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal EndpointsList(IEnumerable<HybridConnectivityEndpointData> value)
+        internal EndpointsList()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<HybridConnectivityEndpointData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EndpointsList"/>. </summary>
-        /// <param name="value"> The list of endpoint. </param>
         /// <param name="nextLink"> The link used to get the next page of endpoints list. </param>
+        /// <param name="value"> The list of endpoint. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EndpointsList(IReadOnlyList<HybridConnectivityEndpointData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EndpointsList(string nextLink, IReadOnlyList<HybridConnectivityEndpointData> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
             NextLink = nextLink;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="EndpointsList"/> for deserialization. </summary>
-        internal EndpointsList()
-        {
-        }
-
+        /// <summary> The link used to get the next page of endpoints list. </summary>
+        public string NextLink { get; }
         /// <summary> The list of endpoint. </summary>
         public IReadOnlyList<HybridConnectivityEndpointData> Value { get; }
-        /// <summary> The link used to get the next page of endpoints list. </summary>
-        public Uri NextLink { get; }
     }
 }

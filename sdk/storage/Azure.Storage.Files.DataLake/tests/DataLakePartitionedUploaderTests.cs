@@ -78,7 +78,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }
@@ -123,7 +123,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
-                new StorageTransferOptions() { MaximumTransferLength = 10 },
+                new StorageTransferOptions() { MaximumTransferLength = 20 },
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -132,7 +132,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             Assert.AreEqual(s_response, info);
             AssertAppended(sink, content);
 
-            Assert.AreEqual(2, testPool.TotalRents);
+            Assert.AreEqual(3, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Assert.AreEqual(1, sink.Appended.Count);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(1, testPool.TotalRents);
+            Assert.AreEqual(2, testPool.TotalRents); // while conceptually there is one rental, the second rental occurs upon checking for stream end on a Read() call
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }
@@ -189,7 +189,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             Assert.AreEqual(s_response, info);
             Assert.AreEqual(0, testPool.CurrentCount);
-            Assert.AreEqual(20, testPool.TotalRents);
+            Assert.AreEqual(41, testPool.TotalRents);
             AssertAppended(sink, content);
 
             foreach ((byte[] bytes, _) in sink.Appended.Values)
@@ -216,7 +216,7 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             var uploader = new PartitionedUploader<DataLakeFileUploadOptions, PathInfo>(
                 DataLakeFileClient.GetPartitionedUploaderBehaviors(clientMock.Object),
-                new StorageTransferOptions() { MaximumTransferLength = 10 },
+                new StorageTransferOptions() { MaximumTransferLength = 20 },
                 transferValidation: s_validationNone,
                 arrayPool: testPool);
             Response<PathInfo> info = await InvokeUploadAsync(uploader, content);
@@ -225,7 +225,7 @@ namespace Azure.Storage.Files.DataLake.Tests
             // First two should be merged
             CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0, 0, 1, 1, 1, 1, 1 }, sink.Appended[0].Data);
             Assert.AreEqual(s_response, info);
-            Assert.AreEqual(2, testPool.TotalRents);
+            Assert.AreEqual(3, testPool.TotalRents);
             Assert.AreEqual(0, testPool.CurrentCount);
             AssertAppended(sink, content);
         }

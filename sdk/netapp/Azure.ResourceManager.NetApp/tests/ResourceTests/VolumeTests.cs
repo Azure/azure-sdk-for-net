@@ -167,9 +167,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             //validate if created successfully
             NetAppVolumeResource volumeResource2 = await _volumeCollection.GetAsync(volumeResource1.Id.Name);
             VerifyVolumeProperties(volumeResource2, true);
-            volumeResource2.Data.ServiceLevel.Should().BeEquivalentTo(volumeResource1.Data.ServiceLevel);
-            volumeResource2.Data.Name.Should().BeEquivalentTo(volumeResource1.Data.Name);
-
+            volumeResource2.Should().BeEquivalentTo(volumeResource1);
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () => { await _volumeCollection.GetAsync(volumeResource1.Id.Name + "1"); });
             Assert.AreEqual(404, exception.Status);
             Assert.IsTrue(await _volumeCollection.ExistsAsync(volumeResource1.Id.Name));

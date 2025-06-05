@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Configuration enabling NAS reroute. </summary>
+    /// <summary>
+    /// Configuration enabling NAS reroute.
+    /// Serialized Name: NASRerouteConfiguration
+    /// </summary>
     internal partial class NASRerouteConfiguration
     {
         /// <summary>
@@ -46,14 +49,20 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NASRerouteConfiguration"/>. </summary>
-        /// <param name="macroMmeGroupId"> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </param>
+        /// <param name="macroMmeGroupId">
+        /// The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute.
+        /// Serialized Name: NASRerouteConfiguration.macroMmeGroupId
+        /// </param>
         public NASRerouteConfiguration(int macroMmeGroupId)
         {
             MacroMmeGroupId = macroMmeGroupId;
         }
 
         /// <summary> Initializes a new instance of <see cref="NASRerouteConfiguration"/>. </summary>
-        /// <param name="macroMmeGroupId"> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </param>
+        /// <param name="macroMmeGroupId">
+        /// The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute.
+        /// Serialized Name: NASRerouteConfiguration.macroMmeGroupId
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal NASRerouteConfiguration(int macroMmeGroupId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,7 +75,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute. </summary>
+        /// <summary>
+        /// The macro network's MME group ID. This is where unknown UEs are sent to via NAS reroute.
+        /// Serialized Name: NASRerouteConfiguration.macroMmeGroupId
+        /// </summary>
         [WirePath("macroMmeGroupId")]
         public int MacroMmeGroupId { get; set; }
     }

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        [RecordedTest]
+        [Test]
         //[Ignore("InsufficientPermissions")]
         public async Task Get()
         {

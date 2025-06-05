@@ -3,7 +3,6 @@
 
 using System;
 using Azure.Core;
-using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -13,7 +12,6 @@ namespace Azure.Security.KeyVault.Administration
     [CodeGenModel("Setting")]
     [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
     [CodeGenSuppress("Content")]
-    [CodeGenSuppress("Type")]
     public partial class KeyVaultSetting
     {
         /// <summary>
@@ -63,13 +61,5 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         /// <returns></returns>
         public override string ToString() => $"{Name}={Value} ({SettingType ?? string.Empty})";
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(new UpdateSettingRequest(this.Value.ToString()));
-            return content;
-        }
     }
 }

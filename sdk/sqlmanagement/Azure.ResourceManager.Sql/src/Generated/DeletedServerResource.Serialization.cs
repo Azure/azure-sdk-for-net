@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class DeletedServerResource : IJsonModel<DeletedServerData>
     {
-        private static DeletedServerData s_dataDeserializationInstance;
-        private static DeletedServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DeletedServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedServerData>)Data).Write(writer, options);
 
-        DeletedServerData IJsonModel<DeletedServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedServerData>)DataDeserializationInstance).Create(ref reader, options);
+        DeletedServerData IJsonModel<DeletedServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedServerData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<DeletedServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeletedServerData IPersistableModel<DeletedServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedServerData>(data, options, AzureResourceManagerSqlContext.Default);
+        DeletedServerData IPersistableModel<DeletedServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedServerData>(data, options);
 
-        string IPersistableModel<DeletedServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DeletedServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedServerData>)Data).GetFormatFromOptions(options);
     }
 }

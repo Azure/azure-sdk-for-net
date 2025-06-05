@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryJobResource : IJsonModel<SiteRecoveryJobData>
     {
-        private static SiteRecoveryJobData s_dataDeserializationInstance;
-        private static SiteRecoveryJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SiteRecoveryJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryJobData>)Data).Write(writer, options);
 
-        SiteRecoveryJobData IJsonModel<SiteRecoveryJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryJobData>)DataDeserializationInstance).Create(ref reader, options);
+        SiteRecoveryJobData IJsonModel<SiteRecoveryJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryJobData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryJobData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+        BinaryData IPersistableModel<SiteRecoveryJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SiteRecoveryJobData IPersistableModel<SiteRecoveryJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryJobData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+        SiteRecoveryJobData IPersistableModel<SiteRecoveryJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryJobData>(data, options);
 
-        string IPersistableModel<SiteRecoveryJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryJobData>)Data).GetFormatFromOptions(options);
     }
 }

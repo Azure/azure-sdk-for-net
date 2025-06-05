@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("lastModified"u8);
             writer.WriteStringValue(LastModified, "O");
             writer.WritePropertyName("contentLength"u8);
-            writer.WriteStringValue(ContentLength.ToString());
+            writer.WriteNumberValue(ContentLength);
             if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
@@ -115,7 +115,7 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("contentLength"u8))
                 {
-                    contentLength = long.Parse(property.Value.GetString());
+                    contentLength = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))
@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FileProperties)} does not support writing '{options.Format}' format.");
             }

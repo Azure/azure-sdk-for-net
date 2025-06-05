@@ -47,6 +47,6 @@ extends:
     CheckAotCompat: true
     AOTTestInputs:
     - ArtifactName: Azure.Messaging.EventHubs
-      ExpectedWarningsFilepath: Azure.Messaging.EventHubs/tests/compatibility/ExpectedWarnings.txt
+      ExpectedWarningsFilepath: None
     - ArtifactName: Azure.Messaging.EventHubs.Processor
-      ExpectedWarningsFilepath: Azure.Messaging.EventHubs.Processor/tests/compatibility/ExpectedWarnings.txt
+      ExpectedWarningsFilepath: None

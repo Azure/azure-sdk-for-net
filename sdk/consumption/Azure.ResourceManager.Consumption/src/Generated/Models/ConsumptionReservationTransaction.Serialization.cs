@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Consumption.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConsumptionContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support writing '{options.Format}' format.");
             }

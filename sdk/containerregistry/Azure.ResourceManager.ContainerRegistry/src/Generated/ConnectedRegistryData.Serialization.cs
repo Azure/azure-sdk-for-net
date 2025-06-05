@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             string version = default;
             ConnectedRegistryConnectionState? connectionState = default;
             DateTimeOffset? lastActivityTime = default;
-            ConnectedRegistryPropertiesActivation activation = default;
+            ConnectedRegistryActivation activation = default;
             ConnectedRegistryParent parent = default;
             IList<ResourceIdentifier> clientTokenIds = default;
             ConnectedRegistryLoginServer loginServer = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            activation = ConnectedRegistryPropertiesActivation.DeserializeConnectedRegistryPropertiesActivation(property0.Value, options);
+                            activation = ConnectedRegistryActivation.DeserializeConnectedRegistryActivation(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("parent"u8))
@@ -697,7 +697,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerRegistryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

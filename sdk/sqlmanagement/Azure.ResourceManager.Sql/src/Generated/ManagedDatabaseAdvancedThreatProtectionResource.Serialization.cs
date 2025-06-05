@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedDatabaseAdvancedThreatProtectionResource : IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>
     {
-        private static ManagedDatabaseAdvancedThreatProtectionData s_dataDeserializationInstance;
-        private static ManagedDatabaseAdvancedThreatProtectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>)Data).Write(writer, options);
 
-        ManagedDatabaseAdvancedThreatProtectionData IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>)DataDeserializationInstance).Create(ref reader, options);
+        ManagedDatabaseAdvancedThreatProtectionData IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedDatabaseAdvancedThreatProtectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedDatabaseAdvancedThreatProtectionData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedDatabaseAdvancedThreatProtectionData IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseAdvancedThreatProtectionData>(data, options, AzureResourceManagerSqlContext.Default);
+        ManagedDatabaseAdvancedThreatProtectionData IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedDatabaseAdvancedThreatProtectionData>(data, options);
 
-        string IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedDatabaseAdvancedThreatProtectionData>)Data).GetFormatFromOptions(options);
     }
 }

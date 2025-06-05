@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> The status of a firmware analysis job. </summary>
+    /// <summary> The status of firmware scan. </summary>
     public readonly partial struct FirmwareAnalysisStatus : IEquatable<FirmwareAnalysisStatus>
     {
         private readonly string _value;
@@ -28,15 +28,15 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         private const string ReadyValue = "Ready";
         private const string ErrorValue = "Error";
 
-        /// <summary> The analysis job is queued. </summary>
+        /// <summary> Pending. </summary>
         public static FirmwareAnalysisStatus Pending { get; } = new FirmwareAnalysisStatus(PendingValue);
-        /// <summary> The firmware is currently being extracted. </summary>
+        /// <summary> Extracting. </summary>
         public static FirmwareAnalysisStatus Extracting { get; } = new FirmwareAnalysisStatus(ExtractingValue);
-        /// <summary> Analysis is being run on the firmware. </summary>
+        /// <summary> Analyzing. </summary>
         public static FirmwareAnalysisStatus Analyzing { get; } = new FirmwareAnalysisStatus(AnalyzingValue);
-        /// <summary> Analysis job results are ready. </summary>
+        /// <summary> Ready. </summary>
         public static FirmwareAnalysisStatus Ready { get; } = new FirmwareAnalysisStatus(ReadyValue);
-        /// <summary> An error occurred while running firmware analysis. </summary>
+        /// <summary> Error. </summary>
         public static FirmwareAnalysisStatus Error { get; } = new FirmwareAnalysisStatus(ErrorValue);
         /// <summary> Determines if two <see cref="FirmwareAnalysisStatus"/> values are the same. </summary>
         public static bool operator ==(FirmwareAnalysisStatus left, FirmwareAnalysisStatus right) => left.Equals(right);

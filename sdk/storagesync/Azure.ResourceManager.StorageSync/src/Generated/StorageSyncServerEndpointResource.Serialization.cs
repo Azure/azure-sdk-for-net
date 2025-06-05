@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class StorageSyncServerEndpointResource : IJsonModel<StorageSyncServerEndpointData>
     {
-        private static StorageSyncServerEndpointData s_dataDeserializationInstance;
-        private static StorageSyncServerEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<StorageSyncServerEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncServerEndpointData>)Data).Write(writer, options);
 
-        StorageSyncServerEndpointData IJsonModel<StorageSyncServerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncServerEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        StorageSyncServerEndpointData IJsonModel<StorageSyncServerEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageSyncServerEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageSyncServerEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageSyncServerEndpointData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
+        BinaryData IPersistableModel<StorageSyncServerEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StorageSyncServerEndpointData IPersistableModel<StorageSyncServerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncServerEndpointData>(data, options, AzureResourceManagerStorageSyncContext.Default);
+        StorageSyncServerEndpointData IPersistableModel<StorageSyncServerEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageSyncServerEndpointData>(data, options);
 
-        string IPersistableModel<StorageSyncServerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncServerEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<StorageSyncServerEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageSyncServerEndpointData>)Data).GetFormatFromOptions(options);
     }
 }

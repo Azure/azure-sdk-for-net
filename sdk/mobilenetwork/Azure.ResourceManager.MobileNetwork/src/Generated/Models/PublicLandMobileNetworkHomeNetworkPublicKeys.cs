@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Configuration relating to SUPI concealment. </summary>
+    /// <summary>
+    /// Configuration relating to SUPI concealment.
+    /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys
+    /// </summary>
     public partial class PublicLandMobileNetworkHomeNetworkPublicKeys
     {
         /// <summary>
@@ -53,8 +56,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicLandMobileNetworkHomeNetworkPublicKeys"/>. </summary>
-        /// <param name="profileA"> This provides a mapping to identify which public key has been used for SUPI concealment using the Profile A Protection Scheme. </param>
-        /// <param name="profileB"> This provides a mapping to identify which public key has been used for SUPI concealment using the Profile B Protection Scheme. </param>
+        /// <param name="profileA">
+        /// This provides a mapping to identify which public key has been used for SUPI concealment using the Profile A Protection Scheme.
+        /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys.profileA
+        /// </param>
+        /// <param name="profileB">
+        /// This provides a mapping to identify which public key has been used for SUPI concealment using the Profile B Protection Scheme.
+        /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys.profileB
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PublicLandMobileNetworkHomeNetworkPublicKeys(IList<HomeNetworkPublicKey> profileA, IList<HomeNetworkPublicKey> profileB, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -63,10 +72,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This provides a mapping to identify which public key has been used for SUPI concealment using the Profile A Protection Scheme. </summary>
+        /// <summary>
+        /// This provides a mapping to identify which public key has been used for SUPI concealment using the Profile A Protection Scheme.
+        /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys.profileA
+        /// </summary>
         [WirePath("profileA")]
         public IList<HomeNetworkPublicKey> ProfileA { get; }
-        /// <summary> This provides a mapping to identify which public key has been used for SUPI concealment using the Profile B Protection Scheme. </summary>
+        /// <summary>
+        /// This provides a mapping to identify which public key has been used for SUPI concealment using the Profile B Protection Scheme.
+        /// Serialized Name: PublicLandMobileNetworkHomeNetworkPublicKeys.profileB
+        /// </summary>
         [WirePath("profileB")]
         public IList<HomeNetworkPublicKey> ProfileB { get; }
     }

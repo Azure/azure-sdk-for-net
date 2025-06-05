@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(ApiManagementApiReleaseCreatedEventDataConverter))]
     public partial class ApiManagementApiReleaseCreatedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementApiReleaseCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementApiReleaseCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -104,7 +102,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApiManagementApiReleaseCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -142,20 +140,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class ApiManagementApiReleaseCreatedEventDataConverter : JsonConverter<ApiManagementApiReleaseCreatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, ApiManagementApiReleaseCreatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override ApiManagementApiReleaseCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeApiManagementApiReleaseCreatedEventData(document.RootElement);
-            }
         }
     }
 }

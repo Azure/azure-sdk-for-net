@@ -12,37 +12,62 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the origin group override action.
-    /// Serialized Name: OriginGroupOverrideActionParameters
-    /// </summary>
-    public partial class OriginGroupOverrideActionProperties : DeliveryRuleActionProperties
+    /// <summary> Defines the parameters for the origin group override action. </summary>
+    public partial class OriginGroupOverrideActionProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="originGroup">
-        /// defines the OriginGroup that would override the DefaultOriginGroup.
-        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="originGroup"/> is null. </exception>
-        public OriginGroupOverrideActionProperties(WritableSubResource originGroup)
+        public OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup)
         {
             Argument.AssertNotNull(originGroup, nameof(originGroup));
 
+            ActionType = actionType;
             OriginGroup = originGroup;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleOriginGroupOverrideActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="actionType"></param>
+        /// <param name="originGroup"> defines the OriginGroup that would override the DefaultOriginGroup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="originGroup">
-        /// defines the OriginGroup that would override the DefaultOriginGroup.
-        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
-        /// </param>
-        internal OriginGroupOverrideActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource originGroup) : base(typeName, serializedAdditionalRawData)
+        internal OriginGroupOverrideActionProperties(OriginGroupOverrideActionType actionType, WritableSubResource originGroup, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ActionType = actionType;
             OriginGroup = originGroup;
-            TypeName = typeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideActionProperties"/> for deserialization. </summary>
@@ -50,10 +75,9 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// defines the OriginGroup that would override the DefaultOriginGroup.
-        /// Serialized Name: OriginGroupOverrideActionParameters.originGroup
-        /// </summary>
+        /// <summary> Gets or sets the action type. </summary>
+        public OriginGroupOverrideActionType ActionType { get; set; }
+        /// <summary> defines the OriginGroup that would override the DefaultOriginGroup. </summary>
         internal WritableSubResource OriginGroup { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier OriginGroupId

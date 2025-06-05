@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
 {
     public partial class VMwareClusterResource : IJsonModel<VMwareClusterData>
     {
-        private static VMwareClusterData s_dataDeserializationInstance;
-        private static VMwareClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VMwareClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VMwareClusterData>)Data).Write(writer, options);
 
-        VMwareClusterData IJsonModel<VMwareClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        VMwareClusterData IJsonModel<VMwareClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VMwareClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VMwareClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VMwareClusterData>(Data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+        BinaryData IPersistableModel<VMwareClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VMwareClusterData IPersistableModel<VMwareClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareClusterData>(data, options, AzureResourceManagerConnectedVMwarevSphereContext.Default);
+        VMwareClusterData IPersistableModel<VMwareClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VMwareClusterData>(data, options);
 
-        string IPersistableModel<VMwareClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VMwareClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VMwareClusterData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -37,25 +36,22 @@ namespace Azure.ResourceManager.Cdn.Models
 
             writer.WritePropertyName("certificateType"u8);
             writer.WriteStringValue(CertificateType.ToString());
-            if (Optional.IsDefined(CipherSuiteSetType))
-            {
-                writer.WritePropertyName("cipherSuiteSetType"u8);
-                writer.WriteStringValue(CipherSuiteSetType.Value.ToString());
-            }
             if (Optional.IsDefined(MinimumTlsVersion))
             {
                 writer.WritePropertyName("minimumTlsVersion"u8);
                 writer.WriteStringValue(MinimumTlsVersion.Value.ToSerialString());
             }
-            if (Optional.IsDefined(CustomizedCipherSuiteSet))
-            {
-                writer.WritePropertyName("customizedCipherSuiteSet"u8);
-                writer.WriteObjectValue(CustomizedCipherSuiteSet, options);
-            }
             if (Optional.IsDefined(Secret))
             {
-                writer.WritePropertyName("secret"u8);
-                JsonSerializer.Serialize(writer, Secret);
+                if (Secret != null)
+                {
+                    writer.WritePropertyName("secret"u8);
+                    writer.WriteObjectValue(Secret, options);
+                }
+                else
+                {
+                    writer.WriteNull("secret");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -95,10 +91,8 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             FrontDoorCertificateType certificateType = default;
-            AfdCipherSuiteSetType? cipherSuiteSetType = default;
             FrontDoorMinimumTlsVersion? minimumTlsVersion = default;
-            FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet customizedCipherSuiteSet = default;
-            WritableSubResource secret = default;
+            FrontDoorCustomDomainHttpsContentSecret secret = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,15 +100,6 @@ namespace Azure.ResourceManager.Cdn.Models
                 if (property.NameEquals("certificateType"u8))
                 {
                     certificateType = new FrontDoorCertificateType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("cipherSuiteSetType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    cipherSuiteSetType = new AfdCipherSuiteSetType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("minimumTlsVersion"u8))
@@ -126,22 +111,14 @@ namespace Azure.ResourceManager.Cdn.Models
                     minimumTlsVersion = property.Value.GetString().ToFrontDoorMinimumTlsVersion();
                     continue;
                 }
-                if (property.NameEquals("customizedCipherSuiteSet"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    customizedCipherSuiteSet = FrontDoorCustomDomainHttpsCustomizedCipherSuiteSet.DeserializeFrontDoorCustomDomainHttpsCustomizedCipherSuiteSet(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("secret"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        secret = null;
                         continue;
                     }
-                    secret = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    secret = FrontDoorCustomDomainHttpsContentSecret.DeserializeFrontDoorCustomDomainHttpsContentSecret(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,13 +127,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FrontDoorCustomDomainHttpsContent(
-                certificateType,
-                cipherSuiteSetType,
-                minimumTlsVersion,
-                customizedCipherSuiteSet,
-                secret,
-                serializedAdditionalRawData);
+            return new FrontDoorCustomDomainHttpsContent(certificateType, minimumTlsVersion, secret, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorCustomDomainHttpsContent>.Write(ModelReaderWriterOptions options)
@@ -166,7 +137,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainHttpsContent)} does not support writing '{options.Format}' format.");
             }

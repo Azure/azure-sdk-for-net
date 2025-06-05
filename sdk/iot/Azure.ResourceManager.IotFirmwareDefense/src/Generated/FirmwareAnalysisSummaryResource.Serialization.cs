@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 {
     public partial class FirmwareAnalysisSummaryResource : IJsonModel<FirmwareAnalysisSummaryData>
     {
-        private static FirmwareAnalysisSummaryData s_dataDeserializationInstance;
-        private static FirmwareAnalysisSummaryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<FirmwareAnalysisSummaryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisSummaryData>)Data).Write(writer, options);
 
-        FirmwareAnalysisSummaryData IJsonModel<FirmwareAnalysisSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisSummaryData>)DataDeserializationInstance).Create(ref reader, options);
+        FirmwareAnalysisSummaryData IJsonModel<FirmwareAnalysisSummaryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FirmwareAnalysisSummaryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FirmwareAnalysisSummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FirmwareAnalysisSummaryData>(Data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+        BinaryData IPersistableModel<FirmwareAnalysisSummaryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FirmwareAnalysisSummaryData IPersistableModel<FirmwareAnalysisSummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirmwareAnalysisSummaryData>(data, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+        FirmwareAnalysisSummaryData IPersistableModel<FirmwareAnalysisSummaryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FirmwareAnalysisSummaryData>(data, options);
 
-        string IPersistableModel<FirmwareAnalysisSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirmwareAnalysisSummaryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<FirmwareAnalysisSummaryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FirmwareAnalysisSummaryData>)Data).GetFormatFromOptions(options);
     }
 }

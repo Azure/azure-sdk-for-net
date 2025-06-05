@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The JSON object that contains the properties to validate a domain.
-    /// Serialized Name: DomainValidationProperties
-    /// </summary>
+    /// <summary> The JSON object that contains the properties to validate a domain. </summary>
     public partial class DomainValidationProperties
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DomainValidationProperties"/>. </summary>
-        /// <param name="validationToken">
-        /// Challenge used for DNS TXT record or file based validation
-        /// Serialized Name: DomainValidationProperties.validationToken
-        /// </param>
-        /// <param name="expiresOn">
-        /// The date time that the token expires
-        /// Serialized Name: DomainValidationProperties.expirationDate
-        /// </param>
+        /// <param name="validationToken"> Challenge used for DNS TXT record or file based validation. </param>
+        /// <param name="expiresOn"> The date time that the token expires. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DomainValidationProperties(string validationToken, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Challenge used for DNS TXT record or file based validation
-        /// Serialized Name: DomainValidationProperties.validationToken
-        /// </summary>
+        /// <summary> Challenge used for DNS TXT record or file based validation. </summary>
         public string ValidationToken { get; }
-        /// <summary>
-        /// The date time that the token expires
-        /// Serialized Name: DomainValidationProperties.expirationDate
-        /// </summary>
+        /// <summary> The date time that the token expires. </summary>
         public DateTimeOffset? ExpiresOn { get; }
     }
 }

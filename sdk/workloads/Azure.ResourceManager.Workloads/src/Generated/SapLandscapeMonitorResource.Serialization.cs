@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Workloads
 {
     public partial class SapLandscapeMonitorResource : IJsonModel<SapLandscapeMonitorData>
     {
-        private static SapLandscapeMonitorData s_dataDeserializationInstance;
-        private static SapLandscapeMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SapLandscapeMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapLandscapeMonitorData>)Data).Write(writer, options);
 
-        SapLandscapeMonitorData IJsonModel<SapLandscapeMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapLandscapeMonitorData>)DataDeserializationInstance).Create(ref reader, options);
+        SapLandscapeMonitorData IJsonModel<SapLandscapeMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapLandscapeMonitorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SapLandscapeMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapLandscapeMonitorData>(Data, options, AzureResourceManagerWorkloadsContext.Default);
+        BinaryData IPersistableModel<SapLandscapeMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SapLandscapeMonitorData IPersistableModel<SapLandscapeMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapLandscapeMonitorData>(data, options, AzureResourceManagerWorkloadsContext.Default);
+        SapLandscapeMonitorData IPersistableModel<SapLandscapeMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapLandscapeMonitorData>(data, options);
 
-        string IPersistableModel<SapLandscapeMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapLandscapeMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SapLandscapeMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapLandscapeMonitorData>)Data).GetFormatFromOptions(options);
     }
 }

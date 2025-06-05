@@ -34,13 +34,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 throw new FormatException($"The model {nameof(ContainerGroupInstanceCountSummary)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Zone))
-            {
-                writer.WritePropertyName("zone"u8);
-                writer.WriteNumberValue(Zone.Value);
-            }
             writer.WritePropertyName("instanceCountsByState"u8);
-            InstanceCountsByStateSerial(writer, options);
+            writer.WriteStartArray();
+            foreach (var item in InstanceCountsByState)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -78,27 +78,17 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 return null;
             }
-            long? zone = default;
-            IReadOnlyList<PoolContainerGroupStateCount> instanceCountsByState = default;
+            IReadOnlyList<PoolResourceStateCount> instanceCountsByState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("zone"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zone = property.Value.GetInt64();
-                    continue;
-                }
                 if (property.NameEquals("instanceCountsByState"u8))
                 {
-                    List<PoolContainerGroupStateCount> array = new List<PoolContainerGroupStateCount>();
+                    List<PoolResourceStateCount> array = new List<PoolResourceStateCount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PoolContainerGroupStateCount.DeserializePoolContainerGroupStateCount(item, options));
+                        array.Add(PoolResourceStateCount.DeserializePoolResourceStateCount(item, options));
                     }
                     instanceCountsByState = array;
                     continue;
@@ -109,7 +99,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ContainerGroupInstanceCountSummary(zone, instanceCountsByState, serializedAdditionalRawData);
+            return new ContainerGroupInstanceCountSummary(instanceCountsByState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupInstanceCountSummary>.Write(ModelReaderWriterOptions options)
@@ -119,7 +109,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupInstanceCountSummary)} does not support writing '{options.Format}' format.");
             }

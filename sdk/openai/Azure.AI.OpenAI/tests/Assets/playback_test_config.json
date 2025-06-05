@@ -64,10 +64,6 @@
     "key": "Sanitized",
     "deployment": "gpt-35-turbo-low-quota"
   },
-  "responses": {
-    "endpoint": "https://Sanitized.openai.azure.com/",
-    "key": "Sanitized"
-  },
   "search": {
     "endpoint": "https://Sanitized.search.windows.net/",
     "key": "Sanitized",

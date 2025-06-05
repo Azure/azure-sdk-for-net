@@ -3,13 +3,10 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -29,7 +26,6 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Create
             var createData = new NetworkCloudClusterManagerData(new AzureLocation(TestEnvironment.Location), new ResourceIdentifier(TestEnvironment.SubnetId))
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Tags = {
                     ["DisableFabricIntegration"] = "true"
                 }
@@ -46,7 +42,6 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             // Update
             var newTags = new NetworkCloudClusterManagerPatch()
             {
-                Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned),
                 Tags = {
                     ["DisableFabricIntegration"] = "true",
                     ["PatchTag"] = "patchTag",
@@ -73,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listBySubscription);
 
             // Delete
-            var deleteResult = await clusterManagerResource.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            var deleteResult = await clusterManagerResource.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

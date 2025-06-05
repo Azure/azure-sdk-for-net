@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class IotSecurityAggregatedRecommendationResource : IJsonModel<IotSecurityAggregatedRecommendationData>
     {
-        private static IotSecurityAggregatedRecommendationData s_dataDeserializationInstance;
-        private static IotSecurityAggregatedRecommendationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<IotSecurityAggregatedRecommendationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedRecommendationData>)Data).Write(writer, options);
 
-        IotSecurityAggregatedRecommendationData IJsonModel<IotSecurityAggregatedRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedRecommendationData>)DataDeserializationInstance).Create(ref reader, options);
+        IotSecurityAggregatedRecommendationData IJsonModel<IotSecurityAggregatedRecommendationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotSecurityAggregatedRecommendationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IotSecurityAggregatedRecommendationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotSecurityAggregatedRecommendationData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<IotSecurityAggregatedRecommendationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        IotSecurityAggregatedRecommendationData IPersistableModel<IotSecurityAggregatedRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecurityAggregatedRecommendationData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        IotSecurityAggregatedRecommendationData IPersistableModel<IotSecurityAggregatedRecommendationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotSecurityAggregatedRecommendationData>(data, options);
 
-        string IPersistableModel<IotSecurityAggregatedRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecurityAggregatedRecommendationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<IotSecurityAggregatedRecommendationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotSecurityAggregatedRecommendationData>)Data).GetFormatFromOptions(options);
     }
 }

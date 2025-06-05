@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HDInsight
 
         HDInsightApplicationResource IOperationSource<HDInsightApplicationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
+            var data = ModelReaderWriter.Read<HDInsightApplicationData>(response.Content);
             return new HDInsightApplicationResource(_client, data);
         }
 
         async ValueTask<HDInsightApplicationResource> IOperationSource<HDInsightApplicationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HDInsightApplicationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHDInsightContext.Default);
+            var data = ModelReaderWriter.Read<HDInsightApplicationData>(response.Content);
             return await Task.FromResult(new HDInsightApplicationResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -9,21 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
-    public partial class BrokerProperties : IJsonModel<BrokerProperties>
+    public partial class BrokerProperties : IUtf8JsonSerializable, IJsonModel<BrokerProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="BrokerProperties"/> for deserialization. </summary>
-        internal BrokerProperties()
-        {
-        }
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BrokerProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BrokerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -35,24 +28,25 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerProperties)} does not support writing '{format}' format.");
             }
+
             writer.WritePropertyName("lockToken"u8);
             writer.WriteStringValue(LockToken);
             writer.WritePropertyName("deliveryCount"u8);
             writer.WriteNumberValue(DeliveryCount);
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -61,84 +55,73 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerProperties IJsonModel<BrokerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        BrokerProperties IJsonModel<BrokerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BrokerProperties)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBrokerProperties(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static BrokerProperties DeserializeBrokerProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static BrokerProperties DeserializeBrokerProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string lockToken = default;
             int deliveryCount = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("lockToken"u8))
+                if (property.NameEquals("lockToken"u8))
                 {
-                    lockToken = prop.Value.GetString();
+                    lockToken = property.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("deliveryCount"u8))
+                if (property.NameEquals("deliveryCount"u8))
                 {
-                    deliveryCount = prop.Value.GetInt32();
+                    deliveryCount = property.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new BrokerProperties(lockToken, deliveryCount, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BrokerProperties(lockToken, deliveryCount, serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<BrokerProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<BrokerProperties>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BrokerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BrokerProperties IPersistableModel<BrokerProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BrokerProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        BrokerProperties IPersistableModel<BrokerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<BrokerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBrokerProperties(document.RootElement, options);
                     }
                 default:
@@ -146,27 +129,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BrokerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="brokerProperties"> The <see cref="BrokerProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(BrokerProperties brokerProperties)
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BrokerProperties FromResponse(Response response)
         {
-            if (brokerProperties == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(brokerProperties, ModelSerializationExtensions.WireOptions);
-            return content;
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeBrokerProperties(document.RootElement);
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BrokerProperties"/> from. </param>
-        public static explicit operator BrokerProperties(Response result)
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeBrokerProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

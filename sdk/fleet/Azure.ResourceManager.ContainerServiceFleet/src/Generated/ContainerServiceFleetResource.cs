@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = await _containerServiceFleetFleetsRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2016-03-30");
+                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = _containerServiceFleetFleetsRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location, apiVersionOverrideValue: "2016-03-30");
+                var operation = new ContainerServiceFleetArmOperation(_containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ifMatch).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = await _containerServiceFleetFleetsRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken).ConfigureAwait(false);
-                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.OriginalUri, apiVersionOverrideValue: "2016-03-30");
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             try
             {
                 var response = _containerServiceFleetFleetsRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch, cancellationToken);
-                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.OriginalUri, apiVersionOverrideValue: "2016-03-30");
+                var operation = new ContainerServiceFleetArmOperation<ContainerServiceFleetResource>(new ContainerServiceFleetOperationSource(Client), _containerServiceFleetFleetsClientDiagnostics, Pipeline, _containerServiceFleetFleetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, ifMatch).Request, response, OperationFinalStateVia.OriginalUri);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -715,7 +715,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -839,7 +839,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -953,7 +953,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-03-01</description>
+        /// <description>2024-05-02-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

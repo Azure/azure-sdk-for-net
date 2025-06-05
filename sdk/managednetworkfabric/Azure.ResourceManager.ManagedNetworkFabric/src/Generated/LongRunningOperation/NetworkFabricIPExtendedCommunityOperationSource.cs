@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricIPExtendedCommunityResource IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricIPExtendedCommunityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkFabricIPExtendedCommunityData>(response.Content);
             return new NetworkFabricIPExtendedCommunityResource(_client, data);
         }
 
         async ValueTask<NetworkFabricIPExtendedCommunityResource> IOperationSource<NetworkFabricIPExtendedCommunityResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricIPExtendedCommunityData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkFabricIPExtendedCommunityData>(response.Content);
             return await Task.FromResult(new NetworkFabricIPExtendedCommunityResource(_client, data)).ConfigureAwait(false);
         }
     }

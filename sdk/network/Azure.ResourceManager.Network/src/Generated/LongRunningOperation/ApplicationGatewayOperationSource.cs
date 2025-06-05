@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         ApplicationGatewayResource IOperationSource<ApplicationGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ApplicationGatewayData>(response.Content);
             return new ApplicationGatewayResource(_client, data);
         }
 
         async ValueTask<ApplicationGatewayResource> IOperationSource<ApplicationGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ApplicationGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<ApplicationGatewayData>(response.Content);
             return await Task.FromResult(new ApplicationGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

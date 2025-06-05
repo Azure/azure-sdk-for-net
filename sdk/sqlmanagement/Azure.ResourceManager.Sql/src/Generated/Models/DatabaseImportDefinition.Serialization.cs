@@ -62,11 +62,8 @@ namespace Azure.ResourceManager.Sql.Models
             writer.WriteStringValue(StorageUri.AbsoluteUri);
             writer.WritePropertyName("administratorLogin"u8);
             writer.WriteStringValue(AdministratorLogin);
-            if (Optional.IsDefined(AdministratorLoginPassword))
-            {
-                writer.WritePropertyName("administratorLoginPassword"u8);
-                writer.WriteStringValue(AdministratorLoginPassword);
-            }
+            writer.WritePropertyName("administratorLoginPassword"u8);
+            writer.WriteStringValue(AdministratorLoginPassword);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -216,7 +213,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DatabaseImportDefinition)} does not support writing '{options.Format}' format.");
             }

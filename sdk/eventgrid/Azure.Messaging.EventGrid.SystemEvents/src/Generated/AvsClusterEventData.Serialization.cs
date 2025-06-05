@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AvsClusterEventDataConverter))]
     public partial class AvsClusterEventData : IUtf8JsonSerializable, IJsonModel<AvsClusterEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsClusterEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -38,7 +36,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
-            if (options.Format != "W" && Optional.IsCollectionDefined(AddedHostNames))
+            if (Optional.IsCollectionDefined(AddedHostNames))
             {
                 writer.WritePropertyName("addedHostNames"u8);
                 writer.WriteStartArray();
@@ -48,7 +46,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(RemovedHostNames))
+            if (Optional.IsCollectionDefined(RemovedHostNames))
             {
                 writer.WritePropertyName("removedHostNames"u8);
                 writer.WriteStartArray();
@@ -58,7 +56,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(InMaintenanceHostNames))
+            if (Optional.IsCollectionDefined(InMaintenanceHostNames))
             {
                 writer.WritePropertyName("inMaintenanceHostNames"u8);
                 writer.WriteStartArray();
@@ -176,7 +174,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AvsClusterEventData)} does not support writing '{options.Format}' format.");
             }
@@ -214,20 +212,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AvsClusterEventDataConverter : JsonConverter<AvsClusterEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AvsClusterEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AvsClusterEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAvsClusterEventData(document.RootElement);
-            }
         }
     }
 }

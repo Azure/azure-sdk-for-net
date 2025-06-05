@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Purview
 
         PurviewAccountResource IOperationSource<PurviewAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
+            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content);
             return new PurviewAccountResource(_client, data);
         }
 
         async ValueTask<PurviewAccountResource> IOperationSource<PurviewAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
+            var data = ModelReaderWriter.Read<PurviewAccountData>(response.Content);
             return await Task.FromResult(new PurviewAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

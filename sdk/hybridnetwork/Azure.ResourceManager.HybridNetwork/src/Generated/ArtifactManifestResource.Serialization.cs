@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class ArtifactManifestResource : IJsonModel<ArtifactManifestData>
     {
-        private static ArtifactManifestData s_dataDeserializationInstance;
-        private static ArtifactManifestData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ArtifactManifestData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactManifestData>)Data).Write(writer, options);
 
-        ArtifactManifestData IJsonModel<ArtifactManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactManifestData>)DataDeserializationInstance).Create(ref reader, options);
+        ArtifactManifestData IJsonModel<ArtifactManifestData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactManifestData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArtifactManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArtifactManifestData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
+        BinaryData IPersistableModel<ArtifactManifestData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ArtifactManifestData IPersistableModel<ArtifactManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactManifestData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
+        ArtifactManifestData IPersistableModel<ArtifactManifestData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactManifestData>(data, options);
 
-        string IPersistableModel<ArtifactManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactManifestData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ArtifactManifestData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactManifestData>)Data).GetFormatFromOptions(options);
     }
 }

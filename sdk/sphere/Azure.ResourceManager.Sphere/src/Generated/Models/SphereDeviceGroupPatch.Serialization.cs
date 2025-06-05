@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sphere.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSphereContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SphereDeviceGroupPatch)} does not support writing '{options.Format}' format.");
             }

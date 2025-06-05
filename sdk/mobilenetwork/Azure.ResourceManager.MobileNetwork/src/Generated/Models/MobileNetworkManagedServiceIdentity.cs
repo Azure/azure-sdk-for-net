@@ -11,7 +11,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Managed service identity (User assigned identity). </summary>
+    /// <summary>
+    /// Managed service identity (User assigned identity)
+    /// Serialized Name: ManagedServiceIdentity
+    /// </summary>
     public partial class MobileNetworkManagedServiceIdentity
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkManagedServiceIdentity"/>. </summary>
-        /// <param name="identityType"> Type of managed service identity (currently only UserAssigned allowed). </param>
+        /// <param name="identityType">
+        /// Type of managed service identity (currently only UserAssigned allowed).
+        /// Serialized Name: ManagedServiceIdentity.type
+        /// </param>
         public MobileNetworkManagedServiceIdentity(MobileNetworkManagedServiceIdentityType identityType)
         {
             IdentityType = identityType;
@@ -55,8 +61,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkManagedServiceIdentity"/>. </summary>
-        /// <param name="identityType"> Type of managed service identity (currently only UserAssigned allowed). </param>
-        /// <param name="userAssignedIdentities"> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </param>
+        /// <param name="identityType">
+        /// Type of managed service identity (currently only UserAssigned allowed).
+        /// Serialized Name: ManagedServiceIdentity.type
+        /// </param>
+        /// <param name="userAssignedIdentities">
+        /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: ManagedServiceIdentity.userAssignedIdentities
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkManagedServiceIdentity(MobileNetworkManagedServiceIdentityType identityType, IDictionary<string, UserAssignedIdentity> userAssignedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,10 +82,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> Type of managed service identity (currently only UserAssigned allowed). </summary>
+        /// <summary>
+        /// Type of managed service identity (currently only UserAssigned allowed).
+        /// Serialized Name: ManagedServiceIdentity.type
+        /// </summary>
         [WirePath("type")]
         public MobileNetworkManagedServiceIdentityType IdentityType { get; set; }
-        /// <summary> The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests. </summary>
+        /// <summary>
+        /// The set of user assigned identities associated with the resource. The userAssignedIdentities dictionary keys will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}. The dictionary values can be empty objects ({}) in requests.
+        /// Serialized Name: ManagedServiceIdentity.userAssignedIdentities
+        /// </summary>
         [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }

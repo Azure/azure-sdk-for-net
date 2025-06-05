@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Output of custom domain validation.
-    /// Serialized Name: ValidateCustomDomainOutput
-    /// </summary>
+    /// <summary> Output of custom domain validation. </summary>
     public partial class ValidateCustomDomainResult
     {
         /// <summary>
@@ -54,18 +51,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ValidateCustomDomainResult"/>. </summary>
-        /// <param name="isCustomDomainValid">
-        /// Indicates whether the custom domain is valid or not.
-        /// Serialized Name: ValidateCustomDomainOutput.customDomainValidated
-        /// </param>
-        /// <param name="reason">
-        /// The reason why the custom domain is not valid.
-        /// Serialized Name: ValidateCustomDomainOutput.reason
-        /// </param>
-        /// <param name="message">
-        /// Error message describing why the custom domain is not valid.
-        /// Serialized Name: ValidateCustomDomainOutput.message
-        /// </param>
+        /// <param name="isCustomDomainValid"> Indicates whether the custom domain is valid or not. </param>
+        /// <param name="reason"> The reason why the custom domain is not valid. </param>
+        /// <param name="message"> Error message describing why the custom domain is not valid. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ValidateCustomDomainResult(bool? isCustomDomainValid, string reason, string message, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -75,20 +63,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Indicates whether the custom domain is valid or not.
-        /// Serialized Name: ValidateCustomDomainOutput.customDomainValidated
-        /// </summary>
+        /// <summary> Indicates whether the custom domain is valid or not. </summary>
         public bool? IsCustomDomainValid { get; }
-        /// <summary>
-        /// The reason why the custom domain is not valid.
-        /// Serialized Name: ValidateCustomDomainOutput.reason
-        /// </summary>
+        /// <summary> The reason why the custom domain is not valid. </summary>
         public string Reason { get; }
-        /// <summary>
-        /// Error message describing why the custom domain is not valid.
-        /// Serialized Name: ValidateCustomDomainOutput.message
-        /// </summary>
+        /// <summary> Error message describing why the custom domain is not valid. </summary>
         public string Message { get; }
     }
 }

@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataMigration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ProjectFileData)} does not support writing '{options.Format}' format.");
             }

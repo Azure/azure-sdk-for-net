@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         StaticSitePrivateEndpointConnectionResource IOperationSource<StaticSitePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(response.Content);
             return new StaticSitePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<StaticSitePrivateEndpointConnectionResource> IOperationSource<StaticSitePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<RemotePrivateEndpointConnectionARMResourceData>(response.Content);
             return await Task.FromResult(new StaticSitePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

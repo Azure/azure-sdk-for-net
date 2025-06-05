@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPrivateDnsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PrivateDnsTxtRecordListResult)} does not support '{options.Format}' format.");
             }

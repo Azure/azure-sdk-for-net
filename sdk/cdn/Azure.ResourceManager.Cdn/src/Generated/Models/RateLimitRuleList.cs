@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines contents of rate limit rules
-    /// Serialized Name: RateLimitRuleList
-    /// </summary>
+    /// <summary> Defines contents of rate limit rules. </summary>
     internal partial class RateLimitRuleList
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RateLimitRuleList"/>. </summary>
-        /// <param name="rules">
-        /// List of rules
-        /// Serialized Name: RateLimitRuleList.rules
-        /// </param>
+        /// <param name="rules"> List of rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RateLimitRuleList(IList<RateLimitRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of rules
-        /// Serialized Name: RateLimitRuleList.rules
-        /// </summary>
+        /// <summary> List of rules. </summary>
         public IList<RateLimitRule> Rules { get; }
     }
 }

@@ -10,12 +10,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/883abbe08d313739069c0007eb820aa0a0710748/specification/compute/resource-manager/readme.md
-#tag: package-2025-02-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md
+#tag: package-2024-11-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -99,8 +99,6 @@ override-operation-name:
   LogAnalytics_ExportRequestRateByInterval: ExportLogAnalyticsRequestRateByInterval
   LogAnalytics_ExportThrottledRequests: ExportLogAnalyticsThrottledRequests
   ResourceSkus_List: GetComputeResourceSkus
-  VirtualMachineImages_ListWithProperties: GetVirtualMachineImagesWithProperties
-  VirtualMachines_MigrateToVmScaleSet: MigrateToVirtualMachineScaleSet
 
 request-path-to-resource-data:
   /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/sharedGalleries/{galleryUniqueName}: SharedGallery
@@ -303,10 +301,6 @@ rename-mapping:
   GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
   ExecutedValidation: GalleryImageExecutedValidation
   Placement: VirtualMachinePlacement
-  Modes: HostEndpointSettingsMode
-  Expand: GetVirtualMachineImagesWithPropertiesExpand
-  RebalanceBehavior: VmssRebalanceBehavior
-  RebalanceStrategy: VmssRebalanceStrategy 
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced

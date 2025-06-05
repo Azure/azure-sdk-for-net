@@ -21,7 +21,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             Argument.AssertNotNull(performShutdown, nameof(performShutdown));
 
             PerformShutdown = performShutdown;
-            PostMigrationSteps = new ChangeTrackingList<ManagedRunCommandScriptContent>();
             InstanceType = "VMwareCbt";
         }
 
@@ -30,12 +29,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="performShutdown"> A value indicating whether VM is to be shutdown. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
-        /// <param name="postMigrationSteps"> The managed run command script input. </param>
-        internal VMwareCbtMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string performShutdown, string osUpgradeVersion, IList<ManagedRunCommandScriptContent> postMigrationSteps) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string performShutdown, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
         {
             PerformShutdown = performShutdown;
             OSUpgradeVersion = osUpgradeVersion;
-            PostMigrationSteps = postMigrationSteps;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
@@ -48,7 +45,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string PerformShutdown { get; }
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
-        /// <summary> The managed run command script input. </summary>
-        public IList<ManagedRunCommandScriptContent> PostMigrationSteps { get; }
     }
 }

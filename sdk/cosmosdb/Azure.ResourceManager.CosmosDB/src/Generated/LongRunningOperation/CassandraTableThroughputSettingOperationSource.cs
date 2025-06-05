@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CassandraTableThroughputSettingResource IOperationSource<CassandraTableThroughputSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
             return new CassandraTableThroughputSettingResource(_client, data);
         }
 
         async ValueTask<CassandraTableThroughputSettingResource> IOperationSource<CassandraTableThroughputSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default));
+            var data = ScrubId(ModelReaderWriter.Read<ThroughputSettingData>(response.Content));
             return await Task.FromResult(new CassandraTableThroughputSettingResource(_client, data)).ConfigureAwait(false);
         }
 

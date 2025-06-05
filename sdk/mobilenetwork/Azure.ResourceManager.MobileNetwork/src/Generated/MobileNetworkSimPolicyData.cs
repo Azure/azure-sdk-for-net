@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the MobileNetworkSimPolicy data model.
     /// SIM policy resource.
+    /// Serialized Name: SimPolicy
     /// </summary>
     public partial class MobileNetworkSimPolicyData : TrackedResourceData
     {
@@ -55,9 +56,18 @@ namespace Azure.ResourceManager.MobileNetwork
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkSimPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="ueAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR. </param>
-        /// <param name="defaultSlice"> The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy. </param>
-        /// <param name="sliceConfigurations"> The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
+        /// <param name="ueAmbr">
+        /// Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR.
+        /// Serialized Name: SimPolicy.properties.ueAmbr
+        /// </param>
+        /// <param name="defaultSlice">
+        /// The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy.
+        /// Serialized Name: SimPolicy.properties.defaultSlice
+        /// </param>
+        /// <param name="sliceConfigurations">
+        /// The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
+        /// Serialized Name: SimPolicy.properties.sliceConfigurations
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ueAmbr"/>, <paramref name="defaultSlice"/> or <paramref name="sliceConfigurations"/> is null. </exception>
         public MobileNetworkSimPolicyData(AzureLocation location, Ambr ueAmbr, WritableSubResource defaultSlice, IEnumerable<MobileNetworkSliceConfiguration> sliceConfigurations) : base(location)
         {
@@ -78,13 +88,34 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState"> The provisioning state of the SIM policy resource. </param>
-        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM policy on that site. </param>
-        /// <param name="ueAmbr"> Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR. </param>
-        /// <param name="defaultSlice"> The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy. </param>
-        /// <param name="rfspIndex"> RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified. </param>
-        /// <param name="registrationTimer"> UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds. </param>
-        /// <param name="sliceConfigurations"> The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the SIM policy resource.
+        /// Serialized Name: SimPolicy.properties.provisioningState
+        /// </param>
+        /// <param name="siteProvisioningState">
+        /// A dictionary of sites to the provisioning state of this SIM policy on that site.
+        /// Serialized Name: SimPolicy.properties.siteProvisioningState
+        /// </param>
+        /// <param name="ueAmbr">
+        /// Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR.
+        /// Serialized Name: SimPolicy.properties.ueAmbr
+        /// </param>
+        /// <param name="defaultSlice">
+        /// The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy.
+        /// Serialized Name: SimPolicy.properties.defaultSlice
+        /// </param>
+        /// <param name="rfspIndex">
+        /// RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified.
+        /// Serialized Name: SimPolicy.properties.rfspIndex
+        /// </param>
+        /// <param name="registrationTimer">
+        /// UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds.
+        /// Serialized Name: SimPolicy.properties.registrationTimer
+        /// </param>
+        /// <param name="sliceConfigurations">
+        /// The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
+        /// Serialized Name: SimPolicy.properties.sliceConfigurations
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkSimPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, Ambr ueAmbr, WritableSubResource defaultSlice, int? rfspIndex, int? registrationTimer, IList<MobileNetworkSliceConfiguration> sliceConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -103,16 +134,28 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> The provisioning state of the SIM policy resource. </summary>
+        /// <summary>
+        /// The provisioning state of the SIM policy resource.
+        /// Serialized Name: SimPolicy.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> A dictionary of sites to the provisioning state of this SIM policy on that site. </summary>
+        /// <summary>
+        /// A dictionary of sites to the provisioning state of this SIM policy on that site.
+        /// Serialized Name: SimPolicy.properties.siteProvisioningState
+        /// </summary>
         [WirePath("properties.siteProvisioningState")]
         public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
-        /// <summary> Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR. </summary>
+        /// <summary>
+        /// Aggregate maximum bit rate across all non-GBR QoS flows of all PDU sessions of a given UE. See 3GPP TS23.501 section 5.7.2.6 for a full description of the UE-AMBR.
+        /// Serialized Name: SimPolicy.properties.ueAmbr
+        /// </summary>
         [WirePath("properties.ueAmbr")]
         public Ambr UEAmbr { get; set; }
-        /// <summary> The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy. </summary>
+        /// <summary>
+        /// The default slice to use if the UE does not explicitly specify it. This slice must exist in the `sliceConfigurations` map. The slice must be in the same location as the SIM policy.
+        /// Serialized Name: SimPolicy.properties.defaultSlice
+        /// </summary>
         internal WritableSubResource DefaultSlice { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("properties.defaultSlice.id")]
@@ -127,13 +170,22 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        /// <summary> RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified. </summary>
+        /// <summary>
+        /// RAT/Frequency Selection Priority Index, defined in 3GPP TS 36.413. This is an optional setting and by default is unspecified.
+        /// Serialized Name: SimPolicy.properties.rfspIndex
+        /// </summary>
         [WirePath("properties.rfspIndex")]
         public int? RfspIndex { get; set; }
-        /// <summary> UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds. </summary>
+        /// <summary>
+        /// UE periodic registration update timer (5G) or UE periodic tracking area update timer (4G), in seconds.
+        /// Serialized Name: SimPolicy.properties.registrationTimer
+        /// </summary>
         [WirePath("properties.registrationTimer")]
         public int? RegistrationTimer { get; set; }
-        /// <summary> The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </summary>
+        /// <summary>
+        /// The allowed slices and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
+        /// Serialized Name: SimPolicy.properties.sliceConfigurations
+        /// </summary>
         [WirePath("properties.sliceConfigurations")]
         public IList<MobileNetworkSliceConfiguration> SliceConfigurations { get; }
     }

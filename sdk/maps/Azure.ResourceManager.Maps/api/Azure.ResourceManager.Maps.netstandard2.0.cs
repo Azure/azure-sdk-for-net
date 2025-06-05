@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.Maps
 {
-    public partial class AzureResourceManagerMapsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerMapsContext() { }
-        public static Azure.ResourceManager.Maps.AzureResourceManagerMapsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class MapsAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Maps.MapsAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Maps.MapsAccountResource>, System.Collections.IEnumerable
     {
         protected MapsAccountCollection() { }

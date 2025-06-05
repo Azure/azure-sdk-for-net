@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <summary> Auto Scale Properties for Elastic San Appliance. </summary>
         internal AutoScaleProperties AutoScaleProperties { get; set; }
         /// <summary> Scale up settings on Elastic San Appliance. </summary>
-        public ElasticSanScaleUpProperties ScaleUpProperties
+        public ScaleUpProperties ScaleUpProperties
         {
             get => AutoScaleProperties is null ? default : AutoScaleProperties.ScaleUpProperties;
             set

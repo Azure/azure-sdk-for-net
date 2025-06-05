@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     public partial class LocalRulestackRuleResource : IJsonModel<LocalRulestackRuleData>
     {
-        private static LocalRulestackRuleData s_dataDeserializationInstance;
-        private static LocalRulestackRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LocalRulestackRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackRuleData>)Data).Write(writer, options);
 
-        LocalRulestackRuleData IJsonModel<LocalRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        LocalRulestackRuleData IJsonModel<LocalRulestackRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LocalRulestackRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LocalRulestackRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LocalRulestackRuleData>(Data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        BinaryData IPersistableModel<LocalRulestackRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LocalRulestackRuleData IPersistableModel<LocalRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalRulestackRuleData>(data, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
+        LocalRulestackRuleData IPersistableModel<LocalRulestackRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LocalRulestackRuleData>(data, options);
 
-        string IPersistableModel<LocalRulestackRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LocalRulestackRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LocalRulestackRuleData>)Data).GetFormatFromOptions(options);
     }
 }

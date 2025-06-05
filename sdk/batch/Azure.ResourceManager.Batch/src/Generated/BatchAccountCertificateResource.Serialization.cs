@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountCertificateResource : IJsonModel<BatchAccountCertificateData>
     {
-        private static BatchAccountCertificateData s_dataDeserializationInstance;
-        private static BatchAccountCertificateData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<BatchAccountCertificateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountCertificateData>)Data).Write(writer, options);
 
-        BatchAccountCertificateData IJsonModel<BatchAccountCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountCertificateData>)DataDeserializationInstance).Create(ref reader, options);
+        BatchAccountCertificateData IJsonModel<BatchAccountCertificateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountCertificateData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BatchAccountCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchAccountCertificateData>(Data, options, AzureResourceManagerBatchContext.Default);
+        BinaryData IPersistableModel<BatchAccountCertificateData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BatchAccountCertificateData IPersistableModel<BatchAccountCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchAccountCertificateData>(data, options, AzureResourceManagerBatchContext.Default);
+        BatchAccountCertificateData IPersistableModel<BatchAccountCertificateData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchAccountCertificateData>(data, options);
 
-        string IPersistableModel<BatchAccountCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchAccountCertificateData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<BatchAccountCertificateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchAccountCertificateData>)Data).GetFormatFromOptions(options);
     }
 }

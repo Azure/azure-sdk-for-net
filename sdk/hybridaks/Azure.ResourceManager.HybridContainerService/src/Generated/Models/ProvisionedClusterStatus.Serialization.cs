@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ProvisionedClusterStatus)} does not support writing '{options.Format}' format.");
             }

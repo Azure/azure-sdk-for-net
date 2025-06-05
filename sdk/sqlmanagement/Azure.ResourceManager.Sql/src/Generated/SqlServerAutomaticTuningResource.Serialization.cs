@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerAutomaticTuningResource : IJsonModel<SqlServerAutomaticTuningData>
     {
-        private static SqlServerAutomaticTuningData s_dataDeserializationInstance;
-        private static SqlServerAutomaticTuningData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SqlServerAutomaticTuningData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAutomaticTuningData>)Data).Write(writer, options);
 
-        SqlServerAutomaticTuningData IJsonModel<SqlServerAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAutomaticTuningData>)DataDeserializationInstance).Create(ref reader, options);
+        SqlServerAutomaticTuningData IJsonModel<SqlServerAutomaticTuningData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerAutomaticTuningData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerAutomaticTuningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerAutomaticTuningData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<SqlServerAutomaticTuningData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SqlServerAutomaticTuningData IPersistableModel<SqlServerAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAutomaticTuningData>(data, options, AzureResourceManagerSqlContext.Default);
+        SqlServerAutomaticTuningData IPersistableModel<SqlServerAutomaticTuningData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerAutomaticTuningData>(data, options);
 
-        string IPersistableModel<SqlServerAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAutomaticTuningData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerAutomaticTuningData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerAutomaticTuningData>)Data).GetFormatFromOptions(options);
     }
 }

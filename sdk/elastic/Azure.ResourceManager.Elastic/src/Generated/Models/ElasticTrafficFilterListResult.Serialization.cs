@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Elastic.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticTrafficFilterListResult)} does not support writing '{options.Format}' format.");
             }

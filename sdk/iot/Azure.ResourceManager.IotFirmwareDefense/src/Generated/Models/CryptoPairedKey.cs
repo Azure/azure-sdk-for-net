@@ -51,18 +51,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoPairedKey"/>. </summary>
-        /// <param name="pairedKeyId"> ID of the paired key or certificate. </param>
+        /// <param name="id"> ID of the paired key or certificate. </param>
         /// <param name="pairedKeyType"> The type indicating whether the paired object is a key or certificate. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CryptoPairedKey(string pairedKeyId, string pairedKeyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CryptoPairedKey(string id, string pairedKeyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PairedKeyId = pairedKeyId;
+            Id = id;
             PairedKeyType = pairedKeyType;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> ID of the paired key or certificate. </summary>
-        public string PairedKeyId { get; set; }
+        public string Id { get; set; }
         /// <summary> The type indicating whether the paired object is a key or certificate. </summary>
         public string PairedKeyType { get; set; }
     }

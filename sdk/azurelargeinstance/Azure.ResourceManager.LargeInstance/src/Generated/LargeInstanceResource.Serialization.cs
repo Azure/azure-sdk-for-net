@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.LargeInstance
 {
     public partial class LargeInstanceResource : IJsonModel<LargeInstanceData>
     {
-        private static LargeInstanceData s_dataDeserializationInstance;
-        private static LargeInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LargeInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LargeInstanceData>)Data).Write(writer, options);
 
-        LargeInstanceData IJsonModel<LargeInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LargeInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        LargeInstanceData IJsonModel<LargeInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LargeInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LargeInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LargeInstanceData>(Data, options, AzureResourceManagerLargeInstanceContext.Default);
+        BinaryData IPersistableModel<LargeInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LargeInstanceData IPersistableModel<LargeInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeInstanceData>(data, options, AzureResourceManagerLargeInstanceContext.Default);
+        LargeInstanceData IPersistableModel<LargeInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LargeInstanceData>(data, options);
 
-        string IPersistableModel<LargeInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LargeInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LargeInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LargeInstanceData>)Data).GetFormatFromOptions(options);
     }
 }

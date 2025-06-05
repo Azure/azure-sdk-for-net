@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlVirtualNetworkRuleResource IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlVirtualNetworkRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<PostgreSqlVirtualNetworkRuleData>(response.Content);
             return new PostgreSqlVirtualNetworkRuleResource(_client, data);
         }
 
         async ValueTask<PostgreSqlVirtualNetworkRuleResource> IOperationSource<PostgreSqlVirtualNetworkRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlVirtualNetworkRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<PostgreSqlVirtualNetworkRuleData>(response.Content);
             return await Task.FromResult(new PostgreSqlVirtualNetworkRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: 2025-01-01/Targets_CreateOrUpdate.json
-            // this example is just showing the usage of "Target_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/CreateUpdateTarget.json
+            // this example is just showing the usage of "Targets_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -43,8 +43,18 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosTargetCollection collection = resourceGroupResource.GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName);
 
             // invoke the operation
-            string targetName = "Microsoft-VirtualMachine";
-            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>());
+            string targetName = "Microsoft-Agent";
+            ChaosTargetData data = new ChaosTargetData(new Dictionary<string, BinaryData>
+            {
+                ["identities"] = BinaryData.FromObjectAsJson(new object[]
+            {
+new
+{
+type = "CertificateSubjectIssuer",
+subject = "CN=example.subject",
+}
+            })
+            });
             ArmOperation<ChaosTargetResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetName, data);
             ChaosTargetResource result = lro.Value;
 
@@ -59,8 +69,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: 2025-01-01/Targets_Get.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -95,8 +105,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllTargetsThatExtendAVirtualMachineResource()
         {
-            // Generated from example definition: 2025-01-01/Targets_List.json
-            // this example is just showing the usage of "Target_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListTargets.json
+            // this example is just showing the usage of "Targets_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -117,7 +127,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             ChaosTargetCollection collection = resourceGroupResource.GetChaosTargets(parentProviderNamespace, parentResourceType, parentResourceName);
 
             // invoke the operation and iterate over the result
-            await foreach (ChaosTargetResource item in collection.GetAllAsync())
+            string continuationToken = null;
+            await foreach (ChaosTargetResource item in collection.GetAllAsync(continuationToken: continuationToken))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -133,8 +144,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: 2025-01-01/Targets_Get.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -165,8 +176,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetATargetThatExtendsAVirtualMachineResource()
         {
-            // Generated from example definition: 2025-01-01/Targets_Get.json
-            // this example is just showing the usage of "Target_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetTarget.json
+            // this example is just showing the usage of "Targets_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

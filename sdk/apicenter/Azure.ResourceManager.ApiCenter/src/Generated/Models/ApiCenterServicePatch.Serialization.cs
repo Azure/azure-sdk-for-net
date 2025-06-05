@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
@@ -35,23 +34,14 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 throw new FormatException($"The model {nameof(ApiCenterServicePatch)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Identity))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(Tags))
-            {
-                writer.WritePropertyName("tags"u8);
-                writer.WriteStartObject();
-                foreach (var item in Tags)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
-            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,34 +79,30 @@ namespace Azure.ResourceManager.ApiCenter.Models
             {
                 return null;
             }
-            ManagedServiceIdentity identity = default;
-            IDictionary<string, string> tags = default;
+            ApiCenterProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("identity"u8))
+                if (property.NameEquals("properties"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ApiCenterProvisioningState(property0.Value.GetString());
+                            continue;
+                        }
                     }
-                    tags = dictionary;
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +111,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ApiCenterServicePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new ApiCenterServicePatch(provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiCenterServicePatch>.Write(ModelReaderWriterOptions options)
@@ -135,7 +121,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApiCenterServicePatch)} does not support writing '{options.Format}' format.");
             }

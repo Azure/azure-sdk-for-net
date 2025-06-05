@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -73,11 +73,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="data"> resource config request. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<BackupResourceVaultConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BackupResourceVaultConfigResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(data, nameof(data));
@@ -86,8 +85,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             scope.Start();
             try
             {
-                var response = await _backupResourceVaultConfigRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
-                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, xMsAuthorizationAuxiliary);
+                var response = await _backupResourceVaultConfigRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken).ConfigureAwait(false);
+                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -125,11 +124,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="data"> resource config request. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="vaultName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<BackupResourceVaultConfigResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BackupResourceVaultConfigResource> CreateOrUpdate(WaitUntil waitUntil, string vaultName, BackupResourceVaultConfigData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
             Argument.AssertNotNull(data, nameof(data));
@@ -138,8 +136,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             scope.Start();
             try
             {
-                var response = _backupResourceVaultConfigRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, xMsAuthorizationAuxiliary, cancellationToken);
-                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, xMsAuthorizationAuxiliary);
+                var response = _backupResourceVaultConfigRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data, cancellationToken);
+                var uri = _backupResourceVaultConfigRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, vaultName, data);
                 var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
                 var operation = new RecoveryServicesBackupArmOperation<BackupResourceVaultConfigResource>(Response.FromValue(new BackupResourceVaultConfigResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
@@ -166,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -211,7 +209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -256,7 +254,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -299,7 +297,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -342,7 +340,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -387,7 +385,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

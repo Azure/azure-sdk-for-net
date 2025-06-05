@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareAccountResource : IJsonModel<DataShareAccountData>
     {
-        private static DataShareAccountData s_dataDeserializationInstance;
-        private static DataShareAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataShareAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataShareAccountData>)Data).Write(writer, options);
 
-        DataShareAccountData IJsonModel<DataShareAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        DataShareAccountData IJsonModel<DataShareAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataShareAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataShareAccountData>(Data, options, AzureResourceManagerDataShareContext.Default);
+        BinaryData IPersistableModel<DataShareAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataShareAccountData IPersistableModel<DataShareAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareAccountData>(data, options, AzureResourceManagerDataShareContext.Default);
+        DataShareAccountData IPersistableModel<DataShareAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareAccountData>(data, options);
 
-        string IPersistableModel<DataShareAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataShareAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareAccountData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowTriggerResource : IJsonModel<LogicWorkflowTriggerData>
     {
-        private static LogicWorkflowTriggerData s_dataDeserializationInstance;
-        private static LogicWorkflowTriggerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LogicWorkflowTriggerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowTriggerData>)Data).Write(writer, options);
 
-        LogicWorkflowTriggerData IJsonModel<LogicWorkflowTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowTriggerData>)DataDeserializationInstance).Create(ref reader, options);
+        LogicWorkflowTriggerData IJsonModel<LogicWorkflowTriggerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowTriggerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicWorkflowTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicWorkflowTriggerData>(Data, options, AzureResourceManagerLogicContext.Default);
+        BinaryData IPersistableModel<LogicWorkflowTriggerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LogicWorkflowTriggerData IPersistableModel<LogicWorkflowTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowTriggerData>(data, options, AzureResourceManagerLogicContext.Default);
+        LogicWorkflowTriggerData IPersistableModel<LogicWorkflowTriggerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowTriggerData>(data, options);
 
-        string IPersistableModel<LogicWorkflowTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowTriggerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LogicWorkflowTriggerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowTriggerData>)Data).GetFormatFromOptions(options);
     }
 }

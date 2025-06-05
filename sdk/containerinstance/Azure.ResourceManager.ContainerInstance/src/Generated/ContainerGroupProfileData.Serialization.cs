@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.ContainerInstance
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerGroupProfileData)} does not support writing '{options.Format}' format.");
             }

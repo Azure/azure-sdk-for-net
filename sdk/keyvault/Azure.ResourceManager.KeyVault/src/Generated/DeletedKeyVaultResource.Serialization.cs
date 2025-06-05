@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class DeletedKeyVaultResource : IJsonModel<DeletedKeyVaultData>
     {
-        private static DeletedKeyVaultData s_dataDeserializationInstance;
-        private static DeletedKeyVaultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DeletedKeyVaultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedKeyVaultData>)Data).Write(writer, options);
 
-        DeletedKeyVaultData IJsonModel<DeletedKeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedKeyVaultData>)DataDeserializationInstance).Create(ref reader, options);
+        DeletedKeyVaultData IJsonModel<DeletedKeyVaultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedKeyVaultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeletedKeyVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedKeyVaultData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
+        BinaryData IPersistableModel<DeletedKeyVaultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeletedKeyVaultData IPersistableModel<DeletedKeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedKeyVaultData>(data, options, AzureResourceManagerKeyVaultContext.Default);
+        DeletedKeyVaultData IPersistableModel<DeletedKeyVaultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedKeyVaultData>(data, options);
 
-        string IPersistableModel<DeletedKeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedKeyVaultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DeletedKeyVaultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedKeyVaultData>)Data).GetFormatFromOptions(options);
     }
 }

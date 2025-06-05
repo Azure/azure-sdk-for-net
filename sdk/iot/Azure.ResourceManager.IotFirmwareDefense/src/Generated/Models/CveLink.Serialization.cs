@@ -36,13 +36,27 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
             if (Optional.IsDefined(Href))
             {
-                writer.WritePropertyName("href"u8);
-                writer.WriteStringValue(Href.AbsoluteUri);
+                if (Href != null)
+                {
+                    writer.WritePropertyName("href"u8);
+                    writer.WriteStringValue(Href.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("href");
+                }
             }
             if (Optional.IsDefined(Label))
             {
-                writer.WritePropertyName("label"u8);
-                writer.WriteStringValue(Label);
+                if (Label != null)
+                {
+                    writer.WritePropertyName("label"u8);
+                    writer.WriteStringValue(Label);
+                }
+                else
+                {
+                    writer.WriteNull("label");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -91,6 +105,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        href = null;
                         continue;
                     }
                     href = new Uri(property.Value.GetString());
@@ -98,6 +113,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (property.NameEquals("label"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        label = null;
+                        continue;
+                    }
                     label = property.Value.GetString();
                     continue;
                 }
@@ -117,7 +137,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CveLink)} does not support writing '{options.Format}' format.");
             }

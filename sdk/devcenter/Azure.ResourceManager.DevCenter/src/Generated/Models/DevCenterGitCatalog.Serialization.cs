@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterGitCatalog)} does not support writing '{options.Format}' format.");
             }

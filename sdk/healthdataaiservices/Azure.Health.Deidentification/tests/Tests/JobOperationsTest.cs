@@ -5,8 +5,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
+using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Tests
@@ -36,17 +41,17 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                OperationType = DeidentificationOperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
 
             Assert.IsNotNull(job);
-            Assert.AreEqual(jobName, job.JobName);
+            Assert.AreEqual(jobName, job.Name);
             Assert.IsNotNull(job.CreatedAt);
             Assert.IsNotNull(job.LastUpdatedAt);
             Assert.IsNull(job.StartedAt);
-            Assert.AreEqual(OperationStatus.NotStarted, job.Status);
+            Assert.AreEqual(OperationState.NotStarted, job.Status);
             Assert.IsNull(job.Error);
             Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
             Assert.AreEqual(inputPrefix, job.SourceLocation.Prefix);
@@ -67,7 +72,7 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                OperationType = DeidentificationOperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
@@ -78,13 +83,13 @@ namespace Azure.Health.Deidentification.Tests
             int jobsToLookThrough = 10;
             while (await jobs.MoveNextAsync())
             {
-                if (jobs.Current.JobName == jobName)
+                if (jobs.Current.Name == jobName)
                 {
                     jobFound = true;
                     Assert.IsNotNull(jobs.Current.CreatedAt);
                     Assert.IsNotNull(jobs.Current.LastUpdatedAt);
                     Assert.IsNull(jobs.Current.StartedAt);
-                    Assert.AreEqual(OperationStatus.NotStarted, jobs.Current.Status);
+                    Assert.AreEqual(OperationState.NotStarted, jobs.Current.Status);
                     Assert.IsNull(jobs.Current.Error);
                     Assert.AreEqual("en-US", job.Customizations.SurrogateLocale);
                     Assert.IsNull(jobs.Current.Summary);
@@ -116,18 +121,18 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                OperationType = DeidentificationOperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
             job.TargetLocation.Overwrite = true;
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job)).Value;
             job = await client.GetJobAsync(jobName);
 
-            Assert.AreEqual(OperationStatus.Succeeded, job.Status);
+            Assert.AreEqual(OperationState.Succeeded, job.Status);
             Assert.IsNotNull(job.StartedAt);
             Assert.IsNotNull(job.Summary);
-            Assert.AreEqual(expectedReportCount, job.Summary.TotalCount);
-            Assert.AreEqual(expectedReportCount, job.Summary.SuccessfulCount);
+            Assert.AreEqual(expectedReportCount, job.Summary.Total);
+            Assert.AreEqual(expectedReportCount, job.Summary.Successful);
 
             // Check file reports, using maxpagesize parameter to test pagination.
             var reportIds = new List<string>();
@@ -150,12 +155,12 @@ namespace Azure.Health.Deidentification.Tests
                         Assert.Fail("Duplicate report ID found.");
                     }
                     reportIds.Add(report.Id);
-                    Assert.IsTrue(report.InputLocation.Location.ToString().Contains(inputPrefix),
-                                  $"Input location {report.InputLocation.Location.ToString()} does not contain input prefix.");
-                    Assert.IsTrue(report.OutputLocation.Location.ToString().Contains(OUTPUT_FOLDER));
-                    Assert.IsNotNull(report.InputLocation.Etag);
-                    Assert.AreEqual(OperationStatus.Succeeded, report.Status);
-                    Assert.IsNotNull(report.OutputLocation.Etag);
+                    Assert.IsTrue(report.Input.Location.ToString().Contains(inputPrefix),
+                                  $"Input location {report.Input.Location.ToString()} does not contain input prefix.");
+                    Assert.IsTrue(report.Output.Location.ToString().Contains(OUTPUT_FOLDER));
+                    Assert.IsNotNull(report.Input.Etag);
+                    Assert.AreEqual(OperationState.Succeeded, report.Status);
+                    Assert.IsNotNull(report.Output.Etag);
                     Assert.IsTrue(report.Id.Length == 36); // Is Guid.
                 }
             }
@@ -175,7 +180,7 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(TestEnvironment.GetStorageAccountLocation()), OUTPUT_FOLDER),
-                OperationType = DeidentificationOperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             job = (await client.DeidentifyDocumentsAsync(WaitUntil.Started, jobName, job)).Value;
@@ -188,13 +193,13 @@ namespace Azure.Health.Deidentification.Tests
                     await Task.Delay(1000);
                 }
             }
-            while (job.Status == OperationStatus.NotStarted);
+            while (job.Status == OperationState.NotStarted);
 
             string errorMessage = job.Error is not null ? job.Error.Message : "No Error Message Available.";
-            Assert.AreEqual(OperationStatus.Running, job.Status, $"Job should be running. Error: {errorMessage}");
+            Assert.AreEqual(OperationState.Running, job.Status, $"Job should be running. Error: {errorMessage}");
 
             job = await client.CancelJobAsync(jobName);
-            Assert.AreEqual(OperationStatus.Canceled, job.Status);
+            Assert.AreEqual(OperationState.Canceled, job.Status);
 
             await client.DeleteJobAsync(jobName);
 
@@ -215,14 +220,14 @@ namespace Azure.Health.Deidentification.Tests
             {
                 SourceLocation = new SourceStorageLocation(new Uri(disfunctionalStorageUri), inputPrefix),
                 TargetLocation = new TargetStorageLocation(new Uri(disfunctionalStorageUri), OUTPUT_FOLDER),
-                OperationType = DeidentificationOperationType.Surrogate
+                Operation = DeidentificationOperationType.Surrogate
             };
 
             Type expectedExceptionType = Mode == RecordedTestMode.Playback ? typeof(InvalidOperationException) : typeof(RequestFailedException);
             Assert.ThrowsAsync(expectedExceptionType, async () => await client.DeidentifyDocumentsAsync(WaitUntil.Completed, jobName, job));
             job = await client.GetJobAsync(jobName);
 
-            Assert.AreEqual(OperationStatus.Failed, job.Status);
+            Assert.AreEqual(OperationState.Failed, job.Status);
             Assert.IsNotNull(job.Error);
             Assert.AreEqual("StorageAccessDenied", job.Error.Code);
             Assert.IsTrue(job.Error.Message.Length > 10); // Arbitrary length choice.

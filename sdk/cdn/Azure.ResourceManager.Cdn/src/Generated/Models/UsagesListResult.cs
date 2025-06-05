@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The list usages operation response.
-    /// Serialized Name: UsagesListResult
-    /// </summary>
+    /// <summary> The list usages operation response. </summary>
     internal partial class UsagesListResult
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UsagesListResult"/>. </summary>
-        /// <param name="value">
-        /// The list of resource usages.
-        /// Serialized Name: UsagesListResult.value
-        /// </param>
-        /// <param name="nextLink">
-        /// URL to get the next set of results.
-        /// Serialized Name: UsagesListResult.nextLink
-        /// </param>
+        /// <param name="value"> The list of resource usages. </param>
+        /// <param name="nextLink"> URL to get the next set of results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UsagesListResult(IReadOnlyList<FrontDoorUsage> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The list of resource usages.
-        /// Serialized Name: UsagesListResult.value
-        /// </summary>
+        /// <summary> The list of resource usages. </summary>
         public IReadOnlyList<FrontDoorUsage> Value { get; }
-        /// <summary>
-        /// URL to get the next set of results.
-        /// Serialized Name: UsagesListResult.nextLink
-        /// </summary>
+        /// <summary> URL to get the next set of results. </summary>
         public string NextLink { get; }
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceKeyResource IOperationSource<ManagedInstanceKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<ManagedInstanceKeyData>(response.Content);
             return new ManagedInstanceKeyResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceKeyResource> IOperationSource<ManagedInstanceKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<ManagedInstanceKeyData>(response.Content);
             return await Task.FromResult(new ManagedInstanceKeyResource(_client, data)).ConfigureAwait(false);
         }
     }

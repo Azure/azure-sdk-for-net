@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Purview
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support writing '{options.Format}' format.");
             }

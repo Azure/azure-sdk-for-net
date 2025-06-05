@@ -244,7 +244,7 @@ namespace Azure.AI.Language.Conversations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(QuestionAnswersConfig)} does not support writing '{options.Format}' format.");
             }

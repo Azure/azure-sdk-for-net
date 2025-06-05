@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsThePolicy()
+        public async Task Get_PolicyGet()
         {
-            // Generated from example definition: 2024-09-01/Policy_Get.json
-            // this example is just showing the usage of "PolicyModel_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Get.json
+            // this example is just showing the usage of "Policy_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeletesThePolicy()
+        public async Task Delete_PolicyDelete()
         {
-            // Generated from example definition: 2024-09-01/Policy_Delete.json
-            // this example is just showing the usage of "PolicyModel_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Delete.json
+            // this example is just showing the usage of "Policy_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -76,10 +76,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PutsThePolicy()
+        public async Task Update_PolicyCreate()
         {
-            // Generated from example definition: 2024-09-01/Policy_Create.json
-            // this example is just showing the usage of "PolicyModel_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Create.json
+            // this example is just showing the usage of "Policy_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,10 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationPolicyResource dataReplicationPolicy = client.GetDataReplicationPolicyResource(dataReplicationPolicyResourceId);
 
             // invoke the operation
-            DataReplicationPolicyData data = new DataReplicationPolicyData
-            {
-                Properties = new DataReplicationPolicyProperties(default),
-            };
+            DataReplicationPolicyData data = new DataReplicationPolicyData(new DataReplicationPolicyProperties(new GeneralPolicyModelCustomProperties()));
             ArmOperation<DataReplicationPolicyResource> lro = await dataReplicationPolicy.UpdateAsync(WaitUntil.Completed, data);
             DataReplicationPolicyResource result = lro.Value;
 

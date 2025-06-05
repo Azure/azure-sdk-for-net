@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         PublicIPPrefixResource IOperationSource<PublicIPPrefixResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicIPPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<PublicIPPrefixData>(response.Content);
             return new PublicIPPrefixResource(_client, data);
         }
 
         async ValueTask<PublicIPPrefixResource> IOperationSource<PublicIPPrefixResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublicIPPrefixData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<PublicIPPrefixData>(response.Content);
             return await Task.FromResult(new PublicIPPrefixResource(_client, data)).ConfigureAwait(false);
         }
     }

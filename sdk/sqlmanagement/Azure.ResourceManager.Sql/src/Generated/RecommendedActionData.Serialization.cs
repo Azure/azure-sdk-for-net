@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Sql
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ActionDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartObject();
-                foreach (var item in ActionDetails)
+                foreach (var item in Details)
                 {
                     writer.WritePropertyName(item.Key);
                     if (item.Value == null)
@@ -1082,7 +1082,7 @@ namespace Azure.ResourceManager.Sql
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionDetails), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Details), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    details: ");
@@ -1090,13 +1090,13 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsCollectionDefined(ActionDetails))
+                if (Optional.IsCollectionDefined(Details))
                 {
-                    if (ActionDetails.Any())
+                    if (Details.Any())
                     {
                         builder.Append("    details: ");
                         builder.AppendLine("{");
-                        foreach (var item in ActionDetails)
+                        foreach (var item in Details)
                         {
                             builder.Append($"        '{item.Key}': ");
                             if (item.Value == null)
@@ -1123,7 +1123,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         PublishingUserResource IOperationSource<PublishingUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublishingUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<PublishingUserData>(response.Content);
             return new PublishingUserResource(_client, data);
         }
 
         async ValueTask<PublishingUserResource> IOperationSource<PublishingUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PublishingUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<PublishingUserData>(response.Content);
             return await Task.FromResult(new PublishingUserResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Consumption
 {
     public partial class ConsumptionBudgetResource : IJsonModel<ConsumptionBudgetData>
     {
-        private static ConsumptionBudgetData s_dataDeserializationInstance;
-        private static ConsumptionBudgetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ConsumptionBudgetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConsumptionBudgetData>)Data).Write(writer, options);
 
-        ConsumptionBudgetData IJsonModel<ConsumptionBudgetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConsumptionBudgetData>)DataDeserializationInstance).Create(ref reader, options);
+        ConsumptionBudgetData IJsonModel<ConsumptionBudgetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConsumptionBudgetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConsumptionBudgetData>(Data, options, AzureResourceManagerConsumptionContext.Default);
+        BinaryData IPersistableModel<ConsumptionBudgetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ConsumptionBudgetData IPersistableModel<ConsumptionBudgetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConsumptionBudgetData>(data, options, AzureResourceManagerConsumptionContext.Default);
+        ConsumptionBudgetData IPersistableModel<ConsumptionBudgetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConsumptionBudgetData>(data, options);
 
-        string IPersistableModel<ConsumptionBudgetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConsumptionBudgetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ConsumptionBudgetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConsumptionBudgetData>)Data).GetFormatFromOptions(options);
     }
 }

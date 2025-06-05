@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.PlaywrightTesting
 {
-    public partial class AzureResourceManagerPlaywrightTestingContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerPlaywrightTestingContext() { }
-        public static Azure.ResourceManager.PlaywrightTesting.AzureResourceManagerPlaywrightTestingContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class PlaywrightTestingAccountCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.PlaywrightTesting.PlaywrightTestingAccountResource>, System.Collections.IEnumerable
     {
         protected PlaywrightTestingAccountCollection() { }

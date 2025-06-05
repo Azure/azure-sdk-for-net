@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class CognitiveServicesCommitmentPlanResource : IJsonModel<CommitmentPlanData>
     {
-        private static CommitmentPlanData s_dataDeserializationInstance;
-        private static CommitmentPlanData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CommitmentPlanData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanData>)Data).Write(writer, options);
 
-        CommitmentPlanData IJsonModel<CommitmentPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanData>)DataDeserializationInstance).Create(ref reader, options);
+        CommitmentPlanData IJsonModel<CommitmentPlanData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommitmentPlanData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CommitmentPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommitmentPlanData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        BinaryData IPersistableModel<CommitmentPlanData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CommitmentPlanData IPersistableModel<CommitmentPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        CommitmentPlanData IPersistableModel<CommitmentPlanData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommitmentPlanData>(data, options);
 
-        string IPersistableModel<CommitmentPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommitmentPlanData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CommitmentPlanData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommitmentPlanData>)Data).GetFormatFromOptions(options);
     }
 }

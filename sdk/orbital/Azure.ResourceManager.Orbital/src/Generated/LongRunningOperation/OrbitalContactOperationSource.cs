@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Orbital
 
         OrbitalContactResource IOperationSource<OrbitalContactResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OrbitalContactData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
+            var data = ModelReaderWriter.Read<OrbitalContactData>(response.Content);
             return new OrbitalContactResource(_client, data);
         }
 
         async ValueTask<OrbitalContactResource> IOperationSource<OrbitalContactResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OrbitalContactData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOrbitalContext.Default);
+            var data = ModelReaderWriter.Read<OrbitalContactData>(response.Content);
             return await Task.FromResult(new OrbitalContactResource(_client, data)).ConfigureAwait(false);
         }
     }

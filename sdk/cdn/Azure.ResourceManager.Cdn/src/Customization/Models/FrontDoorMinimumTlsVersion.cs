@@ -16,10 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
         Tls1_0,
         /// <summary> TLS 1.2. </summary>
         [CodeGenMember("TLS12")]
-        Tls1_2,
-        /// <summary> TLS 1.3. </summary>
-        [CodeGenMember("TLS13")]
-        Tls1_3
+        Tls1_2
 #pragma warning restore CA1707
     }
 }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBSqlClientEncryptionKeyResource IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            var data = ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(response.Content);
             return new CosmosDBSqlClientEncryptionKeyResource(_client, data);
         }
 
         async ValueTask<CosmosDBSqlClientEncryptionKeyResource> IOperationSource<CosmosDBSqlClientEncryptionKeyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            var data = ModelReaderWriter.Read<CosmosDBSqlClientEncryptionKeyData>(response.Content);
             return await Task.FromResult(new CosmosDBSqlClientEncryptionKeyResource(_client, data)).ConfigureAwait(false);
         }
     }

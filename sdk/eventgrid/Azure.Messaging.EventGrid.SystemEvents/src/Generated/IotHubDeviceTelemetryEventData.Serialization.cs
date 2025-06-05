@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(IotHubDeviceTelemetryEventDataConverter))]
     public partial class IotHubDeviceTelemetryEventData : IUtf8JsonSerializable, IJsonModel<IotHubDeviceTelemetryEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubDeviceTelemetryEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -59,7 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            object body = default;
+            IReadOnlyDictionary<string, BinaryData> body = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -68,7 +66,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("body"u8))
                 {
-                    body = property.Value.GetObject();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    body = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -107,7 +117,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(IotHubDeviceTelemetryEventData)} does not support writing '{options.Format}' format.");
             }
@@ -145,20 +155,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class IotHubDeviceTelemetryEventDataConverter : JsonConverter<IotHubDeviceTelemetryEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, IotHubDeviceTelemetryEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override IotHubDeviceTelemetryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeIotHubDeviceTelemetryEventData(document.RootElement);
-            }
         }
     }
 }

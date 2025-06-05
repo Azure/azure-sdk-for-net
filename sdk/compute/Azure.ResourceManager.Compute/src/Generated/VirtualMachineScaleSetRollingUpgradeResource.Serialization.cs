@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class VirtualMachineScaleSetRollingUpgradeResource : IJsonModel<VirtualMachineScaleSetRollingUpgradeData>
     {
-        private static VirtualMachineScaleSetRollingUpgradeData s_dataDeserializationInstance;
-        private static VirtualMachineScaleSetRollingUpgradeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VirtualMachineScaleSetRollingUpgradeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetRollingUpgradeData>)Data).Write(writer, options);
 
-        VirtualMachineScaleSetRollingUpgradeData IJsonModel<VirtualMachineScaleSetRollingUpgradeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetRollingUpgradeData>)DataDeserializationInstance).Create(ref reader, options);
+        VirtualMachineScaleSetRollingUpgradeData IJsonModel<VirtualMachineScaleSetRollingUpgradeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualMachineScaleSetRollingUpgradeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualMachineScaleSetRollingUpgradeData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VirtualMachineScaleSetRollingUpgradeData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetRollingUpgradeData>(data, options, AzureResourceManagerComputeContext.Default);
+        VirtualMachineScaleSetRollingUpgradeData IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualMachineScaleSetRollingUpgradeData>(data, options);
 
-        string IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -39,15 +39,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (Optional.IsDefined(Operator))
+            if (Optional.IsDefined(LabelOperator))
             {
                 writer.WritePropertyName("labelOperator"u8);
-                writer.WriteStringValue(Operator.Value.ToString());
+                writer.WriteStringValue(LabelOperator.Value.ToString());
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue<object>(LabelValue, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(LabelValue);
+#else
+            using (JsonDocument document = JsonDocument.Parse(LabelValue, ModelSerializationExtensions.JsonDocumentOptions))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             writer.WritePropertyName("ttlSeconds"u8);
-            writer.WriteNumberValue(TtlSeconds.Value);
+            writer.WriteNumberValue(TimeToLive);
             if (Optional.IsDefined(SelectorState))
             {
                 writer.WritePropertyName("state"u8);
@@ -97,8 +104,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string key = default;
             AcsRouterLabelOperator? labelOperator = default;
-            object value = default;
-            double? ttlSeconds = default;
+            BinaryData value = default;
+            double ttlSeconds = default;
             AcsRouterWorkerSelectorState? state = default;
             DateTimeOffset? expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -121,7 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = property.Value.GetObject();
+                    value = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("ttlSeconds"u8))
@@ -170,7 +177,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterWorkerSelector)} does not support writing '{options.Format}' format.");
             }

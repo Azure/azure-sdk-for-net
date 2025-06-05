@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Cdn
 
         ProfileResource IOperationSource<ProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            var data = ModelReaderWriter.Read<ProfileData>(response.Content);
             return new ProfileResource(_client, data);
         }
 
         async ValueTask<ProfileResource> IOperationSource<ProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            var data = ModelReaderWriter.Read<ProfileData>(response.Content);
             return await Task.FromResult(new ProfileResource(_client, data)).ConfigureAwait(false);
         }
     }

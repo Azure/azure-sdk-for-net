@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkSegmentResource IOperationSource<WorkloadNetworkSegmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(response.Content);
             return new WorkloadNetworkSegmentResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkSegmentResource> IOperationSource<WorkloadNetworkSegmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkSegmentData>(response.Content);
             return await Task.FromResult(new WorkloadNetworkSegmentResource(_client, data)).ConfigureAwait(false);
         }
     }

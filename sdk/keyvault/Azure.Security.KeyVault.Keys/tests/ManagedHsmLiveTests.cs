@@ -8,12 +8,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
-using NUnit.Framework.Internal.Commands;
 
 namespace Azure.Security.KeyVault.Keys.Tests
 {
     [ClientTestFixture(
-        KeyClientOptions.ServiceVersion.V7_6_Preview_2,
         KeyClientOptions.ServiceVersion.V7_5,
         KeyClientOptions.ServiceVersion.V7_4,
         KeyClientOptions.ServiceVersion.V7_3,
@@ -119,39 +117,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
             JsonElement keyElement = doc.RootElement.GetProperty("key").GetProperty("key");
             Assert.AreEqual(key.Id, keyElement.GetProperty("kid").GetString());
             Assert.AreEqual(JsonValueKind.String, keyElement.GetProperty("key_hsm").ValueKind);
-        }
-
-        [RecordedTest]
-        public async Task GetKeyAttestationWithHSM()
-        {
-            string keyName = Recording.GenerateId();
-            CreateOctKeyOptions options = new CreateOctKeyOptions(keyName, hardwareProtected: true);
-            KeyVaultKey key = await Client.CreateOctKeyAsync(options);
-            RegisterForCleanup(key.Name);
-
-            // Attestation details shouldn't be included unless requested
-            Assert.IsNull(key.Properties.Attestation);
-
-            KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName);
-            AssertKeyVaultKeysEqual(key, keyWithAttestation);
-        }
-
-        [RecordedTest]
-        public void GetKeyAttestationNonExisting()
-        {
-            Assert.ThrowsAsync<RequestFailedException>(() => Client.GetKeyAttestationAsync(Recording.GenerateId()));
-        }
-
-        [RecordedTest]
-        public async Task GetKeyAttestationWithVersion()
-        {
-            string keyName = Recording.GenerateId();
-            KeyVaultKey key = await Client.CreateKeyAsync(keyName, KeyType.Ec);
-            RegisterForCleanup(key.Name);
-
-            KeyVaultKey keyWithAttestation = await Client.GetKeyAttestationAsync(keyName, key.Properties.Version);
-
-            AssertKeyVaultKeysEqual(key, keyWithAttestation);
         }
     }
 }

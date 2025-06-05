@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(CreationTimeInUtc))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageActions.Models
                     {
                         continue;
                     }
-                    provisioningState = new StorageTaskProvisioningState(property.Value.GetString());
+                    provisioningState = property.Value.GetString().ToStorageTaskProvisioningState();
                     continue;
                 }
                 if (property.NameEquals("creationTimeInUtc"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageActionsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskProperties)} does not support writing '{options.Format}' format.");
             }

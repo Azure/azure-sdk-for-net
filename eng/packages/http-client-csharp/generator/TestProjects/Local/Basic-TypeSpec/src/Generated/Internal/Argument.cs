@@ -13,8 +13,6 @@ namespace BasicTypeSpec
 {
     internal static partial class Argument
     {
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T value, string name)
         {
             if (value is null)
@@ -23,10 +21,8 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertNotNull<T>(T? value, string name)
-            where T : struct
+            where T : struct 
         {
             if (!value.HasValue)
             {
@@ -34,8 +30,6 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty<T>(IEnumerable<T> value, string name)
         {
             if (value is null)
@@ -57,8 +51,6 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrEmpty(string value, string name)
         {
             if (value is null)
@@ -71,8 +63,6 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertNotNullOrWhiteSpace(string value, string name)
         {
             if (value is null)
@@ -85,10 +75,8 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertNotDefault<T>(ref T value, string name)
-            where T : struct, IEquatable<T>
+            where T : struct, IEquatable<T> 
         {
             if (value.Equals(default))
             {
@@ -96,12 +84,8 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="minimum"> The minimum value. </param>
-        /// <param name="maximum"> The maximum value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertInRange<T>(T value, T minimum, T maximum, string name)
-            where T : notnull, IComparable<T>
+            where T : notnull, IComparable<T> 
         {
             if (minimum.CompareTo(value) > 0)
             {
@@ -113,9 +97,6 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="enumType"> The enum value. </param>
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static void AssertEnumDefined(Type enumType, object value, string name)
         {
             if (!Enum.IsDefined(enumType, value))
@@ -124,26 +105,19 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static T CheckNotNull<T>(T value, string name)
-            where T : class
+            where T : class 
         {
             AssertNotNull(value, name);
             return value;
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
         public static string CheckNotNullOrEmpty(string value, string name)
         {
             AssertNotNullOrEmpty(value, name);
             return value;
         }
 
-        /// <param name="value"> The value. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="message"> The message. </param>
         public static void AssertNull<T>(T value, string name, string message = null)
         {
             if (value != null)

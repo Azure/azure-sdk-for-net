@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Kind))
-            {
-                writer.WritePropertyName("kind"u8);
-                writer.WriteStringValue(Kind.Value.ToString());
-            }
             writer.WritePropertyName("sku"u8);
             writer.WriteObjectValue(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
@@ -136,7 +131,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             {
                 return null;
             }
-            RedisEnterpriseKind? kind = default;
             RedisEnterpriseSku sku = default;
             IList<string> zones = default;
             ManagedServiceIdentity identity = default;
@@ -159,15 +153,6 @@ namespace Azure.ResourceManager.RedisEnterprise
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("kind"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    kind = new RedisEnterpriseKind(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("sku"u8))
                 {
                     sku = RedisEnterpriseSku.DeserializeRedisEnterpriseSku(property.Value, options);
@@ -342,7 +327,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                kind,
                 sku,
                 zones ?? new ChangeTrackingList<string>(),
                 identity,
@@ -438,21 +422,6 @@ namespace Azure.ResourceManager.RedisEnterprise
                         }
                         builder.AppendLine("  }");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  kind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Kind))
-                {
-                    builder.Append("  kind: ");
-                    builder.AppendLine($"'{Kind.Value.ToString()}'");
                 }
             }
 
@@ -730,7 +699,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRedisEnterpriseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

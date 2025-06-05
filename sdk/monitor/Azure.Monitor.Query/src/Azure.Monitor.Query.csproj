@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
     <PackageReference Include="Azure.Core" />
   </ItemGroup>
 

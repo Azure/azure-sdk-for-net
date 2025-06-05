@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The JSON object that represents the range for http status codes
-    /// Serialized Name: HttpErrorRangeParameters
-    /// </summary>
+    /// <summary> The JSON object that represents the range for http status codes. </summary>
     public partial class HttpErrorRange
     {
         /// <summary>
@@ -54,14 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="HttpErrorRange"/>. </summary>
-        /// <param name="begin">
-        /// The inclusive start of the http status code range.
-        /// Serialized Name: HttpErrorRangeParameters.begin
-        /// </param>
-        /// <param name="end">
-        /// The inclusive end of the http status code range.
-        /// Serialized Name: HttpErrorRangeParameters.end
-        /// </param>
+        /// <param name="begin"> The inclusive start of the http status code range. </param>
+        /// <param name="end"> The inclusive end of the http status code range. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal HttpErrorRange(int? begin, int? end, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,15 +61,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The inclusive start of the http status code range.
-        /// Serialized Name: HttpErrorRangeParameters.begin
-        /// </summary>
+        /// <summary> The inclusive start of the http status code range. </summary>
         public int? Begin { get; set; }
-        /// <summary>
-        /// The inclusive end of the http status code range.
-        /// Serialized Name: HttpErrorRangeParameters.end
-        /// </summary>
+        /// <summary> The inclusive end of the http status code range. </summary>
         public int? End { get; set; }
     }
 }

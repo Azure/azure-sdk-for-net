@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CustomerInsights
 
         RelationshipResourceFormatResource IOperationSource<RelationshipResourceFormatResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RelationshipResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
+            var data = ModelReaderWriter.Read<RelationshipResourceFormatData>(response.Content);
             return new RelationshipResourceFormatResource(_client, data);
         }
 
         async ValueTask<RelationshipResourceFormatResource> IOperationSource<RelationshipResourceFormatResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<RelationshipResourceFormatData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCustomerInsightsContext.Default);
+            var data = ModelReaderWriter.Read<RelationshipResourceFormatData>(response.Content);
             return await Task.FromResult(new RelationshipResourceFormatResource(_client, data)).ConfigureAwait(false);
         }
     }

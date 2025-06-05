@@ -7,17 +7,20 @@
 
 using System;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppPlatform;
 using Azure.ResourceManager.AppPlatform.Models;
-using NUnit.Framework;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformDeploymentResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Get
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_DeploymentsGet()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Get.json
@@ -48,8 +51,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Get_CustomContainer
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_DeploymentsGetCustomContainer()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Get_CustomContainer.json
@@ -80,8 +84,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Delete
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_DeploymentsDelete()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Delete.json
@@ -105,11 +110,12 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // invoke the operation
             await appPlatformDeployment.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Update
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_DeploymentsUpdate()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Update.json
@@ -131,11 +137,11 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            AppPlatformDeploymentData data = new AppPlatformDeploymentData
+            AppPlatformDeploymentData data = new AppPlatformDeploymentData()
             {
-                Properties = new AppPlatformDeploymentProperties
+                Properties = new AppPlatformDeploymentProperties()
                 {
-                    Source = new SourceUploadedUserSourceInfo
+                    Source = new SourceUploadedUserSourceInfo()
                     {
                         ArtifactSelector = "sub-module-1",
                         RelativePath = "resources/a172cedcae47474b615c54d510a5d84a8dea3032e958587430b413538be3f333-2019082605-e3095339-1723-44b7-8b5e-31b1003978bc",
@@ -153,8 +159,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Update_CustomContainer
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_DeploymentsUpdateCustomContainer()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Update_CustomContainer.json
@@ -176,19 +183,25 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            AppPlatformDeploymentData data = new AppPlatformDeploymentData
+            AppPlatformDeploymentData data = new AppPlatformDeploymentData()
             {
-                Properties = new AppPlatformDeploymentProperties
+                Properties = new AppPlatformDeploymentProperties()
                 {
-                    Source = new AppPlatformCustomContainerUserSourceInfo
+                    Source = new AppPlatformCustomContainerUserSourceInfo()
                     {
-                        CustomContainer = new AppPlatformCustomContainer
+                        CustomContainer = new AppPlatformCustomContainer()
                         {
                             Server = "mynewacr.azurecr.io",
                             ContainerImage = "myNewContainerImage:v1",
-                            Command = { "/bin/sh" },
-                            Args = { "-c", "while true; do echo hello; sleep 10;done" },
-                            ImageRegistryCredential = new AppPlatformImageRegistryCredential
+                            Command =
+{
+"/bin/sh"
+},
+                            Args =
+{
+"-c","while true; do echo hello; sleep 10;done"
+},
+                            ImageRegistryCredential = new AppPlatformImageRegistryCredential()
                             {
                                 Username = "myNewUsername",
                                 Password = "<myNewPassword>",
@@ -207,8 +220,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Start
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Start_DeploymentsStart()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Start.json
@@ -232,11 +246,12 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // invoke the operation
             await appPlatformDeployment.StartAsync(WaitUntil.Completed);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Stop
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Stop_DeploymentsStop()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Stop.json
@@ -260,11 +275,12 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // invoke the operation
             await appPlatformDeployment.StopAsync(WaitUntil.Completed);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_Restart
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Restart_DeploymentsRestart()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_Restart.json
@@ -288,11 +304,12 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             // invoke the operation
             await appPlatformDeployment.RestartAsync(WaitUntil.Completed);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_EnableRemoteDebugging
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task EnableRemoteDebugging_DeploymentsEnableRemoteDebugging()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_EnableRemoteDebugging.json
@@ -321,8 +338,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_DisableRemoteDebugging
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task DisableRemoteDebugging_DeploymentsDisableRemoteDebugging()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_DisableRemoteDebugging.json
@@ -350,8 +368,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_GetRemoteDebuggingConfig
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetRemoteDebuggingConfig_DeploymentsGetRemoteDebuggingConfig()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GetRemoteDebuggingConfig.json
@@ -378,12 +397,13 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_GetLogFileUrl
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetLogFileUri_DeploymentsGetLogFileUrl()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GetLogFileUrl.json
-            // this example is just showing the usage of "Deployments_GetLogFileUri" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Deployments_GetLogFileUrl" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -406,8 +426,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_GenerateHeapDump
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GenerateHeapDump_DeploymentsGenerateHeapDump()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GenerateHeapDump.json
@@ -429,18 +450,19 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent
+            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent()
             {
                 AppInstance = "myappinstance",
                 FilePath = "/byos/diagnose",
             };
             await appPlatformDeployment.GenerateHeapDumpAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_GenerateHeapDump
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GenerateThreadDump_DeploymentsGenerateHeapDump()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_GenerateThreadDump.json
@@ -462,22 +484,23 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent
+            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent()
             {
                 AppInstance = "myappinstance",
                 FilePath = "/byos/diagnose",
             };
             await appPlatformDeployment.GenerateThreadDumpAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // Deployments_StartJFR
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task StartJfr_DeploymentsStartJFR()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/Deployments_StartJFR.json
-            // this example is just showing the usage of "Deployments_StartJfr" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Deployments_StartJFR" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -495,7 +518,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformDeploymentResource appPlatformDeployment = client.GetAppPlatformDeploymentResource(appPlatformDeploymentResourceId);
 
             // invoke the operation
-            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent
+            ApplicationDiagnosticContent content = new ApplicationDiagnosticContent()
             {
                 AppInstance = "myappinstance",
                 FilePath = "/byos/diagnose",
@@ -503,7 +526,7 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             };
             await appPlatformDeployment.StartJfrAsync(WaitUntil.Completed, content);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded");
         }
     }
 }

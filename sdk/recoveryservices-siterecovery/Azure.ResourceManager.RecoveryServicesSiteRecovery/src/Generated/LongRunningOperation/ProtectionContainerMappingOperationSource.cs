@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         ProtectionContainerMappingResource IOperationSource<ProtectionContainerMappingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ProtectionContainerMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            var data = ModelReaderWriter.Read<ProtectionContainerMappingData>(response.Content);
             return new ProtectionContainerMappingResource(_client, data);
         }
 
         async ValueTask<ProtectionContainerMappingResource> IOperationSource<ProtectionContainerMappingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ProtectionContainerMappingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            var data = ModelReaderWriter.Read<ProtectionContainerMappingData>(response.Content);
             return await Task.FromResult(new ProtectionContainerMappingResource(_client, data)).ConfigureAwait(false);
         }
     }

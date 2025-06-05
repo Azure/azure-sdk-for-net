@@ -1,0 +1,2281 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-2e72794c025805b4ca8b2d9362902047-97dde185b04a4a82-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "5",
+        "Connection": "keep-alive",
+        "Content-Length": "2538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-l7wd4",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:38.9522404Z",
+                "6a420c81763b04b3",
+                "localhost:9998",
+                "HTTP",
+                "GET /",
+                "http://localhost:9998/",
+                true,
+                "200",
+                3.5791,
+                "<250ms",
+                "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                null,
+                "",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                "",
+                "",
+                "",
+                "TestAuthenticatedUserId",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppDependencies",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "191",
+        "Content-Type": "application/json",
+        "traceparent": "00-a42115b5a33a49bd9b3501424fd4cbb2-e61641504856ab49-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppRequests | where Url == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "5",
+        "Connection": "keep-alive",
+        "Content-Length": "2507",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-dlx87",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Source",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Url",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "OperationLinks",
+                "type": "dynamic"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:38.9545441Z",
+                "698ab381008e2667",
+                "",
+                "GET /",
+                "http://localhost:9998/",
+                true,
+                "200",
+                1.1879,
+                "<250ms",
+                "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                null,
+                "GET /",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                null,
+                "6a420c81763b04b3",
+                "",
+                "",
+                "",
+                "TestAuthenticatedUserId",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppRequests",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "270",
+        "Content-Type": "application/json",
+        "traceparent": "00-d19a9d9d3f9aeb4c8d19721cf56ff244-7700fa9701fbd436-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "4",
+        "Connection": "keep-alive",
+        "Content-Length": "2124",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-68b8f",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "Sum",
+                "type": "real"
+              },
+              {
+                "name": "Min",
+                "type": "real"
+              },
+              {
+                "name": "Max",
+                "type": "real"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:39.0608449Z",
+                "http.client.request.duration",
+                1,
+                0.0033847,
+                0.0033847,
+                0.0033847,
+                "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"server.address\":\"localhost\",\"server.port\":\"9998\",\"url.scheme\":\"http\"}",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                "Azure",
+                "AppMetrics",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "197",
+        "Content-Type": "application/json",
+        "traceparent": "00-ea0ba1ee06fa3add6b1d374b9d6508a7-ad6a0a8e026f9f37-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "2",
+        "Connection": "keep-alive",
+        "Content-Length": "2087",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-25wwf",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "Sum",
+                "type": "real"
+              },
+              {
+                "name": "Min",
+                "type": "real"
+              },
+              {
+                "name": "Max",
+                "type": "real"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:39.0611529Z",
+                "http.server.request.duration",
+                1,
+                0.0011645,
+                0.0011645,
+                0.0011645,
+                "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"http.route\":\"/\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\"}",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                "Azure",
+                "AppMetrics",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "190",
+        "Content-Type": "application/json",
+        "traceparent": "00-786afb536f763ec772a61d5d55eacd36-ac6524acf19eac5e-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppTraces | where Message == 'Message via ILogger' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "2",
+        "Connection": "keep-alive",
+        "Content-Length": "2077",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-6sz7r",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Message",
+                "type": "string"
+              },
+              {
+                "name": "SeverityLevel",
+                "type": "int"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:38.9555907Z",
+                "Message via ILogger",
+                1,
+                "{\"CategoryName\":\"CustomCategoryName\"}",
+                null,
+                "",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                "698ab381008e2667",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppTraces",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e1407f81-4e84-4943-843a-0494dd4700e5/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-7386fd3a21ef6ebf1641655f9917a395-3ea6a5302c9a33ff-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Length": "2538",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-dj7lr",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "e1407f81-4e84-4943-843a-0494dd4700e5",
+                "2025-03-07T01:19:38.9522404Z",
+                "6a420c81763b04b3",
+                "localhost:9998",
+                "HTTP",
+                "GET /",
+                "http://localhost:9998/",
+                true,
+                "200",
+                3.5791,
+                "<250ms",
+                "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                null,
+                "",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                "",
+                "",
+                "",
+                "TestAuthenticatedUserId",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "d64e2b0b-7f11-41ec-b85e-5bd69ee688e2",
+                "3f8e759a-2c28-4cc7-b260-9b343fb2a3ff",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppDependencies",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-2"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "191",
+        "Content-Type": "application/json",
+        "traceparent": "00-3425a6e4019bc345cd9089bac73d8fb4-a7ead4b13b5fd3f9-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppRequests | where Url == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "5",
+        "Connection": "keep-alive",
+        "Content-Length": "2507",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:55 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-d86g7",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Source",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Url",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "OperationLinks",
+                "type": "dynamic"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:38.9545441Z",
+                "698ab381008e2667",
+                "",
+                "GET /",
+                "http://localhost:9998/",
+                true,
+                "200",
+                1.1879,
+                "<250ms",
+                "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                null,
+                "GET /",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                null,
+                "6a420c81763b04b3",
+                "",
+                "",
+                "",
+                "TestAuthenticatedUserId",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppRequests",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "270",
+        "Content-Type": "application/json",
+        "traceparent": "00-eaf36ecaf1f8a85420d1e284734bd727-fcf08a5cdb001207-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppMetrics | where Name == 'http.client.request.duration' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | where Properties.['server.address'] == 'localhost' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "5",
+        "Connection": "keep-alive",
+        "Content-Length": "2124",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:56 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-vm5fx",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "Sum",
+                "type": "real"
+              },
+              {
+                "name": "Min",
+                "type": "real"
+              },
+              {
+                "name": "Max",
+                "type": "real"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:39.0608449Z",
+                "http.client.request.duration",
+                1,
+                0.0033847,
+                0.0033847,
+                0.0033847,
+                "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"server.address\":\"localhost\",\"server.port\":\"9998\",\"url.scheme\":\"http\"}",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                "Azure",
+                "AppMetrics",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "197",
+        "Content-Type": "application/json",
+        "traceparent": "00-1601e39faffad2dda999542efce9b8e8-d5854b2bdaa8cbe4-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppMetrics | where Name == 'http.server.request.duration' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "3",
+        "Connection": "keep-alive",
+        "Content-Length": "2087",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:56 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-74866",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "Sum",
+                "type": "real"
+              },
+              {
+                "name": "Min",
+                "type": "real"
+              },
+              {
+                "name": "Max",
+                "type": "real"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:39.0611529Z",
+                "http.server.request.duration",
+                1,
+                0.0011645,
+                0.0011645,
+                0.0011645,
+                "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"http.route\":\"/\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\"}",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                "Azure",
+                "AppMetrics",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/33d8a320-00c3-4ec8-a6a4-8692b07a6841/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "190",
+        "Content-Type": "application/json",
+        "traceparent": "00-73820aa0b316edbf8f79780426bf994b-716c1bb7809c3f3a-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.2; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppTraces | where Message == 'Message via ILogger' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "3",
+        "Connection": "keep-alive",
+        "Content-Length": "2077",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 07 Mar 2025 01:22:56 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-6cfc5ccf95-zvk82",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Message",
+                "type": "string"
+              },
+              {
+                "name": "SeverityLevel",
+                "type": "int"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": [
+              [
+                "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
+                "2025-03-07T01:19:38.9555907Z",
+                "Message via ILogger",
+                1,
+                "{\"CategoryName\":\"CustomCategoryName\"}",
+                null,
+                "",
+                "8d5e93834e23e29beb875e59f6b6a234",
+                "698ab381008e2667",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "TestServiceVersion",
+                "[TestServiceNamespace]/TestServiceName",
+                "TestServiceInstance",
+                "PC",
+                "Other",
+                "Windows 10",
+                "0.0.0.0",
+                "Quincy",
+                "Washington",
+                "United States",
+                "Other",
+                "a98f261a-124b-425a-931e-8dc00af2e65c",
+                "53e1f7f0-9975-4995-830a-414a26e9450a",
+                "dotnet9.0.2:otel1.11.2:ext1.4.0-beta.2-d",
+                1,
+                "",
+                "",
+                "Azure",
+                "AppTraces",
+                "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "Variables": {
+    "CONNECTION_STRING": "InstrumentationKey=53e1f7f0-9975-4995-830a-414a26e9450a;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=a98f261a-124b-425a-931e-8dc00af2e65c",
+    "LOGS_ENDPOINT": "https://api.loganalytics.io",
+    "RandomSeed": "501135779",
+    "SECONDARY_CONNECTION_STRING": "InstrumentationKey=3f8e759a-2c28-4cc7-b260-9b343fb2a3ff;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=d64e2b0b-7f11-41ec-b85e-5bd69ee688e2",
+    "SECONDARY_WORKSPACE_ID": "e1407f81-4e84-4943-843a-0494dd4700e5",
+    "WORKSPACE_ID": "33d8a320-00c3-4ec8-a6a4-8692b07a6841"
+  }
+}

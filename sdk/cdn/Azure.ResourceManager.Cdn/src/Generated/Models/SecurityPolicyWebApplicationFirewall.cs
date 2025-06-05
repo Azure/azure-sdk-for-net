@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The json object containing security policy waf parameters
-    /// Serialized Name: SecurityPolicyWebApplicationFirewallParameters
-    /// </summary>
+    /// <summary> The json object containing security policy waf parameters. </summary>
     public partial class SecurityPolicyWebApplicationFirewall : SecurityPolicyProperties
     {
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
@@ -26,19 +23,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityPolicyWebApplicationFirewall"/>. </summary>
-        /// <param name="policyType">
-        /// The type of the Security policy to create.
-        /// Serialized Name: SecurityPolicyPropertiesParameters.type
-        /// </param>
+        /// <param name="policyType"> The type of the Security policy to create. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="wafPolicy">
-        /// Resource ID.
-        /// Serialized Name: SecurityPolicyWebApplicationFirewallParameters.wafPolicy
-        /// </param>
-        /// <param name="associations">
-        /// Waf associations
-        /// Serialized Name: SecurityPolicyWebApplicationFirewallParameters.associations
-        /// </param>
+        /// <param name="wafPolicy"> Resource ID. </param>
+        /// <param name="associations"> Waf associations. </param>
         internal SecurityPolicyWebApplicationFirewall(SecurityPolicyType policyType, IDictionary<string, BinaryData> serializedAdditionalRawData, WritableSubResource wafPolicy, IList<SecurityPolicyWebApplicationFirewallAssociation> associations) : base(policyType, serializedAdditionalRawData)
         {
             WafPolicy = wafPolicy;
@@ -46,10 +34,7 @@ namespace Azure.ResourceManager.Cdn.Models
             PolicyType = policyType;
         }
 
-        /// <summary>
-        /// Resource ID.
-        /// Serialized Name: SecurityPolicyWebApplicationFirewallParameters.wafPolicy
-        /// </summary>
+        /// <summary> Resource ID. </summary>
         internal WritableSubResource WafPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier WafPolicyId
@@ -63,10 +48,7 @@ namespace Azure.ResourceManager.Cdn.Models
             }
         }
 
-        /// <summary>
-        /// Waf associations
-        /// Serialized Name: SecurityPolicyWebApplicationFirewallParameters.associations
-        /// </summary>
+        /// <summary> Waf associations. </summary>
         public IList<SecurityPolicyWebApplicationFirewallAssociation> Associations { get; }
     }
 }

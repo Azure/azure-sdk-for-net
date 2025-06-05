@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading;
 
 namespace System.ClientModel.Primitives;
 
@@ -11,77 +14,42 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public class ClientCache
 {
-    private readonly Dictionary<object, ClientEntry> _clients = new();
+    private readonly Dictionary<(Type, string), ClientEntry> _clients = new();
     private readonly ReaderWriterLockSlim _lock = new(LockRecursionPolicy.SupportsRecursion);
 
-    private readonly int _maxSize;
-
-    /// <summary>
-    /// Initializes the ClientCache with a configurable cache size.
-    /// </summary>
-    /// <param name="maxSize">The maximum number of clients to store in the cache.</param>
-    public ClientCache(int maxSize)
-    {
-        _maxSize = maxSize;
-    }
+    private const int MaxCacheSize = 100;
 
     /// <summary>
     /// Retrieves a client from the cache or creates a new one if it doesn't exist.
     /// Updates the last-used timestamp on every hit.
     /// </summary>
     /// <typeparam name="T">The type of the client.</typeparam>
-    /// <param name="clientId">A key representing the client configuration.</param>
     /// <param name="createClient">A factory function to create the client if not cached.</param>
+    /// <param name="id">An identifier for the client instance.</param>
     /// <returns>The cached or newly created client instance.</returns>
-    public T GetClient<T>(object clientId, Func<T> createClient) where T : class
+    public T GetClient<T>(Func<T> createClient, string? id) where T : class
     {
-        _lock.EnterReadLock();
-        try
-        {
-            // If the client exists, update its timestamp.
-            if (_clients.TryGetValue(clientId, out var cached))
-            {
-                cached.LastUsed = Stopwatch.GetTimestamp();
+        (Type, string) key = (typeof(T), id ?? string.Empty);
 
-                if (cached.Client is T typedClient)
-                {
-                    return typedClient;
-                }
-
-                throw new InvalidOperationException($"The clientId is associated with a client of type '{cached.Client.GetType()}', not '{typeof(T)}'.");
-            }
-        }
-        finally
+        // If the client exists, update its timestamp.
+        if (_clients.TryGetValue(key, out var cached))
         {
-            _lock.ExitReadLock();
+            cached.LastUsed = Stopwatch.GetTimestamp();
+            return (T)cached.Client;
         }
 
-        // Client not found, enter write lock
+        // Client not found in cache, create a new one.
         _lock.EnterWriteLock();
         try
         {
-            // Double-check inside write lock to avoid race condition
-            if (_clients.TryGetValue(clientId, out var existing))
-            {
-                existing.LastUsed = Stopwatch.GetTimestamp();
-
-                if (existing.Client is T typedClient)
-                {
-                    return typedClient;
-                }
-
-                throw new InvalidOperationException($"The clientId is associated with a client of type '{existing.Client.GetType()}', not '{typeof(T)}'.");
-            }
-
-            // Client not found in cache, create a new one.
             T created = createClient();
-            _clients[clientId] = new ClientEntry(created, Stopwatch.GetTimestamp());
+            _clients[key] = new ClientEntry(created, Stopwatch.GetTimestamp());
 
-            if (_clients.Count > _maxSize)
+            // After insertion, if cache exceeds the limit, perform cleanup.
+            if (_clients.Count > MaxCacheSize)
             {
                 Cleanup();
             }
-
             return created;
         }
         finally
@@ -95,7 +63,7 @@ public class ClientCache
     /// </summary>
     private void Cleanup()
     {
-        int excess = _clients.Count - _maxSize;
+        int excess = _clients.Count - MaxCacheSize;
         if (excess <= 0)
         {
             return;

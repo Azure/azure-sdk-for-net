@@ -304,8 +304,7 @@ namespace Azure.Storage.Files.Shares.Models
                     FileChangedOn = fileChangeTime,
                     FileId = fileId,
                     ParentId = fileParentId
-                },
-                PosixProperties = new FilePosixProperties()
+                }
             };
     }
 }

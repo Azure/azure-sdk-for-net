@@ -134,7 +134,7 @@ namespace Azure.Communication.Messages
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationMessagesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MessageTemplateLocation)} does not support writing '{options.Format}' format.");
             }

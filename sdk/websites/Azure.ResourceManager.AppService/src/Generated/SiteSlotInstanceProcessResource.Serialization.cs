@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotInstanceProcessResource : IJsonModel<ProcessInfoData>
     {
-        private static ProcessInfoData s_dataDeserializationInstance;
-        private static ProcessInfoData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ProcessInfoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProcessInfoData>)Data).Write(writer, options);
 
-        ProcessInfoData IJsonModel<ProcessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProcessInfoData>)DataDeserializationInstance).Create(ref reader, options);
+        ProcessInfoData IJsonModel<ProcessInfoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProcessInfoData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProcessInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProcessInfoData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<ProcessInfoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProcessInfoData IPersistableModel<ProcessInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessInfoData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        ProcessInfoData IPersistableModel<ProcessInfoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProcessInfoData>(data, options);
 
-        string IPersistableModel<ProcessInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProcessInfoData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ProcessInfoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProcessInfoData>)Data).GetFormatFromOptions(options);
     }
 }

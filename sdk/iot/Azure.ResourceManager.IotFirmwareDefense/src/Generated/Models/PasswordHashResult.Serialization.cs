@@ -40,43 +40,87 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(PasswordHashId))
             {
-                writer.WritePropertyName("passwordHashId"u8);
-                writer.WriteStringValue(PasswordHashId);
+                if (PasswordHashId != null)
+                {
+                    writer.WritePropertyName("passwordHashId"u8);
+                    writer.WriteStringValue(PasswordHashId);
+                }
+                else
+                {
+                    writer.WriteNull("passwordHashId");
+                }
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath"u8);
-                writer.WriteStringValue(FilePath);
+                if (FilePath != null)
+                {
+                    writer.WritePropertyName("filePath"u8);
+                    writer.WriteStringValue(FilePath);
+                }
+                else
+                {
+                    writer.WriteNull("filePath");
+                }
             }
             if (Optional.IsDefined(Salt))
             {
-                writer.WritePropertyName("salt"u8);
-                writer.WriteStringValue(Salt);
+                if (Salt != null)
+                {
+                    writer.WritePropertyName("salt"u8);
+                    writer.WriteStringValue(Salt);
+                }
+                else
+                {
+                    writer.WriteNull("salt");
+                }
             }
             if (Optional.IsDefined(Hash))
             {
-                writer.WritePropertyName("hash"u8);
-                writer.WriteStringValue(Hash);
+                if (Hash != null)
+                {
+                    writer.WritePropertyName("hash"u8);
+                    writer.WriteStringValue(Hash);
+                }
+                else
+                {
+                    writer.WriteNull("hash");
+                }
             }
             if (Optional.IsDefined(Context))
             {
-                writer.WritePropertyName("context"u8);
-                writer.WriteStringValue(Context);
+                if (Context != null)
+                {
+                    writer.WritePropertyName("context"u8);
+                    writer.WriteStringValue(Context);
+                }
+                else
+                {
+                    writer.WriteNull("context");
+                }
             }
             if (Optional.IsDefined(Username))
             {
-                writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
+                if (Username != null)
+                {
+                    writer.WritePropertyName("username"u8);
+                    writer.WriteStringValue(Username);
+                }
+                else
+                {
+                    writer.WriteNull("username");
+                }
             }
             if (Optional.IsDefined(Algorithm))
             {
-                writer.WritePropertyName("algorithm"u8);
-                writer.WriteStringValue(Algorithm);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                if (Algorithm != null)
+                {
+                    writer.WritePropertyName("algorithm"u8);
+                    writer.WriteStringValue(Algorithm);
+                }
+                else
+                {
+                    writer.WriteNull("algorithm");
+                }
             }
             writer.WriteEndObject();
         }
@@ -112,7 +156,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             string context = default;
             string username = default;
             string algorithm = default;
-            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,46 +195,72 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         if (property0.NameEquals("passwordHashId"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                passwordHashId = null;
+                                continue;
+                            }
                             passwordHashId = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("filePath"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                filePath = null;
+                                continue;
+                            }
                             filePath = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("salt"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                salt = null;
+                                continue;
+                            }
                             salt = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("hash"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                hash = null;
+                                continue;
+                            }
                             hash = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("context"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                context = null;
+                                continue;
+                            }
                             context = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("username"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                username = null;
+                                continue;
+                            }
                             username = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("algorithm"u8))
                         {
-                            algorithm = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                algorithm = null;
                                 continue;
                             }
-                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
+                            algorithm = property0.Value.GetString();
                             continue;
                         }
                     }
@@ -215,7 +284,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 context,
                 username,
                 algorithm,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -226,7 +294,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PasswordHashResult)} does not support writing '{options.Format}' format.");
             }

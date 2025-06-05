@@ -16,26 +16,20 @@ namespace Azure.ResourceManager.MongoCluster.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmMongoClusterModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterReplica"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.MongoClusterData"/> instance for mocking. </returns>
-        public static MongoClusterData MongoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoClusterProperties properties = null)
+        /// <returns> A new <see cref="Models.MongoClusterReplica"/> instance for mocking. </returns>
+        public static MongoClusterReplica MongoClusterReplica(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterProperties properties = null)
         {
-            tags ??= new Dictionary<string, string>();
-
-            return new MongoClusterData(
+            return new MongoClusterReplica(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
-                location,
                 properties,
                 serializedAdditionalRawData: null);
         }
@@ -128,6 +122,107 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterReplicationProperties(sourceResourceId, role, replicationState, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResourceData"/> instance for mocking. </returns>
+        public static MongoClusterPrivateLinkResourceData MongoClusterPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterPrivateLinkResourceProperties properties = null)
+        {
+            return new MongoClusterPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResourceProperties"/>. </summary>
+        /// <param name="groupId"> The private link resource group id. </param>
+        /// <param name="requiredMembers"> The private link resource required member names. </param>
+        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
+        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResourceProperties"/> instance for mocking. </returns>
+        public static MongoClusterPrivateLinkResourceProperties MongoClusterPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
+        {
+            requiredMembers ??= new List<string>();
+            requiredZoneNames ??= new List<string>();
+
+            return new MongoClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterPrivateEndpointConnectionResourceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoCluster.MongoClusterPrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
+        public static MongoClusterPrivateEndpointConnectionResourceData MongoClusterPrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterPrivateEndpointConnectionProperties properties = null)
+        {
+            return new MongoClusterPrivateEndpointConnectionResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterFirewallRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoCluster.MongoClusterFirewallRuleData"/> instance for mocking. </returns>
+        public static MongoClusterFirewallRuleData MongoClusterFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterFirewallRuleProperties properties = null)
+        {
+            return new MongoClusterFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterFirewallRuleProperties"/>. </summary>
+        /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
+        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
+        /// <returns> A new <see cref="Models.MongoClusterFirewallRuleProperties"/> instance for mocking. </returns>
+        public static MongoClusterFirewallRuleProperties MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
+        {
+            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="MongoCluster.MongoClusterData"/> instance for mocking. </returns>
+        public static MongoClusterData MongoClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, MongoClusterProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new MongoClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.MongoClusterConnectionStringsResult"/>. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
         /// <returns> A new <see cref="Models.MongoClusterConnectionStringsResult"/> instance for mocking. </returns>
@@ -165,101 +260,6 @@ namespace Azure.ResourceManager.MongoCluster.Models
         public static PromoteReplicaContent PromoteReplicaContent(MongoClusterPromoteOption promoteOption = default, MongoClusterPromoteMode? mode = null)
         {
             return new PromoteReplicaContent(promoteOption, mode, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterFirewallRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.MongoClusterFirewallRuleData"/> instance for mocking. </returns>
-        public static MongoClusterFirewallRuleData MongoClusterFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterFirewallRuleProperties properties = null)
-        {
-            return new MongoClusterFirewallRuleData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterFirewallRuleProperties"/>. </summary>
-        /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
-        /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
-        /// <returns> A new <see cref="Models.MongoClusterFirewallRuleProperties"/> instance for mocking. </returns>
-        public static MongoClusterFirewallRuleProperties MongoClusterFirewallRuleProperties(MongoClusterProvisioningState? provisioningState = null, string startIPAddress = null, string endIPAddress = null)
-        {
-            return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MongoCluster.MongoClusterPrivateEndpointConnectionResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="MongoCluster.MongoClusterPrivateEndpointConnectionResourceData"/> instance for mocking. </returns>
-        public static MongoClusterPrivateEndpointConnectionResourceData MongoClusterPrivateEndpointConnectionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterPrivateEndpointConnectionProperties properties = null)
-        {
-            return new MongoClusterPrivateEndpointConnectionResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResourceData"/> instance for mocking. </returns>
-        public static MongoClusterPrivateLinkResourceData MongoClusterPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterPrivateLinkResourceProperties properties = null)
-        {
-            return new MongoClusterPrivateLinkResourceData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterPrivateLinkResourceProperties"/>. </summary>
-        /// <param name="groupId"> The private link resource group id. </param>
-        /// <param name="requiredMembers"> The private link resource required member names. </param>
-        /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
-        /// <returns> A new <see cref="Models.MongoClusterPrivateLinkResourceProperties"/> instance for mocking. </returns>
-        public static MongoClusterPrivateLinkResourceProperties MongoClusterPrivateLinkResourceProperties(string groupId = null, IEnumerable<string> requiredMembers = null, IEnumerable<string> requiredZoneNames = null)
-        {
-            requiredMembers ??= new List<string>();
-            requiredZoneNames ??= new List<string>();
-
-            return new MongoClusterPrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterReplica"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="Models.MongoClusterReplica"/> instance for mocking. </returns>
-        public static MongoClusterReplica MongoClusterReplica(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, MongoClusterProperties properties = null)
-        {
-            return new MongoClusterReplica(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
         }
     }
 }

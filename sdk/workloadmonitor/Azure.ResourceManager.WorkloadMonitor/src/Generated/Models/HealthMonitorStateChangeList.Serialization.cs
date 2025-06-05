@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.WorkloadMonitor.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadMonitorContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HealthMonitorStateChangeList)} does not support writing '{options.Format}' format.");
             }

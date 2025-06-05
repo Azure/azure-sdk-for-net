@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Automanage
 {
     public partial class AutomanageHcrpConfigurationProfileAssignmentReportResource : IJsonModel<AutomanageConfigurationProfileAssignmentReportData>
     {
-        private static AutomanageConfigurationProfileAssignmentReportData s_dataDeserializationInstance;
-        private static AutomanageConfigurationProfileAssignmentReportData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AutomanageConfigurationProfileAssignmentReportData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileAssignmentReportData>)Data).Write(writer, options);
 
-        AutomanageConfigurationProfileAssignmentReportData IJsonModel<AutomanageConfigurationProfileAssignmentReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileAssignmentReportData>)DataDeserializationInstance).Create(ref reader, options);
+        AutomanageConfigurationProfileAssignmentReportData IJsonModel<AutomanageConfigurationProfileAssignmentReportData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomanageConfigurationProfileAssignmentReportData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomanageConfigurationProfileAssignmentReportData>(Data, options, AzureResourceManagerAutomanageContext.Default);
+        BinaryData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutomanageConfigurationProfileAssignmentReportData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageConfigurationProfileAssignmentReportData>(data, options, AzureResourceManagerAutomanageContext.Default);
+        AutomanageConfigurationProfileAssignmentReportData IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomanageConfigurationProfileAssignmentReportData>(data, options);
 
-        string IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomanageConfigurationProfileAssignmentReportData>)Data).GetFormatFromOptions(options);
     }
 }

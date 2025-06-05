@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ScheduleBasedBackupTriggerContext)} does not support writing '{options.Format}' format.");
             }

@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BotService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new InvalidOperationException($"The model {nameof(EmailChannelProperties)} does not support '{options.Format}' format.");
             }

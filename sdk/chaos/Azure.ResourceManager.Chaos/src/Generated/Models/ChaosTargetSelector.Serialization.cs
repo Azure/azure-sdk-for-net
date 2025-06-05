@@ -34,29 +34,26 @@ namespace Azure.ResourceManager.Chaos.Models
                 throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(SelectorType.ToString());
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteObjectValue(Filter, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            foreach (var item in AdditionalProperties)
             {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
+                writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
                 }
+#endif
             }
         }
 
@@ -98,7 +95,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ChaosTargetSelector)} does not support writing '{options.Format}' format.");
             }

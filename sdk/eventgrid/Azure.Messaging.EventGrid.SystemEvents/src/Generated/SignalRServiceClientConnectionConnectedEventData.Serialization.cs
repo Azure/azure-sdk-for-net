@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(SignalRServiceClientConnectionConnectedEventDataConverter))]
     public partial class SignalRServiceClientConnectionConnectedEventData : IUtf8JsonSerializable, IJsonModel<SignalRServiceClientConnectionConnectedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SignalRServiceClientConnectionConnectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -135,7 +133,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SignalRServiceClientConnectionConnectedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -173,20 +171,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class SignalRServiceClientConnectionConnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionConnectedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, SignalRServiceClientConnectionConnectedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override SignalRServiceClientConnectionConnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeSignalRServiceClientConnectionConnectedEventData(document.RootElement);
-            }
         }
     }
 }

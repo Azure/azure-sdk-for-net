@@ -7,7 +7,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("AzureChatDataSourceAuthenticationOptions")]
+[CodeGenModel("AzureChatDataSourceAuthenticationOptions")]
 [Experimental("AOAI001")]
 public partial class DataSourceAuthentication
 {

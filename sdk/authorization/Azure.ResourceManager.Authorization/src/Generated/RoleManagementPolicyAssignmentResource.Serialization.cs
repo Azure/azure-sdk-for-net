@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleManagementPolicyAssignmentResource : IJsonModel<RoleManagementPolicyAssignmentData>
     {
-        private static RoleManagementPolicyAssignmentData s_dataDeserializationInstance;
-        private static RoleManagementPolicyAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<RoleManagementPolicyAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoleManagementPolicyAssignmentData>)Data).Write(writer, options);
 
-        RoleManagementPolicyAssignmentData IJsonModel<RoleManagementPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleManagementPolicyAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        RoleManagementPolicyAssignmentData IJsonModel<RoleManagementPolicyAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleManagementPolicyAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleManagementPolicyAssignmentData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
+        BinaryData IPersistableModel<RoleManagementPolicyAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RoleManagementPolicyAssignmentData IPersistableModel<RoleManagementPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleManagementPolicyAssignmentData>(data, options, AzureResourceManagerAuthorizationContext.Default);
+        RoleManagementPolicyAssignmentData IPersistableModel<RoleManagementPolicyAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleManagementPolicyAssignmentData>(data, options);
 
-        string IPersistableModel<RoleManagementPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleManagementPolicyAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<RoleManagementPolicyAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleManagementPolicyAssignmentData>)Data).GetFormatFromOptions(options);
     }
 }

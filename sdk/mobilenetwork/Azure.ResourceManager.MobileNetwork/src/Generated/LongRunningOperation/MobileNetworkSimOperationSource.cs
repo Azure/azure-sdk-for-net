@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.MobileNetwork
 
         MobileNetworkSimResource IOperationSource<MobileNetworkSimResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MobileNetworkSimData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            var data = ModelReaderWriter.Read<MobileNetworkSimData>(response.Content);
             return new MobileNetworkSimResource(_client, data);
         }
 
         async ValueTask<MobileNetworkSimResource> IOperationSource<MobileNetworkSimResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MobileNetworkSimData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMobileNetworkContext.Default);
+            var data = ModelReaderWriter.Read<MobileNetworkSimData>(response.Content);
             return await Task.FromResult(new MobileNetworkSimResource(_client, data)).ConfigureAwait(false);
         }
     }

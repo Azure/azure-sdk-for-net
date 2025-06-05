@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure.AI.Projects;
 using Azure.Core.Extensions;
 
@@ -17,23 +16,19 @@ namespace Microsoft.Extensions.Azure
     {
         /// <summary> Registers a <see cref="AIProjectClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Project endpoint. In the form "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/_project"
-        /// if your Foundry Hub has only one Project, or to use the default Project in your Hub. Or in the form
-        /// "https://&lt;your-ai-services-account-name&gt;.services.ai.azure.com/api/projects/&lt;your-project-name&gt;" if you want to explicitly
-        /// specify the Foundry Project name.
-        /// </param>
-        public static IAzureClientBuilder<AIProjectClient, AIProjectClientOptions> AddAIProjectClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        /// <param name="endpoint"> The Azure AI Foundry project endpoint, in the form `https://&lt;azure-region&gt;.api.azureml.ms` or `https://&lt;private-link-guid&gt;.&lt;azure-region&gt;.api.azureml.ms`, where &lt;azure-region&gt; is the Azure region where the project is deployed (e.g. westus) and &lt;private-link-guid&gt; is the GUID of the Enterprise private link. </param>
+        /// <param name="subscriptionId"> The Azure subscription ID. </param>
+        /// <param name="resourceGroupName"> The name of the Azure Resource Group. </param>
+        /// <param name="projectName"> The Azure AI Foundry project name. </param>
+        public static IAzureClientBuilder<AIProjectClient, AIProjectClientOptions> AddAIProjectClient<TBuilder>(this TBuilder builder, Uri endpoint, string subscriptionId, string resourceGroupName, string projectName)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<AIProjectClient, AIProjectClientOptions>((options, cred) => new AIProjectClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<AIProjectClient, AIProjectClientOptions>((options, cred) => new AIProjectClient(endpoint, subscriptionId, resourceGroupName, projectName, cred, options));
         }
 
         /// <summary> Registers a <see cref="AIProjectClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<AIProjectClient, AIProjectClientOptions> AddAIProjectClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

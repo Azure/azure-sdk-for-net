@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("AzureSearchChatDataSourceParametersQueryType")]
+[CodeGenModel("AzureSearchChatDataSourceParametersQueryType")]
 [Experimental("AOAI001")]
 public readonly partial struct DataSourceQueryType
 { }

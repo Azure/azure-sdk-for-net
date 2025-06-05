@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,15 +18,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
         /// <param name="queueDetails"> Router Job Queue Info. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/> or <paramref name="queueDetails"/> is null. </exception>
-        internal AcsRouterJobClassifiedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails) : base(labels, tags)
+        /// <param name="attachedWorkerSelectors"> Router Job Attached Worker Selector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="queueDetails"/> or <paramref name="attachedWorkerSelectors"/> is null. </exception>
+        internal AcsRouterJobClassifiedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterQueueDetails queueDetails, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));
             Argument.AssertNotNull(queueDetails, nameof(queueDetails));
+            Argument.AssertNotNull(attachedWorkerSelectors, nameof(attachedWorkerSelectors));
 
             QueueDetails = queueDetails;
-            AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            AttachedWorkerSelectors = attachedWorkerSelectors.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobClassifiedEventData"/>. </summary>

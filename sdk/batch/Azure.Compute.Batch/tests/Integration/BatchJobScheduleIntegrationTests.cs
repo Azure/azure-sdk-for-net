@@ -91,12 +91,12 @@ namespace Azure.Compute.Batch.Tests.Integration
                 response = await client.EnableJobScheduleAsync(jobScheduleId);
                 Assert.AreEqual(204, response.Status);
 
-                response = await client.TerminateJobScheduleAsync(jobScheduleId, force: true);
+                response = await client.TerminateJobScheduleAsync(jobScheduleId);
                 Assert.AreEqual(202, response.Status);
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId, force: true);
+                await client.DeleteJobScheduleAsync(jobScheduleId);
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId,force:true);
+                await client.DeleteJobScheduleAsync(jobScheduleId);
             }
         }
 

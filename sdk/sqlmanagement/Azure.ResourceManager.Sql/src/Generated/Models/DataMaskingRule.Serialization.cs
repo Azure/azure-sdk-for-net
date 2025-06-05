@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.Sql.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(RuleId))
+            if (Optional.IsDefined(AliasName))
             {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(RuleId);
+                writer.WritePropertyName("aliasName"u8);
+                writer.WriteStringValue(AliasName);
             }
             if (Optional.IsDefined(RuleState))
             {
@@ -73,11 +73,6 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 writer.WritePropertyName("columnName"u8);
                 writer.WriteStringValue(ColumnName);
-            }
-            if (Optional.IsDefined(AliasName))
-            {
-                writer.WritePropertyName("aliasName"u8);
-                writer.WriteStringValue(AliasName);
             }
             if (Optional.IsDefined(MaskingFunction))
             {
@@ -138,12 +133,11 @@ namespace Azure.ResourceManager.Sql.Models
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string id0 = default;
+            string aliasName = default;
             DataMaskingRuleState? ruleState = default;
             string schemaName = default;
             string tableName = default;
             string columnName = default;
-            string aliasName = default;
             DataMaskingFunction? maskingFunction = default;
             string numberFrom = default;
             string numberTo = default;
@@ -201,9 +195,9 @@ namespace Azure.ResourceManager.Sql.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("id"u8))
+                        if (property0.NameEquals("aliasName"u8))
                         {
-                            id0 = property0.Value.GetString();
+                            aliasName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("ruleState"u8))
@@ -228,11 +222,6 @@ namespace Azure.ResourceManager.Sql.Models
                         if (property0.NameEquals("columnName"u8))
                         {
                             columnName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("aliasName"u8))
-                        {
-                            aliasName = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("maskingFunction"u8))
@@ -285,12 +274,11 @@ namespace Azure.ResourceManager.Sql.Models
                 systemData,
                 location,
                 kind,
-                id0,
+                aliasName,
                 ruleState,
                 schemaName,
                 tableName,
                 columnName,
-                aliasName,
                 maskingFunction,
                 numberFrom,
                 numberTo,
@@ -404,25 +392,25 @@ namespace Azure.ResourceManager.Sql.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RuleId), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasName), out propertyOverride);
             if (hasPropertyOverride)
             {
-                builder.Append("    id: ");
+                builder.Append("    aliasName: ");
                 builder.AppendLine(propertyOverride);
             }
             else
             {
-                if (Optional.IsDefined(RuleId))
+                if (Optional.IsDefined(AliasName))
                 {
-                    builder.Append("    id: ");
-                    if (RuleId.Contains(Environment.NewLine))
+                    builder.Append("    aliasName: ");
+                    if (AliasName.Contains(Environment.NewLine))
                     {
                         builder.AppendLine("'''");
-                        builder.AppendLine($"{RuleId}'''");
+                        builder.AppendLine($"{AliasName}'''");
                     }
                     else
                     {
-                        builder.AppendLine($"'{RuleId}'");
+                        builder.AppendLine($"'{AliasName}'");
                     }
                 }
             }
@@ -507,29 +495,6 @@ namespace Azure.ResourceManager.Sql.Models
                     else
                     {
                         builder.AppendLine($"'{ColumnName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    aliasName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AliasName))
-                {
-                    builder.Append("    aliasName: ");
-                    if (AliasName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AliasName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AliasName}'");
                     }
                 }
             }
@@ -676,7 +641,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

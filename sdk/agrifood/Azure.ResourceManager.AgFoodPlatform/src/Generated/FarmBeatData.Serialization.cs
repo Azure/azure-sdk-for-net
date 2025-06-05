@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAgFoodPlatformContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FarmBeatData)} does not support writing '{options.Format}' format.");
             }

@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="sku"> Managed instance sku. </param>
         /// <param name="identity"> Managed instance identity. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="provisioningState"> Provisioning state of managed instance. </param>
+        /// <param name="provisioningState"></param>
         /// <param name="managedInstanceCreateMode">
         /// Specifies the mode of database creation.
         ///
@@ -67,19 +67,13 @@ namespace Azure.ResourceManager.Sql.Models
         /// Restore: Creates an instance by restoring a set of backups to specific point in time. RestorePointInTime and SourceManagedInstanceId must be specified.
         /// </param>
         /// <param name="fullyQualifiedDomainName"> The fully qualified domain name of the managed instance. </param>
-        /// <param name="isGeneralPurposeV2"> Whether or not this is a GPv2 variant of General Purpose edition. </param>
         /// <param name="administratorLogin"> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </param>
         /// <param name="administratorLoginPassword"> The administrator login password (required for managed instance creation). </param>
         /// <param name="subnetId"> Subnet resource ID for the managed instance. </param>
         /// <param name="state"> The state of the managed instance. </param>
         /// <param name="licenseType"> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </param>
-        /// <param name="hybridSecondaryUsage"> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </param>
-        /// <param name="hybridSecondaryUsageDetected"> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </param>
         /// <param name="vCores"> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </param>
         /// <param name="storageSizeInGB"> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageIOps"> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
-        /// <param name="storageThroughputMBps"> Storage throughput MBps parameter is not supported in the instance create/update operation. </param>
-        /// <param name="totalMemoryInMB"> Total memory in MB. Minimum value: 7168. Maximum value: 891328. Increments of 1 MB allowed only. Maximum value depends on the selected hardware family and number of vCores. </param>
         /// <param name="collation"> Collation of the managed instance. </param>
         /// <param name="dnsZone"> The Dns Zone that the managed instance is in. </param>
         /// <param name="managedDnsZonePartner"> The resource id of another managed instance whose DNS zone this managed instance will share after creation. </param>
@@ -106,14 +100,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="keyId"> A CMK URI of the key to use for encryption. </param>
         /// <param name="administrators"> The Azure Active Directory administrator of the instance. This can only be used at instance create time. If used for instance update, it will be ignored or it will result in an error. For updates individual APIs will need to be used. </param>
         /// <param name="servicePrincipal"> The managed instance's service principal. </param>
-        /// <param name="virtualClusterId"> Virtual cluster resource id for the Managed Instance. </param>
-        /// <param name="externalGovernanceStatus"> Status of external governance. </param>
-        /// <param name="pricingModel"> Pricing model of Managed Instance. </param>
-        /// <param name="createOn"> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </param>
-        /// <param name="authenticationMetadata"> The managed instance's authentication metadata lookup mode. </param>
-        /// <param name="databaseFormat"> Specifies the internal format of instance databases specific to the SQL engine version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, bool? isGeneralPurposeV2, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, HybridSecondaryUsage? hybridSecondaryUsage, HybridSecondaryUsageDetected? hybridSecondaryUsageDetected, int? vCores, int? storageSizeInGB, int? storageIOps, int? storageThroughputMBps, int? totalMemoryInMB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, ResourceIdentifier virtualClusterId, ExternalGovernanceStatus? externalGovernanceStatus, SqlManagedInstancePricingModel? pricingModel, DateTimeOffset? createOn, AuthMetadataLookupMode? authenticationMetadata, ManagedInstanceDatabaseFormat? databaseFormat, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedInstancePatch(SqlSku sku, ManagedServiceIdentity identity, IDictionary<string, string> tags, ManagedInstancePropertiesProvisioningState? provisioningState, ManagedServerCreateMode? managedInstanceCreateMode, string fullyQualifiedDomainName, string administratorLogin, string administratorLoginPassword, ResourceIdentifier subnetId, string state, ManagedInstanceLicenseType? licenseType, int? vCores, int? storageSizeInGB, string collation, string dnsZone, ResourceIdentifier managedDnsZonePartner, bool? isPublicDataEndpointEnabled, ResourceIdentifier sourceManagedInstanceId, DateTimeOffset? restorePointInTime, ManagedInstanceProxyOverride? proxyOverride, string timezoneId, ResourceIdentifier instancePoolId, ResourceIdentifier maintenanceConfigurationId, IReadOnlyList<ManagedInstancePecProperty> privateEndpointConnections, string minimalTlsVersion, SqlBackupStorageRedundancy? currentBackupStorageRedundancy, SqlBackupStorageRedundancy? requestedBackupStorageRedundancy, bool? isZoneRedundant, ResourceIdentifier primaryUserAssignedIdentityId, Uri keyId, ManagedInstanceExternalAdministrator administrators, SqlServicePrincipal servicePrincipal, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Identity = identity;
@@ -121,19 +109,13 @@ namespace Azure.ResourceManager.Sql.Models
             ProvisioningState = provisioningState;
             ManagedInstanceCreateMode = managedInstanceCreateMode;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
-            IsGeneralPurposeV2 = isGeneralPurposeV2;
             AdministratorLogin = administratorLogin;
             AdministratorLoginPassword = administratorLoginPassword;
             SubnetId = subnetId;
             State = state;
             LicenseType = licenseType;
-            HybridSecondaryUsage = hybridSecondaryUsage;
-            HybridSecondaryUsageDetected = hybridSecondaryUsageDetected;
             VCores = vCores;
             StorageSizeInGB = storageSizeInGB;
-            StorageIOps = storageIOps;
-            StorageThroughputMBps = storageThroughputMBps;
-            TotalMemoryInMB = totalMemoryInMB;
             Collation = collation;
             DnsZone = dnsZone;
             ManagedDnsZonePartner = managedDnsZonePartner;
@@ -153,12 +135,6 @@ namespace Azure.ResourceManager.Sql.Models
             KeyId = keyId;
             Administrators = administrators;
             ServicePrincipal = servicePrincipal;
-            VirtualClusterId = virtualClusterId;
-            ExternalGovernanceStatus = externalGovernanceStatus;
-            PricingModel = pricingModel;
-            CreateOn = createOn;
-            AuthenticationMetadata = authenticationMetadata;
-            DatabaseFormat = databaseFormat;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -171,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Provisioning state of managed instance. </summary>
+        /// <summary> Gets the provisioning state. </summary>
         [WirePath("properties.provisioningState")]
         public ManagedInstancePropertiesProvisioningState? ProvisioningState { get; }
         /// <summary>
@@ -186,9 +162,6 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The fully qualified domain name of the managed instance. </summary>
         [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; }
-        /// <summary> Whether or not this is a GPv2 variant of General Purpose edition. </summary>
-        [WirePath("properties.isGeneralPurposeV2")]
-        public bool? IsGeneralPurposeV2 { get; set; }
         /// <summary> Administrator username for the managed instance. Can only be specified when the managed instance is being created (and is required for creation). </summary>
         [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
@@ -204,27 +177,12 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The license type. Possible values are 'LicenseIncluded' (regular price inclusive of a new SQL license) and 'BasePrice' (discounted AHB price for bringing your own SQL licenses). </summary>
         [WirePath("properties.licenseType")]
         public ManagedInstanceLicenseType? LicenseType { get; set; }
-        /// <summary> Hybrid secondary usage. Possible values are 'Active' (default value) and 'Passive' (customer uses the secondary as Passive DR). </summary>
-        [WirePath("properties.hybridSecondaryUsage")]
-        public HybridSecondaryUsage? HybridSecondaryUsage { get; set; }
-        /// <summary> Hybrid secondary usage detected. Possible values are 'Active' (customer does not meet the requirements to use the secondary as Passive DR) and 'Passive' (customer meets the requirements to use the secondary as Passive DR). </summary>
-        [WirePath("properties.hybridSecondaryUsageDetected")]
-        public HybridSecondaryUsageDetected? HybridSecondaryUsageDetected { get; }
         /// <summary> The number of vCores. Allowed values: 8, 16, 24, 32, 40, 64, 80. </summary>
         [WirePath("properties.vCores")]
         public int? VCores { get; set; }
         /// <summary> Storage size in GB. Minimum value: 32. Maximum value: 16384. Increments of 32 GB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
         [WirePath("properties.storageSizeInGB")]
         public int? StorageSizeInGB { get; set; }
-        /// <summary> Storage IOps. Minimum value: 300. Maximum value: 80000. Increments of 1 IOps allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
-        [WirePath("properties.storageIOps")]
-        public int? StorageIOps { get; set; }
-        /// <summary> Storage throughput MBps parameter is not supported in the instance create/update operation. </summary>
-        [WirePath("properties.storageThroughputMBps")]
-        public int? StorageThroughputMBps { get; set; }
-        /// <summary> Total memory in MB. Minimum value: 7168. Maximum value: 891328. Increments of 1 MB allowed only. Maximum value depends on the selected hardware family and number of vCores. </summary>
-        [WirePath("properties.totalMemoryMB")]
-        public int? TotalMemoryInMB { get; set; }
         /// <summary> Collation of the managed instance. </summary>
         [WirePath("properties.collation")]
         public string Collation { get; set; }
@@ -289,23 +247,5 @@ namespace Azure.ResourceManager.Sql.Models
         /// <summary> The managed instance's service principal. </summary>
         [WirePath("properties.servicePrincipal")]
         public SqlServicePrincipal ServicePrincipal { get; set; }
-        /// <summary> Virtual cluster resource id for the Managed Instance. </summary>
-        [WirePath("properties.virtualClusterId")]
-        public ResourceIdentifier VirtualClusterId { get; }
-        /// <summary> Status of external governance. </summary>
-        [WirePath("properties.externalGovernanceStatus")]
-        public ExternalGovernanceStatus? ExternalGovernanceStatus { get; }
-        /// <summary> Pricing model of Managed Instance. </summary>
-        [WirePath("properties.pricingModel")]
-        public SqlManagedInstancePricingModel? PricingModel { get; set; }
-        /// <summary> Specifies the point in time (ISO8601 format) of the Managed Instance creation. </summary>
-        [WirePath("properties.createTime")]
-        public DateTimeOffset? CreateOn { get; }
-        /// <summary> The managed instance's authentication metadata lookup mode. </summary>
-        [WirePath("properties.authenticationMetadata")]
-        public AuthMetadataLookupMode? AuthenticationMetadata { get; set; }
-        /// <summary> Specifies the internal format of instance databases specific to the SQL engine version. </summary>
-        [WirePath("properties.databaseFormat")]
-        public ManagedInstanceDatabaseFormat? DatabaseFormat { get; set; }
     }
 }

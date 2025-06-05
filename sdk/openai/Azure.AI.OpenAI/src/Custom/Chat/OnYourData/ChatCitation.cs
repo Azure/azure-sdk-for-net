@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("AzureChatMessageContextCitation")]
+[CodeGenModel("AzureChatMessageContextCitation")]
 [Experimental("AOAI001")]
 
 public partial class ChatCitation

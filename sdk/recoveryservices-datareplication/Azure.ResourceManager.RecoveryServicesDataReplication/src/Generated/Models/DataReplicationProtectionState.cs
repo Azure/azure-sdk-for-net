@@ -75,109 +75,109 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string ReprotectFailedValue = "ReprotectFailed";
         private const string ReprotectStatesEndValue = "ReprotectStatesEnd";
 
-        /// <summary> Begin marker for unprotected states. </summary>
+        /// <summary> UnprotectedStatesBegin. </summary>
         public static DataReplicationProtectionState UnprotectedStatesBegin { get; } = new DataReplicationProtectionState(UnprotectedStatesBeginValue);
-        /// <summary> Enable protection is in progress. </summary>
+        /// <summary> EnablingProtection. </summary>
         public static DataReplicationProtectionState EnablingProtection { get; } = new DataReplicationProtectionState(EnablingProtectionValue);
-        /// <summary> Enable protection failed. </summary>
+        /// <summary> EnablingFailed. </summary>
         public static DataReplicationProtectionState EnablingFailed { get; } = new DataReplicationProtectionState(EnablingFailedValue);
-        /// <summary> Disabling protection is in progress. </summary>
+        /// <summary> DisablingProtection. </summary>
         public static DataReplicationProtectionState DisablingProtection { get; } = new DataReplicationProtectionState(DisablingProtectionValue);
-        /// <summary> Disabling protection succeeded. This is a transient state before the protected item is deleted. </summary>
+        /// <summary> MarkedForDeletion. </summary>
         public static DataReplicationProtectionState MarkedForDeletion { get; } = new DataReplicationProtectionState(MarkedForDeletionValue);
-        /// <summary> Disable protection failed. </summary>
+        /// <summary> DisablingFailed. </summary>
         public static DataReplicationProtectionState DisablingFailed { get; } = new DataReplicationProtectionState(DisablingFailedValue);
-        /// <summary> End marker for unprotected states. </summary>
+        /// <summary> UnprotectedStatesEnd. </summary>
         public static DataReplicationProtectionState UnprotectedStatesEnd { get; } = new DataReplicationProtectionState(UnprotectedStatesEndValue);
-        /// <summary> Begin marker for initial replication states. </summary>
+        /// <summary> InitialReplicationStatesBegin. </summary>
         public static DataReplicationProtectionState InitialReplicationStatesBegin { get; } = new DataReplicationProtectionState(InitialReplicationStatesBeginValue);
-        /// <summary> Initial replication is in progress. </summary>
+        /// <summary> InitialReplicationInProgress. </summary>
         public static DataReplicationProtectionState InitialReplicationInProgress { get; } = new DataReplicationProtectionState(InitialReplicationInProgressValue);
-        /// <summary> Initial replication has completed on the primary side. </summary>
+        /// <summary> InitialReplicationCompletedOnPrimary. </summary>
         public static DataReplicationProtectionState InitialReplicationCompletedOnPrimary { get; } = new DataReplicationProtectionState(InitialReplicationCompletedOnPrimaryValue);
-        /// <summary> Initial replication has completed on the recovery side. </summary>
+        /// <summary> InitialReplicationCompletedOnRecovery. </summary>
         public static DataReplicationProtectionState InitialReplicationCompletedOnRecovery { get; } = new DataReplicationProtectionState(InitialReplicationCompletedOnRecoveryValue);
-        /// <summary> Initial replication failed and would need to be started again. </summary>
+        /// <summary> InitialReplicationFailed. </summary>
         public static DataReplicationProtectionState InitialReplicationFailed { get; } = new DataReplicationProtectionState(InitialReplicationFailedValue);
-        /// <summary> End marker for initial replication states. </summary>
+        /// <summary> InitialReplicationStatesEnd. </summary>
         public static DataReplicationProtectionState InitialReplicationStatesEnd { get; } = new DataReplicationProtectionState(InitialReplicationStatesEndValue);
-        /// <summary> Begin marker for protected steady-state states. </summary>
+        /// <summary> ProtectedStatesBegin. </summary>
         public static DataReplicationProtectionState ProtectedStatesBegin { get; } = new DataReplicationProtectionState(ProtectedStatesBeginValue);
-        /// <summary> Protected item is protected and replication is on-going. Any issues with replication will be surfaced separately via the health property and will not affect the state. </summary>
+        /// <summary> Protected. </summary>
         public static DataReplicationProtectionState Protected { get; } = new DataReplicationProtectionState(ProtectedValue);
-        /// <summary> End marker for protected steady-state states. </summary>
+        /// <summary> ProtectedStatesEnd. </summary>
         public static DataReplicationProtectionState ProtectedStatesEnd { get; } = new DataReplicationProtectionState(ProtectedStatesEndValue);
-        /// <summary> Begin marker for planned failover transition states. </summary>
+        /// <summary> PlannedFailoverTransitionStatesBegin. </summary>
         public static DataReplicationProtectionState PlannedFailoverTransitionStatesBegin { get; } = new DataReplicationProtectionState(PlannedFailoverTransitionStatesBeginValue);
-        /// <summary> Planned failover has been initiated. </summary>
+        /// <summary> PlannedFailoverInitiated. </summary>
         public static DataReplicationProtectionState PlannedFailoverInitiated { get; } = new DataReplicationProtectionState(PlannedFailoverInitiatedValue);
-        /// <summary> Planned failover preparing protected entities is in progress. </summary>
+        /// <summary> PlannedFailoverCompleting. </summary>
         public static DataReplicationProtectionState PlannedFailoverCompleting { get; } = new DataReplicationProtectionState(PlannedFailoverCompletingValue);
-        /// <summary> Planned failover has been completed successfully. </summary>
+        /// <summary> PlannedFailoverCompleted. </summary>
         public static DataReplicationProtectionState PlannedFailoverCompleted { get; } = new DataReplicationProtectionState(PlannedFailoverCompletedValue);
-        /// <summary> Planned failover initiation failed. </summary>
+        /// <summary> PlannedFailoverFailed. </summary>
         public static DataReplicationProtectionState PlannedFailoverFailed { get; } = new DataReplicationProtectionState(PlannedFailoverFailedValue);
-        /// <summary> Planned failover preparing protected entities failed. </summary>
+        /// <summary> PlannedFailoverCompletionFailed. </summary>
         public static DataReplicationProtectionState PlannedFailoverCompletionFailed { get; } = new DataReplicationProtectionState(PlannedFailoverCompletionFailedValue);
-        /// <summary> End marker for planned failover transition states. </summary>
+        /// <summary> PlannedFailoverTransitionStatesEnd. </summary>
         public static DataReplicationProtectionState PlannedFailoverTransitionStatesEnd { get; } = new DataReplicationProtectionState(PlannedFailoverTransitionStatesEndValue);
-        /// <summary> Begin marker for unplanned failover transition states. </summary>
+        /// <summary> UnplannedFailoverTransitionStatesBegin. </summary>
         public static DataReplicationProtectionState UnplannedFailoverTransitionStatesBegin { get; } = new DataReplicationProtectionState(UnplannedFailoverTransitionStatesBeginValue);
-        /// <summary> Unplanned failover has been initiated. </summary>
+        /// <summary> UnplannedFailoverInitiated. </summary>
         public static DataReplicationProtectionState UnplannedFailoverInitiated { get; } = new DataReplicationProtectionState(UnplannedFailoverInitiatedValue);
-        /// <summary> Unplanned failover preparing protected entities is in progress. </summary>
+        /// <summary> UnplannedFailoverCompleting. </summary>
         public static DataReplicationProtectionState UnplannedFailoverCompleting { get; } = new DataReplicationProtectionState(UnplannedFailoverCompletingValue);
-        /// <summary> Unplanned failover preparing protected entities is in progress. </summary>
+        /// <summary> UnplannedFailoverCompleted. </summary>
         public static DataReplicationProtectionState UnplannedFailoverCompleted { get; } = new DataReplicationProtectionState(UnplannedFailoverCompletedValue);
-        /// <summary> Unplanned failover initiation failed. </summary>
+        /// <summary> UnplannedFailoverFailed. </summary>
         public static DataReplicationProtectionState UnplannedFailoverFailed { get; } = new DataReplicationProtectionState(UnplannedFailoverFailedValue);
-        /// <summary> Unplanned failover preparing protected entities failed. </summary>
+        /// <summary> UnplannedFailoverCompletionFailed. </summary>
         public static DataReplicationProtectionState UnplannedFailoverCompletionFailed { get; } = new DataReplicationProtectionState(UnplannedFailoverCompletionFailedValue);
-        /// <summary> End marker for unplanned failover transition states. </summary>
+        /// <summary> UnplannedFailoverTransitionStatesEnd. </summary>
         public static DataReplicationProtectionState UnplannedFailoverTransitionStatesEnd { get; } = new DataReplicationProtectionState(UnplannedFailoverTransitionStatesEndValue);
-        /// <summary> Begin marker for commit failover states. </summary>
+        /// <summary> CommitFailoverStatesBegin. </summary>
         public static DataReplicationProtectionState CommitFailoverStatesBegin { get; } = new DataReplicationProtectionState(CommitFailoverStatesBeginValue);
-        /// <summary> Commit failover is in progress on the primary side. </summary>
+        /// <summary> CommitFailoverInProgressOnPrimary. </summary>
         public static DataReplicationProtectionState CommitFailoverInProgressOnPrimary { get; } = new DataReplicationProtectionState(CommitFailoverInProgressOnPrimaryValue);
-        /// <summary> Commit failover is in progress on the recovery side. </summary>
+        /// <summary> CommitFailoverInProgressOnRecovery. </summary>
         public static DataReplicationProtectionState CommitFailoverInProgressOnRecovery { get; } = new DataReplicationProtectionState(CommitFailoverInProgressOnRecoveryValue);
-        /// <summary> Commit failover has been completed successfully. </summary>
+        /// <summary> CommitFailoverCompleted. </summary>
         public static DataReplicationProtectionState CommitFailoverCompleted { get; } = new DataReplicationProtectionState(CommitFailoverCompletedValue);
-        /// <summary> Commit failover failed on the primary side. </summary>
+        /// <summary> CommitFailoverFailedOnPrimary. </summary>
         public static DataReplicationProtectionState CommitFailoverFailedOnPrimary { get; } = new DataReplicationProtectionState(CommitFailoverFailedOnPrimaryValue);
-        /// <summary> Commit failover failed on the recovery side. </summary>
+        /// <summary> CommitFailoverFailedOnRecovery. </summary>
         public static DataReplicationProtectionState CommitFailoverFailedOnRecovery { get; } = new DataReplicationProtectionState(CommitFailoverFailedOnRecoveryValue);
-        /// <summary> End marker for commit failover states. </summary>
+        /// <summary> CommitFailoverStatesEnd. </summary>
         public static DataReplicationProtectionState CommitFailoverStatesEnd { get; } = new DataReplicationProtectionState(CommitFailoverStatesEndValue);
-        /// <summary> Begin marker for cancel failover states. </summary>
+        /// <summary> CancelFailoverStatesBegin. </summary>
         public static DataReplicationProtectionState CancelFailoverStatesBegin { get; } = new DataReplicationProtectionState(CancelFailoverStatesBeginValue);
-        /// <summary> Cancel failover is in progress on the primary side. </summary>
+        /// <summary> CancelFailoverInProgressOnPrimary. </summary>
         public static DataReplicationProtectionState CancelFailoverInProgressOnPrimary { get; } = new DataReplicationProtectionState(CancelFailoverInProgressOnPrimaryValue);
-        /// <summary> Cancel failover is in progress on the recovery side. </summary>
+        /// <summary> CancelFailoverInProgressOnRecovery. </summary>
         public static DataReplicationProtectionState CancelFailoverInProgressOnRecovery { get; } = new DataReplicationProtectionState(CancelFailoverInProgressOnRecoveryValue);
-        /// <summary> Cancel failover failed on the primary side. </summary>
+        /// <summary> CancelFailoverFailedOnPrimary. </summary>
         public static DataReplicationProtectionState CancelFailoverFailedOnPrimary { get; } = new DataReplicationProtectionState(CancelFailoverFailedOnPrimaryValue);
-        /// <summary> Cancel failover failed on the recovery side. </summary>
+        /// <summary> CancelFailoverFailedOnRecovery. </summary>
         public static DataReplicationProtectionState CancelFailoverFailedOnRecovery { get; } = new DataReplicationProtectionState(CancelFailoverFailedOnRecoveryValue);
-        /// <summary> End marker for cancel failover states. </summary>
+        /// <summary> CancelFailoverStatesEnd. </summary>
         public static DataReplicationProtectionState CancelFailoverStatesEnd { get; } = new DataReplicationProtectionState(CancelFailoverStatesEndValue);
-        /// <summary> Begin marker for change recovery point states. </summary>
+        /// <summary> ChangeRecoveryPointStatesBegin. </summary>
         public static DataReplicationProtectionState ChangeRecoveryPointStatesBegin { get; } = new DataReplicationProtectionState(ChangeRecoveryPointStatesBeginValue);
-        /// <summary> Change recovery point has been initiated.. </summary>
+        /// <summary> ChangeRecoveryPointInitiated. </summary>
         public static DataReplicationProtectionState ChangeRecoveryPointInitiated { get; } = new DataReplicationProtectionState(ChangeRecoveryPointInitiatedValue);
-        /// <summary> Change recovery point has been completed successfully. </summary>
+        /// <summary> ChangeRecoveryPointCompleted. </summary>
         public static DataReplicationProtectionState ChangeRecoveryPointCompleted { get; } = new DataReplicationProtectionState(ChangeRecoveryPointCompletedValue);
-        /// <summary> Change recovery point has failed. </summary>
+        /// <summary> ChangeRecoveryPointFailed. </summary>
         public static DataReplicationProtectionState ChangeRecoveryPointFailed { get; } = new DataReplicationProtectionState(ChangeRecoveryPointFailedValue);
-        /// <summary> End marker for change recovery point states. </summary>
+        /// <summary> ChangeRecoveryPointStatesEnd. </summary>
         public static DataReplicationProtectionState ChangeRecoveryPointStatesEnd { get; } = new DataReplicationProtectionState(ChangeRecoveryPointStatesEndValue);
-        /// <summary> Begin marker for reprotect states. </summary>
+        /// <summary> ReprotectStatesBegin. </summary>
         public static DataReplicationProtectionState ReprotectStatesBegin { get; } = new DataReplicationProtectionState(ReprotectStatesBeginValue);
-        /// <summary> Reprotect has been initiated. </summary>
+        /// <summary> ReprotectInitiated. </summary>
         public static DataReplicationProtectionState ReprotectInitiated { get; } = new DataReplicationProtectionState(ReprotectInitiatedValue);
-        /// <summary> Reprotect has failed. </summary>
+        /// <summary> ReprotectFailed. </summary>
         public static DataReplicationProtectionState ReprotectFailed { get; } = new DataReplicationProtectionState(ReprotectFailedValue);
-        /// <summary> End marker for reprotect states. </summary>
+        /// <summary> ReprotectStatesEnd. </summary>
         public static DataReplicationProtectionState ReprotectStatesEnd { get; } = new DataReplicationProtectionState(ReprotectStatesEndValue);
         /// <summary> Determines if two <see cref="DataReplicationProtectionState"/> values are the same. </summary>
         public static bool operator ==(DataReplicationProtectionState left, DataReplicationProtectionState right) => left.Equals(right);

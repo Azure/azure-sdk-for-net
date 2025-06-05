@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class DataWarehouseUserActivityResource : IJsonModel<DataWarehouseUserActivityData>
     {
-        private static DataWarehouseUserActivityData s_dataDeserializationInstance;
-        private static DataWarehouseUserActivityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataWarehouseUserActivityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataWarehouseUserActivityData>)Data).Write(writer, options);
 
-        DataWarehouseUserActivityData IJsonModel<DataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataWarehouseUserActivityData>)DataDeserializationInstance).Create(ref reader, options);
+        DataWarehouseUserActivityData IJsonModel<DataWarehouseUserActivityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataWarehouseUserActivityData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataWarehouseUserActivityData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<DataWarehouseUserActivityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataWarehouseUserActivityData IPersistableModel<DataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataWarehouseUserActivityData>(data, options, AzureResourceManagerSqlContext.Default);
+        DataWarehouseUserActivityData IPersistableModel<DataWarehouseUserActivityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataWarehouseUserActivityData>(data, options);
 
-        string IPersistableModel<DataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataWarehouseUserActivityData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataWarehouseUserActivityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataWarehouseUserActivityData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class IntegrationAccountSchemaResource : IJsonModel<IntegrationAccountSchemaData>
     {
-        private static IntegrationAccountSchemaData s_dataDeserializationInstance;
-        private static IntegrationAccountSchemaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<IntegrationAccountSchemaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountSchemaData>)Data).Write(writer, options);
 
-        IntegrationAccountSchemaData IJsonModel<IntegrationAccountSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountSchemaData>)DataDeserializationInstance).Create(ref reader, options);
+        IntegrationAccountSchemaData IJsonModel<IntegrationAccountSchemaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IntegrationAccountSchemaData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<IntegrationAccountSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IntegrationAccountSchemaData>(Data, options, AzureResourceManagerLogicContext.Default);
+        BinaryData IPersistableModel<IntegrationAccountSchemaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        IntegrationAccountSchemaData IPersistableModel<IntegrationAccountSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountSchemaData>(data, options, AzureResourceManagerLogicContext.Default);
+        IntegrationAccountSchemaData IPersistableModel<IntegrationAccountSchemaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IntegrationAccountSchemaData>(data, options);
 
-        string IPersistableModel<IntegrationAccountSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountSchemaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<IntegrationAccountSchemaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IntegrationAccountSchemaData>)Data).GetFormatFromOptions(options);
     }
 }

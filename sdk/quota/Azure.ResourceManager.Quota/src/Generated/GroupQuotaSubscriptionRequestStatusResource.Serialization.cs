@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Quota
 {
     public partial class GroupQuotaSubscriptionRequestStatusResource : IJsonModel<GroupQuotaSubscriptionRequestStatusData>
     {
-        private static GroupQuotaSubscriptionRequestStatusData s_dataDeserializationInstance;
-        private static GroupQuotaSubscriptionRequestStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<GroupQuotaSubscriptionRequestStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaSubscriptionRequestStatusData>)Data).Write(writer, options);
 
-        GroupQuotaSubscriptionRequestStatusData IJsonModel<GroupQuotaSubscriptionRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaSubscriptionRequestStatusData>)DataDeserializationInstance).Create(ref reader, options);
+        GroupQuotaSubscriptionRequestStatusData IJsonModel<GroupQuotaSubscriptionRequestStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GroupQuotaSubscriptionRequestStatusData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GroupQuotaSubscriptionRequestStatusData>(Data, options, AzureResourceManagerQuotaContext.Default);
+        BinaryData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        GroupQuotaSubscriptionRequestStatusData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaSubscriptionRequestStatusData>(data, options, AzureResourceManagerQuotaContext.Default);
+        GroupQuotaSubscriptionRequestStatusData IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GroupQuotaSubscriptionRequestStatusData>(data, options);
 
-        string IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaSubscriptionRequestStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<GroupQuotaSubscriptionRequestStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GroupQuotaSubscriptionRequestStatusData>)Data).GetFormatFromOptions(options);
     }
 }

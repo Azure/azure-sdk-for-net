@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ScopeMapResource IOperationSource<ScopeMapResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScopeMapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            var data = ModelReaderWriter.Read<ScopeMapData>(response.Content);
             return new ScopeMapResource(_client, data);
         }
 
         async ValueTask<ScopeMapResource> IOperationSource<ScopeMapResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScopeMapData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            var data = ModelReaderWriter.Read<ScopeMapData>(response.Content);
             return await Task.FromResult(new ScopeMapResource(_client, data)).ConfigureAwait(false);
         }
     }

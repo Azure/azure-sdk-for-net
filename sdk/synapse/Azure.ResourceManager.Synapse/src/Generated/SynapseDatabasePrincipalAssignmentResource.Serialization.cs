@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDatabasePrincipalAssignmentResource : IJsonModel<SynapseDatabasePrincipalAssignmentData>
     {
-        private static SynapseDatabasePrincipalAssignmentData s_dataDeserializationInstance;
-        private static SynapseDatabasePrincipalAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseDatabasePrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDatabasePrincipalAssignmentData>)Data).Write(writer, options);
 
-        SynapseDatabasePrincipalAssignmentData IJsonModel<SynapseDatabasePrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDatabasePrincipalAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseDatabasePrincipalAssignmentData IJsonModel<SynapseDatabasePrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDatabasePrincipalAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseDatabasePrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseDatabasePrincipalAssignmentData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseDatabasePrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseDatabasePrincipalAssignmentData IPersistableModel<SynapseDatabasePrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDatabasePrincipalAssignmentData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseDatabasePrincipalAssignmentData IPersistableModel<SynapseDatabasePrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDatabasePrincipalAssignmentData>(data, options);
 
-        string IPersistableModel<SynapseDatabasePrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDatabasePrincipalAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseDatabasePrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDatabasePrincipalAssignmentData>)Data).GetFormatFromOptions(options);
     }
 }

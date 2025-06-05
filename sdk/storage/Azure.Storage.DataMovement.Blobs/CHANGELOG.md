@@ -3,13 +3,10 @@
 ## 12.2.0-beta.1 (Unreleased)
 
 ### Features Added
-- Explicitly setting `BlobStorageResourceOptions.AccessTier` to `null` will disable preserving the access tier value from the source blob to the destination blob.
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed bug where AccessTier for Premium Page Blobs were not being preserved.
-- Fixed some issues when transferring virtual directories with Blob Storage as the source.
 
 ### Other Changes
 

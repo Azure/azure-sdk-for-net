@@ -63,49 +63,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework
             }
         }
 
-        public static void AssertCustomEventTelemetry(
-            TelemetryItem telemetryItem,
-            string expectedName,
-            IDictionary<string, string> expectedProperties,
-            string? expectedSpanId,
-            string? expectedTraceId,
-            string expectedCloudRole = "[testNamespace]/testName",
-            string expectedCloudInstance = "testInstance",
-            string expectedApplicationVersion = "testVersion")
-        {
-            Assert.Equal("Event", telemetryItem.Name); // telemetry type
-            Assert.Equal("EventData", telemetryItem.Data.BaseType); // telemetry data type
-            Assert.Equal(2, telemetryItem.Data.BaseData.Version); // telemetry api version
-            Assert.Equal("00000000-0000-0000-0000-000000000000", telemetryItem.InstrumentationKey);
-
-            var expectedTagsCount = 4;
-
-            if (expectedSpanId != null && expectedTraceId != null)
-            {
-                expectedTagsCount += 2;
-
-                Assert.Equal(expectedSpanId, telemetryItem.Tags["ai.operation.parentId"]);
-                Assert.Equal(expectedTraceId, telemetryItem.Tags["ai.operation.id"]);
-            }
-
-            Assert.Equal(expectedTagsCount, telemetryItem.Tags.Count);
-            Assert.Equal(expectedCloudRole, telemetryItem.Tags["ai.cloud.role"]);
-            Assert.Equal(expectedApplicationVersion, telemetryItem.Tags["ai.application.ver"]);
-            Assert.Equal(expectedCloudInstance, telemetryItem.Tags["ai.cloud.roleInstance"]);
-            Assert.Contains("ai.internal.sdkVersion", telemetryItem.Tags.Keys);
-
-            var eventData = (TelemetryEventData)telemetryItem.Data.BaseData;
-
-            Assert.Equal(expectedName, eventData.Name);
-
-            foreach (var prop in expectedProperties)
-            {
-                Assert.Equal(prop.Value, eventData.Properties[prop.Key]);
-            }
-
-            Assert.Equal(expectedProperties.Count, eventData.Properties.Count);
-        }
-
         public static void AssertLog_As_ExceptionTelemetry(
             TelemetryItem telemetryItem,
             string expectedSeverityLevel,

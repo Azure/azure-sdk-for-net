@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataFactory
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataFactoryPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }

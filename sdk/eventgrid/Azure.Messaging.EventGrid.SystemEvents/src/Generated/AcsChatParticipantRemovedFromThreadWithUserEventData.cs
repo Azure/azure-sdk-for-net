@@ -15,14 +15,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatParticipantRemovedFromThreadWithUserEventData"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="threadId"> The chat thread id. </param>
         /// <param name="removedByCommunicationIdentifier"> The communication identifier of the user who removed the user. </param>
         /// <param name="participantRemoved"> The details of the user who was removed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="threadId"/>, <paramref name="removedByCommunicationIdentifier"/> or <paramref name="participantRemoved"/> is null. </exception>
-        internal AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved) : base(recipientCommunicationIdentifier, threadId)
+        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/>, <paramref name="removedByCommunicationIdentifier"/> or <paramref name="participantRemoved"/> is null. </exception>
+        internal AcsChatParticipantRemovedFromThreadWithUserEventData(CommunicationIdentifierModel recipientCommunicationIdentifier, CommunicationIdentifierModel removedByCommunicationIdentifier, AcsChatThreadParticipantProperties participantRemoved) : base(recipientCommunicationIdentifier)
         {
             Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-            Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(removedByCommunicationIdentifier, nameof(removedByCommunicationIdentifier));
             Argument.AssertNotNull(participantRemoved, nameof(participantRemoved));
 

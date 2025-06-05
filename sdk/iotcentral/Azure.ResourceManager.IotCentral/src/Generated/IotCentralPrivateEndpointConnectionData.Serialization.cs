@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.IotCentral
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotCentralContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(IotCentralPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }

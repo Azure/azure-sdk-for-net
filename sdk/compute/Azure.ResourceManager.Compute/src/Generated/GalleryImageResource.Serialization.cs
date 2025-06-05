@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class GalleryImageResource : IJsonModel<GalleryImageData>
     {
-        private static GalleryImageData s_dataDeserializationInstance;
-        private static GalleryImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<GalleryImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GalleryImageData>)Data).Write(writer, options);
 
-        GalleryImageData IJsonModel<GalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryImageData>)DataDeserializationInstance).Create(ref reader, options);
+        GalleryImageData IJsonModel<GalleryImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GalleryImageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GalleryImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GalleryImageData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<GalleryImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        GalleryImageData IPersistableModel<GalleryImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryImageData>(data, options, AzureResourceManagerComputeContext.Default);
+        GalleryImageData IPersistableModel<GalleryImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GalleryImageData>(data, options);
 
-        string IPersistableModel<GalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<GalleryImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GalleryImageData>)Data).GetFormatFromOptions(options);
     }
 }

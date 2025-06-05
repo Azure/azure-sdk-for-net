@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityCenterApiCollectionResource : IJsonModel<SecurityCenterApiCollectionData>
     {
-        private static SecurityCenterApiCollectionData s_dataDeserializationInstance;
-        private static SecurityCenterApiCollectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityCenterApiCollectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterApiCollectionData>)Data).Write(writer, options);
 
-        SecurityCenterApiCollectionData IJsonModel<SecurityCenterApiCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterApiCollectionData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityCenterApiCollectionData IJsonModel<SecurityCenterApiCollectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityCenterApiCollectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityCenterApiCollectionData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityCenterApiCollectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityCenterApiCollectionData IPersistableModel<SecurityCenterApiCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterApiCollectionData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityCenterApiCollectionData IPersistableModel<SecurityCenterApiCollectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityCenterApiCollectionData>(data, options);
 
-        string IPersistableModel<SecurityCenterApiCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterApiCollectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityCenterApiCollectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityCenterApiCollectionData>)Data).GetFormatFromOptions(options);
     }
 }

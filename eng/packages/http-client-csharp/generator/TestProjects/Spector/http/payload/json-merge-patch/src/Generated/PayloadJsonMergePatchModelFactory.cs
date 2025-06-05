@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 
-namespace Payload.JsonMergePatch
+namespace Payload.JsonMergePatch.Models
 {
     public static partial class PayloadJsonMergePatchModelFactory
     {

@@ -81,8 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
             using var serviceProvider = serviceCollection.BuildServiceProvider();
 
-            await StartHostedServicesAsync(serviceProvider);
-
             var logForwarder = serviceProvider.GetRequiredService<Microsoft.Extensions.Azure.AzureEventSourceLogForwarder>();
             Assert.NotNull(logForwarder);
             logForwarder.Start();

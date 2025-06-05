@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The SIMs to move. </summary>
+    /// <summary>
+    /// The SIMs to move.
+    /// Serialized Name: SimMove
+    /// </summary>
     public partial class SimMoveContent
     {
         /// <summary>
@@ -54,8 +57,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimMoveContent"/>. </summary>
-        /// <param name="targetSimGroupId"> The SIM Group where the SIMs should be moved. </param>
-        /// <param name="sims"> A list of SIM resource names to be moved. </param>
+        /// <param name="targetSimGroupId">
+        /// The SIM Group where the SIMs should be moved.
+        /// Serialized Name: SimMove.targetSimGroupId
+        /// </param>
+        /// <param name="sims">
+        /// A list of SIM resource names to be moved.
+        /// Serialized Name: SimMove.sims
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimMoveContent(SubResource targetSimGroupId, IList<string> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,7 +73,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The SIM Group where the SIMs should be moved. </summary>
+        /// <summary>
+        /// The SIM Group where the SIMs should be moved.
+        /// Serialized Name: SimMove.targetSimGroupId
+        /// </summary>
         internal SubResource TargetSimGroupId { get; set; }
         /// <summary> Gets Id. </summary>
         [WirePath("targetSimGroupId.id")]
@@ -73,7 +85,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             get => TargetSimGroupId is null ? default : TargetSimGroupId.Id;
         }
 
-        /// <summary> A list of SIM resource names to be moved. </summary>
+        /// <summary>
+        /// A list of SIM resource names to be moved.
+        /// Serialized Name: SimMove.sims
+        /// </summary>
         [WirePath("sims")]
         public IList<string> Sims { get; }
     }

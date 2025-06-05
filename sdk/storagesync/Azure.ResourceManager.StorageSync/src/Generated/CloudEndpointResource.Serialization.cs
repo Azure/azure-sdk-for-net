@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.StorageSync
 {
     public partial class CloudEndpointResource : IJsonModel<CloudEndpointData>
     {
-        private static CloudEndpointData s_dataDeserializationInstance;
-        private static CloudEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CloudEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudEndpointData>)Data).Write(writer, options);
 
-        CloudEndpointData IJsonModel<CloudEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        CloudEndpointData IJsonModel<CloudEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudEndpointData>(Data, options, AzureResourceManagerStorageSyncContext.Default);
+        BinaryData IPersistableModel<CloudEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CloudEndpointData IPersistableModel<CloudEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudEndpointData>(data, options, AzureResourceManagerStorageSyncContext.Default);
+        CloudEndpointData IPersistableModel<CloudEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudEndpointData>(data, options);
 
-        string IPersistableModel<CloudEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CloudEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudEndpointData>)Data).GetFormatFromOptions(options);
     }
 }

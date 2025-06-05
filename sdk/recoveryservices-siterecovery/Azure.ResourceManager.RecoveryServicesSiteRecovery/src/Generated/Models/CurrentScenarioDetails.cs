@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="CurrentScenarioDetails"/>. </summary>
-        public CurrentScenarioDetails()
+        internal CurrentScenarioDetails()
         {
         }
 
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         }
 
         /// <summary> Scenario name. </summary>
-        public string ScenarioName { get; set; }
+        public string ScenarioName { get; }
         /// <summary> ARM Id of the job being executed. </summary>
-        public ResourceIdentifier JobId { get; set; }
+        public ResourceIdentifier JobId { get; }
         /// <summary> Start time of the workflow. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartOn { get; }
     }
 }

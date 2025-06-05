@@ -39,17 +39,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(ResourceType);
+            writer.WriteStringValue(Type);
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location);
             }
-            if (Optional.IsCollectionDefined(ResourceTags))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
-                foreach (var item in ResourceTags)
+                foreach (var item in Tags)
                 {
                     writer.WritePropertyName(item.Key);
                     writer.WriteStringValue(item.Value);
@@ -68,7 +68,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue<object>(item.Value, options);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
                 writer.WriteEndObject();
             }
@@ -114,7 +121,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string type = default;
             string location = default;
             IReadOnlyDictionary<string, string> tags = default;
-            IReadOnlyDictionary<string, object> properties = default;
+            IReadOnlyDictionary<string, BinaryData> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +166,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -168,7 +175,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                         }
                         else
                         {
-                            dictionary.Add(property0.Name, property0.Value.GetObject());
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
                         }
                     }
                     properties = dictionary;
@@ -186,7 +193,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 type,
                 location,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
-                properties ?? new ChangeTrackingDictionary<string, object>(),
+                properties ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 serializedAdditionalRawData);
         }
 
@@ -197,7 +204,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceNotificationsResourceUpdatedDetails)} does not support writing '{options.Format}' format.");
             }

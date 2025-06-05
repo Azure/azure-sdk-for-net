@@ -33,10 +33,21 @@ pr:
     - eng/common/
 #endif
 
+# Switch to canary to test canary 1es branch. 1es template validation will set this parameter
+# to canary on run.
+parameters:
+- name: oneESTemplateTag
+  type: string
+  default: release
+  values:
+    - release
+    - canary
+
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: template
+    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     ArtifactName: packages
     Artifacts:
     - name: Azure.Template

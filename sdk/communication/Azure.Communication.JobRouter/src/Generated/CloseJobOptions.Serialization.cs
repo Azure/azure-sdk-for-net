@@ -125,7 +125,7 @@ namespace Azure.Communication.JobRouter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureCommunicationJobRouterContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CloseJobOptions)} does not support writing '{options.Format}' format.");
             }

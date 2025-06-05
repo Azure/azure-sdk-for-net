@@ -19,7 +19,6 @@ namespace Azure.Communication.Messages
     {
         private const string AuthorizationHeader = "Authorization";
         private readonly AzureKeyCredential _keyCredential;
-        private const string AuthorizationApiKeyPrefix = "Bearer";
         private static readonly string[] AuthorizationScopes = new string[] { "https://communication.azure.com/.default" };
         private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;

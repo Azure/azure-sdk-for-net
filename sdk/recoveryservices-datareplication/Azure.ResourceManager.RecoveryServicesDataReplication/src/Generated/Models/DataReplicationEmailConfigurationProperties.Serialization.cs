@@ -51,11 +51,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +91,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             bool sendToOwners = default;
             IList<string> customEmailAddresses = default;
             string locale = default;
-            DataReplicationProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,22 +119,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     locale = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataReplicationEmailConfigurationProperties(sendToOwners, customEmailAddresses ?? new ChangeTrackingList<string>(), locale, provisioningState, serializedAdditionalRawData);
+            return new DataReplicationEmailConfigurationProperties(sendToOwners, customEmailAddresses ?? new ChangeTrackingList<string>(), locale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataReplicationEmailConfigurationProperties>.Write(ModelReaderWriterOptions options)
@@ -150,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationEmailConfigurationProperties)} does not support writing '{options.Format}' format.");
             }

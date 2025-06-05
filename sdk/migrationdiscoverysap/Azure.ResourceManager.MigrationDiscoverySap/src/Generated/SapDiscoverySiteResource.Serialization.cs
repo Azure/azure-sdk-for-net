@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.MigrationDiscoverySap
 {
     public partial class SapDiscoverySiteResource : IJsonModel<SapDiscoverySiteData>
     {
-        private static SapDiscoverySiteData s_dataDeserializationInstance;
-        private static SapDiscoverySiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SapDiscoverySiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoverySiteData>)Data).Write(writer, options);
 
-        SapDiscoverySiteData IJsonModel<SapDiscoverySiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoverySiteData>)DataDeserializationInstance).Create(ref reader, options);
+        SapDiscoverySiteData IJsonModel<SapDiscoverySiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapDiscoverySiteData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SapDiscoverySiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapDiscoverySiteData>(Data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
+        BinaryData IPersistableModel<SapDiscoverySiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SapDiscoverySiteData IPersistableModel<SapDiscoverySiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapDiscoverySiteData>(data, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
+        SapDiscoverySiteData IPersistableModel<SapDiscoverySiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapDiscoverySiteData>(data, options);
 
-        string IPersistableModel<SapDiscoverySiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapDiscoverySiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SapDiscoverySiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapDiscoverySiteData>)Data).GetFormatFromOptions(options);
     }
 }

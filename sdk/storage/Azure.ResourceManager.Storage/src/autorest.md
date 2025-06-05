@@ -6,12 +6,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 csharp: true
 namespace: Azure.ResourceManager.Storage
-require: https://github.com/Azure/azure-rest-api-specs/blob/63d03a8f8c51576551e0fc621a97cef857970ab5/specification/storage/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/42b311973cb0045bde1cbf942bdeb73b7b184398/specification/storage/resource-manager/readme.md
 #tag: package-2024-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-    output-folder: $(this-folder)/../tests/Generated
+    output-folder: $(this-folder)/../samples/Generated
     clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -86,6 +86,7 @@ prepend-rp-prefix:
     - DnsEndpointType
     - ListKeyExpand
     - MinimumTlsVersion
+    - ProvisioningState
     - PermissionScope
     - SshPublicKey
     - PublicNetworkAccess
@@ -239,7 +240,6 @@ rename-mapping:
     ListEncryptionScopesInclude: EncryptionScopesIncludeType
     StorageAccount.properties.accountMigrationInProgress: IsAccountMigrationInProgress
     StorageAccount.properties.enableExtendedGroups: IsExtendedGroupEnabled
-    StorageAccount.properties.provisioningState: StorageAccountProvisioningState
     StorageAccountCreateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
     StorageAccountUpdateParameters.properties.enableExtendedGroups: IsExtendedGroupEnabled
     LocalUser.properties.allowAclAuthorization: IsAclAuthorizationAllowed
@@ -256,9 +256,7 @@ rename-mapping:
     Severity: NetworkSecurityPerimeterProvisioningIssueSeverity
     StorageTaskAssignmentUpdateProperties: StorageTaskAssignmentPatchProperties
     StorageTaskAssignmentUpdateProperties.enabled: IsEnabled
-    StorageTaskAssignmentUpdateProperties.provisioningState: StorageTaskAssignmentProvisioningState?
     StorageTaskAssignmentProperties.enabled: IsEnabled
-    StorageTaskAssignmentProperties.provisioningState: StorageTaskAssignmentProvisioningState?
     StorageTaskReportProperties.startTime: StartedOn|date-time
     StorageTaskReportProperties.finishTime: FinishedOn|date-time
     TriggerParameters: ExecutionTriggerParameters
@@ -369,23 +367,4 @@ directive:
       transform: >
           $['type'] = "integer";
           $['format'] = "int32";
-    # Fix ProvisioningState
-    - from: storage.json
-      where: $.definitions
-      transform: >
-          $.StorageAccountProperties.properties.provisioningState['x-ms-enum'] = {
-              "name": "StorageAccountProvisioningState",
-              "modelAsString": true
-            }
-    - from: storageTaskAssignments.json
-      where: $.definitions
-      transform: >
-          $.StorageTaskAssignmentProperties.properties.provisioningState['x-ms-enum'] = {
-              "name": "StorageTaskAssignmentProvisioningState",
-              "modelAsString": true
-            };
-          $.StorageTaskAssignmentUpdateProperties.properties.provisioningState['x-ms-enum'] = {
-              "name": "StorageTaskAssignmentProvisioningState",
-              "modelAsString": true
-            };
 ```

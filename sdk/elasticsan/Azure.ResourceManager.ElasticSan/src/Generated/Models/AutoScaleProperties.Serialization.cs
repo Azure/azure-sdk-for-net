@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 return null;
             }
-            ElasticSanScaleUpProperties scaleUpProperties = default;
+            ScaleUpProperties scaleUpProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                     {
                         continue;
                     }
-                    scaleUpProperties = ElasticSanScaleUpProperties.DeserializeElasticSanScaleUpProperties(property.Value, options);
+                    scaleUpProperties = ScaleUpProperties.DeserializeScaleUpProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AutoScaleProperties)} does not support writing '{options.Format}' format.");
             }

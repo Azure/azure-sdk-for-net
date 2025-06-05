@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.StoragePool
 {
     public partial class DiskPoolResource : IJsonModel<DiskPoolData>
     {
-        private static DiskPoolData s_dataDeserializationInstance;
-        private static DiskPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DiskPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolData>)Data).Write(writer, options);
 
-        DiskPoolData IJsonModel<DiskPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        DiskPoolData IJsonModel<DiskPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiskPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiskPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiskPoolData>(Data, options, AzureResourceManagerStoragePoolContext.Default);
+        BinaryData IPersistableModel<DiskPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DiskPoolData IPersistableModel<DiskPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskPoolData>(data, options, AzureResourceManagerStoragePoolContext.Default);
+        DiskPoolData IPersistableModel<DiskPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiskPoolData>(data, options);
 
-        string IPersistableModel<DiskPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DiskPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiskPoolData>)Data).GetFormatFromOptions(options);
     }
 }

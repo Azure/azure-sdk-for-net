@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Communication
 
         CommunicationServiceResource IOperationSource<CommunicationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CommunicationServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
+            var data = ModelReaderWriter.Read<CommunicationServiceResourceData>(response.Content);
             return new CommunicationServiceResource(_client, data);
         }
 
         async ValueTask<CommunicationServiceResource> IOperationSource<CommunicationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CommunicationServiceResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCommunicationContext.Default);
+            var data = ModelReaderWriter.Read<CommunicationServiceResourceData>(response.Content);
             return await Task.FromResult(new CommunicationServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

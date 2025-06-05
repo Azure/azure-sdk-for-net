@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleEligibilityScheduleInstances();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Get()
         {
             var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAll()
         {
             var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleEligibilityScheduleInstances.Count, 0);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Exists()
         {
             var collection = await GetRoleEligibilityScheduleInstanceCollectionAsync();

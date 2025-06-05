@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for packet core control plane version API service call. </summary>
+    /// <summary>
+    /// Response for packet core control plane version API service call.
+    /// Serialized Name: PacketCoreControlPlaneVersionListResult
+    /// </summary>
     internal partial class PacketCoreControlPlaneVersionListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneVersionListResult"/>. </summary>
-        /// <param name="value"> A list of supported packet core control plane versions. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of supported packet core control plane versions.
+        /// Serialized Name: PacketCoreControlPlaneVersionListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: PacketCoreControlPlaneVersionListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCoreControlPlaneVersionListResult(IReadOnlyList<PacketCoreControlPlaneVersionData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of supported packet core control plane versions. </summary>
+        /// <summary>
+        /// A list of supported packet core control plane versions.
+        /// Serialized Name: PacketCoreControlPlaneVersionListResult.value
+        /// </summary>
         public IReadOnlyList<PacketCoreControlPlaneVersionData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: PacketCoreControlPlaneVersionListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

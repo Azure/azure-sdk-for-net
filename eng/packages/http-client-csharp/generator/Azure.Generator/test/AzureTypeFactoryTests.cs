@@ -28,14 +28,13 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ETag), ExpectedResult = "writer.WriteStringValue(value.ToString());\n")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "writer.WriteStringValue(value);\n")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "writer.WriteStringValue(value);\n")]
-        [TestCase(typeof(ResponseError), ExpectedResult = "global::System.Text.Json.JsonSerializer.Serialize(writer, value);\n")]
         public string ValidateSerializationStatement(Type type)
         {
             var value = new ParameterProvider("value", $"", type).AsExpression().As(type);
             var writer = new ParameterProvider("writer", $"", typeof(Utf8JsonWriter)).AsExpression().As<Utf8JsonWriter>();
             var options = new ParameterProvider("options", $"", typeof(ModelReaderWriterOptions)).AsExpression().As<ModelReaderWriterOptions>();
 
-            var statement = AzureClientGenerator.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
+            var statement = AzureClientPlugin.Instance.TypeFactory.SerializeJsonValue(type, value, writer, options, SerializationFormat.Default);
             Assert.IsNotNull(statement);
 
             return statement.ToDisplayString();
@@ -46,12 +45,11 @@ namespace Azure.Generator.Tests
         [TestCase(typeof(ETag), ExpectedResult = "new global::Azure.ETag(element.GetString())")]
         [TestCase(typeof(AzureLocation), ExpectedResult = "new global::Azure.Core.AzureLocation(element.GetString())")]
         [TestCase(typeof(ResourceIdentifier), ExpectedResult = "new global::Azure.Core.ResourceIdentifier(element.GetString())")]
-        [TestCase(typeof(ResponseError), ExpectedResult = "global::System.Text.Json.JsonSerializer.Deserialize<global::Azure.ResponseError>(element.GetRawText())")]
         public string ValidateDeserializationExpression(Type type)
         {
             var element = new ParameterProvider("element", $"", typeof(JsonElement)).AsExpression().As<JsonElement>();
 
-            var expression = AzureClientGenerator.Instance.TypeFactory.DeserializeJsonValue(type, element, SerializationFormat.Default);
+            var expression = AzureClientPlugin.Instance.TypeFactory.DeserializeJsonValue(type, element, SerializationFormat.Default);
             Assert.IsNotNull(expression);
 
             return expression.ToDisplayString();
@@ -62,7 +60,7 @@ namespace Azure.Generator.Tests
         {
             var input = InputFactory.Primitive.String("uuid", "Azure.Core.uuid");
 
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
@@ -74,7 +72,7 @@ namespace Azure.Generator.Tests
         {
             var input = InputFactory.Primitive.String("ipV4Address", "Azure.Core.ipV4Address");
 
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
@@ -86,7 +84,7 @@ namespace Azure.Generator.Tests
         {
             var input = InputFactory.Primitive.String("ipV6Address", "Azure.Core.ipV6Address");
 
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
@@ -98,7 +96,7 @@ namespace Azure.Generator.Tests
         {
             var input = InputFactory.Primitive.String("eTag", "Azure.Core.eTag");
 
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
@@ -110,7 +108,7 @@ namespace Azure.Generator.Tests
         {
             var input = InputFactory.Primitive.String("azureLocation", "Azure.Core.azureLocation");
 
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
@@ -122,23 +120,11 @@ namespace Azure.Generator.Tests
         {
             var input = InputFactory.Primitive.String("armResourceIdentifier", "Azure.Core.armResourceIdentifier");
 
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
+            var actual = AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(input);
 
             Assert.IsNotNull(actual);
             Assert.IsTrue(actual?.IsFrameworkType);
             Assert.AreEqual(typeof(ResourceIdentifier), actual?.FrameworkType);
-        }
-
-        [Test]
-        public void ResponseError()
-        {
-            var input = InputFactory.Primitive.String("responseError", "Azure.Core.Foundations.Error");
-
-            var actual = AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(input);
-
-            Assert.IsNotNull(actual);
-            Assert.IsTrue(actual?.IsFrameworkType);
-            Assert.AreEqual(typeof(ResponseError), actual?.FrameworkType);
         }
     }
 }

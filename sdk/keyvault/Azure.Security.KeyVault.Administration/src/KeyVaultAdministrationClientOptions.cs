@@ -9,33 +9,21 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    [CodeGenModel("AzureSecurityKeyVaultAdministrationClientOptions")]
-    public partial class KeyVaultAdministrationClientOptions : ClientOptions
+    public class KeyVaultAdministrationClientOptions : ClientOptions
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
 
         /// <summary>
-        /// Gets the <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when
-        /// making requests. For more information, see
+        /// The latest service version supported by this client library.
+        /// For more information, see
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
-        public KeyVaultAdministrationClientOptions.ServiceVersion Version { get; }
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_5;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="KeyVaultAdministrationClientOptions"/> class.
+        /// The versions of Azure Key Vault supported by this client
+        /// library.
         /// </summary>
-        /// <param name="version">
-        /// The <see cref="KeyVaultAdministrationClientOptions.ServiceVersion"/> of the service API used when
-        /// making requests.
-        /// </param>
-        public KeyVaultAdministrationClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version;
-
-            this.ConfigureLogging();
-        }
-
-        /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
 #pragma warning disable CA1707 // Identifiers should not contain underscores
@@ -58,12 +46,28 @@ namespace Azure.Security.KeyVault.Administration
             /// The Key Vault API version 7.5.
             /// </summary>
             V7_5 = 4,
-
-            /// <summary>
-            /// Service version "7.6-preview.1".
-            /// </summary>
-            V7_6_Preview_2 = 5,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
+        }
+
+        /// <summary>
+        /// Gets the <see cref="ServiceVersion"/> of the service API used when
+        /// making requests. For more information, see
+        /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
+        /// </summary>
+        public ServiceVersion Version { get; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyVaultAdministrationClientOptions"/> class.
+        /// </summary>
+        /// <param name="version">
+        /// The <see cref="ServiceVersion"/> of the service API used when
+        /// making requests.
+        /// </param>
+        public KeyVaultAdministrationClientOptions(ServiceVersion version = LatestVersion)
+        {
+            Version = version;
+
+            this.ConfigureLogging();
         }
 
         /// <summary>
@@ -79,8 +83,7 @@ namespace Azure.Security.KeyVault.Administration
                 ServiceVersion.V7_3 => "7.3",
                 ServiceVersion.V7_4 => "7.4",
                 ServiceVersion.V7_5 => "7.5",
-                ServiceVersion.V7_6_Preview_2 => "7.6-preview.2",
-                _ => throw new ArgumentOutOfRangeException(nameof(Version), Version, null)
+                _ => throw new ArgumentException(Version.ToString()),
             };
         }
     }

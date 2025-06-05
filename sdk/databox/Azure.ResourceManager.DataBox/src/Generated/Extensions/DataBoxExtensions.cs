@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -434,7 +434,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.DataBox
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2022-12-01</description>
         /// </item>
         /// </list>
         /// <item>

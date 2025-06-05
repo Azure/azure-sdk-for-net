@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -19,17 +18,7 @@ namespace Azure.Storage.Queues.Models
         /// <summary>
         /// The approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public int ApproximateMessagesCount
-        {
-            get => (int)ApproximateMessagesCountLong;
-            internal set => ApproximateMessagesCountLong = value;
-        }
-
-        /// <summary>
-        /// The approximate number of messages in the queue. This number is not lower than the actual number of messages in the queue, but could be higher.
-        /// </summary>
-        public long ApproximateMessagesCountLong { get; internal set; }
+        public int ApproximateMessagesCount { get; internal set; }
 
         /// <summary>
         /// Creates a new QueueProperties instance

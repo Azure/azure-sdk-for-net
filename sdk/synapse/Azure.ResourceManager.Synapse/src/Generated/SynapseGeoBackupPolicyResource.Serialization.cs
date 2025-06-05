@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseGeoBackupPolicyResource : IJsonModel<SynapseGeoBackupPolicyData>
     {
-        private static SynapseGeoBackupPolicyData s_dataDeserializationInstance;
-        private static SynapseGeoBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseGeoBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseGeoBackupPolicyData>)Data).Write(writer, options);
 
-        SynapseGeoBackupPolicyData IJsonModel<SynapseGeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseGeoBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseGeoBackupPolicyData IJsonModel<SynapseGeoBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseGeoBackupPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseGeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseGeoBackupPolicyData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseGeoBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseGeoBackupPolicyData IPersistableModel<SynapseGeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseGeoBackupPolicyData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseGeoBackupPolicyData IPersistableModel<SynapseGeoBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseGeoBackupPolicyData>(data, options);
 
-        string IPersistableModel<SynapseGeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseGeoBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseGeoBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseGeoBackupPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

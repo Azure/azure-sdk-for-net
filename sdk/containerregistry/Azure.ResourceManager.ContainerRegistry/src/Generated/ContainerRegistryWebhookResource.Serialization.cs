@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryWebhookResource : IJsonModel<ContainerRegistryWebhookData>
     {
-        private static ContainerRegistryWebhookData s_dataDeserializationInstance;
-        private static ContainerRegistryWebhookData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ContainerRegistryWebhookData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryWebhookData>)Data).Write(writer, options);
 
-        ContainerRegistryWebhookData IJsonModel<ContainerRegistryWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryWebhookData>)DataDeserializationInstance).Create(ref reader, options);
+        ContainerRegistryWebhookData IJsonModel<ContainerRegistryWebhookData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryWebhookData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerRegistryWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryWebhookData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
+        BinaryData IPersistableModel<ContainerRegistryWebhookData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ContainerRegistryWebhookData IPersistableModel<ContainerRegistryWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryWebhookData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
+        ContainerRegistryWebhookData IPersistableModel<ContainerRegistryWebhookData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryWebhookData>(data, options);
 
-        string IPersistableModel<ContainerRegistryWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryWebhookData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerRegistryWebhookData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryWebhookData>)Data).GetFormatFromOptions(options);
     }
 }

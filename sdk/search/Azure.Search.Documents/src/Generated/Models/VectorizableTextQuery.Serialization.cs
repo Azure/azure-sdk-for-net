@@ -59,11 +59,6 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("filterOverride"u8);
                 writer.WriteStringValue(FilterOverride);
             }
-            if (Optional.IsDefined(PerDocumentVectorLimit))
-            {
-                writer.WritePropertyName("perDocumentVectorLimit"u8);
-                writer.WriteNumberValue(PerDocumentVectorLimit.Value);
-            }
             writer.WriteEndObject();
         }
 
@@ -83,7 +78,6 @@ namespace Azure.Search.Documents.Models
             float? weight = default;
             VectorThreshold threshold = default;
             string filterOverride = default;
-            int? perDocumentVectorLimit = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -160,15 +154,6 @@ namespace Azure.Search.Documents.Models
                     filterOverride = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("perDocumentVectorLimit"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    perDocumentVectorLimit = property.Value.GetInt32();
-                    continue;
-                }
             }
             return new VectorizableTextQuery(
                 kind,
@@ -179,7 +164,6 @@ namespace Azure.Search.Documents.Models
                 weight,
                 threshold,
                 filterOverride,
-                perDocumentVectorLimit,
                 text,
                 queryRewrites);
         }

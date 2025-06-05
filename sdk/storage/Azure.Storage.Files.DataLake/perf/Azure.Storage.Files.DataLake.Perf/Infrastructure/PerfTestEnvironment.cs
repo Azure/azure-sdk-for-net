@@ -27,21 +27,26 @@ namespace Azure.Storage.Files.DataLake.Perf
         public new string StorageEndpointSuffix => base.StorageEndpointSuffix ?? "core.windows.net";
 
         /// <summary>
-        /// The name of the Blob storage account to test against.
+        ///   The name of the Data Lake storage account to test against.
         /// </summary>
-        /// <value>The Blob storage account name, read from the "AZURE_STORAGE_ACCOUNT_NAME" environment variable.</value>
-        public string StorageAccountName => GetVariable("AZURE_STORAGE_ACCOUNT_NAME");
+        ///
+        /// <value>The Data Lake storage account name, read from the "DATALAKE_STORAGE_ACCOUNT_NAME" environment variable.</value>
+        ///
+        public string DataLakeAccountName => GetVariable("DATALAKE_STORAGE_ACCOUNT_NAME");
 
         /// <summary>
-        /// The shared access key of the Blob storage account to test against.
+        ///   The shared access key of the Data Lake storage account to test against.
         /// </summary>
-        /// <value>The Blob storage account key, read from the "AZURE_STORAGE_ACCOUNT_KEY" environment variable.</value>
-        public string StorageAccountKey => GetOptionalVariable("AZURE_STORAGE_ACCOUNT_KEY");
+        ///
+        /// <value>The Data Lake storage account key, read from the "DATALAKE_STORAGE_ACCOUNT_KEY" environment variable.</value>
+        ///
+        public string DataLakeAccountKey => GetVariable("DATALAKE_STORAGE_ACCOUNT_KEY");
 
         /// <summary>
-        /// The Blob storage endpoint.
+        ///   The fully-qualified URI for the Data Lake storage account to test against.
         /// </summary>
-        public Uri StorageEndpoint { get; }
+        ///
+        public Uri DataLakeServiceUri { get; }
 
         /// <summary>
         ///   The credential for accessing the Data Lake storage account used for testing.
@@ -57,11 +62,8 @@ namespace Azure.Storage.Files.DataLake.Perf
         ///
         public PerfTestEnvironment()
         {
-            StorageEndpoint = new Uri($"{ Uri.UriSchemeHttps }{ Uri.SchemeDelimiter }{ StorageAccountName }.dfs.{ StorageEndpointSuffix }");
-            if (StorageAccountKey != null)
-            {
-                DataLakeCredential = new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey);
-            }
+            DataLakeServiceUri = new Uri($"{ Uri.UriSchemeHttps }{ Uri.SchemeDelimiter }{ DataLakeAccountName }.dfs.{ StorageEndpointSuffix }");
+            DataLakeCredential = new StorageSharedKeyCredential(DataLakeAccountName, DataLakeAccountKey);
         }
     }
 }

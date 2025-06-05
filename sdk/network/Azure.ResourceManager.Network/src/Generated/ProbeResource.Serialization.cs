@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ProbeResource : IJsonModel<ProbeData>
     {
-        private static ProbeData s_dataDeserializationInstance;
-        private static ProbeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ProbeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProbeData>)Data).Write(writer, options);
 
-        ProbeData IJsonModel<ProbeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProbeData>)DataDeserializationInstance).Create(ref reader, options);
+        ProbeData IJsonModel<ProbeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProbeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProbeData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ProbeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProbeData IPersistableModel<ProbeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProbeData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ProbeData IPersistableModel<ProbeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProbeData>(data, options);
 
-        string IPersistableModel<ProbeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProbeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ProbeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProbeData>)Data).GetFormatFromOptions(options);
     }
 }

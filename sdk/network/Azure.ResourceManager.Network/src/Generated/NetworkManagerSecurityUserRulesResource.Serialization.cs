@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkManagerSecurityUserRulesResource : IJsonModel<NetworkManagerSecurityUserRulesData>
     {
-        private static NetworkManagerSecurityUserRulesData s_dataDeserializationInstance;
-        private static NetworkManagerSecurityUserRulesData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkManagerSecurityUserRulesData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRulesData>)Data).Write(writer, options);
 
-        NetworkManagerSecurityUserRulesData IJsonModel<NetworkManagerSecurityUserRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRulesData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkManagerSecurityUserRulesData IJsonModel<NetworkManagerSecurityUserRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerSecurityUserRulesData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkManagerSecurityUserRulesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerSecurityUserRulesData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NetworkManagerSecurityUserRulesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkManagerSecurityUserRulesData IPersistableModel<NetworkManagerSecurityUserRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserRulesData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NetworkManagerSecurityUserRulesData IPersistableModel<NetworkManagerSecurityUserRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerSecurityUserRulesData>(data, options);
 
-        string IPersistableModel<NetworkManagerSecurityUserRulesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserRulesData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkManagerSecurityUserRulesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerSecurityUserRulesData>)Data).GetFormatFromOptions(options);
     }
 }

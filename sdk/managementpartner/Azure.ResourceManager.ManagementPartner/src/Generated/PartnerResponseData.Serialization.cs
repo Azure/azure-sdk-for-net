@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ManagementPartner
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagementPartnerContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PartnerResponseData)} does not support writing '{options.Format}' format.");
             }

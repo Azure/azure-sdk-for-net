@@ -64,11 +64,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("oSMinorVersion"u8);
                 writer.WriteStringValue(OSMinorVersion);
             }
-            if (Optional.IsDefined(UserSelectedOSName))
-            {
-                writer.WritePropertyName("userSelectedOSName"u8);
-                writer.WriteStringValue(UserSelectedOSName);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +107,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string osVersion = default;
             string osMajorVersion = default;
             string osMinorVersion = default;
-            string userSelectedOSName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,11 +141,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     osMinorVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("userSelectedOSName"u8))
-                {
-                    userSelectedOSName = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -165,7 +154,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 osVersion,
                 osMajorVersion,
                 osMinorVersion,
-                userSelectedOSName,
                 serializedAdditionalRawData);
         }
 
@@ -176,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SiteRecoveryOSDetails)} does not support writing '{options.Format}' format.");
             }

@@ -8,23 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.ResourceManager.Blueprint.Models;
 
 namespace Azure.ResourceManager.Blueprint
 {
     public partial class BlueprintArtifactResource : IJsonModel<ArtifactData>
     {
-        private static UnknownArtifact s_dataDeserializationInstance;
-        private static UnknownArtifact DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ArtifactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactData>)Data).Write(writer, options);
 
-        ArtifactData IJsonModel<ArtifactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactData>)DataDeserializationInstance).Create(ref reader, options);
+        ArtifactData IJsonModel<ArtifactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArtifactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArtifactData>(Data, options, AzureResourceManagerBlueprintContext.Default);
+        BinaryData IPersistableModel<ArtifactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ArtifactData IPersistableModel<ArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactData>(data, options, AzureResourceManagerBlueprintContext.Default);
+        ArtifactData IPersistableModel<ArtifactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactData>(data, options);
 
-        string IPersistableModel<ArtifactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ArtifactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactData>)Data).GetFormatFromOptions(options);
     }
 }

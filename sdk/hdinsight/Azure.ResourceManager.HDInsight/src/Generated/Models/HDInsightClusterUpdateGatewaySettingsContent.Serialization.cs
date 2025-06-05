@@ -49,16 +49,6 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WritePropertyName("restAuthCredential.password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (Optional.IsCollectionDefined(RestAuthEntraUsers))
-            {
-                writer.WritePropertyName("restAuthEntraUsers"u8);
-                writer.WriteStartArray();
-                foreach (var item in RestAuthEntraUsers)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -99,7 +89,6 @@ namespace Azure.ResourceManager.HDInsight.Models
             bool? restAuthCredentialIsEnabled = default;
             string restAuthCredentialUsername = default;
             string restAuthCredentialPassword = default;
-            IList<EntraUserInfo> restAuthEntraUsers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,27 +112,13 @@ namespace Azure.ResourceManager.HDInsight.Models
                     restAuthCredentialPassword = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("restAuthEntraUsers"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<EntraUserInfo> array = new List<EntraUserInfo>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(EntraUserInfo.DeserializeEntraUserInfo(item, options));
-                    }
-                    restAuthEntraUsers = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HDInsightClusterUpdateGatewaySettingsContent(restAuthCredentialIsEnabled, restAuthCredentialUsername, restAuthCredentialPassword, restAuthEntraUsers ?? new ChangeTrackingList<EntraUserInfo>(), serializedAdditionalRawData);
+            return new HDInsightClusterUpdateGatewaySettingsContent(restAuthCredentialIsEnabled, restAuthCredentialUsername, restAuthCredentialPassword, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HDInsightClusterUpdateGatewaySettingsContent>.Write(ModelReaderWriterOptions options)
@@ -153,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightClusterUpdateGatewaySettingsContent)} does not support writing '{options.Format}' format.");
             }

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         {
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAndExists()
         {
             var randomGuid = Recording.Random.NewGuid().ToString();
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.IsFalse(await denyAssignmentCollection.ExistsAsync(randomGuid));
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllBySubscription()
         {
             var scope = DefaultSubscription.Id;
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.IsEmpty(denyAssignments);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllByResourceGroup()
         {
             var subscriptionId = DefaultSubscription.Id;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.IsEmpty(denyAssignments);
         }
 
-        [RecordedTest]
+        [Test]
         public async Task GetAllByResource()
         {
             var subscriptionId = DefaultSubscription.Id;

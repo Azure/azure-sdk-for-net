@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputePrivateEndpointConnectionResource : IJsonModel<HybridComputePrivateEndpointConnectionData>
     {
-        private static HybridComputePrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static HybridComputePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HybridComputePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        HybridComputePrivateEndpointConnectionData IJsonModel<HybridComputePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        HybridComputePrivateEndpointConnectionData IJsonModel<HybridComputePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridComputePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputePrivateEndpointConnectionData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
+        BinaryData IPersistableModel<HybridComputePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HybridComputePrivateEndpointConnectionData IPersistableModel<HybridComputePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(data, options, AzureResourceManagerHybridComputeContext.Default);
+        HybridComputePrivateEndpointConnectionData IPersistableModel<HybridComputePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<HybridComputePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HybridComputePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

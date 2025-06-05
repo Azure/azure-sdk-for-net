@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CapacityReservationResource : IJsonModel<CapacityReservationData>
     {
-        private static CapacityReservationData s_dataDeserializationInstance;
-        private static CapacityReservationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CapacityReservationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CapacityReservationData>)Data).Write(writer, options);
 
-        CapacityReservationData IJsonModel<CapacityReservationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityReservationData>)DataDeserializationInstance).Create(ref reader, options);
+        CapacityReservationData IJsonModel<CapacityReservationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CapacityReservationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CapacityReservationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CapacityReservationData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<CapacityReservationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CapacityReservationData IPersistableModel<CapacityReservationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityReservationData>(data, options, AzureResourceManagerComputeContext.Default);
+        CapacityReservationData IPersistableModel<CapacityReservationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CapacityReservationData>(data, options);
 
-        string IPersistableModel<CapacityReservationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityReservationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CapacityReservationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CapacityReservationData>)Data).GetFormatFromOptions(options);
     }
 }

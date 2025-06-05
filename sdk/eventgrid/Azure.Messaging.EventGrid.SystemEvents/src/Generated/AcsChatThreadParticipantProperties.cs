@@ -47,13 +47,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>
         /// <param name="participantCommunicationIdentifier"> The communication identifier of the user. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="participantCommunicationIdentifier"/> is null. </exception>
-        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier)
+        /// <param name="metadata"> The metadata of the user. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="participantCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
+        internal AcsChatThreadParticipantProperties(CommunicationIdentifierModel participantCommunicationIdentifier, IReadOnlyDictionary<string, string> metadata)
         {
             Argument.AssertNotNull(participantCommunicationIdentifier, nameof(participantCommunicationIdentifier));
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
             ParticipantCommunicationIdentifier = participantCommunicationIdentifier;
-            Metadata = new ChangeTrackingDictionary<string, string>();
+            Metadata = metadata;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadParticipantProperties"/>. </summary>

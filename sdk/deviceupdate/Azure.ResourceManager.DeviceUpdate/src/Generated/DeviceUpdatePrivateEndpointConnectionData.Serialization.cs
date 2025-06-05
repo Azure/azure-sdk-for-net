@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceUpdateContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }

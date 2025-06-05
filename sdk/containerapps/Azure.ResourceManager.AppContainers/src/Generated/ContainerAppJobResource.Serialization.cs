@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppContainers
 {
     public partial class ContainerAppJobResource : IJsonModel<ContainerAppJobData>
     {
-        private static ContainerAppJobData s_dataDeserializationInstance;
-        private static ContainerAppJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ContainerAppJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppJobData>)Data).Write(writer, options);
 
-        ContainerAppJobData IJsonModel<ContainerAppJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppJobData>)DataDeserializationInstance).Create(ref reader, options);
+        ContainerAppJobData IJsonModel<ContainerAppJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerAppJobData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerAppJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerAppJobData>(Data, options, AzureResourceManagerAppContainersContext.Default);
+        BinaryData IPersistableModel<ContainerAppJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ContainerAppJobData IPersistableModel<ContainerAppJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppJobData>(data, options, AzureResourceManagerAppContainersContext.Default);
+        ContainerAppJobData IPersistableModel<ContainerAppJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerAppJobData>(data, options);
 
-        string IPersistableModel<ContainerAppJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerAppJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerAppJobData>)Data).GetFormatFromOptions(options);
     }
 }

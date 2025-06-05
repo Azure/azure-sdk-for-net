@@ -44,8 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="instantRPRetentionRangeInDays"> Instant RP retention policy range in days. </param>
         /// <param name="timeZone"> TimeZone optional input as string. For example: TimeZone = "Pacific Standard Time". </param>
         /// <param name="policyType"></param>
-        /// <param name="snapshotConsistencyType"></param>
-        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType, IaasVmSnapshotConsistencyType? snapshotConsistencyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
+        internal IaasVmProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> serializedAdditionalRawData, InstantRPAdditionalDetails instantRPDetails, BackupSchedulePolicy schedulePolicy, BackupRetentionPolicy retentionPolicy, IDictionary<string, BackupTieringPolicy> tieringPolicy, int? instantRPRetentionRangeInDays, string timeZone, IaasVmPolicyType? policyType) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, serializedAdditionalRawData)
         {
             InstantRPDetails = instantRPDetails;
             SchedulePolicy = schedulePolicy;
@@ -54,7 +53,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             InstantRPRetentionRangeInDays = instantRPRetentionRangeInDays;
             TimeZone = timeZone;
             PolicyType = policyType;
-            SnapshotConsistencyType = snapshotConsistencyType;
             BackupManagementType = backupManagementType ?? "AzureIaasVM";
         }
 
@@ -84,7 +82,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TimeZone { get; set; }
         /// <summary> Gets or sets the policy type. </summary>
         public IaasVmPolicyType? PolicyType { get; set; }
-        /// <summary> Gets or sets the snapshot consistency type. </summary>
-        public IaasVmSnapshotConsistencyType? SnapshotConsistencyType { get; set; }
     }
 }

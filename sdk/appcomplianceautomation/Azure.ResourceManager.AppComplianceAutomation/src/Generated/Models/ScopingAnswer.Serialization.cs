@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppComplianceAutomationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ScopingAnswer)} does not support writing '{options.Format}' format.");
             }

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeScheduleContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ScheduledActionExecutionParameterDetail)} does not support writing '{options.Format}' format.");
             }

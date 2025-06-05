@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsMessageDeliveryStatusUpdatedEventDataConverter))]
     public partial class AcsMessageDeliveryStatusUpdatedEventData : IUtf8JsonSerializable, IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMessageDeliveryStatusUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -160,7 +158,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsMessageDeliveryStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -198,20 +196,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AcsMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<AcsMessageDeliveryStatusUpdatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsMessageDeliveryStatusUpdatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AcsMessageDeliveryStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement);
-            }
         }
     }
 }

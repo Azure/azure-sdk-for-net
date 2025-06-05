@@ -53,46 +53,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
             }
-            if (Optional.IsDefined(AuthenticationType))
-            {
-                writer.WritePropertyName("authenticationType"u8);
-                writer.WriteStringValue(AuthenticationType.Value.ToString());
-            }
-            if (Optional.IsDefined(Host))
-            {
-                writer.WritePropertyName("host"u8);
-                JsonSerializer.Serialize(writer, Host);
-            }
-            if (Optional.IsDefined(Port))
-            {
-                writer.WritePropertyName("port"u8);
-                JsonSerializer.Serialize(writer, Port);
-            }
-            if (Optional.IsDefined(Username))
-            {
-                writer.WritePropertyName("username"u8);
-                JsonSerializer.Serialize(writer, Username);
-            }
-            if (Optional.IsDefined(Database))
-            {
-                writer.WritePropertyName("database"u8);
-                JsonSerializer.Serialize(writer, Database);
-            }
-            if (Optional.IsDefined(SslMode))
-            {
-                writer.WritePropertyName("sslMode"u8);
-                JsonSerializer.Serialize(writer, SslMode);
-            }
-            if (Optional.IsDefined(ConnectionTimeout))
-            {
-                writer.WritePropertyName("connectionTimeout"u8);
-                JsonSerializer.Serialize(writer, ConnectionTimeout);
-            }
-            if (Optional.IsDefined(CommandTimeout))
-            {
-                writer.WritePropertyName("commandTimeout"u8);
-                JsonSerializer.Serialize(writer, CommandTimeout);
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -137,14 +97,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> connectionString = default;
             DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
-            GreenplumAuthenticationType? authenticationType = default;
-            DataFactoryElement<string> host = default;
-            DataFactoryElement<int> port = default;
-            DataFactoryElement<string> username = default;
-            DataFactoryElement<string> database = default;
-            DataFactoryElement<int> sslMode = default;
-            DataFactoryElement<int> connectionTimeout = default;
-            DataFactoryElement<int> commandTimeout = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,78 +192,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                             encryptedCredential = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("authenticationType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authenticationType = new GreenplumAuthenticationType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("host"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            host = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("port"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            port = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("username"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            username = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("database"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            database = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("sslMode"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sslMode = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionTimeout"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
-                        if (property0.NameEquals("commandTimeout"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            commandTimeout = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -328,15 +208,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties,
                 connectionString,
                 password,
-                encryptedCredential,
-                authenticationType,
-                host,
-                port,
-                username,
-                database,
-                sslMode,
-                connectionTimeout,
-                commandTimeout);
+                encryptedCredential);
         }
 
         BinaryData IPersistableModel<GreenplumLinkedService>.Write(ModelReaderWriterOptions options)
@@ -346,7 +218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(GreenplumLinkedService)} does not support writing '{options.Format}' format.");
             }

@@ -655,7 +655,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="vmId"> Azure VM unique ID. </param>
         /// <param name="instanceView"> The virtual machine instance view. </param>
         /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
-        /// <param name="resilientVmDeletionStatus"> Specifies the resilient VM deletion status for the virtual machine. </param>
         /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
         /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the virtual machine. </param>
@@ -671,7 +670,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <returns> A new <see cref="Compute.VirtualMachineScaleSetVmData"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceId = null, ComputeSku sku = null, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null, bool? latestModelApplied = null, string vmId = null, VirtualMachineScaleSetVmInstanceView instanceView = null, VirtualMachineHardwareProfile hardwareProfile = null, ResilientVmDeletionStatus? resilientVmDeletionStatus = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, SecurityProfile securityProfile = null, VirtualMachineNetworkProfile networkProfile = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, DateTimeOffset? timeCreated = null)
+        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string instanceId = null, ComputeSku sku = null, ComputePlan plan = null, IEnumerable<VirtualMachineExtensionData> resources = null, IEnumerable<string> zones = null, ManagedServiceIdentity identity = null, string etag = null, bool? latestModelApplied = null, string vmId = null, VirtualMachineScaleSetVmInstanceView instanceView = null, VirtualMachineHardwareProfile hardwareProfile = null, VirtualMachineStorageProfile storageProfile = null, AdditionalCapabilities additionalCapabilities = null, VirtualMachineOSProfile osProfile = null, SecurityProfile securityProfile = null, VirtualMachineNetworkProfile networkProfile = null, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = null, BootDiagnostics bootDiagnostics = null, ResourceIdentifier availabilitySetId = null, string provisioningState = null, string licenseType = null, string modelDefinitionApplied = null, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy = null, string userData = null, DateTimeOffset? timeCreated = null)
         {
             tags ??= new Dictionary<string, string>();
             resources ??= new List<VirtualMachineExtensionData>();
@@ -696,7 +695,6 @@ namespace Azure.ResourceManager.Compute.Models
                 vmId,
                 instanceView,
                 hardwareProfile,
-                resilientVmDeletionStatus,
                 storageProfile,
                 additionalCapabilities,
                 osProfile,
@@ -722,7 +720,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
         /// <param name="disks"> The disks information. </param>
         /// <param name="extensions"> The extensions information. </param>
-        /// <param name="vmHealthStatus"> The application health status for the VM, provided through Application Health Extension or Load Balancer Health Probes. </param>
+        /// <param name="vmHealthStatus"> The health status for the VM. </param>
         /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
@@ -1058,7 +1056,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="maintenanceRedeployStatus"> The Maintenance Operation status on the virtual machine. </param>
         /// <param name="disks"> The virtual machine disk information. </param>
         /// <param name="extensions"> The extensions information. </param>
-        /// <param name="vmHealthStatus"> The application health status for the VM, provided through Application Health Extension. </param>
+        /// <param name="vmHealthStatus"> The health status for the VM. </param>
         /// <param name="bootDiagnostics"> Boot Diagnostics is a debugging feature which allows you to view Console Output and Screenshot to diagnose VM status. You can easily view the output of your console log. Azure also enables you to see a screenshot of the VM from the hypervisor. </param>
         /// <param name="assignedHost"> Resource id of the dedicated host, on which the virtual machine is allocated through automatic placement, when the virtual machine is associated with a dedicated host group that has automatic placement enabled. Minimum api-version: 2020-06-01. </param>
         /// <param name="statuses"> The resource status information. </param>
@@ -1429,9 +1427,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
         /// <returns> A new <see cref="Compute.AvailabilitySetData"/> instance for mocking. </returns>
-        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null, ScheduledEventsPolicy scheduledEventsPolicy = null, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = null)
+        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null, ScheduledEventsPolicy scheduledEventsPolicy = null)
         {
             tags ??= new Dictionary<string, string>();
             virtualMachines ??= new List<WritableSubResource>();
@@ -1451,26 +1448,7 @@ namespace Azure.ResourceManager.Compute.Models
                 proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null,
                 statuses?.ToList(),
                 scheduledEventsPolicy,
-                virtualMachineScaleSetMigrationInfo,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.VirtualMachineScaleSetMigrationInfo"/>. </summary>
-        /// <param name="defaultVirtualMachineScaleSetInfo"> Indicates the target Virtual Machine ScaleSet properties upon triggering a seamless migration without downtime of the VMs via the ConvertToVirtualMachineScaleSet API. </param>
-        /// <param name="migrateToVirtualMachineScaleSetId"> Specifies the Virtual Machine Scale Set that the Availability Set is migrated to. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineScaleSetMigrationInfo"/> instance for mocking. </returns>
-        public static VirtualMachineScaleSetMigrationInfo VirtualMachineScaleSetMigrationInfo(DefaultVirtualMachineScaleSetInfo defaultVirtualMachineScaleSetInfo = null, ResourceIdentifier migrateToVirtualMachineScaleSetId = null)
-        {
-            return new VirtualMachineScaleSetMigrationInfo(defaultVirtualMachineScaleSetInfo, migrateToVirtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(migrateToVirtualMachineScaleSetId) : null, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DefaultVirtualMachineScaleSetInfo"/>. </summary>
-        /// <param name="constrainedMaximumCapacity"> Indicates if the the maximum capacity of the default migrated Virtual Machine Scale Set after its migration will be constrained to a limited number of VMs. </param>
-        /// <param name="defaultVirtualMachineScaleSetId"> The default Virtual Machine ScaleSet Uri that the Availability Set will be moved to upon triggering a seamless migration via the ConvertToVirtualMachineScaleSet API. </param>
-        /// <returns> A new <see cref="Models.DefaultVirtualMachineScaleSetInfo"/> instance for mocking. </returns>
-        public static DefaultVirtualMachineScaleSetInfo DefaultVirtualMachineScaleSetInfo(bool? constrainedMaximumCapacity = null, ResourceIdentifier defaultVirtualMachineScaleSetId = null)
-        {
-            return new DefaultVirtualMachineScaleSetInfo(constrainedMaximumCapacity, defaultVirtualMachineScaleSetId != null ? ResourceManagerModelFactory.WritableSubResource(defaultVirtualMachineScaleSetId) : null, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AvailabilitySetPatch"/>. </summary>
@@ -1482,9 +1460,8 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <param name="virtualMachineScaleSetMigrationInfo"> Describes the migration properties on the Availability Set. </param>
         /// <returns> A new <see cref="Models.AvailabilitySetPatch"/> instance for mocking. </returns>
-        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null, ScheduledEventsPolicy scheduledEventsPolicy = null, VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = null)
+        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags = null, ComputeSku sku = null, int? platformUpdateDomainCount = null, int? platformFaultDomainCount = null, IEnumerable<WritableSubResource> virtualMachines = null, ResourceIdentifier proximityPlacementGroupId = null, IEnumerable<InstanceViewStatus> statuses = null, ScheduledEventsPolicy scheduledEventsPolicy = null)
         {
             tags ??= new Dictionary<string, string>();
             virtualMachines ??= new List<WritableSubResource>();
@@ -1499,8 +1476,7 @@ namespace Azure.ResourceManager.Compute.Models
                 virtualMachines?.ToList(),
                 proximityPlacementGroupId != null ? ResourceManagerModelFactory.WritableSubResource(proximityPlacementGroupId) : null,
                 statuses?.ToList(),
-                scheduledEventsPolicy,
-                virtualMachineScaleSetMigrationInfo);
+                scheduledEventsPolicy);
         }
 
         /// <summary> Initializes a new instance of <see cref="Compute.ProximityPlacementGroupData"/>. </summary>
@@ -4482,45 +4458,6 @@ namespace Azure.ResourceManager.Compute.Models
             return new OSVersionPropertiesBase(version, label, isDefault, isActive, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="instanceId"> The virtual machine instance ID. </param>
-        /// <param name="sku"> The virtual machine SKU. </param>
-        /// <param name="plan"> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use.  In the Azure portal, find the marketplace image that you want to use and then click **Want to deploy programmatically, Get Started -&gt;**. Enter any required information and then click **Save**. </param>
-        /// <param name="resources"> The virtual machine child extension resources. </param>
-        /// <param name="zones"> The virtual machine zones. </param>
-        /// <param name="identity"> The identity of the virtual machine, if configured. </param>
-        /// <param name="etag"> Etag is property returned in Update/Get response of the VMSS VM, so that customer can supply it in the header to ensure optimistic updates. </param>
-        /// <param name="latestModelApplied"> Specifies whether the latest model has been applied to the virtual machine. </param>
-        /// <param name="vmId"> Azure VM unique ID. </param>
-        /// <param name="instanceView"> The virtual machine instance view. </param>
-        /// <param name="hardwareProfile"> Specifies the hardware settings for the virtual machine. </param>
-        /// <param name="storageProfile"> Specifies the storage settings for the virtual machine disks. </param>
-        /// <param name="additionalCapabilities"> Specifies additional capabilities enabled or disabled on the virtual machine in the scale set. For instance: whether the virtual machine has the capability to support attaching managed data disks with UltraSSD_LRS storage account type. </param>
-        /// <param name="osProfile"> Specifies the operating system settings for the virtual machine. </param>
-        /// <param name="securityProfile"> Specifies the Security related profile settings for the virtual machine. </param>
-        /// <param name="networkProfile"> Specifies the network interfaces of the virtual machine. </param>
-        /// <param name="networkInterfaceConfigurations"> Specifies the network profile configuration of the virtual machine. </param>
-        /// <param name="bootDiagnostics"> Specifies the boot diagnostic settings state. Minimum api-version: 2015-06-15. </param>
-        /// <param name="availabilitySetId"> Specifies information about the availability set that the virtual machine should be assigned to. Virtual machines specified in the same availability set are allocated to different nodes to maximize availability. For more information about availability sets, see [Availability sets overview](https://docs.microsoft.com/azure/virtual-machines/availability-set-overview). For more information on Azure planned maintenance, see [Maintenance and updates for Virtual Machines in Azure](https://docs.microsoft.com/azure/virtual-machines/maintenance-and-updates). Currently, a VM can only be added to availability set at creation time. An existing VM cannot be added to an availability set. </param>
-        /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
-        /// <param name="licenseType"> Specifies that the image or disk that is being used was licensed on-premises. &lt;br&gt;&lt;br&gt; Possible values for Windows Server operating system are: &lt;br&gt;&lt;br&gt; Windows_Client &lt;br&gt;&lt;br&gt; Windows_Server &lt;br&gt;&lt;br&gt; Possible values for Linux Server operating system are: &lt;br&gt;&lt;br&gt; RHEL_BYOS (for RHEL) &lt;br&gt;&lt;br&gt; SLES_BYOS (for SUSE) &lt;br&gt;&lt;br&gt; For more information, see [Azure Hybrid Use Benefit for Windows Server](https://docs.microsoft.com/azure/virtual-machines/windows/hybrid-use-benefit-licensing) &lt;br&gt;&lt;br&gt; [Azure Hybrid Use Benefit for Linux Server](https://docs.microsoft.com/azure/virtual-machines/linux/azure-hybrid-benefit-linux) &lt;br&gt;&lt;br&gt; Minimum api-version: 2015-06-15. </param>
-        /// <param name="modelDefinitionApplied"> Specifies whether the model applied to the virtual machine is the model of the virtual machine scale set or the customized model for the virtual machine. </param>
-        /// <param name="protectionPolicy"> Specifies the protection policy of the virtual machine. </param>
-        /// <param name="userData"> UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01. </param>
-        /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.VirtualMachineScaleSetVmData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, IEnumerable<string> zones, ManagedServiceIdentity identity, string etag, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated)
-        {
-            return VirtualMachineScaleSetVmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, instanceId: instanceId, sku: sku, plan: plan, resources: resources, zones: zones, identity: identity, etag: etag, latestModelApplied: latestModelApplied, vmId: vmId, instanceView: instanceView, hardwareProfile: hardwareProfile, resilientVmDeletionStatus: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, securityProfile: securityProfile, networkProfile: networkProfile, networkInterfaceConfigurations: networkInterfaceConfigurations, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, provisioningState: provisioningState, licenseType: licenseType, modelDefinitionApplied: modelDefinitionApplied, protectionPolicy: protectionPolicy, userData: userData, timeCreated: timeCreated);
-        }
-
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.VirtualMachineData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -4569,47 +4506,10 @@ namespace Azure.ResourceManager.Compute.Models
             return VirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, plan: plan, resources: resources, identity: identity, zones: zones, extendedLocation: extendedLocation, managedBy: managedBy, etag: etag, placement: default, hardwareProfile: hardwareProfile, scheduledEventsPolicy: scheduledEventsPolicy, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, networkProfile: networkProfile, securityProfile: securityProfile, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, virtualMachineScaleSetId: virtualMachineScaleSetId, proximityPlacementGroupId: proximityPlacementGroupId, priority: priority, evictionPolicy: evictionPolicy, billingMaxPrice: billingMaxPrice, hostId: hostId, hostGroupId: hostGroupId, provisioningState: provisioningState, instanceView: instanceView, licenseType: licenseType, vmId: vmId, extensionsTimeBudget: extensionsTimeBudget, platformFaultDomain: platformFaultDomain, scheduledEventsProfile: scheduledEventsProfile, userData: userData, capacityReservationGroupId: capacityReservationGroupId, galleryApplications: galleryApplications, timeCreated: timeCreated);
         }
 
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.AvailabilitySetData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku"> Sku of the availability set, only name is required to be set. See AvailabilitySetSkuTypes for possible set of values. Use 'Aligned' for virtual machines with managed disks and 'Classic' for virtual machines with unmanaged disks. Default value is 'Classic'. </param>
-        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
-        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
-        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.AvailabilitySetData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy)
-        {
-            return AvailabilitySetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, platformUpdateDomainCount: platformUpdateDomainCount, platformFaultDomainCount: platformFaultDomainCount, virtualMachines: virtualMachines, proximityPlacementGroupId: proximityPlacementGroupId, statuses: statuses, scheduledEventsPolicy: scheduledEventsPolicy, virtualMachineScaleSetMigrationInfo: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.AvailabilitySetPatch" />. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="sku"> Sku of the availability set. </param>
-        /// <param name="platformUpdateDomainCount"> Update Domain count. </param>
-        /// <param name="platformFaultDomainCount"> Fault Domain count. </param>
-        /// <param name="virtualMachines"> A list of references to all virtual machines in the availability set. </param>
-        /// <param name="proximityPlacementGroupId"> Specifies information about the proximity placement group that the availability set should be assigned to. Minimum api-version: 2018-04-01. </param>
-        /// <param name="statuses"> The resource status information. </param>
-        /// <param name="scheduledEventsPolicy"> Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Compute.Models.AvailabilitySetPatch" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses, ScheduledEventsPolicy scheduledEventsPolicy)
-        {
-            return AvailabilitySetPatch(tags: tags, sku: sku, platformUpdateDomainCount: platformUpdateDomainCount, platformFaultDomainCount: platformFaultDomainCount, virtualMachines: virtualMachines, proximityPlacementGroupId: proximityPlacementGroupId, statuses: statuses, scheduledEventsPolicy: scheduledEventsPolicy, virtualMachineScaleSetMigrationInfo: default);
-        }
-
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static VirtualMachineScaleSetVmData VirtualMachineScaleSetVmData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string instanceId, ComputeSku sku, ComputePlan plan, IEnumerable<VirtualMachineExtensionData> resources, IEnumerable<string> zones, ManagedServiceIdentity identity, bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, IEnumerable<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations, BootDiagnostics bootDiagnostics, ResourceIdentifier availabilitySetId, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated)
         {
-            return VirtualMachineScaleSetVmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, instanceId: instanceId, sku: sku, plan: plan, resources: resources, zones: zones, identity: identity, etag: default, latestModelApplied: latestModelApplied, vmId: vmId, instanceView: instanceView, hardwareProfile: hardwareProfile, resilientVmDeletionStatus: default, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, securityProfile: securityProfile, networkProfile: networkProfile, networkInterfaceConfigurations: networkInterfaceConfigurations, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, provisioningState: provisioningState, licenseType: licenseType, modelDefinitionApplied: modelDefinitionApplied, protectionPolicy: protectionPolicy, userData: userData, timeCreated: timeCreated);
+            return VirtualMachineScaleSetVmData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, instanceId: instanceId, sku: sku, plan: plan, resources: resources, zones: zones, identity: identity, etag: default, latestModelApplied: latestModelApplied, vmId: vmId, instanceView: instanceView, hardwareProfile: hardwareProfile, storageProfile: storageProfile, additionalCapabilities: additionalCapabilities, osProfile: osProfile, securityProfile: securityProfile, networkProfile: networkProfile, networkInterfaceConfigurations: networkInterfaceConfigurations, bootDiagnostics: bootDiagnostics, availabilitySetId: availabilitySetId, provisioningState: provisioningState, licenseType: licenseType, modelDefinitionApplied: modelDefinitionApplied, protectionPolicy: protectionPolicy, userData: userData, timeCreated: timeCreated);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -4829,7 +4729,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilitySetData AvailabilitySetData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses)
         {
-            return AvailabilitySetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, platformUpdateDomainCount: platformUpdateDomainCount, platformFaultDomainCount: platformFaultDomainCount, virtualMachines: virtualMachines, proximityPlacementGroupId: proximityPlacementGroupId, statuses: statuses, scheduledEventsPolicy: default, virtualMachineScaleSetMigrationInfo: default);
+            return AvailabilitySetData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, sku: sku, platformUpdateDomainCount: platformUpdateDomainCount, platformFaultDomainCount: platformFaultDomainCount, virtualMachines: virtualMachines, proximityPlacementGroupId: proximityPlacementGroupId, statuses: statuses, scheduledEventsPolicy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.AvailabilitySetPatch" />. </summary>
@@ -4844,7 +4744,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AvailabilitySetPatch AvailabilitySetPatch(IDictionary<string, string> tags, ComputeSku sku, int? platformUpdateDomainCount, int? platformFaultDomainCount, IEnumerable<WritableSubResource> virtualMachines, ResourceIdentifier proximityPlacementGroupId, IEnumerable<InstanceViewStatus> statuses)
         {
-            return AvailabilitySetPatch(tags: tags, sku: sku, platformUpdateDomainCount: platformUpdateDomainCount, platformFaultDomainCount: platformFaultDomainCount, virtualMachines: virtualMachines, proximityPlacementGroupId: proximityPlacementGroupId, statuses: statuses, scheduledEventsPolicy: default, virtualMachineScaleSetMigrationInfo: default);
+            return AvailabilitySetPatch(tags: tags, sku: sku, platformUpdateDomainCount: platformUpdateDomainCount, platformFaultDomainCount: platformFaultDomainCount, virtualMachines: virtualMachines, proximityPlacementGroupId: proximityPlacementGroupId, statuses: statuses, scheduledEventsPolicy: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.DiskRestorePointData" />. </summary>

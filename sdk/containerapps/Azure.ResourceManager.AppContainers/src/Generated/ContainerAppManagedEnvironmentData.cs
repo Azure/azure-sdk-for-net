@@ -67,7 +67,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="kind"> Kind of the Environment. </param>
-        /// <param name="identity"> Managed identities for the Managed Environment to interact with other Azure services without maintaining any secrets or credentials in code. </param>
         /// <param name="provisioningState"> Provisioning state of the Environment. </param>
         /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="daprAIConnectionString"> Application Insights connection string used by Dapr to export Service to Service communication telemetry. </param>
@@ -75,7 +74,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
         /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
         /// <param name="staticIP"> Static IP of the Environment. </param>
-        /// <param name="appLogsConfiguration"> Cluster configuration which enables the log daemon to export app logs to configured destination. </param>
+        /// <param name="appLogsConfiguration">
+        /// Cluster configuration which enables the log daemon to export
+        /// app logs to a destination. Currently only "log-analytics" is
+        /// supported
+        /// </param>
         /// <param name="isZoneRedundant"> Whether or not this Managed Environment is zone-redundant. </param>
         /// <param name="customDomainConfiguration"> Custom domain configuration for the environment. </param>
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the Environment. </param>
@@ -86,10 +89,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="peerAuthentication"> Peer authentication settings for the Managed Environment. </param>
         /// <param name="peerTrafficConfiguration"> Peer traffic settings for the Managed Environment. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ManagedServiceIdentity identity, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerAppManagedEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ContainerAppEnvironmentProvisioningState? provisioningState, string daprAIInstrumentationKey, string daprAIConnectionString, ContainerAppVnetConfiguration vnetConfiguration, string deploymentErrors, string defaultDomain, IPAddress staticIP, ContainerAppLogsConfiguration appLogsConfiguration, bool? isZoneRedundant, ContainerAppCustomDomainConfiguration customDomainConfiguration, string eventStreamEndpoint, IList<ContainerAppWorkloadProfile> workloadProfiles, KedaConfiguration kedaConfiguration, DaprConfiguration daprConfiguration, string infrastructureResourceGroup, ManagedEnvironmentPropertiesPeerAuthentication peerAuthentication, ManagedEnvironmentPropertiesPeerTrafficConfiguration peerTrafficConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            Identity = identity;
             ProvisioningState = provisioningState;
             DaprAIInstrumentationKey = daprAIInstrumentationKey;
             DaprAIConnectionString = daprAIConnectionString;
@@ -118,9 +120,6 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Kind of the Environment. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary> Managed identities for the Managed Environment to interact with other Azure services without maintaining any secrets or credentials in code. </summary>
-        [WirePath("identity")]
-        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Provisioning state of the Environment. </summary>
         [WirePath("properties.provisioningState")]
         public ContainerAppEnvironmentProvisioningState? ProvisioningState { get; }
@@ -142,7 +141,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Static IP of the Environment. </summary>
         [WirePath("properties.staticIp")]
         public IPAddress StaticIP { get; }
-        /// <summary> Cluster configuration which enables the log daemon to export app logs to configured destination. </summary>
+        /// <summary>
+        /// Cluster configuration which enables the log daemon to export
+        /// app logs to a destination. Currently only "log-analytics" is
+        /// supported
+        /// </summary>
         [WirePath("properties.appLogsConfiguration")]
         public ContainerAppLogsConfiguration AppLogsConfiguration { get; set; }
         /// <summary> Whether or not this Managed Environment is zone-redundant. </summary>

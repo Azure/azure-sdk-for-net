@@ -7,12 +7,12 @@
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    /// <summary> Hardware encryption support for a given sku for a given region. </summary>
+    /// <summary> Defines Hardware level encryption (Only for disk). </summary>
     public enum HardwareEncryption
     {
         /// <summary> Hardware-based encryption is enabled. </summary>
         Enabled,
-        /// <summary> Hardware-based encryption is disabled. </summary>
+        /// <summary> Hardware-based encryption is enabled. </summary>
         Disabled
     }
 }

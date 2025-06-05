@@ -6,8 +6,10 @@ using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 using Azure.Storage.Shared;
@@ -42,6 +44,38 @@ namespace Azure.Storage
                 ContentChecksum = contentChecksum;
             }
         }
+
+        /// <summary>
+        /// Generic delegate to slice the caller provided content into smaller
+        /// partitions for separate upload.
+        /// </summary>
+        /// <typeparam name="TContent">
+        /// Data structure housing the content to upload.
+        /// </typeparam>
+        /// <param name="content">
+        /// Content to slice.
+        /// </param>
+        /// <param name="contentLength">
+        /// Optional known length of <paramref name="content"/>.
+        /// </param>
+        /// <param name="blockSize">
+        /// Maximum size of the resulting slices.
+        /// </param>
+        /// <param name="async">
+        /// Whether to perform this operation asynchronously.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Cancellation token for the operation.
+        /// </param>
+        /// <returns>
+        /// Async enumerable of the sliced content.
+        /// </returns>
+        private delegate IAsyncEnumerable<ContentPartition<TContent>> GetContentPartitionsAsync<TContent>(
+            TContent content,
+            long? contentLength,
+            long blockSize,
+            bool async,
+            CancellationToken cancellationToken);
 
         /// <summary>
         /// Generic delegate to upload and individual content partition.
@@ -85,7 +119,8 @@ namespace Azure.Storage
         /// </summary>
         private delegate Task<(Stream PartitionContent, ReadOnlyMemory<byte> PartitionChecksum)> GetNextStreamPartition(
             Stream stream,
-            long count,
+            long minCount,
+            long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken);
@@ -326,14 +361,54 @@ namespace Azure.Storage
                 _masterCrcSupplier = () => masterCrc.GetFinalHash();
             }
 
-            return await UploadPartitionsInternal(
-                GetContentPartitionsBinaryDataInternal(content, length, GetActualBlockSize(_blockSize, length), async, cancellationToken),
-                args,
-                progressHandler,
-                StageBinaryDataPartitionInternal,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
+            // If the caller provided an explicit block size, we'll use it.
+            // Otherwise we'll adjust dynamically based on the size of the
+            // content.
+            long blockSize = _blockSize != null
+                ? _blockSize.Value
+                : length < Constants.LargeUploadThreshold ?
+                    Constants.DefaultBufferSize :
+                    Constants.LargeBufferSize;
+
+            // Otherwise stage individual blocks
+
+            /* We only support parallel upload in an async context to avoid issues in our overall sync story.
+             * We're branching on both async and max worker count, where 3 combinations lead to
+             * UploadInSequenceInternal and 1 combination leads to UploadInParallelAsync. We are guaranteed
+             * to be in an async context when we call UploadInParallelAsync, even though the analyzer can't
+             * detext this, and we properly pass in the async context in the else case when we haven't
+             * explicitly checked.
+             */
+#pragma warning disable AZC0109 // Misuse of 'async' parameter.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            if (async && _maxWorkerCount > 1)
+            {
+                return await UploadInParallelAsync(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    GetContentPartitionsBinaryDataInternal,
+                    StageBinaryDataPartitionInternal,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0109 // Misuse of 'async' parameter.
+            else
+            {
+                return await UploadInSequenceInternal(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    GetContentPartitionsBinaryDataInternal,
+                    StageBinaryDataPartitionInternal,
+                    async: async,
+                    cancellationToken).ConfigureAwait(false);
+            }
         }
 
         public async Task<Response<TCompleteUploadReturn>> UploadInternal(
@@ -372,14 +447,14 @@ namespace Azure.Storage
                     Stream bufferedContent;
                     if (UseMasterCrc && _masterCrcSupplier != default)
                     {
-                        bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
-                        await content.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
-                        bufferedContent.Position = 0;
+                        bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
+                            content, length.Value, length.Value, _arrayPool,
+                            maxArrayPoolRentalSize: default, async, cancellationToken).ConfigureAwait(false);
                     }
                     else
                     {
                         (bufferedContent, oneshotValidationOptions) = await BufferAndOptionalChecksumStreamInternal(
-                            content, length.Value, oneshotValidationOptions, async, cancellationToken)
+                            content, length.Value, length.Value, oneshotValidationOptions, async, cancellationToken)
                             .ConfigureAwait(false);
                     }
                     bucket.Add(bufferedContent);
@@ -408,28 +483,61 @@ namespace Azure.Storage
                 _masterCrcSupplier = () => masterCrc.GetFinalHash();
             }
 
-            // Streamed partitions only work if we can seek the stream and don't need parallel access to it.
-            GetNextStreamPartition partitionGetter = content.CanSeek && _maxWorkerCount == 1
-                ? (GetNextStreamPartition)GetStreamedPartitionInternal
-                : /*   redundant cast   */GetBufferedPartitionInternal;
-
-            return await UploadPartitionsInternal(
-                GetStreamPartitionsAsync(content, length, GetActualBlockSize(_blockSize, length), partitionGetter, async, cancellationToken),
-                args,
-                progressHandler,
-                StageStreamPartitionInternal,
-                async,
-                cancellationToken)
-                .ConfigureAwait(false);
-        }
-
-        private static long GetActualBlockSize(long? blockSize, long? totalLength)
             // If the caller provided an explicit block size, we'll use it.
             // Otherwise we'll adjust dynamically based on the size of the
             // content.
-            => blockSize ?? (totalLength < Constants.LargeUploadThreshold ?
+            long blockSize = _blockSize != null
+                ? _blockSize.Value
+                : length < Constants.LargeUploadThreshold ?
                     Constants.DefaultBufferSize :
-                    Constants.LargeBufferSize);
+                    Constants.LargeBufferSize;
+
+            // Otherwise stage individual blocks
+
+            /* We only support parallel upload in an async context to avoid issues in our overall sync story.
+             * We're branching on both async and max worker count, where 3 combinations lead to
+             * UploadInSequenceInternal and 1 combination leads to UploadInParallelAsync. We are guaranteed
+             * to be in an async context when we call UploadInParallelAsync, even though the analyzer can't
+             * detext this, and we properly pass in the async context in the else case when we haven't
+             * explicitly checked.
+             */
+#pragma warning disable AZC0109 // Misuse of 'async' parameter.
+#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+            if (async && _maxWorkerCount > 1)
+            {
+                return await UploadInParallelAsync(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    // we always buffer stream partitions when uploading in parallel
+                    GetStreamPartitioner(GetBufferedPartitionInternal),
+                    StageStreamPartitionInternal,
+                    cancellationToken)
+                    .ConfigureAwait(false);
+            }
+#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
+#pragma warning restore AZC0109 // Misuse of 'async' parameter.
+            else
+            {
+                // Streamed partitions only work if we can seek the stream; we need retries on individual uploads.
+                GetNextStreamPartition partitionGetter = content.CanSeek
+                            ? (GetNextStreamPartition)GetStreamedPartitionInternal
+                            : /*   redundant cast   */GetBufferedPartitionInternal;
+
+                return await UploadInSequenceInternal(
+                    content,
+                    length,
+                    blockSize,
+                    args,
+                    progressHandler,
+                    GetStreamPartitioner(partitionGetter),
+                    StageStreamPartitionInternal,
+                    async: async,
+                    cancellationToken).ConfigureAwait(false);
+            }
+        }
 
         /// <summary>
         /// Buffers the given stream and optionally checksums the stream contents as they are buffered.
@@ -437,8 +545,11 @@ namespace Azure.Storage
         /// <param name="source">
         /// Stream to buffer.
         /// </param>
-        /// <param name="count">
-        /// Exact count to buffer from the stream.
+        /// <param name="minCount">
+        /// Minimum count to buffer from the stream.
+        /// </param>
+        /// <param name="maxCount">
+        /// Maximum count to buffer from the stream.
         /// </param>
         /// <param name="validationOptions">
         /// Validation options for the upload to determine if buffering is needed.
@@ -463,7 +574,8 @@ namespace Azure.Storage
         private async Task<(Stream Stream, UploadTransferValidationOptions ValidationOptions)>
             BufferAndOptionalChecksumStreamInternal(
                 Stream source,
-                long? count,
+                long minCount,
+                long maxCount,
                 UploadTransferValidationOptions validationOptions,
                 bool async,
                 CancellationToken cancellationToken)
@@ -483,16 +595,14 @@ namespace Azure.Storage
                     .SetupChecksumCalculatingReadStream(source, validationOptions.ChecksumAlgorithm);
             }
 
-            Stream bufferedContent = new PooledMemoryStream(_arrayPool, Constants.MB);
-            if (count.HasValue)
-            {
-                await source.CopyToExactInternal(bufferedContent, count.Value, async, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                await source.CopyToInternal(bufferedContent, async, cancellationToken).ConfigureAwait(false);
-            }
-            bufferedContent.Position = 0;
+            PooledMemoryStream bufferedContent = await PooledMemoryStream.BufferStreamPartitionInternal(
+                source,
+                minCount,
+                maxCount,
+                _arrayPool,
+                maxArrayPoolRentalSize: default,
+                async,
+                cancellationToken).ConfigureAwait(false);
 
             if (usingChecksumStream)
             {
@@ -509,51 +619,13 @@ namespace Azure.Storage
             return (bufferedContent, validationOptions);
         }
 
-        private async Task<Response<TCompleteUploadReturn>> UploadPartitionsInternal<TContent>(
-            IAsyncEnumerable<ContentPartition<TContent>> contentPartitions,
-            TServiceSpecificData args,
-            IProgress<long> progressHandler,
-            StageContentPartitionAsync<TContent> stageContentAsync,
-            bool async,
-            CancellationToken cancellationToken)
-        {
-            /* We only support parallel upload in an async context to avoid issues in our overall sync story.
-             * We're branching on both async and max worker count, where 3 combinations lead to
-             * UploadInSequenceInternal and 1 combination leads to UploadInParallelAsync. We are guaranteed
-             * to be in an async context when we call UploadInParallelAsync, even though the analyzer can't
-             * detext this, and we properly pass in the async context in the else case when we haven't
-             * explicitly checked.
-             */
-#pragma warning disable AZC0109 // Misuse of 'async' parameter.
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-            if (async && _maxWorkerCount > 1)
-            {
-                return await UploadInParallelAsync(
-                    contentPartitions,
-                    args,
-                    progressHandler,
-                    stageContentAsync,
-                    cancellationToken)
-                    .ConfigureAwait(false);
-            }
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-#pragma warning restore AZC0109 // Misuse of 'async' parameter.
-            else
-            {
-                return await UploadInSequenceInternal(
-                    contentPartitions,
-                    args,
-                    progressHandler,
-                    stageContentAsync,
-                    async: async,
-                    cancellationToken).ConfigureAwait(false);
-            }
-        }
-
         private async Task<Response<TCompleteUploadReturn>> UploadInSequenceInternal<TContent>(
-            IAsyncEnumerable<ContentPartition<TContent>> contentPartitions,
+            TContent content,
+            long? contentLength,
+            long partitionSize,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
+            GetContentPartitionsAsync<TContent> partitionContentAsync,
             StageContentPartitionAsync<TContent> stageContentAsync,
             bool async,
             CancellationToken cancellationToken)
@@ -573,7 +645,7 @@ namespace Azure.Storage
                 }
 
                 // The list tracking blocks IDs we're going to commit
-                List<(long Offset, long Size)> partitions = new();
+                List<(long Offset, long Size)> partitions = new List<(long, long)>();
 
                 Memory<byte> _composedBlockCrc64 = UseMasterCrc
                     ? new Memory<byte>(new byte[Constants.StorageCrc64SizeInBytes])
@@ -581,9 +653,16 @@ namespace Azure.Storage
                 long composedOriginalDataLength = 0;
 
                 // Partition the stream into individual blocks and stage them
-                async Task StageAsync(ContentPartition<TContent> block, bool async, CancellationToken cancellationToken)
+                if (async)
                 {
-                    await stageContentAsync(
+                    await foreach (ContentPartition<TContent> block in partitionContentAsync(
+                        content,
+                        contentLength,
+                        partitionSize,
+                        async: true,
+                        cancellationToken).ConfigureAwait(false))
+                    {
+                        await stageContentAsync(
                             block.Content,
                             block.AbsolutePosition,
                             args,
@@ -593,29 +672,47 @@ namespace Azure.Storage
                                 PrecalculatedChecksum = block.ContentChecksum,
                             },
                             progressHandler,
-                            async,
+                            async: true,
                             cancellationToken).ConfigureAwait(false);
 
-                    partitions.Add((block.AbsolutePosition, block.Length));
-                    if (UseMasterCrc)
-                    {
-                        _composedBlockCrc64 = StorageCrc64Composer.Compose(
-                            (_composedBlockCrc64.ToArray(), composedOriginalDataLength),
-                            (block.ContentChecksum.ToArray(), block.Length));
-                    }
-                }
-                if (async)
-                {
-                    await foreach (ContentPartition<TContent> block in contentPartitions.ConfigureAwait(false))
-                    {
-                        await StageAsync(block, true, cancellationToken).ConfigureAwait(false);
+                        partitions.Add((block.AbsolutePosition, block.Length));
+                        if (UseMasterCrc)
+                        {
+                            _composedBlockCrc64 = StorageCrc64Composer.Compose(
+                                (_composedBlockCrc64.ToArray(), composedOriginalDataLength),
+                                (block.ContentChecksum.ToArray(), block.Length));
+                        }
                     }
                 }
                 else
                 {
-                    foreach (ContentPartition<TContent> block in contentPartitions.EnsureSyncEnumerable())
+                    foreach (ContentPartition<TContent> block in partitionContentAsync(
+                        content,
+                        contentLength,
+                        partitionSize,
+                        async: false,
+                        cancellationToken).EnsureSyncEnumerable())
                     {
-                        StageAsync(block, false, cancellationToken).EnsureCompleted();
+                        stageContentAsync(
+                            block.Content,
+                            block.AbsolutePosition,
+                            args,
+                            new UploadTransferValidationOptions
+                            {
+                                ChecksumAlgorithm = _validationAlgorithm,
+                                PrecalculatedChecksum = block.ContentChecksum
+                            },
+                            progressHandler,
+                            async: false,
+                            cancellationToken).EnsureCompleted();
+
+                        partitions.Add((block.AbsolutePosition, block.Length));
+                        if (UseMasterCrc)
+                        {
+                            _composedBlockCrc64 = StorageCrc64Composer.Compose(
+                                (_composedBlockCrc64.ToArray(), composedOriginalDataLength),
+                                (block.ContentChecksum.ToArray(), block.Length));
+                        }
                     }
                 }
 
@@ -648,9 +745,12 @@ namespace Azure.Storage
         }
 
         private async Task<Response<TCompleteUploadReturn>> UploadInParallelAsync<TContent>(
-            IAsyncEnumerable<ContentPartition<TContent>> contentPartitions,
+            TContent content,
+            long? contentLength,
+            long blockSize,
             TServiceSpecificData args,
             IProgress<long> progressHandler,
+            GetContentPartitionsAsync<TContent> partitionContentAsync,
             StageContentPartitionAsync<TContent> stageContentAsync,
             CancellationToken cancellationToken)
         {
@@ -681,7 +781,12 @@ namespace Azure.Storage
                 long composedOriginalDataLength = 0;
 
                 // Partition the stream into individual blocks
-                await foreach (ContentPartition<TContent> block in contentPartitions.ConfigureAwait(false))
+                await foreach (ContentPartition<TContent> block in partitionContentAsync(
+                    content,
+                    contentLength,
+                    blockSize,
+                    async: true,
+                    cancellationToken).ConfigureAwait(false))
                 {
                     /* We need to do this first! Length is calculated on the fly based on stream buffer
                      * contents; We need to record the partition data first before consuming the stream
@@ -824,6 +929,9 @@ namespace Azure.Storage
         }
 
         #region Content Slicing Impl
+        /// <summary>
+        /// <see cref="GetContentPartitionsAsync{TContent}"/> implementation for <see cref="BinaryData"/>.
+        /// </summary>
         /// <remarks>
         /// Async wrapper over a synchronous operation to satisfy delegate definitions.
         /// </remarks>
@@ -880,6 +988,18 @@ namespace Azure.Storage
         }
 
         /// <summary>
+        /// Gets the correct implementation of <see cref="GetContentPartitionsAsync{TContent}"/>
+        /// for <see cref="Stream"/> depending on whether the stream is to be sliced in place or
+        /// to be buffered into its new partitions.
+        /// </summary>
+        /// <param name="partitionCreator">Stream partitioning behavior.</param>
+        private static GetContentPartitionsAsync<Stream> GetStreamPartitioner(GetNextStreamPartition partitionCreator)
+        {
+            return (content, contentLength, blockSize, async, cancellationToken) => GetStreamPartitionsAsync(
+                content, contentLength, blockSize, partitionCreator, async, cancellationToken);
+        }
+
+        /// <summary>
         /// Partition a stream into a series of blocks buffered as needed by an array pool.
         /// </summary>
         private static async IAsyncEnumerable<ContentPartition<Stream>> GetStreamPartitionsAsync(
@@ -890,6 +1010,12 @@ namespace Azure.Storage
             bool async,
             [EnumeratorCancellation] CancellationToken cancellationToken)
         {
+            // The minimum amount of data we'll accept from a stream before
+            // splitting another block. Code that sets `blockSize` will always
+            // set it to a positive number. Min() only avoids edge case where
+            // user sets their block size to 1.
+            long acceptableBlockSize = Math.Max(1, blockSize / 2);
+
             // if we know the data length, assert boundaries before spending resources uploading beyond service capabilities
             if (streamLength.HasValue)
             {
@@ -901,6 +1027,8 @@ namespace Azure.Storage
                 {
                     throw Errors.InsufficientStorageTransferOptions(streamLength.Value, blockSize, minRequiredBlockSize);
                 }
+                // bring min up to our min required by the service
+                acceptableBlockSize = Math.Max(acceptableBlockSize, minRequiredBlockSize);
             }
 
             long read;
@@ -909,6 +1037,7 @@ namespace Azure.Storage
             {
                 (Stream partition, ReadOnlyMemory<byte> partitionChecksum) = await getNextPartition(
                     stream,
+                    acceptableBlockSize,
                     blockSize,
                     absolutePosition,
                     async,
@@ -942,8 +1071,11 @@ namespace Azure.Storage
         /// <param name="stream">
         /// Stream to buffer a partition from.
         /// </param>
-        /// <param name="count">
-        /// Amount of data to wait on before finalizing buffer.
+        /// <param name="minCount">
+        /// Minimum amount of data to wait on before finalizing buffer.
+        /// </param>
+        /// <param name="maxCount">
+        /// Max amount of data to buffer before cutting off for the next.
         /// </param>
         /// <param name="absolutePosition">
         /// Offset of this stream relative to the large stream.
@@ -959,7 +1091,8 @@ namespace Azure.Storage
         /// </returns>
         private async Task<(Stream PartitionContent, ReadOnlyMemory<byte> PartitionChecksum)> GetBufferedPartitionInternal(
             Stream stream,
-            long count,
+            long minCount,
+            long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
@@ -968,7 +1101,8 @@ namespace Azure.Storage
             (Stream slicedStream, UploadTransferValidationOptions validationOptions)
                 = await BufferAndOptionalChecksumStreamInternal(
                     stream,
-                    count,
+                    minCount,
+                    maxCount,
                     new UploadTransferValidationOptions { ChecksumAlgorithm = _validationAlgorithm },
                     async,
                     cancellationToken).ConfigureAwait(false);
@@ -985,7 +1119,10 @@ namespace Azure.Storage
         /// <param name="stream">
         /// Stream to wrap.
         /// </param>
-        /// <param name="count">
+        /// <param name="minCount">
+        /// Unused, but part of <see cref="GetNextStreamPartition"/> definition.
+        /// </param>
+        /// <param name="maxCount">
         /// Length of this facade stream.
         /// </param>
         /// <param name="absolutePosition">
@@ -1000,7 +1137,8 @@ namespace Azure.Storage
         /// </returns>
         private async Task<(Stream PartitionContent, ReadOnlyMemory<byte> PartitionChecksum)> GetStreamedPartitionInternal(
             Stream stream,
-            long count,
+            long minCount,
+            long maxCount,
             long absolutePosition,
             bool async,
             CancellationToken cancellationToken)
@@ -1009,7 +1147,7 @@ namespace Azure.Storage
             {
                 throw Errors.InvalidArgument(nameof(stream));
             }
-            var partitionStream = WindowStream.GetWindow(stream, count);
+            var partitionStream = WindowStream.GetWindow(stream, maxCount);
             // this resets stream position for us
             var checksum = await ContentHasher.GetHashOrDefaultInternal(
                 partitionStream,

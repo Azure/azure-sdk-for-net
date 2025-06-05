@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteDomainOwnershipIdentifierResource : IJsonModel<AppServiceIdentifierData>
     {
-        private static AppServiceIdentifierData s_dataDeserializationInstance;
-        private static AppServiceIdentifierData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AppServiceIdentifierData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceIdentifierData>)Data).Write(writer, options);
 
-        AppServiceIdentifierData IJsonModel<AppServiceIdentifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceIdentifierData>)DataDeserializationInstance).Create(ref reader, options);
+        AppServiceIdentifierData IJsonModel<AppServiceIdentifierData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppServiceIdentifierData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppServiceIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppServiceIdentifierData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<AppServiceIdentifierData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppServiceIdentifierData IPersistableModel<AppServiceIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceIdentifierData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        AppServiceIdentifierData IPersistableModel<AppServiceIdentifierData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppServiceIdentifierData>(data, options);
 
-        string IPersistableModel<AppServiceIdentifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceIdentifierData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AppServiceIdentifierData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppServiceIdentifierData>)Data).GetFormatFromOptions(options);
     }
 }

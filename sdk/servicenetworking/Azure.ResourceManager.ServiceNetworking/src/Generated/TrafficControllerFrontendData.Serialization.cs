@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(TrafficControllerFrontendData)} does not support writing '{options.Format}' format.");
             }

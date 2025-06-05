@@ -19,8 +19,7 @@ namespace Azure.Communication.CallAutomation
             Confidence = confidence;
             Offset = TimeSpan.FromTicks(offset);
             Duration = TimeSpan.FromTicks(duration);
-            if (words != null)
-                Words = ConvertToWordData(words);
+            Words = ConvertToWordData(words);
             if (participantRawID != null)
             {
                 Participant = CommunicationIdentifier.FromRawId(participantRawID);

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    /// <summary> Gets or sets the provisioning state of the email configuration. </summary>
+    /// <summary> Gets or sets the provisioning state of the Dra. </summary>
     public readonly partial struct DataReplicationProvisioningState : IEquatable<DataReplicationProvisioningState>
     {
         private readonly string _value;
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string SucceededValue = "Succeeded";
         private const string UpdatingValue = "Updating";
 
-        /// <summary> Resource creation has been canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static DataReplicationProvisioningState Canceled { get; } = new DataReplicationProvisioningState(CanceledValue);
-        /// <summary> Resource is being created. </summary>
+        /// <summary> Creating. </summary>
         public static DataReplicationProvisioningState Creating { get; } = new DataReplicationProvisioningState(CreatingValue);
-        /// <summary> Resource is being deleted. </summary>
+        /// <summary> Deleting. </summary>
         public static DataReplicationProvisioningState Deleting { get; } = new DataReplicationProvisioningState(DeletingValue);
-        /// <summary> Resource has been deleted. </summary>
+        /// <summary> Deleted. </summary>
         public static DataReplicationProvisioningState Deleted { get; } = new DataReplicationProvisioningState(DeletedValue);
-        /// <summary> Resource creation failed. </summary>
+        /// <summary> Failed. </summary>
         public static DataReplicationProvisioningState Failed { get; } = new DataReplicationProvisioningState(FailedValue);
-        /// <summary> Resource creation/update succeeded. </summary>
+        /// <summary> Succeeded. </summary>
         public static DataReplicationProvisioningState Succeeded { get; } = new DataReplicationProvisioningState(SucceededValue);
-        /// <summary> Resource is being updated. </summary>
+        /// <summary> Updating. </summary>
         public static DataReplicationProvisioningState Updating { get; } = new DataReplicationProvisioningState(UpdatingValue);
         /// <summary> Determines if two <see cref="DataReplicationProvisioningState"/> values are the same. </summary>
         public static bool operator ==(DataReplicationProvisioningState left, DataReplicationProvisioningState right) => left.Equals(right);

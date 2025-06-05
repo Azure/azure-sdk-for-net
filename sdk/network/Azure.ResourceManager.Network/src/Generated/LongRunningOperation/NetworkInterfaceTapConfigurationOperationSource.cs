@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         NetworkInterfaceTapConfigurationResource IOperationSource<NetworkInterfaceTapConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(response.Content);
             return new NetworkInterfaceTapConfigurationResource(_client, data);
         }
 
         async ValueTask<NetworkInterfaceTapConfigurationResource> IOperationSource<NetworkInterfaceTapConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NetworkInterfaceTapConfigurationData>(response.Content);
             return await Task.FromResult(new NetworkInterfaceTapConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

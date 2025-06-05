@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StorageSync
 
         StorageSyncRegisteredServerResource IOperationSource<StorageSyncRegisteredServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageSyncRegisteredServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageSyncContext.Default);
+            var data = ModelReaderWriter.Read<StorageSyncRegisteredServerData>(response.Content);
             return new StorageSyncRegisteredServerResource(_client, data);
         }
 
         async ValueTask<StorageSyncRegisteredServerResource> IOperationSource<StorageSyncRegisteredServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StorageSyncRegisteredServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStorageSyncContext.Default);
+            var data = ModelReaderWriter.Read<StorageSyncRegisteredServerData>(response.Content);
             return await Task.FromResult(new StorageSyncRegisteredServerResource(_client, data)).ConfigureAwait(false);
         }
     }

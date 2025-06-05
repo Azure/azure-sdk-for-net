@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.ElasticSan
                 writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
                 writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
-            if (Optional.IsDefined(DeleteRetentionPolicy))
-            {
-                writer.WritePropertyName("deleteRetentionPolicy"u8);
-                writer.WriteObjectValue(DeleteRetentionPolicy, options);
-            }
             writer.WriteEndObject();
         }
 
@@ -121,10 +116,9 @@ namespace Azure.ResourceManager.ElasticSan
             ElasticSanStorageTargetType? protocolType = default;
             ElasticSanEncryptionType? encryption = default;
             ElasticSanEncryptionProperties encryptionProperties = default;
-            ElasticSanNetworkRuleSet networkAcls = default;
+            NetworkRuleSet networkAcls = default;
             IReadOnlyList<ElasticSanPrivateEndpointConnectionData> privateEndpointConnections = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
-            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -213,7 +207,7 @@ namespace Azure.ResourceManager.ElasticSan
                             {
                                 continue;
                             }
-                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
+                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("privateEndpointConnections"u8))
@@ -239,15 +233,6 @@ namespace Azure.ResourceManager.ElasticSan
                             enforceDataIntegrityCheckForIscsi = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("deleteRetentionPolicy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -270,7 +255,6 @@ namespace Azure.ResourceManager.ElasticSan
                 networkAcls,
                 privateEndpointConnections ?? new ChangeTrackingList<ElasticSanPrivateEndpointConnectionData>(),
                 enforceDataIntegrityCheckForIscsi,
-                deleteRetentionPolicy,
                 serializedAdditionalRawData);
         }
 
@@ -281,7 +265,7 @@ namespace Azure.ResourceManager.ElasticSan
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanVolumeGroupData)} does not support writing '{options.Format}' format.");
             }

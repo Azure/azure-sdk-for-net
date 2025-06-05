@@ -40,44 +40,104 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(BinaryHardeningId))
             {
-                writer.WritePropertyName("binaryHardeningId"u8);
-                writer.WriteStringValue(BinaryHardeningId);
+                if (BinaryHardeningId != null)
+                {
+                    writer.WritePropertyName("binaryHardeningId"u8);
+                    writer.WriteStringValue(BinaryHardeningId);
+                }
+                else
+                {
+                    writer.WriteNull("binaryHardeningId");
+                }
             }
-            if (Optional.IsDefined(SecurityHardeningFeatures))
+            if (Optional.IsDefined(Architecture))
             {
-                writer.WritePropertyName("securityHardeningFeatures"u8);
-                writer.WriteObjectValue(SecurityHardeningFeatures, options);
-            }
-            if (Optional.IsDefined(ExecutableArchitecture))
-            {
-                writer.WritePropertyName("executableArchitecture"u8);
-                writer.WriteStringValue(ExecutableArchitecture);
+                if (Architecture != null)
+                {
+                    writer.WritePropertyName("architecture"u8);
+                    writer.WriteStringValue(Architecture);
+                }
+                else
+                {
+                    writer.WriteNull("architecture");
+                }
             }
             if (Optional.IsDefined(FilePath))
             {
-                writer.WritePropertyName("filePath"u8);
-                writer.WriteStringValue(FilePath);
+                if (FilePath != null)
+                {
+                    writer.WritePropertyName("filePath"u8);
+                    writer.WriteStringValue(FilePath);
+                }
+                else
+                {
+                    writer.WriteNull("filePath");
+                }
             }
-            if (Optional.IsDefined(ExecutableClass))
+            if (Optional.IsDefined(Class))
             {
-                writer.WritePropertyName("executableClass"u8);
-                writer.WriteStringValue(ExecutableClass.Value.ToString());
+                if (Class != null)
+                {
+                    writer.WritePropertyName("class"u8);
+                    writer.WriteStringValue(Class);
+                }
+                else
+                {
+                    writer.WriteNull("class");
+                }
             }
             if (Optional.IsDefined(Runpath))
             {
-                writer.WritePropertyName("runpath"u8);
-                writer.WriteStringValue(Runpath);
+                if (Runpath != null)
+                {
+                    writer.WritePropertyName("runpath"u8);
+                    writer.WriteStringValue(Runpath);
+                }
+                else
+                {
+                    writer.WriteNull("runpath");
+                }
             }
             if (Optional.IsDefined(Rpath))
             {
-                writer.WritePropertyName("rpath"u8);
-                writer.WriteStringValue(Rpath);
+                if (Rpath != null)
+                {
+                    writer.WritePropertyName("rpath"u8);
+                    writer.WriteStringValue(Rpath);
+                }
+                else
+                {
+                    writer.WriteNull("rpath");
+                }
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            writer.WritePropertyName("features"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NXFlag))
             {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WritePropertyName("nx"u8);
+                writer.WriteBooleanValue(NXFlag.Value);
             }
+            if (Optional.IsDefined(PieFlag))
+            {
+                writer.WritePropertyName("pie"u8);
+                writer.WriteBooleanValue(PieFlag.Value);
+            }
+            if (Optional.IsDefined(RelroFlag))
+            {
+                writer.WritePropertyName("relro"u8);
+                writer.WriteBooleanValue(RelroFlag.Value);
+            }
+            if (Optional.IsDefined(CanaryFlag))
+            {
+                writer.WritePropertyName("canary"u8);
+                writer.WriteBooleanValue(CanaryFlag.Value);
+            }
+            if (Optional.IsDefined(StrippedFlag))
+            {
+                writer.WritePropertyName("stripped"u8);
+                writer.WriteBooleanValue(StrippedFlag.Value);
+            }
+            writer.WriteEndObject();
             writer.WriteEndObject();
         }
 
@@ -106,13 +166,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             ResourceType type = default;
             SystemData systemData = default;
             string binaryHardeningId = default;
-            BinaryHardeningFeatures securityHardeningFeatures = default;
-            string executableArchitecture = default;
+            string architecture = default;
             string filePath = default;
-            ExecutableClass? executableClass = default;
+            string @class = default;
             string runpath = default;
             string rpath = default;
-            FirmwareProvisioningState? provisioningState = default;
+            bool? nx = default;
+            bool? pie = default;
+            bool? relro = default;
+            bool? canary = default;
+            bool? stripped = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,54 +215,119 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     {
                         if (property0.NameEquals("binaryHardeningId"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                binaryHardeningId = null;
+                                continue;
+                            }
                             binaryHardeningId = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("securityHardeningFeatures"u8))
+                        if (property0.NameEquals("architecture"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                architecture = null;
                                 continue;
                             }
-                            securityHardeningFeatures = BinaryHardeningFeatures.DeserializeBinaryHardeningFeatures(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("executableArchitecture"u8))
-                        {
-                            executableArchitecture = property0.Value.GetString();
+                            architecture = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("filePath"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                filePath = null;
+                                continue;
+                            }
                             filePath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("executableClass"u8))
+                        if (property0.NameEquals("class"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                @class = null;
                                 continue;
                             }
-                            executableClass = new ExecutableClass(property0.Value.GetString());
+                            @class = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("runpath"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                runpath = null;
+                                continue;
+                            }
                             runpath = property0.Value.GetString();
                             continue;
                         }
                         if (property0.NameEquals("rpath"u8))
                         {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                rpath = null;
+                                continue;
+                            }
                             rpath = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"u8))
+                        if (property0.NameEquals("features"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
-                            provisioningState = new FirmwareProvisioningState(property0.Value.GetString());
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.NameEquals("nx"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    nx = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("pie"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    pie = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("relro"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    relro = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("canary"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    canary = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                                if (property1.NameEquals("stripped"u8))
+                                {
+                                    if (property1.Value.ValueKind == JsonValueKind.Null)
+                                    {
+                                        continue;
+                                    }
+                                    stripped = property1.Value.GetBoolean();
+                                    continue;
+                                }
+                            }
                             continue;
                         }
                     }
@@ -217,13 +345,16 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 type,
                 systemData,
                 binaryHardeningId,
-                securityHardeningFeatures,
-                executableArchitecture,
+                architecture,
                 filePath,
-                executableClass,
+                @class,
                 runpath,
                 rpath,
-                provisioningState,
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped,
                 serializedAdditionalRawData);
         }
 
@@ -234,7 +365,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BinaryHardeningResult)} does not support writing '{options.Format}' format.");
             }

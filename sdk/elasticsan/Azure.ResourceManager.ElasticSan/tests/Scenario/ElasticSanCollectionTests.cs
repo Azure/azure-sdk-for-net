@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
             ElasticSanData data = GetDefaultElasticSanParameters(TestLocation);
             data.Tags.Add("tag1", "value1");
             data.PublicNetworkAccess = Models.ElasticSanPublicNetworkAccess.Enabled;
-            data.ScaleUpProperties = new Models.ElasticSanScaleUpProperties
+            data.ScaleUpProperties = new Models.ScaleUpProperties
             {
                 AutoScalePolicyEnforcement = Models.AutoScalePolicyEnforcement.Disabled,
                 CapacityUnitScaleUpLimitTiB  = 24,

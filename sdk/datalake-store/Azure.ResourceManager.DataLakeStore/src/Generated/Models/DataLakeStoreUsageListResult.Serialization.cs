@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataLakeStoreContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support writing '{options.Format}' format.");
             }

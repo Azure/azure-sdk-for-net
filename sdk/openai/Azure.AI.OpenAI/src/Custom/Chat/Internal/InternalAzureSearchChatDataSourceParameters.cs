@@ -8,7 +8,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI.Chat;
 
 [Experimental("AOAI001")]
-[CodeGenType("AzureSearchChatDataSourceParameters")]
+[CodeGenModel("AzureSearchChatDataSourceParameters")]
 internal partial class InternalAzureSearchChatDataSourceParameters
 {
     [CodeGenMember("IncludeContexts")]

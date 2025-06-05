@@ -9,14 +9,16 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using NUnit.Framework;
+using Azure.ResourceManager;
+using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Samples
 {
     public partial class Sample_AppPlatformSupportedStackResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
+        // BuildService_GetSupportedStack
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_BuildServiceGetSupportedStack()
         {
             // Generated from example definition: specification/appplatform/resource-manager/Microsoft.AppPlatform/stable/2022-12-01/examples/BuildService_GetSupportedStack.json

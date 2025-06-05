@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MobileNetworkTagsPatch)} does not support writing '{options.Format}' format.");
             }

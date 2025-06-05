@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class ExpressRouteAuthorizationResource : IJsonModel<ExpressRouteAuthorizationData>
     {
-        private static ExpressRouteAuthorizationData s_dataDeserializationInstance;
-        private static ExpressRouteAuthorizationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ExpressRouteAuthorizationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteAuthorizationData>)Data).Write(writer, options);
 
-        ExpressRouteAuthorizationData IJsonModel<ExpressRouteAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteAuthorizationData>)DataDeserializationInstance).Create(ref reader, options);
+        ExpressRouteAuthorizationData IJsonModel<ExpressRouteAuthorizationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteAuthorizationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteAuthorizationData>(Data, options, AzureResourceManagerAvsContext.Default);
+        BinaryData IPersistableModel<ExpressRouteAuthorizationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ExpressRouteAuthorizationData IPersistableModel<ExpressRouteAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteAuthorizationData>(data, options, AzureResourceManagerAvsContext.Default);
+        ExpressRouteAuthorizationData IPersistableModel<ExpressRouteAuthorizationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteAuthorizationData>(data, options);
 
-        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteAuthorizationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRouteAuthorizationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteAuthorizationData>)Data).GetFormatFromOptions(options);
     }
 }

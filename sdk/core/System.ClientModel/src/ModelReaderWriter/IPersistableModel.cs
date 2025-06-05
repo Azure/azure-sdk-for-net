@@ -31,6 +31,6 @@ public interface IPersistableModel<out T>
     /// Gets the data interchange format (JSON, Xml, etc) that the model uses when communicating with the service.
     /// </summary>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to consider when serializing and deserializing the model.</param>
-    /// <returns>The format that the model uses when communicating with the service.</returns>
+    /// <returns>The format that the model uses when communicating with the serivce.</returns>
     string GetFormatFromOptions(ModelReaderWriterOptions options);
 }

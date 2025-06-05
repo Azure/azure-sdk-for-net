@@ -68,5 +68,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ValidationResponse = validationResponse;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/> for deserialization. </summary>
+        internal SubscriptionValidationResponse()
+        {
+        }
+
+        /// <summary> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </summary>
+        public string ValidationResponse { get; }
     }
 }

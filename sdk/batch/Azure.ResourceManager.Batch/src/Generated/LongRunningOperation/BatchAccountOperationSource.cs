@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Batch
 
         BatchAccountResource IOperationSource<BatchAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BatchAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBatchContext.Default);
+            var data = ModelReaderWriter.Read<BatchAccountData>(response.Content);
             return new BatchAccountResource(_client, data);
         }
 
         async ValueTask<BatchAccountResource> IOperationSource<BatchAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BatchAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBatchContext.Default);
+            var data = ModelReaderWriter.Read<BatchAccountData>(response.Content);
             return await Task.FromResult(new BatchAccountResource(_client, data)).ConfigureAwait(false);
         }
     }

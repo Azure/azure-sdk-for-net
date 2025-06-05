@@ -1,10 +1,8 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.0-beta.2 (Unreleased)
 
 ### Features Added
-
-- Added support for post-call processing options, including summarization and transcription.
 
 ### Breaking Changes
 

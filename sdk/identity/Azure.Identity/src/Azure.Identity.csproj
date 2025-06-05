@@ -2,9 +2,9 @@
   <PropertyGroup>
     <Description>Provides APIs for authenticating to Microsoft Entra ID</Description>
     <AssemblyTitle>Microsoft Azure.Identity Component</AssemblyTitle>
-    <Version>1.15.0-beta.1</Version>
+    <Version>1.14.0-beta.2</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.14.0</ApiCompatVersion>
+    <ApiCompatVersion>1.13.2</ApiCompatVersion>
     <PackageTags>Microsoft Azure Identity;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);3021;AZC0011</NoWarn>
@@ -21,6 +21,8 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Memory" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" />
     <PackageReference Include="Microsoft.Identity.Client" />
     <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" />
   </ItemGroup>

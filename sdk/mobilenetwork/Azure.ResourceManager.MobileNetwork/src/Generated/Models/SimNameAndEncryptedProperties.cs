@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> SIM name and encrypted properties. </summary>
+    /// <summary>
+    /// SIM name and encrypted properties.
+    /// Serialized Name: SimNameAndEncryptedProperties
+    /// </summary>
     public partial class SimNameAndEncryptedProperties
     {
         /// <summary>
@@ -48,8 +51,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/>. </summary>
-        /// <param name="name"> The name of the SIM. </param>
-        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
+        /// <param name="name">
+        /// The name of the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.name
+        /// </param>
+        /// <param name="internationalMobileSubscriberIdentity">
+        /// The international mobile subscriber identity (IMSI) for the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.internationalMobileSubscriberIdentity
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="internationalMobileSubscriberIdentity"/> is null. </exception>
         public SimNameAndEncryptedProperties(string name, string internationalMobileSubscriberIdentity)
         {
@@ -63,18 +72,54 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimNameAndEncryptedProperties"/>. </summary>
-        /// <param name="name"> The name of the SIM. </param>
-        /// <param name="provisioningState"> The provisioning state of the SIM resource. </param>
-        /// <param name="simState"> The state of the SIM resource. </param>
-        /// <param name="siteProvisioningState"> A dictionary of sites to the provisioning state of this SIM on that site. </param>
-        /// <param name="internationalMobileSubscriberIdentity"> The international mobile subscriber identity (IMSI) for the SIM. </param>
-        /// <param name="integratedCircuitCardIdentifier"> The integrated circuit card ID (ICCID) for the SIM. </param>
-        /// <param name="deviceType"> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </param>
-        /// <param name="simPolicy"> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </param>
-        /// <param name="staticIPConfiguration"> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </param>
-        /// <param name="vendorName"> The name of the SIM vendor who provided this SIM, if any. </param>
-        /// <param name="vendorKeyFingerprint"> The public key fingerprint of the SIM vendor who provided this SIM, if any. </param>
-        /// <param name="encryptedCredentials"> The encrypted SIM credentials. </param>
+        /// <param name="name">
+        /// The name of the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.name
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the SIM resource.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.provisioningState
+        /// </param>
+        /// <param name="simState">
+        /// The state of the SIM resource.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.simState
+        /// </param>
+        /// <param name="siteProvisioningState">
+        /// A dictionary of sites to the provisioning state of this SIM on that site.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.siteProvisioningState
+        /// </param>
+        /// <param name="internationalMobileSubscriberIdentity">
+        /// The international mobile subscriber identity (IMSI) for the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.internationalMobileSubscriberIdentity
+        /// </param>
+        /// <param name="integratedCircuitCardIdentifier">
+        /// The integrated circuit card ID (ICCID) for the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.integratedCircuitCardIdentifier
+        /// </param>
+        /// <param name="deviceType">
+        /// An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.deviceType
+        /// </param>
+        /// <param name="simPolicy">
+        /// The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.simPolicy
+        /// </param>
+        /// <param name="staticIPConfiguration">
+        /// A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.staticIpConfiguration
+        /// </param>
+        /// <param name="vendorName">
+        /// The name of the SIM vendor who provided this SIM, if any.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.vendorName
+        /// </param>
+        /// <param name="vendorKeyFingerprint">
+        /// The public key fingerprint of the SIM vendor who provided this SIM, if any.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.vendorKeyFingerprint
+        /// </param>
+        /// <param name="encryptedCredentials">
+        /// The encrypted SIM credentials.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.encryptedCredentials
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimNameAndEncryptedProperties(string name, MobileNetworkProvisioningState? provisioningState, MobileNetworkSimState? simState, IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> siteProvisioningState, string internationalMobileSubscriberIdentity, string integratedCircuitCardIdentifier, string deviceType, WritableSubResource simPolicy, IList<SimStaticIPProperties> staticIPConfiguration, string vendorName, string vendorKeyFingerprint, string encryptedCredentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -98,28 +143,52 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> The name of the SIM. </summary>
+        /// <summary>
+        /// The name of the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.name
+        /// </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary> The provisioning state of the SIM resource. </summary>
+        /// <summary>
+        /// The provisioning state of the SIM resource.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> The state of the SIM resource. </summary>
+        /// <summary>
+        /// The state of the SIM resource.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.simState
+        /// </summary>
         [WirePath("properties.simState")]
         public MobileNetworkSimState? SimState { get; }
-        /// <summary> A dictionary of sites to the provisioning state of this SIM on that site. </summary>
+        /// <summary>
+        /// A dictionary of sites to the provisioning state of this SIM on that site.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.siteProvisioningState
+        /// </summary>
         [WirePath("properties.siteProvisioningState")]
         public IReadOnlyDictionary<string, MobileNetworkSiteProvisioningState> SiteProvisioningState { get; }
-        /// <summary> The international mobile subscriber identity (IMSI) for the SIM. </summary>
+        /// <summary>
+        /// The international mobile subscriber identity (IMSI) for the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.internationalMobileSubscriberIdentity
+        /// </summary>
         [WirePath("properties.internationalMobileSubscriberIdentity")]
         public string InternationalMobileSubscriberIdentity { get; }
-        /// <summary> The integrated circuit card ID (ICCID) for the SIM. </summary>
+        /// <summary>
+        /// The integrated circuit card ID (ICCID) for the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.integratedCircuitCardIdentifier
+        /// </summary>
         [WirePath("properties.integratedCircuitCardIdentifier")]
         public string IntegratedCircuitCardIdentifier { get; set; }
-        /// <summary> An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value. </summary>
+        /// <summary>
+        /// An optional free-form text field that can be used to record the device type this SIM is associated with, for example 'Video camera'. The Azure portal allows SIMs to be grouped and filtered based on this value.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.deviceType
+        /// </summary>
         [WirePath("properties.deviceType")]
         public string DeviceType { get; set; }
-        /// <summary> The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM. </summary>
+        /// <summary>
+        /// The SIM policy used by this SIM. The SIM policy must be in the same location as the SIM.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.simPolicy
+        /// </summary>
         internal WritableSubResource SimPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("properties.simPolicy.id")]
@@ -134,16 +203,28 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}. </summary>
+        /// <summary>
+        /// A list of static IP addresses assigned to this SIM. Each address is assigned at a defined network scope, made up of {attached data network, slice}.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.staticIpConfiguration
+        /// </summary>
         [WirePath("properties.staticIpConfiguration")]
         public IList<SimStaticIPProperties> StaticIPConfiguration { get; }
-        /// <summary> The name of the SIM vendor who provided this SIM, if any. </summary>
+        /// <summary>
+        /// The name of the SIM vendor who provided this SIM, if any.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.vendorName
+        /// </summary>
         [WirePath("properties.vendorName")]
         public string VendorName { get; }
-        /// <summary> The public key fingerprint of the SIM vendor who provided this SIM, if any. </summary>
+        /// <summary>
+        /// The public key fingerprint of the SIM vendor who provided this SIM, if any.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.vendorKeyFingerprint
+        /// </summary>
         [WirePath("properties.vendorKeyFingerprint")]
         public string VendorKeyFingerprint { get; }
-        /// <summary> The encrypted SIM credentials. </summary>
+        /// <summary>
+        /// The encrypted SIM credentials.
+        /// Serialized Name: SimNameAndEncryptedProperties.properties.encryptedCredentials
+        /// </summary>
         [WirePath("properties.encryptedCredentials")]
         public string EncryptedCredentials { get; set; }
     }

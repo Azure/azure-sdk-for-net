@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         CapacityReservationResource IOperationSource<CapacityReservationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CapacityReservationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<CapacityReservationData>(response.Content);
             return new CapacityReservationResource(_client, data);
         }
 
         async ValueTask<CapacityReservationResource> IOperationSource<CapacityReservationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CapacityReservationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<CapacityReservationData>(response.Content);
             return await Task.FromResult(new CapacityReservationResource(_client, data)).ConfigureAwait(false);
         }
     }

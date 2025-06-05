@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.KeyVault
 {
-    public partial class AzureResourceManagerKeyVaultContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerKeyVaultContext() { }
-        public static Azure.ResourceManager.KeyVault.AzureResourceManagerKeyVaultContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class DeletedKeyVaultCollection : Azure.ResourceManager.ArmCollection
     {
         protected DeletedKeyVaultCollection() { }
@@ -1450,7 +1444,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         private readonly int _dummyPrimitive;
         public ManagedHsmSkuFamily(string value) { throw null; }
         public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily B { get { throw null; } }
-        public static Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily C { get { throw null; } }
         public bool Equals(Azure.ResourceManager.KeyVault.Models.ManagedHsmSkuFamily other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
@@ -1466,8 +1459,6 @@ namespace Azure.ResourceManager.KeyVault.Models
         StandardB1 = 0,
         CustomB32 = 1,
         CustomB6 = 2,
-        CustomC42 = 3,
-        CustomC10 = 4,
     }
     public partial class ManagedHsmVirtualNetworkRule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.KeyVault.Models.ManagedHsmVirtualNetworkRule>
     {

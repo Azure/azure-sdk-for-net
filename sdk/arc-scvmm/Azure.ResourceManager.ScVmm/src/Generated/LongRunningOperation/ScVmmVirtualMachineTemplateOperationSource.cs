@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ScVmm
 
         ScVmmVirtualMachineTemplateResource IOperationSource<ScVmmVirtualMachineTemplateResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmVirtualMachineTemplateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
+            var data = ModelReaderWriter.Read<ScVmmVirtualMachineTemplateData>(response.Content);
             return new ScVmmVirtualMachineTemplateResource(_client, data);
         }
 
         async ValueTask<ScVmmVirtualMachineTemplateResource> IOperationSource<ScVmmVirtualMachineTemplateResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ScVmmVirtualMachineTemplateData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerScVmmContext.Default);
+            var data = ModelReaderWriter.Read<ScVmmVirtualMachineTemplateData>(response.Content);
             return await Task.FromResult(new ScVmmVirtualMachineTemplateResource(_client, data)).ConfigureAwait(false);
         }
     }

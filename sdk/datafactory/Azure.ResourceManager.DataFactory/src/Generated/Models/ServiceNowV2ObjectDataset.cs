@@ -35,11 +35,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="tableName"> The table name. Type: string (or Expression with resultType string). </param>
-        /// <param name="valueType"> Type of value copied from source. </param>
-        internal ServiceNowV2ObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName, DatasetSourceValueType? valueType) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal ServiceNowV2ObjectDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> tableName) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TableName = tableName;
-            ValueType = valueType;
             DatasetType = datasetType ?? "ServiceNowV2Object";
         }
 
@@ -50,7 +48,5 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> The table name. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> TableName { get; set; }
-        /// <summary> Type of value copied from source. </summary>
-        public DatasetSourceValueType? ValueType { get; set; }
     }
 }

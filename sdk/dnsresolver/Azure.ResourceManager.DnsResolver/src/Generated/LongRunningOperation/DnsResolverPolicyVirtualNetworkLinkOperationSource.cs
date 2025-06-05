@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsResolverPolicyVirtualNetworkLinkResource IOperationSource<DnsResolverPolicyVirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            var data = ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(response.Content);
             return new DnsResolverPolicyVirtualNetworkLinkResource(_client, data);
         }
 
         async ValueTask<DnsResolverPolicyVirtualNetworkLinkResource> IOperationSource<DnsResolverPolicyVirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            var data = ModelReaderWriter.Read<DnsResolverPolicyVirtualNetworkLinkData>(response.Content);
             return await Task.FromResult(new DnsResolverPolicyVirtualNetworkLinkResource(_client, data)).ConfigureAwait(false);
         }
     }

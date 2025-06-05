@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Storage.Models
                 }
                 if (property.NameEquals("domainGuid"u8))
                 {
-                    DeserializeNullableGuid(property, ref domainGuid);
+                    domainGuid = property.Value.GetGuid();
                     continue;
                 }
                 if (property.NameEquals("domainSid"u8))
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.Storage.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

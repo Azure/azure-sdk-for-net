@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Storage
 {
     public partial class BlobInventoryPolicyResource : IJsonModel<BlobInventoryPolicyData>
     {
-        private static BlobInventoryPolicyData s_dataDeserializationInstance;
-        private static BlobInventoryPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<BlobInventoryPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BlobInventoryPolicyData>)Data).Write(writer, options);
 
-        BlobInventoryPolicyData IJsonModel<BlobInventoryPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlobInventoryPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        BlobInventoryPolicyData IJsonModel<BlobInventoryPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BlobInventoryPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BlobInventoryPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BlobInventoryPolicyData>(Data, options, AzureResourceManagerStorageContext.Default);
+        BinaryData IPersistableModel<BlobInventoryPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BlobInventoryPolicyData IPersistableModel<BlobInventoryPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlobInventoryPolicyData>(data, options, AzureResourceManagerStorageContext.Default);
+        BlobInventoryPolicyData IPersistableModel<BlobInventoryPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BlobInventoryPolicyData>(data, options);
 
-        string IPersistableModel<BlobInventoryPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlobInventoryPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<BlobInventoryPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BlobInventoryPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -44,6 +44,18 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
         }
 
         ChaosTargetQuerySelector IJsonModel<ChaosTargetQuerySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -68,11 +80,11 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             string queryString = default;
             IList<string> subscriptionIds = default;
-            string id = default;
             SelectorType type = default;
+            string id = default;
             ChaosTargetFilter filter = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("queryString"u8))
@@ -90,14 +102,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     subscriptionIds = array;
                     continue;
                 }
-                if (property.NameEquals("id"u8))
-                {
-                    id = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("type"u8))
                 {
                     type = new SelectorType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("filter"u8))
@@ -109,17 +121,14 @@ namespace Azure.ResourceManager.Chaos.Models
                     filter = ChaosTargetFilter.DeserializeChaosTargetFilter(property.Value, options);
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            additionalProperties = additionalPropertiesDictionary;
             return new ChaosTargetQuerySelector(
-                id,
                 type,
+                id,
                 filter,
-                serializedAdditionalRawData,
+                additionalProperties,
                 queryString,
                 subscriptionIds);
         }
@@ -131,7 +140,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ChaosTargetQuerySelector)} does not support writing '{options.Format}' format.");
             }

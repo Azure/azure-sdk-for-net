@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The WafMetricsResponseSeriesPropertiesItemsItem.
-    /// Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem
-    /// </summary>
+    /// <summary> The WafMetricsResponseSeriesPropertiesItemsItem. </summary>
     public partial class WafMetricsResponseSeriesPropertiesItemsItem
     {
         /// <summary>
@@ -54,8 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WafMetricsResponseSeriesPropertiesItemsItem"/>. </summary>
-        /// <param name="name"> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.name. </param>
-        /// <param name="value"> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.value. </param>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal WafMetricsResponseSeriesPropertiesItemsItem(string name, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +61,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: WafMetricsResponseSeriesPropertiesItemsItem.value. </summary>
+        /// <summary> Gets the value. </summary>
         public string Value { get; }
     }
 }

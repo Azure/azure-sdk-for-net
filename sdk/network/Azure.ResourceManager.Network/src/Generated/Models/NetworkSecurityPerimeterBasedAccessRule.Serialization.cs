@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            string id = default;
             Guid? perimeterGuid = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -95,11 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    id = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("perimeterGuid"u8))
@@ -136,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterBasedAccessRule)} does not support writing '{options.Format}' format.");
             }

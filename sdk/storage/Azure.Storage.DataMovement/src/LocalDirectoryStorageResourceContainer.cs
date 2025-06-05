@@ -111,11 +111,5 @@ namespace Azure.Storage.DataMovement
             uri.Path = Path.Combine(uri.Path, path);
             return new LocalDirectoryStorageResourceContainer(uri.Uri);
         }
-
-        protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
-        {
-            // Will implement this when implementing NFS Upload
-            return Task.FromResult(new StorageResourceContainerProperties());
-        }
     }
 }

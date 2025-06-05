@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HybridCompute
 {
     public partial class HybridComputePrivateLinkResource : IJsonModel<HybridComputePrivateLinkResourceData>
     {
-        private static HybridComputePrivateLinkResourceData s_dataDeserializationInstance;
-        private static HybridComputePrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HybridComputePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkResourceData>)Data).Write(writer, options);
 
-        HybridComputePrivateLinkResourceData IJsonModel<HybridComputePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        HybridComputePrivateLinkResourceData IJsonModel<HybridComputePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridComputePrivateLinkResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridComputePrivateLinkResourceData>(Data, options, AzureResourceManagerHybridComputeContext.Default);
+        BinaryData IPersistableModel<HybridComputePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HybridComputePrivateLinkResourceData IPersistableModel<HybridComputePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateLinkResourceData>(data, options, AzureResourceManagerHybridComputeContext.Default);
+        HybridComputePrivateLinkResourceData IPersistableModel<HybridComputePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridComputePrivateLinkResourceData>(data, options);
 
-        string IPersistableModel<HybridComputePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HybridComputePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridComputePrivateLinkResourceData>)Data).GetFormatFromOptions(options);
     }
 }

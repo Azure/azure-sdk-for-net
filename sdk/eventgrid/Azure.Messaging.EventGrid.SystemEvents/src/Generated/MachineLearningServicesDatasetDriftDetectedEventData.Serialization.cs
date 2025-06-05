@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(MachineLearningServicesDatasetDriftDetectedEventDataConverter))]
     public partial class MachineLearningServicesDatasetDriftDetectedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesDatasetDriftDetectedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesDatasetDriftDetectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -36,16 +34,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("dataDriftId"u8);
-            writer.WriteStringValue(DataDriftId);
-            writer.WritePropertyName("dataDriftName"u8);
-            writer.WriteStringValue(DataDriftName);
-            writer.WritePropertyName("runId"u8);
-            writer.WriteStringValue(RunId);
-            writer.WritePropertyName("baseDatasetId"u8);
-            writer.WriteStringValue(BaseDatasetId);
-            writer.WritePropertyName("targetDatasetId"u8);
-            writer.WriteStringValue(TargetDatasetId);
+            if (Optional.IsDefined(DataDriftId))
+            {
+                writer.WritePropertyName("dataDriftId"u8);
+                writer.WriteStringValue(DataDriftId);
+            }
+            if (Optional.IsDefined(DataDriftName))
+            {
+                writer.WritePropertyName("dataDriftName"u8);
+                writer.WriteStringValue(DataDriftName);
+            }
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(BaseDatasetId))
+            {
+                writer.WritePropertyName("baseDatasetId"u8);
+                writer.WriteStringValue(BaseDatasetId);
+            }
+            if (Optional.IsDefined(TargetDatasetId))
+            {
+                writer.WritePropertyName("targetDatasetId"u8);
+                writer.WriteStringValue(TargetDatasetId);
+            }
             if (Optional.IsDefined(DriftCoefficient))
             {
                 writer.WritePropertyName("driftCoefficient"u8);
@@ -53,27 +66,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             if (Optional.IsDefined(StartTime))
             {
-                if (StartTime != null)
-                {
-                    writer.WritePropertyName("startTime"u8);
-                    writer.WriteStringValue(StartTime.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("startTime");
-                }
+                writer.WritePropertyName("startTime"u8);
+                writer.WriteStringValue(StartTime.Value, "O");
             }
             if (Optional.IsDefined(EndTime))
             {
-                if (EndTime != null)
-                {
-                    writer.WritePropertyName("endTime"u8);
-                    writer.WriteStringValue(EndTime.Value, "O");
-                }
-                else
-                {
-                    writer.WriteNull("endTime");
-                }
+                writer.WritePropertyName("endTime"u8);
+                writer.WriteStringValue(EndTime.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -162,7 +161,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        startTime = null;
                         continue;
                     }
                     startTime = property.Value.GetDateTimeOffset("O");
@@ -172,7 +170,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
                         continue;
                     }
                     endTime = property.Value.GetDateTimeOffset("O");
@@ -203,7 +200,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningServicesDatasetDriftDetectedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -241,20 +238,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, MachineLearningServicesDatasetDriftDetectedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override MachineLearningServicesDatasetDriftDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement);
-            }
         }
     }
 }

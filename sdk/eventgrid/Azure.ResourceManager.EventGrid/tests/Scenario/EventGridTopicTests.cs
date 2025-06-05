@@ -1,7 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -29,7 +32,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             _eventGridTopicCollection = _resourceGroup.GetEventGridTopics();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task CreateOrUpdate()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
@@ -37,30 +40,16 @@ namespace Azure.ResourceManager.EventGrid.Tests
             ValidateEventGridTopic(topic, topicName);
         }
 
-        [Test]
-        public async Task PrivateLinkResourcesGetAndList()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            ValidateEventGridTopic(topic, topicName);
-            // get private link resources
-            var linkResource = await topic.GetEventGridTopicPrivateLinkResourceAsync("topic");
-            Assert.IsNotNull(linkResource);
-            // list all private link resources
-            System.Collections.Generic.List<EventGridTopicPrivateLinkResource> list = await topic.GetEventGridTopicPrivateLinkResources().ToEnumerableAsync();
-            Assert.NotNull(list);
-        }
-
-        [Test]
-        public async Task Exists()
+        [RecordedTest]
+        public async Task Exist()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             await CreateEventGridTopic(_resourceGroup, topicName);
-            bool exists = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsTrue(exists);
+            bool flag = await _eventGridTopicCollection.ExistsAsync(topicName);
+            Assert.IsTrue(flag);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
@@ -69,74 +58,50 @@ namespace Azure.ResourceManager.EventGrid.Tests
             ValidateEventGridTopic(topic, topicName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             await CreateEventGridTopic(_resourceGroup, topicName);
-            var topicsInResourceGroup = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
-            // Get all topics created within a resourceGroup
-            Assert.NotNull(topicsInResourceGroup);
-            Assert.GreaterOrEqual(topicsInResourceGroup.Count, 1);
-            Assert.AreEqual(topicsInResourceGroup.FirstOrDefault().Data.Name, topicName);
-            // Get all topics created within the subscription irrespective of the resourceGroup
-            var topicsInAzureSubscription = await DefaultSubscription.GetEventGridTopicsAsync().ToEnumerableAsync();
-            Assert.NotNull(topicsInAzureSubscription);
-            Assert.GreaterOrEqual(topicsInAzureSubscription.Count, 1);
-            var falseFlag = false;
-            foreach (var item in topicsInAzureSubscription)
-            {
-                if (item.Data.Name == topicName)
-                {
-                    falseFlag = true;
-                    break;
-                }
-            }
-            Assert.IsTrue(falseFlag);
+            var list = await _eventGridTopicCollection.GetAllAsync().ToEnumerableAsync();
+            Assert.IsNotEmpty(list);
+            ValidateEventGridTopic(list.First(item => item.Data.Name == topicName), topicName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Delete()
         {
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
+            bool flag = await _eventGridTopicCollection.ExistsAsync(topicName);
+            Assert.IsTrue(flag);
+
             await topic.DeleteAsync(WaitUntil.Completed);
-            bool exists = await _eventGridTopicCollection.ExistsAsync(topicName);
-            Assert.IsFalse(exists);
+            flag = await _eventGridTopicCollection.ExistsAsync(topicName);
+            Assert.IsFalse(flag);
         }
 
-        [Test]
-        public async Task Update()
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public async Task AddRemoveTag(bool? useTagResource)
         {
-            // Arrange
+            SetTagResourceUsage(Client, useTagResource);
             string topicName = Recording.GenerateAssetName("EventGridTopic");
             var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            var patch = new EventGridTopicPatch
-            {
-                Tags = { { "env", "test" }, { "owner", "sdk-test" } }
-            };
-            await topic.UpdateAsync(WaitUntil.Completed, patch);
-            // Retrieve the updated topic
-            var updatedTopic = await _eventGridTopicCollection.GetAsync(topicName);
-            Assert.IsNotNull(updatedTopic.Value);
-        }
 
-        [Test]
-        public async Task ListSharedAccessKeys()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            var keys = await topic.GetSharedAccessKeysAsync();
-            Assert.IsNotNull(keys);
-        }
+            // AddTag
+            await topic.AddTagAsync("addtagkey", "addtagvalue");
+            topic = await _eventGridTopicCollection.GetAsync(topicName);
+            Assert.AreEqual(1, topic.Data.Tags.Count);
+            KeyValuePair<string, string> tag = topic.Data.Tags.Where(tag => tag.Key == "addtagkey").FirstOrDefault();
+            Assert.AreEqual("addtagkey", tag.Key);
+            Assert.AreEqual("addtagvalue", tag.Value);
 
-        [Test]
-        public async Task RegenerateSharedAccessKey()
-        {
-            string topicName = Recording.GenerateAssetName("EventGridTopic");
-            var topic = await CreateEventGridTopic(_resourceGroup, topicName);
-            var newKey = await topic.RegenerateKeyAsync(WaitUntil.Completed, new TopicRegenerateKeyContent("key1"));
-            Assert.IsNotNull(newKey);
+            // RemoveTag
+            await topic.RemoveTagAsync("addtagkey");
+            topic = await _eventGridTopicCollection.GetAsync(topicName);
+            Assert.AreEqual(0, topic.Data.Tags.Count);
         }
 
         private void ValidateEventGridTopic(EventGridTopicResource topic, string topicName)

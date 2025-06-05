@@ -49,9 +49,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("peakDiskGiB"u8);
             writer.WriteNumberValue(PeakDiskGiB);
             writer.WritePropertyName("diskReadIOps"u8);
-            writer.WriteStringValue(DiskReadIOps.ToString());
+            writer.WriteNumberValue(DiskReadIOps);
             writer.WritePropertyName("diskWriteIOps"u8);
-            writer.WriteStringValue(DiskWriteIOps.ToString());
+            writer.WriteNumberValue(DiskWriteIOps);
             writer.WritePropertyName("diskReadGiB"u8);
             writer.WriteNumberValue(DiskReadGiB);
             writer.WritePropertyName("diskWriteGiB"u8);
@@ -151,12 +151,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("diskReadIOps"u8))
                 {
-                    diskReadIOps = long.Parse(property.Value.GetString());
+                    diskReadIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("diskWriteIOps"u8))
                 {
-                    diskWriteIOps = long.Parse(property.Value.GetString());
+                    diskWriteIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("diskReadGiB"u8))
@@ -209,7 +209,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolResourceStatistics)} does not support writing '{options.Format}' format.");
             }

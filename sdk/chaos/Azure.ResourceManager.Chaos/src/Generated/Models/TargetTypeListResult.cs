@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.ResourceManager.Chaos.Models
 {
@@ -47,34 +46,25 @@ namespace Azure.ResourceManager.Chaos.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
-        /// <param name="value"> The TargetType items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal TargetTypeListResult(IEnumerable<ChaosTargetMetadataData> value)
+        internal TargetTypeListResult()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
+            Value = new ChangeTrackingList<ChaosTargetTypeData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/>. </summary>
-        /// <param name="value"> The TargetType items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <param name="value"> List of Target Type resources. </param>
+        /// <param name="nextLink"> URL to retrieve the next page of Target Type resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetTypeListResult(IReadOnlyList<ChaosTargetMetadataData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetTypeListResult(IReadOnlyList<ChaosTargetTypeData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetTypeListResult"/> for deserialization. </summary>
-        internal TargetTypeListResult()
-        {
-        }
-
-        /// <summary> The TargetType items on this page. </summary>
-        public IReadOnlyList<ChaosTargetMetadataData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> List of Target Type resources. </summary>
+        public IReadOnlyList<ChaosTargetTypeData> Value { get; }
+        /// <summary> URL to retrieve the next page of Target Type resources. </summary>
+        public string NextLink { get; }
     }
 }

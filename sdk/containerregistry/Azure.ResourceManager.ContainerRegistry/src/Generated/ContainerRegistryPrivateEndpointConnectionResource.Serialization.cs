@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ContainerRegistry
 {
     public partial class ContainerRegistryPrivateEndpointConnectionResource : IJsonModel<ContainerRegistryPrivateEndpointConnectionData>
     {
-        private static ContainerRegistryPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static ContainerRegistryPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ContainerRegistryPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ContainerRegistryPrivateEndpointConnectionData IJsonModel<ContainerRegistryPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        ContainerRegistryPrivateEndpointConnectionData IJsonModel<ContainerRegistryPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerRegistryPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerRegistryPrivateEndpointConnectionData>(Data, options, AzureResourceManagerContainerRegistryContext.Default);
+        BinaryData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ContainerRegistryPrivateEndpointConnectionData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(data, options, AzureResourceManagerContainerRegistryContext.Default);
+        ContainerRegistryPrivateEndpointConnectionData IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerRegistryPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerRegistryPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

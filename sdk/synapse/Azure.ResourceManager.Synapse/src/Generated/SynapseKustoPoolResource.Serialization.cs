@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseKustoPoolResource : IJsonModel<SynapseKustoPoolData>
     {
-        private static SynapseKustoPoolData s_dataDeserializationInstance;
-        private static SynapseKustoPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseKustoPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseKustoPoolData>)Data).Write(writer, options);
 
-        SynapseKustoPoolData IJsonModel<SynapseKustoPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseKustoPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseKustoPoolData IJsonModel<SynapseKustoPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseKustoPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseKustoPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseKustoPoolData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseKustoPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseKustoPoolData IPersistableModel<SynapseKustoPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseKustoPoolData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseKustoPoolData IPersistableModel<SynapseKustoPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseKustoPoolData>(data, options);
 
-        string IPersistableModel<SynapseKustoPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseKustoPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseKustoPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseKustoPoolData>)Data).GetFormatFromOptions(options);
     }
 }

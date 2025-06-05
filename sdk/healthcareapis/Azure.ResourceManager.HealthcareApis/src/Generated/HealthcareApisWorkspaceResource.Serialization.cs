@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class HealthcareApisWorkspaceResource : IJsonModel<HealthcareApisWorkspaceData>
     {
-        private static HealthcareApisWorkspaceData s_dataDeserializationInstance;
-        private static HealthcareApisWorkspaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HealthcareApisWorkspaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisWorkspaceData>)Data).Write(writer, options);
 
-        HealthcareApisWorkspaceData IJsonModel<HealthcareApisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisWorkspaceData>)DataDeserializationInstance).Create(ref reader, options);
+        HealthcareApisWorkspaceData IJsonModel<HealthcareApisWorkspaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisWorkspaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisWorkspaceData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
+        BinaryData IPersistableModel<HealthcareApisWorkspaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HealthcareApisWorkspaceData IPersistableModel<HealthcareApisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisWorkspaceData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
+        HealthcareApisWorkspaceData IPersistableModel<HealthcareApisWorkspaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisWorkspaceData>(data, options);
 
-        string IPersistableModel<HealthcareApisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisWorkspaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HealthcareApisWorkspaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisWorkspaceData>)Data).GetFormatFromOptions(options);
     }
 }

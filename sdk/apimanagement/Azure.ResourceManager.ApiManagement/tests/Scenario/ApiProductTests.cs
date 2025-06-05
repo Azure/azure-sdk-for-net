@@ -34,8 +34,8 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         private async Task CreateApiServiceAsync()
         {
             await SetCollectionsAsync();
-            var apiName = Recording.GenerateAssetName("sdktestapimv2-");
-            var data = new ApiManagementServiceData(AzureLocation.WestUS2, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.BasicV2, 1), "Sample@Sample.com", "sample")
+            var apiName = Recording.GenerateAssetName("testapi-");
+            var data = new ApiManagementServiceData(AzureLocation.EastUS, new ApiManagementServiceSkuProperties(ApiManagementServiceSkuType.Developer, 1), "Sample@Sample.com", "sample")
             {
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
@@ -48,21 +48,15 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             await CreateApiServiceAsync();
 
             var list = await ApiServiceResource.GetApis().GetAllAsync().ToEnumerableAsync();
-            Assert.AreEqual(0, list.Count);
+            Assert.GreaterOrEqual(list.Count, 1);
+            var api = list.Single();
 
             var productCollections = ApiServiceResource.GetApiManagementProducts();
             var listResponse = await productCollections.GetAllAsync().ToEnumerableAsync();
             Assert.NotNull(listResponse);
-            Assert.AreEqual(0, listResponse.Count());
+            Assert.AreEqual(2, listResponse.Count());
 
-            var productId = Recording.GenerateAssetName("prod-");
-            var data = new ApiManagementProductData()
-            {
-                Description = "product",
-                DisplayName = productId,
-                IsSubscriptionRequired = true,
-            };
-            var product = (await productCollections.CreateOrUpdateAsync(WaitUntil.Completed, productId, data)).Value;
+            var product = listResponse.FirstOrDefault();
             var name = product.Data.Name;
             var result = (await product.GetAsync()).Value;
             Assert.NotNull(result);

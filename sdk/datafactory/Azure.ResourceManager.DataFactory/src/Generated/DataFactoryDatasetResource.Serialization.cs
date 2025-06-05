@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryDatasetResource : IJsonModel<DataFactoryDatasetData>
     {
-        private static DataFactoryDatasetData s_dataDeserializationInstance;
-        private static DataFactoryDatasetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataFactoryDatasetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryDatasetData>)Data).Write(writer, options);
 
-        DataFactoryDatasetData IJsonModel<DataFactoryDatasetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryDatasetData>)DataDeserializationInstance).Create(ref reader, options);
+        DataFactoryDatasetData IJsonModel<DataFactoryDatasetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryDatasetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryDatasetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryDatasetData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
+        BinaryData IPersistableModel<DataFactoryDatasetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataFactoryDatasetData IPersistableModel<DataFactoryDatasetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryDatasetData>(data, options, AzureResourceManagerDataFactoryContext.Default);
+        DataFactoryDatasetData IPersistableModel<DataFactoryDatasetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryDatasetData>(data, options);
 
-        string IPersistableModel<DataFactoryDatasetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryDatasetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataFactoryDatasetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryDatasetData>)Data).GetFormatFromOptions(options);
     }
 }

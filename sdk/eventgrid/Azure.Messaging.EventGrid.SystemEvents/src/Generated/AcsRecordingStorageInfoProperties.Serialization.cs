@@ -34,16 +34,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AcsRecordingStorageInfoProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W")
+            writer.WritePropertyName("recordingChunks"u8);
+            writer.WriteStartArray();
+            foreach (var item in RecordingChunks)
             {
-                writer.WritePropertyName("recordingChunks"u8);
-                writer.WriteStartArray();
-                foreach (var item in RecordingChunks)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
+            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -112,7 +109,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsRecordingStorageInfoProperties)} does not support writing '{options.Format}' format.");
             }

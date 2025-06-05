@@ -1,31 +1,16 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
-
-## 1.1.0-beta.1 (2025-06-02)
-
-### Features Added
-
-- Updated Microsoft.IoTfirmwareDefense API version to `2025-04-01-preview`
-- Added new get operations for fetching workspace usage metrics
-
-### Breaking Changes
-
-- Renamed models as per previous API/SDK review instructions to align with standard naming conventions
-
-## 1.0.1 (2025-03-11)
-
-### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0 (2024-02-28)
 

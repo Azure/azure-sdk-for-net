@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppVolumeGroupResource : IJsonModel<NetAppVolumeGroupData>
     {
-        private static NetAppVolumeGroupData s_dataDeserializationInstance;
-        private static NetAppVolumeGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetAppVolumeGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeGroupData>)Data).Write(writer, options);
 
-        NetAppVolumeGroupData IJsonModel<NetAppVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        NetAppVolumeGroupData IJsonModel<NetAppVolumeGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppVolumeGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppVolumeGroupData>(Data, options, AzureResourceManagerNetAppContext.Default);
+        BinaryData IPersistableModel<NetAppVolumeGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetAppVolumeGroupData IPersistableModel<NetAppVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeGroupData>(data, options, AzureResourceManagerNetAppContext.Default);
+        NetAppVolumeGroupData IPersistableModel<NetAppVolumeGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppVolumeGroupData>(data, options);
 
-        string IPersistableModel<NetAppVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppVolumeGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppVolumeGroupData>)Data).GetFormatFromOptions(options);
     }
 }

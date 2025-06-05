@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkProfileResource : IJsonModel<NetworkProfileData>
     {
-        private static NetworkProfileData s_dataDeserializationInstance;
-        private static NetworkProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkProfileData>)Data).Write(writer, options);
 
-        NetworkProfileData IJsonModel<NetworkProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkProfileData IJsonModel<NetworkProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkProfileData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NetworkProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkProfileData IPersistableModel<NetworkProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkProfileData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NetworkProfileData IPersistableModel<NetworkProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkProfileData>(data, options);
 
-        string IPersistableModel<NetworkProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkProfileData>)Data).GetFormatFromOptions(options);
     }
 }

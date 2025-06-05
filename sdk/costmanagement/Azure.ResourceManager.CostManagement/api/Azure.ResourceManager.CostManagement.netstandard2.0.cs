@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.CostManagement
 {
-    public partial class AzureResourceManagerCostManagementContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerCostManagementContext() { }
-        public static Azure.ResourceManager.CostManagement.AzureResourceManagerCostManagementContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class CostManagementAlertCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CostManagement.CostManagementAlertResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.CostManagementAlertResource>, System.Collections.IEnumerable
     {
         protected CostManagementAlertCollection() { }

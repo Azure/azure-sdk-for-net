@@ -53,14 +53,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="ResourceHttpRequest"/>. </summary>
         /// <param name="clientRequestId"> The client request ID. </param>
         /// <param name="clientIpAddress"> The client IP address. </param>
-        /// <param name="methodString"> The request method. </param>
+        /// <param name="method"> The request method. </param>
         /// <param name="url"> The url used in the request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string methodString, string url, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceHttpRequest(string clientRequestId, string clientIpAddress, string method, string url, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientRequestId = clientRequestId;
             ClientIpAddress = clientIpAddress;
-            MethodString = methodString;
+            Method = method;
             Url = url;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -69,6 +69,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string ClientRequestId { get; }
         /// <summary> The client IP address. </summary>
         public string ClientIpAddress { get; }
+        /// <summary> The request method. </summary>
+        public string Method { get; }
         /// <summary> The url used in the request. </summary>
         public string Url { get; }
     }

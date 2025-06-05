@@ -7,11 +7,10 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> The type used for update operations of the Service. </summary>
+    /// <summary> The service properties to be updated. </summary>
     public partial class ApiCenterServicePatch
     {
         /// <summary>
@@ -49,23 +48,18 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// <summary> Initializes a new instance of <see cref="ApiCenterServicePatch"/>. </summary>
         public ApiCenterServicePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterServicePatch"/>. </summary>
-        /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterServicePatch(ManagedServiceIdentity identity, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApiCenterServicePatch(ApiCenterProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Identity = identity;
-            Tags = tags;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The managed service identities assigned to this resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> The status of the last operation. </summary>
+        public ApiCenterProvisioningState? ProvisioningState { get; }
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class TenantAssessmentMetadataResource : IJsonModel<SecurityAssessmentMetadataData>
     {
-        private static SecurityAssessmentMetadataData s_dataDeserializationInstance;
-        private static SecurityAssessmentMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityAssessmentMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentMetadataData>)Data).Write(writer, options);
 
-        SecurityAssessmentMetadataData IJsonModel<SecurityAssessmentMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentMetadataData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityAssessmentMetadataData IJsonModel<SecurityAssessmentMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityAssessmentMetadataData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityAssessmentMetadataData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityAssessmentMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityAssessmentMetadataData IPersistableModel<SecurityAssessmentMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAssessmentMetadataData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityAssessmentMetadataData IPersistableModel<SecurityAssessmentMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityAssessmentMetadataData>(data, options);
 
-        string IPersistableModel<SecurityAssessmentMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAssessmentMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityAssessmentMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityAssessmentMetadataData>)Data).GetFormatFromOptions(options);
     }
 }

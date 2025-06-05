@@ -35,8 +35,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("messageId"u8);
-            writer.WriteStringValue(MessageId);
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
             writer.WritePropertyName("senderCommunicationIdentifier"u8);
             writer.WriteObjectValue(SenderCommunicationIdentifier, options);
             if (Optional.IsDefined(SenderDisplayName))
@@ -49,8 +52,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("composeTime"u8);
                 writer.WriteStringValue(ComposeTime.Value, "O");
             }
-            writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Type))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(Type);
+            }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
@@ -170,7 +176,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatMessageEventBaseProperties)} does not support writing '{options.Format}' format.");
             }

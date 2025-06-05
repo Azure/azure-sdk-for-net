@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteSlotPrivateAccessResource : IJsonModel<PrivateAccessData>
     {
-        private static PrivateAccessData s_dataDeserializationInstance;
-        private static PrivateAccessData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PrivateAccessData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateAccessData>)Data).Write(writer, options);
 
-        PrivateAccessData IJsonModel<PrivateAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateAccessData>)DataDeserializationInstance).Create(ref reader, options);
+        PrivateAccessData IJsonModel<PrivateAccessData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateAccessData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PrivateAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateAccessData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<PrivateAccessData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PrivateAccessData IPersistableModel<PrivateAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateAccessData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        PrivateAccessData IPersistableModel<PrivateAccessData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateAccessData>(data, options);
 
-        string IPersistableModel<PrivateAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateAccessData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PrivateAccessData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateAccessData>)Data).GetFormatFromOptions(options);
     }
 }

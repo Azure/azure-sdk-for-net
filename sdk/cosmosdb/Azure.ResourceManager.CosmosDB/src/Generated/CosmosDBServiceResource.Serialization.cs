@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBServiceResource : IJsonModel<CosmosDBServiceData>
     {
-        private static CosmosDBServiceData s_dataDeserializationInstance;
-        private static CosmosDBServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CosmosDBServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBServiceData>)Data).Write(writer, options);
 
-        CosmosDBServiceData IJsonModel<CosmosDBServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        CosmosDBServiceData IJsonModel<CosmosDBServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBServiceData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<CosmosDBServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CosmosDBServiceData IPersistableModel<CosmosDBServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBServiceData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        CosmosDBServiceData IPersistableModel<CosmosDBServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBServiceData>(data, options);
 
-        string IPersistableModel<CosmosDBServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBServiceData>)Data).GetFormatFromOptions(options);
     }
 }

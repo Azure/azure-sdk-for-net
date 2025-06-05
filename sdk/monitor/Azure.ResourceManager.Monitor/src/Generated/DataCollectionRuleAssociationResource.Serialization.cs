@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class DataCollectionRuleAssociationResource : IJsonModel<DataCollectionRuleAssociationData>
     {
-        private static DataCollectionRuleAssociationData s_dataDeserializationInstance;
-        private static DataCollectionRuleAssociationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataCollectionRuleAssociationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionRuleAssociationData>)Data).Write(writer, options);
 
-        DataCollectionRuleAssociationData IJsonModel<DataCollectionRuleAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionRuleAssociationData>)DataDeserializationInstance).Create(ref reader, options);
+        DataCollectionRuleAssociationData IJsonModel<DataCollectionRuleAssociationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataCollectionRuleAssociationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataCollectionRuleAssociationData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<DataCollectionRuleAssociationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataCollectionRuleAssociationData IPersistableModel<DataCollectionRuleAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionRuleAssociationData>(data, options, AzureResourceManagerMonitorContext.Default);
+        DataCollectionRuleAssociationData IPersistableModel<DataCollectionRuleAssociationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataCollectionRuleAssociationData>(data, options);
 
-        string IPersistableModel<DataCollectionRuleAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataCollectionRuleAssociationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataCollectionRuleAssociationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataCollectionRuleAssociationData>)Data).GetFormatFromOptions(options);
     }
 }

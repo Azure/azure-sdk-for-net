@@ -13,12 +13,4 @@ namespace Azure.Identity
 
         bool UseDefaultBrokerAccount { get; set; }
     }
-
-    [Friend("Azure.Identity.Broker")]
-    internal interface IMsalSettablePublicClientInitializerOptions
-    {
-        Action<PublicClientApplicationBuilder> BeforeBuildClient { get; set; }
-
-        bool UseDefaultBrokerAccount { get; set; }
-    }
 }

@@ -15,7 +15,6 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -469,6 +468,10 @@ public class TransferManagerTests
             It.IsAny<CancellationToken>()));
         checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<TransferStatus>(),
             It.IsAny<CancellationToken>()), Times.Exactly(3));
+        if (!isContainer)
+        {
+            checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
+        }
         Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(TransferState.InProgress));
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(TransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
@@ -654,9 +657,6 @@ internal static partial class MockExtensions
                 });
             });
 
-        items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
             .Returns<long, long?, CancellationToken>((position, length, cancellationToken) =>
             {
@@ -727,9 +727,6 @@ internal static partial class MockExtensions
         containers.Source.SetupGet(r => r.Uri).Returns(srcUri);
         containers.Destination.SetupGet(r => r.Uri).Returns(dstUri);
 
-        containers.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
-            .Returns(Task.CompletedTask);
-
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
             .Returns(SubResourcesAsAsyncEnumerable);
 
@@ -768,7 +765,6 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceItem> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
-        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnQueue(this Mock<StorageResourceContainer> srcResource)
@@ -779,14 +775,12 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceContainer> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
-        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnJobProcess(this Mock<StorageResourceItem> srcResource)
     {
         srcResource.VerifyGet(r => r.Uri);
         srcResource.VerifyGet(r => r.ResourceId);
-        srcResource.VerifyGet(r => r.IsContainer);
     }
 
     public static void VerifyDestinationResourceOnJobProcess(this Mock<StorageResourceItem> dstResource)

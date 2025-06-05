@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The status of the packet capture session. </summary>
+    /// <summary>
+    /// The status of the packet capture session.
+    /// Serialized Name: PacketCaptureStatus
+    /// </summary>
     public readonly partial struct MobileNetworkPacketCaptureStatus : IEquatable<MobileNetworkPacketCaptureStatus>
     {
         private readonly string _value;
@@ -27,13 +30,25 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string StoppedValue = "Stopped";
         private const string ErrorValue = "Error";
 
-        /// <summary> NotStarted. </summary>
+        /// <summary>
+        /// NotStarted
+        /// Serialized Name: PacketCaptureStatus.NotStarted
+        /// </summary>
         public static MobileNetworkPacketCaptureStatus NotStarted { get; } = new MobileNetworkPacketCaptureStatus(NotStartedValue);
-        /// <summary> Running. </summary>
+        /// <summary>
+        /// Running
+        /// Serialized Name: PacketCaptureStatus.Running
+        /// </summary>
         public static MobileNetworkPacketCaptureStatus Running { get; } = new MobileNetworkPacketCaptureStatus(RunningValue);
-        /// <summary> Stopped. </summary>
+        /// <summary>
+        /// Stopped
+        /// Serialized Name: PacketCaptureStatus.Stopped
+        /// </summary>
         public static MobileNetworkPacketCaptureStatus Stopped { get; } = new MobileNetworkPacketCaptureStatus(StoppedValue);
-        /// <summary> Error. </summary>
+        /// <summary>
+        /// Error
+        /// Serialized Name: PacketCaptureStatus.Error
+        /// </summary>
         public static MobileNetworkPacketCaptureStatus Error { get; } = new MobileNetworkPacketCaptureStatus(ErrorValue);
         /// <summary> Determines if two <see cref="MobileNetworkPacketCaptureStatus"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkPacketCaptureStatus left, MobileNetworkPacketCaptureStatus right) => left.Equals(right);

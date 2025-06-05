@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityContactResource : IJsonModel<SecurityContactData>
     {
-        private static SecurityContactData s_dataDeserializationInstance;
-        private static SecurityContactData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityContactData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)Data).Write(writer, options);
 
-        SecurityContactData IJsonModel<SecurityContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityContactData IJsonModel<SecurityContactData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityContactData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityContactData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityContactData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityContactData IPersistableModel<SecurityContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityContactData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityContactData IPersistableModel<SecurityContactData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityContactData>(data, options);
 
-        string IPersistableModel<SecurityContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityContactData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityContactData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityContactData>)Data).GetFormatFromOptions(options);
     }
 }

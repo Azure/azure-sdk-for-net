@@ -7,7 +7,7 @@ using System.ClientModel.Primitives;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ErrorResult<T> : ClientResult<T>
+    internal class ErrorResult<T> : ClientResult<T>
     {
         private readonly PipelineResponse _response;
         private readonly ClientResultException _exception;
@@ -18,7 +18,6 @@ namespace Azure.AI.OpenAI
             _exception = exception;
         }
 
-        /// <summary> Gets the Value. </summary>
         public override T Value => throw _exception;
     }
 }

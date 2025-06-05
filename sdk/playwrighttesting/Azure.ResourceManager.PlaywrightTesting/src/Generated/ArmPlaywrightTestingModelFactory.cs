@@ -16,97 +16,6 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmPlaywrightTestingModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingAccountData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingAccountData"/> instance for mocking. </returns>
-        public static PlaywrightTestingAccountData PlaywrightTestingAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PlaywrightTestingAccountProperties properties = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new PlaywrightTestingAccountData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingAccountProperties"/>. </summary>
-        /// <param name="dashboardUri"> The Playwright testing dashboard URI for the account resource. </param>
-        /// <param name="regionalAffinity"> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
-        /// <param name="scalableExecution"> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </param>
-        /// <param name="reporting"> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </param>
-        /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth (through service access token) for executing operations. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.PlaywrightTestingAccountProperties"/> instance for mocking. </returns>
-        public static PlaywrightTestingAccountProperties PlaywrightTestingAccountProperties(Uri dashboardUri = null, PlaywrightTestingEnablementStatus? regionalAffinity = null, PlaywrightTestingEnablementStatus? scalableExecution = null, PlaywrightTestingEnablementStatus? reporting = null, PlaywrightTestingEnablementStatus? localAuth = null, PlaywrightTestingProvisioningState? provisioningState = null)
-        {
-            return new PlaywrightTestingAccountProperties(
-                dashboardUri,
-                regionalAffinity,
-                scalableExecution,
-                reporting,
-                localAuth,
-                provisioningState,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingNameAvailabilityResult"/>. </summary>
-        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
-        /// <param name="reason"> The reason why the given name is not available. </param>
-        /// <param name="message"> Detailed reason why the given name is not available. </param>
-        /// <returns> A new <see cref="Models.PlaywrightTestingNameAvailabilityResult"/> instance for mocking. </returns>
-        public static PlaywrightTestingNameAvailabilityResult PlaywrightTestingNameAvailabilityResult(bool? isNameAvailable = null, PlaywrightTestingNameUnavailableReason? reason = null, string message = null)
-        {
-            return new PlaywrightTestingNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/> instance for mocking. </returns>
-        public static PlaywrightTestingQuotaData PlaywrightTestingQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlaywrightTestingQuotaProperties properties = null)
-        {
-            return new PlaywrightTestingQuotaData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingQuotaProperties"/>. </summary>
-        /// <param name="freeTrial"> The subscription quota resource free-trial properties. </param>
-        /// <param name="offeringType"> Indicates the offering type for the subscription. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="Models.PlaywrightTestingQuotaProperties"/> instance for mocking. </returns>
-        public static PlaywrightTestingQuotaProperties PlaywrightTestingQuotaProperties(PlaywrightTestingFreeTrialProperties freeTrial = null, PlaywrightTestingOfferingType? offeringType = null, PlaywrightTestingProvisioningState? provisioningState = null)
-        {
-            return new PlaywrightTestingQuotaProperties(freeTrial, offeringType, provisioningState, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingFreeTrialProperties"/>. </summary>
-        /// <param name="accountId"> The Playwright service account id. </param>
-        /// <param name="state"> The free-trial state. </param>
-        /// <returns> A new <see cref="Models.PlaywrightTestingFreeTrialProperties"/> instance for mocking. </returns>
-        public static PlaywrightTestingFreeTrialProperties PlaywrightTestingFreeTrialProperties(string accountId = null, PlaywrightTestingFreeTrialState state = default)
-        {
-            return new PlaywrightTestingFreeTrialProperties(accountId, state, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingAccountQuotaData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -150,6 +59,97 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 usedValue,
                 percentageUsed,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingQuotaData"/> instance for mocking. </returns>
+        public static PlaywrightTestingQuotaData PlaywrightTestingQuotaData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PlaywrightTestingQuotaProperties properties = null)
+        {
+            return new PlaywrightTestingQuotaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingQuotaProperties"/>. </summary>
+        /// <param name="freeTrial"> The subscription quota resource free-trial properties. </param>
+        /// <param name="offeringType"> Indicates the offering type for the subscription. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.PlaywrightTestingQuotaProperties"/> instance for mocking. </returns>
+        public static PlaywrightTestingQuotaProperties PlaywrightTestingQuotaProperties(PlaywrightTestingFreeTrialProperties freeTrial = null, PlaywrightTestingOfferingType? offeringType = null, PlaywrightTestingProvisioningState? provisioningState = null)
+        {
+            return new PlaywrightTestingQuotaProperties(freeTrial, offeringType, provisioningState, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingFreeTrialProperties"/>. </summary>
+        /// <param name="accountId"> The Playwright service account id. </param>
+        /// <param name="state"> The free-trial state. </param>
+        /// <returns> A new <see cref="Models.PlaywrightTestingFreeTrialProperties"/> instance for mocking. </returns>
+        public static PlaywrightTestingFreeTrialProperties PlaywrightTestingFreeTrialProperties(string accountId = null, PlaywrightTestingFreeTrialState state = default)
+        {
+            return new PlaywrightTestingFreeTrialProperties(accountId, state, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PlaywrightTesting.PlaywrightTestingAccountData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="PlaywrightTesting.PlaywrightTestingAccountData"/> instance for mocking. </returns>
+        public static PlaywrightTestingAccountData PlaywrightTestingAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PlaywrightTestingAccountProperties properties = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new PlaywrightTestingAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingAccountProperties"/>. </summary>
+        /// <param name="dashboardUri"> The Playwright testing dashboard URI for the account resource. </param>
+        /// <param name="regionalAffinity"> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </param>
+        /// <param name="scalableExecution"> When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations. </param>
+        /// <param name="reporting"> When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting. </param>
+        /// <param name="localAuth"> When enabled, this feature allows the workspace to use local auth(through access key) for authentication of test runs. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <returns> A new <see cref="Models.PlaywrightTestingAccountProperties"/> instance for mocking. </returns>
+        public static PlaywrightTestingAccountProperties PlaywrightTestingAccountProperties(Uri dashboardUri = null, PlaywrightTestingEnablementStatus? regionalAffinity = null, PlaywrightTestingEnablementStatus? scalableExecution = null, PlaywrightTestingEnablementStatus? reporting = null, PlaywrightTestingEnablementStatus? localAuth = null, PlaywrightTestingProvisioningState? provisioningState = null)
+        {
+            return new PlaywrightTestingAccountProperties(
+                dashboardUri,
+                regionalAffinity,
+                scalableExecution,
+                reporting,
+                localAuth,
+                provisioningState,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PlaywrightTestingNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
+        /// <param name="reason"> The reason why the given name is not available. </param>
+        /// <param name="message"> Detailed reason why the given name is not available. </param>
+        /// <returns> A new <see cref="Models.PlaywrightTestingNameAvailabilityResult"/> instance for mocking. </returns>
+        public static PlaywrightTestingNameAvailabilityResult PlaywrightTestingNameAvailabilityResult(bool? isNameAvailable = null, PlaywrightTestingNameUnavailableReason? reason = null, string message = null)
+        {
+            return new PlaywrightTestingNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
     }
 }

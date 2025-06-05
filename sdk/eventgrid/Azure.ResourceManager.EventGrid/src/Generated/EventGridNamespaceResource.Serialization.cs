@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class EventGridNamespaceResource : IJsonModel<EventGridNamespaceData>
     {
-        private static EventGridNamespaceData s_dataDeserializationInstance;
-        private static EventGridNamespaceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EventGridNamespaceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceData>)Data).Write(writer, options);
 
-        EventGridNamespaceData IJsonModel<EventGridNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceData>)DataDeserializationInstance).Create(ref reader, options);
+        EventGridNamespaceData IJsonModel<EventGridNamespaceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridNamespaceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridNamespaceData>(Data, options, AzureResourceManagerEventGridContext.Default);
+        BinaryData IPersistableModel<EventGridNamespaceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventGridNamespaceData IPersistableModel<EventGridNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceData>(data, options, AzureResourceManagerEventGridContext.Default);
+        EventGridNamespaceData IPersistableModel<EventGridNamespaceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridNamespaceData>(data, options);
 
-        string IPersistableModel<EventGridNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridNamespaceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridNamespaceData>)Data).GetFormatFromOptions(options);
     }
 }

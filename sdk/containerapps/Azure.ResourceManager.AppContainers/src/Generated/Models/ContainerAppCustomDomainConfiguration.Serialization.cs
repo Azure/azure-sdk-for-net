@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("dnsSuffix"u8);
                 writer.WriteStringValue(DnsSuffix);
             }
-            if (Optional.IsDefined(CertificateKeyVaultProperties))
-            {
-                writer.WritePropertyName("certificateKeyVaultProperties"u8);
-                writer.WriteObjectValue(CertificateKeyVaultProperties, options);
-            }
             if (Optional.IsDefined(CertificateValue))
             {
                 writer.WritePropertyName("certificateValue"u8);
@@ -114,7 +109,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string customDomainVerificationId = default;
             string dnsSuffix = default;
-            ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             byte[] certificateValue = default;
             string certificatePassword = default;
             DateTimeOffset? expirationDate = default;
@@ -132,15 +126,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (property.NameEquals("dnsSuffix"u8))
                 {
                     dnsSuffix = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("certificateKeyVaultProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("certificateValue"u8))
@@ -185,7 +170,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppCustomDomainConfiguration(
                 customDomainVerificationId,
                 dnsSuffix,
-                certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
                 expirationDate,
@@ -248,21 +232,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         builder.AppendLine($"'{DnsSuffix}'");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateKeyVaultProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateKeyVaultProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateKeyVaultProperties))
-                {
-                    builder.Append("  certificateKeyVaultProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CertificateKeyVaultProperties, options, 2, false, "  certificateKeyVaultProperties: ");
                 }
             }
 
@@ -377,7 +346,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

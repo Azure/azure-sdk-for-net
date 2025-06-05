@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseSqlPoolResource IOperationSource<SynapseSqlPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseSqlPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseSqlPoolData>(response.Content);
             return new SynapseSqlPoolResource(_client, data);
         }
 
         async ValueTask<SynapseSqlPoolResource> IOperationSource<SynapseSqlPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseSqlPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseSqlPoolData>(response.Content);
             return await Task.FromResult(new SynapseSqlPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 {
     public partial class DataReplicationEmailConfigurationResource : IJsonModel<DataReplicationEmailConfigurationData>
     {
-        private static DataReplicationEmailConfigurationData s_dataDeserializationInstance;
-        private static DataReplicationEmailConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataReplicationEmailConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationEmailConfigurationData>)Data).Write(writer, options);
 
-        DataReplicationEmailConfigurationData IJsonModel<DataReplicationEmailConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationEmailConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        DataReplicationEmailConfigurationData IJsonModel<DataReplicationEmailConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataReplicationEmailConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataReplicationEmailConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataReplicationEmailConfigurationData>(Data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+        BinaryData IPersistableModel<DataReplicationEmailConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataReplicationEmailConfigurationData IPersistableModel<DataReplicationEmailConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationEmailConfigurationData>(data, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+        DataReplicationEmailConfigurationData IPersistableModel<DataReplicationEmailConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataReplicationEmailConfigurationData>(data, options);
 
-        string IPersistableModel<DataReplicationEmailConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationEmailConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataReplicationEmailConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataReplicationEmailConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

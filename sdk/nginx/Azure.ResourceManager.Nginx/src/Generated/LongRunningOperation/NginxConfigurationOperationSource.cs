@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Nginx
 
         NginxConfigurationResource IOperationSource<NginxConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content);
             return new NginxConfigurationResource(_client, data);
         }
 
         async ValueTask<NginxConfigurationResource> IOperationSource<NginxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNginxContext.Default);
+            var data = ModelReaderWriter.Read<NginxConfigurationData>(response.Content);
             return await Task.FromResult(new NginxConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

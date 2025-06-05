@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The ContinentsResponseCountryOrRegionsItem.
-    /// Serialized Name: ContinentsResponseCountryOrRegionsItem
-    /// </summary>
+    /// <summary> The ContinentsResponseCountryOrRegionsItem. </summary>
     public partial class ContinentsResponseCountryOrRegionsItem
     {
         /// <summary>
@@ -54,8 +51,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContinentsResponseCountryOrRegionsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ContinentsResponseCountryOrRegionsItem.id. </param>
-        /// <param name="continentId"> Serialized Name: ContinentsResponseCountryOrRegionsItem.continentId. </param>
+        /// <param name="id"></param>
+        /// <param name="continentId"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContinentsResponseCountryOrRegionsItem(string id, string continentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -64,9 +61,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ContinentsResponseCountryOrRegionsItem.id. </summary>
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
-        /// <summary> Serialized Name: ContinentsResponseCountryOrRegionsItem.continentId. </summary>
+        /// <summary> Gets the continent id. </summary>
         public string ContinentId { get; }
     }
 }

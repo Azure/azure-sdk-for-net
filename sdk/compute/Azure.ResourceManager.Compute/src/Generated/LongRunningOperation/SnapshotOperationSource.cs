@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         SnapshotResource IOperationSource<SnapshotResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<SnapshotData>(response.Content);
             return new SnapshotResource(_client, data);
         }
 
         async ValueTask<SnapshotResource> IOperationSource<SnapshotResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SnapshotData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<SnapshotData>(response.Content);
             return await Task.FromResult(new SnapshotResource(_client, data)).ConfigureAwait(false);
         }
     }

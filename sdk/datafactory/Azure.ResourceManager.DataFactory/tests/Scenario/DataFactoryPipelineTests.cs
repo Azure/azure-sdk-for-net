@@ -926,7 +926,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSapOpenHub = new DataFactoryLinkedServiceData(new SapTableLinkedService()
             {
                 ClientId = "1",
-                SncFlag = false,
+                SncMode = "false",
                 UserName = "admin",
                 Server = "testserver",
                 Password = new DataFactorySecretString("fakePassword")

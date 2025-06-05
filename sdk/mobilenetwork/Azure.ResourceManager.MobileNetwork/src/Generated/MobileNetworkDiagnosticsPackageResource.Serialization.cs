@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.MobileNetwork
 {
     public partial class MobileNetworkDiagnosticsPackageResource : IJsonModel<MobileNetworkDiagnosticsPackageData>
     {
-        private static MobileNetworkDiagnosticsPackageData s_dataDeserializationInstance;
-        private static MobileNetworkDiagnosticsPackageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<MobileNetworkDiagnosticsPackageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkDiagnosticsPackageData>)Data).Write(writer, options);
 
-        MobileNetworkDiagnosticsPackageData IJsonModel<MobileNetworkDiagnosticsPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkDiagnosticsPackageData>)DataDeserializationInstance).Create(ref reader, options);
+        MobileNetworkDiagnosticsPackageData IJsonModel<MobileNetworkDiagnosticsPackageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MobileNetworkDiagnosticsPackageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MobileNetworkDiagnosticsPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MobileNetworkDiagnosticsPackageData>(Data, options, AzureResourceManagerMobileNetworkContext.Default);
+        BinaryData IPersistableModel<MobileNetworkDiagnosticsPackageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MobileNetworkDiagnosticsPackageData IPersistableModel<MobileNetworkDiagnosticsPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkDiagnosticsPackageData>(data, options, AzureResourceManagerMobileNetworkContext.Default);
+        MobileNetworkDiagnosticsPackageData IPersistableModel<MobileNetworkDiagnosticsPackageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MobileNetworkDiagnosticsPackageData>(data, options);
 
-        string IPersistableModel<MobileNetworkDiagnosticsPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkDiagnosticsPackageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MobileNetworkDiagnosticsPackageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MobileNetworkDiagnosticsPackageData>)Data).GetFormatFromOptions(options);
     }
 }

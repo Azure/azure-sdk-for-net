@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Analysis.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAnalysisContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AnalysisServerNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

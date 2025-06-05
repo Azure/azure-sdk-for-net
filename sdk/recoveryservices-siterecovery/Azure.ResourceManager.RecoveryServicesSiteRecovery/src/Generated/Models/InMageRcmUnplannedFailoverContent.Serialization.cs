@@ -42,11 +42,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (Optional.IsDefined(OSUpgradeVersion))
-            {
-                writer.WritePropertyName("osUpgradeVersion"u8);
-                writer.WriteStringValue(OSUpgradeVersion);
-            }
         }
 
         InMageRcmUnplannedFailoverContent IJsonModel<InMageRcmUnplannedFailoverContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,7 +66,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
             string performShutdown = default;
             ResourceIdentifier recoveryPointId = default;
-            string osUpgradeVersion = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,11 +85,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     recoveryPointId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osUpgradeVersion"u8))
-                {
-                    osUpgradeVersion = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -107,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new InMageRcmUnplannedFailoverContent(instanceType, serializedAdditionalRawData, performShutdown, recoveryPointId, osUpgradeVersion);
+            return new InMageRcmUnplannedFailoverContent(instanceType, serializedAdditionalRawData, performShutdown, recoveryPointId);
         }
 
         BinaryData IPersistableModel<InMageRcmUnplannedFailoverContent>.Write(ModelReaderWriterOptions options)
@@ -117,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmUnplannedFailoverContent)} does not support writing '{options.Format}' format.");
             }

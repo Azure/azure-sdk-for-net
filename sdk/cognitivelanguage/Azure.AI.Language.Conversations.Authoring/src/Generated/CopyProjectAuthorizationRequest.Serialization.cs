@@ -125,7 +125,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsAuthoringContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CopyProjectAuthorizationRequest)} does not support writing '{options.Format}' format.");
             }

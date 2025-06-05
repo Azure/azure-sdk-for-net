@@ -21,7 +21,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             IndexerExecutionStatus status = default;
             IndexerExecutionStatusDetail? statusDetail = default;
-            IndexingMode? mode = default;
+            IndexerState currentState = default;
             string errorMessage = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
@@ -48,13 +48,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     statusDetail = new IndexerExecutionStatusDetail(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (property.NameEquals("currentState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new IndexingMode(property.Value.GetString());
+                    currentState = IndexerState.DeserializeIndexerState(property.Value);
                     continue;
                 }
                 if (property.NameEquals("errorMessage"u8))
@@ -125,7 +125,7 @@ namespace Azure.Search.Documents.Indexes.Models
             return new IndexerExecutionResult(
                 status,
                 statusDetail,
-                mode,
+                currentState,
                 errorMessage,
                 startTime,
                 endTime,

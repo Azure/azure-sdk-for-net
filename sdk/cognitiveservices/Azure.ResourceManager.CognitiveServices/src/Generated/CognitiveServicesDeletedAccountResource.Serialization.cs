@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.CognitiveServices
 {
     public partial class CognitiveServicesDeletedAccountResource : IJsonModel<CognitiveServicesAccountData>
     {
-        private static CognitiveServicesAccountData s_dataDeserializationInstance;
-        private static CognitiveServicesAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CognitiveServicesAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountData>)Data).Write(writer, options);
 
-        CognitiveServicesAccountData IJsonModel<CognitiveServicesAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        CognitiveServicesAccountData IJsonModel<CognitiveServicesAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CognitiveServicesAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CognitiveServicesAccountData>(Data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        BinaryData IPersistableModel<CognitiveServicesAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CognitiveServicesAccountData IPersistableModel<CognitiveServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountData>(data, options, AzureResourceManagerCognitiveServicesContext.Default);
+        CognitiveServicesAccountData IPersistableModel<CognitiveServicesAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CognitiveServicesAccountData>(data, options);
 
-        string IPersistableModel<CognitiveServicesAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CognitiveServicesAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CognitiveServicesAccountData>)Data).GetFormatFromOptions(options);
     }
 }

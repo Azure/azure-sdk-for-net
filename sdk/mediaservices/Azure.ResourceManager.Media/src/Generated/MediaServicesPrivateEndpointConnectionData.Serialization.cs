@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Media
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMediaContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MediaServicesPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }

@@ -20,10 +20,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
-            if (Optional.IsDefined(SpeechModelEndpointId))
+            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
             {
-                writer.WritePropertyName("speechModelEndpointId"u8);
-                writer.WriteStringValue(SpeechModelEndpointId);
+                writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
+                writer.WriteStringValue(SpeechRecognitionModelEndpointId);
             }
             if (Optional.IsDefined(OperationContext))
             {

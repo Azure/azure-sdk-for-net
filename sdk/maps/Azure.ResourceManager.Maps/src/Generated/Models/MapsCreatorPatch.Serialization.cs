@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Maps.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MapsCreatorPatch)} does not support writing '{options.Format}' format.");
             }

@@ -7,7 +7,7 @@ using Azure.Search.Documents.Indexes.Models;
 namespace Azure.Search.Documents.Indexes
 {
     /// <summary>
-    /// Attributes a Collection(<see cref="SearchFieldDataType.Single"/>) vector field, allowing its use with the VectorSearch indexes.
+    /// Attributes a ReadOnlyMemory&lt;float&gt; vector field, allowing its use with the VectorSearch indexes.
     /// </summary>
     [AttributeUsage(AttributeTargets.Field | AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class VectorSearchFieldAttribute : Attribute, ISearchFieldAttribute

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Automation
 {
     public partial class AutomationAccountResource : IJsonModel<AutomationAccountData>
     {
-        private static AutomationAccountData s_dataDeserializationInstance;
-        private static AutomationAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AutomationAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutomationAccountData>)Data).Write(writer, options);
 
-        AutomationAccountData IJsonModel<AutomationAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        AutomationAccountData IJsonModel<AutomationAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutomationAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutomationAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutomationAccountData>(Data, options, AzureResourceManagerAutomationContext.Default);
+        BinaryData IPersistableModel<AutomationAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutomationAccountData IPersistableModel<AutomationAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationAccountData>(data, options, AzureResourceManagerAutomationContext.Default);
+        AutomationAccountData IPersistableModel<AutomationAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutomationAccountData>(data, options);
 
-        string IPersistableModel<AutomationAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AutomationAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutomationAccountData>)Data).GetFormatFromOptions(options);
     }
 }

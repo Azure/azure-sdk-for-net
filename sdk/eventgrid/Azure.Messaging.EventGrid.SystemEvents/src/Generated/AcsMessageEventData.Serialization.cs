@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsMessageEventDataConverter))]
     public partial class AcsMessageEventData : IUtf8JsonSerializable, IJsonModel<AcsMessageEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMessageEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -45,10 +43,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("receivedTimeStamp"u8);
                 writer.WriteStringValue(ReceivedTimestamp.Value, "O");
             }
-            if (Optional.IsDefined(ErrorInternal))
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue<AcsMessageChannelEventError>(ErrorInternal, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +137,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsMessageEventData)} does not support writing '{options.Format}' format.");
             }
@@ -177,20 +175,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AcsMessageEventDataConverter : JsonConverter<AcsMessageEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsMessageEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AcsMessageEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsMessageEventData(document.RootElement);
-            }
         }
     }
 }

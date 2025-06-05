@@ -11,7 +11,6 @@ using System.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection;
 using System.Linq;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -220,13 +219,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             return metricAccumulators;
         }
 
-        private void ApplyFilters<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)] TTelemetry>(
+        private void ApplyFilters<TTelemetry>(
             Dictionary<string, AccumulatedValues> metricAccumulators,
             IEnumerable<DerivedMetric<TTelemetry>> metrics,
             TTelemetry telemetry,
             out CollectionConfigurationError[] filteringErrors,
             ref string projectionError)
-            where TTelemetry : DocumentIngress
         {
             filteringErrors = Array.Empty<CollectionConfigurationError>();
 

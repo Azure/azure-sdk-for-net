@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         EventGridNamespaceClientGroupResource IOperationSource<EventGridNamespaceClientGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridNamespaceClientGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<EventGridNamespaceClientGroupData>(response.Content);
             return new EventGridNamespaceClientGroupResource(_client, data);
         }
 
         async ValueTask<EventGridNamespaceClientGroupResource> IOperationSource<EventGridNamespaceClientGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<EventGridNamespaceClientGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<EventGridNamespaceClientGroupData>(response.Content);
             return await Task.FromResult(new EventGridNamespaceClientGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

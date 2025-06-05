@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformMonitoringSettingResource : IJsonModel<AppPlatformMonitoringSettingData>
     {
-        private static AppPlatformMonitoringSettingData s_dataDeserializationInstance;
-        private static AppPlatformMonitoringSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AppPlatformMonitoringSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformMonitoringSettingData>)Data).Write(writer, options);
 
-        AppPlatformMonitoringSettingData IJsonModel<AppPlatformMonitoringSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformMonitoringSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        AppPlatformMonitoringSettingData IJsonModel<AppPlatformMonitoringSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformMonitoringSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformMonitoringSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformMonitoringSettingData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
+        BinaryData IPersistableModel<AppPlatformMonitoringSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppPlatformMonitoringSettingData IPersistableModel<AppPlatformMonitoringSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformMonitoringSettingData>(data, options, AzureResourceManagerAppPlatformContext.Default);
+        AppPlatformMonitoringSettingData IPersistableModel<AppPlatformMonitoringSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformMonitoringSettingData>(data, options);
 
-        string IPersistableModel<AppPlatformMonitoringSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformMonitoringSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformMonitoringSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformMonitoringSettingData>)Data).GetFormatFromOptions(options);
     }
 }

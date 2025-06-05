@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteLinkedBackendResource IOperationSource<StaticSiteLinkedBackendResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StaticSiteLinkedBackendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<StaticSiteLinkedBackendData>(response.Content);
             return new StaticSiteLinkedBackendResource(_client, data);
         }
 
         async ValueTask<StaticSiteLinkedBackendResource> IOperationSource<StaticSiteLinkedBackendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StaticSiteLinkedBackendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            var data = ModelReaderWriter.Read<StaticSiteLinkedBackendData>(response.Content);
             return await Task.FromResult(new StaticSiteLinkedBackendResource(_client, data)).ConfigureAwait(false);
         }
     }

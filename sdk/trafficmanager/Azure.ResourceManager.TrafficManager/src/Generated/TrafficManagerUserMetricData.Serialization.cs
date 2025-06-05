@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.TrafficManager
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTrafficManagerContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(TrafficManagerUserMetricData)} does not support writing '{options.Format}' format.");
             }

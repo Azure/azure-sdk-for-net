@@ -17,16 +17,12 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
-        /// <param name="confidence"> The confidence of the recognized speech. </param>
-        internal SpeechResult(string speech, double? confidence)
+        internal SpeechResult(string speech)
         {
             Speech = speech;
-            Confidence = confidence;
         }
 
         /// <summary> The recognized speech in string. </summary>
         public string Speech { get; }
-        /// <summary> The confidence of the recognized speech. </summary>
-        public double? Confidence { get; }
     }
 }

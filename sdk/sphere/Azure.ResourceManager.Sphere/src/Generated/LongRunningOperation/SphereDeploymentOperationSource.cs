@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sphere
 
         SphereDeploymentResource IOperationSource<SphereDeploymentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
+            var data = ModelReaderWriter.Read<SphereDeploymentData>(response.Content);
             return new SphereDeploymentResource(_client, data);
         }
 
         async ValueTask<SphereDeploymentResource> IOperationSource<SphereDeploymentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SphereDeploymentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSphereContext.Default);
+            var data = ModelReaderWriter.Read<SphereDeploymentData>(response.Content);
             return await Task.FromResult(new SphereDeploymentResource(_client, data)).ConfigureAwait(false);
         }
     }

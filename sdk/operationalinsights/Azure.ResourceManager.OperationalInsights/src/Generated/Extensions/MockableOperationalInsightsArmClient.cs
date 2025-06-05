@@ -35,15 +35,27 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OperationalInsightsClusterResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OperationalInsightsClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="LogAnalyticsQueryPackResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogAnalyticsQueryPackResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryPackResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsClusterResource"/> object. </returns>
-        public virtual OperationalInsightsClusterResource GetOperationalInsightsClusterResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource"/> object. </returns>
+        public virtual LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(ResourceIdentifier id)
         {
-            OperationalInsightsClusterResource.ValidateResourceId(id);
-            return new OperationalInsightsClusterResource(Client, id);
+            LogAnalyticsQueryPackResource.ValidateResourceId(id);
+            return new LogAnalyticsQueryPackResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="LogAnalyticsQueryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="LogAnalyticsQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="LogAnalyticsQueryResource"/> object. </returns>
+        public virtual LogAnalyticsQueryResource GetLogAnalyticsQueryResource(ResourceIdentifier id)
+        {
+            LogAnalyticsQueryResource.ValidateResourceId(id);
+            return new LogAnalyticsQueryResource(Client, id);
         }
 
         /// <summary>
@@ -95,27 +107,15 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LogAnalyticsQueryResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogAnalyticsQueryResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing a <see cref="StorageInsightResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="StorageInsightResource.CreateResourceIdentifier" /> to create a <see cref="StorageInsightResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryResource"/> object. </returns>
-        public virtual LogAnalyticsQueryResource GetLogAnalyticsQueryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="StorageInsightResource"/> object. </returns>
+        public virtual StorageInsightResource GetStorageInsightResource(ResourceIdentifier id)
         {
-            LogAnalyticsQueryResource.ValidateResourceId(id);
-            return new LogAnalyticsQueryResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="LogAnalyticsQueryPackResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="LogAnalyticsQueryPackResource.CreateResourceIdentifier" /> to create a <see cref="LogAnalyticsQueryPackResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LogAnalyticsQueryPackResource"/> object. </returns>
-        public virtual LogAnalyticsQueryPackResource GetLogAnalyticsQueryPackResource(ResourceIdentifier id)
-        {
-            LogAnalyticsQueryPackResource.ValidateResourceId(id);
-            return new LogAnalyticsQueryPackResource(Client, id);
+            StorageInsightResource.ValidateResourceId(id);
+            return new StorageInsightResource(Client, id);
         }
 
         /// <summary>
@@ -131,27 +131,15 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="StorageInsightResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="StorageInsightResource.CreateResourceIdentifier" /> to create a <see cref="StorageInsightResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="OperationalInsightsClusterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsClusterResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsClusterResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="StorageInsightResource"/> object. </returns>
-        public virtual StorageInsightResource GetStorageInsightResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="OperationalInsightsClusterResource"/> object. </returns>
+        public virtual OperationalInsightsClusterResource GetOperationalInsightsClusterResource(ResourceIdentifier id)
         {
-            StorageInsightResource.ValidateResourceId(id);
-            return new StorageInsightResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing an <see cref="OperationalInsightsTableResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OperationalInsightsTableResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsTableResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OperationalInsightsTableResource"/> object. </returns>
-        public virtual OperationalInsightsTableResource GetOperationalInsightsTableResource(ResourceIdentifier id)
-        {
-            OperationalInsightsTableResource.ValidateResourceId(id);
-            return new OperationalInsightsTableResource(Client, id);
+            OperationalInsightsClusterResource.ValidateResourceId(id);
+            return new OperationalInsightsClusterResource(Client, id);
         }
 
         /// <summary>
@@ -164,6 +152,18 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         {
             OperationalInsightsWorkspaceResource.ValidateResourceId(id);
             return new OperationalInsightsWorkspaceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OperationalInsightsTableResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationalInsightsTableResource.CreateResourceIdentifier" /> to create an <see cref="OperationalInsightsTableResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OperationalInsightsTableResource"/> object. </returns>
+        public virtual OperationalInsightsTableResource GetOperationalInsightsTableResource(ResourceIdentifier id)
+        {
+            OperationalInsightsTableResource.ValidateResourceId(id);
+            return new OperationalInsightsTableResource(Client, id);
         }
     }
 }

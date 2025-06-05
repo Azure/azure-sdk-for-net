@@ -83,10 +83,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("messageServerService"u8);
                 JsonSerializer.Serialize(writer, MessageServerService);
             }
-            if (Optional.IsDefined(SncFlag))
+            if (Optional.IsDefined(SncMode))
             {
                 writer.WritePropertyName("sncMode"u8);
-                JsonSerializer.Serialize(writer, SncFlag);
+                JsonSerializer.Serialize(writer, SncMode);
             }
             if (Optional.IsDefined(SncMyName))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret password = default;
             DataFactoryElement<string> messageServer = default;
             DataFactoryElement<string> messageServerService = default;
-            DataFactoryElement<bool> sncMode = default;
+            DataFactoryElement<string> sncMode = default;
             DataFactoryElement<string> sncMyName = default;
             DataFactoryElement<string> sncPartnerName = default;
             DataFactoryElement<string> sncLibraryPath = default;
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property0.Value.GetRawText());
+                            sncMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("sncMyName"u8))
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SapOdpLinkedService)} does not support writing '{options.Format}' format.");
             }

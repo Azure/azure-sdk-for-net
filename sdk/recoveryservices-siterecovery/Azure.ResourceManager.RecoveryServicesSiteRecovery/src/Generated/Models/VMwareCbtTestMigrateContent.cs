@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;
             VmNics = new ChangeTrackingList<VMwareCbtNicContent>();
-            PostMigrationSteps = new ChangeTrackingList<ManagedRunCommandScriptContent>();
             InstanceType = "VMwareCbt";
         }
 
@@ -37,14 +36,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="networkId"> The test network Id. </param>
         /// <param name="vmNics"> The list of NIC details. </param>
         /// <param name="osUpgradeVersion"> A value indicating the inplace OS Upgrade version. </param>
-        /// <param name="postMigrationSteps"> The managed run command script input. </param>
-        internal VMwareCbtTestMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion, IList<ManagedRunCommandScriptContent> postMigrationSteps) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareCbtTestMigrateContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier recoveryPointId, ResourceIdentifier networkId, IList<VMwareCbtNicContent> vmNics, string osUpgradeVersion) : base(instanceType, serializedAdditionalRawData)
         {
             RecoveryPointId = recoveryPointId;
             NetworkId = networkId;
             VmNics = vmNics;
             OSUpgradeVersion = osUpgradeVersion;
-            PostMigrationSteps = postMigrationSteps;
             InstanceType = instanceType ?? "VMwareCbt";
         }
 
@@ -61,7 +58,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public IList<VMwareCbtNicContent> VmNics { get; }
         /// <summary> A value indicating the inplace OS Upgrade version. </summary>
         public string OSUpgradeVersion { get; set; }
-        /// <summary> The managed run command script input. </summary>
-        public IList<ManagedRunCommandScriptContent> PostMigrationSteps { get; }
     }
 }

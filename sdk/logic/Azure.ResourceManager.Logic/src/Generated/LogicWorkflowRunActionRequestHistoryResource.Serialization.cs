@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowRunActionRequestHistoryResource : IJsonModel<LogicWorkflowRequestHistoryData>
     {
-        private static LogicWorkflowRequestHistoryData s_dataDeserializationInstance;
-        private static LogicWorkflowRequestHistoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LogicWorkflowRequestHistoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRequestHistoryData>)Data).Write(writer, options);
 
-        LogicWorkflowRequestHistoryData IJsonModel<LogicWorkflowRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRequestHistoryData>)DataDeserializationInstance).Create(ref reader, options);
+        LogicWorkflowRequestHistoryData IJsonModel<LogicWorkflowRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowRequestHistoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicWorkflowRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicWorkflowRequestHistoryData>(Data, options, AzureResourceManagerLogicContext.Default);
+        BinaryData IPersistableModel<LogicWorkflowRequestHistoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LogicWorkflowRequestHistoryData IPersistableModel<LogicWorkflowRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowRequestHistoryData>(data, options, AzureResourceManagerLogicContext.Default);
+        LogicWorkflowRequestHistoryData IPersistableModel<LogicWorkflowRequestHistoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowRequestHistoryData>(data, options);
 
-        string IPersistableModel<LogicWorkflowRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowRequestHistoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LogicWorkflowRequestHistoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowRequestHistoryData>)Data).GetFormatFromOptions(options);
     }
 }

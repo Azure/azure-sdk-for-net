@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class RestorableDroppedManagedDatabaseResource : IJsonModel<RestorableDroppedManagedDatabaseData>
     {
-        private static RestorableDroppedManagedDatabaseData s_dataDeserializationInstance;
-        private static RestorableDroppedManagedDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<RestorableDroppedManagedDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RestorableDroppedManagedDatabaseData>)Data).Write(writer, options);
 
-        RestorableDroppedManagedDatabaseData IJsonModel<RestorableDroppedManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RestorableDroppedManagedDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        RestorableDroppedManagedDatabaseData IJsonModel<RestorableDroppedManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RestorableDroppedManagedDatabaseData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RestorableDroppedManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RestorableDroppedManagedDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<RestorableDroppedManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RestorableDroppedManagedDatabaseData IPersistableModel<RestorableDroppedManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorableDroppedManagedDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
+        RestorableDroppedManagedDatabaseData IPersistableModel<RestorableDroppedManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorableDroppedManagedDatabaseData>(data, options);
 
-        string IPersistableModel<RestorableDroppedManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RestorableDroppedManagedDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<RestorableDroppedManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RestorableDroppedManagedDatabaseData>)Data).GetFormatFromOptions(options);
     }
 }

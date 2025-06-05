@@ -1180,7 +1180,7 @@ namespace Azure.Storage.Queues
 
                     QueueProperties queueProperties = new QueueProperties
                     {
-                        ApproximateMessagesCountLong = response.Headers.ApproximateMessagesCount.GetValueOrDefault(),
+                        ApproximateMessagesCount = response.Headers.ApproximateMessagesCount.GetValueOrDefault(),
                         Metadata = response.Headers.Metadata
                     };
 

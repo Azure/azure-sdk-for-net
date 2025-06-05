@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Grafana
 
         ManagedGrafanaResource IOperationSource<ManagedGrafanaResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content);
             return new ManagedGrafanaResource(_client, data);
         }
 
         async ValueTask<ManagedGrafanaResource> IOperationSource<ManagedGrafanaResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGrafanaContext.Default);
+            var data = ModelReaderWriter.Read<ManagedGrafanaData>(response.Content);
             return await Task.FromResult(new ManagedGrafanaResource(_client, data)).ConfigureAwait(false);
         }
     }

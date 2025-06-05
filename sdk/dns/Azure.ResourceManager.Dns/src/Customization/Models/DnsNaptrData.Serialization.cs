@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Dns
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DnsNaptrRecordData)} does not support '{options.Format}' format.");
             }

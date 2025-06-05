@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     public partial class ManagedNetworkResource : IJsonModel<ManagedNetworkData>
     {
-        private static ManagedNetworkData s_dataDeserializationInstance;
-        private static ManagedNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ManagedNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkData>)Data).Write(writer, options);
 
-        ManagedNetworkData IJsonModel<ManagedNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        ManagedNetworkData IJsonModel<ManagedNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
+        BinaryData IPersistableModel<ManagedNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedNetworkData IPersistableModel<ManagedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
+        ManagedNetworkData IPersistableModel<ManagedNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkData>(data, options);
 
-        string IPersistableModel<ManagedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkData>)Data).GetFormatFromOptions(options);
     }
 }

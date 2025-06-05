@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformGatewayCustomDomainResource IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
+            var data = ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(response.Content);
             return new AppPlatformGatewayCustomDomainResource(_client, data);
         }
 
         async ValueTask<AppPlatformGatewayCustomDomainResource> IOperationSource<AppPlatformGatewayCustomDomainResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
+            var data = ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(response.Content);
             return await Task.FromResult(new AppPlatformGatewayCustomDomainResource(_client, data)).ConfigureAwait(false);
         }
     }

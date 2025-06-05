@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.BillingBenefits
 {
     public partial class BillingBenefitsReservationOrderAliasResource : IJsonModel<BillingBenefitsReservationOrderAliasData>
     {
-        private static BillingBenefitsReservationOrderAliasData s_dataDeserializationInstance;
-        private static BillingBenefitsReservationOrderAliasData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<BillingBenefitsReservationOrderAliasData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsReservationOrderAliasData>)Data).Write(writer, options);
 
-        BillingBenefitsReservationOrderAliasData IJsonModel<BillingBenefitsReservationOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsReservationOrderAliasData>)DataDeserializationInstance).Create(ref reader, options);
+        BillingBenefitsReservationOrderAliasData IJsonModel<BillingBenefitsReservationOrderAliasData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingBenefitsReservationOrderAliasData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingBenefitsReservationOrderAliasData>(Data, options, AzureResourceManagerBillingBenefitsContext.Default);
+        BinaryData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BillingBenefitsReservationOrderAliasData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(data, options, AzureResourceManagerBillingBenefitsContext.Default);
+        BillingBenefitsReservationOrderAliasData IPersistableModel<BillingBenefitsReservationOrderAliasData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingBenefitsReservationOrderAliasData>(data, options);
 
-        string IPersistableModel<BillingBenefitsReservationOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsReservationOrderAliasData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<BillingBenefitsReservationOrderAliasData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingBenefitsReservationOrderAliasData>)Data).GetFormatFromOptions(options);
     }
 }

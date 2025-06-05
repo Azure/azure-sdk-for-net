@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AdvancedThreatProtectionData)} does not support writing '{options.Format}' format.");
             }

@@ -13,7 +13,7 @@ tag: package-2022-04-01
 output-folder: Generated/
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 use-model-reader-writer: true
 skip-csproj: true

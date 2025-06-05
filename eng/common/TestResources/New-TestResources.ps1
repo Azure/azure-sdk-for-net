@@ -18,7 +18,7 @@ param (
     [ValidatePattern('^[-\w\._\(\)]+$')]
     [string] $ResourceGroupName,
 
-    [Parameter(Position = 0)]
+    [Parameter(Mandatory = $true, Position = 0)]
     [string] $ServiceDirectory,
 
     [Parameter()]
@@ -93,11 +93,6 @@ param (
     })]
     [array] $AllowIpRanges = @(),
 
-    # Instead of running the post script, create a wrapped file to run it with parameters
-    # so that CI can run it in a subsequent step with a refreshed azure login
-    [Parameter()]
-    [string] $SelfContainedPostScript,
-
     [Parameter()]
     [switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID),
 
@@ -122,7 +117,6 @@ param (
     $NewTestResourcesRemainingArguments
 )
 
-. (Join-Path $PSScriptRoot .. scripts common.ps1)
 . (Join-Path $PSScriptRoot .. scripts Helpers Resource-Helpers.ps1)
 . $PSScriptRoot/TestResources-Helpers.ps1
 . $PSScriptRoot/SubConfig-Helpers.ps1
@@ -159,13 +153,10 @@ if ($initialContext) {
 
 # try..finally will also trap Ctrl+C.
 try {
+
     # Enumerate test resources to deploy. Fail if none found.
-    $root = $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
-
-    if($ServiceDirectory) {
-        $root = "$repositoryRoot/sdk/$ServiceDirectory" | Resolve-Path
-    }
-
+    $repositoryRoot = "$PSScriptRoot/../../.." | Resolve-Path
+    $root = [System.IO.Path]::Combine($repositoryRoot, "sdk", $ServiceDirectory) | Resolve-Path
     if ($TestResourcesDirectory) {
         $root = $TestResourcesDirectory | Resolve-Path
         # Add an explicit check below in case ErrorActionPreference is overridden and Resolve-Path doesn't stop execution
@@ -174,7 +165,6 @@ try {
         }
         Write-Verbose "Overriding test resources search directory to '$root'"
     }
-    
     $templateFiles = @()
 
     "$ResourceType-resources.json", "$ResourceType-resources.bicep" | ForEach-Object {
@@ -196,12 +186,7 @@ try {
         exit
     }
 
-    # returns empty string if $ServiceDirectory is not set
     $serviceName = GetServiceLeafDirectoryName $ServiceDirectory
-    
-    # in ci, random names are used
-    # in non-ci, without BaseName, ResourceGroupName or ServiceDirectory, all invocations will
-    # generate the same resource group name and base name for a given user
     $BaseName, $ResourceGroupName = GetBaseAndResourceGroupNames `
         -baseNameDefault $BaseName `
         -resourceGroupNameDefault $ResourceGroupName `
@@ -213,14 +198,11 @@ try {
     $PSBoundParameters['BaseName'] = $BaseName
 
     # Try detecting repos that support OutFile and defaulting to it
-    if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile')) {
+    if (!$CI -and !$PSBoundParameters.ContainsKey('OutFile') -and $IsWindows) {
         # TODO: find a better way to detect the language
-        if ($IsWindows -and $Language -eq 'dotnet') {
+        if (Test-Path "$repositoryRoot/eng/service.proj") {
             $OutFile = $true
-            Log "Detected .NET repository. Defaulting OutFile to true. Test environment settings will be stored into a file so you don't need to set environment variables manually."
-        } elseif ($SupportsTestResourcesDotenv) {
-            $OutFile = $true
-            Log "Repository supports reading .env files. Defaulting OutFile to true. Test environment settings may be stored in a .env file so they are read by tests automatically."
+            Log "Detected .NET repository. Defaulting OutFile to true. Test environment settings would be stored into the file so you don't need to set environment variables manually."
         }
     }
 
@@ -305,19 +287,6 @@ try {
         }
     }
 
-    # This needs to happen after we set the TenantId but before we use the ResourceGroupName	
-    if ($wellKnownTMETenants.Contains($TenantId)) {
-        # Add a prefix to the resource group name to avoid flagging the usages of local auth
-        # See details at https://eng.ms/docs/products/onecert-certificates-key-vault-and-dsms/key-vault-dsms/certandsecretmngmt/credfreefaqs#how-can-i-disable-s360-reporting-when-testing-customer-facing-3p-features-that-depend-on-use-of-unsafe-local-auth
-        $ResourceGroupName = "SSS3PT_" + $ResourceGroupName
-    }
-
-    if ($ResourceGroupName.Length -gt 90) {
-        # See limits at https://docs.microsoft.com/azure/architecture/best-practices/resource-naming
-        Write-Warning -Message "Resource group name '$ResourceGroupName' is too long. So pruning it to be the first 90 characters."
-        $ResourceGroupName = $ResourceGroupName.Substring(0, 90)
-    }
-
     # If a provisioner service principal was provided log into it to perform the pre- and post-scripts and deployments.
     if ($ProvisionerApplicationId -and $ServicePrincipalAuth) {
         $null = Disable-AzContextAutosave -Scope Process
@@ -355,10 +324,10 @@ try {
         if ($context.Account.Type -eq 'User') {
             # Support corp tenant and TME tenant user id lookups
             $user = Get-AzADUser -Mail $context.Account.Id
-            if ($null -eq $user -or !$user.Id) {
+            if ($user -eq $null -or !$user.Id) {
                 $user = Get-AzADUser -UserPrincipalName $context.Account.Id
             }
-            if ($null -eq $user -or !$user.Id) {
+            if ($user -eq $null -or !$user.Id) {
                 throw "Failed to find entra object ID for the current user"
             }
             $ProvisionerApplicationOid = $user.Id
@@ -373,10 +342,9 @@ try {
         $ProvisionerApplicationOid = $sp.Id
     }
 
-    $tags = @{ Owners = (GetUserName) }
-
-    if ($ServiceDirectory) {
-        $tags['ServiceDirectory'] = $ServiceDirectory
+    $tags = @{
+        Owners = (GetUserName)
+        ServiceDirectory = $ServiceDirectory
     }
 
     # Tag the resource group to be deleted after a certain number of hours.
@@ -433,10 +401,10 @@ try {
 
         # Support corp tenant and TME tenant user id lookups
         $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account.Id)
-        if ($null -eq $userAccount -or !$userAccount.Id) {
+        if ($userAccount -eq $null -or !$userAccount.Id) {
             $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
         }
-        if ($null -eq $userAccount -or !$userAccount.Id) {
+        if ($userAccount -eq $null -or !$userAccount.Id) {
             throw "Failed to find entra object ID for the current user"
         }
         $TestApplicationOid = $userAccount.Id
@@ -645,42 +613,9 @@ try {
         SetResourceNetworkAccessRules -ResourceGroupName $ResourceGroupName -AllowIpRanges $AllowIpRanges -CI:$CI
 
         $postDeploymentScript = $templateFile.originalFilePath | Split-Path | Join-Path -ChildPath "$ResourceType-resources-post.ps1"
-
-        if ($SelfContainedPostScript -and !(Test-Path $postDeploymentScript)) {
-            throw "-SelfContainedPostScript is not supported if there is no 'test-resources-post.ps1' script in the deployment template directory"
-        }
-
         if (Test-Path $postDeploymentScript) {
-            if ($SelfContainedPostScript) {
-                Log "Creating invokable post-deployment script '$SelfContainedPostScript' from '$postDeploymentScript'"
-
-                $deserialized = @{}
-                foreach ($parameter in $PSBoundParameters.GetEnumerator()) {
-                    if ($parameter.Value -is [System.Management.Automation.SwitchParameter]) {
-                        $deserialized[$parameter.Key] = $parameter.Value.ToBool()
-                    } else {
-                        $deserialized[$parameter.Key] = $parameter.Value
-                    }
-                }
-                $deserialized['ResourceGroupName'] = $ResourceGroupName
-                $deserialized['DeploymentOutputs'] = $deploymentOutputs
-                $serialized = $deserialized | ConvertTo-Json
-
-                $outScript = @"
-`$parameters = `@'
-$serialized
-'`@ | ConvertFrom-Json -AsHashtable
-# Set global variables that aren't always passed as parameters
-`$ResourceGroupName = `$parameters.ResourceGroupName
-`$AdditionalParameters = `$parameters.AdditionalParameters
-`$DeploymentOutputs = `$parameters.DeploymentOutputs
-$postDeploymentScript `@parameters
-"@
-                $outScript | Out-File $SelfContainedPostScript
-            } else {
-                Log "Invoking post-deployment script '$postDeploymentScript'"
-                &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
-            }
+            Log "Invoking post-deployment script '$postDeploymentScript'"
+            &$postDeploymentScript -ResourceGroupName $ResourceGroupName -DeploymentOutputs $deploymentOutputs @PSBoundParameters
         }
 
         if ($templateFile.jsonFilePath.EndsWith('.compiled.json')) {
@@ -874,18 +809,13 @@ Force creation of resources instead of being prompted.
 
 .PARAMETER OutFile
 Save test environment settings into a .env file next to test resources template.
+The contents of the file are protected via the .NET Data Protection API (DPAPI).
+This is supported only on Windows. The environment file is scoped to the current
+service directory.
 
-On Windows in the Azure/azure-sdk-for-net repository,
-the contents of the file are protected via the .NET Data Protection API (DPAPI).
-The environment file is scoped to the current service directory.
 The environment file will be named for the test resources template that it was
 generated for. For ARM templates, it will be test-resources.json.env. For
 Bicep templates, test-resources.bicep.env.
-
-If `$SupportsTestResourcesDotenv=$true` in language repos' `LanguageSettings.ps1`,
-and if `.env` files are gitignore'd, and if a service directory's `test-resources.bicep`
-file does not expose secrets based on `bicep lint`, a `.env` file is written next to
-`test-resources.bicep` that can be loaded by a test harness to be used for recording tests.
 
 .PARAMETER SuppressVsoCommands
 By default, the -CI parameter will print out secrets to logs with Azure Pipelines log

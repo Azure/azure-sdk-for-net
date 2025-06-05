@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleManagementPolicies();
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Get()
         {
             var collection = await GetRoleManagementPolicyCollectionAsync();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             }
         }
 
-        [RecordedTest]
+        [Test]
         public async Task Update()
         {
             var collection = await GetRoleManagementPolicyCollectionAsync();

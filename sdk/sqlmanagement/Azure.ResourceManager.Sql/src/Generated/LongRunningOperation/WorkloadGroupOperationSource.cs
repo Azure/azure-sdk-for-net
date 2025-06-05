@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         WorkloadGroupResource IOperationSource<WorkloadGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadGroupData>(response.Content);
             return new WorkloadGroupResource(_client, data);
         }
 
         async ValueTask<WorkloadGroupResource> IOperationSource<WorkloadGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadGroupData>(response.Content);
             return await Task.FromResult(new WorkloadGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

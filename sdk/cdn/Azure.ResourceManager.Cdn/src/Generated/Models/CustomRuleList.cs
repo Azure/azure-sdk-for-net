@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines contents of custom rules
-    /// Serialized Name: CustomRuleList
-    /// </summary>
+    /// <summary> Defines contents of custom rules. </summary>
     internal partial class CustomRuleList
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomRuleList"/>. </summary>
-        /// <param name="rules">
-        /// List of rules
-        /// Serialized Name: CustomRuleList.rules
-        /// </param>
+        /// <param name="rules"> List of rules. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CustomRuleList(IList<CustomRule> rules, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of rules
-        /// Serialized Name: CustomRuleList.rules
-        /// </summary>
+        /// <summary> List of rules. </summary>
         public IList<CustomRule> Rules { get; }
     }
 }

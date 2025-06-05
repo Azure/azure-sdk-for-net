@@ -16,7 +16,11 @@ namespace Azure.Maps.Search.Models
     internal partial class GeoJsonFeatureCollectionData
     {
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
-        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
+        /// <param name="features">
+        /// Contains a list of valid `GeoJSON Feature` objects.
+        /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BoundaryInternal"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="features"/> is null. </exception>
         internal GeoJsonFeatureCollectionData(IEnumerable<GeoJsonFeature> features)
         {
@@ -26,13 +30,21 @@ namespace Azure.Maps.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GeoJsonFeatureCollectionData"/>. </summary>
-        /// <param name="features"> Contains a list of valid `GeoJSON Feature` objects. </param>
+        /// <param name="features">
+        /// Contains a list of valid `GeoJSON Feature` objects.
+        /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BoundaryInternal"/>.
+        /// </param>
         internal GeoJsonFeatureCollectionData(IReadOnlyList<GeoJsonFeature> features)
         {
             Features = features;
         }
 
-        /// <summary> Contains a list of valid `GeoJSON Feature` objects. </summary>
+        /// <summary>
+        /// Contains a list of valid `GeoJSON Feature` objects.
+        /// Please note <see cref="GeoJsonFeature"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="BoundaryInternal"/>.
+        /// </summary>
         public IReadOnlyList<GeoJsonFeature> Features { get; }
     }
 }

@@ -14,22 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class ContainerServiceClusterSupportEndedEventData : ContainerServiceClusterSupportEventData
     {
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndedEventData"/>. </summary>
-        /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="kubernetesVersion"/> is null. </exception>
-        internal ContainerServiceClusterSupportEndedEventData(string kubernetesVersion) : base(kubernetesVersion)
+        internal ContainerServiceClusterSupportEndedEventData()
         {
-            Argument.AssertNotNull(kubernetesVersion, nameof(kubernetesVersion));
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndedEventData"/>. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version of the ManagedCluster resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerServiceClusterSupportEndedEventData(string kubernetesVersion, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(kubernetesVersion, serializedAdditionalRawData)
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerServiceClusterSupportEndedEventData"/> for deserialization. </summary>
-        internal ContainerServiceClusterSupportEndedEventData()
         {
         }
     }

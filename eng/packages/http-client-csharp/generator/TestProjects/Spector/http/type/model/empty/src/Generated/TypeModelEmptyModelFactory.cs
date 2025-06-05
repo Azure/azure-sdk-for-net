@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace _Type.Model.Empty
+namespace _Type.Model.Empty.Models
 {
     public static partial class TypeModelEmptyModelFactory
     {

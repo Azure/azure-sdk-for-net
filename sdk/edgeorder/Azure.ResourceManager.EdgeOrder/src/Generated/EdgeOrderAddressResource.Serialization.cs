@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderAddressResource : IJsonModel<EdgeOrderAddressData>
     {
-        private static EdgeOrderAddressData s_dataDeserializationInstance;
-        private static EdgeOrderAddressData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EdgeOrderAddressData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderAddressData>)Data).Write(writer, options);
 
-        EdgeOrderAddressData IJsonModel<EdgeOrderAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderAddressData>)DataDeserializationInstance).Create(ref reader, options);
+        EdgeOrderAddressData IJsonModel<EdgeOrderAddressData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderAddressData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeOrderAddressData>(Data, options, AzureResourceManagerEdgeOrderContext.Default);
+        BinaryData IPersistableModel<EdgeOrderAddressData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EdgeOrderAddressData IPersistableModel<EdgeOrderAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderAddressData>(data, options, AzureResourceManagerEdgeOrderContext.Default);
+        EdgeOrderAddressData IPersistableModel<EdgeOrderAddressData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderAddressData>(data, options);
 
-        string IPersistableModel<EdgeOrderAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderAddressData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EdgeOrderAddressData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderAddressData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -3,6 +3,7 @@
 
 using Azure.AI.OpenAI;
 using Azure.Projects;
+using Azure.Projects.OpenAI;
 using OpenAI.Chat;
 
 ProjectInfrastructure infrastructure = new();
@@ -17,3 +18,4 @@ if (args.Length > 0 && args[0] == "-bicep")
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
 Console.WriteLine(chat.CompleteChat("list all noble gasses.").AsText());
+

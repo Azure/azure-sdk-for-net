@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.DevCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DevCenterProjectData)} does not support writing '{options.Format}' format.");
             }

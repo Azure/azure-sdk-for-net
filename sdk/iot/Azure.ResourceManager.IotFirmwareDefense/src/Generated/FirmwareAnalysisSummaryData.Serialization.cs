@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryData)} does not support writing '{options.Format}' format.");
             }

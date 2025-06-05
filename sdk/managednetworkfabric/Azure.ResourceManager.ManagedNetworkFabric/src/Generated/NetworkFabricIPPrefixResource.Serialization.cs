@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricIPPrefixResource : IJsonModel<NetworkFabricIPPrefixData>
     {
-        private static NetworkFabricIPPrefixData s_dataDeserializationInstance;
-        private static NetworkFabricIPPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkFabricIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricIPPrefixData>)Data).Write(writer, options);
 
-        NetworkFabricIPPrefixData IJsonModel<NetworkFabricIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricIPPrefixData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkFabricIPPrefixData IJsonModel<NetworkFabricIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricIPPrefixData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricIPPrefixData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        BinaryData IPersistableModel<NetworkFabricIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkFabricIPPrefixData IPersistableModel<NetworkFabricIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricIPPrefixData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        NetworkFabricIPPrefixData IPersistableModel<NetworkFabricIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricIPPrefixData>(data, options);
 
-        string IPersistableModel<NetworkFabricIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricIPPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricIPPrefixData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Communication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCommunicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(EmailServiceResourcePatch)} does not support writing '{options.Format}' format.");
             }

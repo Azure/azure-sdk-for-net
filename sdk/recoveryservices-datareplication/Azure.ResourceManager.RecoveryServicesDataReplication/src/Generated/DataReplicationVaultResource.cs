@@ -106,11 +106,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EmailConfigurationModel_Get</description>
+        /// <description>EmailConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EmailConfigurationModel_Get</description>
+        /// <description>EmailConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,11 +175,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <description>Event_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -206,11 +206,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EventModel_Get</description>
+        /// <description>Event_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -226,75 +226,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual Response<DataReplicationEventResource> GetDataReplicationEvent(string eventName, CancellationToken cancellationToken = default)
         {
             return GetDataReplicationEvents().Get(eventName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataReplicationJobResources in the DataReplicationVault. </summary>
-        /// <returns> An object representing collection of DataReplicationJobResources and their operations over a DataReplicationJobResource. </returns>
-        public virtual DataReplicationJobCollection GetDataReplicationJobs()
-        {
-            return GetCachedClient(client => new DataReplicationJobCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of the job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationJobResource>> GetDataReplicationJobAsync(string jobName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataReplicationJobs().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of the job.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>JobModel_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationJobResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="jobName"> The job name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataReplicationJobResource> GetDataReplicationJob(string jobName, CancellationToken cancellationToken = default)
-        {
-            return GetDataReplicationJobs().Get(jobName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataReplicationPolicyResources in the DataReplicationVault. </summary>
@@ -313,11 +244,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PolicyModel_Get</description>
+        /// <description>Policy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -344,11 +275,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PolicyModel_Get</description>
+        /// <description>Policy_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -364,213 +295,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         public virtual Response<DataReplicationPolicyResource> GetDataReplicationPolicy(string policyName, CancellationToken cancellationToken = default)
         {
             return GetDataReplicationPolicies().Get(policyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataReplicationPrivateEndpointConnectionResources in the DataReplicationVault. </summary>
-        /// <returns> An object representing collection of DataReplicationPrivateEndpointConnectionResources and their operations over a DataReplicationPrivateEndpointConnectionResource. </returns>
-        public virtual DataReplicationPrivateEndpointConnectionCollection GetDataReplicationPrivateEndpointConnections()
-        {
-            return GetCachedClient(client => new DataReplicationPrivateEndpointConnectionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the private endpoint connection details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationPrivateEndpointConnectionResource>> GetDataReplicationPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataReplicationPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the private endpoint connection details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnections/{privateEndpointConnectionName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnection_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationPrivateEndpointConnectionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionName"> The private endpoint connection name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataReplicationPrivateEndpointConnectionResource> GetDataReplicationPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
-        {
-            return GetDataReplicationPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataReplicationPrivateEndpointConnectionProxyResources in the DataReplicationVault. </summary>
-        /// <returns> An object representing collection of DataReplicationPrivateEndpointConnectionProxyResources and their operations over a DataReplicationPrivateEndpointConnectionProxyResource. </returns>
-        public virtual DataReplicationPrivateEndpointConnectionProxyCollection GetDataReplicationPrivateEndpointConnectionProxies()
-        {
-            return GetCachedClient(client => new DataReplicationPrivateEndpointConnectionProxyCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the private endpoint connection proxy details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionProxy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationPrivateEndpointConnectionProxyResource>> GetDataReplicationPrivateEndpointConnectionProxyAsync(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataReplicationPrivateEndpointConnectionProxies().GetAsync(privateEndpointConnectionProxyName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the private endpoint connection proxy details.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateEndpointConnectionProxies/{privateEndpointConnectionProxyName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionProxy_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationPrivateEndpointConnectionProxyResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateEndpointConnectionProxyName"> The private endpoint connection proxy name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionProxyName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionProxyName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataReplicationPrivateEndpointConnectionProxyResource> GetDataReplicationPrivateEndpointConnectionProxy(string privateEndpointConnectionProxyName, CancellationToken cancellationToken = default)
-        {
-            return GetDataReplicationPrivateEndpointConnectionProxies().Get(privateEndpointConnectionProxyName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DataReplicationPrivateLinkResources in the DataReplicationVault. </summary>
-        /// <returns> An object representing collection of DataReplicationPrivateLinkResources and their operations over a DataReplicationPrivateLinkResource. </returns>
-        public virtual DataReplicationPrivateLinkResourceCollection GetDataReplicationPrivateLinkResources()
-        {
-            return GetCachedClient(client => new DataReplicationPrivateLinkResourceCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets the details of site recovery private link resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The private link name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationPrivateLinkResource>> GetDataReplicationPrivateLinkResourceAsync(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return await GetDataReplicationPrivateLinkResources().GetAsync(privateLinkResourceName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets the details of site recovery private link resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/privateLinkResources/{privateLinkResourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DataReplicationPrivateLinkResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="privateLinkResourceName"> The private link name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateLinkResourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="privateLinkResourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DataReplicationPrivateLinkResource> GetDataReplicationPrivateLinkResource(string privateLinkResourceName, CancellationToken cancellationToken = default)
-        {
-            return GetDataReplicationPrivateLinkResources().Get(privateLinkResourceName, cancellationToken);
         }
 
         /// <summary> Gets a collection of DataReplicationProtectedItemResources in the DataReplicationVault. </summary>
@@ -589,11 +313,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProtectedItemModel_Get</description>
+        /// <description>ProtectedItem_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -620,11 +344,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ProtectedItemModel_Get</description>
+        /// <description>ProtectedItem_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -642,11 +366,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             return GetDataReplicationProtectedItems().Get(protectedItemName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of DataReplicationExtensionResources in the DataReplicationVault. </summary>
-        /// <returns> An object representing collection of DataReplicationExtensionResources and their operations over a DataReplicationExtensionResource. </returns>
-        public virtual DataReplicationExtensionCollection GetDataReplicationExtensions()
+        /// <summary> Gets a collection of DataReplicationReplicationExtensionResources in the DataReplicationVault. </summary>
+        /// <returns> An object representing collection of DataReplicationReplicationExtensionResources and their operations over a DataReplicationReplicationExtensionResource. </returns>
+        public virtual DataReplicationReplicationExtensionCollection GetDataReplicationReplicationExtensions()
         {
-            return GetCachedClient(client => new DataReplicationExtensionCollection(client, Id));
+            return GetCachedClient(client => new DataReplicationReplicationExtensionCollection(client, Id));
         }
 
         /// <summary>
@@ -658,15 +382,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
+        /// <description>ReplicationExtension_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
+        /// <description><see cref="DataReplicationReplicationExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -675,9 +399,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationExtensionResource>> GetDataReplicationExtensionAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationReplicationExtensionResource>> GetDataReplicationReplicationExtensionAsync(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            return await GetDataReplicationExtensions().GetAsync(replicationExtensionName, cancellationToken).ConfigureAwait(false);
+            return await GetDataReplicationReplicationExtensions().GetAsync(replicationExtensionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -689,15 +413,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ReplicationExtensionModel_Get</description>
+        /// <description>ReplicationExtension_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataReplicationExtensionResource"/></description>
+        /// <description><see cref="DataReplicationReplicationExtensionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -706,9 +430,78 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <exception cref="ArgumentNullException"> <paramref name="replicationExtensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="replicationExtensionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataReplicationExtensionResource> GetDataReplicationExtension(string replicationExtensionName, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationReplicationExtensionResource> GetDataReplicationReplicationExtension(string replicationExtensionName, CancellationToken cancellationToken = default)
         {
-            return GetDataReplicationExtensions().Get(replicationExtensionName, cancellationToken);
+            return GetDataReplicationReplicationExtensions().Get(replicationExtensionName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of DataReplicationWorkflowResources in the DataReplicationVault. </summary>
+        /// <returns> An object representing collection of DataReplicationWorkflowResources and their operations over a DataReplicationWorkflowResource. </returns>
+        public virtual DataReplicationWorkflowCollection GetDataReplicationWorkflows()
+        {
+            return GetCachedClient(client => new DataReplicationWorkflowCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the details of the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The job (workflow) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<DataReplicationWorkflowResource>> GetDataReplicationWorkflowAsync(string jobName, CancellationToken cancellationToken = default)
+        {
+            return await GetDataReplicationWorkflows().GetAsync(jobName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the details of the job.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DataReplication/replicationVaults/{vaultName}/jobs/{jobName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workflow_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-16-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataReplicationWorkflowResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="jobName"> The job (workflow) name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<DataReplicationWorkflowResource> GetDataReplicationWorkflow(string jobName, CancellationToken cancellationToken = default)
+        {
+            return GetDataReplicationWorkflows().Get(jobName, cancellationToken);
         }
 
         /// <summary>
@@ -720,11 +513,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -760,11 +553,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -800,11 +593,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Delete</description>
+        /// <description>Vault_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -842,11 +635,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Delete</description>
+        /// <description>Vault_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -884,11 +677,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Update</description>
+        /// <description>Vault_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -930,11 +723,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Update</description>
+        /// <description>Vault_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -976,11 +769,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1038,11 +831,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1100,11 +893,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1157,11 +950,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1214,11 +1007,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1274,11 +1067,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VaultModel_Get</description>
+        /// <description>Vault_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

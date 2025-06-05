@@ -13,11 +13,10 @@ tag: package-dotnet-sdk
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
   skipped-operations:
   - InformationProtectionPolicies_CreateOrUpdate
-  - SqlVulnerabilityAssessmentBaselineRules_Add
   - InformationProtectionPolicies_List
   - SubAssessments_ListAll
   - Assessments_List

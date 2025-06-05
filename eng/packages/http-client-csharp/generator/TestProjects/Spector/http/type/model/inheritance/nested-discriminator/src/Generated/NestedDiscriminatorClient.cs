@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Model.Inheritance.NestedDiscriminator.Models;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
@@ -20,7 +21,7 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
 
         public NestedDiscriminatorClient(Uri endpoint, NestedDiscriminatorClientOptions options) => throw null;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public HttpPipeline Pipeline => throw null;
 
         public virtual Response GetModel(RequestContext context) => throw null;
 

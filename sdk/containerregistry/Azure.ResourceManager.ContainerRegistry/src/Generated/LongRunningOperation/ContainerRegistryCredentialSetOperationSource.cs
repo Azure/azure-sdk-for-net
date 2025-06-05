@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryCredentialSetResource IOperationSource<ContainerRegistryCredentialSetResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            var data = ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(response.Content);
             return new ContainerRegistryCredentialSetResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryCredentialSetResource> IOperationSource<ContainerRegistryCredentialSetResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            var data = ModelReaderWriter.Read<ContainerRegistryCredentialSetData>(response.Content);
             return await Task.FromResult(new ContainerRegistryCredentialSetResource(_client, data)).ConfigureAwait(false);
         }
     }

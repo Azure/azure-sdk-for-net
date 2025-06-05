@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class DeploymentStackResource : IJsonModel<DeploymentStackData>
     {
-        private static DeploymentStackData s_dataDeserializationInstance;
-        private static DeploymentStackData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DeploymentStackData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeploymentStackData>)Data).Write(writer, options);
 
-        DeploymentStackData IJsonModel<DeploymentStackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeploymentStackData>)DataDeserializationInstance).Create(ref reader, options);
+        DeploymentStackData IJsonModel<DeploymentStackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeploymentStackData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DeploymentStackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeploymentStackData>(Data, options, AzureResourceManagerResourcesContext.Default);
+        BinaryData IPersistableModel<DeploymentStackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DeploymentStackData IPersistableModel<DeploymentStackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeploymentStackData>(data, options, AzureResourceManagerResourcesContext.Default);
+        DeploymentStackData IPersistableModel<DeploymentStackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeploymentStackData>(data, options);
 
-        string IPersistableModel<DeploymentStackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeploymentStackData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DeploymentStackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeploymentStackData>)Data).GetFormatFromOptions(options);
     }
 }

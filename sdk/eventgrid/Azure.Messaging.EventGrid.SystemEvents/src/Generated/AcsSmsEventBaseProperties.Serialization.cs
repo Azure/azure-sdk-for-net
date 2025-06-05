@@ -34,12 +34,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(AcsSmsEventBaseProperties)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("messageId"u8);
-            writer.WriteStringValue(MessageId);
-            writer.WritePropertyName("from"u8);
-            writer.WriteStringValue(From);
-            writer.WritePropertyName("to"u8);
-            writer.WriteStringValue(To);
+            if (Optional.IsDefined(MessageId))
+            {
+                writer.WritePropertyName("messageId"u8);
+                writer.WriteStringValue(MessageId);
+            }
+            if (Optional.IsDefined(From))
+            {
+                writer.WritePropertyName("from"u8);
+                writer.WriteStringValue(From);
+            }
+            if (Optional.IsDefined(To))
+            {
+                writer.WritePropertyName("to"u8);
+                writer.WriteStringValue(To);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -115,7 +124,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsSmsEventBaseProperties)} does not support writing '{options.Format}' format.");
             }

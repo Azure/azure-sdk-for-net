@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.HealthcareApis
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthcareApisContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DicomServiceData)} does not support writing '{options.Format}' format.");
             }

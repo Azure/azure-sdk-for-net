@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderItemResource : IJsonModel<EdgeOrderItemData>
     {
-        private static EdgeOrderItemData s_dataDeserializationInstance;
-        private static EdgeOrderItemData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EdgeOrderItemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderItemData>)Data).Write(writer, options);
 
-        EdgeOrderItemData IJsonModel<EdgeOrderItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderItemData>)DataDeserializationInstance).Create(ref reader, options);
+        EdgeOrderItemData IJsonModel<EdgeOrderItemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderItemData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EdgeOrderItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeOrderItemData>(Data, options, AzureResourceManagerEdgeOrderContext.Default);
+        BinaryData IPersistableModel<EdgeOrderItemData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EdgeOrderItemData IPersistableModel<EdgeOrderItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderItemData>(data, options, AzureResourceManagerEdgeOrderContext.Default);
+        EdgeOrderItemData IPersistableModel<EdgeOrderItemData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderItemData>(data, options);
 
-        string IPersistableModel<EdgeOrderItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderItemData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EdgeOrderItemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderItemData>)Data).GetFormatFromOptions(options);
     }
 }

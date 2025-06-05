@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.Fabric
 {
-    public partial class AzureResourceManagerFabricContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerFabricContext() { }
-        public static Azure.ResourceManager.Fabric.AzureResourceManagerFabricContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class FabricCapacityCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Fabric.FabricCapacityResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Fabric.FabricCapacityResource>, System.Collections.IEnumerable
     {
         protected FabricCapacityCollection() { }

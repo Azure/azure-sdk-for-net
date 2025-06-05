@@ -131,22 +131,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             ValidateTranscriptionData(transcription);
         }
 
-        [Test]
-        public void ParseTranscriptionDataWithWordsNull_Test()
-        {
-            var data = "{" +
-                "\"kind\":\"TranscriptionData\"," +
-                "\"transcriptionData\":" +
-                "{\"text\":\"store hours\"," +
-                "\"format\":\"display\"," +
-                "\"offset\":49876484," +
-                "\"duration\":9200000," +
-                "\"participantRawID\":\"abc12345\"," +
-                "\"resultStatus\":\"Intermediate\"}}";
-            TranscriptionData transcription = (TranscriptionData)StreamingData.Parse(data);
-            ValidateTranscriptionDataWithWordsNull(transcription);
-        }
-
         private static void ValidateTranscriptionMetadata(TranscriptionMetadata transcriptionMetadata)
         {
             Assert.IsNotNull(transcriptionMetadata);
@@ -154,20 +138,6 @@ namespace Azure.Communication.CallAutomation.Tests.MediaStreaming
             Assert.AreEqual("en-US", transcriptionMetadata.Locale);
             Assert.AreEqual("callConnectionId", transcriptionMetadata.CallConnectionId);
             Assert.AreEqual("correlationId", transcriptionMetadata.CorrelationId);
-        }
-
-        private static void ValidateTranscriptionDataWithWordsNull(TranscriptionData transcription)
-        {
-            Assert.IsNotNull(transcription);
-            Assert.AreEqual("store hours", transcription.Text);
-            Assert.AreEqual(TextFormat.Display, transcription.Format);
-            Assert.AreEqual(49876484, transcription.Offset.Ticks);
-            Assert.AreEqual(9200000, transcription.Duration.Ticks);
-
-            Assert.IsTrue(transcription.Participant is CommunicationIdentifier);
-            Assert.AreEqual("abc12345", transcription.Participant.RawId);
-            Console.WriteLine(transcription.ResultState.ToString());
-            Assert.AreEqual(TranscriptionResultState.Intermediate, transcription.ResultState);
         }
 
         private static void ValidateTranscriptionData(TranscriptionData transcription)

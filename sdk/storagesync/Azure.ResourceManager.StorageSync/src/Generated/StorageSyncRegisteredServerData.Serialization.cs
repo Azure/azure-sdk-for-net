@@ -161,26 +161,6 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (Optional.IsDefined(ApplicationId))
-            {
-                writer.WritePropertyName("applicationId"u8);
-                writer.WriteStringValue(ApplicationId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(UseIdentity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteBooleanValue(UseIdentity.Value);
-            }
-            if (Optional.IsDefined(LatestApplicationId))
-            {
-                writer.WritePropertyName("latestApplicationId"u8);
-                writer.WriteStringValue(LatestApplicationId.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ActiveAuthType))
-            {
-                writer.WritePropertyName("activeAuthType"u8);
-                writer.WriteStringValue(ActiveAuthType.Value.ToString());
-            }
             writer.WriteEndObject();
         }
 
@@ -231,10 +211,6 @@ namespace Azure.ResourceManager.StorageSync
             Uri monitoringEndpointUri = default;
             string monitoringConfiguration = default;
             string serverName = default;
-            Guid? applicationId = default;
-            bool? identity = default;
-            Guid? latestApplicationId = default;
-            StorageSyncServerAuthType? activeAuthType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -435,42 +411,6 @@ namespace Azure.ResourceManager.StorageSync
                             serverName = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("applicationId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            applicationId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("identity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            identity = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("latestApplicationId"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            latestApplicationId = property0.Value.GetGuid();
-                            continue;
-                        }
-                        if (property0.NameEquals("activeAuthType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            activeAuthType = new StorageSyncServerAuthType(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -508,10 +448,6 @@ namespace Azure.ResourceManager.StorageSync
                 monitoringEndpointUri,
                 monitoringConfiguration,
                 serverName,
-                applicationId,
-                identity,
-                latestApplicationId,
-                activeAuthType,
                 serializedAdditionalRawData);
         }
 
@@ -522,7 +458,7 @@ namespace Azure.ResourceManager.StorageSync
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageSyncContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support writing '{options.Format}' format.");
             }

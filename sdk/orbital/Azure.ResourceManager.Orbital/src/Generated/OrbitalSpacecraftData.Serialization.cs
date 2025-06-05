@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Orbital
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOrbitalContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OrbitalSpacecraftData)} does not support writing '{options.Format}' format.");
             }

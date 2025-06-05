@@ -4,11 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Secrets;
-using Moq;
 using NUnit.Framework;
 
 namespace Azure.Core.Samples
@@ -68,33 +66,6 @@ namespace Azure.Core.Samples
         }
         #endregion
 
-        #region Snippet:RemoveUserAgentPolicy
-        public class RemoveUserAgentPolicy : HttpPipelineSynchronousPolicy
-        {
-            public override void OnSendingRequest(HttpMessage message)
-            {
-                message.Request.Headers.Remove(HttpHeader.Names.UserAgent);
-            }
-        }
-        #endregion
-
-        public void RemoveUserAgentUse()
-        {
-            #region Snippet:RemoveUserAgentPolicyUse
-            Uri serviceEndpoint = new Uri("https://example.contoso.com");
-#if SNIPPET
-            TokenCredential credential = new DefaultAzureCredential();
-#else
-            TokenCredential credential = Mock.Of<TokenCredential>();
-#endif
-
-            SampleClientOptions clientOptions = new SampleClientOptions();
-            clientOptions.AddPolicy(new RemoveUserAgentPolicy(), HttpPipelinePosition.PerRetry);
-
-            SampleClient client = new SampleClient(serviceEndpoint, credential, clientOptions);
-            #endregion
-        }
-
         private class RequestFailedDetailsParserSample
         {
             public SampleClientOptions options;
@@ -117,13 +88,6 @@ namespace Azure.Core.Samples
         }
 
         private class SampleClientOptions : ClientOptions { }
-        private class SampleClient
-        {
-            public SampleClient(Uri endpoint, TokenCredential credential, SampleClientOptions options = default)
-            {
-            }
-        }
-
         private class FooClientRequestFailedDetailsParser : RequestFailedDetailsParser
         {
             public override bool TryParse(Response response, out ResponseError error, out IDictionary<string, string> data)

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
 {
     public partial class ExtensionResource : IJsonModel<ExtensionData>
     {
-        private static ExtensionData s_dataDeserializationInstance;
-        private static ExtensionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ExtensionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExtensionData>)Data).Write(writer, options);
 
-        ExtensionData IJsonModel<ExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtensionData>)DataDeserializationInstance).Create(ref reader, options);
+        ExtensionData IJsonModel<ExtensionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExtensionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExtensionData>(Data, options, AzureResourceManagerAgFoodPlatformContext.Default);
+        BinaryData IPersistableModel<ExtensionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ExtensionData IPersistableModel<ExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtensionData>(data, options, AzureResourceManagerAgFoodPlatformContext.Default);
+        ExtensionData IPersistableModel<ExtensionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExtensionData>(data, options);
 
-        string IPersistableModel<ExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtensionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ExtensionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExtensionData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -54,17 +54,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="HyperVReplicaAzureDiskDetails"/>. </summary>
         /// <param name="diskId"> The DiskId. </param>
         /// <param name="logStorageAccountId"> The LogStorageAccountId. </param>
-        /// <param name="diskType"> The disk type. </param>
+        /// <param name="diskType"> The DiskType. </param>
         /// <param name="diskEncryptionSetId"> The DiskEncryptionSet ARM ID. </param>
-        /// <param name="sectorSizeInBytes"> The logical sector size (in bytes), 512 by default. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HyperVReplicaAzureDiskDetails(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier diskEncryptionSetId, int? sectorSizeInBytes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HyperVReplicaAzureDiskDetails(string diskId, ResourceIdentifier logStorageAccountId, SiteRecoveryDiskAccountType? diskType, ResourceIdentifier diskEncryptionSetId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DiskId = diskId;
             LogStorageAccountId = logStorageAccountId;
             DiskType = diskType;
             DiskEncryptionSetId = diskEncryptionSetId;
-            SectorSizeInBytes = sectorSizeInBytes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,11 +70,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string DiskId { get; set; }
         /// <summary> The LogStorageAccountId. </summary>
         public ResourceIdentifier LogStorageAccountId { get; set; }
-        /// <summary> The disk type. </summary>
+        /// <summary> The DiskType. </summary>
         public SiteRecoveryDiskAccountType? DiskType { get; set; }
         /// <summary> The DiskEncryptionSet ARM ID. </summary>
         public ResourceIdentifier DiskEncryptionSetId { get; set; }
-        /// <summary> The logical sector size (in bytes), 512 by default. </summary>
-        public int? SectorSizeInBytes { get; set; }
     }
 }

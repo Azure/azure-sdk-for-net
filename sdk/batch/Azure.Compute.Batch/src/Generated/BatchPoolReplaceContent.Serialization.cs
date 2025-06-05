@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -15,15 +14,6 @@ namespace Azure.Compute.Batch
 {
     public partial class BatchPoolReplaceContent : IUtf8JsonSerializable, IJsonModel<BatchPoolReplaceContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPoolReplaceContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<BatchPoolReplaceContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -39,13 +29,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            writer.WritePropertyName("certificateReferences"u8);
-            writer.WriteStartArray();
-            foreach (var item in CertificateReferences)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             writer.WritePropertyName("applicationPackageReferences"u8);
             writer.WriteStartArray();
             foreach (var item in ApplicationPackageReferences)
@@ -94,86 +77,6 @@ namespace Azure.Compute.Batch
             return DeserializeBatchPoolReplaceContent(document.RootElement, options);
         }
 
-        internal static BatchPoolReplaceContent DeserializeBatchPoolReplaceContent(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
-            IList<BatchApplicationPackageReference> applicationPackageReferences = default;
-            IList<MetadataItem> metadata = default;
-            BatchNodeCommunicationMode? targetNodeCommunicationMode = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("startTask"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
-                if (property.NameEquals("applicationPackageReferences"u8))
-                {
-                    List<BatchApplicationPackageReference> array = new List<BatchApplicationPackageReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchApplicationPackageReference.DeserializeBatchApplicationPackageReference(item, options));
-                    }
-                    applicationPackageReferences = array;
-                    continue;
-                }
-                if (property.NameEquals("metadata"u8))
-                {
-                    List<MetadataItem> array = new List<MetadataItem>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(MetadataItem.DeserializeMetadataItem(item, options));
-                    }
-                    metadata = array;
-                    continue;
-                }
-                if (property.NameEquals("targetNodeCommunicationMode"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetNodeCommunicationMode = new BatchNodeCommunicationMode(property.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPoolReplaceContent(
-                startTask,
-                certificateReferences,
-                applicationPackageReferences,
-                metadata,
-                targetNodeCommunicationMode,
-                serializedAdditionalRawData);
-        }
-
         BinaryData IPersistableModel<BatchPoolReplaceContent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BatchPoolReplaceContent>)this).GetFormatFromOptions(options) : options.Format;
@@ -181,7 +84,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolReplaceContent)} does not support writing '{options.Format}' format.");
             }
@@ -204,21 +107,5 @@ namespace Azure.Compute.Batch
         }
 
         string IPersistableModel<BatchPoolReplaceContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static BatchPoolReplaceContent FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeBatchPoolReplaceContent(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
     }
 }

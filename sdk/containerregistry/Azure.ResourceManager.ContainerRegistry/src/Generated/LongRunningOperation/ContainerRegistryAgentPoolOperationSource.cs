@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerRegistry
 
         ContainerRegistryAgentPoolResource IOperationSource<ContainerRegistryAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            var data = ModelReaderWriter.Read<ContainerRegistryAgentPoolData>(response.Content);
             return new ContainerRegistryAgentPoolResource(_client, data);
         }
 
         async ValueTask<ContainerRegistryAgentPoolResource> IOperationSource<ContainerRegistryAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerRegistryAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerRegistryContext.Default);
+            var data = ModelReaderWriter.Read<ContainerRegistryAgentPoolData>(response.Content);
             return await Task.FromResult(new ContainerRegistryAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -47,26 +47,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         internal bool _isFileMetadataSet = false;
 
         /// <summary>
-        /// Optional. Specifies whether protocol validation for the resource should be skipped before starting the transfer.
-        /// By default this value is set to false. This is intended to be set on the source and destination Share.
-        /// Applies to only Share-to-Share copy transfers.
-        /// Note: Protocol validation requires share-level read access.
-        /// </summary>
-        public bool SkipProtocolValidation { get; set; } = false;
-
-        /// <summary>
-        /// Optional. Specifies whether the Share uses NFS or SMB protocol.
-        /// By default this value is set to SMB.
-        /// This is intended to be set on the source and destination Share.
-        /// For Share-to-Share copy transfers, the protocol is validated and must be correctly set to process the transfer and preserve the proper properties and permissions.
-        ///
-        /// Note: Only NFS -> NFS and SMB -> SMB transfers are currently supported.
-        /// For NFS Share-to-Share Copy and Download transfers, Hard links will be copied as regular files and Symbolic links are skipped.
-        /// For NFS Upload transfers, Hard links will be copied as regular files and Symbolic links are not supported.
-        /// </summary>
-        public ShareProtocol ShareProtocol { get; set; } = ShareProtocol.Smb;
-
-        /// <summary>
         /// Optional. See <see cref="ShareFileRequestConditions"/>.
         /// Access conditions on the copying of data from this source storage resource share file.
         ///
@@ -84,9 +64,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// Optional. Sets the Cache Control header which
-        /// specifies directives for caching mechanisms. This is intended to be set on the destination Share.
+        /// specifies directives for caching mechanisms.
         ///
-        /// By default preserves the Cache Control from the source for copy transfers. If explicitly set, the Cache Control of the destination will be set to this value.
+        /// By default preserves the Cache Control from the source. If explicitly set to null, the Cache Control will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -106,9 +86,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// payload, and also can be used to attach additional metadata.  For
         /// example, if set to attachment, it indicates that the user-agent
         /// should not display the response, but instead show a Save As dialog
-        /// with a filename other than the blob name specified. This is intended to be set on the destination Share.
+        /// with a filename other than the blob name specified.
         ///
-        /// By default preserves the Content Disposition from the source for copy transfers. If explicitly set, the Content Disposition of the destination will be set to this value.
+        /// By default preserves the Content Disposition from the source. If explicitly set to null, the Content Disposition will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -127,9 +107,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// specifies which content encodings have been applied to the blob.
         /// This value is returned to the client when the Get Blob operation
         /// is performed on the blob resource. The client can use this value
-        /// when returned to decode the blob content. This is intended to be set on the destination Share.
+        /// when returned to decode the blob content.
         ///
-        /// By default preserves the Content Encoding from the source for copy transfers. If explicitly set, the Content Encoding of the destination will be set to this value.
+        /// By default preserves the Content Encoding from the source. If explicitly set to null, the Content Encoding will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -145,9 +125,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// Optional. Sets the Content Language header which
-        /// specifies the natural languages used by this resource. This is intended to be set on the destination Share.
+        /// specifies the natural languages used by this resource.
         ///
-        /// By default preserves the Content Language from the source for copy transfers. If explicitly set, the Content Language of the destination will be set to this value.
+        /// By default preserves the Content Language from the source. If explicitly set to null, the Content Language will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -163,9 +143,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// Optional. Sets the Content Type header which
-        /// specifies the MIME content type of the file. This is intended to be set on the destination Share.
+        /// specifies the MIME content type of the blob.
         ///
-        /// By default preserves the Content Type from the source for copy transfers. If explicitly set, the Content Type of the destination will be set to this value.
+        /// By default preserves the Content Type from the source. If explicitly set to null, the Content Type will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -180,9 +160,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The file system attributes for this file/directory. This is intended to be set on the destination Share.
+        /// The file system attributes for this file.
         ///
-        /// By default preserves the Attributes from the source for copy transfers. If explicitly set, the Attributes of the destination will be set to this value.
+        /// By default preserves the File Attributes from the source. If explicitly set to null, the File Attributes will not be preserved and set to null.
         /// </summary>
         public NtfsFileAttributes? FileAttributes
         {
@@ -195,20 +175,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// To preserve the file/directory permissions. This is intended to be set on the destination Share.
-        /// If set to true, the permissions will be preserved from the source Share to the destination Share.
-        /// For SMB, this requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
+        /// To preserve the key of the file permission.
+        /// If set to true, the permission key will be preserved from the source Share to the destination Share.
+        /// This requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
         /// which is a operation called on the Destination Share, which requires Share level permissions.
         ///
-        /// By default the permissions will not be preserved from the source Share to the destination Share. If explicitly set to null, the permissions will not be preserved.
+        /// By default the permission key will not be preserved from the source Share to the destination Share. If explicitly set to null, the File Permissions will not be preserved.
         /// Applies only to copy transfers.
         /// </summary>
         public bool? FilePermissions { get; set; }
 
         /// <summary>
-        /// The creation time of the file/directory. This is intended to be set on the destination Share.
+        /// The creation time of the file.
         ///
-        /// By default preserves the Created On Time from the source for copy transfers. If explicitly set, the Created On Time of the destination will be set to this value.
+        /// By default preserves the File Created On Time from the source. If explicitly set to null, the File Created On Time will not be preserved and set to `now`.
         /// </summary>
         public DateTimeOffset? FileCreatedOn
         {
@@ -221,10 +201,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The last write time of the file/directory. This is intended to be set on the destination Share.
+        /// The last write time of the file.
         ///
-        /// By default preserves the Last Written On Time from the source for copy transfers. If explicitly set, the Last Written On Time of the destination will be set to this value.
-        /// Note: For share directories, the Last Written On Time may not be preserved.
+        /// By default preserves the File Last Written On Time from the source. If explicitly set to null, the File Last Written On Time will not be preserved and set to `now`.
         /// </summary>
         public DateTimeOffset? FileLastWrittenOn
         {
@@ -237,9 +216,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// The change time of the file/directory. This is intended to be set on the destination Share.
+        /// The change time of the file.
         ///
-        /// By default preserves the Changed On Time from the source for copy transfers. If explicitly set, the Changed On Time of the destination will be set to this value.
+        /// By default preserves the File Changed On Time from the source. If explicitly set to null, the File Changed On Time will not be preserved and set to `now`.
         /// </summary>
         public DateTimeOffset? FileChangedOn
         {
@@ -252,11 +231,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <summary>
-        /// Optional. Defines custom metadata to set on the destination directory resource. This is intended to be set on the destination Share.
+        /// Optional. Defines custom metadata to set on the destination resource.
         ///
         /// Applies to upload and copy transfers.
         ///
-        /// By default preserves Metadata from the source for copy transfers. If explicitly set, the Metadata of the destination directory will be set to this value.
+        /// Preserves Metadata from the source by default. If explicitly set to null, the Metadata will not be preserved and set to null.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata DirectoryMetadata
@@ -271,11 +250,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
 #pragma warning restore CA2227 // Collection properties should be readonly
 
         /// <summary>
-        /// Optional. Defines custom metadata to set on the destination file resource. This is intended to be set on the destination Share.
+        /// Optional. Defines custom metadata to set on the destination resource.
         ///
         /// Applies to upload and copy transfers.
         ///
-        /// By default preserves Metadata from the source for copy transfers. If explicitly set, the Metadata of the destination file will be set to this value.
+        /// Preserves Metadata from the source by default. If explicitly set to null, the Metadata will not be preserved and set to null.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata FileMetadata
@@ -322,8 +301,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
             _isDirectoryMetadataSet = options?._isDirectoryMetadataSet ?? false;
             FileMetadata = options?.FileMetadata;
             _isFileMetadataSet = options?._isFileMetadataSet ?? false;
-            SkipProtocolValidation = options?.SkipProtocolValidation ?? false;
-            ShareProtocol = options?.ShareProtocol ?? ShareProtocol.Smb;
         }
     }
 }

@@ -13,7 +13,7 @@ require:  https://github.com/Azure/azure-rest-api-specs/blob/f17b769690a46d85813
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -96,7 +96,7 @@ rename-mapping:
   ManagedCluster.properties.ipv6Address: -|ip-address
   ManagedCluster.properties.zonalResiliency: HasZoneResiliency
   ManagedCluster.properties.enableHttpGatewayExclusiveAuthMode: IsHttpGatewayExclusiveAuthModeEnabled
-
+  
   Subnet: ManagedClusterSubnet
   Subnet.enableIpv6: IsIPv6Enabled
   Subnet.networkSecurityGroupId: -|arm-id

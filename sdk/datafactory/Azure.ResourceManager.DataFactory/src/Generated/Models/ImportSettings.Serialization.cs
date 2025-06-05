@@ -76,7 +76,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     case "AzureDatabricksDeltaLakeImportCommand": return AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(element, options);
                     case "SnowflakeImportCopyCommand": return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element, options);
-                    case "TeradataImportCommand": return TeradataImportCommand.DeserializeTeradataImportCommand(element, options);
                 }
             }
             return UnknownImportSettings.DeserializeUnknownImportSettings(element, options);
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ImportSettings)} does not support writing '{options.Format}' format.");
             }

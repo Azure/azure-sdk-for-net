@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -3176,28 +3177,34 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="file"> The file data (not filename) to upload. </param>
+        /// <param name="data"> The file data (not filename) to upload. </param>
+        /// <param name="purpose"> The intended purpose of the file. </param>
+        /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(UploadFileRequest file, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<OpenAIFile>> UploadFileAsync(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using MultipartFormDataRequestContent content = file.ToMultipartRequestContent();
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
         /// <summary> Uploads a file for use by other operations. </summary>
-        /// <param name="file"> The file data (not filename) to upload. </param>
+        /// <param name="data"> The file data (not filename) to upload. </param>
+        /// <param name="purpose"> The intended purpose of the file. </param>
+        /// <param name="filename"> A filename to associate with the uploaded data. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public virtual Response<OpenAIFile> UploadFile(UploadFileRequest file, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<OpenAIFile> UploadFile(Stream data, OpenAIFilePurpose purpose, string filename = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(file, nameof(file));
+            Argument.AssertNotNull(data, nameof(data));
 
-            using MultipartFormDataRequestContent content = file.ToMultipartRequestContent();
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose, filename, null);
+            using MultipartFormDataRequestContent content = uploadFileRequest.ToMultipartRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);

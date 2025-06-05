@@ -114,18 +114,17 @@ namespace Azure.Messaging.EventGrid
         /// <returns> Whether or not the event is a system event.</returns>
         public bool TryGetSystemEventData(out object eventData)
         {
-            // the property can be set to null after the creation of the event.
-            if (Data == null)
+            try
+            {
+                JsonDocument requestDocument = JsonDocument.Parse(Data.ToMemory());
+                eventData = SystemEventExtensions.AsSystemEventData(EventType, requestDocument.RootElement);
+                return eventData != null;
+            }
+            catch
             {
                 eventData = null;
                 return false;
             }
-
-            // We use a dummy CloudEvent to deserialize the system event data. This is necessary so that we can
-            // avoid maintaining two sets of system events in both Azure.Messaging.EventGrid and Azure.Messaging.EventGrid.SystemEvents
-            // libraries.
-            var cloudEvent = new CloudEvent("source", EventType, Data, null, CloudEventDataFormat.Json);
-            return cloudEvent.TryGetSystemEventData(out eventData);
         }
 
         /// <summary>
@@ -156,7 +155,7 @@ namespace Azure.Messaging.EventGrid
                     egEvents[i++] = new EventGridEvent(EventGridEventInternal.DeserializeEventGridEventInternal(property));
                 }
             }
-            return egEvents ?? [];
+            return egEvents ?? Array.Empty<EventGridEvent>();
         }
 
         /// <summary>
@@ -172,15 +171,19 @@ namespace Azure.Messaging.EventGrid
         {
             Argument.AssertNotNull(json, nameof(json));
             EventGridEvent[] events = ParseMany(json);
-            return events.Length switch
+            if (events.Length == 0)
             {
-                0 => null,
-                > 1 => throw new ArgumentException(
+                return null;
+            }
+            if (events.Length > 1)
+            {
+                throw new ArgumentException(
                     "The BinaryData instance contains JSON from multiple event grid events. This method " +
-                    "should only be used with BinaryData containing a single event grid event. " + Environment.NewLine +
-                    $"To parse multiple events, use the {nameof(ParseMany)} overload."),
-                _ => events[0]
-            };
+                    "should only be used with BinaryData containing a single event grid event. " +
+                    Environment.NewLine +
+                    $"To parse multiple events, use the {nameof(ParseMany)} overload.");
+            }
+            return events[0];
         }
     }
 }

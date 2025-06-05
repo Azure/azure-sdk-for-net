@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Elastic
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ElasticOpenAIIntegrationData)} does not support writing '{options.Format}' format.");
             }

@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Response for packet capture API service call. </summary>
+    /// <summary>
+    /// Response for packet capture API service call.
+    /// Serialized Name: PacketCaptureListResult
+    /// </summary>
     internal partial class PacketCaptureListResult
     {
         /// <summary>
@@ -52,8 +55,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PacketCaptureListResult"/>. </summary>
-        /// <param name="value"> A list of packet capture sessions under a packet core control plane. </param>
-        /// <param name="nextLink"> The URL to get the next set of results. </param>
+        /// <param name="value">
+        /// A list of packet capture sessions under a packet core control plane.
+        /// Serialized Name: PacketCaptureListResult.value
+        /// </param>
+        /// <param name="nextLink">
+        /// The URL to get the next set of results.
+        /// Serialized Name: PacketCaptureListResult.nextLink
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PacketCaptureListResult(IReadOnlyList<MobileNetworkPacketCaptureData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +71,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of packet capture sessions under a packet core control plane. </summary>
+        /// <summary>
+        /// A list of packet capture sessions under a packet core control plane.
+        /// Serialized Name: PacketCaptureListResult.value
+        /// </summary>
         public IReadOnlyList<MobileNetworkPacketCaptureData> Value { get; }
-        /// <summary> The URL to get the next set of results. </summary>
+        /// <summary>
+        /// The URL to get the next set of results.
+        /// Serialized Name: PacketCaptureListResult.nextLink
+        /// </summary>
         public string NextLink { get; }
     }
 }

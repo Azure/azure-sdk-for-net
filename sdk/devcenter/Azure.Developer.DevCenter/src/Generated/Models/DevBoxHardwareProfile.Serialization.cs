@@ -136,7 +136,7 @@ namespace Azure.Developer.DevCenter.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureDeveloperDevCenterContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DevBoxHardwareProfile)} does not support writing '{options.Format}' format.");
             }

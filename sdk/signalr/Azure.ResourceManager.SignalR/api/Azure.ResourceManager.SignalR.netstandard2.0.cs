@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.SignalR
 {
-    public partial class AzureResourceManagerSignalRContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerSignalRContext() { }
-        public static Azure.ResourceManager.SignalR.AzureResourceManagerSignalRContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class SignalRCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SignalR.SignalRResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.SignalR.SignalRResource>, System.Collections.IEnumerable
     {
         protected SignalRCollection() { }

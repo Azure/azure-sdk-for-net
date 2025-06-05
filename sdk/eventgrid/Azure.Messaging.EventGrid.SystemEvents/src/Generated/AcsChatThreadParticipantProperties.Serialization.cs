@@ -41,17 +41,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             writer.WritePropertyName("participantCommunicationIdentifier"u8);
             writer.WriteObjectValue(ParticipantCommunicationIdentifier, options);
-            if (Optional.IsCollectionDefined(Metadata))
+            writer.WritePropertyName("metadata"u8);
+            writer.WriteStartObject();
+            foreach (var item in Metadata)
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
             }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -108,10 +105,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -126,7 +119,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
+            return new AcsChatThreadParticipantProperties(displayName, participantCommunicationIdentifier, metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsChatThreadParticipantProperties>.Write(ModelReaderWriterOptions options)
@@ -136,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatThreadParticipantProperties)} does not support writing '{options.Format}' format.");
             }

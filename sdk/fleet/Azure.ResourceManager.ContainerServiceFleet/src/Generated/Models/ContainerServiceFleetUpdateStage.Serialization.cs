@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStage)} does not support writing '{options.Format}' format.");
             }

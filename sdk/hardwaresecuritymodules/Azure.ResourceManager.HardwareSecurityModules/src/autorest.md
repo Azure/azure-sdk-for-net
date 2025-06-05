@@ -12,7 +12,7 @@ require: https://github.com/emmeliaAra/azure-rest-api-specs/blob/898ccbc6e7b8372
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VirtualNetworkResource IOperationSource<VirtualNetworkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VirtualNetworkData>(response.Content);
             return new VirtualNetworkResource(_client, data);
         }
 
         async ValueTask<VirtualNetworkResource> IOperationSource<VirtualNetworkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualNetworkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VirtualNetworkData>(response.Content);
             return await Task.FromResult(new VirtualNetworkResource(_client, data)).ConfigureAwait(false);
         }
     }

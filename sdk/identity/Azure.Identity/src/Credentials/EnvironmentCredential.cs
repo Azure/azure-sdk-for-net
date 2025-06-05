@@ -11,7 +11,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Enables authentication to Microsoft Entra ID using a client secret or certificate.
+    /// Enables authentication to Microsoft Entra ID using a client secret or certificate, or as a user
+    /// with a username and password.
     /// <para>
     /// Configuration is attempted in this order, using these environment variables:
     /// </para>
@@ -39,11 +40,13 @@ namespace Azure.Identity
     /// <listheader><term>Variable</term><description>Description</description></listheader>
     /// <item><term>AZURE_TENANT_ID</term><description>The Microsoft Entra tenant (directory) ID.</description></item>
     /// <item><term>AZURE_CLIENT_ID</term><description>The client (application) ID of an App Registration in the tenant.</description></item>
+    /// <item><term>AZURE_USERNAME</term><description>The username, also known as upn, of a Microsoft Entra user account.</description></item>
+    /// <item><term>AZURE_PASSWORD</term><description>The password of the Microsoft Entra user account. Note this does not support accounts with MFA enabled.</description></item>
     /// </list>
     ///
-    /// This credential ultimately uses a <see cref="ClientSecretCredential"/> or <see cref="ClientCertificateCredential"/> to
+    /// This credential ultimately uses a <see cref="ClientSecretCredential"/>, <see cref="ClientCertificateCredential"/>, or <see cref="UsernamePasswordCredential"/> to
     /// perform the authentication using these details. Please consult the
-    /// documentation of those classes for more details.
+    /// documentation of that class for more details.
     /// </summary>
     public class EnvironmentCredential : TokenCredential
     {
@@ -126,7 +129,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
-        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
+        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
         /// instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.
@@ -146,7 +149,7 @@ namespace Azure.Identity
 
         /// <summary>
         /// Obtains a token from Microsoft Entra ID, using the client details specified in the environment variables
-        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET to authenticate.
+        /// AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_CLIENT_SECRET or AZURE_USERNAME and AZURE_PASSWORD to authenticate.
         /// Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see> by the credential
         /// instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
         /// to optimize cache effectiveness.

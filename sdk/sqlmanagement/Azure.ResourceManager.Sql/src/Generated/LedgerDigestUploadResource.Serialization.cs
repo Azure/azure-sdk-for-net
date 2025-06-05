@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class LedgerDigestUploadResource : IJsonModel<LedgerDigestUploadData>
     {
-        private static LedgerDigestUploadData s_dataDeserializationInstance;
-        private static LedgerDigestUploadData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LedgerDigestUploadData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LedgerDigestUploadData>)Data).Write(writer, options);
 
-        LedgerDigestUploadData IJsonModel<LedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LedgerDigestUploadData>)DataDeserializationInstance).Create(ref reader, options);
+        LedgerDigestUploadData IJsonModel<LedgerDigestUploadData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LedgerDigestUploadData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LedgerDigestUploadData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LedgerDigestUploadData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<LedgerDigestUploadData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LedgerDigestUploadData IPersistableModel<LedgerDigestUploadData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LedgerDigestUploadData>(data, options, AzureResourceManagerSqlContext.Default);
+        LedgerDigestUploadData IPersistableModel<LedgerDigestUploadData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LedgerDigestUploadData>(data, options);
 
-        string IPersistableModel<LedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LedgerDigestUploadData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LedgerDigestUploadData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LedgerDigestUploadData>)Data).GetFormatFromOptions(options);
     }
 }

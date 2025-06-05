@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorSecurityPolicyResource : IJsonModel<FrontDoorSecurityPolicyData>
     {
-        private static FrontDoorSecurityPolicyData s_dataDeserializationInstance;
-        private static FrontDoorSecurityPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<FrontDoorSecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecurityPolicyData>)Data).Write(writer, options);
 
-        FrontDoorSecurityPolicyData IJsonModel<FrontDoorSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecurityPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        FrontDoorSecurityPolicyData IJsonModel<FrontDoorSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorSecurityPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorSecurityPolicyData>(Data, options, AzureResourceManagerCdnContext.Default);
+        BinaryData IPersistableModel<FrontDoorSecurityPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FrontDoorSecurityPolicyData IPersistableModel<FrontDoorSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(data, options, AzureResourceManagerCdnContext.Default);
+        FrontDoorSecurityPolicyData IPersistableModel<FrontDoorSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorSecurityPolicyData>(data, options);
 
-        string IPersistableModel<FrontDoorSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorSecurityPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorSecurityPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

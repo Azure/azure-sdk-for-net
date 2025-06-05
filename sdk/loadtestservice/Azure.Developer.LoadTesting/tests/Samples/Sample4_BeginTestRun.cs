@@ -50,14 +50,14 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                         WaitUntil.Started, testRunId, RequestContent.Create(data)
                    );
 
-                // get initial response
+                // get inital response
                 Response initialResponse = operation.GetRawResponse();
                 Console.WriteLine(initialResponse.Content.ToString());
 
-                // waiting for test run to get completed
+                // waiting for testrun to get completed
                 operation.WaitForCompletion();
 
-                // final response
+                // final reponse
                 Response finalResponse = operation.GetRawResponse();
                 Console.WriteLine(finalResponse.Content.ToString());
             }

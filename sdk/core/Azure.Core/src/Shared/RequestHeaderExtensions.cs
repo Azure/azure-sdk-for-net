@@ -122,11 +122,5 @@ namespace Azure.Core
             var stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
             headers.Add(name, string.Join(delimiter, stringValues));
         }
-
-        public static void SetDelimited<T>(this RequestHeaders headers, string name, IEnumerable<T> value, string delimiter, string? format = default)
-        {
-            IEnumerable<string> stringValues = value.Select(v => TypeFormatters.ConvertToString(v, format));
-            headers.SetValue(name, string.Join(delimiter, stringValues));
-        }
     }
 }

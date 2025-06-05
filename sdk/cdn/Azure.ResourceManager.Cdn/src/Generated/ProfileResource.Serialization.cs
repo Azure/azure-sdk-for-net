@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class ProfileResource : IJsonModel<ProfileData>
     {
-        private static ProfileData s_dataDeserializationInstance;
-        private static ProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProfileData>)Data).Write(writer, options);
 
-        ProfileData IJsonModel<ProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        ProfileData IJsonModel<ProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProfileData>(Data, options, AzureResourceManagerCdnContext.Default);
+        BinaryData IPersistableModel<ProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProfileData IPersistableModel<ProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileData>(data, options, AzureResourceManagerCdnContext.Default);
+        ProfileData IPersistableModel<ProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProfileData>(data, options);
 
-        string IPersistableModel<ProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProfileData>)Data).GetFormatFromOptions(options);
     }
 }

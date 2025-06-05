@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
         private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync(AzureLocation.EastUS);
+            ResourceGroup = await CreateResourceGroupAsync();
             VNetCollection = ResourceGroup.GetVirtualNetworks();
             ApiServiceCollection = ResourceGroup.GetApiManagementServices();
         }

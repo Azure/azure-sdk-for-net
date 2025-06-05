@@ -42,8 +42,7 @@ namespace Azure.ResourceManager.OperationalInsights
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                JsonSerializer.Serialize(writer, Identity);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -85,12 +84,12 @@ namespace Azure.ResourceManager.OperationalInsights
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDate"u8);
-                writer.WriteStringValue(LastModifiedOn.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "R");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
-                writer.WriteStringValue(CreatedOn.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "R");
             }
             if (Optional.IsCollectionDefined(AssociatedWorkspaces))
             {
@@ -106,11 +105,6 @@ namespace Azure.ResourceManager.OperationalInsights
             {
                 writer.WritePropertyName("capacityReservationProperties"u8);
                 writer.WriteObjectValue(CapacityReservationProperties, options);
-            }
-            if (Optional.IsDefined(Replication))
-            {
-                writer.WritePropertyName("replication"u8);
-                writer.WriteObjectValue(Replication, options);
             }
             writer.WriteEndObject();
         }
@@ -153,7 +147,6 @@ namespace Azure.ResourceManager.OperationalInsights
             DateTimeOffset? createdDate = default;
             IList<OperationalInsightsClusterAssociatedWorkspace> associatedWorkspaces = default;
             OperationalInsightsCapacityReservationProperties capacityReservationProperties = default;
-            OperationalInsightsClusterReplicationProperties replication = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,8 +157,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     {
                         continue;
                     }
-                    var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -289,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            lastModifiedDate = property0.Value.GetDateTimeOffset("O");
+                            lastModifiedDate = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -298,7 +290,7 @@ namespace Azure.ResourceManager.OperationalInsights
                             {
                                 continue;
                             }
-                            createdDate = property0.Value.GetDateTimeOffset("O");
+                            createdDate = property0.Value.GetDateTimeOffset("R");
                             continue;
                         }
                         if (property0.NameEquals("associatedWorkspaces"u8))
@@ -322,15 +314,6 @@ namespace Azure.ResourceManager.OperationalInsights
                                 continue;
                             }
                             capacityReservationProperties = OperationalInsightsCapacityReservationProperties.DeserializeOperationalInsightsCapacityReservationProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("replication"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            replication = OperationalInsightsClusterReplicationProperties.DeserializeOperationalInsightsClusterReplicationProperties(property0.Value, options);
                             continue;
                         }
                     }
@@ -361,7 +344,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 createdDate,
                 associatedWorkspaces ?? new ChangeTrackingList<OperationalInsightsClusterAssociatedWorkspace>(),
                 capacityReservationProperties,
-                replication,
                 serializedAdditionalRawData);
         }
 
@@ -672,21 +654,6 @@ namespace Azure.ResourceManager.OperationalInsights
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Replication), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    replication: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Replication))
-                {
-                    builder.Append("    replication: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Replication, options, 4, false, "    replication: ");
-                }
-            }
-
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -699,7 +666,7 @@ namespace Azure.ResourceManager.OperationalInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

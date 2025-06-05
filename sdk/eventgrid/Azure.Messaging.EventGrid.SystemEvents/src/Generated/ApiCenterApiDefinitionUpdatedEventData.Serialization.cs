@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(ApiCenterApiDefinitionUpdatedEventDataConverter))]
     public partial class ApiCenterApiDefinitionUpdatedEventData : IUtf8JsonSerializable, IJsonModel<ApiCenterApiDefinitionUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiCenterApiDefinitionUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -127,7 +125,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApiCenterApiDefinitionUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -165,20 +163,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class ApiCenterApiDefinitionUpdatedEventDataConverter : JsonConverter<ApiCenterApiDefinitionUpdatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, ApiCenterApiDefinitionUpdatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override ApiCenterApiDefinitionUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeApiCenterApiDefinitionUpdatedEventData(document.RootElement);
-            }
         }
     }
 }

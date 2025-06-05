@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudVirtualMachineConsoleResource : IJsonModel<NetworkCloudVirtualMachineConsoleData>
     {
-        private static NetworkCloudVirtualMachineConsoleData s_dataDeserializationInstance;
-        private static NetworkCloudVirtualMachineConsoleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkCloudVirtualMachineConsoleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineConsoleData>)Data).Write(writer, options);
 
-        NetworkCloudVirtualMachineConsoleData IJsonModel<NetworkCloudVirtualMachineConsoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineConsoleData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkCloudVirtualMachineConsoleData IJsonModel<NetworkCloudVirtualMachineConsoleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudVirtualMachineConsoleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudVirtualMachineConsoleData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
+        BinaryData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkCloudVirtualMachineConsoleData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
+        NetworkCloudVirtualMachineConsoleData IPersistableModel<NetworkCloudVirtualMachineConsoleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudVirtualMachineConsoleData>(data, options);
 
-        string IPersistableModel<NetworkCloudVirtualMachineConsoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudVirtualMachineConsoleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudVirtualMachineConsoleData>)Data).GetFormatFromOptions(options);
     }
 }

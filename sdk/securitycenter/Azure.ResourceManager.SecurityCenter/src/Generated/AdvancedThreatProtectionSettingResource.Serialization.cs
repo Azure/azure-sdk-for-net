@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class AdvancedThreatProtectionSettingResource : IJsonModel<AdvancedThreatProtectionSettingData>
     {
-        private static AdvancedThreatProtectionSettingData s_dataDeserializationInstance;
-        private static AdvancedThreatProtectionSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AdvancedThreatProtectionSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AdvancedThreatProtectionSettingData>)Data).Write(writer, options);
 
-        AdvancedThreatProtectionSettingData IJsonModel<AdvancedThreatProtectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdvancedThreatProtectionSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        AdvancedThreatProtectionSettingData IJsonModel<AdvancedThreatProtectionSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AdvancedThreatProtectionSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AdvancedThreatProtectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AdvancedThreatProtectionSettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<AdvancedThreatProtectionSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AdvancedThreatProtectionSettingData IPersistableModel<AdvancedThreatProtectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdvancedThreatProtectionSettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        AdvancedThreatProtectionSettingData IPersistableModel<AdvancedThreatProtectionSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AdvancedThreatProtectionSettingData>(data, options);
 
-        string IPersistableModel<AdvancedThreatProtectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdvancedThreatProtectionSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AdvancedThreatProtectionSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AdvancedThreatProtectionSettingData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -62,8 +62,6 @@
   "words": [
     "AADDS",
     "AADKERB",
-    "Adls",
-    "AOAI",
     "apos",
     "azsdk",
     "blazor",
@@ -87,7 +85,6 @@
     "dotnetcli",
     "dtmf",
     "eastus",
-    "Eloqua",
     "entra",
     "epsg",
     "Exfiltration",
@@ -100,13 +97,10 @@
     "getsas",
     "Gmsa",
     "GZRS",
-    "Hana",
-    "Hdfs",
     "hnsw",
     "ienumerable",
     "illumos",
     "imds",
-    "Informix",
     "Inotify",
     "interventional",
     "ints",
@@ -120,15 +114,12 @@
     "kusto",
     "Kustomization",
     "Kustomizations",
-    "Liftr",
     "listsas",
     "lucene",
-    "Magento",
     "mgmt",
     "miscs",
     "msal",
     "Mtls",
-    "Netezza",
     "northcentralus",
     "nunit",
     "odata",
@@ -151,7 +142,6 @@
     "referer",
     "renormalize",
     "retriable",
-    "Serp",
     "Servfail",
     "setsas",
     "signalr",
@@ -160,11 +150,8 @@
     "Somaxconn",
     "southcentralus",
     "structs",
-    "Sybase",
     "Sysctls",
     "SYSLIB",
-    "Teradata",
-    "Tswtz",
     "Uefi",
     "uints",
     "unbilled",
@@ -179,7 +166,6 @@
     "Vectorize",
     "Vectorizer",
     "Vectorizers",
-    "Vertica",
     "vhdx",
     "vmos",
     "vmss",
@@ -190,7 +176,6 @@
     "westcentralus",
     "westus",
     "Wmem",
-    "Xero",
     "xunit"
   ],
   "overrides": [
@@ -201,24 +186,9 @@
       ]
     },
     {
-      "filename": "**/sdk/agricultureplatform/**/*.cs",
-      "words": [
-        "agri",
-        "mobo"
-      ]
-    },
-    {
       "filename": "**/sdk/ai/**/*.cs",
       "words": [
-        "Ubinary",
-        "Ansii",
-        "Atbash",
-        "Bleu",
-        "azureai",
-        "bleu",
-        "azureai",
-        "Gleu",
-        "gleu"
+        "Ubinary"
       ]
     },
     {
@@ -271,12 +241,6 @@
       ]
     },
     {
-      "filename": "**/sdk/arizeaiobservabilityeval/**/*.cs",
-      "words": [
-        "Arize"
-      ]
-    },
-    {
       "filename": "**/sdk/avs/**/*.cs",
       "words": [
         "dhcps",
@@ -310,10 +274,8 @@
       "filename": "**/sdk/batch/**/*.cs",
       "words": [
         "cifs",
-        "Cleanedup",
         "ocpdate",
         "Reimage",
-        "Reimaged",
         "Reimaging",
         "reimaging",
         "SSDLRS"
@@ -380,11 +342,7 @@
         "cbor",
         "ccfs",
         "cose",
-        "Jwks",
-        "PHDR",
-        "PKIX",
-        "scitt",
-        "tstr"
+        "scitt"
       ]
     },
     {
@@ -450,12 +408,6 @@
         "dapr",
         "grpc",
         "proto"
-      ]
-    },
-    {
-      "filename": "**/sdk/containerregistry/**/*",
-      "words": [
-        "Abac"
       ]
     },
     {
@@ -821,32 +773,6 @@
       ]
     },
     {
-      "filename": "**/sdk/migrationassessment/**/*.cs",
-      "words": [
-        "Paas",
-        "Reasonings",
-        "Vcpu",
-        "Hadr",
-        "Mbps",
-        "MSAZR",
-        "MSAZRDE",
-        "MSAZRUSGOV",
-        "MSMCAZR",
-        "Dadsv",
-        "Dasv",
-        "Ddsv",
-        "Eadsv",
-        "Easv",
-        "Ebdsv",
-        "Ebsv",
-        "Edsv",
-        "Mdsv",
-        "Idms",
-        "Recieved",
-        "Cluter"
-      ]
-    },
-    {
       "filename": "**/sdk/migrationdiscoverysap/**/*.cs",
       "words": [
         "Hana",
@@ -936,8 +862,7 @@
         "Apac",
         "Latam",
         "Fips",
-        "Diffie",
-        "Reimage"
+        "Diffie"
       ]
     },
     {
@@ -1247,7 +1172,6 @@
       "filename": "**/sdk/recoveryservices-datareplication/**/*.cs",
       "words": [
         "dras",
-        "fqdns",
         "nics",
         "reprotect"
       ]
@@ -1268,8 +1192,7 @@
         "vcpus",
         "esxi",
         "seleted",
-        "dras",
-        "fqdns"
+        "dras"
       ]
     },
     {
@@ -1408,8 +1331,7 @@
         "Stdev",
         "Unrestorable",
         "Vcores",
-        "Dtcs",
-        "Freemium"
+        "Dtcs"
       ]
     },
     {
@@ -1591,15 +1513,6 @@
       ]
     },
     {
-      "filename": "**/sdk/workloadssapvirtualinstance/**/*.cs",
-      "words": [
-        "acss",
-        "ascs",
-        "hana",
-        "mbps"
-      ]
-    },
-    {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
         "Noreuse",
@@ -1668,14 +1581,13 @@
     {
       "filename": "**/sdk/iot/Azure.ResourceManager.IotFirmwareDefense/**/*.cs",
       "words": [
+        "RELRO",
+        "Relro",
         "relro",
+        "Rpath",
         "rpath",
         "runpath",
-        "cves",
-        "ocsp",
-        "sbom",
-        "diffie",
-        "iotfirmwaredefense"
+        "Cves"
       ]
     },
     {

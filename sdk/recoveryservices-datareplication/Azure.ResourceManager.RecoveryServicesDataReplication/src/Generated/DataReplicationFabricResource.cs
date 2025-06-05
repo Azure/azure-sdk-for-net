@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
-        /// <summary> Gets a collection of DataReplicationFabricAgentResources in the DataReplicationFabric. </summary>
-        /// <returns> An object representing collection of DataReplicationFabricAgentResources and their operations over a DataReplicationFabricAgentResource. </returns>
-        public virtual DataReplicationFabricAgentCollection GetDataReplicationFabricAgents()
+        /// <summary> Gets a collection of DataReplicationDraResources in the DataReplicationFabric. </summary>
+        /// <returns> An object representing collection of DataReplicationDraResources and their operations over a DataReplicationDraResource. </returns>
+        public virtual DataReplicationDraCollection GetDataReplicationDras()
         {
-            return GetCachedClient(client => new DataReplicationFabricAgentCollection(client, Id));
+            return GetCachedClient(client => new DataReplicationDraCollection(client, Id));
         }
 
         /// <summary>
@@ -106,26 +106,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Get</description>
+        /// <description>Dra_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
+        /// <description><see cref="DataReplicationDraResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fabricAgentName"> The fabric agent name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<DataReplicationFabricAgentResource>> GetDataReplicationFabricAgentAsync(string fabricAgentName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DataReplicationDraResource>> GetDataReplicationDraAsync(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            return await GetDataReplicationFabricAgents().GetAsync(fabricAgentName, cancellationToken).ConfigureAwait(false);
+            return await GetDataReplicationDras().GetAsync(fabricAgentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,26 +137,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricAgentModel_Get</description>
+        /// <description>Dra_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="DataReplicationFabricAgentResource"/></description>
+        /// <description><see cref="DataReplicationDraResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="fabricAgentName"> The fabric agent name. </param>
+        /// <param name="fabricAgentName"> The fabric agent (Dra) name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="fabricAgentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fabricAgentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<DataReplicationFabricAgentResource> GetDataReplicationFabricAgent(string fabricAgentName, CancellationToken cancellationToken = default)
+        public virtual Response<DataReplicationDraResource> GetDataReplicationDra(string fabricAgentName, CancellationToken cancellationToken = default)
         {
-            return GetDataReplicationFabricAgents().Get(fabricAgentName, cancellationToken);
+            return GetDataReplicationDras().Get(fabricAgentName, cancellationToken);
         }
 
         /// <summary>
@@ -168,11 +168,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -208,11 +208,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Delete</description>
+        /// <description>Fabric_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -290,11 +290,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Delete</description>
+        /// <description>Fabric_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -332,11 +332,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Update</description>
+        /// <description>Fabric_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -378,11 +378,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Update</description>
+        /// <description>Fabric_Update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -424,11 +424,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -486,11 +486,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -548,11 +548,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -605,11 +605,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -662,11 +662,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -722,11 +722,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricModel_Get</description>
+        /// <description>Fabric_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

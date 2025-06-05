@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WorkflowRunActionResource : IJsonModel<WorkflowRunActionData>
     {
-        private static WorkflowRunActionData s_dataDeserializationInstance;
-        private static WorkflowRunActionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<WorkflowRunActionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionData>)Data).Write(writer, options);
 
-        WorkflowRunActionData IJsonModel<WorkflowRunActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionData>)DataDeserializationInstance).Create(ref reader, options);
+        WorkflowRunActionData IJsonModel<WorkflowRunActionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkflowRunActionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkflowRunActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkflowRunActionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<WorkflowRunActionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        WorkflowRunActionData IPersistableModel<WorkflowRunActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        WorkflowRunActionData IPersistableModel<WorkflowRunActionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkflowRunActionData>(data, options);
 
-        string IPersistableModel<WorkflowRunActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<WorkflowRunActionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkflowRunActionData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -46,19 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
-        /// <param name="fileurl"> The path to the capture file. </param>
-        /// <param name="fileType"> The file type of the capture file. </param>
-        /// <param name="partitionId"> The shard ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fileurl"/>, <paramref name="fileType"/> or <paramref name="partitionId"/> is null. </exception>
-        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId)
+        internal EventHubCaptureFileCreatedEventData()
         {
-            Argument.AssertNotNull(fileurl, nameof(fileurl));
-            Argument.AssertNotNull(fileType, nameof(fileType));
-            Argument.AssertNotNull(partitionId, nameof(partitionId));
-
-            Fileurl = fileurl;
-            FileType = fileType;
-            PartitionId = partitionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
@@ -84,11 +73,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             FirstEnqueueTime = firstEnqueueTime;
             LastEnqueueTime = lastEnqueueTime;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/> for deserialization. </summary>
-        internal EventHubCaptureFileCreatedEventData()
-        {
         }
 
         /// <summary> The path to the capture file. </summary>

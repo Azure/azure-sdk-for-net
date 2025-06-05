@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Datadog
 
         DatadogSingleSignOnResource IOperationSource<DatadogSingleSignOnResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatadogSingleSignOnResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatadogContext.Default);
+            var data = ModelReaderWriter.Read<DatadogSingleSignOnResourceData>(response.Content);
             return new DatadogSingleSignOnResource(_client, data);
         }
 
         async ValueTask<DatadogSingleSignOnResource> IOperationSource<DatadogSingleSignOnResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DatadogSingleSignOnResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDatadogContext.Default);
+            var data = ModelReaderWriter.Read<DatadogSingleSignOnResourceData>(response.Content);
             return await Task.FromResult(new DatadogSingleSignOnResource(_client, data)).ConfigureAwait(false);
         }
     }

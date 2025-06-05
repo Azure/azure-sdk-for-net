@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Confluent.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ApiKeyResourceEntity)} does not support writing '{options.Format}' format.");
             }

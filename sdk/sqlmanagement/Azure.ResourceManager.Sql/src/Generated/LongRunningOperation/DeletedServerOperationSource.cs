@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         DeletedServerResource IOperationSource<DeletedServerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeletedServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<DeletedServerData>(response.Content);
             return new DeletedServerResource(_client, data);
         }
 
         async ValueTask<DeletedServerResource> IOperationSource<DeletedServerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DeletedServerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<DeletedServerData>(response.Content);
             return await Task.FromResult(new DeletedServerResource(_client, data)).ConfigureAwait(false);
         }
     }

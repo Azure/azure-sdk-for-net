@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Functions.Worker
         /// <summary>
         /// Message to broadcast.
         /// </summary>
-        [JsonConverter(typeof(System.BinaryDataJsonConverter))]
+        [JsonConverter(typeof(BinaryDataJsonConverter))]
         public BinaryData Data { get; set; }
 
         /// <summary>

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the MobileNetworkSimGroup data model.
     /// SIM group resource.
+    /// Serialized Name: SimGroup
     /// </summary>
     public partial class MobileNetworkSimGroupData : TrackedResourceData
     {
@@ -65,10 +66,22 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="userAssignedIdentity"> The identity used to retrieve the encryption key from Azure key vault. </param>
-        /// <param name="provisioningState"> The provisioning state of the SIM group resource. </param>
-        /// <param name="encryptionKey"> A key to encrypt the SIM data that belongs to this SIM group. </param>
-        /// <param name="mobileNetwork"> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </param>
+        /// <param name="userAssignedIdentity">
+        /// The identity used to retrieve the encryption key from Azure key vault.
+        /// Serialized Name: SimGroup.identity
+        /// </param>
+        /// <param name="provisioningState">
+        /// The provisioning state of the SIM group resource.
+        /// Serialized Name: SimGroup.properties.provisioningState
+        /// </param>
+        /// <param name="encryptionKey">
+        /// A key to encrypt the SIM data that belongs to this SIM group.
+        /// Serialized Name: SimGroup.properties.encryptionKey
+        /// </param>
+        /// <param name="mobileNetwork">
+        /// Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group.
+        /// Serialized Name: SimGroup.properties.mobileNetwork
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkSimGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, KeyVaultKey encryptionKey, WritableSubResource mobileNetwork, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -84,15 +97,27 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary> The identity used to retrieve the encryption key from Azure key vault. </summary>
+        /// <summary>
+        /// The identity used to retrieve the encryption key from Azure key vault.
+        /// Serialized Name: SimGroup.identity
+        /// </summary>
         [WirePath("identity")]
         public MobileNetworkManagedServiceIdentity UserAssignedIdentity { get; set; }
-        /// <summary> The provisioning state of the SIM group resource. </summary>
+        /// <summary>
+        /// The provisioning state of the SIM group resource.
+        /// Serialized Name: SimGroup.properties.provisioningState
+        /// </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> A key to encrypt the SIM data that belongs to this SIM group. </summary>
+        /// <summary>
+        /// A key to encrypt the SIM data that belongs to this SIM group.
+        /// Serialized Name: SimGroup.properties.encryptionKey
+        /// </summary>
         internal KeyVaultKey EncryptionKey { get; set; }
-        /// <summary> The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey. </summary>
+        /// <summary>
+        /// The key URL, unversioned. For example: https://contosovault.vault.azure.net/keys/azureKey.
+        /// Serialized Name: KeyVaultKey.keyUrl
+        /// </summary>
         [WirePath("properties.encryptionKey.keyUrl")]
         public Uri KeyUri
         {
@@ -105,7 +130,10 @@ namespace Azure.ResourceManager.MobileNetwork
             }
         }
 
-        /// <summary> Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group. </summary>
+        /// <summary>
+        /// Mobile network that this SIM group belongs to. The mobile network must be in the same location as the SIM group.
+        /// Serialized Name: SimGroup.properties.mobileNetwork
+        /// </summary>
         internal WritableSubResource MobileNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("properties.mobileNetwork.id")]

@@ -1,36 +1,29 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Azure.EventGrid.Messaging.SourceGeneration
+namespace EventGridSourceGenerator
 {
-    internal sealed class SystemEventNode
+    internal class SystemEventNode
     {
-        public SystemEventNode(string eventName, string eventType, string deserializeMethod)
-        {
-            EventName = eventName;
-            EventType = eventType;
-            DeserializeMethod = deserializeMethod;
-            EventConstantName = Convert(EventName);
-        }
+        public string EventName { get; set; }
 
-        private static string Convert(string eventName)
+        public string EventConstantName
         {
-            // special case a few events that don't follow the pattern
-            return eventName switch
+            get
             {
-                "ServiceBusDeadletterMessagesAvailableWithNoListenersEventData" => "ServiceBusDeadletterMessagesAvailableWithNoListener",
-                "SubscriptionDeletedEventData" => "EventGridSubscriptionDeleted",
-                "SubscriptionValidationEventData" => "EventGridSubscriptionValidation",
-                _ => eventName?.Replace("EventData", ""),
-            };
+                // special case a few events that don't follow the pattern
+                return EventName switch
+                {
+                    "ServiceBusDeadletterMessagesAvailableWithNoListenersEventData" => "ServiceBusDeadletterMessagesAvailableWithNoListener",
+                    "SubscriptionDeletedEventData" => "EventGridSubscriptionDeleted",
+                    "SubscriptionValidationEventData" => "EventGridSubscriptionValidation",
+                    _ => EventName?.Replace("EventData", ""),
+                };
+            }
         }
 
-        public string EventName { get; }
+        public string EventType { get; set; }
 
-        public string EventConstantName { get; }
-
-        public string EventType { get; }
-
-        public string DeserializeMethod { get; }
+        public string DeserializeMethod { get; set; }
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class SharedGalleryImageVersionResource : IJsonModel<SharedGalleryImageVersionData>
     {
-        private static SharedGalleryImageVersionData s_dataDeserializationInstance;
-        private static SharedGalleryImageVersionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SharedGalleryImageVersionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SharedGalleryImageVersionData>)Data).Write(writer, options);
 
-        SharedGalleryImageVersionData IJsonModel<SharedGalleryImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SharedGalleryImageVersionData>)DataDeserializationInstance).Create(ref reader, options);
+        SharedGalleryImageVersionData IJsonModel<SharedGalleryImageVersionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SharedGalleryImageVersionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SharedGalleryImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SharedGalleryImageVersionData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<SharedGalleryImageVersionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SharedGalleryImageVersionData IPersistableModel<SharedGalleryImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SharedGalleryImageVersionData>(data, options, AzureResourceManagerComputeContext.Default);
+        SharedGalleryImageVersionData IPersistableModel<SharedGalleryImageVersionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SharedGalleryImageVersionData>(data, options);
 
-        string IPersistableModel<SharedGalleryImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SharedGalleryImageVersionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SharedGalleryImageVersionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SharedGalleryImageVersionData>)Data).GetFormatFromOptions(options);
     }
 }

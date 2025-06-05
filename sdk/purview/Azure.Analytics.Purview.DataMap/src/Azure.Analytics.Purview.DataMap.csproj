@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the Azure.Analytics.Purview.DataMap client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>Azure SDK Code Generation Azure.Analytics.Purview.DataMap for Azure Data Plane</AssemblyTitle>
-    <Version>1.0.0-beta.3</Version>
+    <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure.Analytics.Purview.DataMap</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);AZC0012;AZC0030</NoWarn>
@@ -17,5 +17,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 </Project>

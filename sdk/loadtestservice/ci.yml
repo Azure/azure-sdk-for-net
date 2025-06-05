@@ -10,9 +10,6 @@ trigger:
     include:
     - sdk/loadtestservice/ci.yml
     - sdk/loadtestservice/Azure.Developer.LoadTesting
-    - sdk/loadtestservice/Azure.Developer.Playwright
-    - sdk/loadtestservice/Azure.Developer.Playwright.NUnit
-    - sdk/loadtestservice/Azure.Developer.Playwright.MSTest
 
 pr:
   branches:
@@ -25,9 +22,6 @@ pr:
     include:
     - sdk/loadtestservice/ci.yml
     - sdk/loadtestservice/Azure.Developer.LoadTesting
-    - sdk/loadtestservice/Azure.Developer.Playwright
-    - sdk/loadtestservice/Azure.Developer.Playwright.NUnit
-    - sdk/loadtestservice/Azure.Developer.Playwright.MSTest
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -39,9 +33,3 @@ extends:
     Artifacts:
     - name: Azure.Developer.LoadTesting
       safeName: AzureDeveloperLoadTesting
-    - name: Azure.Developer.Playwright
-      safeName: AzureDeveloperPlaywright
-    - name: Azure.Developer.Playwright.NUnit
-      safeName: AzureDeveloperPlaywrightNUnit
-    - name: Azure.Developer.Playwright.MSTest
-      safeName: AzureDeveloperPlaywrightMSTest

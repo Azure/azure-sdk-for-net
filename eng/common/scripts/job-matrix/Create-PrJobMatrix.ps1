@@ -40,13 +40,12 @@ param (
   [Parameter(Mandatory = $true)][string] $PackagePropertiesFolder,
   [Parameter(Mandatory = $true)][string] $PRMatrixFile,
   [Parameter(Mandatory = $true)][string] $PRMatrixSetting,
-  [Parameter(Mandatory = $false)][string] $DisplayNameFilter,
-  [Parameter(Mandatory = $false)][array] $Filters,
-  [Parameter(Mandatory = $false)][array] $IndirectFilters,
-  [Parameter(Mandatory = $false)][array] $Replace,
-  [Parameter(Mandatory = $false)][string] $PRMatrixKey = "ArtifactName",
-  [Parameter(Mandatory = $false)][bool] $SparseIndirect = $true,
-  [Parameter(Mandatory = $false)][int] $PackagesPerPRJob = 10,
+  [Parameter(Mandatory = $False)][string] $DisplayNameFilter,
+  [Parameter(Mandatory = $False)][array] $Filters,
+  [Parameter(Mandatory = $False)][array] $IndirectFilters,
+  [Parameter(Mandatory = $False)][array] $Replace,
+  [Parameter(Mandatory = $False)][bool] $SparseIndirect = $true,
+  [Parameter(Mandatory = $False)][int] $PackagesPerPRJob = 10,
   [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
 
@@ -75,7 +74,6 @@ function QueuePop([ref]$queue) {
 function GeneratePRMatrixForBatch {
   param (
     [Parameter(Mandatory = $true)][array] $Packages,
-    [Parameter(Mandatory = $true)][array] $MatrixKey,
     [Parameter(Mandatory = $false)][bool] $FullSparseMatrix = $false
   )
 
@@ -106,7 +104,7 @@ function GeneratePRMatrixForBatch {
     $matrixResults = @()
 
     if (!$matrixConfig) {
-      Write-Error "Unable to find matrix config for $matrixBatchKey. Check the package properties for the package $($matrixBatch[0].($MatrixKey))."
+      Write-Error "Unable to find matrix config for $matrixBatchKey. Check the package properties for the package $($matrixBatch[0].ArtifactName)."
       exit 1
     }
 
@@ -146,7 +144,7 @@ function GeneratePRMatrixForBatch {
       }
     }
 
-    if ($matrixConfig.PSObject.Properties['PRBatching'] -and $matrixResults) {
+    if ($matrixConfig.PSObject.Properties['PRBatching']) {
       # if we are doing a PR Batch, we need to just add the matrix items directly to the OverallResult
       # as the users have explicitly disabled PR batching for this matrix.
       if (!$matrixConfig.PRBatching) {
@@ -168,7 +166,7 @@ function GeneratePRMatrixForBatch {
       $batchCounter = 1
 
       foreach ($batch in $packageBatches) {
-        $namesForBatch = ($batch | ForEach-Object { $_.($MatrixKey) }) -join ","
+        $namesForBatch = ($batch | ForEach-Object { $_.ArtifactName }) -join ","
 
         foreach ($matrixOutputItem in $matrixResults) {
           # we need to clone this, as each item is an object with possible children
@@ -182,7 +180,7 @@ function GeneratePRMatrixForBatch {
           }
 
           if ($batchSuffixNecessary) {
-            $outputItem["name"] = $outputItem["name"] + "_$batchNamePrefix$batchCounter"
+            $outputItem["name"] = $outputItem["name"] + "$batchNamePrefix$batchCounter"
           }
 
           $OverallResult += $outputItem
@@ -197,7 +195,7 @@ function GeneratePRMatrixForBatch {
       $batchSuffixNecessary = $packageBatches.Length -gt 0
       $batchCounter = 1
       foreach ($batch in $packageBatches) {
-        $namesForBatch = ($batch | ForEach-Object { $_.($MatrixKey) }) -join ","
+        $namesForBatch = ($batch | ForEach-Object { $_.ArtifactName }) -join ","
         $outputItem = QueuePop -queue ([ref]$matrixResults)
 
         $outputItem["parameters"]["$PRMatrixSetting"] = $namesForBatch
@@ -207,7 +205,7 @@ function GeneratePRMatrixForBatch {
         }
 
         if ($batchSuffixNecessary) {
-          $outputItem["name"] = $outputItem["name"] + "_$batchNamePrefix$batchCounter"
+          $outputItem["name"] = $outputItem["name"]  + "_$batchNamePrefix$batchCounter"
         }
         # now we need to take an item from the front of the matrix results, clone it, and add it to the back of the matrix results
         # we will add the cloned version to OverallResult
@@ -230,7 +228,7 @@ if (!(Test-Path $PRMatrixFile)) {
   exit 1
 }
 
-Write-Host "Generating PR job matrix for $PackagePropertiesFolder using accesskey $PRMatrixKey to determine artifact batches."
+Write-Host "Generating PR job matrix for $PackagePropertiesFolder"
 
 $configs = Get-Content -Raw $PRMatrixFile | ConvertFrom-Json
 
@@ -253,16 +251,16 @@ $OverallResult = @()
 if ($directPackages) {
   Write-Host "Discovered $($directPackages.Length) direct packages"
   foreach($artifact in $directPackages) {
-    Write-Host "-> $($artifact.($PRMatrixKey))"
+    Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += (GeneratePRMatrixForBatch -Packages $directPackages -MatrixKey $PRMatrixKey) ?? @()
+  $OverallResult += GeneratePRMatrixForBatch -Packages $directPackages
 }
 if ($indirectPackages) {
   Write-Host "Discovered $($indirectPackages.Length) indirect packages"
   foreach($artifact in $indirectPackages) {
-    Write-Host "-> $($artifact.($PRMatrixKey))"
+    Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += (GeneratePRMatrixForBatch -Packages $indirectPackages -MatrixKey $PRMatrixKey -FullSparseMatrix (-not $SparseIndirect)) ?? @()
+  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)
 }
 $serialized = SerializePipelineMatrix $OverallResult
 

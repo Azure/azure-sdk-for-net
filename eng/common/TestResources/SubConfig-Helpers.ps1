@@ -1,7 +1,4 @@
 function BuildServiceDirectoryPrefix([string]$serviceName) {
-    if(!$serviceName) {
-        return ""
-    }
     $serviceName = $serviceName -replace '[\./\\]', '_'
     return $serviceName.ToUpperInvariant() + "_"
 }
@@ -35,15 +32,10 @@ function GetBaseAndResourceGroupNames(
     if ($CI) {
         $base = 't' + (New-Guid).ToString('n').Substring(0, 16)
         # Format the resource group name based on resource group naming recommendations and limitations.
-        if ($serviceDirectoryName) {
-            $generatedGroup = "rg-{0}-$base" -f ($serviceName -replace '[\.\\\/:]', '-').
-              Substring(0, [Math]::Min($serviceDirectoryName.Length, 90 - $base.Length - 4)).
-              Trim('-').
-              ToLowerInvariant()
-        } else {
-            $generatedGroup = "rg-$base"
-        }
-
+        $generatedGroup = "rg-{0}-$base" -f ($serviceName -replace '[\.\\\/:]', '-').
+                            Substring(0, [Math]::Min($serviceDirectoryName.Length, 90 - $base.Length - 4)).
+                            Trim('-').
+                            ToLowerInvariant()
         $group = $resourceGroupNameDefault ? $resourceGroupNameDefault : $generatedGroup
 
         Log "Generated resource base name '$base' and resource group name '$group' for CI build"

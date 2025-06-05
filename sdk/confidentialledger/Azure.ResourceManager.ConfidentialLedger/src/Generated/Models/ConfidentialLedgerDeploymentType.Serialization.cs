@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support writing '{options.Format}' format.");
             }

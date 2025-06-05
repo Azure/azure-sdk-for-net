@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         TopicNetworkSecurityPerimeterConfigurationResource IOperationSource<TopicNetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content);
             return new TopicNetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
         async ValueTask<TopicNetworkSecurityPerimeterConfigurationResource> IOperationSource<TopicNetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content);
             return await Task.FromResult(new TopicNetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

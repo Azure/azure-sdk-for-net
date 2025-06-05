@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.DocumentIntelligence;
 using Azure.Core.Extensions;
@@ -57,8 +56,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="DocumentIntelligenceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<DocumentIntelligenceClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -67,8 +64,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="DocumentIntelligenceAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<DocumentIntelligenceAdministrationClient, DocumentIntelligenceClientOptions> AddDocumentIntelligenceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

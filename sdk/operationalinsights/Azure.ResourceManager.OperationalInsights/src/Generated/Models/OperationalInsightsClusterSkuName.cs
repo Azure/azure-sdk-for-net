@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    /// <summary> The SKU (tier) of a cluster. </summary>
+    /// <summary> The name of the SKU. </summary>
     public readonly partial struct OperationalInsightsClusterSkuName : IEquatable<OperationalInsightsClusterSkuName>
     {
         private readonly string _value;

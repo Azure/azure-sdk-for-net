@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(ResourceWriteFailureEventDataConverter))]
     public partial class ResourceWriteFailureEventData : IUtf8JsonSerializable, IJsonModel<ResourceWriteFailureEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceWriteFailureEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -72,16 +70,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("authorization"u8);
-            AuthorizationJson.WriteTo(writer);
+            writer.WriteObjectValue(Authorization, options);
             writer.WritePropertyName("claims"u8);
-            ClaimsJson.WriteTo(writer);
+            writer.WriteStartObject();
+            foreach (var item in Claims)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId);
             }
             writer.WritePropertyName("httpRequest"u8);
-            HttpRequestJson.WriteTo(writer);
+            writer.WriteObjectValue(HttpRequest, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -126,10 +130,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string resourceUri = default;
             string operationName = default;
             string status = default;
-            JsonElement authorization = default;
-            JsonElement claims = default;
+            ResourceAuthorization authorization = default;
+            IReadOnlyDictionary<string, string> claims = default;
             string correlationId = default;
-            JsonElement httpRequest = default;
+            ResourceHttpRequest httpRequest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,12 +175,17 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("authorization"u8))
                 {
-                    authorization = property.Value.Clone();
+                    authorization = ResourceAuthorization.DeserializeResourceAuthorization(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("claims"u8))
                 {
-                    claims = property.Value.Clone();
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    claims = dictionary;
                     continue;
                 }
                 if (property.NameEquals("correlationId"u8))
@@ -186,7 +195,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("httpRequest"u8))
                 {
-                    httpRequest = property.Value.Clone();
+                    httpRequest = ResourceHttpRequest.DeserializeResourceHttpRequest(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -217,7 +226,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceWriteFailureEventData)} does not support writing '{options.Format}' format.");
             }
@@ -255,20 +264,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class ResourceWriteFailureEventDataConverter : JsonConverter<ResourceWriteFailureEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, ResourceWriteFailureEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override ResourceWriteFailureEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeResourceWriteFailureEventData(document.RootElement);
-            }
         }
     }
 }

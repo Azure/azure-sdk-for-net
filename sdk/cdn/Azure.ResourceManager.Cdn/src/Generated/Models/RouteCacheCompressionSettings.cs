@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// settings for compression.
-    /// Serialized Name: CompressionSettings
-    /// </summary>
+    /// <summary> settings for compression. </summary>
     public partial class RouteCacheCompressionSettings
     {
         /// <summary>
@@ -55,14 +52,8 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RouteCacheCompressionSettings"/>. </summary>
-        /// <param name="contentTypesToCompress">
-        /// List of content types on which compression applies. The value should be a valid MIME type.
-        /// Serialized Name: CompressionSettings.contentTypesToCompress
-        /// </param>
-        /// <param name="isCompressionEnabled">
-        /// Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
-        /// Serialized Name: CompressionSettings.isCompressionEnabled
-        /// </param>
+        /// <param name="contentTypesToCompress"> List of content types on which compression applies. The value should be a valid MIME type. </param>
+        /// <param name="isCompressionEnabled"> Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal RouteCacheCompressionSettings(IList<string> contentTypesToCompress, bool? isCompressionEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,15 +62,9 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// List of content types on which compression applies. The value should be a valid MIME type.
-        /// Serialized Name: CompressionSettings.contentTypesToCompress
-        /// </summary>
+        /// <summary> List of content types on which compression applies. The value should be a valid MIME type. </summary>
         public IList<string> ContentTypesToCompress { get; }
-        /// <summary>
-        /// Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB.
-        /// Serialized Name: CompressionSettings.isCompressionEnabled
-        /// </summary>
+        /// <summary> Indicates whether content compression is enabled on AzureFrontDoor. Default value is false. If compression is enabled, content will be served as compressed if user requests for a compressed version. Content won't be compressed on AzureFrontDoor when requested content is smaller than 1 byte or larger than 1 MB. </summary>
         public bool? IsCompressionEnabled { get; set; }
     }
 }

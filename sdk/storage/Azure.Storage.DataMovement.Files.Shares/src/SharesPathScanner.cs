@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     options: new() { Traits = traits },
                     cancellationToken: cancellationToken).ConfigureAwait(false))
                 {
-                    string destinationPermissionKey = default;
+                    string destinationPermissionKey = string.Empty;
                     if (destinationShare != default && item.PermissionKey != default)
                     {
                         // Check if the permission key is already created.
@@ -65,7 +65,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                         toScan.Enqueue(subdir);
                         yield return new ShareDirectoryStorageResourceContainer(
                             subdir,
-                            item.ToResourceContainerProperties(destinationPermissionKey),
                             sourceOptions);
                     }
                     else

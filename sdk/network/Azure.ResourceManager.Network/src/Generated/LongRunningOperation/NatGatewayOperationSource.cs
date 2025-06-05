@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         NatGatewayResource IOperationSource<NatGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NatGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NatGatewayData>(response.Content);
             return new NatGatewayResource(_client, data);
         }
 
         async ValueTask<NatGatewayResource> IOperationSource<NatGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NatGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<NatGatewayData>(response.Content);
             return await Task.FromResult(new NatGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

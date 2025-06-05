@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("AzureSearchChatDataSource")]
+[CodeGenModel("AzureSearchChatDataSource")]
 [Experimental("AOAI001")]
 public partial class AzureSearchChatDataSource : ChatDataSource
 {
@@ -115,7 +115,7 @@ public partial class AzureSearchChatDataSource : ChatDataSource
     /// <summary>
     /// Creates a new instance of <see cref="AzureSearchChatDataSource"/>.
     /// </summary>
-    public AzureSearchChatDataSource() : base(type: "azure_search", additionalBinaryDataProperties: null)
+    public AzureSearchChatDataSource() : base(type: "azure_search", serializedAdditionalRawData: null)
     {
         InternalParameters = new();
     }
@@ -132,11 +132,11 @@ public partial class AzureSearchChatDataSource : ChatDataSource
 
     /// <summary> Initializes a new instance of <see cref="AzureSearchChatDataSource"/>. </summary>
     /// <param name="type"></param>
-    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal AzureSearchChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalAzureSearchChatDataSourceParameters internalParameters)
-        : base(type, additionalBinaryDataProperties)
+    internal AzureSearchChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalAzureSearchChatDataSourceParameters internalParameters)
+        : base(type, serializedAdditionalRawData)
     {
         InternalParameters = internalParameters;
     }

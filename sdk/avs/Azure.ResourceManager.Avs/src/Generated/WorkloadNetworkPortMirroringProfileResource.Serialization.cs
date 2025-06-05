@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkPortMirroringProfileResource : IJsonModel<WorkloadNetworkPortMirroringProfileData>
     {
-        private static WorkloadNetworkPortMirroringProfileData s_dataDeserializationInstance;
-        private static WorkloadNetworkPortMirroringProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<WorkloadNetworkPortMirroringProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPortMirroringProfileData>)Data).Write(writer, options);
 
-        WorkloadNetworkPortMirroringProfileData IJsonModel<WorkloadNetworkPortMirroringProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPortMirroringProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        WorkloadNetworkPortMirroringProfileData IJsonModel<WorkloadNetworkPortMirroringProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkPortMirroringProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkPortMirroringProfileData>(Data, options, AzureResourceManagerAvsContext.Default);
+        BinaryData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        WorkloadNetworkPortMirroringProfileData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(data, options, AzureResourceManagerAvsContext.Default);
+        WorkloadNetworkPortMirroringProfileData IPersistableModel<WorkloadNetworkPortMirroringProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkPortMirroringProfileData>(data, options);
 
-        string IPersistableModel<WorkloadNetworkPortMirroringProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPortMirroringProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkPortMirroringProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkPortMirroringProfileData>)Data).GetFormatFromOptions(options);
     }
 }

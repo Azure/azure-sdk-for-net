@@ -156,11 +156,14 @@ namespace Azure.ResourceManager.AppContainers
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ManagedEnvironmentStorageAzureFile", out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  properties: ");
+                builder.AppendLine("{");
+                builder.Append("    azureFile: ");
                 builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
             }
             else
             {
@@ -212,7 +215,7 @@ namespace Azure.ResourceManager.AppContainers
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

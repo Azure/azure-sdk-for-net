@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class ManagedInstanceResource : IJsonModel<ManagedInstanceData>
     {
-        private static ManagedInstanceData s_dataDeserializationInstance;
-        private static ManagedInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ManagedInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceData>)Data).Write(writer, options);
 
-        ManagedInstanceData IJsonModel<ManagedInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        ManagedInstanceData IJsonModel<ManagedInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<ManagedInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedInstanceData IPersistableModel<ManagedInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceData>(data, options, AzureResourceManagerSqlContext.Default);
+        ManagedInstanceData IPersistableModel<ManagedInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceData>(data, options);
 
-        string IPersistableModel<ManagedInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceData>)Data).GetFormatFromOptions(options);
     }
 }

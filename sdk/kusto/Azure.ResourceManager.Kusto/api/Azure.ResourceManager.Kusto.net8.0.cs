@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.Kusto
 {
-    public partial class AzureResourceManagerKustoContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerKustoContext() { }
-        public static Azure.ResourceManager.Kusto.AzureResourceManagerKustoContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class KustoAttachedDatabaseConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Kusto.KustoAttachedDatabaseConfigurationResource>, System.Collections.IEnumerable
     {
         protected KustoAttachedDatabaseConfigurationCollection() { }

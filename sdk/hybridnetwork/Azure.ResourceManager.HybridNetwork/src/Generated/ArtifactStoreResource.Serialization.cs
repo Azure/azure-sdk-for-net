@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class ArtifactStoreResource : IJsonModel<ArtifactStoreData>
     {
-        private static ArtifactStoreData s_dataDeserializationInstance;
-        private static ArtifactStoreData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ArtifactStoreData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactStoreData>)Data).Write(writer, options);
 
-        ArtifactStoreData IJsonModel<ArtifactStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactStoreData>)DataDeserializationInstance).Create(ref reader, options);
+        ArtifactStoreData IJsonModel<ArtifactStoreData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArtifactStoreData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArtifactStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArtifactStoreData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
+        BinaryData IPersistableModel<ArtifactStoreData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ArtifactStoreData IPersistableModel<ArtifactStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactStoreData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
+        ArtifactStoreData IPersistableModel<ArtifactStoreData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArtifactStoreData>(data, options);
 
-        string IPersistableModel<ArtifactStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactStoreData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ArtifactStoreData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArtifactStoreData>)Data).GetFormatFromOptions(options);
     }
 }

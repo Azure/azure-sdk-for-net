@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 {
     public partial class KubernetesFluxConfigurationResource : IJsonModel<KubernetesFluxConfigurationData>
     {
-        private static KubernetesFluxConfigurationData s_dataDeserializationInstance;
-        private static KubernetesFluxConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<KubernetesFluxConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesFluxConfigurationData>)Data).Write(writer, options);
 
-        KubernetesFluxConfigurationData IJsonModel<KubernetesFluxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesFluxConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        KubernetesFluxConfigurationData IJsonModel<KubernetesFluxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KubernetesFluxConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KubernetesFluxConfigurationData>(Data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
+        BinaryData IPersistableModel<KubernetesFluxConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KubernetesFluxConfigurationData IPersistableModel<KubernetesFluxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesFluxConfigurationData>(data, options, AzureResourceManagerKubernetesConfigurationContext.Default);
+        KubernetesFluxConfigurationData IPersistableModel<KubernetesFluxConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KubernetesFluxConfigurationData>(data, options);
 
-        string IPersistableModel<KubernetesFluxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesFluxConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<KubernetesFluxConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KubernetesFluxConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

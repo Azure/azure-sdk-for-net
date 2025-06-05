@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ManagementPartner.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagementPartnerContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(OperationDisplay)} does not support writing '{options.Format}' format.");
             }

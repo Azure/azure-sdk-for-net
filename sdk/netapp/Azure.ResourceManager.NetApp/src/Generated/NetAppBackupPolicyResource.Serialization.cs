@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.NetApp
 {
     public partial class NetAppBackupPolicyResource : IJsonModel<NetAppBackupPolicyData>
     {
-        private static NetAppBackupPolicyData s_dataDeserializationInstance;
-        private static NetAppBackupPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetAppBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupPolicyData>)Data).Write(writer, options);
 
-        NetAppBackupPolicyData IJsonModel<NetAppBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        NetAppBackupPolicyData IJsonModel<NetAppBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetAppBackupPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetAppBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppBackupPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
+        BinaryData IPersistableModel<NetAppBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetAppBackupPolicyData IPersistableModel<NetAppBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
+        NetAppBackupPolicyData IPersistableModel<NetAppBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppBackupPolicyData>(data, options);
 
-        string IPersistableModel<NetAppBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetAppBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetAppBackupPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

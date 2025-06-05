@@ -54,8 +54,15 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
-                writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
+                if (PreValidatedCustomDomainResource != null)
+                {
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
+                }
+                else
+                {
+                    writer.WriteNull("preValidatedCustomDomainResourceId");
+                }
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -98,7 +105,7 @@ namespace Azure.ResourceManager.Cdn.Models
             string profileName = default;
             FrontDoorCustomDomainHttpsContent tlsSettings = default;
             WritableSubResource azureDnsZone = default;
-            WritableSubResource preValidatedCustomDomainResourceId = default;
+            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,9 +146,10 @@ namespace Azure.ResourceManager.Cdn.Models
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
                             continue;
                         }
                     }
@@ -163,7 +171,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainPatch)} does not support writing '{options.Format}' format.");
             }

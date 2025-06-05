@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 {
     public partial class SiteRecoveryPolicyResource : IJsonModel<SiteRecoveryPolicyData>
     {
-        private static SiteRecoveryPolicyData s_dataDeserializationInstance;
-        private static SiteRecoveryPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SiteRecoveryPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryPolicyData>)Data).Write(writer, options);
 
-        SiteRecoveryPolicyData IJsonModel<SiteRecoveryPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        SiteRecoveryPolicyData IJsonModel<SiteRecoveryPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteRecoveryPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteRecoveryPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteRecoveryPolicyData>(Data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+        BinaryData IPersistableModel<SiteRecoveryPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SiteRecoveryPolicyData IPersistableModel<SiteRecoveryPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryPolicyData>(data, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+        SiteRecoveryPolicyData IPersistableModel<SiteRecoveryPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteRecoveryPolicyData>(data, options);
 
-        string IPersistableModel<SiteRecoveryPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SiteRecoveryPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteRecoveryPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

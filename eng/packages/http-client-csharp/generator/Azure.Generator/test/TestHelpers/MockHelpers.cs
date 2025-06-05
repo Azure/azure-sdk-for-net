@@ -22,36 +22,32 @@ namespace Azure.Generator.Tests.TestHelpers
         private static readonly string _configFilePath = Path.Combine(AppContext.BaseDirectory, TestHelpersFolder);
         private const string TestHelpersFolder = "TestHelpers";
 
-        public static Mock<AzureClientGenerator> LoadMockPlugin(
+        public static Mock<AzureClientPlugin> LoadMockPlugin(
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,
             Func<InputOAuth2Auth>? oauth2Auth = null,
             Func<IReadOnlyList<string>>? apiVersions = null,
-            Func<IReadOnlyList<InputLiteralType>>? inputLiterals = null,
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
             Func<IReadOnlyList<InputClient>>? clients = null,
             ClientResponseApi? clientResponseApi = null,
             ClientPipelineApi? clientPipelineApi = null,
-            HttpMessageApi? httpMessageApi = null,
-            string? configurationJson = null,
-            string? inputNamespace = null)
+            HttpMessageApi? httpMessageApi = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
-            IReadOnlyList<InputLiteralType> inputNsLiterals = inputLiterals?.Invoke() ?? [];
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
             IReadOnlyList<InputClient> inputNsClients = clients?.Invoke() ?? [];
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
             InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
-                inputNamespace ?? "Samples",
+                "Samples",
                 inputNsApiVersions,
-                inputNsLiterals,
                 inputNsEnums,
                 inputNsModels,
                 inputNsClients,
-                inputNsAuth);
+                inputNsAuth,
+                null);
             var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
@@ -63,15 +59,15 @@ namespace Azure.Generator.Tests.TestHelpers
             }
 
             // initialize the mock singleton instance of the plugin
-            var codeModelInstance = typeof(CodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var clientModelInstance = typeof(ScmCodeModelGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
-            var azureInstance = typeof(AzureClientGenerator).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var codeModelInstance = typeof(CodeModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var clientModelInstance = typeof(ScmCodeModelPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
+            var azureInstance = typeof(AzureClientPlugin).GetField("_instance", BindingFlags.Static | BindingFlags.NonPublic);
             // invoke the load method with the config file path
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
-            object?[] parameters = [_configFilePath, configurationJson];
+            object?[] parameters = [_configFilePath, null];
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
-            var mockPluginInstance = new Mock<AzureClientGenerator>(mockGeneratorContext.Object) { CallBase = true };
+            var mockPluginInstance = new Mock<AzureClientPlugin>(mockGeneratorContext.Object) { CallBase = true };
             codeModelInstance!.SetValue(null, mockPluginInstance.Object);
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);
@@ -82,13 +78,9 @@ namespace Azure.Generator.Tests.TestHelpers
                 mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
             }
 
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null, null)) { CallBase = true };
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
             mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
-            var configureMethod = typeof(CodeModelGenerator).GetMethod(
-                "Configure",
-                BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.InvokeMethod
-            );
-            configureMethod!.Invoke(mockPluginInstance.Object, null);
+            mockPluginInstance.Object.Configure();
             return mockPluginInstance;
         }
     }

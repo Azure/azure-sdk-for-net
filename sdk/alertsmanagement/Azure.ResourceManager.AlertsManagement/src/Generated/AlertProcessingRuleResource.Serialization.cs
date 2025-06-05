@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AlertsManagement
 {
     public partial class AlertProcessingRuleResource : IJsonModel<AlertProcessingRuleData>
     {
-        private static AlertProcessingRuleData s_dataDeserializationInstance;
-        private static AlertProcessingRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AlertProcessingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AlertProcessingRuleData>)Data).Write(writer, options);
 
-        AlertProcessingRuleData IJsonModel<AlertProcessingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AlertProcessingRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        AlertProcessingRuleData IJsonModel<AlertProcessingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AlertProcessingRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AlertProcessingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AlertProcessingRuleData>(Data, options, AzureResourceManagerAlertsManagementContext.Default);
+        BinaryData IPersistableModel<AlertProcessingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AlertProcessingRuleData IPersistableModel<AlertProcessingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AlertProcessingRuleData>(data, options, AzureResourceManagerAlertsManagementContext.Default);
+        AlertProcessingRuleData IPersistableModel<AlertProcessingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AlertProcessingRuleData>(data, options);
 
-        string IPersistableModel<AlertProcessingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AlertProcessingRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AlertProcessingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AlertProcessingRuleData>)Data).GetFormatFromOptions(options);
     }
 }

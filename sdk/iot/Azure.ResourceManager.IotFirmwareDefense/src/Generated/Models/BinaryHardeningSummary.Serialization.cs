@@ -40,30 +40,65 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 writer.WritePropertyName("totalFiles"u8);
                 writer.WriteNumberValue(TotalFiles.Value);
             }
-            if (Optional.IsDefined(NotExecutableStackCount))
+            if (Optional.IsDefined(NXPercentage))
             {
-                writer.WritePropertyName("notExecutableStackCount"u8);
-                writer.WriteNumberValue(NotExecutableStackCount.Value);
+                if (NXPercentage != null)
+                {
+                    writer.WritePropertyName("nx"u8);
+                    writer.WriteNumberValue(NXPercentage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("nx");
+                }
             }
-            if (Optional.IsDefined(PositionIndependentExecutableCount))
+            if (Optional.IsDefined(PiePercentage))
             {
-                writer.WritePropertyName("positionIndependentExecutableCount"u8);
-                writer.WriteNumberValue(PositionIndependentExecutableCount.Value);
+                if (PiePercentage != null)
+                {
+                    writer.WritePropertyName("pie"u8);
+                    writer.WriteNumberValue(PiePercentage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("pie");
+                }
             }
-            if (Optional.IsDefined(RelocationReadOnlyCount))
+            if (Optional.IsDefined(RelroPercentage))
             {
-                writer.WritePropertyName("relocationReadOnlyCount"u8);
-                writer.WriteNumberValue(RelocationReadOnlyCount.Value);
+                if (RelroPercentage != null)
+                {
+                    writer.WritePropertyName("relro"u8);
+                    writer.WriteNumberValue(RelroPercentage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("relro");
+                }
             }
-            if (Optional.IsDefined(StackCanaryCount))
+            if (Optional.IsDefined(CanaryPercentage))
             {
-                writer.WritePropertyName("stackCanaryCount"u8);
-                writer.WriteNumberValue(StackCanaryCount.Value);
+                if (CanaryPercentage != null)
+                {
+                    writer.WritePropertyName("canary"u8);
+                    writer.WriteNumberValue(CanaryPercentage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("canary");
+                }
             }
-            if (Optional.IsDefined(StrippedBinaryCount))
+            if (Optional.IsDefined(StrippedPercentage))
             {
-                writer.WritePropertyName("strippedBinaryCount"u8);
-                writer.WriteNumberValue(StrippedBinaryCount.Value);
+                if (StrippedPercentage != null)
+                {
+                    writer.WritePropertyName("stripped"u8);
+                    writer.WriteNumberValue(StrippedPercentage.Value);
+                }
+                else
+                {
+                    writer.WriteNull("stripped");
+                }
             }
         }
 
@@ -88,13 +123,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 return null;
             }
             long? totalFiles = default;
-            long? notExecutableStackCount = default;
-            long? positionIndependentExecutableCount = default;
-            long? relocationReadOnlyCount = default;
-            long? stackCanaryCount = default;
-            long? strippedBinaryCount = default;
+            int? nx = default;
+            int? pie = default;
+            int? relro = default;
+            int? canary = default;
+            int? stripped = default;
             FirmwareAnalysisSummaryType summaryType = default;
-            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,63 +142,59 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     totalFiles = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("notExecutableStackCount"u8))
+                if (property.NameEquals("nx"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        nx = null;
                         continue;
                     }
-                    notExecutableStackCount = property.Value.GetInt64();
+                    nx = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("positionIndependentExecutableCount"u8))
+                if (property.NameEquals("pie"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        pie = null;
                         continue;
                     }
-                    positionIndependentExecutableCount = property.Value.GetInt64();
+                    pie = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("relocationReadOnlyCount"u8))
+                if (property.NameEquals("relro"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        relro = null;
                         continue;
                     }
-                    relocationReadOnlyCount = property.Value.GetInt64();
+                    relro = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("stackCanaryCount"u8))
+                if (property.NameEquals("canary"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        canary = null;
                         continue;
                     }
-                    stackCanaryCount = property.Value.GetInt64();
+                    canary = property.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("strippedBinaryCount"u8))
+                if (property.NameEquals("stripped"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        stripped = null;
                         continue;
                     }
-                    strippedBinaryCount = property.Value.GetInt64();
+                    stripped = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,14 +205,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new BinaryHardeningSummary(
                 summaryType,
-                provisioningState,
                 serializedAdditionalRawData,
                 totalFiles,
-                notExecutableStackCount,
-                positionIndependentExecutableCount,
-                relocationReadOnlyCount,
-                stackCanaryCount,
-                strippedBinaryCount);
+                nx,
+                pie,
+                relro,
+                canary,
+                stripped);
         }
 
         BinaryData IPersistableModel<BinaryHardeningSummary>.Write(ModelReaderWriterOptions options)
@@ -192,7 +221,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BinaryHardeningSummary)} does not support writing '{options.Format}' format.");
             }

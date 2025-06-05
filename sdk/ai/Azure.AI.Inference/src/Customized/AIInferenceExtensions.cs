@@ -19,28 +19,22 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static ChatCompletionsClient GetChatCompletionsClient(this ClientConnectionProvider provider)
+        public static ChatCompletionsClient GetChatCompletionsClient(this ConnectionProvider provider)
         {
-            ChatCompletionsClientKey chatCompletionsClientKey = new();
-            ChatCompletionsClient chatClient = provider.Subclients.GetClient(chatCompletionsClientKey, () => CreateChatCompletionsClient(provider));
+            ChatCompletionsClient chatClient = provider.Subclients.GetClient(() => CreateChatCompletionsClient(provider), null);
             return chatClient;
         }
 
-        private static ChatCompletionsClient CreateChatCompletionsClient(this ClientConnectionProvider provider)
+        private static ChatCompletionsClient CreateChatCompletionsClient(this ConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
-
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-
-            return connection.CredentialKind switch
-            {
-                CredentialKind.ApiKeyString => new ChatCompletionsClient(uri, new AzureKeyCredential((string)connection.Credential!)),
-                CredentialKind.TokenCredential => new ChatCompletionsClient(uri, (TokenCredential)connection.Credential!),
-                _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
-            };
+            return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new ChatCompletionsClient(uri, connection.Credential as TokenCredential)
+            : new ChatCompletionsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
         }
 
         /// <summary>
@@ -48,32 +42,22 @@ namespace Azure.AI.Inference
         /// </summary>
         /// <param name="provider"></param>
         /// <returns></returns>
-        public static EmbeddingsClient GetEmbeddingsClient(this ClientConnectionProvider provider)
+        public static EmbeddingsClient GetEmbeddingsClient(this ConnectionProvider provider)
         {
-            EmbeddingsClientKey embeddingsClientKey = new();
-            EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(embeddingsClientKey, () => CreateEmbeddingsClient(provider));
+            EmbeddingsClient embeddingsClient = provider.Subclients.GetClient(() => CreateEmbeddingsClient(provider), null);
             return embeddingsClient;
         }
 
-        private static EmbeddingsClient CreateEmbeddingsClient(this ClientConnectionProvider provider)
+        private static EmbeddingsClient CreateEmbeddingsClient(this ConnectionProvider provider)
         {
             ClientConnection connection = provider.GetConnection(typeof(ChatCompletionsClient).FullName!);
-
             if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
             {
                 throw new InvalidOperationException("Invalid URI.");
             }
-
-            return connection.CredentialKind switch
-            {
-                CredentialKind.ApiKeyString => new EmbeddingsClient(uri, new AzureKeyCredential((string)connection.Credential!)),
-                CredentialKind.TokenCredential => new EmbeddingsClient(uri, (TokenCredential)connection.Credential!),
-                _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
-            };
+            return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new EmbeddingsClient(uri, connection.Credential as TokenCredential)
+            : new EmbeddingsClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
         }
-
-        private record ChatCompletionsClientKey();
-
-        private record EmbeddingsClientKey();
     }
 }

@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.RecoveryServicesDataReplication.Tests.Helpers;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 using NUnit.Framework;
@@ -29,8 +28,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Tests
         [SetUp]
         public async Task CreateCommonClient()
         {
-            Client = GetArmClient(
-                subscriptionId: DataReplicationTestUtilities.DefaultSubscriptionId);
+            Client = GetArmClient();
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 

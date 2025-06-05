@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using _Type.Model.Empty.Models;
 
 namespace _Type.Model.Empty
 {
@@ -20,7 +21,7 @@ namespace _Type.Model.Empty
 
         public EmptyClient(Uri endpoint, EmptyClientOptions options) => throw null;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public HttpPipeline Pipeline => throw null;
 
         public virtual Response PutEmpty(RequestContent content, RequestContext context = null) => throw null;
 

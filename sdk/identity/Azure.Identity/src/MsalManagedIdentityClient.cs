@@ -67,7 +67,7 @@ namespace Azure.Identity
 
             ManagedIdentityApplicationBuilder miAppBuilder = ManagedIdentityApplicationBuilder
                 .Create(ManagedIdentityId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false)
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
 
             if (clientCapabilities.Length > 0)

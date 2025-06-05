@@ -16,17 +16,17 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilter"/>. </summary>
         public ChaosTargetSimpleFilter()
         {
-            Type = FilterType.Simple;
+            FilterType = FilterType.Simple;
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosTargetSimpleFilter"/>. </summary>
-        /// <param name="type"> Chaos target filter discriminator type. </param>
+        /// <param name="filterType"> Enum that discriminates between filter types. Currently only `Simple` type is supported. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parameters"> Model that represents the Simple filter parameters. </param>
-        internal ChaosTargetSimpleFilter(FilterType type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChaosTargetSimpleFilterParameters parameters) : base(type, serializedAdditionalRawData)
+        internal ChaosTargetSimpleFilter(FilterType filterType, IDictionary<string, BinaryData> serializedAdditionalRawData, ChaosTargetSimpleFilterParameters parameters) : base(filterType, serializedAdditionalRawData)
         {
             Parameters = parameters;
-            Type = type;
+            FilterType = filterType;
         }
 
         /// <summary> Model that represents the Simple filter parameters. </summary>

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseAttachedDatabaseConfigurationResource : IJsonModel<SynapseAttachedDatabaseConfigurationData>
     {
-        private static SynapseAttachedDatabaseConfigurationData s_dataDeserializationInstance;
-        private static SynapseAttachedDatabaseConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseAttachedDatabaseConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAttachedDatabaseConfigurationData>)Data).Write(writer, options);
 
-        SynapseAttachedDatabaseConfigurationData IJsonModel<SynapseAttachedDatabaseConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAttachedDatabaseConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseAttachedDatabaseConfigurationData IJsonModel<SynapseAttachedDatabaseConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseAttachedDatabaseConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseAttachedDatabaseConfigurationData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseAttachedDatabaseConfigurationData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseAttachedDatabaseConfigurationData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseAttachedDatabaseConfigurationData IPersistableModel<SynapseAttachedDatabaseConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseAttachedDatabaseConfigurationData>(data, options);
 
-        string IPersistableModel<SynapseAttachedDatabaseConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseAttachedDatabaseConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseAttachedDatabaseConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseAttachedDatabaseConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

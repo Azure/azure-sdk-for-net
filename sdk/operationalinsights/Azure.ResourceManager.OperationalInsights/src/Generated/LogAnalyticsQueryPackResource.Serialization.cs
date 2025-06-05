@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class LogAnalyticsQueryPackResource : IJsonModel<LogAnalyticsQueryPackData>
     {
-        private static LogAnalyticsQueryPackData s_dataDeserializationInstance;
-        private static LogAnalyticsQueryPackData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LogAnalyticsQueryPackData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogAnalyticsQueryPackData>)Data).Write(writer, options);
 
-        LogAnalyticsQueryPackData IJsonModel<LogAnalyticsQueryPackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogAnalyticsQueryPackData>)DataDeserializationInstance).Create(ref reader, options);
+        LogAnalyticsQueryPackData IJsonModel<LogAnalyticsQueryPackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogAnalyticsQueryPackData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogAnalyticsQueryPackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogAnalyticsQueryPackData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
+        BinaryData IPersistableModel<LogAnalyticsQueryPackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LogAnalyticsQueryPackData IPersistableModel<LogAnalyticsQueryPackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogAnalyticsQueryPackData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
+        LogAnalyticsQueryPackData IPersistableModel<LogAnalyticsQueryPackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogAnalyticsQueryPackData>(data, options);
 
-        string IPersistableModel<LogAnalyticsQueryPackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogAnalyticsQueryPackData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LogAnalyticsQueryPackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogAnalyticsQueryPackData>)Data).GetFormatFromOptions(options);
     }
 }

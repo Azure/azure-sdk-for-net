@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerExtendedLocationsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support writing '{options.Format}' format.");
             }

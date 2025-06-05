@@ -44,10 +44,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("clientIpAddress"u8);
                 writer.WriteStringValue(ClientIpAddress);
             }
-            if (Optional.IsDefined(MethodString))
+            if (Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
-                writer.WriteStringValue(MethodString);
+                writer.WriteStringValue(Method);
             }
             if (Optional.IsDefined(Url))
             {
@@ -135,7 +135,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceHttpRequest)} does not support writing '{options.Format}' format.");
             }

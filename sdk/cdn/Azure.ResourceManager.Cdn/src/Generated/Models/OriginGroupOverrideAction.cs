@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the origin group override action for the delivery rule.
-    /// Serialized Name: OriginGroupOverrideAction
-    /// </summary>
+    /// <summary> Defines the origin group override action for the delivery rule. </summary>
     public partial class OriginGroupOverrideAction : DeliveryRuleAction
     {
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
-        /// <param name="properties">
-        /// Defines the parameters for the action.
-        /// Serialized Name: OriginGroupOverrideAction.parameters
-        /// </param>
+        /// <param name="properties"> Defines the parameters for the action. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public OriginGroupOverrideAction(OriginGroupOverrideActionProperties properties)
         {
@@ -31,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OriginGroupOverrideAction"/>. </summary>
-        /// <param name="name">
-        /// The name of the action for the delivery rule.
-        /// Serialized Name: DeliveryRuleAction.name
-        /// </param>
+        /// <param name="name"> The name of the action for the delivery rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Defines the parameters for the action.
-        /// Serialized Name: OriginGroupOverrideAction.parameters
-        /// </param>
+        /// <param name="properties"> Defines the parameters for the action. </param>
         internal OriginGroupOverrideAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, OriginGroupOverrideActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
@@ -51,10 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Defines the parameters for the action.
-        /// Serialized Name: OriginGroupOverrideAction.parameters
-        /// </summary>
+        /// <summary> Defines the parameters for the action. </summary>
         public OriginGroupOverrideActionProperties Properties { get; set; }
     }
 }

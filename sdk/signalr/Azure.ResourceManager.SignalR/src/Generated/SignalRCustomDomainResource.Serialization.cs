@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SignalR
 {
     public partial class SignalRCustomDomainResource : IJsonModel<SignalRCustomDomainData>
     {
-        private static SignalRCustomDomainData s_dataDeserializationInstance;
-        private static SignalRCustomDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SignalRCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomDomainData>)Data).Write(writer, options);
 
-        SignalRCustomDomainData IJsonModel<SignalRCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomDomainData>)DataDeserializationInstance).Create(ref reader, options);
+        SignalRCustomDomainData IJsonModel<SignalRCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SignalRCustomDomainData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SignalRCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SignalRCustomDomainData>(Data, options, AzureResourceManagerSignalRContext.Default);
+        BinaryData IPersistableModel<SignalRCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SignalRCustomDomainData IPersistableModel<SignalRCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomDomainData>(data, options, AzureResourceManagerSignalRContext.Default);
+        SignalRCustomDomainData IPersistableModel<SignalRCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SignalRCustomDomainData>(data, options);
 
-        string IPersistableModel<SignalRCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SignalRCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SignalRCustomDomainData>)Data).GetFormatFromOptions(options);
     }
 }

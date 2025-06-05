@@ -43,11 +43,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("tableName"u8);
                 JsonSerializer.Serialize(writer, TableName);
             }
-            if (Optional.IsDefined(ValueType))
-            {
-                writer.WritePropertyName("valueType"u8);
-                writer.WriteStringValue(ValueType.Value.ToString());
-            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -92,7 +87,6 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
             DataFactoryElement<string> tableName = default;
-            DatasetSourceValueType? valueType = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -192,15 +186,6 @@ namespace Azure.ResourceManager.DataFactory.Models
                             tableName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
                             continue;
                         }
-                        if (property0.NameEquals("valueType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            valueType = new DatasetSourceValueType(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -217,8 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 annotations ?? new ChangeTrackingList<BinaryData>(),
                 folder,
                 additionalProperties,
-                tableName,
-                valueType);
+                tableName);
         }
 
         BinaryData IPersistableModel<ServiceNowV2ObjectDataset>.Write(ModelReaderWriterOptions options)
@@ -228,7 +212,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ServiceNowV2ObjectDataset)} does not support writing '{options.Format}' format.");
             }

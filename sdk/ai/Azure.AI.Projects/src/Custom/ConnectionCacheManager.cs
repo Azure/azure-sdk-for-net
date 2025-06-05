@@ -15,13 +15,13 @@ namespace Azure.AI.Projects
     internal class ConnectionCacheManager
     {
         private readonly TokenCredential _tokenCredential;
-        private readonly Uri _endpoint;
-        private readonly ConcurrentDictionary<ConnectionType, Uri> _connectionCache = new();
+        private readonly ConnectionsClient _connectionsClient;
+        private readonly ConcurrentDictionary<ConnectionType, ConnectionResponse> _connectionCache = new();
         private readonly ConcurrentDictionary<string, ClientConnection> _connections = new();
 
-        public ConnectionCacheManager(Uri endpoint, TokenCredential tokenCredential)
+        public ConnectionCacheManager(ConnectionsClient connectionsClient, TokenCredential tokenCredential)
         {
-            _endpoint = endpoint;
+            _connectionsClient = connectionsClient;
             _tokenCredential = tokenCredential;
         }
 
@@ -36,15 +36,38 @@ namespace Azure.AI.Projects
             }
 
             var connectionType = GetConnectionTypeFromId(connectionId);
-            var connection = _connectionCache.GetOrAdd(connectionType, _endpoint);
+            var connection = _connectionCache.GetOrAdd(connectionType, type =>
+                _connectionsClient.GetDefaultConnection(type, true));
 
-            if (string.IsNullOrWhiteSpace(_endpoint.AbsoluteUri))
+            if (connection.Properties.AuthType == AuthenticationType.ApiKey)
             {
-                throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
+                ConnectionPropertiesApiKeyAuth apiKeyAuthProperties = connection.Properties as ConnectionPropertiesApiKeyAuth;
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
+                {
+                    throw new ArgumentException($"The API key authentication target URI is missing or invalid for {connectionId}.");
+                }
+
+                if (apiKeyAuthProperties.Credentials?.Key is null or { Length: 0 })
+                {
+                    throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
+                }
+
+                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key);
+                return _connections.GetOrAdd(connectionId, newConnection);
+            }
+            else if (connection.Properties.AuthType == AuthenticationType.EntraId)
+            {
+                InternalConnectionPropertiesAADAuth aadAuthProperties = connection.Properties as InternalConnectionPropertiesAADAuth;
+                if (string.IsNullOrWhiteSpace(aadAuthProperties.Target))
+                {
+                    throw new ArgumentException($"The AAD authentication target URI is missing or invalid for {connectionId}.");
+                }
+
+                var newConnection = new ClientConnection(connectionId, aadAuthProperties.Target, _tokenCredential);
+                return _connections.GetOrAdd(connectionId, newConnection);
             }
 
-            var newConnection = new ClientConnection(connectionId, _endpoint.AbsoluteUri, _tokenCredential, CredentialKind.TokenCredential);
-            return _connections.GetOrAdd(connectionId, newConnection);
+            throw new ArgumentException($"Cannot connect with {connectionId}! Unknown authentication type.");
         }
 
         /// <summary>
@@ -61,21 +84,20 @@ namespace Azure.AI.Projects
             {
                 // AzureOpenAI
                 case "Azure.AI.OpenAI.AzureOpenAIClient":
-                case "Azure.AI.Agents.Persistent.PersistentAgentsClient":
                 case "OpenAI.Chat.ChatClient":
                 case "OpenAI.Embeddings.EmbeddingClient":
                     return ConnectionType.AzureOpenAI;
+
+                // Inference
+                case "Azure.AI.Inference.ChatCompletionsClient":
+                case "Azure.AI.Inference.EmbeddingsClient":
+                    return ConnectionType.Serverless;
 
                 // AzureAISearch
                 case "Azure.Search.Documents.SearchClient":
                 case "Azure.Search.Documents.Indexes.SearchIndexClient":
                 case "Azure.Search.Documents.Indexes.SearchIndexerClient":
                     return ConnectionType.AzureAISearch;
-
-                case "Azure.AI.Inference.ChatCompletionsClient":
-                case "Azure.AI.Inference.EmbeddingsClient":
-                case "Azure.AI.Inference.ImageEmbeddingsClient":
-                    return new ConnectionType("Inference");
 
                 default:
                     throw new ArgumentException($"Unknown connection type for ID: {connectionId}");

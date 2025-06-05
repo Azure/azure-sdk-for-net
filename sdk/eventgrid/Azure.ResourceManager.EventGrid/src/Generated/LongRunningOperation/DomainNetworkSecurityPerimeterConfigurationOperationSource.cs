@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.EventGrid
 
         DomainNetworkSecurityPerimeterConfigurationResource IOperationSource<DomainNetworkSecurityPerimeterConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content);
             return new DomainNetworkSecurityPerimeterConfigurationResource(_client, data);
         }
 
         async ValueTask<DomainNetworkSecurityPerimeterConfigurationResource> IOperationSource<DomainNetworkSecurityPerimeterConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerEventGridContext.Default);
+            var data = ModelReaderWriter.Read<NetworkSecurityPerimeterConfigurationData>(response.Content);
             return await Task.FromResult(new DomainNetworkSecurityPerimeterConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

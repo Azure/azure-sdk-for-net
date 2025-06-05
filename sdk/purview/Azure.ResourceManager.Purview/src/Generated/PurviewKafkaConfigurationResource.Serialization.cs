@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Purview
 {
     public partial class PurviewKafkaConfigurationResource : IJsonModel<PurviewKafkaConfigurationData>
     {
-        private static PurviewKafkaConfigurationData s_dataDeserializationInstance;
-        private static PurviewKafkaConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PurviewKafkaConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewKafkaConfigurationData>)Data).Write(writer, options);
 
-        PurviewKafkaConfigurationData IJsonModel<PurviewKafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewKafkaConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        PurviewKafkaConfigurationData IJsonModel<PurviewKafkaConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewKafkaConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewKafkaConfigurationData>(Data, options, AzureResourceManagerPurviewContext.Default);
+        BinaryData IPersistableModel<PurviewKafkaConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PurviewKafkaConfigurationData IPersistableModel<PurviewKafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewKafkaConfigurationData>(data, options, AzureResourceManagerPurviewContext.Default);
+        PurviewKafkaConfigurationData IPersistableModel<PurviewKafkaConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewKafkaConfigurationData>(data, options);
 
-        string IPersistableModel<PurviewKafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewKafkaConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PurviewKafkaConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewKafkaConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

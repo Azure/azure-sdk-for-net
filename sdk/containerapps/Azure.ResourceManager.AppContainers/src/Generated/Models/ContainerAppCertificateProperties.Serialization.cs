@@ -41,11 +41,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(CertificateKeyVaultProperties))
-            {
-                writer.WritePropertyName("certificateKeyVaultProperties"u8);
-                writer.WriteObjectValue(CertificateKeyVaultProperties, options);
-            }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppCertificateProvisioningState? provisioningState = default;
-            ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default;
             string password = default;
             string subjectName = default;
             IReadOnlyList<string> subjectAlternativeNames = default;
@@ -161,15 +155,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                         continue;
                     }
                     provisioningState = new ContainerAppCertificateProvisioningState(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("certificateKeyVaultProperties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    certificateKeyVaultProperties = ContainerAppCertificateKeyVaultProperties.DeserializeContainerAppCertificateKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -255,7 +240,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppCertificateProperties(
                 provisioningState,
-                certificateKeyVaultProperties,
                 password,
                 subjectName,
                 subjectAlternativeNames ?? new ChangeTrackingList<string>(),
@@ -292,21 +276,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 {
                     builder.Append("  provisioningState: ");
                     builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertificateKeyVaultProperties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  certificateKeyVaultProperties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CertificateKeyVaultProperties))
-                {
-                    builder.Append("  certificateKeyVaultProperties: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, CertificateKeyVaultProperties, options, 2, false, "  certificateKeyVaultProperties: ");
                 }
             }
 
@@ -535,7 +504,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppContainersContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

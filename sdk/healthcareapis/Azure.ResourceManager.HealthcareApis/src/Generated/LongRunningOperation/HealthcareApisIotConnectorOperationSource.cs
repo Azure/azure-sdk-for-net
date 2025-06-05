@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisIotConnectorResource IOperationSource<HealthcareApisIotConnectorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(response.Content);
             return new HealthcareApisIotConnectorResource(_client, data);
         }
 
         async ValueTask<HealthcareApisIotConnectorResource> IOperationSource<HealthcareApisIotConnectorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<HealthcareApisIotConnectorData>(response.Content);
             return await Task.FromResult(new HealthcareApisIotConnectorResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Properties required to update a CdnWebApplicationFirewallPolicy.
-    /// Serialized Name: CdnWebApplicationFirewallPolicyPatchParameters
-    /// </summary>
+    /// <summary> Properties required to update a CdnWebApplicationFirewallPolicy. </summary>
     public partial class CdnWebApplicationFirewallPolicyPatch
     {
         /// <summary>
@@ -55,10 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CdnWebApplicationFirewallPolicyPatch"/>. </summary>
-        /// <param name="tags">
-        /// CdnWebApplicationFirewallPolicy tags
-        /// Serialized Name: CdnWebApplicationFirewallPolicyPatchParameters.tags
-        /// </param>
+        /// <param name="tags"> CdnWebApplicationFirewallPolicy tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CdnWebApplicationFirewallPolicyPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -66,10 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// CdnWebApplicationFirewallPolicy tags
-        /// Serialized Name: CdnWebApplicationFirewallPolicyPatchParameters.tags
-        /// </summary>
+        /// <summary> CdnWebApplicationFirewallPolicy tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }
 }

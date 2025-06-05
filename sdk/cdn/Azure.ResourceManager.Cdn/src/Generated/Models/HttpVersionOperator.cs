@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: HttpVersionOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct HttpVersionOperator : IEquatable<HttpVersionOperator>
     {
         private readonly string _value;
@@ -27,10 +24,7 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string EqualValue = "Equal";
 
-        /// <summary>
-        /// Equal
-        /// Serialized Name: HttpVersionOperator.Equal
-        /// </summary>
+        /// <summary> Equal. </summary>
         public static HttpVersionOperator Equal { get; } = new HttpVersionOperator(EqualValue);
         /// <summary> Determines if two <see cref="HttpVersionOperator"/> values are the same. </summary>
         public static bool operator ==(HttpVersionOperator left, HttpVersionOperator right) => left.Equals(right);

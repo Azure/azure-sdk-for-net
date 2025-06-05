@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Hci.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHciContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ExtensionUpgradeContent)} does not support writing '{options.Format}' format.");
             }

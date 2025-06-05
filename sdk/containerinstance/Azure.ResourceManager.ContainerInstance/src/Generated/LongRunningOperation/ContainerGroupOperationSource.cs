@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerInstance
 
         ContainerGroupResource IOperationSource<ContainerGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerInstanceContext.Default);
+            var data = ModelReaderWriter.Read<ContainerGroupData>(response.Content);
             return new ContainerGroupResource(_client, data);
         }
 
         async ValueTask<ContainerGroupResource> IOperationSource<ContainerGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerInstanceContext.Default);
+            var data = ModelReaderWriter.Read<ContainerGroupData>(response.Content);
             return await Task.FromResult(new ContainerGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

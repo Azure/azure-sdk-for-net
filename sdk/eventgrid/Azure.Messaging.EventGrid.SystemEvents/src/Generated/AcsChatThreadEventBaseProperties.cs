@@ -15,12 +15,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventBaseProperties"/>. </summary>
         /// <param name="recipientCommunicationIdentifier"> The communication identifier of the target user. </param>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/> or <paramref name="threadId"/> is null. </exception>
-        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier, string threadId) : base(recipientCommunicationIdentifier, threadId)
+        /// <exception cref="ArgumentNullException"> <paramref name="recipientCommunicationIdentifier"/> is null. </exception>
+        internal AcsChatThreadEventBaseProperties(CommunicationIdentifierModel recipientCommunicationIdentifier) : base(recipientCommunicationIdentifier)
         {
             Argument.AssertNotNull(recipientCommunicationIdentifier, nameof(recipientCommunicationIdentifier));
-            Argument.AssertNotNull(threadId, nameof(threadId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadEventBaseProperties"/>. </summary>

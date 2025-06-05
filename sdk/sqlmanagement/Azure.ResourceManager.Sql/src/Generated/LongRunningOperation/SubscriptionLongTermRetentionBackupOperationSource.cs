@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         SubscriptionLongTermRetentionBackupResource IOperationSource<SubscriptionLongTermRetentionBackupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LongTermRetentionBackupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<LongTermRetentionBackupData>(response.Content);
             return new SubscriptionLongTermRetentionBackupResource(_client, data);
         }
 
         async ValueTask<SubscriptionLongTermRetentionBackupResource> IOperationSource<SubscriptionLongTermRetentionBackupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<LongTermRetentionBackupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<LongTermRetentionBackupData>(response.Content);
             return await Task.FromResult(new SubscriptionLongTermRetentionBackupResource(_client, data)).ConfigureAwait(false);
         }
     }

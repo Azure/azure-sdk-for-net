@@ -3,8 +3,9 @@
 
 using Azure.AI.OpenAI;
 using Azure.Projects;
-using Azure.Projects.AI;
+using Azure.Projects.OpenAI;
 using OpenAI.Chat;
+using OpenAI.Embeddings;
 
 ProjectInfrastructure infrastructure = new();
 infrastructure.AddFeature(new OpenAIChatFeature("gpt-35-turbo", "0125"));
@@ -15,8 +16,9 @@ if (infrastructure.TryExecuteCommand(args)) return;
 
 ProjectClient project = new();
 ChatClient chat = project.GetOpenAIChatClient();
-EmbeddingsStore embeddings = EmbeddingsStore.Create(project.GetOpenAIEmbeddingClient());
-ChatThread conversation = [];
+EmbeddingClient embeddings = project.GetOpenAIEmbeddingClient();
+EmbeddingsVectorbase vectorDb = new(embeddings);
+List<ChatMessage> conversation = [];
 ChatTools tools = new ChatTools(typeof(Tools));
 
 while (true)
@@ -30,11 +32,11 @@ while (true)
     if (prompt.StartsWith("fact:", StringComparison.OrdinalIgnoreCase))
     {
         string fact = prompt[5..].Trim();
-        embeddings.Add(fact);
+        vectorDb.Add(fact);
         continue;
     }
 
-    var related = embeddings.FindRelated(prompt);
+    var related = vectorDb.Find(prompt);
     conversation.Add(related);
 
     conversation.Add(ChatMessage.CreateUserMessage(prompt));
@@ -49,21 +51,22 @@ complete:
             Console.WriteLine(completion.AsText());
             break;
         case ChatFinishReason.Length:
-            conversation.Trim();
+            conversation = new(conversation.Slice(conversation.Count / 2, conversation.Count / 2));
             goto complete;
         case ChatFinishReason.ToolCalls:
 
-            // for some reason I am getting tool calls for tools that dont exist.
-            ToolCallResult toolResults = await tools.CallAllWithErrors(completion.ToolCalls).ConfigureAwait(false);
-            if (toolResults.Failed != null)
+            // for some reason I am getting tool calls for tools that dont exist. 
+            List<string> failed;
+            IEnumerable<ToolChatMessage> toolResults = tools.CallAll(completion.ToolCalls, out failed);
+            if (failed != null)
             {
-                toolResults.Failed.ForEach(f => Console.WriteLine($"Failed to call tool: {f}"));
+                failed.ForEach(f => Console.WriteLine($"Failed to call tool: {f}"));
                 conversation.Add(ChatMessage.CreateUserMessage("don't call tools that dont exist"));
             }
             else
             {
                 conversation.Add(completion);
-                conversation.AddRange(toolResults.Messages);
+                conversation.AddRange(toolResults);
             }
             goto complete;
         default:

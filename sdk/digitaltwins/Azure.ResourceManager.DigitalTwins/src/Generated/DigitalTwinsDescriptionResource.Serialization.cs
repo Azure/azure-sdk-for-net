@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DigitalTwins
 {
     public partial class DigitalTwinsDescriptionResource : IJsonModel<DigitalTwinsDescriptionData>
     {
-        private static DigitalTwinsDescriptionData s_dataDeserializationInstance;
-        private static DigitalTwinsDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DigitalTwinsDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsDescriptionData>)Data).Write(writer, options);
 
-        DigitalTwinsDescriptionData IJsonModel<DigitalTwinsDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        DigitalTwinsDescriptionData IJsonModel<DigitalTwinsDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DigitalTwinsDescriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DigitalTwinsDescriptionData>(Data, options, AzureResourceManagerDigitalTwinsContext.Default);
+        BinaryData IPersistableModel<DigitalTwinsDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DigitalTwinsDescriptionData IPersistableModel<DigitalTwinsDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsDescriptionData>(data, options, AzureResourceManagerDigitalTwinsContext.Default);
+        DigitalTwinsDescriptionData IPersistableModel<DigitalTwinsDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DigitalTwinsDescriptionData>(data, options);
 
-        string IPersistableModel<DigitalTwinsDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DigitalTwinsDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DigitalTwinsDescriptionData>)Data).GetFormatFromOptions(options);
     }
 }

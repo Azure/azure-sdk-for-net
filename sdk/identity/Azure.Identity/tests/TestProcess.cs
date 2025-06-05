@@ -3,7 +3,6 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
@@ -71,8 +70,6 @@ namespace Azure.Identity.Tests
                 throw new InvalidOperationException();
             }
         }
-
-        public StreamWriter StandardInput => throw new NotImplementedException();
 
         public event EventHandler Exited;
         public event EventHandler Started;

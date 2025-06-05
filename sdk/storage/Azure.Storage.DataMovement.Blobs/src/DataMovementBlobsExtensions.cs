@@ -482,7 +482,6 @@ namespace Azure.Storage.DataMovement.Blobs
                     TagConditions = options?.DestinationConditions?.TagConditions,
                     LeaseId = options?.DestinationConditions?.LeaseId,
                 },
-                PremiumPageBlobAccessTier = GetAccessTier(options, sourceProperties?.RawProperties).ToPremiumPageBlobAccessTier(),
             };
         }
 
@@ -668,7 +667,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
             IDictionary<string, object> properties)
-            => options?._isAccessTierSet ?? false
+            => options?.AccessTier != default
                 ? options?.AccessTier
                 : properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
                     ? (AccessTier?)accessTierObject
@@ -683,20 +682,5 @@ namespace Azure.Storage.DataMovement.Blobs
                 : properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
                     ? (Metadata)metadataObject
                     : default;
-
-        // Convert AccessTier to PremiumPageBlobAccessTier
-        // As long as it works. Do not set if the AccessTier is a BlockBlob tier
-        private static PremiumPageBlobAccessTier? ToPremiumPageBlobAccessTier(this AccessTier? accessTier)
-        {
-            if (accessTier != default &&
-                accessTier != AccessTier.Hot &&
-                accessTier != AccessTier.Cool &&
-                accessTier != AccessTier.Archive &&
-                accessTier != AccessTier.Cold)
-            {
-                return new PremiumPageBlobAccessTier(accessTier.ToString());
-            }
-            return default;
-        }
     }
 }

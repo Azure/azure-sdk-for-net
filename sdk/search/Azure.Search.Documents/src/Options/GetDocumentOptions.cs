@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchClient.GetDocumentAsync{T}(string, GetDocumentOptions, System.Threading.CancellationToken)"/>.
+    /// Options for <see cref="SearchClient.GetDocumentAsync"/>.
     /// </summary>
     public class GetDocumentOptions
     {

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         IPAllocationResource IOperationSource<IPAllocationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IPAllocationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<IPAllocationData>(response.Content);
             return new IPAllocationResource(_client, data);
         }
 
         async ValueTask<IPAllocationResource> IOperationSource<IPAllocationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<IPAllocationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<IPAllocationData>(response.Content);
             return await Task.FromResult(new IPAllocationResource(_client, data)).ConfigureAwait(false);
         }
     }

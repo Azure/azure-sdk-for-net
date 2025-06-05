@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Media
 {
     public partial class MediaTransformResource : IJsonModel<MediaTransformData>
     {
-        private static MediaTransformData s_dataDeserializationInstance;
-        private static MediaTransformData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<MediaTransformData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MediaTransformData>)Data).Write(writer, options);
 
-        MediaTransformData IJsonModel<MediaTransformData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaTransformData>)DataDeserializationInstance).Create(ref reader, options);
+        MediaTransformData IJsonModel<MediaTransformData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MediaTransformData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MediaTransformData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MediaTransformData>(Data, options, AzureResourceManagerMediaContext.Default);
+        BinaryData IPersistableModel<MediaTransformData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MediaTransformData IPersistableModel<MediaTransformData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaTransformData>(data, options, AzureResourceManagerMediaContext.Default);
+        MediaTransformData IPersistableModel<MediaTransformData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MediaTransformData>(data, options);
 
-        string IPersistableModel<MediaTransformData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaTransformData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MediaTransformData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MediaTransformData>)Data).GetFormatFromOptions(options);
     }
 }

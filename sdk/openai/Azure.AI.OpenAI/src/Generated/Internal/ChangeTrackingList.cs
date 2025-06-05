@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
+    internal class ChangeTrackingList<T> : IList<T>, IReadOnlyList<T>
     {
         private IList<T> _innerList;
 
@@ -33,16 +33,12 @@ namespace Azure.AI.OpenAI
             }
         }
 
-        /// <summary> Gets the IsUndefined. </summary>
         public bool IsUndefined => _innerList == null;
 
-        /// <summary> Gets the Count. </summary>
         public int Count => IsUndefined ? 0 : EnsureList().Count;
 
-        /// <summary> Gets the IsReadOnly. </summary>
         public bool IsReadOnly => IsUndefined ? false : EnsureList().IsReadOnly;
 
-        /// <summary> Gets or sets the value associated with the specified key. </summary>
         public T this[int index]
         {
             get

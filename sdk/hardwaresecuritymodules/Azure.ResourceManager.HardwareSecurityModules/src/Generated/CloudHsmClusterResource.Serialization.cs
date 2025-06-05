@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
 {
     public partial class CloudHsmClusterResource : IJsonModel<CloudHsmClusterData>
     {
-        private static CloudHsmClusterData s_dataDeserializationInstance;
-        private static CloudHsmClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CloudHsmClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterData>)Data).Write(writer, options);
 
-        CloudHsmClusterData IJsonModel<CloudHsmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        CloudHsmClusterData IJsonModel<CloudHsmClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudHsmClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudHsmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudHsmClusterData>(Data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+        BinaryData IPersistableModel<CloudHsmClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CloudHsmClusterData IPersistableModel<CloudHsmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterData>(data, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
+        CloudHsmClusterData IPersistableModel<CloudHsmClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudHsmClusterData>(data, options);
 
-        string IPersistableModel<CloudHsmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CloudHsmClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudHsmClusterData>)Data).GetFormatFromOptions(options);
     }
 }

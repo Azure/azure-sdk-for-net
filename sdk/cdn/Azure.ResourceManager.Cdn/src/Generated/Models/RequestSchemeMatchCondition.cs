@@ -10,51 +10,67 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for RequestScheme match conditions
-    /// Serialized Name: RequestSchemeMatchConditionParameters
-    /// </summary>
-    public partial class RequestSchemeMatchCondition : DeliveryRuleConditionProperties
+    /// <summary> Defines the parameters for RequestScheme match conditions. </summary>
+    public partial class RequestSchemeMatchCondition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
-        /// <param name="requestSchemeOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestSchemeMatchConditionParameters.operator
-        /// </param>
-        public RequestSchemeMatchCondition(RequestSchemeOperator requestSchemeOperator)
+        /// <param name="conditionType"></param>
+        /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
+        public RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator)
         {
+            ConditionType = conditionType;
             RequestSchemeOperator = requestSchemeOperator;
             Transforms = new ChangeTrackingList<PreTransformCategory>();
             MatchValues = new ChangeTrackingList<RequestSchemeMatchConditionMatchValue>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="conditionType"></param>
+        /// <param name="requestSchemeOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="transforms"> List of transforms. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="requestSchemeOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestSchemeMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestSchemeMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: RequestSchemeMatchConditionParameters.transforms
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestSchemeMatchConditionParameters.matchValues
-        /// </param>
-        internal RequestSchemeMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues) : base(typeName, serializedAdditionalRawData)
+        internal RequestSchemeMatchCondition(RequestSchemeMatchConditionType conditionType, RequestSchemeOperator requestSchemeOperator, bool? negateCondition, IList<PreTransformCategory> transforms, IList<RequestSchemeMatchConditionMatchValue> matchValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ConditionType = conditionType;
             RequestSchemeOperator = requestSchemeOperator;
             NegateCondition = negateCondition;
             Transforms = transforms;
             MatchValues = matchValues;
-            TypeName = typeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestSchemeMatchCondition"/> for deserialization. </summary>
@@ -62,25 +78,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: RequestSchemeMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Gets or sets the condition type. </summary>
+        public RequestSchemeMatchConditionType ConditionType { get; set; }
+        /// <summary> Describes operator to be matched. </summary>
         public RequestSchemeOperator RequestSchemeOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestSchemeMatchConditionParameters.negateCondition
-        /// </summary>
+        /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: RequestSchemeMatchConditionParameters.transforms
-        /// </summary>
+        /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestSchemeMatchConditionParameters.matchValues
-        /// </summary>
+        /// <summary> The match value for the condition of the delivery rule. </summary>
         public IList<RequestSchemeMatchConditionMatchValue> MatchValues { get; }
     }
 }

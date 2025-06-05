@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The ResourcesResponseEndpointsItem.
-    /// Serialized Name: ResourcesResponseEndpointsItem
-    /// </summary>
+    /// <summary> The ResourcesResponseEndpointsItem. </summary>
     public partial class ResourcesResponseEndpointsItem
     {
         /// <summary>
@@ -55,10 +52,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsItem.id. </param>
-        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsItem.name. </param>
-        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsItem.history. </param>
-        /// <param name="customDomains"> Serialized Name: ResourcesResponseEndpointsItem.customDomains. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="history"></param>
+        /// <param name="customDomains"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourcesResponseEndpointsItem(string id, string name, bool? history, IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,13 +66,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ResourcesResponseEndpointsItem.id. </summary>
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
-        /// <summary> Serialized Name: ResourcesResponseEndpointsItem.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: ResourcesResponseEndpointsItem.history. </summary>
+        /// <summary> Gets the history. </summary>
         public bool? History { get; }
-        /// <summary> Serialized Name: ResourcesResponseEndpointsItem.customDomains. </summary>
+        /// <summary> Gets the custom domains. </summary>
         public IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> CustomDomains { get; }
     }
 }

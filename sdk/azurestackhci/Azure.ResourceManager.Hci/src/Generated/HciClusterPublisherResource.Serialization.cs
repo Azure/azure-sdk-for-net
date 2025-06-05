@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class HciClusterPublisherResource : IJsonModel<HciClusterPublisherData>
     {
-        private static HciClusterPublisherData s_dataDeserializationInstance;
-        private static HciClusterPublisherData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HciClusterPublisherData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterPublisherData>)Data).Write(writer, options);
 
-        HciClusterPublisherData IJsonModel<HciClusterPublisherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterPublisherData>)DataDeserializationInstance).Create(ref reader, options);
+        HciClusterPublisherData IJsonModel<HciClusterPublisherData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HciClusterPublisherData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HciClusterPublisherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HciClusterPublisherData>(Data, options, AzureResourceManagerHciContext.Default);
+        BinaryData IPersistableModel<HciClusterPublisherData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HciClusterPublisherData IPersistableModel<HciClusterPublisherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterPublisherData>(data, options, AzureResourceManagerHciContext.Default);
+        HciClusterPublisherData IPersistableModel<HciClusterPublisherData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HciClusterPublisherData>(data, options);
 
-        string IPersistableModel<HciClusterPublisherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterPublisherData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HciClusterPublisherData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HciClusterPublisherData>)Data).GetFormatFromOptions(options);
     }
 }

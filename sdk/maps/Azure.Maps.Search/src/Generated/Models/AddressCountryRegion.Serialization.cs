@@ -22,7 +22,7 @@ namespace Azure.Maps.Search.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("ISO"u8))
+                if (property.NameEquals("iso"u8))
                 {
                     iso = property.Value.GetString();
                     continue;

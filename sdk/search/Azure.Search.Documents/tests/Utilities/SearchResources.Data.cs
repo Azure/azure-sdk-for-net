@@ -87,7 +87,6 @@ namespace Azure.Search.Documents.Tests
                 },
                 SemanticSearch = new()
                 {
-                    DefaultConfigurationName = "my-semantic-config",
                     Configurations =
                     {
                        new SemanticConfiguration("my-semantic-config", new()

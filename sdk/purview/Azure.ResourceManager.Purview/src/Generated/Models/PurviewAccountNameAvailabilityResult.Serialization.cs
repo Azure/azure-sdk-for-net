@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Purview.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPurviewContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PurviewAccountNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }

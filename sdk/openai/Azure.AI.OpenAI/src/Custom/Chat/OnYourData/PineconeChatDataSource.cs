@@ -8,7 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("PineconeChatDataSource")]
+[CodeGenModel("PineconeChatDataSource")]
 [Experimental("AOAI001")]
 #if AZURE_OPENAI_GA
 [EditorBrowsable(EditorBrowsableState.Never)]
@@ -97,7 +97,7 @@ public partial class PineconeChatDataSource : ChatDataSource
         set => InternalParameters.OutputContexts = value;
     }
 
-    public PineconeChatDataSource() : base(type: "pinecone", additionalBinaryDataProperties: null)
+    public PineconeChatDataSource() : base(type: "pinecone", serializedAdditionalRawData: null)
     {
         InternalParameters = new();
     }
@@ -122,11 +122,11 @@ public partial class PineconeChatDataSource : ChatDataSource
 
     /// <summary> Initializes a new instance of <see cref="PineconeChatDataSource"/>. </summary>
     /// <param name="type"></param>
-    /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+    /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
     /// <param name="internalParameters"> The parameter information to control the use of the Azure Search data source. </param>
     [SetsRequiredMembers]
-    internal PineconeChatDataSource(string type, IDictionary<string, BinaryData> additionalBinaryDataProperties, InternalPineconeChatDataSourceParameters internalParameters)
-        : base(type, additionalBinaryDataProperties)
+    internal PineconeChatDataSource(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, InternalPineconeChatDataSourceParameters internalParameters)
+        : base(type, serializedAdditionalRawData)
     {
         InternalParameters = internalParameters;
     }

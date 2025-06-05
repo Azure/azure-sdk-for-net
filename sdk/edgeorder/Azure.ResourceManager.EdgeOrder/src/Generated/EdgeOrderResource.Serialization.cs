@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EdgeOrder
 {
     public partial class EdgeOrderResource : IJsonModel<EdgeOrderData>
     {
-        private static EdgeOrderData s_dataDeserializationInstance;
-        private static EdgeOrderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EdgeOrderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderData>)Data).Write(writer, options);
 
-        EdgeOrderData IJsonModel<EdgeOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderData>)DataDeserializationInstance).Create(ref reader, options);
+        EdgeOrderData IJsonModel<EdgeOrderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EdgeOrderData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EdgeOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EdgeOrderData>(Data, options, AzureResourceManagerEdgeOrderContext.Default);
+        BinaryData IPersistableModel<EdgeOrderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EdgeOrderData IPersistableModel<EdgeOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderData>(data, options, AzureResourceManagerEdgeOrderContext.Default);
+        EdgeOrderData IPersistableModel<EdgeOrderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EdgeOrderData>(data, options);
 
-        string IPersistableModel<EdgeOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EdgeOrderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EdgeOrderData>)Data).GetFormatFromOptions(options);
     }
 }

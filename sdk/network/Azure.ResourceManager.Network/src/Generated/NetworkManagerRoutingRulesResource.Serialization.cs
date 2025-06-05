@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class NetworkManagerRoutingRulesResource : IJsonModel<NetworkManagerRoutingRulesData>
     {
-        private static NetworkManagerRoutingRulesData s_dataDeserializationInstance;
-        private static NetworkManagerRoutingRulesData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkManagerRoutingRulesData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerRoutingRulesData>)Data).Write(writer, options);
 
-        NetworkManagerRoutingRulesData IJsonModel<NetworkManagerRoutingRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerRoutingRulesData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkManagerRoutingRulesData IJsonModel<NetworkManagerRoutingRulesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkManagerRoutingRulesData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkManagerRoutingRulesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkManagerRoutingRulesData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<NetworkManagerRoutingRulesData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkManagerRoutingRulesData IPersistableModel<NetworkManagerRoutingRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerRoutingRulesData>(data, options, AzureResourceManagerNetworkContext.Default);
+        NetworkManagerRoutingRulesData IPersistableModel<NetworkManagerRoutingRulesData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkManagerRoutingRulesData>(data, options);
 
-        string IPersistableModel<NetworkManagerRoutingRulesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerRoutingRulesData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkManagerRoutingRulesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkManagerRoutingRulesData>)Data).GetFormatFromOptions(options);
     }
 }

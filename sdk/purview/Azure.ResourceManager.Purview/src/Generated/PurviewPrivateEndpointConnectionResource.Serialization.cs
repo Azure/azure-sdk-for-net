@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Purview
 {
     public partial class PurviewPrivateEndpointConnectionResource : IJsonModel<PurviewPrivateEndpointConnectionData>
     {
-        private static PurviewPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static PurviewPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PurviewPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        PurviewPrivateEndpointConnectionData IJsonModel<PurviewPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        PurviewPrivateEndpointConnectionData IJsonModel<PurviewPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PurviewPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PurviewPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PurviewPrivateEndpointConnectionData>(Data, options, AzureResourceManagerPurviewContext.Default);
+        BinaryData IPersistableModel<PurviewPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PurviewPrivateEndpointConnectionData IPersistableModel<PurviewPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(data, options, AzureResourceManagerPurviewContext.Default);
+        PurviewPrivateEndpointConnectionData IPersistableModel<PurviewPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<PurviewPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PurviewPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PurviewPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

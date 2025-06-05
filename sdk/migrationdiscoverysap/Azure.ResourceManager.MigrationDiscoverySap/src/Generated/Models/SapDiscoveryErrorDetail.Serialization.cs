@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SapDiscoveryErrorDetail)} does not support writing '{options.Format}' format.");
             }

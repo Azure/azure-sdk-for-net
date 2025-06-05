@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceTagApiLinkResource : IJsonModel<TagApiLinkContractData>
     {
-        private static TagApiLinkContractData s_dataDeserializationInstance;
-        private static TagApiLinkContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<TagApiLinkContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TagApiLinkContractData>)Data).Write(writer, options);
 
-        TagApiLinkContractData IJsonModel<TagApiLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagApiLinkContractData>)DataDeserializationInstance).Create(ref reader, options);
+        TagApiLinkContractData IJsonModel<TagApiLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagApiLinkContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TagApiLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TagApiLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<TagApiLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TagApiLinkContractData IPersistableModel<TagApiLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagApiLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        TagApiLinkContractData IPersistableModel<TagApiLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagApiLinkContractData>(data, options);
 
-        string IPersistableModel<TagApiLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagApiLinkContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<TagApiLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagApiLinkContractData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -576,7 +576,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -807,7 +807,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -865,7 +865,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -904,7 +904,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1003,7 +1003,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1061,7 +1061,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1160,7 +1160,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1199,7 +1199,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1274,7 +1274,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1310,7 +1310,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1346,7 +1346,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1382,7 +1382,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1416,7 +1416,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1450,7 +1450,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1486,7 +1486,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1522,7 +1522,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1558,7 +1558,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1595,7 +1595,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1635,7 +1635,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1675,7 +1675,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1712,7 +1712,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1748,7 +1748,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1783,7 +1783,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1818,7 +1818,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1888,26 +1888,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin(string,SecurityPinContent,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin(string,SecurityPinContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
-        public static async Task<Response<TokenInformation>> GetSecurityPinAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        public static async Task<Response<TokenInformation>> GetSecurityPinAsync(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPinAsync(vaultName, content, xMsAuthorizationAuxiliary, cancellationToken).ConfigureAwait(false);
+            return await GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPinAsync(vaultName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1923,26 +1922,25 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin(string,SecurityPinContent,string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableRecoveryServicesBackupResourceGroupResource.GetSecurityPin(string,SecurityPinContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <param name="vaultName"> The name of the recovery services vault. </param>
         /// <param name="content"> security pin request. </param>
-        /// <param name="xMsAuthorizationAuxiliary"> The <see cref="string"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="vaultName"/> is null. </exception>
-        public static Response<TokenInformation> GetSecurityPin(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent content = null, string xMsAuthorizationAuxiliary = null, CancellationToken cancellationToken = default)
+        public static Response<TokenInformation> GetSecurityPin(this ResourceGroupResource resourceGroupResource, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPin(vaultName, content, xMsAuthorizationAuxiliary, cancellationToken);
+            return GetMockableRecoveryServicesBackupResourceGroupResource(resourceGroupResource).GetSecurityPin(vaultName, content, cancellationToken);
         }
 
         /// <summary>
@@ -1959,7 +1957,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -1995,7 +1993,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2030,7 +2028,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2064,7 +2062,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2101,7 +2099,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2141,7 +2139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2178,7 +2176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2211,7 +2209,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2244,7 +2242,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -2277,7 +2275,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-02-01</description>
+        /// <description>2023-06-01</description>
         /// </item>
         /// </list>
         /// <item>

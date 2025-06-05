@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VirtualNetworkResource : IJsonModel<VirtualNetworkData>
     {
-        private static VirtualNetworkData s_dataDeserializationInstance;
-        private static VirtualNetworkData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VirtualNetworkData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkData>)Data).Write(writer, options);
 
-        VirtualNetworkData IJsonModel<VirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkData>)DataDeserializationInstance).Create(ref reader, options);
+        VirtualNetworkData IJsonModel<VirtualNetworkData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualNetworkData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualNetworkData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<VirtualNetworkData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VirtualNetworkData IPersistableModel<VirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkData>(data, options, AzureResourceManagerNetworkContext.Default);
+        VirtualNetworkData IPersistableModel<VirtualNetworkData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualNetworkData>(data, options);
 
-        string IPersistableModel<VirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualNetworkData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualNetworkData>)Data).GetFormatFromOptions(options);
     }
 }

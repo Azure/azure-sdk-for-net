@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? throw new ArgumentNullException(nameof(endpoint));
-            _apiVersion = apiVersion ?? "2024-07-01";
+            _apiVersion = apiVersion ?? "2024-05-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, string ifMatch)
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, string ifMatch)
+        internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -317,10 +317,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(workspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -336,11 +332,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="data"> Verifier Workspace object to create/update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkVerifierWorkspaceData>> CreateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkVerifierWorkspaceData>> CreateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -348,7 +343,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, data, ifMatch);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -371,11 +366,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="data"> Verifier Workspace object to create/update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkVerifierWorkspaceData> Create(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<NetworkVerifierWorkspaceData> Create(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspaceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -383,7 +377,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, data, ifMatch);
+            using var message = CreateCreateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -400,7 +394,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, string ifMatch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -416,7 +410,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, string ifMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -433,10 +427,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(workspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -452,11 +442,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="patch"> Verifier Workspace object to create/update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkVerifierWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkVerifierWorkspaceData>> UpdateAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -464,7 +453,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, patch, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -486,11 +475,10 @@ namespace Azure.ResourceManager.Network
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="patch"> Verifier Workspace object to create/update. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/>, <paramref name="workspaceName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkVerifierWorkspaceData> Update(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response<NetworkVerifierWorkspaceData> Update(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, NetworkVerifierWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -498,7 +486,7 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, patch, ifMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -514,7 +502,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string ifMatch)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -530,7 +518,7 @@ namespace Azure.ResourceManager.Network
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string ifMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -547,10 +535,6 @@ namespace Azure.ResourceManager.Network
             uri.AppendPath(workspaceName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -561,18 +545,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="workspaceName"> Workspace name. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -589,18 +572,17 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceGroupName"> The name of the resource group. </param>
         /// <param name="networkManagerName"> The name of the network manager. </param>
         /// <param name="workspaceName"> Workspace name. </param>
-        /// <param name="ifMatch"> The entity state (ETag) version of the pool to update. This value can be omitted or set to "*" to apply the operation unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="networkManagerName"/> or <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, string ifMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string networkManagerName, string workspaceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(networkManagerName, nameof(networkManagerName));
             Argument.AssertNotNullOrEmpty(workspaceName, nameof(workspaceName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName, ifMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, networkManagerName, workspaceName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

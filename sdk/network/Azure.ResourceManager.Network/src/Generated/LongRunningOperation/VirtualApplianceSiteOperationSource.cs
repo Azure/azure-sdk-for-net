@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         VirtualApplianceSiteResource IOperationSource<VirtualApplianceSiteResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualApplianceSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VirtualApplianceSiteData>(response.Content);
             return new VirtualApplianceSiteResource(_client, data);
         }
 
         async ValueTask<VirtualApplianceSiteResource> IOperationSource<VirtualApplianceSiteResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<VirtualApplianceSiteData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<VirtualApplianceSiteData>(response.Content);
             return await Task.FromResult(new VirtualApplianceSiteResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CommunityGalleryResource : IJsonModel<CommunityGalleryData>
     {
-        private static CommunityGalleryData s_dataDeserializationInstance;
-        private static CommunityGalleryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CommunityGalleryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryData>)Data).Write(writer, options);
 
-        CommunityGalleryData IJsonModel<CommunityGalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryData>)DataDeserializationInstance).Create(ref reader, options);
+        CommunityGalleryData IJsonModel<CommunityGalleryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CommunityGalleryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CommunityGalleryData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<CommunityGalleryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CommunityGalleryData IPersistableModel<CommunityGalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunityGalleryData>(data, options, AzureResourceManagerComputeContext.Default);
+        CommunityGalleryData IPersistableModel<CommunityGalleryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CommunityGalleryData>(data, options);
 
-        string IPersistableModel<CommunityGalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunityGalleryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CommunityGalleryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CommunityGalleryData>)Data).GetFormatFromOptions(options);
     }
 }

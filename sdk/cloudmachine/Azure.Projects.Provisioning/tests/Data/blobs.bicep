@@ -4,12 +4,12 @@ param location string = resourceGroup().location
 @description('The objectId of the current user principal.')
 param principalId string
 
-resource projectIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
+resource project_identity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-01-31' = {
   name: 'cm0c420d2f21084cd'
   location: location
 }
 
-resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-05-01' = {
+resource cm_app_config 'Microsoft.AppConfiguration/configurationStores@2024-05-01' = {
   name: 'cm0c420d2f21084cd'
   location: location
   sku: {
@@ -17,27 +17,27 @@ resource appConfiguration 'Microsoft.AppConfiguration/configurationStores@2024-0
   }
 }
 
-resource appConfiguration_admin_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('appConfiguration', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
+resource cm_app_config_1_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_app_config', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
     principalId: principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
     principalType: 'User'
   }
-  scope: appConfiguration
+  scope: cm_app_config
 }
 
-resource appConfiguration_projectIdentity_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('appConfiguration', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
+resource cm_app_config_project_identity_AppConfigurationDataOwner 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_app_config', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b'))
   properties: {
-    principalId: projectIdentity.properties.principalId
+    principalId: project_identity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '5ae67dd6-50cb-40e7-96ff-dc2bfa4b606b')
     principalType: 'ServicePrincipal'
   }
-  scope: appConfiguration
+  scope: cm_app_config
 }
 
-resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
+resource cm_storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   name: 'cm0c420d2f21084cd'
   kind: 'StorageV2'
   location: location
@@ -52,75 +52,67 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   identity: {
     type: 'UserAssigned'
     userAssignedIdentities: {
-      '${projectIdentity.id}': { }
+      '${project_identity.id}': { }
     }
   }
 }
 
-resource storageAccount_admin_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('storageAccount', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
+resource cm_storage_1_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_storage', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
   properties: {
     principalId: principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
     principalType: 'User'
   }
-  scope: storageAccount
+  scope: cm_storage
 }
 
-resource storageAccount_projectIdentity_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('storageAccount', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
+resource cm_storage_project_identity_StorageBlobDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_storage', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'))
   properties: {
-    principalId: projectIdentity.properties.principalId
+    principalId: project_identity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe')
     principalType: 'ServicePrincipal'
   }
-  scope: storageAccount
+  scope: cm_storage
 }
 
-resource storageAccount_admin_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('storageAccount', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
+resource cm_storage_1_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_storage', 'cm0c420d2f21084cd', principalId, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
   properties: {
     principalId: principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')
     principalType: 'User'
   }
-  scope: storageAccount
+  scope: cm_storage
 }
 
-resource storageAccount_projectIdentity_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
-  name: guid('storageAccount', projectIdentity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
+resource cm_storage_project_identity_StorageTableDataContributor 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid('cm_storage', project_identity.id, subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3'))
   properties: {
-    principalId: projectIdentity.properties.principalId
+    principalId: project_identity.properties.principalId
     roleDefinitionId: subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '0a9a7e1f-b9d0-4cc4-a60d-0319b160aaa3')
     principalType: 'ServicePrincipal'
   }
-  scope: storageAccount
+  scope: cm_storage
 }
 
-resource storageBlobService 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
+resource cm_storage_blobs 'Microsoft.Storage/storageAccounts/blobServices@2024-01-01' = {
   name: 'default'
-  parent: storageAccount
+  parent: cm_storage
 }
 
-resource storageBlobContainer_testcontainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
+resource cm_storage_blobs_container_testcontainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-01-01' = {
   name: 'testcontainer'
-  parent: storageBlobService
+  parent: cm_storage_blobs
 }
 
-resource projectConnection 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
-  name: 'Azure.Data.AppConfiguration.ConfigurationClient'
-  properties: {
-    value: 'https://cm0c420d2f21084cd.azconfig.io'
-  }
-  parent: appConfiguration
-}
-
-resource projectConnection2 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
+resource cm_connection_1 'Microsoft.AppConfiguration/configurationStores/keyValues@2024-05-01' = {
   name: 'Azure.Storage.Blobs.BlobContainerClient@testcontainer'
   properties: {
     value: 'https://cm0c420d2f21084cd.blob.core.windows.net/testcontainer'
   }
-  parent: appConfiguration
+  parent: cm_app_config
 }
 
-output project_identity_id string = projectIdentity.id
+output project_identity_id string = project_identity.id

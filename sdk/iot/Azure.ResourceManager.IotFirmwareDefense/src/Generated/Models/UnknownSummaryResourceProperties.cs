@@ -14,10 +14,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     internal partial class UnknownSummaryResourceProperties : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSummaryResourceProperties"/>. </summary>
-        /// <param name="summaryType"> The type of summary. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownSummaryResourceProperties(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(summaryType, provisioningState, serializedAdditionalRawData)
+        internal UnknownSummaryResourceProperties(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(summaryType, serializedAdditionalRawData)
         {
             SummaryType = summaryType;
         }

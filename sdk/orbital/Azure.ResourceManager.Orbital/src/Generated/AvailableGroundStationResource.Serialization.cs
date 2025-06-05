@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Orbital
 {
     public partial class AvailableGroundStationResource : IJsonModel<AvailableGroundStationData>
     {
-        private static AvailableGroundStationData s_dataDeserializationInstance;
-        private static AvailableGroundStationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AvailableGroundStationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AvailableGroundStationData>)Data).Write(writer, options);
 
-        AvailableGroundStationData IJsonModel<AvailableGroundStationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailableGroundStationData>)DataDeserializationInstance).Create(ref reader, options);
+        AvailableGroundStationData IJsonModel<AvailableGroundStationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AvailableGroundStationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AvailableGroundStationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AvailableGroundStationData>(Data, options, AzureResourceManagerOrbitalContext.Default);
+        BinaryData IPersistableModel<AvailableGroundStationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AvailableGroundStationData IPersistableModel<AvailableGroundStationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailableGroundStationData>(data, options, AzureResourceManagerOrbitalContext.Default);
+        AvailableGroundStationData IPersistableModel<AvailableGroundStationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AvailableGroundStationData>(data, options);
 
-        string IPersistableModel<AvailableGroundStationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailableGroundStationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AvailableGroundStationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AvailableGroundStationData>)Data).GetFormatFromOptions(options);
     }
 }

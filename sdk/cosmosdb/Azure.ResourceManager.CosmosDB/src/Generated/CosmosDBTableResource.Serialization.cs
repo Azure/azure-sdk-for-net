@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CosmosDBTableResource : IJsonModel<CosmosDBTableData>
     {
-        private static CosmosDBTableData s_dataDeserializationInstance;
-        private static CosmosDBTableData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CosmosDBTableData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableData>)Data).Write(writer, options);
 
-        CosmosDBTableData IJsonModel<CosmosDBTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableData>)DataDeserializationInstance).Create(ref reader, options);
+        CosmosDBTableData IJsonModel<CosmosDBTableData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CosmosDBTableData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CosmosDBTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CosmosDBTableData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<CosmosDBTableData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CosmosDBTableData IPersistableModel<CosmosDBTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBTableData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        CosmosDBTableData IPersistableModel<CosmosDBTableData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CosmosDBTableData>(data, options);
 
-        string IPersistableModel<CosmosDBTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBTableData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CosmosDBTableData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CosmosDBTableData>)Data).GetFormatFromOptions(options);
     }
 }

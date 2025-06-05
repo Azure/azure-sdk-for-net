@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.PostgreSql
 {
     public partial class PostgreSqlServerResource : IJsonModel<PostgreSqlServerData>
     {
-        private static PostgreSqlServerData s_dataDeserializationInstance;
-        private static PostgreSqlServerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PostgreSqlServerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerData>)Data).Write(writer, options);
 
-        PostgreSqlServerData IJsonModel<PostgreSqlServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerData>)DataDeserializationInstance).Create(ref reader, options);
+        PostgreSqlServerData IJsonModel<PostgreSqlServerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PostgreSqlServerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PostgreSqlServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PostgreSqlServerData>(Data, options, AzureResourceManagerPostgreSqlContext.Default);
+        BinaryData IPersistableModel<PostgreSqlServerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PostgreSqlServerData IPersistableModel<PostgreSqlServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerData>(data, options, AzureResourceManagerPostgreSqlContext.Default);
+        PostgreSqlServerData IPersistableModel<PostgreSqlServerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PostgreSqlServerData>(data, options);
 
-        string IPersistableModel<PostgreSqlServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PostgreSqlServerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PostgreSqlServerData>)Data).GetFormatFromOptions(options);
     }
 }

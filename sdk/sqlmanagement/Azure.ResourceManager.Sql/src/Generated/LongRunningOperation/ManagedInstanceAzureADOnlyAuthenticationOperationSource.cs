@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceAzureADOnlyAuthenticationResource IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(response.Content);
             return new ManagedInstanceAzureADOnlyAuthenticationResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceAzureADOnlyAuthenticationResource> IOperationSource<ManagedInstanceAzureADOnlyAuthenticationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(response.Content);
             return await Task.FromResult(new ManagedInstanceAzureADOnlyAuthenticationResource(_client, data)).ConfigureAwait(false);
         }
     }

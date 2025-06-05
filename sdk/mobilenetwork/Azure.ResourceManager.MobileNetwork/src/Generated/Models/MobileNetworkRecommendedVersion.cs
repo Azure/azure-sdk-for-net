@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Indicates whether this is the recommended version to use for new packet core control plane deployments. </summary>
+    /// <summary>
+    /// Indicates whether this is the recommended version to use for new packet core control plane deployments.
+    /// Serialized Name: RecommendedVersion
+    /// </summary>
     public readonly partial struct MobileNetworkRecommendedVersion : IEquatable<MobileNetworkRecommendedVersion>
     {
         private readonly string _value;
@@ -25,9 +28,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string RecommendedValue = "Recommended";
         private const string NotRecommendedValue = "NotRecommended";
 
-        /// <summary> This is the recommended version to use for new packet core control plane deployments. </summary>
+        /// <summary>
+        /// This is the recommended version to use for new packet core control plane deployments.
+        /// Serialized Name: RecommendedVersion.Recommended
+        /// </summary>
         public static MobileNetworkRecommendedVersion Recommended { get; } = new MobileNetworkRecommendedVersion(RecommendedValue);
-        /// <summary> This is not the recommended version to use for new packet core control plane deployments. </summary>
+        /// <summary>
+        /// This is not the recommended version to use for new packet core control plane deployments.
+        /// Serialized Name: RecommendedVersion.NotRecommended
+        /// </summary>
         public static MobileNetworkRecommendedVersion NotRecommended { get; } = new MobileNetworkRecommendedVersion(NotRecommendedValue);
         /// <summary> Determines if two <see cref="MobileNetworkRecommendedVersion"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkRecommendedVersion left, MobileNetworkRecommendedVersion right) => left.Equals(right);

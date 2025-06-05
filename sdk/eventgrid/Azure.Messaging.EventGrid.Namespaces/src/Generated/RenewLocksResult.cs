@@ -7,36 +7,76 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> The result of the RenewLock operation. </summary>
     public partial class RenewLocksResult
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/>. </summary>
-        internal RenewLocksResult()
+        /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
+        /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="failedLockTokens"/> or <paramref name="succeededLockTokens"/> is null. </exception>
+        internal RenewLocksResult(IEnumerable<FailedLockToken> failedLockTokens, IEnumerable<string> succeededLockTokens)
         {
-            FailedLockTokens = new ChangeTrackingList<FailedLockToken>();
-            SucceededLockTokens = new ChangeTrackingList<string>();
+            Argument.AssertNotNull(failedLockTokens, nameof(failedLockTokens));
+            Argument.AssertNotNull(succeededLockTokens, nameof(succeededLockTokens));
+
+            FailedLockTokens = failedLockTokens.ToList();
+            SucceededLockTokens = succeededLockTokens.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RenewLocksResult(IReadOnlyList<FailedLockToken> failedLockTokens, IReadOnlyList<string> succeededLockTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RenewLocksResult(IReadOnlyList<FailedLockToken> failedLockTokens, IReadOnlyList<string> succeededLockTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FailedLockTokens = failedLockTokens;
             SucceededLockTokens = succeededLockTokens;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RenewLocksResult"/> for deserialization. </summary>
+        internal RenewLocksResult()
+        {
         }
 
         /// <summary> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </summary>
         public IReadOnlyList<FailedLockToken> FailedLockTokens { get; }
-
         /// <summary> Array of lock tokens for the successfully renewed locks. </summary>
         public IReadOnlyList<string> SucceededLockTokens { get; }
     }

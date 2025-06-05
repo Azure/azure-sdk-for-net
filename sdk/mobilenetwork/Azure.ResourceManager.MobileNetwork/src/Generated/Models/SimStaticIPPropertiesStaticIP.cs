@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The static IP configuration for the SIM to use at the defined network scope. </summary>
+    /// <summary>
+    /// The static IP configuration for the SIM to use at the defined network scope.
+    /// Serialized Name: SimStaticIpPropertiesStaticIp
+    /// </summary>
     internal partial class SimStaticIPPropertiesStaticIP
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimStaticIPPropertiesStaticIP"/>. </summary>
-        /// <param name="ipv4Address"> The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network. </param>
+        /// <param name="ipv4Address">
+        /// The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network.
+        /// Serialized Name: SimStaticIpPropertiesStaticIp.ipv4Address
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimStaticIPPropertiesStaticIP(string ipv4Address, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network. </summary>
+        /// <summary>
+        /// The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network.
+        /// Serialized Name: SimStaticIpPropertiesStaticIp.ipv4Address
+        /// </summary>
         [WirePath("ipv4Address")]
         public string IPv4Address { get; set; }
     }

@@ -36,11 +36,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
             writer.WritePropertyName("summaryType"u8);
             writer.WriteStringValue(SummaryType.ToString());
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,9 +78,9 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 switch (discriminator.GetString())
                 {
                     case "BinaryHardening": return BinaryHardeningSummary.DeserializeBinaryHardeningSummary(element, options);
-                    case "CommonVulnerabilitiesAndExposures": return CveSummary.DeserializeCveSummary(element, options);
                     case "CryptoCertificate": return CryptoCertificateSummary.DeserializeCryptoCertificateSummary(element, options);
                     case "CryptoKey": return CryptoKeySummary.DeserializeCryptoKeySummary(element, options);
+                    case "CVE": return CveSummary.DeserializeCveSummary(element, options);
                     case "Firmware": return FirmwareSummary.DeserializeFirmwareSummary(element, options);
                 }
             }
@@ -99,7 +94,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support writing '{options.Format}' format.");
             }

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 
         ConnectedClusterBgpPeerResource IOperationSource<ConnectedClusterBgpPeerResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content);
             return new ConnectedClusterBgpPeerResource(_client, data);
         }
 
         async ValueTask<ConnectedClusterBgpPeerResource> IOperationSource<ConnectedClusterBgpPeerResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+            var data = ModelReaderWriter.Read<ConnectedClusterBgpPeerData>(response.Content);
             return await Task.FromResult(new ConnectedClusterBgpPeerResource(_client, data)).ConfigureAwait(false);
         }
     }

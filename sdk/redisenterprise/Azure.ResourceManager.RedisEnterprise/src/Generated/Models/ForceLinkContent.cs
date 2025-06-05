@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -46,21 +47,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/>. </summary>
-        /// <param name="geoReplication"> Properties to configure geo replication for this database. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geoReplication"/> is null. </exception>
-        public ForceLinkContent(ForceLinkParametersGeoReplication geoReplication)
+        /// <param name="groupNickname"> The name of the group of linked database resources. This should match the existing replication group name. </param>
+        /// <param name="linkedDatabases"> The resource IDs of the databases that are expected to be linked and included in the replication group. This parameter is used to validate that the linking is to the expected (unlinked) part of the replication group, if it is splintered. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupNickname"/> or <paramref name="linkedDatabases"/> is null. </exception>
+        public ForceLinkContent(string groupNickname, IEnumerable<RedisEnterpriseLinkedDatabase> linkedDatabases)
         {
-            Argument.AssertNotNull(geoReplication, nameof(geoReplication));
+            Argument.AssertNotNull(groupNickname, nameof(groupNickname));
+            Argument.AssertNotNull(linkedDatabases, nameof(linkedDatabases));
 
-            GeoReplication = geoReplication;
+            GroupNickname = groupNickname;
+            LinkedDatabases = linkedDatabases.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="ForceLinkContent"/>. </summary>
-        /// <param name="geoReplication"> Properties to configure geo replication for this database. </param>
+        /// <param name="groupNickname"> The name of the group of linked database resources. This should match the existing replication group name. </param>
+        /// <param name="linkedDatabases"> The resource IDs of the databases that are expected to be linked and included in the replication group. This parameter is used to validate that the linking is to the expected (unlinked) part of the replication group, if it is splintered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ForceLinkContent(ForceLinkParametersGeoReplication geoReplication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ForceLinkContent(string groupNickname, IList<RedisEnterpriseLinkedDatabase> linkedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            GeoReplication = geoReplication;
+            GroupNickname = groupNickname;
+            LinkedDatabases = linkedDatabases;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -69,8 +75,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
         {
         }
 
-        /// <summary> Properties to configure geo replication for this database. </summary>
-        [WirePath("geoReplication")]
-        public ForceLinkParametersGeoReplication GeoReplication { get; }
+        /// <summary> The name of the group of linked database resources. This should match the existing replication group name. </summary>
+        [WirePath("groupNickname")]
+        public string GroupNickname { get; }
+        /// <summary> The resource IDs of the databases that are expected to be linked and included in the replication group. This parameter is used to validate that the linking is to the expected (unlinked) part of the replication group, if it is splintered. </summary>
+        [WirePath("linkedDatabases")]
+        public IList<RedisEnterpriseLinkedDatabase> LinkedDatabases { get; }
     }
 }

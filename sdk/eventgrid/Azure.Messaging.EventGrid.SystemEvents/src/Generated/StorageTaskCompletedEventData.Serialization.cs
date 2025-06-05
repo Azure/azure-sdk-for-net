@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(StorageTaskCompletedEventDataConverter))]
     public partial class StorageTaskCompletedEventData : IUtf8JsonSerializable, IJsonModel<StorageTaskCompletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -57,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(TaskName);
             }
             writer.WritePropertyName("summaryReportBlobUrl"u8);
-            writer.WriteStringValue(SummaryReportBlobUri.AbsoluteUri);
+            writer.WriteStringValue(SummaryReportBlobUrl.AbsoluteUri);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -159,7 +157,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskCompletedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -197,20 +195,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class StorageTaskCompletedEventDataConverter : JsonConverter<StorageTaskCompletedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, StorageTaskCompletedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override StorageTaskCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeStorageTaskCompletedEventData(document.RootElement);
-            }
         }
     }
 }

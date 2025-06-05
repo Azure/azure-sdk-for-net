@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteLinkedBackendResource : IJsonModel<StaticSiteLinkedBackendData>
     {
-        private static StaticSiteLinkedBackendData s_dataDeserializationInstance;
-        private static StaticSiteLinkedBackendData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<StaticSiteLinkedBackendData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteLinkedBackendData>)Data).Write(writer, options);
 
-        StaticSiteLinkedBackendData IJsonModel<StaticSiteLinkedBackendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteLinkedBackendData>)DataDeserializationInstance).Create(ref reader, options);
+        StaticSiteLinkedBackendData IJsonModel<StaticSiteLinkedBackendData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteLinkedBackendData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteLinkedBackendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteLinkedBackendData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<StaticSiteLinkedBackendData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StaticSiteLinkedBackendData IPersistableModel<StaticSiteLinkedBackendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        StaticSiteLinkedBackendData IPersistableModel<StaticSiteLinkedBackendData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteLinkedBackendData>(data, options);
 
-        string IPersistableModel<StaticSiteLinkedBackendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteLinkedBackendData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<StaticSiteLinkedBackendData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteLinkedBackendData>)Data).GetFormatFromOptions(options);
     }
 }

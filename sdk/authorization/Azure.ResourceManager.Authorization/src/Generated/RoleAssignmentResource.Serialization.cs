@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Authorization
 {
     public partial class RoleAssignmentResource : IJsonModel<RoleAssignmentData>
     {
-        private static RoleAssignmentData s_dataDeserializationInstance;
-        private static RoleAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<RoleAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentData>)Data).Write(writer, options);
 
-        RoleAssignmentData IJsonModel<RoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        RoleAssignmentData IJsonModel<RoleAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RoleAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RoleAssignmentData>(Data, options, AzureResourceManagerAuthorizationContext.Default);
+        BinaryData IPersistableModel<RoleAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RoleAssignmentData IPersistableModel<RoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleAssignmentData>(data, options, AzureResourceManagerAuthorizationContext.Default);
+        RoleAssignmentData IPersistableModel<RoleAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RoleAssignmentData>(data, options);
 
-        string IPersistableModel<RoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<RoleAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RoleAssignmentData>)Data).GetFormatFromOptions(options);
     }
 }

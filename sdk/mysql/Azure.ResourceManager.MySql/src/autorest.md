@@ -22,7 +22,7 @@ namespace: Azure.ResourceManager.MySql
 require: https://github.com/Azure/azure-rest-api-specs/blob/c45a7f47c1901149828eb8a33c74898c554659c0/specification/mysql/resource-manager/readme.md
 output-folder: $(this-folder)/MySql/Generated
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 modelerfour:
   flatten-payloads: false

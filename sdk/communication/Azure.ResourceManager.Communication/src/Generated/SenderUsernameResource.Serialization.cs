@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Communication
 {
     public partial class SenderUsernameResource : IJsonModel<SenderUsernameResourceData>
     {
-        private static SenderUsernameResourceData s_dataDeserializationInstance;
-        private static SenderUsernameResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SenderUsernameResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SenderUsernameResourceData>)Data).Write(writer, options);
 
-        SenderUsernameResourceData IJsonModel<SenderUsernameResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SenderUsernameResourceData>)DataDeserializationInstance).Create(ref reader, options);
+        SenderUsernameResourceData IJsonModel<SenderUsernameResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SenderUsernameResourceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SenderUsernameResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SenderUsernameResourceData>(Data, options, AzureResourceManagerCommunicationContext.Default);
+        BinaryData IPersistableModel<SenderUsernameResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SenderUsernameResourceData IPersistableModel<SenderUsernameResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SenderUsernameResourceData>(data, options, AzureResourceManagerCommunicationContext.Default);
+        SenderUsernameResourceData IPersistableModel<SenderUsernameResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SenderUsernameResourceData>(data, options);
 
-        string IPersistableModel<SenderUsernameResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SenderUsernameResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SenderUsernameResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SenderUsernameResourceData>)Data).GetFormatFromOptions(options);
     }
 }

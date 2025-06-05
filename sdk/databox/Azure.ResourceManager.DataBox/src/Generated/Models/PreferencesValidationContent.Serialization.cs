@@ -42,11 +42,6 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("deviceType"u8);
             writer.WriteStringValue(DeviceType.ToSerialString());
-            if (Optional.IsDefined(Model))
-            {
-                writer.WritePropertyName("model"u8);
-                writer.WriteStringValue(Model.Value.ToSerialString());
-            }
         }
 
         PreferencesValidationContent IJsonModel<PreferencesValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -71,7 +66,6 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             DataBoxOrderPreferences preference = default;
             DataBoxSkuName deviceType = default;
-            DeviceModelName? model = default;
             DataBoxValidationInputDiscriminator validationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,15 +85,6 @@ namespace Azure.ResourceManager.DataBox.Models
                     deviceType = property.Value.GetString().ToDataBoxSkuName();
                     continue;
                 }
-                if (property.NameEquals("model"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    model = property.Value.GetString().ToDeviceModelName();
-                    continue;
-                }
                 if (property.NameEquals("validationType"u8))
                 {
                     validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
@@ -111,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PreferencesValidationContent(validationType, serializedAdditionalRawData, preference, deviceType, model);
+            return new PreferencesValidationContent(validationType, serializedAdditionalRawData, preference, deviceType);
         }
 
         BinaryData IPersistableModel<PreferencesValidationContent>.Write(ModelReaderWriterOptions options)
@@ -121,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PreferencesValidationContent)} does not support writing '{options.Format}' format.");
             }

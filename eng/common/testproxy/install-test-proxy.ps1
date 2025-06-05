@@ -16,15 +16,18 @@ param(
     $InstallDirectory
 )
 
-. (Join-Path $PSScriptRoot '..' 'scripts' 'Helpers' 'AzSdkTool-Helpers.ps1')
+. (Join-Path $PSScriptRoot test-proxy.ps1)
 
 Write-Host "Attempting to download and install version `"$Version`" into `"$InstallDirectory`""
 
-$exe = Install-Standalone-Tool `
-        -Version $Version `
-        -FileName "test-proxy" `
-        -Package "Azure.Sdk.Tools.TestProxy" `
-        -Directory $InstallDirectory
+Install-Standalone-TestProxy -Version $Version -Directory $InstallDirectory
 
-Write-Host "Downloaded test-proxy available at $exe."
-Write-Host "##vso[task.setvariable variable=PROXY_EXE]$exe"
+$PROXY_EXE = ""
+
+if ($IsWindows) {
+    $PROXY_EXE = Join-Path $InstallDirectory "Azure.Sdk.Tools.TestProxy.exe"
+} else {
+    $PROXY_EXE = Join-Path $InstallDirectory "Azure.Sdk.Tools.TestProxy"
+}
+Write-Host "Downloaded test-proxy available at $PROXY_EXE."
+Write-Host "##vso[task.setvariable variable=PROXY_EXE]$PROXY_EXE"

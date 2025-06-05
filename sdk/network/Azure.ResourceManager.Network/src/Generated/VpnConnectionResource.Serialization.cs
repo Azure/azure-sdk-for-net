@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class VpnConnectionResource : IJsonModel<VpnConnectionData>
     {
-        private static VpnConnectionData s_dataDeserializationInstance;
-        private static VpnConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VpnConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VpnConnectionData>)Data).Write(writer, options);
 
-        VpnConnectionData IJsonModel<VpnConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        VpnConnectionData IJsonModel<VpnConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VpnConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VpnConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VpnConnectionData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<VpnConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VpnConnectionData IPersistableModel<VpnConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnConnectionData>(data, options, AzureResourceManagerNetworkContext.Default);
+        VpnConnectionData IPersistableModel<VpnConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VpnConnectionData>(data, options);
 
-        string IPersistableModel<VpnConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VpnConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VpnConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DiagnosticRemoteSupportSettingResource : IJsonModel<DiagnosticRemoteSupportSettingData>
     {
-        private static DiagnosticRemoteSupportSettingData s_dataDeserializationInstance;
-        private static DiagnosticRemoteSupportSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DiagnosticRemoteSupportSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)Data).Write(writer, options);
 
-        DiagnosticRemoteSupportSettingData IJsonModel<DiagnosticRemoteSupportSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        DiagnosticRemoteSupportSettingData IJsonModel<DiagnosticRemoteSupportSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DiagnosticRemoteSupportSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DiagnosticRemoteSupportSettingData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
+        BinaryData IPersistableModel<DiagnosticRemoteSupportSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DiagnosticRemoteSupportSettingData IPersistableModel<DiagnosticRemoteSupportSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
+        DiagnosticRemoteSupportSettingData IPersistableModel<DiagnosticRemoteSupportSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DiagnosticRemoteSupportSettingData>(data, options);
 
-        string IPersistableModel<DiagnosticRemoteSupportSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticRemoteSupportSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DiagnosticRemoteSupportSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DiagnosticRemoteSupportSettingData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -46,33 +46,33 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/>. </summary>
-        /// <param name="successfulCount"> Number of documents that have completed. </param>
-        /// <param name="failedCount"> Number of documents that have failed. </param>
-        /// <param name="canceledCount"> Number of documents that have been canceled. </param>
-        /// <param name="totalCount"> Number of documents total. </param>
+        /// <param name="successful"> Number of documents that have completed. </param>
+        /// <param name="failed"> Number of documents that have failed. </param>
+        /// <param name="canceled"> Number of documents that have been canceled. </param>
+        /// <param name="total"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
-        internal DeidentificationJobSummary(int successfulCount, int failedCount, int canceledCount, int totalCount, long bytesProcessed)
+        internal DeidentificationJobSummary(int successful, int failed, int canceled, int total, long bytesProcessed)
         {
-            SuccessfulCount = successfulCount;
-            FailedCount = failedCount;
-            CanceledCount = canceledCount;
-            TotalCount = totalCount;
+            Successful = successful;
+            Failed = failed;
+            Canceled = canceled;
+            Total = total;
             BytesProcessed = bytesProcessed;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/>. </summary>
-        /// <param name="successfulCount"> Number of documents that have completed. </param>
-        /// <param name="failedCount"> Number of documents that have failed. </param>
-        /// <param name="canceledCount"> Number of documents that have been canceled. </param>
-        /// <param name="totalCount"> Number of documents total. </param>
+        /// <param name="successful"> Number of documents that have completed. </param>
+        /// <param name="failed"> Number of documents that have failed. </param>
+        /// <param name="canceled"> Number of documents that have been canceled. </param>
+        /// <param name="total"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationJobSummary(int successfulCount, int failedCount, int canceledCount, int totalCount, long bytesProcessed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJobSummary(int successful, int failed, int canceled, int total, long bytesProcessed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SuccessfulCount = successfulCount;
-            FailedCount = failedCount;
-            CanceledCount = canceledCount;
-            TotalCount = totalCount;
+            Successful = successful;
+            Failed = failed;
+            Canceled = canceled;
+            Total = total;
             BytesProcessed = bytesProcessed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -83,13 +83,13 @@ namespace Azure.Health.Deidentification
         }
 
         /// <summary> Number of documents that have completed. </summary>
-        public int SuccessfulCount { get; }
+        public int Successful { get; }
         /// <summary> Number of documents that have failed. </summary>
-        public int FailedCount { get; }
+        public int Failed { get; }
         /// <summary> Number of documents that have been canceled. </summary>
-        public int CanceledCount { get; }
+        public int Canceled { get; }
         /// <summary> Number of documents total. </summary>
-        public int TotalCount { get; }
+        public int Total { get; }
         /// <summary> Number of bytes processed. </summary>
         public long BytesProcessed { get; }
     }

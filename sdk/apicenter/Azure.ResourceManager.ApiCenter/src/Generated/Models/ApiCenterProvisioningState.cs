@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ApiCenter.Models
 {
-    /// <summary> The provisioning state of the resource. </summary>
+    /// <summary> Provisioning state of the service. </summary>
     public readonly partial struct ApiCenterProvisioningState : IEquatable<ApiCenterProvisioningState>
     {
         private readonly string _value;
@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ApiCenter.Models
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Resource has been created. </summary>
+        /// <summary> Succeeded. </summary>
         public static ApiCenterProvisioningState Succeeded { get; } = new ApiCenterProvisioningState(SucceededValue);
-        /// <summary> Resource creation failed. </summary>
+        /// <summary> Failed. </summary>
         public static ApiCenterProvisioningState Failed { get; } = new ApiCenterProvisioningState(FailedValue);
-        /// <summary> Resource creation was canceled. </summary>
+        /// <summary> Canceled. </summary>
         public static ApiCenterProvisioningState Canceled { get; } = new ApiCenterProvisioningState(CanceledValue);
         /// <summary> Determines if two <see cref="ApiCenterProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ApiCenterProvisioningState left, ApiCenterProvisioningState right) => left.Equals(right);

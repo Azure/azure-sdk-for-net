@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class TopicTypeResource : IJsonModel<TopicTypeData>
     {
-        private static TopicTypeData s_dataDeserializationInstance;
-        private static TopicTypeData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<TopicTypeData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TopicTypeData>)Data).Write(writer, options);
 
-        TopicTypeData IJsonModel<TopicTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TopicTypeData>)DataDeserializationInstance).Create(ref reader, options);
+        TopicTypeData IJsonModel<TopicTypeData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TopicTypeData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TopicTypeData>(Data, options, AzureResourceManagerEventGridContext.Default);
+        BinaryData IPersistableModel<TopicTypeData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TopicTypeData IPersistableModel<TopicTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TopicTypeData>(data, options, AzureResourceManagerEventGridContext.Default);
+        TopicTypeData IPersistableModel<TopicTypeData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TopicTypeData>(data, options);
 
-        string IPersistableModel<TopicTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TopicTypeData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<TopicTypeData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TopicTypeData>)Data).GetFormatFromOptions(options);
     }
 }

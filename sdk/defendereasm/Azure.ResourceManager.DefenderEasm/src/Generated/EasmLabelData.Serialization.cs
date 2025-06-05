@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DefenderEasm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDefenderEasmContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(EasmLabelData)} does not support writing '{options.Format}' format.");
             }

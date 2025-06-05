@@ -9,7 +9,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenType("AzureContentFilterBlocklistResult")]
+[CodeGenModel("AzureContentFilterBlocklistResult")]
 public partial class ContentFilterBlocklistResult
 {
     public IReadOnlyDictionary<string, bool> BlocklistFilterStatuses

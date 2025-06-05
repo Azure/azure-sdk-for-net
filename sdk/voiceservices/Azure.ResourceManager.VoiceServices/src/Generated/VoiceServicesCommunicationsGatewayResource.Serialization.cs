@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.VoiceServices
 {
     public partial class VoiceServicesCommunicationsGatewayResource : IJsonModel<VoiceServicesCommunicationsGatewayData>
     {
-        private static VoiceServicesCommunicationsGatewayData s_dataDeserializationInstance;
-        private static VoiceServicesCommunicationsGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VoiceServicesCommunicationsGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VoiceServicesCommunicationsGatewayData>)Data).Write(writer, options);
 
-        VoiceServicesCommunicationsGatewayData IJsonModel<VoiceServicesCommunicationsGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VoiceServicesCommunicationsGatewayData>)DataDeserializationInstance).Create(ref reader, options);
+        VoiceServicesCommunicationsGatewayData IJsonModel<VoiceServicesCommunicationsGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VoiceServicesCommunicationsGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VoiceServicesCommunicationsGatewayData>(Data, options, AzureResourceManagerVoiceServicesContext.Default);
+        BinaryData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VoiceServicesCommunicationsGatewayData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(data, options, AzureResourceManagerVoiceServicesContext.Default);
+        VoiceServicesCommunicationsGatewayData IPersistableModel<VoiceServicesCommunicationsGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VoiceServicesCommunicationsGatewayData>(data, options);
 
-        string IPersistableModel<VoiceServicesCommunicationsGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VoiceServicesCommunicationsGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VoiceServicesCommunicationsGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VoiceServicesCommunicationsGatewayData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SensitivitySettingResource : IJsonModel<SensitivitySettingData>
     {
-        private static SensitivitySettingData s_dataDeserializationInstance;
-        private static SensitivitySettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SensitivitySettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SensitivitySettingData>)Data).Write(writer, options);
 
-        SensitivitySettingData IJsonModel<SensitivitySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivitySettingData>)DataDeserializationInstance).Create(ref reader, options);
+        SensitivitySettingData IJsonModel<SensitivitySettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SensitivitySettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SensitivitySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SensitivitySettingData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SensitivitySettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SensitivitySettingData IPersistableModel<SensitivitySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivitySettingData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SensitivitySettingData IPersistableModel<SensitivitySettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SensitivitySettingData>(data, options);
 
-        string IPersistableModel<SensitivitySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivitySettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SensitivitySettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SensitivitySettingData>)Data).GetFormatFromOptions(options);
     }
 }

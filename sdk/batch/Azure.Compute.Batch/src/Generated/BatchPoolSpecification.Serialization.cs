@@ -106,16 +106,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTask"u8);
                 writer.WriteObjectValue(StartTask, options);
             }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(ApplicationPackageReferences))
             {
                 writer.WritePropertyName("applicationPackageReferences"u8);
@@ -218,7 +208,6 @@ namespace Azure.Compute.Batch
             bool? enableInterNodeCommunication = default;
             NetworkConfiguration networkConfiguration = default;
             BatchStartTask startTask = default;
-            IList<BatchCertificateReference> certificateReferences = default;
             IList<BatchApplicationPackageReference> applicationPackageReferences = default;
             IList<UserAccount> userAccounts = default;
             IList<MetadataItem> metadata = default;
@@ -348,20 +337,6 @@ namespace Azure.Compute.Batch
                     startTask = BatchStartTask.DeserializeBatchStartTask(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("applicationPackageReferences"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -458,7 +433,6 @@ namespace Azure.Compute.Batch
                 enableInterNodeCommunication,
                 networkConfiguration,
                 startTask,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 applicationPackageReferences ?? new ChangeTrackingList<BatchApplicationPackageReference>(),
                 userAccounts ?? new ChangeTrackingList<UserAccount>(),
                 metadata ?? new ChangeTrackingList<MetadataItem>(),
@@ -475,7 +449,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BatchPoolSpecification)} does not support writing '{options.Format}' format.");
             }

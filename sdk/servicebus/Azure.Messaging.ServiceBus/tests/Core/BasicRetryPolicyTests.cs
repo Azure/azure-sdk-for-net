@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net.Sockets;
-using System.Net.WebSockets;
 using System.Threading.Tasks;
 using System.Transactions;
 using Azure.Messaging.ServiceBus.Core;
@@ -32,9 +31,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new SocketException((int)SocketError.ConnectionReset) };
             yield return new object[] { new IOException() };
             yield return new object[] { new UnauthorizedAccessException() };
-
-            // WebSocketException should use the inner exception as the decision point.
-            yield return new object[] { new WebSocketException("dummy", new ServiceBusException(true, null)) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 
@@ -67,9 +63,6 @@ namespace Azure.Messaging.ServiceBus.Tests
             yield return new object[] { new ObjectDisposedException("dummy") };
             yield return new object[] { new SocketException((int)SocketError.HostNotFound) };
             yield return new object[] { new SocketException((int)SocketError.HostUnreachable) };
-
-            // WebSocketException should use the inner exception as the decision point.
-            yield return new object[] { new WebSocketException("dummy", new ServiceBusException(false, null)) };
 
             // Task/Operation Canceled should use the inner exception as the decision point.
 

@@ -8,6 +8,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
+    <PackageReference Include="Microsoft.Identity.Client" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />

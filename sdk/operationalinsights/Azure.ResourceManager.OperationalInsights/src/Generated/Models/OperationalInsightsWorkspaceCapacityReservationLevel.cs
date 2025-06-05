@@ -25,12 +25,6 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <summary> 2000. </summary>
         TwoThousand = 2000,
         /// <summary> 5000. </summary>
-        FiveThousand = 5000,
-        /// <summary> 10000. </summary>
-        TenThousand = 10000,
-        /// <summary> 25000. </summary>
-        TwentyFiveThousand = 25000,
-        /// <summary> 50000. </summary>
-        FiftyThousand = 50000
+        FiveThousand = 5000
     }
 }

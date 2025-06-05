@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EventHubs
 {
     public partial class EventHubsClusterResource : IJsonModel<EventHubsClusterData>
     {
-        private static EventHubsClusterData s_dataDeserializationInstance;
-        private static EventHubsClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EventHubsClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsClusterData>)Data).Write(writer, options);
 
-        EventHubsClusterData IJsonModel<EventHubsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        EventHubsClusterData IJsonModel<EventHubsClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventHubsClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventHubsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventHubsClusterData>(Data, options, AzureResourceManagerEventHubsContext.Default);
+        BinaryData IPersistableModel<EventHubsClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventHubsClusterData IPersistableModel<EventHubsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsClusterData>(data, options, AzureResourceManagerEventHubsContext.Default);
+        EventHubsClusterData IPersistableModel<EventHubsClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventHubsClusterData>(data, options);
 
-        string IPersistableModel<EventHubsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EventHubsClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventHubsClusterData>)Data).GetFormatFromOptions(options);
     }
 }

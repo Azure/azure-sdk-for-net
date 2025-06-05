@@ -49,7 +49,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="accessTier"> The current tier of the blob. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="storageDiagnostics"/> is null. </exception>
-        internal StorageBlobCreatedEventData(StorageBlobAccessTier accessTier, object storageDiagnostics)
+        internal StorageBlobCreatedEventData(StorageBlobAccessTier accessTier, IReadOnlyDictionary<string, BinaryData> storageDiagnostics)
         {
             Argument.AssertNotNull(storageDiagnostics, nameof(storageDiagnostics));
 
@@ -72,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="identity"> The identity of the requester that triggered this event. </param>
         /// <param name="storageDiagnostics"> For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageBlobCreatedEventData(string api, string clientRequestId, string requestId, string eTag, string contentType, long? contentLength, long? contentOffset, string blobType, StorageBlobAccessTier accessTier, string url, string sequencer, string identity, object storageDiagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageBlobCreatedEventData(string api, string clientRequestId, string requestId, string eTag, string contentType, long? contentLength, long? contentOffset, string blobType, StorageBlobAccessTier accessTier, string url, string sequencer, string identity, IReadOnlyDictionary<string, BinaryData> storageDiagnostics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Api = api;
             ClientRequestId = clientRequestId;
@@ -119,5 +119,36 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string Sequencer { get; }
         /// <summary> The identity of the requester that triggered this event. </summary>
         public string Identity { get; }
+        /// <summary>
+        /// For service use only. Diagnostic data occasionally included by the Azure Storage service. This property should be ignored by event consumers.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> StorageDiagnostics { get; }
     }
 }

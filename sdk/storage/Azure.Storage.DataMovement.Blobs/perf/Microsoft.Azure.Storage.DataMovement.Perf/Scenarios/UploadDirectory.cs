@@ -41,10 +41,7 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
             TransferStatus transfer = await TransferManager.UploadDirectoryAsync(
                 _sourceDirectory,
                 _destinationContainer.GetDirectoryReference(string.Empty),
-                new UploadDirectoryOptions()
-                {
-                    Recursive = true
-                },
+                options: null,
                 DefaultTransferContext,
                 CancellationToken.None);  // Don't pass cancellation token to let ransfer finish gracefully
             AssertTransferStatus(transfer);

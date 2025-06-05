@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxEdgeContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(EdgeKubernetesIPConfiguration)} does not support writing '{options.Format}' format.");
             }

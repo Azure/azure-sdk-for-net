@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The UserConsentConfiguration. </summary>
+    /// <summary>
+    /// The UserConsentConfiguration.
+    /// Serialized Name: UserConsentConfiguration
+    /// </summary>
     internal partial class UserConsentConfiguration
     {
         /// <summary>
@@ -51,7 +54,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UserConsentConfiguration"/>. </summary>
-        /// <param name="allowSupportTelemetryAccess"> Allow Microsoft to access non-PII telemetry information from the packet core. </param>
+        /// <param name="allowSupportTelemetryAccess">
+        /// Allow Microsoft to access non-PII telemetry information from the packet core.
+        /// Serialized Name: UserConsentConfiguration.allowSupportTelemetryAccess
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal UserConsentConfiguration(bool? allowSupportTelemetryAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -59,7 +65,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Allow Microsoft to access non-PII telemetry information from the packet core. </summary>
+        /// <summary>
+        /// Allow Microsoft to access non-PII telemetry information from the packet core.
+        /// Serialized Name: UserConsentConfiguration.allowSupportTelemetryAccess
+        /// </summary>
         [WirePath("allowSupportTelemetryAccess")]
         public bool? AllowSupportTelemetryAccess { get; set; }
     }

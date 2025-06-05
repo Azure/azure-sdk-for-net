@@ -1747,35 +1747,5 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.Filtering
         }
 
         #endregion
-
-        [Fact]
-        public void GetFieldType_CorrectlyDiscoversNestedType()
-        {
-            // ARRANGE
-            string fieldName = "Parent.Child.GrandChild";
-
-            // ACT
-            Filter<DocumentMockWithNestedProperties>.FieldNameType fieldNameType;
-            Type result = Filter<DocumentMockWithNestedProperties>.GetFieldType(fieldName, out fieldNameType);
-
-            // ASSERT
-            Assert.Equal(typeof(string), result);
-            Assert.Equal(Filter<DocumentMockWithNestedProperties>.FieldNameType.FieldName, fieldNameType);
-        }
-
-        internal class DocumentMockWithNestedProperties : DocumentIngress
-        {
-            public ParentType Parent { get; set; } = new ParentType();
-
-            public class ParentType
-            {
-                public ChildType Child { get; set; } = new ChildType();
-
-                public class ChildType
-                {
-                    public string GrandChild { get; set; } = "TestValue";
-                }
-            }
-        }
     }
 }

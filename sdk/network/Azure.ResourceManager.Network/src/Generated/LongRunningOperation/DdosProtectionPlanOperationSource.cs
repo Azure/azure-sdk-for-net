@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Network
 
         DdosProtectionPlanResource IOperationSource<DdosProtectionPlanResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DdosProtectionPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<DdosProtectionPlanData>(response.Content);
             return new DdosProtectionPlanResource(_client, data);
         }
 
         async ValueTask<DdosProtectionPlanResource> IOperationSource<DdosProtectionPlanResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DdosProtectionPlanData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkContext.Default);
+            var data = ModelReaderWriter.Read<DdosProtectionPlanData>(response.Content);
             return await Task.FromResult(new DdosProtectionPlanResource(_client, data)).ConfigureAwait(false);
         }
     }

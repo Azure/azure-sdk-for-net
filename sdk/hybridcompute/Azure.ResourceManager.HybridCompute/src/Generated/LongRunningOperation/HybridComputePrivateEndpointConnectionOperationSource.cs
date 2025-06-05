@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HybridCompute
 
         HybridComputePrivateEndpointConnectionResource IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content);
             return new HybridComputePrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<HybridComputePrivateEndpointConnectionResource> IOperationSource<HybridComputePrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridComputeContext.Default);
+            var data = ModelReaderWriter.Read<HybridComputePrivateEndpointConnectionData>(response.Content);
             return await Task.FromResult(new HybridComputePrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

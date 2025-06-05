@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
 {
     public partial class VirtualDesktopResource : IJsonModel<VirtualDesktopData>
     {
-        private static VirtualDesktopData s_dataDeserializationInstance;
-        private static VirtualDesktopData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<VirtualDesktopData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<VirtualDesktopData>)Data).Write(writer, options);
 
-        VirtualDesktopData IJsonModel<VirtualDesktopData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualDesktopData>)DataDeserializationInstance).Create(ref reader, options);
+        VirtualDesktopData IJsonModel<VirtualDesktopData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<VirtualDesktopData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<VirtualDesktopData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<VirtualDesktopData>(Data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        BinaryData IPersistableModel<VirtualDesktopData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        VirtualDesktopData IPersistableModel<VirtualDesktopData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualDesktopData>(data, options, AzureResourceManagerDesktopVirtualizationContext.Default);
+        VirtualDesktopData IPersistableModel<VirtualDesktopData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<VirtualDesktopData>(data, options);
 
-        string IPersistableModel<VirtualDesktopData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualDesktopData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<VirtualDesktopData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<VirtualDesktopData>)Data).GetFormatFromOptions(options);
     }
 }

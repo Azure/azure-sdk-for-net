@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Datadog
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DatadogSingleSignOnResourceData)} does not support writing '{options.Format}' format.");
             }

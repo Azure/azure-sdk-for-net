@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.BotService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BotServiceNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }

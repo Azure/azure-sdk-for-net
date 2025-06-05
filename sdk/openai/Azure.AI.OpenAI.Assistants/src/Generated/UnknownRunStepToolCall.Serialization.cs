@@ -89,7 +89,7 @@ namespace Azure.AI.OpenAI.Assistants
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIAssistantsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(RunStepToolCall)} does not support writing '{options.Format}' format.");
             }

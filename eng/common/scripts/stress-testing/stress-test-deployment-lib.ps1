@@ -48,15 +48,7 @@ function Login([string]$subscription, [string]$tenant, [string]$clusterGroup, [s
     Write-Host "Logging in to subscription, cluster and container registry"
     az account show -s "$subscription" *> $null
     if ($LASTEXITCODE) {
-        Run az login --allow-no-subscriptions --tenant $tenant
-        if ($LASTEXITCODE) {
-            throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
-        }
-    }
-
-    $subscriptions = (Run az account list -o json) | ConvertFrom-Json
-    if ($subscriptions.Length -eq 0) {
-        throw "You do not have access to the TME subscription. Follow these steps to join the group: https://dev.azure.com/azure-sdk/internal/_wiki/wikis/internal.wiki/206/Subscription-and-Tenant-Usage?anchor=azure-sdk-test-resources-tme"
+        RunOrExitOnFailure az login --allow-no-subscriptions --tenant $tenant
     }
 
     # Discover cluster name, only one cluster per group is expected

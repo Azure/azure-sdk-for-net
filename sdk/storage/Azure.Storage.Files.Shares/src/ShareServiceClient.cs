@@ -129,7 +129,6 @@ namespace Azure.Storage.Files.Shares
         {
             options ??= new ShareClientOptions();
             var conn = StorageConnectionString.Parse(connectionString);
-            ShareErrors.AssertNotDevelopment(conn, nameof(connectionString));
             _uri = conn.FileEndpoint;
             _accountName = conn.AccountName;
             _clientConfiguration = new ShareClientConfiguration(

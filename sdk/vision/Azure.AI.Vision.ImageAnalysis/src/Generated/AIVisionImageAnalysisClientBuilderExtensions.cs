@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.Vision.ImageAnalysis;
 using Azure.Core.Extensions;
@@ -44,8 +43,6 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="ImageAnalysisClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<ImageAnalysisClient, ImageAnalysisClientOptions> AddImageAnalysisClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {

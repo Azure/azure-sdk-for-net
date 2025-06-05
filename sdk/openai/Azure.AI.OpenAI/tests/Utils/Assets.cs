@@ -47,15 +47,6 @@ namespace Azure.AI.OpenAI.Tests
                 MimeType = "image/png",
                 Url = new Uri("https://cdn.openai.com/API/images/guides/image_variation_original.webp")
             };
-            ScreenshotWithSaveButton = new()
-            {
-                Type = AssetType.Image,
-                Language = null,
-                Description = "A screenshot with a prominent 'Save' button to click",
-                Name = "images_screenshot_with_save_1024_768.png",
-                RelativePath = GetPath("images_screenshot_with_save_1024_768.png"),
-                MimeType = "image/png",
-            };
             FineTuning = new()
             {
                 Type = AssetType.Text,
@@ -80,7 +71,6 @@ namespace Azure.AI.OpenAI.Tests
         public virtual AssetInfo HelloWorldMp3 { get; }
         public virtual AssetInfo WhisperFrenchDescription { get; }
         public virtual AssetInfo DogAndCat { get; }
-        public virtual AssetInfo ScreenshotWithSaveButton { get; }
         public virtual AssetInfo FineTuning { get; }
         public virtual AssetInfo AudioWhatsTheWeatherPcm16 { get; }
 

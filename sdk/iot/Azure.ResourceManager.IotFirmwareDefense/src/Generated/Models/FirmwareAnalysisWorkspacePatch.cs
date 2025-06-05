@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    /// <summary> The type used for update operations of the Workspace. </summary>
+    /// <summary> Firmware analysis workspace. </summary>
     public partial class FirmwareAnalysisWorkspacePatch
     {
         /// <summary>
@@ -48,23 +48,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisWorkspacePatch"/>. </summary>
         public FirmwareAnalysisWorkspacePatch()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareAnalysisWorkspacePatch"/>. </summary>
-        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareAnalysisWorkspacePatch(IotFirmwareDefenseSkuUpdate sku, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FirmwareAnalysisWorkspacePatch(FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Sku = sku;
-            Tags = tags;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
-        public IotFirmwareDefenseSkuUpdate Sku { get; set; }
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
+        /// <summary> Provisioning state of the resource. </summary>
+        public FirmwareProvisioningState? ProvisioningState { get; }
     }
 }

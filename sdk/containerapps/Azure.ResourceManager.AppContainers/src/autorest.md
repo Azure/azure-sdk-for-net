@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: AppContainers
 namespace: Azure.ResourceManager.AppContainers
-require: https://github.com/Azure/azure-rest-api-specs/blob/24b224b17e698746d3c34e32f84dab7de5e4f2a8/specification/app/resource-manager/readme.md
-#tag: package-2025-01-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/07f22664203dc215a564e00329b81a8a94cc11ee/specification/app/resource-manager/readme.md
+#tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -52,7 +52,6 @@ acronym-mapping:
   URI: Uri
   Etag: ETag|etag
   Github: GitHub
-  LTS: Lts
 
 rename-mapping:
   ContainerAppProbeHttpGet: ContainerAppHttpRequestInfo
@@ -89,7 +88,6 @@ rename-mapping:
   AzureActiveDirectoryValidation: ContainerAppAzureActiveDirectoryValidationConfiguration
   AzureCredentials: ContainerAppCredentials
   AzureFileProperties: ContainerAppAzureFileProperties
-  NfsAzureFileProperties: ContainerAppNfsAzureFileProperties
   BaseContainer: ContainerAppBaseContainer
   BillingMeter: ContainerAppBillingMeter
   BillingMeterProperties: ContainerAppBillingMeterProperties
@@ -238,14 +236,6 @@ rename-mapping:
   Usage: ContainerAppUsage
   UsageName: ContainerAppUsageName
   UsageUnit: ContainerAppUsageUnit
-  DaprSubscriptionBulkSubscribeOptions: DaprSubscriptionBulkSubscribeConfig
-  ScaleConfiguration: SessionPoolScaleConfiguration
-  ManagedIdentitySetting: SessionPoolManagedIdentitySetting
-  LifecycleType: SessionPoolLifecycleType
-  LifecycleConfiguration: SessionPoolLifecycleConfiguration
-  IdentitySettingsLifeCycle: ContainerAppIdentitySettingsLifeCycle 
-  IdentitySettings: ContainerAppIdentitySettings
-  CertificateKeyVaultProperties: ContainerAppCertificateKeyVaultProperties
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/connectedEnvironments/{connectedEnvironmentName}/certificates/{certificateName}: ContainerAppConnectedEnvironmentCertificate

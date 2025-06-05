@@ -161,11 +161,6 @@ namespace Azure.Storage.DataMovement
             internal const string FilePermissions = "FilePermissions";
             internal const string SourceFilePermissionKey = "SourceFilePermissionKey";
             internal const string DestinationFilePermissionKey = "DestinationFilePermissionKey";
-            internal const string Owner = "Owner";
-            internal const string Group = "Group";
-            internal const string FileMode = "FileMode";
-            internal const string FileType = "FileType";
-            internal const string LinkCount = "LinkCount";
         }
     }
 }

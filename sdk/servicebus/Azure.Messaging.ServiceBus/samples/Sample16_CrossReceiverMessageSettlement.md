@@ -13,7 +13,7 @@ First we can get the raw AMQP message bytes and lock token as shown below:
 actually part of the AMQP message so it needs to stored separately from the AMQP bytes.*
 
 ```C# Snippet:ServiceBusWriteReceivedMessage
-var credential = new DefaultAzureCredential();
+DefaultAzureCredential credential = new();
 ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
 ServiceBusSender sender = client1.CreateSender(queueName);
 

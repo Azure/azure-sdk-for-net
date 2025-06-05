@@ -10,7 +10,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.ResourceManager.IotFirmwareDefense.Mocking;
-using Azure.ResourceManager.IotFirmwareDefense.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.IotFirmwareDefense
@@ -34,25 +33,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
-        public static FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareAnalysisWorkspaceResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing an <see cref="IotFirmwareResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="IotFirmwareResource.CreateResourceIdentifier" /> to create an <see cref="IotFirmwareResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -73,7 +53,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
 
         /// <summary>
         /// Gets an object representing a <see cref="FirmwareAnalysisSummaryResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier(string,string,string,string,FirmwareAnalysisSummaryType)" /> to create a <see cref="FirmwareAnalysisSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// You can use <see cref="FirmwareAnalysisSummaryResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisSummaryResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
         /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisSummaryResource(ResourceIdentifier)"/> instead.</description>
@@ -91,22 +71,22 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="UsageMetricResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="UsageMetricResource.CreateResourceIdentifier" /> to create an <see cref="UsageMetricResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing a <see cref="FirmwareAnalysisWorkspaceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="FirmwareAnalysisWorkspaceResource.CreateResourceIdentifier" /> to create a <see cref="FirmwareAnalysisWorkspaceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetUsageMetricResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotFirmwareDefenseArmClient.GetFirmwareAnalysisWorkspaceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="UsageMetricResource"/> object. </returns>
-        public static UsageMetricResource GetUsageMetricResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="FirmwareAnalysisWorkspaceResource"/> object. </returns>
+        public static FirmwareAnalysisWorkspaceResource GetFirmwareAnalysisWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotFirmwareDefenseArmClient(client).GetUsageMetricResource(id);
+            return GetMockableIotFirmwareDefenseArmClient(client).GetFirmwareAnalysisWorkspaceResource(id);
         }
 
         /// <summary>
@@ -139,7 +119,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,7 +157,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -215,7 +195,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,7 +231,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

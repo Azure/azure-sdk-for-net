@@ -4,7 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <PackageId>Microsoft.Azure.WebJobs.Extensions.SignalRService</PackageId>
     <Version>2.1.0-beta.1</Version>
-    <ApiCompatVersion>2.0.1</ApiCompatVersion>
+    <ApiCompatVersion>2.0.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <SignAssembly>true</SignAssembly>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
@@ -18,7 +18,8 @@
     <PackageReference Include="Microsoft.Azure.SignalR" />
     <PackageReference Include="Microsoft.Azure.SignalR.Protocols" />
     <PackageReference Include="Microsoft.Azure.SignalR.Serverless.Protocols" />
-    <PackageReference Include="Microsoft.Extensions.Azure" />
+    <!--According to https://github.com/Azure/azure-sdk-for-net/pull/48280#discussion_r1972339492, 1.8.0 is the latest safe version.-->
+    <PackageReference Include="Microsoft.Extensions.Azure" VersionOverride="1.8.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
   </ItemGroup>
 

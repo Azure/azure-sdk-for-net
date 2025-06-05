@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DigitalTwins
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDigitalTwinsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DigitalTwinsDescriptionData)} does not support writing '{options.Format}' format.");
             }

@@ -18,11 +18,8 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowOnDeserializationWithRehydrationTokenNullRequiredMember()
         {
-            // net462 doesn't play well with validating debug asserts
-#if !NETFRAMEWORK
             var data = BinaryData.FromString("{\"requestMethod\": null}");
             Assert.That(() => ModelReaderWriter.Read(data, typeof(RehydrationToken)), Throws.Exception);
-#endif
         }
 
         [Test]

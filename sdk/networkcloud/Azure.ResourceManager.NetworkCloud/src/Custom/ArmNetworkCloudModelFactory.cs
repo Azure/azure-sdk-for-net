@@ -102,7 +102,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 systemData,
                 tags,
                 location,
-                null,
                 extendedLocation,
                 administratorConfiguration,
                 agentOptions,

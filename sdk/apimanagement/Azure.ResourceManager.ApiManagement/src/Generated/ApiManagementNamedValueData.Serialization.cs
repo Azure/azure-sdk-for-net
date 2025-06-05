@@ -71,11 +71,6 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("keyVault"u8);
                 writer.WriteObjectValue(KeyVaultDetails, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
             writer.WriteEndObject();
         }
 
@@ -108,7 +103,6 @@ namespace Azure.ResourceManager.ApiManagement
             string displayName = default;
             string value = default;
             KeyVaultContractProperties keyVault = default;
-            string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,11 +182,6 @@ namespace Azure.ResourceManager.ApiManagement
                             keyVault = KeyVaultContractProperties.DeserializeKeyVaultContractProperties(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -212,7 +201,6 @@ namespace Azure.ResourceManager.ApiManagement
                 displayName,
                 value,
                 keyVault,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -395,29 +383,6 @@ namespace Azure.ResourceManager.ApiManagement
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    if (ProvisioningState.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ProvisioningState}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ProvisioningState}'");
-                    }
-                }
-            }
-
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -430,7 +395,7 @@ namespace Azure.ResourceManager.ApiManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

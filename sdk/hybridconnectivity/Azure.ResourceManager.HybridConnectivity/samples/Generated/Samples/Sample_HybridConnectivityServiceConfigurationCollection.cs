@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.HybridConnectivity.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HybridConnectivity.Samples
@@ -19,8 +20,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServiceConfigurationsPutSSH()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsPutSSH.json
-            // this example is just showing the usage of "ServiceConfigurationResource_CreateOrupdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsPutSSH.json
+            // this example is just showing the usage of "ServiceConfigurations_CreateOrupdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,7 +40,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
 
             // invoke the operation
             string serviceConfigurationName = "SSH";
-            HybridConnectivityServiceConfigurationData data = new HybridConnectivityServiceConfigurationData();
+            HybridConnectivityServiceConfigurationData data = new HybridConnectivityServiceConfigurationData
+            {
+                ServiceName = HybridConnectivityServiceName.SSH,
+                Port = 22L,
+            };
             ArmOperation<HybridConnectivityServiceConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceConfigurationName, data);
             HybridConnectivityServiceConfigurationResource result = lro.Value;
 
@@ -54,8 +59,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServiceConfigurationsPutWAC()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsPutWAC.json
-            // this example is just showing the usage of "ServiceConfigurationResource_CreateOrupdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsPutWAC.json
+            // this example is just showing the usage of "ServiceConfigurations_CreateOrupdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,7 +79,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
 
             // invoke the operation
             string serviceConfigurationName = "WAC";
-            HybridConnectivityServiceConfigurationData data = new HybridConnectivityServiceConfigurationData();
+            HybridConnectivityServiceConfigurationData data = new HybridConnectivityServiceConfigurationData
+            {
+                ServiceName = HybridConnectivityServiceName.WAC,
+                Port = 6516L,
+            };
             ArmOperation<HybridConnectivityServiceConfigurationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, serviceConfigurationName, data);
             HybridConnectivityServiceConfigurationResource result = lro.Value;
 
@@ -89,8 +98,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
-            // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsGetSSH.json
+            // this example is just showing the usage of "ServiceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -122,8 +131,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
-            // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsGetWAC.json
+            // this example is just showing the usage of "ServiceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -155,8 +164,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetClustersExample()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsList.json
-            // this example is just showing the usage of "ServiceConfigurationResource_ListByEndpointResource" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsList.json
+            // this example is just showing the usage of "ServiceConfigurations_ListByEndpointResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -190,8 +199,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
-            // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsGetSSH.json
+            // this example is just showing the usage of "ServiceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -219,8 +228,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
-            // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsGetWAC.json
+            // this example is just showing the usage of "ServiceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -248,8 +257,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
-            // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsGetSSH.json
+            // this example is just showing the usage of "ServiceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -289,8 +298,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
-            // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/ServiceConfigurationsGetWAC.json
+            // this example is just showing the usage of "ServiceConfigurations_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

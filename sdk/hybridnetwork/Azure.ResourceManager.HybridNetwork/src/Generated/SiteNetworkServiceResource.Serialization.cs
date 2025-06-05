@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HybridNetwork
 {
     public partial class SiteNetworkServiceResource : IJsonModel<SiteNetworkServiceData>
     {
-        private static SiteNetworkServiceData s_dataDeserializationInstance;
-        private static SiteNetworkServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SiteNetworkServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteNetworkServiceData>)Data).Write(writer, options);
 
-        SiteNetworkServiceData IJsonModel<SiteNetworkServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteNetworkServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        SiteNetworkServiceData IJsonModel<SiteNetworkServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteNetworkServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SiteNetworkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteNetworkServiceData>(Data, options, AzureResourceManagerHybridNetworkContext.Default);
+        BinaryData IPersistableModel<SiteNetworkServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SiteNetworkServiceData IPersistableModel<SiteNetworkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteNetworkServiceData>(data, options, AzureResourceManagerHybridNetworkContext.Default);
+        SiteNetworkServiceData IPersistableModel<SiteNetworkServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteNetworkServiceData>(data, options);
 
-        string IPersistableModel<SiteNetworkServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteNetworkServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SiteNetworkServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteNetworkServiceData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sphere
 {
     public partial class SphereImageResource : IJsonModel<SphereImageData>
     {
-        private static SphereImageData s_dataDeserializationInstance;
-        private static SphereImageData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SphereImageData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SphereImageData>)Data).Write(writer, options);
 
-        SphereImageData IJsonModel<SphereImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereImageData>)DataDeserializationInstance).Create(ref reader, options);
+        SphereImageData IJsonModel<SphereImageData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SphereImageData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SphereImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SphereImageData>(Data, options, AzureResourceManagerSphereContext.Default);
+        BinaryData IPersistableModel<SphereImageData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SphereImageData IPersistableModel<SphereImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereImageData>(data, options, AzureResourceManagerSphereContext.Default);
+        SphereImageData IPersistableModel<SphereImageData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SphereImageData>(data, options);
 
-        string IPersistableModel<SphereImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereImageData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SphereImageData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SphereImageData>)Data).GetFormatFromOptions(options);
     }
 }

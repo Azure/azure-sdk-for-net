@@ -37,12 +37,12 @@ namespace Azure.Health.Deidentification
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(JobName);
+                writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(OperationType))
+            if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(OperationType.Value.ToString());
+                writer.WriteStringValue(Operation.Value.ToString());
             }
             writer.WritePropertyName("sourceLocation"u8);
             writer.WriteObjectValue(SourceLocation, options);
@@ -125,7 +125,7 @@ namespace Azure.Health.Deidentification
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
             DeidentificationJobCustomizationOptions customizations = default;
-            OperationStatus status = default;
+            OperationState status = default;
             ResponseError error = default;
             DateTimeOffset lastUpdatedAt = default;
             DateTimeOffset createdAt = default;
@@ -170,7 +170,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new OperationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -238,7 +238,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeidentificationJob)} does not support writing '{options.Format}' format.");
             }

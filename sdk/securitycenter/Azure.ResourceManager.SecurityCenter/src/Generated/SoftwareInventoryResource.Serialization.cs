@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SoftwareInventoryResource : IJsonModel<SoftwareInventoryData>
     {
-        private static SoftwareInventoryData s_dataDeserializationInstance;
-        private static SoftwareInventoryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SoftwareInventoryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareInventoryData>)Data).Write(writer, options);
 
-        SoftwareInventoryData IJsonModel<SoftwareInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareInventoryData>)DataDeserializationInstance).Create(ref reader, options);
+        SoftwareInventoryData IJsonModel<SoftwareInventoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SoftwareInventoryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SoftwareInventoryData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SoftwareInventoryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SoftwareInventoryData IPersistableModel<SoftwareInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareInventoryData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SoftwareInventoryData IPersistableModel<SoftwareInventoryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SoftwareInventoryData>(data, options);
 
-        string IPersistableModel<SoftwareInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SoftwareInventoryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SoftwareInventoryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SoftwareInventoryData>)Data).GetFormatFromOptions(options);
     }
 }

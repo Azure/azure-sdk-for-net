@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.DataBox.Models
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
-            DeviceModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,22 +79,13 @@ namespace Azure.ResourceManager.DataBox.Models
                     country = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    model = property.Value.GetString().ToDeviceModelName();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HeavyScheduleAvailabilityContent(storageLocation, skuName, country, model, serializedAdditionalRawData);
+            return new HeavyScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HeavyScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -105,7 +95,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HeavyScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

@@ -90,16 +90,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("managementId"u8);
                 writer.WriteStringValue(ManagementId);
             }
-            if (Optional.IsDefined(ProtectionClusterId))
-            {
-                writer.WritePropertyName("protectionClusterId"u8);
-                writer.WriteStringValue(ProtectionClusterId);
-            }
-            if (Optional.IsDefined(IsClusterInfraReady))
-            {
-                writer.WritePropertyName("isClusterInfraReady"u8);
-                writer.WriteBooleanValue(IsClusterInfraReady.Value);
-            }
             if (Optional.IsCollectionDefined(ProtectedDisks))
             {
                 writer.WritePropertyName("protectedDisks"u8);
@@ -368,8 +358,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string multiVmGroupName = default;
             MultiVmGroupCreateOption? multiVmGroupCreateOption = default;
             string managementId = default;
-            ResourceIdentifier protectionClusterId = default;
-            bool? isClusterInfraReady = default;
             IReadOnlyList<A2AProtectedDiskDetails> protectedDisks = default;
             IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks = default;
             IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default;
@@ -495,24 +483,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 if (property.NameEquals("managementId"u8))
                 {
                     managementId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("protectionClusterId"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    protectionClusterId = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("isClusterInfraReady"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isClusterInfraReady = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("protectedDisks"u8))
@@ -891,8 +861,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 multiVmGroupName,
                 multiVmGroupCreateOption,
                 managementId,
-                protectionClusterId,
-                isClusterInfraReady,
                 protectedDisks ?? new ChangeTrackingList<A2AProtectedDiskDetails>(),
                 unprotectedDisks ?? new ChangeTrackingList<A2AUnprotectedDiskDetails>(),
                 protectedManagedDisks ?? new ChangeTrackingList<A2AProtectedManagedDiskDetails>(),
@@ -945,7 +913,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(A2AReplicationDetails)} does not support writing '{options.Format}' format.");
             }

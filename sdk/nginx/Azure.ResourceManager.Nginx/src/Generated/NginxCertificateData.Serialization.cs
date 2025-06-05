@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Nginx
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NginxCertificateData)} does not support writing '{options.Format}' format.");
             }

@@ -36,8 +36,6 @@ namespace Azure.Compute.Batch
 
             writer.WritePropertyName("subnetId"u8);
             writer.WriteStringValue(SubnetId);
-            writer.WritePropertyName("skipWithdrawFromVNet"u8);
-            writer.WriteBooleanValue(SkipWithdrawFromVNet);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -76,7 +74,6 @@ namespace Azure.Compute.Batch
                 return null;
             }
             string subnetId = default;
-            bool skipWithdrawFromVNet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,18 +83,13 @@ namespace Azure.Compute.Batch
                     subnetId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("skipWithdrawFromVNet"u8))
-                {
-                    skipWithdrawFromVNet = property.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchJobNetworkConfiguration(subnetId, skipWithdrawFromVNet, serializedAdditionalRawData);
+            return new BatchJobNetworkConfiguration(subnetId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchJobNetworkConfiguration>.Write(ModelReaderWriterOptions options)
@@ -107,7 +99,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }

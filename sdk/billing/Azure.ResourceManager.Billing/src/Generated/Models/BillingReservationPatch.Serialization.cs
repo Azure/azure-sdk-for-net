@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Billing.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BillingReservationPatch)} does not support writing '{options.Format}' format.");
             }

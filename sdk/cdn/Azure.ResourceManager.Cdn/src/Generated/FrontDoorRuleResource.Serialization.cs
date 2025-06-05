@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Cdn
 {
     public partial class FrontDoorRuleResource : IJsonModel<FrontDoorRuleData>
     {
-        private static FrontDoorRuleData s_dataDeserializationInstance;
-        private static FrontDoorRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<FrontDoorRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRuleData>)Data).Write(writer, options);
 
-        FrontDoorRuleData IJsonModel<FrontDoorRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        FrontDoorRuleData IJsonModel<FrontDoorRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorRuleData>(Data, options, AzureResourceManagerCdnContext.Default);
+        BinaryData IPersistableModel<FrontDoorRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        FrontDoorRuleData IPersistableModel<FrontDoorRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorRuleData>(data, options, AzureResourceManagerCdnContext.Default);
+        FrontDoorRuleData IPersistableModel<FrontDoorRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorRuleData>(data, options);
 
-        string IPersistableModel<FrontDoorRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRuleData>)Data).GetFormatFromOptions(options);
     }
 }

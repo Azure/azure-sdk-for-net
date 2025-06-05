@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AvsClusterCreatedEventDataConverter))]
     public partial class AvsClusterCreatedEventData : IUtf8JsonSerializable, IJsonModel<AvsClusterCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsClusterCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -130,7 +128,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AvsClusterCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -168,20 +166,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AvsClusterCreatedEventDataConverter : JsonConverter<AvsClusterCreatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AvsClusterCreatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AvsClusterCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAvsClusterCreatedEventData(document.RootElement);
-            }
         }
     }
 }

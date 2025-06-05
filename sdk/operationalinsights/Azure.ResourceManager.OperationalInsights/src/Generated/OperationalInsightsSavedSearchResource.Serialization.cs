@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsSavedSearchResource : IJsonModel<OperationalInsightsSavedSearchData>
     {
-        private static OperationalInsightsSavedSearchData s_dataDeserializationInstance;
-        private static OperationalInsightsSavedSearchData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<OperationalInsightsSavedSearchData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsSavedSearchData>)Data).Write(writer, options);
 
-        OperationalInsightsSavedSearchData IJsonModel<OperationalInsightsSavedSearchData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsSavedSearchData>)DataDeserializationInstance).Create(ref reader, options);
+        OperationalInsightsSavedSearchData IJsonModel<OperationalInsightsSavedSearchData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsSavedSearchData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OperationalInsightsSavedSearchData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsSavedSearchData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
+        BinaryData IPersistableModel<OperationalInsightsSavedSearchData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        OperationalInsightsSavedSearchData IPersistableModel<OperationalInsightsSavedSearchData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsSavedSearchData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
+        OperationalInsightsSavedSearchData IPersistableModel<OperationalInsightsSavedSearchData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsSavedSearchData>(data, options);
 
-        string IPersistableModel<OperationalInsightsSavedSearchData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsSavedSearchData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsSavedSearchData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsSavedSearchData>)Data).GetFormatFromOptions(options);
     }
 }

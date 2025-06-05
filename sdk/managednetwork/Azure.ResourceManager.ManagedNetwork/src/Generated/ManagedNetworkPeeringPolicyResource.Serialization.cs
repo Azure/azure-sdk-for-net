@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagedNetwork
 {
     public partial class ManagedNetworkPeeringPolicyResource : IJsonModel<ManagedNetworkPeeringPolicyData>
     {
-        private static ManagedNetworkPeeringPolicyData s_dataDeserializationInstance;
-        private static ManagedNetworkPeeringPolicyData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ManagedNetworkPeeringPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkPeeringPolicyData>)Data).Write(writer, options);
 
-        ManagedNetworkPeeringPolicyData IJsonModel<ManagedNetworkPeeringPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkPeeringPolicyData>)DataDeserializationInstance).Create(ref reader, options);
+        ManagedNetworkPeeringPolicyData IJsonModel<ManagedNetworkPeeringPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedNetworkPeeringPolicyData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ManagedNetworkPeeringPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedNetworkPeeringPolicyData>(Data, options, AzureResourceManagerManagedNetworkContext.Default);
+        BinaryData IPersistableModel<ManagedNetworkPeeringPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ManagedNetworkPeeringPolicyData IPersistableModel<ManagedNetworkPeeringPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(data, options, AzureResourceManagerManagedNetworkContext.Default);
+        ManagedNetworkPeeringPolicyData IPersistableModel<ManagedNetworkPeeringPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedNetworkPeeringPolicyData>(data, options);
 
-        string IPersistableModel<ManagedNetworkPeeringPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkPeeringPolicyData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ManagedNetworkPeeringPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedNetworkPeeringPolicyData>)Data).GetFormatFromOptions(options);
     }
 }

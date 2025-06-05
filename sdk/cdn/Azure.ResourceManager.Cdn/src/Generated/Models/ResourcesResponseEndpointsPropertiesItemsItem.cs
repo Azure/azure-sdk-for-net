@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The ResourcesResponseEndpointsPropertiesItemsItem.
-    /// Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem
-    /// </summary>
+    /// <summary> The ResourcesResponseEndpointsPropertiesItemsItem. </summary>
     public partial class ResourcesResponseEndpointsPropertiesItemsItem
     {
         /// <summary>
@@ -54,10 +51,10 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourcesResponseEndpointsPropertiesItemsItem"/>. </summary>
-        /// <param name="id"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.id. </param>
-        /// <param name="name"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.name. </param>
-        /// <param name="endpointId"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.endpointId. </param>
-        /// <param name="history"> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.history. </param>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="endpointId"></param>
+        /// <param name="history"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ResourcesResponseEndpointsPropertiesItemsItem(string id, string name, string endpointId, bool? history, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,13 +65,13 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.id. </summary>
+        /// <summary> Gets the id. </summary>
         public string Id { get; }
-        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.name. </summary>
+        /// <summary> Gets the name. </summary>
         public string Name { get; }
-        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.endpointId. </summary>
+        /// <summary> Gets the endpoint id. </summary>
         public string EndpointId { get; }
-        /// <summary> Serialized Name: ResourcesResponseEndpointsPropertiesItemsItem.history. </summary>
+        /// <summary> Gets the history. </summary>
         public bool? History { get; }
     }
 }

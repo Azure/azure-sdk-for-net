@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class OSOptionProfileResource : IJsonModel<OSOptionProfileData>
     {
-        private static OSOptionProfileData s_dataDeserializationInstance;
-        private static OSOptionProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<OSOptionProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OSOptionProfileData>)Data).Write(writer, options);
 
-        OSOptionProfileData IJsonModel<OSOptionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OSOptionProfileData>)DataDeserializationInstance).Create(ref reader, options);
+        OSOptionProfileData IJsonModel<OSOptionProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OSOptionProfileData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OSOptionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OSOptionProfileData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
+        BinaryData IPersistableModel<OSOptionProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        OSOptionProfileData IPersistableModel<OSOptionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OSOptionProfileData>(data, options, AzureResourceManagerContainerServiceContext.Default);
+        OSOptionProfileData IPersistableModel<OSOptionProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OSOptionProfileData>(data, options);
 
-        string IPersistableModel<OSOptionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OSOptionProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<OSOptionProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OSOptionProfileData>)Data).GetFormatFromOptions(options);
     }
 }

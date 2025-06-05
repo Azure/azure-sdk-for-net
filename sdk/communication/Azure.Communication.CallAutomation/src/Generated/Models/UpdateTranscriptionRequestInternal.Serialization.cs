@@ -15,15 +15,12 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(Locale))
+            writer.WritePropertyName("locale"u8);
+            writer.WriteStringValue(Locale);
+            if (Optional.IsDefined(SpeechRecognitionModelEndpointId))
             {
-                writer.WritePropertyName("locale"u8);
-                writer.WriteStringValue(Locale);
-            }
-            if (Optional.IsDefined(SpeechModelEndpointId))
-            {
-                writer.WritePropertyName("speechModelEndpointId"u8);
-                writer.WriteStringValue(SpeechModelEndpointId);
+                writer.WritePropertyName("speechRecognitionModelEndpointId"u8);
+                writer.WriteStringValue(SpeechRecognitionModelEndpointId);
             }
             if (Optional.IsDefined(OperationContext))
             {

@@ -106,11 +106,6 @@ namespace Azure.ResourceManager.AppService
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(InheritAppSettingsAndConnectionStrings))
-            {
-                writer.WritePropertyName("inheritAppSettingsAndConnectionStrings"u8);
-                writer.WriteBooleanValue(InheritAppSettingsAndConnectionStrings.Value);
-            }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
@@ -160,7 +155,6 @@ namespace Azure.ResourceManager.AppService
             DateTimeOffset? createdTime = default;
             DateTimeOffset? lastModifiedTime = default;
             IList<SiteContainerVolumeMount> volumeMounts = default;
-            bool? inheritAppSettingsAndConnectionStrings = default;
             IList<WebAppEnvironmentVariable> environmentVariables = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -284,15 +278,6 @@ namespace Azure.ResourceManager.AppService
                             volumeMounts = array;
                             continue;
                         }
-                        if (property0.NameEquals("inheritAppSettingsAndConnectionStrings"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            inheritAppSettingsAndConnectionStrings = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("environmentVariables"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -332,7 +317,6 @@ namespace Azure.ResourceManager.AppService
                 createdTime,
                 lastModifiedTime,
                 volumeMounts ?? new ChangeTrackingList<SiteContainerVolumeMount>(),
-                inheritAppSettingsAndConnectionStrings,
                 environmentVariables ?? new ChangeTrackingList<WebAppEnvironmentVariable>(),
                 kind,
                 serializedAdditionalRawData);
@@ -651,22 +635,6 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InheritAppSettingsAndConnectionStrings), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    inheritAppSettingsAndConnectionStrings: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InheritAppSettingsAndConnectionStrings))
-                {
-                    builder.Append("    inheritAppSettingsAndConnectionStrings: ");
-                    var boolValue = InheritAppSettingsAndConnectionStrings.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnvironmentVariables), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -702,7 +670,7 @@ namespace Azure.ResourceManager.AppService
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAppServiceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

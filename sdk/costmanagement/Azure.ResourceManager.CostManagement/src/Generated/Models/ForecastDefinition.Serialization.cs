@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ForecastDefinition)} does not support writing '{options.Format}' format.");
             }

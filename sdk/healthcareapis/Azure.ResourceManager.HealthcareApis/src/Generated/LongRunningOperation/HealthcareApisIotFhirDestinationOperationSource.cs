@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.HealthcareApis
 
         HealthcareApisIotFhirDestinationResource IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(response.Content);
             return new HealthcareApisIotFhirDestinationResource(_client, data);
         }
 
         async ValueTask<HealthcareApisIotFhirDestinationResource> IOperationSource<HealthcareApisIotFhirDestinationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthcareApisContext.Default);
+            var data = ModelReaderWriter.Read<HealthcareApisIotFhirDestinationData>(response.Content);
             return await Task.FromResult(new HealthcareApisIotFhirDestinationResource(_client, data)).ConfigureAwait(false);
         }
     }

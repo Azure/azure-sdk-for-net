@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Version>1.10.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.9.1</ApiCompatVersion>
+    <ApiCompatVersion>1.9.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.Resources</PackageId>
     <Description>Microsoft Azure Resource Manager client SDK for Azure resource provider Resources.</Description>
     <PackageTags>azure;management;resources</PackageTags>

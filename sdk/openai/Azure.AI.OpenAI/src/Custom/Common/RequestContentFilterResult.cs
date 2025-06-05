@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenType("AzureContentFilterResultForPrompt")]
+[CodeGenModel("AzureContentFilterResultForPrompt")]
 public partial class RequestContentFilterResult
 {
     internal int? PromptIndex { get; }

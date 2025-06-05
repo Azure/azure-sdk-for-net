@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Maps
 {
     public partial class MapsCreatorResource : IJsonModel<MapsCreatorData>
     {
-        private static MapsCreatorData s_dataDeserializationInstance;
-        private static MapsCreatorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<MapsCreatorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MapsCreatorData>)Data).Write(writer, options);
 
-        MapsCreatorData IJsonModel<MapsCreatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MapsCreatorData>)DataDeserializationInstance).Create(ref reader, options);
+        MapsCreatorData IJsonModel<MapsCreatorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MapsCreatorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MapsCreatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MapsCreatorData>(Data, options, AzureResourceManagerMapsContext.Default);
+        BinaryData IPersistableModel<MapsCreatorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MapsCreatorData IPersistableModel<MapsCreatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MapsCreatorData>(data, options, AzureResourceManagerMapsContext.Default);
+        MapsCreatorData IPersistableModel<MapsCreatorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MapsCreatorData>(data, options);
 
-        string IPersistableModel<MapsCreatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MapsCreatorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MapsCreatorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MapsCreatorData>)Data).GetFormatFromOptions(options);
     }
 }

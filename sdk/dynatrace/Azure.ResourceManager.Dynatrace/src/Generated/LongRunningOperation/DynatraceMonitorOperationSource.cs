@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Dynatrace
 
         DynatraceMonitorResource IOperationSource<DynatraceMonitorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DynatraceMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            var data = ModelReaderWriter.Read<DynatraceMonitorData>(response.Content);
             return new DynatraceMonitorResource(_client, data);
         }
 
         async ValueTask<DynatraceMonitorResource> IOperationSource<DynatraceMonitorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DynatraceMonitorData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDynatraceContext.Default);
+            var data = ModelReaderWriter.Read<DynatraceMonitorData>(response.Content);
             return await Task.FromResult(new DynatraceMonitorResource(_client, data)).ConfigureAwait(false);
         }
     }

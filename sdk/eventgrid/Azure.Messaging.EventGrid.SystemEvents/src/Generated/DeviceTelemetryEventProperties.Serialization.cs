@@ -35,7 +35,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue<object>(Body, options);
+            writer.WriteStartObject();
+            foreach (var item in Body)
+            {
+                writer.WritePropertyName(item.Key);
+                if (item.Value == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             foreach (var item in Properties)
@@ -89,7 +107,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            object body = default;
+            IReadOnlyDictionary<string, BinaryData> body = default;
             IReadOnlyDictionary<string, string> properties = default;
             IReadOnlyDictionary<string, string> systemProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -98,7 +116,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("body"u8))
                 {
-                    body = property.Value.GetObject();
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    body = dictionary;
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -137,7 +167,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeviceTelemetryEventProperties)} does not support writing '{options.Format}' format.");
             }

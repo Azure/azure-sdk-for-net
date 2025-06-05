@@ -1,43 +1,25 @@
 {
  "$id": "1",
- "name": "Authentication.Http.Custom",
- "apiVersions": [],
- "enums": [],
- "constants": [
+ "Name": "Authentication.Http.Custom",
+ "ApiVersions": [],
+ "Enums": [],
+ "Models": [
   {
    "$id": "2",
-   "kind": "constant",
-   "name": "invalidContentType",
-   "namespace": "",
-   "usage": "None",
-   "valueType": {
-    "$id": "3",
-    "kind": "string",
-    "name": "string",
-    "crossLanguageDefinitionId": "TypeSpec.string",
-    "decorators": []
-   },
-   "value": "application/json",
-   "decorators": []
-  }
- ],
- "models": [
-  {
-   "$id": "4",
    "kind": "model",
    "name": "InvalidAuth",
    "namespace": "Authentication.Http.Custom",
    "crossLanguageDefinitionId": "Authentication.Http.Custom.InvalidAuth",
-   "usage": "Json,Exception",
+   "usage": "Error,Json,Exception",
    "decorators": [],
    "properties": [
     {
-     "$id": "5",
+     "$id": "3",
      "kind": "property",
      "name": "error",
      "serializedName": "error",
      "type": {
-      "$id": "6",
+      "$id": "4",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -50,9 +32,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Authentication.Http.Custom.InvalidAuth.error",
      "serializationOptions": {
-      "$id": "7",
+      "$id": "5",
       "json": {
-       "$id": "8",
+       "$id": "6",
        "name": "error"
       }
      }
@@ -60,179 +42,141 @@
    ]
   }
  ],
- "clients": [
+ "Clients": [
   {
-   "$id": "9",
-   "kind": "client",
-   "name": "CustomClient",
-   "namespace": "Authentication.Http.Custom",
-   "doc": "Illustrates clients generated with generic HTTP auth.",
-   "methods": [
+   "$id": "7",
+   "Name": "CustomClient",
+   "Namespace": "Authentication.Http.Custom",
+   "Doc": "Illustrates clients generated with generic HTTP auth.",
+   "Operations": [
     {
-     "$id": "10",
-     "kind": "basic",
-     "name": "valid",
-     "accessibility": "public",
-     "apiVersions": [],
-     "doc": "Check whether client is authenticated",
-     "operation": {
-      "$id": "11",
-      "name": "valid",
-      "resourceName": "Custom",
-      "doc": "Check whether client is authenticated",
-      "accessibility": "public",
-      "parameters": [],
-      "responses": [
-       {
-        "$id": "12",
-        "statusCodes": [
-         204
-        ],
-        "headers": [],
-        "isErrorResponse": false
-       }
-      ],
-      "httpMethod": "GET",
-      "uri": "{endpoint}",
-      "path": "/authentication/http/custom/valid",
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Authentication.Http.Custom.valid",
-      "decorators": []
-     },
-     "parameters": [],
-     "response": {
-      "$id": "13"
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Authentication.Http.Custom.valid"
-    },
-    {
-     "$id": "14",
-     "kind": "basic",
-     "name": "invalid",
-     "accessibility": "public",
-     "apiVersions": [],
-     "doc": "Check whether client is authenticated.",
-     "operation": {
-      "$id": "15",
-      "name": "invalid",
-      "resourceName": "Custom",
-      "doc": "Check whether client is authenticated.",
-      "accessibility": "public",
-      "parameters": [
-       {
-        "$id": "16",
-        "name": "accept",
-        "nameInRequest": "Accept",
-        "type": {
-         "$ref": "2"
-        },
-        "location": "Header",
-        "isApiVersion": false,
-        "isContentType": false,
-        "isEndpoint": false,
-        "explode": false,
-        "isRequired": true,
-        "kind": "Constant",
-        "decorators": [],
-        "skipUrlEncoding": false
-       }
-      ],
-      "responses": [
-       {
-        "$id": "17",
-        "statusCodes": [
-         204
-        ],
-        "headers": [],
-        "isErrorResponse": false
-       }
-      ],
-      "httpMethod": "GET",
-      "uri": "{endpoint}",
-      "path": "/authentication/http/custom/invalid",
-      "bufferResponse": true,
-      "generateProtocolMethod": true,
-      "generateConvenienceMethod": true,
-      "crossLanguageDefinitionId": "Authentication.Http.Custom.invalid",
-      "decorators": []
-     },
-     "parameters": [
+     "$id": "8",
+     "Name": "valid",
+     "ResourceName": "Custom",
+     "Doc": "Check whether client is authenticated",
+     "Accessibility": "public",
+     "Parameters": [],
+     "Responses": [
       {
-       "$id": "18",
-       "name": "accept",
-       "nameInRequest": "accept",
-       "type": {
-        "$ref": "2"
-       },
-       "location": "Header",
-       "isApiVersion": false,
-       "isContentType": false,
-       "isEndpoint": false,
-       "explode": false,
-       "isRequired": true,
-       "kind": "Constant",
-       "decorators": [],
-       "skipUrlEncoding": false
+       "$id": "9",
+       "StatusCodes": [
+        204
+       ],
+       "Headers": [],
+       "IsErrorResponse": false
       }
      ],
-     "response": {
-      "$id": "19"
-     },
-     "isOverride": false,
-     "generateConvenient": true,
-     "generateProtocol": true,
-     "crossLanguageDefinitionId": "Authentication.Http.Custom.invalid"
+     "HttpMethod": "GET",
+     "Uri": "{endpoint}",
+     "Path": "/authentication/http/custom/valid",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Authentication.Http.Custom.valid",
+     "Decorators": []
+    },
+    {
+     "$id": "10",
+     "Name": "invalid",
+     "ResourceName": "Custom",
+     "Doc": "Check whether client is authenticated.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "11",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "12",
+        "kind": "constant",
+        "valueType": {
+         "$id": "13",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "14",
+       "StatusCodes": [
+        204
+       ],
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "GET",
+     "Uri": "{endpoint}",
+     "Path": "/authentication/http/custom/invalid",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Authentication.Http.Custom.invalid",
+     "Decorators": []
     }
    ],
-   "parameters": [
+   "Protocol": {
+    "$id": "15"
+   },
+   "Parameters": [
     {
-     "$id": "20",
-     "name": "endpoint",
-     "nameInRequest": "endpoint",
-     "doc": "Service host",
-     "type": {
-      "$id": "21",
+     "$id": "16",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "17",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
-     "location": "Uri",
-     "isApiVersion": false,
-     "isContentType": false,
-     "isRequired": true,
-     "isEndpoint": true,
-     "skipUrlEncoding": false,
-     "explode": false,
-     "kind": "Client",
-     "defaultValue": {
-      "$id": "22",
-      "type": {
-       "$id": "23",
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "18",
+      "Type": {
+       "$id": "19",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
       },
-      "value": "http://localhost:3000"
+      "Value": "http://localhost:3000"
      }
     }
    ],
-   "decorators": [],
-   "crossLanguageDefinitionId": "Authentication.Http.Custom",
-   "apiVersions": []
+   "Decorators": [],
+   "CrossLanguageDefinitionId": "Authentication.Http.Custom"
   }
  ],
- "auth": {
-  "$id": "24",
-  "apiKey": {
-   "$id": "25",
-   "name": "Authorization",
-   "in": "header",
-   "prefix": "SharedAccessKey"
+ "Auth": {
+  "$id": "20",
+  "ApiKey": {
+   "$id": "21",
+   "Name": "Authorization",
+   "In": "header",
+   "Prefix": "SharedAccessKey"
   }
  }
 }

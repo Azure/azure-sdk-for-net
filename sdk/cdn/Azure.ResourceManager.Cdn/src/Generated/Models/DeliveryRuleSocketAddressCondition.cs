@@ -10,17 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the SocketAddress condition for the delivery rule.
-    /// Serialized Name: DeliveryRuleSocketAddrCondition
-    /// </summary>
+    /// <summary> Defines the SocketAddress condition for the delivery rule. </summary>
     public partial class DeliveryRuleSocketAddressCondition : DeliveryRuleCondition
     {
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSocketAddressCondition"/>. </summary>
-        /// <param name="properties">
-        /// Defines the parameters for the condition.
-        /// Serialized Name: DeliveryRuleSocketAddrCondition.parameters
-        /// </param>
+        /// <param name="properties"> Defines the parameters for the condition. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
         public DeliveryRuleSocketAddressCondition(SocketAddressMatchCondition properties)
         {
@@ -31,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSocketAddressCondition"/>. </summary>
-        /// <param name="name">
-        /// The name of the condition for the delivery rule.
-        /// Serialized Name: DeliveryRuleCondition.name
-        /// </param>
+        /// <param name="name"> The name of the condition for the delivery rule. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="properties">
-        /// Defines the parameters for the condition.
-        /// Serialized Name: DeliveryRuleSocketAddrCondition.parameters
-        /// </param>
+        /// <param name="properties"> Defines the parameters for the condition. </param>
         internal DeliveryRuleSocketAddressCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, SocketAddressMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
@@ -51,10 +39,7 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Defines the parameters for the condition.
-        /// Serialized Name: DeliveryRuleSocketAddrCondition.parameters
-        /// </summary>
+        /// <summary> Defines the parameters for the condition. </summary>
         public SocketAddressMatchCondition Properties { get; set; }
     }
 }

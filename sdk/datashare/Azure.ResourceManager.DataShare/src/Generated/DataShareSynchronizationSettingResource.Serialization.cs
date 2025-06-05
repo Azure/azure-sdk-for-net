@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataShare
 {
     public partial class DataShareSynchronizationSettingResource : IJsonModel<DataShareSynchronizationSettingData>
     {
-        private static DataShareSynchronizationSettingData s_dataDeserializationInstance;
-        private static DataShareSynchronizationSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataShareSynchronizationSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataShareSynchronizationSettingData>)Data).Write(writer, options);
 
-        DataShareSynchronizationSettingData IJsonModel<DataShareSynchronizationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareSynchronizationSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        DataShareSynchronizationSettingData IJsonModel<DataShareSynchronizationSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataShareSynchronizationSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataShareSynchronizationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataShareSynchronizationSettingData>(Data, options, AzureResourceManagerDataShareContext.Default);
+        BinaryData IPersistableModel<DataShareSynchronizationSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataShareSynchronizationSettingData IPersistableModel<DataShareSynchronizationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareSynchronizationSettingData>(data, options, AzureResourceManagerDataShareContext.Default);
+        DataShareSynchronizationSettingData IPersistableModel<DataShareSynchronizationSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataShareSynchronizationSettingData>(data, options);
 
-        string IPersistableModel<DataShareSynchronizationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareSynchronizationSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataShareSynchronizationSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataShareSynchronizationSettingData>)Data).GetFormatFromOptions(options);
     }
 }

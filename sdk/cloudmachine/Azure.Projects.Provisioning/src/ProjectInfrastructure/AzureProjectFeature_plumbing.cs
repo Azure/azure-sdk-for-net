@@ -8,6 +8,9 @@ namespace Azure.Projects.Core;
 public abstract partial class AzureProjectFeature
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
+    public override string ToString() => base.ToString()!;
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public override int GetHashCode() => base.GetHashCode();
 
     [EditorBrowsable(EditorBrowsableState.Never)]

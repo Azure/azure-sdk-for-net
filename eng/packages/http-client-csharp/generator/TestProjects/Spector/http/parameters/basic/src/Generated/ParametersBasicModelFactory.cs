@@ -9,6 +9,7 @@ namespace Parameters.Basic.Models
 {
     public static partial class ParametersBasicModelFactory
     {
+
         public static User User(string name = default) => throw null;
     }
 }

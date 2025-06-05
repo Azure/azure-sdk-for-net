@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDataMaskingRuleResource : IJsonModel<SynapseDataMaskingRuleData>
     {
-        private static SynapseDataMaskingRuleData s_dataDeserializationInstance;
-        private static SynapseDataMaskingRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseDataMaskingRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataMaskingRuleData>)Data).Write(writer, options);
 
-        SynapseDataMaskingRuleData IJsonModel<SynapseDataMaskingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataMaskingRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseDataMaskingRuleData IJsonModel<SynapseDataMaskingRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDataMaskingRuleData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseDataMaskingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseDataMaskingRuleData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseDataMaskingRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseDataMaskingRuleData IPersistableModel<SynapseDataMaskingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDataMaskingRuleData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseDataMaskingRuleData IPersistableModel<SynapseDataMaskingRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDataMaskingRuleData>(data, options);
 
-        string IPersistableModel<SynapseDataMaskingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDataMaskingRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseDataMaskingRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDataMaskingRuleData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -2,29 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
-using System.Formats.Cbor;
-using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Security.CodeTransparency.Receipt;
 
 namespace Azure.Security.CodeTransparency
 {
     [CodeGenSuppress("CreateEntry", typeof(RequestContent), typeof(RequestContext))]
     [CodeGenSuppress("CreateEntryAsync", typeof(RequestContent), typeof(RequestContext))]
-    [CodeGenSuppress("CreateEntry", typeof(BinaryData), typeof(CancellationToken))]
-    [CodeGenSuppress("CreateEntryAsync", typeof(BinaryData),typeof(CancellationToken))]
-    [CodeGenSuppress("CreateGetTransparencyConfigCborRequest", typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetPublicKeysRequest", typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetOperationRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEntryRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateGetEntryStatementRequest", typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("CreateCreateEntryRequest", typeof(RequestContent), typeof(RequestContext))]
     public partial class CodeTransparencyClient
     {
         /// <summary>
@@ -56,18 +43,6 @@ namespace Azure.Security.CodeTransparency
                 new ResponseClassifier());
             _endpoint = endpoint;
             _apiVersion = options.Version;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
-        /// TLS CA cert to perform server cert authentication.
-        /// If the CA changes then there is a TTL which will help healing the long lived clients.
-        /// </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
-        {
         }
 
         /// <summary>
@@ -126,12 +101,11 @@ namespace Azure.Security.CodeTransparency
             return new HttpPipelineTransportOptions { ServerCertificateCustomValidationCallback = args => CertValidationCheck(args.Certificate) };
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
-        /// <param name="body"> CoseSign1 signature envelope. </param>
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. The returned operation will have the entry id when it is complete. </summary>
+        /// <param name="body"> A raw CoseSign1 signature. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
+        public virtual Operation<GetOperationResult> CreateEntry(BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -141,47 +115,8 @@ namespace Azure.Security.CodeTransparency
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
                 Response response = _pipeline.ProcessMessage(message, context, cancellationToken);
-
-                BinaryData result = Response.FromValue(response.Content, response);
-
-                string operationId = string.Empty;
-                try
-                {
-                    // Read cbor response to get the operationId
-                    CborReader cborReader = new(response.Content);
-                    cborReader.ReadStartMap();
-                    while (cborReader.PeekState() != CborReaderState.EndMap)
-                    {
-                        string key = cborReader.ReadTextString();
-                        if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            operationId = cborReader.ReadTextString();
-                            break;
-                        }
-                        else
-                            cborReader.SkipValue();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException("Failed to parse the Cbor response.", ex);
-                }
-
-                if (string.IsNullOrEmpty(operationId))
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    var entryOperation = new CreateEntryOperation(this, operationId);
-
-                    if (waitUntil == WaitUntil.Completed)
-                    {
-                        entryOperation.WaitForCompletionResponse(cancellationToken);
-                    }
-
-                    return entryOperation;
-                }
+                CreateEntryResult result = Response.FromValue(CreateEntryResult.FromResponse(response), response);
+                return new CreateEntryOperation(this, result.OperationId);
             }
             catch (Exception e)
             {
@@ -190,12 +125,11 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary> Post an entry to be registered on the CodeTransparency instance, mandatory in IETF SCITT draft. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>.</param>
-        /// <param name="body"> CoseSign1 signature envelope. </param>
+        /// <summary> Post an entry to be registered on the CodeTransparency instance. The returned operation will have the entry id when it is complete. </summary>
+        /// <param name="body"> A raw CoseSign1 signature. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation<GetOperationResult>> CreateEntryAsync(BinaryData body, CancellationToken cancellationToken = default)
         {
             using RequestContent content = body ?? throw new ArgumentNullException(nameof(body));
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -205,47 +139,8 @@ namespace Azure.Security.CodeTransparency
             {
                 using HttpMessage message = CreateCreateEntryRequest(content, context);
                 Response response = await _pipeline.ProcessMessageAsync(message, context, cancellationToken).ConfigureAwait(false);
-
-                BinaryData result = Response.FromValue(response.Content, response);
-
-                string operationId = string.Empty;
-                try
-                {
-                    // Read cbor response to get the operationId
-                    CborReader cborReader = new(response.Content);
-                    cborReader.ReadStartMap();
-                    while (cborReader.PeekState() != CborReaderState.EndMap)
-                    {
-                        string key = cborReader.ReadTextString();
-                        if (string.Equals(key, "OperationId", StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            operationId = cborReader.ReadTextString();
-                            break;
-                        }
-                        else
-                            cborReader.SkipValue();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new RequestFailedException($"Failed to parse the Cbor response.", ex);
-                }
-
-                if (string.IsNullOrEmpty(operationId))
-                {
-                    throw new RequestFailedException(response);
-                }
-                else
-                {
-                    var entryOperation = new CreateEntryOperation(this, operationId);
-
-                    if (waitUntil == WaitUntil.Completed)
-                    {
-                       await entryOperation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
-                    }
-
-                    return entryOperation;
-                }
+                CreateEntryResult result = Response.FromValue(CreateEntryResult.FromResponse(response), response);
+                return new CreateEntryOperation(this, result.OperationId);
             }
             catch (Exception e)
             {
@@ -254,159 +149,9 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        /// <summary>
-        /// Verify the receipt integrity against the COSE_Sign1 envelope
-        /// and check if receipt was endorsed by the given service certificate.
-        /// In the case of multiple receipts being embedded in the signature then verify
-        /// all of them.
-        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
-        /// </summary>
-        /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
-        public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
-        {
-            List<Exception> failures = new List<Exception>();
-
-            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
-
-            // Embedded receipt bytes contain receipt under the map with key as 394 and the value as the receipt bytes
-            // See https://www.ietf.org/archive/id/draft-ietf-scitt-architecture-10.html#name-transparent-statements
-            if (!coseSign1Message.UnprotectedHeaders.
-                TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseHeaderEmbeddedReceipts),
-                out CoseHeaderValue embeddedReceipts))
-            {
-                throw new InvalidOperationException("embeddedReceipts not found");
-            }
-
-            CborReader cborReader = new CborReader(embeddedReceipts.EncodedValue);
-            cborReader.ReadStartArray();
-
-            var receiptList = new List<byte[]>();
-            while (cborReader.PeekState() != CborReaderState.EndArray)
-            {
-                receiptList.Add(cborReader.ReadByteString());
-            }
-            cborReader.ReadEndArray();
-
-            // Get the input signed statement bytes from the transparent statement
-            // by removing the unprotected headers and encoding the message again
-            CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(transparentStatementCoseSign1Bytes);
-            inputSignedStatement.UnprotectedHeaders.Clear();
-
-            // Verify each receipt and keep failure counter
-            foreach (var receipt in receiptList)
-            {
-                try
-                {
-                    JsonWebKey jsonWebKey = GetServiceCertificateKey(receipt);
-                    CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receipt, inputSignedStatement.Encode());
-                }
-                catch (Exception e)
-                {
-                    failures.Add(e);
-                }
-            }
-            if (failures.Count > 0)
-            {
-                throw new AggregateException(failures);
-            }
-        }
-
-        /// <summary>
-        /// Get the service certificate key from the JWKs service endpoint.
-        /// </summary>
-        /// <param name="receiptBytes">the COSE receipt bytes,
-        /// see https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.html#name-verifiable-data-structures-</param>
-        /// <returns>The service certificate key (JWK)</returns>
-        private JsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
-        {
-            CoseSign1Message coseSign1Message = CoseMessage.DecodeSign1(receiptBytes);
-
-            if (!coseSign1Message.ProtectedHeaders.TryGetValue(new CoseHeaderLabel(CcfReceipt.CoseReceiptCwtMapLabel), out CoseHeaderValue cwtMap))
-            {
-                throw new InvalidOperationException("CWT-MAP not found in receipt.");
-            }
-
-            string issuer = string.Empty;
-
-            CborReader cborReader = new CborReader(cwtMap.EncodedValue.ToArray());
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
-            {
-                int key = cborReader.ReadInt32();
-                if (key == CcfReceipt.CoseReceiptCwtIssLabel)
-                    issuer = cborReader.ReadTextString();
-                else
-                    cborReader.SkipValue();
-            }
-            cborReader.ReadEndMap();
-
-            // Validate issuer and CTS instance are matching
-            if (!issuer.Equals(_endpoint.Host, StringComparison.InvariantCultureIgnoreCase))
-            {
-                throw new InvalidOperationException("Issuer and CTS instance name are not matching.");
-            }
-
-            // Get all the public keys from the JWKS endpoint
-            JwksDocument jwksDocument = GetPublicKeys().Value;
-
-            // Ensure there is at least one entry in the JWKS document
-            if (jwksDocument.Keys.Count == 0)
-            {
-                throw new InvalidOperationException("No keys found in JWKS document.");
-            }
-
-            // Store all the keys in a new Dictionary to simplify lookup
-            var keysDict = new Dictionary<string, JsonWebKey>();
-            foreach (JsonWebKey jsonWebKey in jwksDocument.Keys)
-            {
-                keysDict[jsonWebKey.Kid] = jsonWebKey;
-            }
-
-            if (!coseSign1Message.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue receiptKid))
-            {
-                throw new InvalidOperationException("KID not found.");
-            }
-
-            string kidAsString = Encoding.UTF8.GetString(receiptKid.GetValueAsBytes());
-            if (!keysDict.TryGetValue(kidAsString, out JsonWebKey matchingKey))
-            {
-                throw new InvalidOperationException($"Key with ID '{kidAsString}' not found.");
-            }
-
-            return matchingKey;
-        }
-
-        internal HttpMessage CreateGetTransparencyConfigCborRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/.well-known/transparency-configuration", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cbor");
-            return message;
-        }
-
-        internal HttpMessage CreateGetPublicKeysRequest(RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/jwks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
         internal HttpMessage CreateCreateEntryRequest(RequestContent content, RequestContext context)
         {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier201202);
+            var message = _pipeline.CreateMessage(context);
             var request = message.Request;
             request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
@@ -414,63 +159,10 @@ namespace Azure.Security.CodeTransparency
             uri.AppendPath("/entries", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose; application/cbor");
-            request.Headers.Add("Content-Type", "application/cose");
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("content-type", "application/cose");
             request.Content = content;
             return message;
         }
-
-        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200202);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cbor");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryRequest(string entryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
-        }
-
-        internal HttpMessage CreateGetEntryStatementRequest(string entryId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/entries/", false);
-            uri.AppendPath(entryId, true);
-            uri.AppendPath("/statement", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/cose");
-            return message;
-        }
-
-        private static ResponseClassifier _responseClassifier200;
-        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-        private static ResponseClassifier _responseClassifier201202;
-        private static ResponseClassifier ResponseClassifier201202 => _responseClassifier201202 ??= new StatusCodeClassifier(stackalloc ushort[] { 201, 202 });
-        private static ResponseClassifier _responseClassifier200202;
-        private static ResponseClassifier ResponseClassifier200202 => _responseClassifier200202 ??= new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
     }
 }

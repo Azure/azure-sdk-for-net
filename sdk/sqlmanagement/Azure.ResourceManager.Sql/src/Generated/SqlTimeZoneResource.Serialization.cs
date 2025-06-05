@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlTimeZoneResource : IJsonModel<SqlTimeZoneData>
     {
-        private static SqlTimeZoneData s_dataDeserializationInstance;
-        private static SqlTimeZoneData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SqlTimeZoneData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlTimeZoneData>)Data).Write(writer, options);
 
-        SqlTimeZoneData IJsonModel<SqlTimeZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlTimeZoneData>)DataDeserializationInstance).Create(ref reader, options);
+        SqlTimeZoneData IJsonModel<SqlTimeZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlTimeZoneData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlTimeZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlTimeZoneData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<SqlTimeZoneData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SqlTimeZoneData IPersistableModel<SqlTimeZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlTimeZoneData>(data, options, AzureResourceManagerSqlContext.Default);
+        SqlTimeZoneData IPersistableModel<SqlTimeZoneData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlTimeZoneData>(data, options);
 
-        string IPersistableModel<SqlTimeZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlTimeZoneData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SqlTimeZoneData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlTimeZoneData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.StorageSync.Tests
         private string _storageSyncServiceName;
         private StorageSyncServiceCreateOrUpdateContent _storageSyncServiceCreateOrUpdateContent;
 
-        public StorageSyncServiceTests(bool async) : base(async , ModeFromSourceCode)
+        public StorageSyncServiceTests(bool async) : base(async) //, RecordedTestMode.Record)
         {
         }
 

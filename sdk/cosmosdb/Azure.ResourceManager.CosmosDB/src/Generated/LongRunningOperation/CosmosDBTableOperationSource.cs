@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBTableResource IOperationSource<CosmosDBTableResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            var data = ModelReaderWriter.Read<CosmosDBTableData>(response.Content);
             return new CosmosDBTableResource(_client, data);
         }
 
         async ValueTask<CosmosDBTableResource> IOperationSource<CosmosDBTableResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CosmosDBTableData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            var data = ModelReaderWriter.Read<CosmosDBTableData>(response.Content);
             return await Task.FromResult(new CosmosDBTableResource(_client, data)).ConfigureAwait(false);
         }
     }

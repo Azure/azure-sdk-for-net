@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration
 
         private const string BooleanValue = "boolean";
 
-        /// <summary> A boolean setting value. </summary>
+        /// <summary> boolean. </summary>
         public static KeyVaultSettingType Boolean { get; } = new KeyVaultSettingType(BooleanValue);
         /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSettingType left, KeyVaultSettingType right) => left.Equals(right);

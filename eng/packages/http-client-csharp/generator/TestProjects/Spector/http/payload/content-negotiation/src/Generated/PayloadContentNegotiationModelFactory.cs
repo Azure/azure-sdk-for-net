@@ -6,12 +6,11 @@
 #nullable disable
 
 using System;
-using Payload.ContentNegotiation._DifferentBody;
 
-namespace Payload.ContentNegotiation
+namespace Payload.ContentNegotiation.Models
 {
     public static partial class PayloadContentNegotiationModelFactory
     {
-        public static PngImageAsJson PngImageAsJson(string contentType = default, BinaryData content = default) => throw null;
+        public static PngImageAsJson PngImageAsJson(BinaryData content = default) => throw null;
     }
 }

@@ -175,7 +175,7 @@ namespace Azure.Storage.Cryptography
             while (written < count)
             {
                 // clear buffer if full
-                await FlushToInnerIfReady(async, cancellationToken).ConfigureAwait(false);
+                await FlushIfReadyInternal(async, cancellationToken).ConfigureAwait(false);
 
                 int bytesToWrite = Math.Min(count - written, _bufferLength - _bufferPos);
                 Array.Copy(buffer, offset + written, _buffer, _bufferPos, bytesToWrite);
@@ -186,22 +186,12 @@ namespace Azure.Storage.Cryptography
         #endregion
 
         public override void Flush()
-        {
-            if (FlushToInnerIfReady(false, default).EnsureCompleted())
-            {
-                _innerStream.Flush();
-            }
-        }
+            => FlushIfReadyInternal(false, default).Wait();
 
         public override async Task FlushAsync(CancellationToken cancellationToken)
-        {
-            if (await FlushToInnerIfReady(true, cancellationToken).ConfigureAwait(false))
-            {
-                await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
-            }
-        }
+            => await FlushIfReadyInternal(true, cancellationToken).ConfigureAwait(false);
 
-        private async Task<bool> FlushToInnerIfReady(bool async, CancellationToken cancellationToken)
+        private async Task FlushIfReadyInternal(bool async, CancellationToken cancellationToken)
         {
             if (!CanWrite)
             {
@@ -209,41 +199,41 @@ namespace Azure.Storage.Cryptography
             }
 
             // flush buffer if full, else ignore
-            if (_bufferPos < _bufferLength)
+            if (_bufferPos >= _bufferLength)
             {
-                return false;
-            }
-            byte[] transformedContentsBuffer = null;
-            try
-            {
-                transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
-                int outputBytes = _transform.TransformAuthenticationBlock(
-                    input: new ReadOnlySpan<byte>(_buffer, 0, _bufferLength),
-                    output: transformedContentsBuffer);
-
-                if (async)
+                byte[] transformedContentsBuffer = null;
+                try
                 {
-                    await _innerStream.WriteAsync(
-                        transformedContentsBuffer,
-                        offset: 0,
-                        count: outputBytes,
-                        cancellationToken).ConfigureAwait(false);
-                }
-                else
-                {
-                    _innerStream.Write(
-                        transformedContentsBuffer,
-                        offset: 0,
-                        count: outputBytes);
-                }
+                    transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                    int outputBytes = _transform.TransformAuthenticationBlock(
+                        input: new ReadOnlySpan<byte>(_buffer, 0, _bufferLength),
+                        output: transformedContentsBuffer);
 
-                _bufferPos = 0;
+                    if (async)
+                    {
+                        await _innerStream.WriteAsync(
+                            transformedContentsBuffer,
+                            offset: 0,
+                            count: outputBytes,
+                            cancellationToken).ConfigureAwait(false);
+                        await _innerStream.FlushAsync(cancellationToken).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        _innerStream.Write(
+                            transformedContentsBuffer,
+                            offset: 0,
+                            count: outputBytes);
+                        _innerStream.Flush();
+                    }
+
+                    _bufferPos = 0;
+                }
+                finally
+                {
+                    ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                }
             }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
-            }
-            return true;
         }
 
         public async Task FlushFinalInternal(bool async, CancellationToken cancellationToken)
@@ -258,7 +248,7 @@ namespace Azure.Storage.Cryptography
                 return;
             }
 
-            await FlushToInnerIfReady(async, cancellationToken).ConfigureAwait(false);
+            await FlushIfReadyInternal(async, cancellationToken).ConfigureAwait(false);
 
             // if there is a final partial block, force-flush
             if (_bufferPos != 0)

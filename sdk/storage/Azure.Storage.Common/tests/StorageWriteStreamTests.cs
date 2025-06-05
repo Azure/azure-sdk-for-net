@@ -36,8 +36,7 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB,
-                default(int?))
+                Constants.MB)
             {
                 CallBase = true,
             };
@@ -95,8 +94,7 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB,
-                default(int?))
+                Constants.MB)
             {
                 CallBase = true,
             };
@@ -151,8 +149,7 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB,
-                default(int?))
+                Constants.MB)
             {
                 CallBase = true,
             };
@@ -201,8 +198,7 @@ namespace Azure.Storage.Tests
             Mock<PooledMemoryStream> mockBuffer = new(
                 MockBehavior.Loose,
                 ArrayPool<byte>.Shared,
-                Constants.MB,
-                default(int?))
+                Constants.MB)
             {
                 CallBase = true,
             };

@@ -20,13 +20,40 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\**\*.json">
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetData.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMs.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelWithPersistableOnly\ModelWithPersistableOnlyWireFormat.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelXml.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelXmlX.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelX\ModelX.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ModelX\ModelXWireFormat.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-TwoSpaces.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData-Collapsed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\ResourceProviderData\ResourceProviderData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

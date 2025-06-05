@@ -46,22 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
-        /// <param name="experimentId"> The ID of the experiment that the run belongs to. </param>
-        /// <param name="experimentName"> The name of the experiment that the run belongs to. </param>
-        /// <param name="runId"> The ID of the Run that was completed. </param>
-        /// <param name="runType"> The Run Type of the completed Run. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="experimentId"/>, <paramref name="experimentName"/>, <paramref name="runId"/> or <paramref name="runType"/> is null. </exception>
-        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType)
+        /// <param name="runTags"> The tags of the completed Run. </param>
+        /// <param name="runProperties"> The properties of the completed Run. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="runTags"/> or <paramref name="runProperties"/> is null. </exception>
+        internal MachineLearningServicesRunCompletedEventData(IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties)
         {
-            Argument.AssertNotNull(experimentId, nameof(experimentId));
-            Argument.AssertNotNull(experimentName, nameof(experimentName));
-            Argument.AssertNotNull(runId, nameof(runId));
-            Argument.AssertNotNull(runType, nameof(runType));
+            Argument.AssertNotNull(runTags, nameof(runTags));
+            Argument.AssertNotNull(runProperties, nameof(runProperties));
 
-            ExperimentId = experimentId;
-            ExperimentName = experimentName;
-            RunId = runId;
-            RunType = runType;
+            RunTags = runTags;
+            RunProperties = runProperties;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningServicesRunCompletedEventData"/>. </summary>
@@ -72,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="runTags"> The tags of the completed Run. </param>
         /// <param name="runProperties"> The properties of the completed Run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, object runTags, object runProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MachineLearningServicesRunCompletedEventData(string experimentId, string experimentName, string runId, string runType, IReadOnlyDictionary<string, BinaryData> runTags, IReadOnlyDictionary<string, BinaryData> runProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ExperimentId = experimentId;
             ExperimentName = experimentName;
@@ -96,5 +90,67 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string RunId { get; }
         /// <summary> The Run Type of the completed Run. </summary>
         public string RunType { get; }
+        /// <summary>
+        /// The tags of the completed Run.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> RunTags { get; }
+        /// <summary>
+        /// The properties of the completed Run.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IReadOnlyDictionary<string, BinaryData> RunProperties { get; }
     }
 }

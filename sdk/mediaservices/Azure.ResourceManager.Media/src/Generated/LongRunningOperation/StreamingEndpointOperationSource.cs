@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Media
 
         StreamingEndpointResource IOperationSource<StreamingEndpointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StreamingEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
+            var data = ModelReaderWriter.Read<StreamingEndpointData>(response.Content);
             return new StreamingEndpointResource(_client, data);
         }
 
         async ValueTask<StreamingEndpointResource> IOperationSource<StreamingEndpointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StreamingEndpointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
+            var data = ModelReaderWriter.Read<StreamingEndpointData>(response.Content);
             return await Task.FromResult(new StreamingEndpointResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -40,8 +40,11 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(KeyId);
             writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource);
-            writer.WritePropertyName("secretVersion"u8);
-            writer.WriteStringValue(SecretVersion);
+            if (Optional.IsDefined(SecretVersion))
+            {
+                writer.WritePropertyName("secretVersion"u8);
+                writer.WriteStringValue(SecretVersion);
+            }
         }
 
         UriSigningKeyProperties IJsonModel<UriSigningKeyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -108,7 +111,7 @@ namespace Azure.ResourceManager.Cdn.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(UriSigningKeyProperties)} does not support writing '{options.Format}' format.");
             }

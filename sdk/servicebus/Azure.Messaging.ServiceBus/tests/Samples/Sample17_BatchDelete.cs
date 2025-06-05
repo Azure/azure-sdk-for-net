@@ -3,7 +3,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -17,7 +16,7 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPurgeMessages
 #if SNIPPET
-                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+                string fullQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
                 await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
 #else
@@ -43,13 +42,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusPurgeMessagesByDate
 #if SNIPPET
-                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+                string fullQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";;
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
 #else
-                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string fullQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+                await using ServiceBusClient client = new(fullQualifiedNamespace, TestEnvironment.Credential);
 #endif
                 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 
@@ -70,13 +69,13 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 #region Snippet:ServiceBusDeleteMessages
 #if SNIPPET
-                string fullyQualifiedNamespace = "<fully_qualified_namespace>";
+                string fullQualifiedNamespace = "<fully_qualified_namespace>";
                 string queueName = "<queue_name>";
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, new DefaultAzureCredential());
+                await using ServiceBusClient client = new(fullQualifiedNamespace, new DefaultAzureCredential());
 #else
-                string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
+                string fullQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
-                await using ServiceBusClient client = new(fullyQualifiedNamespace, TestEnvironment.Credential);
+                await using ServiceBusClient client = new(fullQualifiedNamespace, TestEnvironment.Credential);
 #endif
                 await using ServiceBusReceiver receiver = client.CreateReceiver(queueName);
 

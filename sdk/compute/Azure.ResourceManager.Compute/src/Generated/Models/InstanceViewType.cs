@@ -13,8 +13,6 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> instanceView. </summary>
         InstanceView,
         /// <summary> userData. </summary>
-        UserData,
-        /// <summary> resiliencyView. </summary>
-        ResiliencyView
+        UserData
     }
 }

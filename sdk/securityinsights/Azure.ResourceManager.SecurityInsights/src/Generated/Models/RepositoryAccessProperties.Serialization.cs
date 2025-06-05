@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(RepositoryAccessProperties)} does not support writing '{options.Format}' format.");
             }

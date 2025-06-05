@@ -53,8 +53,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationFabricData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public DataReplicationFabricData(AzureLocation location) : base(location)
+        /// <param name="properties"> Fabric model properties. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
+        public DataReplicationFabricData(AzureLocation location, DataReplicationFabricProperties properties) : base(location)
         {
+            Argument.AssertNotNull(properties, nameof(properties));
+
+            Properties = properties;
         }
 
         /// <summary> Initializes a new instance of <see cref="DataReplicationFabricData"/>. </summary>
@@ -64,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="properties"> Fabric model properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal DataReplicationFabricData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataReplicationFabricProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -77,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         {
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
+        /// <summary> Fabric model properties. </summary>
         public DataReplicationFabricProperties Properties { get; set; }
     }
 }

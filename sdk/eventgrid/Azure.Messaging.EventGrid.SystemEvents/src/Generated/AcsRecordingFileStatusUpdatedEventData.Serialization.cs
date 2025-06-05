@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsRecordingFileStatusUpdatedEventDataConverter))]
     public partial class AcsRecordingFileStatusUpdatedEventData : IUtf8JsonSerializable, IJsonModel<AcsRecordingFileStatusUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRecordingFileStatusUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -48,20 +46,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("recordingDurationMs"u8);
                 writer.WriteNumberValue(RecordingDurationMs.Value);
             }
-            if (Optional.IsDefined(ContentType))
+            if (Optional.IsDefined(RecordingContentType))
             {
                 writer.WritePropertyName("recordingContentType"u8);
-                writer.WriteStringValue(ContentType.Value.ToString());
+                writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
-            if (Optional.IsDefined(ChannelType))
+            if (Optional.IsDefined(RecordingChannelKind))
             {
                 writer.WritePropertyName("recordingChannelType"u8);
-                writer.WriteStringValue(ChannelType.Value.ToString());
+                writer.WriteStringValue(RecordingChannelKind.Value.ToString());
             }
-            if (Optional.IsDefined(FormatType))
+            if (Optional.IsDefined(RecordingFormatType))
             {
                 writer.WritePropertyName("recordingFormatType"u8);
-                writer.WriteStringValue(FormatType.Value.ToString());
+                writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
             if (Optional.IsDefined(SessionEndReason))
             {
@@ -108,9 +106,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             AcsRecordingStorageInfoProperties recordingStorageInfo = default;
             DateTimeOffset? recordingStartTime = default;
             long? recordingDurationMs = default;
-            AcsRecordingContentType? recordingContentType = default;
-            AcsRecordingChannelType? recordingChannelType = default;
-            AcsRecordingFormatType? recordingFormatType = default;
+            RecordingContentType? recordingContentType = default;
+            RecordingChannelType? recordingChannelType = default;
+            RecordingFormatType? recordingFormatType = default;
             string sessionEndReason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -145,7 +143,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    recordingContentType = new AcsRecordingContentType(property.Value.GetString());
+                    recordingContentType = new RecordingContentType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recordingChannelType"u8))
@@ -154,7 +152,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    recordingChannelType = new AcsRecordingChannelType(property.Value.GetString());
+                    recordingChannelType = new RecordingChannelType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("recordingFormatType"u8))
@@ -163,7 +161,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    recordingFormatType = new AcsRecordingFormatType(property.Value.GetString());
+                    recordingFormatType = new RecordingFormatType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sessionEndReason"u8))
@@ -195,7 +193,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsRecordingFileStatusUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -233,20 +231,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AcsRecordingFileStatusUpdatedEventDataConverter : JsonConverter<AcsRecordingFileStatusUpdatedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsRecordingFileStatusUpdatedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AcsRecordingFileStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsRecordingFileStatusUpdatedEventData(document.RootElement);
-            }
         }
     }
 }

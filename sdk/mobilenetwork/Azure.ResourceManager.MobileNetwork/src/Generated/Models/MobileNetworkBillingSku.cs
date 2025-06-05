@@ -10,7 +10,10 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The SKU of the packet core control plane resource. The SKU list may change over time when a new SKU gets added or an exiting SKU gets removed. </summary>
+    /// <summary>
+    /// The SKU of the packet core control plane resource. The SKU list may change over time when a new SKU gets added or an exiting SKU gets removed.
+    /// Serialized Name: BillingSku
+    /// </summary>
     public readonly partial struct MobileNetworkBillingSku : IEquatable<MobileNetworkBillingSku>
     {
         private readonly string _value;
@@ -28,15 +31,30 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string G5Value = "G5";
         private const string G10Value = "G10";
 
-        /// <summary> 100 Mbps, 20 active SIMs plan, 2 RANs. </summary>
+        /// <summary>
+        /// 100 Mbps, 20 active SIMs plan, 2 RANs
+        /// Serialized Name: BillingSku.G0
+        /// </summary>
         public static MobileNetworkBillingSku G0 { get; } = new MobileNetworkBillingSku(G0Value);
-        /// <summary> 1 Gbps, 100 active SIMs plan, 5 RANs. </summary>
+        /// <summary>
+        /// 1 Gbps, 100 active SIMs plan, 5 RANs
+        /// Serialized Name: BillingSku.G1
+        /// </summary>
         public static MobileNetworkBillingSku G1 { get; } = new MobileNetworkBillingSku(G1Value);
-        /// <summary> 2 Gbps, 200 active SIMs plan, 10 RANs. </summary>
+        /// <summary>
+        /// 2 Gbps, 200 active SIMs plan, 10 RANs
+        /// Serialized Name: BillingSku.G2
+        /// </summary>
         public static MobileNetworkBillingSku G2 { get; } = new MobileNetworkBillingSku(G2Value);
-        /// <summary> 5 Gbps, 500 active SIMs plan. </summary>
+        /// <summary>
+        /// 5 Gbps, 500 active SIMs plan
+        /// Serialized Name: BillingSku.G5
+        /// </summary>
         public static MobileNetworkBillingSku G5 { get; } = new MobileNetworkBillingSku(G5Value);
-        /// <summary> 10 Gbps, 1000 active SIMs plan. </summary>
+        /// <summary>
+        /// 10 Gbps, 1000 active SIMs plan
+        /// Serialized Name: BillingSku.G10
+        /// </summary>
         public static MobileNetworkBillingSku G10 { get; } = new MobileNetworkBillingSku(G10Value);
         /// <summary> Determines if two <see cref="MobileNetworkBillingSku"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkBillingSku left, MobileNetworkBillingSku right) => left.Equals(right);

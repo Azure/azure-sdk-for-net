@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
             {
                 writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationPolicyGroups)
+                foreach (var item in ConfigurationPolicyGroupAssociations)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkAddressSpace vpnClientAddressPool = default;
             RoutingConfiguration routingConfiguration = default;
             bool? enableInternetSecurity = default;
-            IList<WritableSubResource> configurationPolicyGroupAssociations = default;
+            IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations = default;
             IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }

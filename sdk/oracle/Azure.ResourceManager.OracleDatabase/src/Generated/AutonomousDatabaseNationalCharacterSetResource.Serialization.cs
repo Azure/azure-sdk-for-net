@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.OracleDatabase
 {
     public partial class AutonomousDatabaseNationalCharacterSetResource : IJsonModel<AutonomousDatabaseNationalCharacterSetData>
     {
-        private static AutonomousDatabaseNationalCharacterSetData s_dataDeserializationInstance;
-        private static AutonomousDatabaseNationalCharacterSetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseNationalCharacterSetData>)Data).Write(writer, options);
 
-        AutonomousDatabaseNationalCharacterSetData IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseNationalCharacterSetData>)DataDeserializationInstance).Create(ref reader, options);
+        AutonomousDatabaseNationalCharacterSetData IJsonModel<AutonomousDatabaseNationalCharacterSetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AutonomousDatabaseNationalCharacterSetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AutonomousDatabaseNationalCharacterSetData>(Data, options, AzureResourceManagerOracleDatabaseContext.Default);
+        BinaryData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AutonomousDatabaseNationalCharacterSetData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseNationalCharacterSetData>(data, options, AzureResourceManagerOracleDatabaseContext.Default);
+        AutonomousDatabaseNationalCharacterSetData IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AutonomousDatabaseNationalCharacterSetData>(data, options);
 
-        string IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseNationalCharacterSetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AutonomousDatabaseNationalCharacterSetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AutonomousDatabaseNationalCharacterSetData>)Data).GetFormatFromOptions(options);
     }
 }

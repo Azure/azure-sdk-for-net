@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.KeyVault
 {
     public partial class KeyVaultSecretResource : IJsonModel<KeyVaultSecretData>
     {
-        private static KeyVaultSecretData s_dataDeserializationInstance;
-        private static KeyVaultSecretData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<KeyVaultSecretData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretData>)Data).Write(writer, options);
 
-        KeyVaultSecretData IJsonModel<KeyVaultSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretData>)DataDeserializationInstance).Create(ref reader, options);
+        KeyVaultSecretData IJsonModel<KeyVaultSecretData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KeyVaultSecretData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KeyVaultSecretData>(Data, options, AzureResourceManagerKeyVaultContext.Default);
+        BinaryData IPersistableModel<KeyVaultSecretData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretData>(data, options, AzureResourceManagerKeyVaultContext.Default);
+        KeyVaultSecretData IPersistableModel<KeyVaultSecretData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KeyVaultSecretData>(data, options);
 
-        string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<KeyVaultSecretData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KeyVaultSecretData>)Data).GetFormatFromOptions(options);
     }
 }

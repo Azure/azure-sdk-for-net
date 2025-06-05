@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHealthDataAIServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DeidServiceData)} does not support writing '{options.Format}' format.");
             }

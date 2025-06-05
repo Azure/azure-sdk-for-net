@@ -1,6 +1,8 @@
 // Copyright The OpenTelemetry Authors
 // SPDX-License-Identifier: Apache-2.0
 
+#nullable enable
+
 using System.Diagnostics;
 using OpenTelemetry.Internal;
 
@@ -32,7 +34,7 @@ internal sealed class DiagnosticSourceSubscriber : IDisposable, IObserver<Diagno
     {
         Guard.ThrowIfNull(handlerFactory);
 
-        this.listenerSubscriptions = [];
+        this.listenerSubscriptions = new List<IDisposable>();
         this.handlerFactory = handlerFactory;
         this.diagnosticSourceFilter = diagnosticSourceFilter;
         this.isEnabledFilter = isEnabledFilter;
@@ -41,7 +43,10 @@ internal sealed class DiagnosticSourceSubscriber : IDisposable, IObserver<Diagno
 
     public void Subscribe()
     {
-        this.allSourcesSubscription ??= DiagnosticListener.AllListeners.Subscribe(this);
+        if (this.allSourcesSubscription == null)
+        {
+            this.allSourcesSubscription = DiagnosticListener.AllListeners.Subscribe(this);
+        }
     }
 
     public void OnNext(DiagnosticListener value)
@@ -86,22 +91,15 @@ internal sealed class DiagnosticSourceSubscriber : IDisposable, IObserver<Diagno
 
         lock (this.listenerSubscriptions)
         {
-            if (disposing)
+            foreach (var listenerSubscription in this.listenerSubscriptions)
             {
-                foreach (var listenerSubscription in this.listenerSubscriptions)
-                {
-                    listenerSubscription?.Dispose();
-                }
+                listenerSubscription?.Dispose();
             }
 
             this.listenerSubscriptions.Clear();
         }
 
-        if (disposing)
-        {
-            this.allSourcesSubscription?.Dispose();
-        }
-
+        this.allSourcesSubscription?.Dispose();
         this.allSourcesSubscription = null;
     }
 }

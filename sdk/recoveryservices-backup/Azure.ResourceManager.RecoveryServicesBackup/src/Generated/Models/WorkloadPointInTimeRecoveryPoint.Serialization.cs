@@ -71,7 +71,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureWorkloadSAPAsePointInTimeRecoveryPoint": return WorkloadSapAsePointInTimeRecoveryPoint.DeserializeWorkloadSapAsePointInTimeRecoveryPoint(element, options);
                     case "AzureWorkloadSAPHanaPointInTimeRecoveryPoint": return WorkloadSapHanaPointInTimeRecoveryPoint.DeserializeWorkloadSapHanaPointInTimeRecoveryPoint(element, options);
                 }
             }
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(WorkloadPointInTimeRecoveryPoint)} does not support writing '{options.Format}' format.");
             }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformBuildServiceAgentPoolResource : IJsonModel<AppPlatformBuildServiceAgentPoolData>
     {
-        private static AppPlatformBuildServiceAgentPoolData s_dataDeserializationInstance;
-        private static AppPlatformBuildServiceAgentPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AppPlatformBuildServiceAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildServiceAgentPoolData>)Data).Write(writer, options);
 
-        AppPlatformBuildServiceAgentPoolData IJsonModel<AppPlatformBuildServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildServiceAgentPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        AppPlatformBuildServiceAgentPoolData IJsonModel<AppPlatformBuildServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformBuildServiceAgentPoolData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformBuildServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformBuildServiceAgentPoolData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
+        BinaryData IPersistableModel<AppPlatformBuildServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AppPlatformBuildServiceAgentPoolData IPersistableModel<AppPlatformBuildServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(data, options, AzureResourceManagerAppPlatformContext.Default);
+        AppPlatformBuildServiceAgentPoolData IPersistableModel<AppPlatformBuildServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(data, options);
 
-        string IPersistableModel<AppPlatformBuildServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformBuildServiceAgentPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformBuildServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformBuildServiceAgentPoolData>)Data).GetFormatFromOptions(options);
     }
 }

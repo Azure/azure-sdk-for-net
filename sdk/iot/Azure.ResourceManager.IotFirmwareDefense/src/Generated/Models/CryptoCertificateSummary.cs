@@ -14,47 +14,46 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public partial class CryptoCertificateSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateSummary"/>. </summary>
-        public CryptoCertificateSummary()
+        internal CryptoCertificateSummary()
         {
             SummaryType = FirmwareAnalysisSummaryType.CryptoCertificate;
         }
 
         /// <summary> Initializes a new instance of <see cref="CryptoCertificateSummary"/>. </summary>
-        /// <param name="summaryType"> The type of summary. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="totalCertificateCount"> Total number of certificates found. </param>
-        /// <param name="pairedKeyCount"> Total number of paired private keys found for the certificates. </param>
-        /// <param name="expiredCertificateCount"> Total number of expired certificates found. </param>
-        /// <param name="expiringSoonCertificateCount"> Total number of nearly expired certificates found. </param>
-        /// <param name="weakSignatureCount"> Total number of certificates found using a weak signature algorithm. </param>
-        /// <param name="selfSignedCertificateCount"> Total number of certificates found that are self-signed. </param>
-        /// <param name="shortKeySizeCount"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
-        internal CryptoCertificateSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificateCount, long? pairedKeyCount, long? expiredCertificateCount, long? expiringSoonCertificateCount, long? weakSignatureCount, long? selfSignedCertificateCount, long? shortKeySizeCount) : base(summaryType, provisioningState, serializedAdditionalRawData)
+        /// <param name="totalCertificates"> Total number of certificates found. </param>
+        /// <param name="pairedKeys"> Total number of paired private keys found for the certificates. </param>
+        /// <param name="expired"> Total number of expired certificates found. </param>
+        /// <param name="expiringSoon"> Total number of nearly expired certificates found. </param>
+        /// <param name="weakSignature"> Total number of certificates found using a weak signature algorithm. </param>
+        /// <param name="selfSigned"> Total number of certificates found that are self-signed. </param>
+        /// <param name="shortKeySize"> Total number of certificates found that have an insecure key size for the key algorithm. </param>
+        internal CryptoCertificateSummary(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? totalCertificates, long? pairedKeys, long? expired, long? expiringSoon, long? weakSignature, long? selfSigned, long? shortKeySize) : base(summaryType, serializedAdditionalRawData)
         {
-            TotalCertificateCount = totalCertificateCount;
-            PairedKeyCount = pairedKeyCount;
-            ExpiredCertificateCount = expiredCertificateCount;
-            ExpiringSoonCertificateCount = expiringSoonCertificateCount;
-            WeakSignatureCount = weakSignatureCount;
-            SelfSignedCertificateCount = selfSignedCertificateCount;
-            ShortKeySizeCount = shortKeySizeCount;
+            TotalCertificates = totalCertificates;
+            PairedKeys = pairedKeys;
+            Expired = expired;
+            ExpiringSoon = expiringSoon;
+            WeakSignature = weakSignature;
+            SelfSigned = selfSigned;
+            ShortKeySize = shortKeySize;
             SummaryType = summaryType;
         }
 
         /// <summary> Total number of certificates found. </summary>
-        public long? TotalCertificateCount { get; set; }
+        public long? TotalCertificates { get; }
         /// <summary> Total number of paired private keys found for the certificates. </summary>
-        public long? PairedKeyCount { get; set; }
+        public long? PairedKeys { get; }
         /// <summary> Total number of expired certificates found. </summary>
-        public long? ExpiredCertificateCount { get; set; }
+        public long? Expired { get; }
         /// <summary> Total number of nearly expired certificates found. </summary>
-        public long? ExpiringSoonCertificateCount { get; set; }
+        public long? ExpiringSoon { get; }
         /// <summary> Total number of certificates found using a weak signature algorithm. </summary>
-        public long? WeakSignatureCount { get; set; }
+        public long? WeakSignature { get; }
         /// <summary> Total number of certificates found that are self-signed. </summary>
-        public long? SelfSignedCertificateCount { get; set; }
+        public long? SelfSigned { get; }
         /// <summary> Total number of certificates found that have an insecure key size for the key algorithm. </summary>
-        public long? ShortKeySizeCount { get; set; }
+        public long? ShortKeySize { get; }
     }
 }

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SignalR.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSignalRContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(SignalRNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }

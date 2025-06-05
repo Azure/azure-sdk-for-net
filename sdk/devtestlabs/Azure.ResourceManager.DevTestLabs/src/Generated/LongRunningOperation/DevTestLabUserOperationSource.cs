@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DevTestLabs
 
         DevTestLabUserResource IOperationSource<DevTestLabUserResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            var data = ModelReaderWriter.Read<DevTestLabUserData>(response.Content);
             return new DevTestLabUserResource(_client, data);
         }
 
         async ValueTask<DevTestLabUserResource> IOperationSource<DevTestLabUserResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DevTestLabUserData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDevTestLabsContext.Default);
+            var data = ModelReaderWriter.Read<DevTestLabUserData>(response.Content);
             return await Task.FromResult(new DevTestLabUserResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceWorkspaceTagOperationLinkResource : IJsonModel<TagOperationLinkContractData>
     {
-        private static TagOperationLinkContractData s_dataDeserializationInstance;
-        private static TagOperationLinkContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<TagOperationLinkContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TagOperationLinkContractData>)Data).Write(writer, options);
 
-        TagOperationLinkContractData IJsonModel<TagOperationLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagOperationLinkContractData>)DataDeserializationInstance).Create(ref reader, options);
+        TagOperationLinkContractData IJsonModel<TagOperationLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TagOperationLinkContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TagOperationLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TagOperationLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<TagOperationLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TagOperationLinkContractData IPersistableModel<TagOperationLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagOperationLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        TagOperationLinkContractData IPersistableModel<TagOperationLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TagOperationLinkContractData>(data, options);
 
-        string IPersistableModel<TagOperationLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagOperationLinkContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<TagOperationLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TagOperationLinkContractData>)Data).GetFormatFromOptions(options);
     }
 }

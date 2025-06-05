@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlAgentConfigurationResource : IJsonModel<SqlAgentConfigurationData>
     {
-        private static SqlAgentConfigurationData s_dataDeserializationInstance;
-        private static SqlAgentConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SqlAgentConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlAgentConfigurationData>)Data).Write(writer, options);
 
-        SqlAgentConfigurationData IJsonModel<SqlAgentConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlAgentConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        SqlAgentConfigurationData IJsonModel<SqlAgentConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlAgentConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlAgentConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlAgentConfigurationData>(Data, options, AzureResourceManagerSqlContext.Default);
+        BinaryData IPersistableModel<SqlAgentConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SqlAgentConfigurationData IPersistableModel<SqlAgentConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAgentConfigurationData>(data, options, AzureResourceManagerSqlContext.Default);
+        SqlAgentConfigurationData IPersistableModel<SqlAgentConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlAgentConfigurationData>(data, options);
 
-        string IPersistableModel<SqlAgentConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlAgentConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SqlAgentConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlAgentConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

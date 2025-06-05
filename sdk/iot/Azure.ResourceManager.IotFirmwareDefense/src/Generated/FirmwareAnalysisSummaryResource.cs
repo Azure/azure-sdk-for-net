@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="workspaceName"> The workspaceName. </param>
         /// <param name="firmwareId"> The firmwareId. </param>
-        /// <param name="summaryType"> The summaryType. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryType summaryType)
+        /// <param name="summaryName"> The summaryName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string workspaceName, string firmwareId, FirmwareAnalysisSummaryName summaryName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryType}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.IoTFirmwareDefense/workspaces/{workspaceName}/firmwares/{firmwareId}/summaries/{summaryName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2025-04-01-preview</description>
+        /// <description>2024-01-10</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

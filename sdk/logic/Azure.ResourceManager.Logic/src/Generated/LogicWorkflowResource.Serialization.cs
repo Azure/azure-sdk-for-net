@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Logic
 {
     public partial class LogicWorkflowResource : IJsonModel<LogicWorkflowData>
     {
-        private static LogicWorkflowData s_dataDeserializationInstance;
-        private static LogicWorkflowData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LogicWorkflowData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowData>)Data).Write(writer, options);
 
-        LogicWorkflowData IJsonModel<LogicWorkflowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowData>)DataDeserializationInstance).Create(ref reader, options);
+        LogicWorkflowData IJsonModel<LogicWorkflowData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogicWorkflowData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LogicWorkflowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogicWorkflowData>(Data, options, AzureResourceManagerLogicContext.Default);
+        BinaryData IPersistableModel<LogicWorkflowData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LogicWorkflowData IPersistableModel<LogicWorkflowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowData>(data, options, AzureResourceManagerLogicContext.Default);
+        LogicWorkflowData IPersistableModel<LogicWorkflowData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogicWorkflowData>(data, options);
 
-        string IPersistableModel<LogicWorkflowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LogicWorkflowData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogicWorkflowData>)Data).GetFormatFromOptions(options);
     }
 }

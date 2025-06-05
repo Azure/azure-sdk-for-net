@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(EventGridMqttClientDeletedEventDataConverter))]
     public partial class EventGridMqttClientDeletedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientDeletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientDeletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -97,7 +95,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(EventGridMqttClientDeletedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -135,20 +133,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class EventGridMqttClientDeletedEventDataConverter : JsonConverter<EventGridMqttClientDeletedEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, EventGridMqttClientDeletedEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override EventGridMqttClientDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeEventGridMqttClientDeletedEventData(document.RootElement);
-            }
         }
     }
 }

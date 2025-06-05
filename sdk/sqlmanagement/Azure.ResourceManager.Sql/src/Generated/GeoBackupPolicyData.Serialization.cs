@@ -38,23 +38,20 @@ namespace Azure.ResourceManager.Sql
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(GeoBackupPolicyState))
-            {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(GeoBackupPolicyState.Value.ToSerialString());
-            }
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToSerialString());
             if (options.Format != "W" && Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
@@ -83,18 +80,23 @@ namespace Azure.ResourceManager.Sql
             {
                 return null;
             }
-            AzureLocation? location = default;
             string kind = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            GeoBackupPolicyState? state = default;
+            GeoBackupPolicyState state = default;
             string storageType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("kind"u8))
+                {
+                    kind = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("location"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -102,11 +104,6 @@ namespace Azure.ResourceManager.Sql
                         continue;
                     }
                     location = new AzureLocation(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -144,10 +141,6 @@ namespace Azure.ResourceManager.Sql
                     {
                         if (property0.NameEquals("state"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
                             state = property0.Value.GetString().ToGeoBackupPolicyState();
                             continue;
                         }
@@ -170,8 +163,8 @@ namespace Azure.ResourceManager.Sql
                 name,
                 type,
                 systemData,
-                location,
                 kind,
+                location,
                 state,
                 storageType,
                 serializedAdditionalRawData);
@@ -281,7 +274,7 @@ namespace Azure.ResourceManager.Sql
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupPolicyState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    state: ");
@@ -289,11 +282,8 @@ namespace Azure.ResourceManager.Sql
             }
             else
             {
-                if (Optional.IsDefined(GeoBackupPolicyState))
-                {
-                    builder.Append("    state: ");
-                    builder.AppendLine($"'{GeoBackupPolicyState.Value.ToSerialString()}'");
-                }
+                builder.Append("    state: ");
+                builder.AppendLine($"'{State.ToSerialString()}'");
             }
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageType), out propertyOverride);
@@ -331,7 +321,7 @@ namespace Azure.ResourceManager.Sql
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

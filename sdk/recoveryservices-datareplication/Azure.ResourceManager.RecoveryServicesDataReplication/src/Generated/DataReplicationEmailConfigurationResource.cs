@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EmailConfigurationModel_Get</description>
+        /// <description>EmailConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EmailConfigurationModel_Get</description>
+        /// <description>EmailConfiguration_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EmailConfigurationModel_Create</description>
+        /// <description>EmailConfiguration_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -225,11 +225,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EmailConfigurationModel_Create</description>
+        /// <description>EmailConfiguration_Create</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-09-01</description>
+        /// <description>2021-02-16-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

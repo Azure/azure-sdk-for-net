@@ -6,15 +6,16 @@
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.4.0</ApiCompatVersion>
     <PackageTags>Azure, WebPubSub</PackageTags>
-    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp3.1</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <NoWarn>$(NoWarn);419</NoWarn>
     <GenerateAPIListing>true</GenerateAPIListing>
-		<ApiCompatBaselineTargetFramework Condition="'$(TargetFramework)' == 'net8.0'">netcoreapp3.1</ApiCompatBaselineTargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Memory.Data" />
   </ItemGroup>
 

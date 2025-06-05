@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkPacketBrokerResource : IJsonModel<NetworkPacketBrokerData>
     {
-        private static NetworkPacketBrokerData s_dataDeserializationInstance;
-        private static NetworkPacketBrokerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkPacketBrokerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkPacketBrokerData>)Data).Write(writer, options);
 
-        NetworkPacketBrokerData IJsonModel<NetworkPacketBrokerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkPacketBrokerData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkPacketBrokerData IJsonModel<NetworkPacketBrokerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkPacketBrokerData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkPacketBrokerData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        BinaryData IPersistableModel<NetworkPacketBrokerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkPacketBrokerData IPersistableModel<NetworkPacketBrokerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkPacketBrokerData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        NetworkPacketBrokerData IPersistableModel<NetworkPacketBrokerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkPacketBrokerData>(data, options);
 
-        string IPersistableModel<NetworkPacketBrokerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkPacketBrokerData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkPacketBrokerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkPacketBrokerData>)Data).GetFormatFromOptions(options);
     }
 }

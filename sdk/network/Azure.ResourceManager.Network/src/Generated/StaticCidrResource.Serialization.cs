@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class StaticCidrResource : IJsonModel<StaticCidrData>
     {
-        private static StaticCidrData s_dataDeserializationInstance;
-        private static StaticCidrData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<StaticCidrData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticCidrData>)Data).Write(writer, options);
 
-        StaticCidrData IJsonModel<StaticCidrData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticCidrData>)DataDeserializationInstance).Create(ref reader, options);
+        StaticCidrData IJsonModel<StaticCidrData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticCidrData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticCidrData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticCidrData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<StaticCidrData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StaticCidrData IPersistableModel<StaticCidrData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticCidrData>(data, options, AzureResourceManagerNetworkContext.Default);
+        StaticCidrData IPersistableModel<StaticCidrData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticCidrData>(data, options);
 
-        string IPersistableModel<StaticCidrData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticCidrData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<StaticCidrData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticCidrData>)Data).GetFormatFromOptions(options);
     }
 }

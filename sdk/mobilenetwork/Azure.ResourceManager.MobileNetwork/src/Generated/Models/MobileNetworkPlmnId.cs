@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Public land mobile network (PLMN) ID. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks. </summary>
+    /// <summary>
+    /// Public land mobile network (PLMN) ID. This is made up of the mobile country code and mobile network code, as defined in https://www.itu.int/rec/T-REC-E.212. The values 001-01 and 001-001 can be used for testing and the values 999-99 and 999-999 can be used on internal private networks.
+    /// Serialized Name: PlmnId
+    /// </summary>
     public partial class MobileNetworkPlmnId
     {
         /// <summary>
@@ -46,8 +49,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlmnId"/>. </summary>
-        /// <param name="mcc"> Mobile country code (MCC). </param>
-        /// <param name="mnc"> Mobile network code (MNC). </param>
+        /// <param name="mcc">
+        /// Mobile country code (MCC).
+        /// Serialized Name: PlmnId.mcc
+        /// </param>
+        /// <param name="mnc">
+        /// Mobile network code (MNC).
+        /// Serialized Name: PlmnId.mnc
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="mcc"/> or <paramref name="mnc"/> is null. </exception>
         public MobileNetworkPlmnId(string mcc, string mnc)
         {
@@ -59,8 +68,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlmnId"/>. </summary>
-        /// <param name="mcc"> Mobile country code (MCC). </param>
-        /// <param name="mnc"> Mobile network code (MNC). </param>
+        /// <param name="mcc">
+        /// Mobile country code (MCC).
+        /// Serialized Name: PlmnId.mcc
+        /// </param>
+        /// <param name="mnc">
+        /// Mobile network code (MNC).
+        /// Serialized Name: PlmnId.mnc
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkPlmnId(string mcc, string mnc, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -74,10 +89,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> Mobile country code (MCC). </summary>
+        /// <summary>
+        /// Mobile country code (MCC).
+        /// Serialized Name: PlmnId.mcc
+        /// </summary>
         [WirePath("mcc")]
         public string Mcc { get; set; }
-        /// <summary> Mobile network code (MNC). </summary>
+        /// <summary>
+        /// Mobile network code (MNC).
+        /// Serialized Name: PlmnId.mnc
+        /// </summary>
         [WirePath("mnc")]
         public string Mnc { get; set; }
     }

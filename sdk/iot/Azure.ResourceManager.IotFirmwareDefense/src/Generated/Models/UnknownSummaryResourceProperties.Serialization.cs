@@ -58,7 +58,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 return null;
             }
             FirmwareAnalysisSummaryType summaryType = "Unknown";
-            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -68,22 +67,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UnknownSummaryResourceProperties(summaryType, provisioningState, serializedAdditionalRawData);
+            return new UnknownSummaryResourceProperties(summaryType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirmwareAnalysisSummaryProperties>.Write(ModelReaderWriterOptions options)
@@ -93,7 +83,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareAnalysisSummaryProperties)} does not support writing '{options.Format}' format.");
             }

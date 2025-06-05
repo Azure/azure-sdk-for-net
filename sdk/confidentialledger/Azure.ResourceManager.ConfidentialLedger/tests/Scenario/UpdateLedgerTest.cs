@@ -16,9 +16,8 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
     {
         private ConfidentialLedgerResource _ledgerResource;
 
-        public UpdateLedgerTest(string testFixtureName) : base(true, RecordedTestMode.Playback, testFixtureName)
+        public UpdateLedgerTest(string testFixtureName) : base(true, testFixtureName)
         {
-            SaveDebugRecordingsOnFailure = true;
         }
 
         [Test, Order(1)]
@@ -26,26 +25,20 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         [LiveOnly(Reason = "Test relies on PrincipalId format which currently is not a valid GUID. This will be fixed when the sanitization migrates to the Test Proxy.")]
         public async Task TestAddUserToLedger()
         {
-            try
-            {
-                // Create Ledger
-                await CreateLedger(LedgerName);
-                _ledgerResource = await GetLedgerByName(LedgerName);
+            // Create Ledger
+            await CreateLedger(LedgerName);
+            _ledgerResource = await GetLedgerByName(LedgerName);
 
-                // Add the AadBasedSecurityPrincipal
-                _ledgerResource.Data.Properties = AddTestSecurityPrincipal(_ledgerResource.Data.Properties,
-                    GenerateTestSecurityPrincipal());
-                await UpdateLedger(LedgerName, _ledgerResource.Data);
+            // Add the AadBasedSecurityPrincipal
+            _ledgerResource.Data.Properties = AddTestSecurityPrincipal(_ledgerResource.Data.Properties,
+                GenerateTestSecurityPrincipal());
+            await UpdateLedger(LedgerName, _ledgerResource.Data);
 
-                // Get the updated ledger
-                _ledgerResource = await GetLedgerByName(LedgerName);
+            // Get the updated ledger
+            _ledgerResource = await GetLedgerByName(LedgerName);
 
-                Assert.True(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
-                    .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
-            }
-            catch (Exception)
-            {
-            }
+            Assert.True(_ledgerResource.Data.Properties.AadBasedSecurityPrincipals
+                .Any(testUser => TestEnvironment.TestUserObjectId.Equals(testUser.PrincipalId.ToString())));
         }
 
         [Test, Order(2)]
@@ -84,9 +77,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Tests.Scenario
         {
             return new ConfidentialLedgerProperties(properties.LedgerName, properties.LedgerUri,
                 properties.IdentityServiceUri, properties.LedgerInternalNamespace, properties.RunningState, properties.LedgerType,
-                properties.ProvisioningState, ConfidentialLedgerSku.Standard, securityPrincipals, properties.CertBasedSecurityPrincipals, properties.HostLevel,
-                properties.MaxBodySizeInMb, properties.SubjectName, properties.NodeCount, properties.WriteLBAddressPrefix,
-                properties.WorkerThreads, properties.EnclavePlatform, properties.ApplicationType, null);
+                properties.ProvisioningState, null, securityPrincipals, properties.CertBasedSecurityPrincipals, null);
         }
 
         /// <summary>

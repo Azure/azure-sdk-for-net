@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class GovernanceAssignmentResource : IJsonModel<GovernanceAssignmentData>
     {
-        private static GovernanceAssignmentData s_dataDeserializationInstance;
-        private static GovernanceAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<GovernanceAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceAssignmentData>)Data).Write(writer, options);
 
-        GovernanceAssignmentData IJsonModel<GovernanceAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
+        GovernanceAssignmentData IJsonModel<GovernanceAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GovernanceAssignmentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GovernanceAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GovernanceAssignmentData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<GovernanceAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        GovernanceAssignmentData IPersistableModel<GovernanceAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceAssignmentData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        GovernanceAssignmentData IPersistableModel<GovernanceAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GovernanceAssignmentData>(data, options);
 
-        string IPersistableModel<GovernanceAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<GovernanceAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GovernanceAssignmentData>)Data).GetFormatFromOptions(options);
     }
 }

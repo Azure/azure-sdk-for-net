@@ -66,16 +66,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
 #endif
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DelayInformation))
-            {
-                writer.WritePropertyName("delayInformation"u8);
-                writer.WriteStartArray();
-                foreach (var item in DelayInformation)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -118,7 +108,6 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxStageStatus? stageStatus = default;
             DateTimeOffset? stageTime = default;
             BinaryData jobStageDetails = default;
-            IReadOnlyList<JobDelayDetails> delayInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,20 +153,6 @@ namespace Azure.ResourceManager.DataBox.Models
                     jobStageDetails = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("delayInformation"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<JobDelayDetails> array = new List<JobDelayDetails>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(JobDelayDetails.DeserializeJobDelayDetails(item, options));
-                    }
-                    delayInformation = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -190,7 +165,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 stageStatus,
                 stageTime,
                 jobStageDetails,
-                delayInformation ?? new ChangeTrackingList<JobDelayDetails>(),
                 serializedAdditionalRawData);
         }
 
@@ -201,7 +175,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support writing '{options.Format}' format.");
             }

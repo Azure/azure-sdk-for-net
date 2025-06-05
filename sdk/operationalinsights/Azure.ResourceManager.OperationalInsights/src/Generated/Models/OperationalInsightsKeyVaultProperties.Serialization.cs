@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUri"u8);
-                WriteKeyVaultUri(writer, options);
+                writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
             }
             if (Optional.IsDefined(KeyName))
             {
@@ -102,7 +102,11 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 if (property.NameEquals("keyVaultUri"u8))
                 {
-                    DeserializeKeyVaultUri(property, ref keyVaultUri);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    keyVaultUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("keyName"u8))
@@ -231,7 +235,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerOperationalInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

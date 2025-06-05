@@ -1,21 +1,10 @@
-param(
-  [string]$ServiceDirectory,
-  [string]$PackageName,
-  [string]$ExpectedWarningsFilePath,
-  [string]$DirectoryName = "")
+param([string]$ServiceDirectory, [string]$PackageName, [string]$ExpectedWarningsFilePath)
 
 ### Creating a test app ###
 
 Write-Host "Creating a test app to publish."
 
 $expectedWarningsFullPath = Join-Path -Path "..\..\..\..\sdk\$ServiceDirectory\" -ChildPath $ExpectedWarningsFilePath
-
-# Set the project reference path based on whether DirectoryName was provided
-if ([string]::IsNullOrEmpty($DirectoryName)) {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj"
-} else {
-    $projectRefFullPath = "..\..\..\..\sdk\$ServiceDirectory\$DirectoryName\src\$PackageName.csproj"
-}
 
 $folderPath = "\TempAotCompatFiles"
 New-Item -ItemType Directory -Path "./$folderPath" | Out-Null
@@ -29,12 +18,11 @@ $csprojContent = @"
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <PublishAot>true</PublishAot>
-    <EventSourceSupport>true</EventSourceSupport>
     <TrimmerSingleWarn>false</TrimmerSingleWarn>
     <IsTestSupportProject>true</IsTestSupportProject>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="$projectRefFullPath" />
+    <ProjectReference Include="..\..\..\..\sdk\$ServiceDirectory\$PackageName\src\$PackageName.csproj" />
       <TrimmerRootAssembly Include="$PackageName" />
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +63,9 @@ $publishOutput = dotnet publish aotcompatibility.csproj -nodeReuse:false /p:UseS
 
 if ($LASTEXITCODE -ne 0)
 {
-    Write-Host "Publish failed." -ForegroundColor Red
+    Write-Host "Publish failed."
 
-    Write-Host ($publishOutput -join "`n")
+    Write-Host $publishOutput
 
     Write-Host "Deleting test app files."
 
@@ -92,7 +80,7 @@ $actualWarningCount = 0
 
 foreach ($line in $($publishOutput -split "`r`n"))
 {
-    if ($line -like "*warning IL*")
+    if ($line -like "*analysis warning IL*")
     {
         $actualWarningCount += 1
     }
@@ -116,9 +104,9 @@ if (Test-Path $expectedWarningsFullPath -PathType Leaf) {
     $numWarnings = $warnings.Count
 
     if ($numWarnings -gt 0) {
-      Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
+      Write-Host "Found $numWarnings additional warnings that were not expected:"
       foreach ($warning in $warnings) {
-        Write-Host $warning -ForegroundColor Yellow
+        Write-Host $warning
       }
     }
 
@@ -141,9 +129,9 @@ Write-Host "Checking against the list of expected warnings. There are $numExpect
 $warnings = $publishOutput -split "`n" | select-string -pattern 'IL\d+' | select-string -pattern '##' -notmatch | select-string -pattern $expectedWarnings -notmatch
 $numWarnings = $warnings.Count
 if ($numWarnings -gt 0) {
-  Write-Host "Found $numWarnings additional warnings that were not expected:" -ForegroundColor Red
+  Write-Host "Found $numWarnings additional warnings that were not expected:"
   foreach ($warning in $warnings) {
-    Write-Host $warning -ForegroundColor Yellow
+    Write-Host $warning
   }
 }
 

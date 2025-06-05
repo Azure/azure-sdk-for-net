@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class NetworkFeatureResource : IJsonModel<NetworkFeatureData>
     {
-        private static NetworkFeatureData s_dataDeserializationInstance;
-        private static NetworkFeatureData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkFeatureData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeatureData>)Data).Write(writer, options);
 
-        NetworkFeatureData IJsonModel<NetworkFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeatureData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkFeatureData IJsonModel<NetworkFeatureData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFeatureData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFeatureData>(Data, options, AzureResourceManagerAppServiceContext.Default);
+        BinaryData IPersistableModel<NetworkFeatureData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkFeatureData IPersistableModel<NetworkFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFeatureData>(data, options, AzureResourceManagerAppServiceContext.Default);
+        NetworkFeatureData IPersistableModel<NetworkFeatureData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFeatureData>(data, options);
 
-        string IPersistableModel<NetworkFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFeatureData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFeatureData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFeatureData>)Data).GetFormatFromOptions(options);
     }
 }

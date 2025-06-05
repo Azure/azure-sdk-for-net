@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ApiManagement
 {
     public partial class ServiceProductGroupLinkResource : IJsonModel<ProductGroupLinkContractData>
     {
-        private static ProductGroupLinkContractData s_dataDeserializationInstance;
-        private static ProductGroupLinkContractData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ProductGroupLinkContractData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ProductGroupLinkContractData>)Data).Write(writer, options);
 
-        ProductGroupLinkContractData IJsonModel<ProductGroupLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProductGroupLinkContractData>)DataDeserializationInstance).Create(ref reader, options);
+        ProductGroupLinkContractData IJsonModel<ProductGroupLinkContractData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ProductGroupLinkContractData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ProductGroupLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ProductGroupLinkContractData>(Data, options, AzureResourceManagerApiManagementContext.Default);
+        BinaryData IPersistableModel<ProductGroupLinkContractData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ProductGroupLinkContractData IPersistableModel<ProductGroupLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductGroupLinkContractData>(data, options, AzureResourceManagerApiManagementContext.Default);
+        ProductGroupLinkContractData IPersistableModel<ProductGroupLinkContractData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ProductGroupLinkContractData>(data, options);
 
-        string IPersistableModel<ProductGroupLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProductGroupLinkContractData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ProductGroupLinkContractData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ProductGroupLinkContractData>)Data).GetFormatFromOptions(options);
     }
 }

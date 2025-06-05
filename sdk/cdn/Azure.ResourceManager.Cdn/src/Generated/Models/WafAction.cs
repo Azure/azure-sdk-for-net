@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// The WafAction.
-    /// Serialized Name: WafAction
-    /// </summary>
+    /// <summary> The WafAction. </summary>
     public readonly partial struct WafAction : IEquatable<WafAction>
     {
         private readonly string _value;
@@ -30,25 +27,13 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string LogValue = "log";
         private const string RedirectValue = "redirect";
 
-        /// <summary>
-        /// allow
-        /// Serialized Name: WafAction.allow
-        /// </summary>
+        /// <summary> allow. </summary>
         public static WafAction Allow { get; } = new WafAction(AllowValue);
-        /// <summary>
-        /// block
-        /// Serialized Name: WafAction.block
-        /// </summary>
+        /// <summary> block. </summary>
         public static WafAction Block { get; } = new WafAction(BlockValue);
-        /// <summary>
-        /// log
-        /// Serialized Name: WafAction.log
-        /// </summary>
+        /// <summary> log. </summary>
         public static WafAction Log { get; } = new WafAction(LogValue);
-        /// <summary>
-        /// redirect
-        /// Serialized Name: WafAction.redirect
-        /// </summary>
+        /// <summary> redirect. </summary>
         public static WafAction Redirect { get; } = new WafAction(RedirectValue);
         /// <summary> Determines if two <see cref="WafAction"/> values are the same. </summary>
         public static bool operator ==(WafAction left, WafAction right) => left.Equals(right);

@@ -76,11 +76,6 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
             }
-            if (Optional.IsDefined(ConnectivityCapabilities))
-            {
-                writer.WritePropertyName("connectivityCapabilities"u8);
-                writer.WriteObjectValue(ConnectivityCapabilities, options);
-            }
             if (Optional.IsCollectionDefined(AppliesToGroups))
             {
                 writer.WritePropertyName("appliesToGroups"u8);
@@ -150,7 +145,6 @@ namespace Azure.ResourceManager.Network.Models
             ConnectivityTopology? connectivityTopology = default;
             IReadOnlyList<ConnectivityHub> hubs = default;
             GlobalMeshSupportFlag? isGlobal = default;
-            ConnectivityConfigurationPropertiesConnectivityCapabilities connectivityCapabilities = default;
             IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
             NetworkProvisioningState? provisioningState = default;
             DeleteExistingPeering? deleteExistingPeering = default;
@@ -224,15 +218,6 @@ namespace Azure.ResourceManager.Network.Models
                             isGlobal = new GlobalMeshSupportFlag(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("connectivityCapabilities"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectivityCapabilities = ConnectivityConfigurationPropertiesConnectivityCapabilities.DeserializeConnectivityConfigurationPropertiesConnectivityCapabilities(property0.Value, options);
-                            continue;
-                        }
                         if (property0.NameEquals("appliesToGroups"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -290,7 +275,6 @@ namespace Azure.ResourceManager.Network.Models
                 connectivityTopology,
                 hubs ?? new ChangeTrackingList<ConnectivityHub>(),
                 isGlobal,
-                connectivityCapabilities,
                 appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
                 provisioningState,
                 deleteExistingPeering,
@@ -305,7 +289,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
             }

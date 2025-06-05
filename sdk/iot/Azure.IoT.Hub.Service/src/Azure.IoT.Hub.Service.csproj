@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Common source from Azure.Core -->

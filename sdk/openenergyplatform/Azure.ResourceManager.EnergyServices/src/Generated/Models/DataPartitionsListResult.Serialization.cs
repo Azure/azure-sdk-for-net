@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEnergyServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support writing '{options.Format}' format.");
             }

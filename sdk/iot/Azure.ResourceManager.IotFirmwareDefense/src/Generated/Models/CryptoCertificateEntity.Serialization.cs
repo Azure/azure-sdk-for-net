@@ -36,28 +36,63 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
 
             if (Optional.IsDefined(CommonName))
             {
-                writer.WritePropertyName("commonName"u8);
-                writer.WriteStringValue(CommonName);
+                if (CommonName != null)
+                {
+                    writer.WritePropertyName("commonName"u8);
+                    writer.WriteStringValue(CommonName);
+                }
+                else
+                {
+                    writer.WriteNull("commonName");
+                }
             }
             if (Optional.IsDefined(Organization))
             {
-                writer.WritePropertyName("organization"u8);
-                writer.WriteStringValue(Organization);
+                if (Organization != null)
+                {
+                    writer.WritePropertyName("organization"u8);
+                    writer.WriteStringValue(Organization);
+                }
+                else
+                {
+                    writer.WriteNull("organization");
+                }
             }
             if (Optional.IsDefined(OrganizationalUnit))
             {
-                writer.WritePropertyName("organizationalUnit"u8);
-                writer.WriteStringValue(OrganizationalUnit);
+                if (OrganizationalUnit != null)
+                {
+                    writer.WritePropertyName("organizationalUnit"u8);
+                    writer.WriteStringValue(OrganizationalUnit);
+                }
+                else
+                {
+                    writer.WriteNull("organizationalUnit");
+                }
             }
             if (Optional.IsDefined(State))
             {
-                writer.WritePropertyName("state"u8);
-                writer.WriteStringValue(State);
+                if (State != null)
+                {
+                    writer.WritePropertyName("state"u8);
+                    writer.WriteStringValue(State);
+                }
+                else
+                {
+                    writer.WriteNull("state");
+                }
             }
             if (Optional.IsDefined(Country))
             {
-                writer.WritePropertyName("country"u8);
-                writer.WriteStringValue(Country);
+                if (Country != null)
+                {
+                    writer.WritePropertyName("country"u8);
+                    writer.WriteStringValue(Country);
+                }
+                else
+                {
+                    writer.WriteNull("country");
+                }
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -107,26 +142,51 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 if (property.NameEquals("commonName"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        commonName = null;
+                        continue;
+                    }
                     commonName = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("organization"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        organization = null;
+                        continue;
+                    }
                     organization = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("organizationalUnit"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        organizationalUnit = null;
+                        continue;
+                    }
                     organizationalUnit = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        state = null;
+                        continue;
+                    }
                     state = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("country"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        country = null;
+                        continue;
+                    }
                     country = property.Value.GetString();
                     continue;
                 }
@@ -152,7 +212,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CryptoCertificateEntity)} does not support writing '{options.Format}' format.");
             }

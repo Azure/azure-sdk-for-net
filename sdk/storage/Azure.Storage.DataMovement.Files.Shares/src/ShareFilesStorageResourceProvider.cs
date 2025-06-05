@@ -180,20 +180,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected override async ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
-            ShareFileSourceCheckpointDetails checkpointDetails;
-            using (MemoryStream stream = new(properties.SourceCheckpointDetails))
-            {
-                checkpointDetails = ShareFileSourceCheckpointDetails.Deserialize(stream);
-            }
-
-            ShareFileStorageResourceOptions options = new()
-            {
-                ShareProtocol = checkpointDetails.ShareProtocol
-            };
-
+            // Source share file data currently empty, so no specific properties to grab
             return properties.IsContainer
-                ? await FromDirectoryAsync(properties.SourceUri, options).ConfigureAwait(false)
-                : await FromFileAsync(properties.SourceUri, options).ConfigureAwait(false);
+                ? await FromDirectoryAsync(properties.SourceUri).ConfigureAwait(false)
+                : await FromFileAsync(properties.SourceUri).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -231,7 +221,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 _isDirectoryMetadataSet = checkpointDetails.IsDirectoryMetadataSet,
                 FileMetadata = checkpointDetails.FileMetadata,
                 _isFileMetadataSet = checkpointDetails.IsFileMetadataSet,
-                ShareProtocol = checkpointDetails.ShareProtocol,
             };
             return properties.IsContainer
                 ? await FromDirectoryAsync(properties.DestinationUri, options).ConfigureAwait(false)

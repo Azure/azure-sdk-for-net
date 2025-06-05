@@ -15,7 +15,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Microsoft.Extensions.Logging;
 
 using Moq;
-using OpenTelemetry;
+
 using OpenTelemetry.Logs;
 
 using Xunit;
@@ -202,7 +202,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var exception = CreateException(1);
             logger.LogWarning(exception, exception.Message);
 
-            var exceptionData = new TelemetryExceptionData(2, logRecords[0], string.Empty, new ChangeTrackingDictionary<string, string>());
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(1, exceptionData.Exceptions.Count);
         }
@@ -231,8 +231,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // aggregateException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(aggregateException, "AggregateException");
 
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
-            var exceptionData = (TelemetryExceptionData)telemetryItem[0].Data.BaseData;
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
 
@@ -268,8 +267,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // exception.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(exception, "Exception");
 
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
-            var exceptionData = (TelemetryExceptionData)telemetryItem[0].Data.BaseData;
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(3, exceptionData.Exceptions.Count);
             Assert.Equal("Exception", exceptionData.Exceptions[0].Message);
@@ -306,8 +304,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // rootLevelException.Message will return different value in case of net462 compared to netcore
             logger.LogWarning(rootLevelException, "0");
 
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
-            var exceptionData = (TelemetryExceptionData)telemetryItem[0].Data.BaseData;
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(maxNumberOfExceptionsAllowed + 1, exceptionData.Exceptions.Count);
 
@@ -364,8 +361,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var ex = new Exception("Exception Message");
             logger.Log(logLevel, ex, "Log Message");
 
-            var telemetryItem = LogsHelper.OtelToAzureMonitorLogs(new Batch<LogRecord>(logRecords.ToArray(), logRecords.Count), null, "00000000-0000-0000-0000-000000000000");
-            var exceptionData = (TelemetryExceptionData)telemetryItem[0].Data.BaseData;
+            var exceptionData = new TelemetryExceptionData(2, logRecords[0]);
 
             Assert.Equal(2, exceptionData.Version);
             Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), exceptionData.SeverityLevel);

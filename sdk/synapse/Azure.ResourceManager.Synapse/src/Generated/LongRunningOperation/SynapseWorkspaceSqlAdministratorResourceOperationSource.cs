@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseWorkspaceSqlAdministratorResource IOperationSource<SynapseWorkspaceSqlAdministratorResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseWorkspaceAadAdminInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseWorkspaceAadAdminInfoData>(response.Content);
             return new SynapseWorkspaceSqlAdministratorResource(_client, data);
         }
 
         async ValueTask<SynapseWorkspaceSqlAdministratorResource> IOperationSource<SynapseWorkspaceSqlAdministratorResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SynapseWorkspaceAadAdminInfoData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            var data = ModelReaderWriter.Read<SynapseWorkspaceAadAdminInfoData>(response.Content);
             return await Task.FromResult(new SynapseWorkspaceSqlAdministratorResource(_client, data)).ConfigureAwait(false);
         }
     }

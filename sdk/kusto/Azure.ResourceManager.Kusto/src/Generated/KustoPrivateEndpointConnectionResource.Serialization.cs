@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoPrivateEndpointConnectionResource : IJsonModel<KustoPrivateEndpointConnectionData>
     {
-        private static KustoPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static KustoPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<KustoPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        KustoPrivateEndpointConnectionData IJsonModel<KustoPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        KustoPrivateEndpointConnectionData IJsonModel<KustoPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoPrivateEndpointConnectionData>(Data, options, AzureResourceManagerKustoContext.Default);
+        BinaryData IPersistableModel<KustoPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KustoPrivateEndpointConnectionData IPersistableModel<KustoPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoPrivateEndpointConnectionData>(data, options, AzureResourceManagerKustoContext.Default);
+        KustoPrivateEndpointConnectionData IPersistableModel<KustoPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<KustoPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<KustoPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

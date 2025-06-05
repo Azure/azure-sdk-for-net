@@ -6,7 +6,7 @@ using System.ClientModel.Primitives;
 using Azure.Core;
 using Azure.Security.KeyVault.Secrets;
 
-namespace Azure.Projects;
+namespace Azure.Projects.KeyVault;
 
 /// <summary>
 /// The key vault extensions.
@@ -19,10 +19,10 @@ public static class KeyVaultExtensions
     /// <param name="workspace"></param>
     /// <returns></returns>
     /// <exception cref="Exception"></exception>
-    public static SecretClient GetSecretClient(this ClientConnectionProvider workspace)
+    public static SecretClient GetKeyVaultSecretsClient(this ConnectionProvider workspace)
     {
         ClientConnection connection = workspace.GetConnection(typeof(SecretClient).FullName);
-        if (connection.CredentialKind == CredentialKind.TokenCredential)
+        if (connection.Authentication == ClientAuthenticationMethod.Credential)
         {
             if (!connection.TryGetLocatorAsUri(out Uri uri))
             {

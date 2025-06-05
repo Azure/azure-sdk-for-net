@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ConnectionMonitorResource : IJsonModel<ConnectionMonitorData>
     {
-        private static ConnectionMonitorData s_dataDeserializationInstance;
-        private static ConnectionMonitorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ConnectionMonitorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorData>)Data).Write(writer, options);
 
-        ConnectionMonitorData IJsonModel<ConnectionMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorData>)DataDeserializationInstance).Create(ref reader, options);
+        ConnectionMonitorData IJsonModel<ConnectionMonitorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectionMonitorData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectionMonitorData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ConnectionMonitorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ConnectionMonitorData IPersistableModel<ConnectionMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionMonitorData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ConnectionMonitorData IPersistableModel<ConnectionMonitorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectionMonitorData>(data, options);
 
-        string IPersistableModel<ConnectionMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionMonitorData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectionMonitorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectionMonitorData>)Data).GetFormatFromOptions(options);
     }
 }

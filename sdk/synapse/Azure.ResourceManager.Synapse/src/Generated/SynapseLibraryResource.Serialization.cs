@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseLibraryResource : IJsonModel<SynapseLibraryData>
     {
-        private static SynapseLibraryData s_dataDeserializationInstance;
-        private static SynapseLibraryData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseLibraryData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseLibraryData>)Data).Write(writer, options);
 
-        SynapseLibraryData IJsonModel<SynapseLibraryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseLibraryData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseLibraryData IJsonModel<SynapseLibraryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseLibraryData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseLibraryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseLibraryData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseLibraryData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseLibraryData IPersistableModel<SynapseLibraryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseLibraryData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseLibraryData IPersistableModel<SynapseLibraryData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseLibraryData>(data, options);
 
-        string IPersistableModel<SynapseLibraryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseLibraryData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseLibraryData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseLibraryData>)Data).GetFormatFromOptions(options);
     }
 }

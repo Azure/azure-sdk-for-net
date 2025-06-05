@@ -12,8 +12,6 @@ namespace BasicTypeSpec
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct), AllowMultiple = true)]
     internal partial class CodeGenSuppressAttribute : Attribute
     {
-        /// <param name="member"> The member to suppress. </param>
-        /// <param name="parameters"> The types of the parameters of the member. </param>
         public CodeGenSuppressAttribute(string member, params Type[] parameters)
         {
             Member = member;

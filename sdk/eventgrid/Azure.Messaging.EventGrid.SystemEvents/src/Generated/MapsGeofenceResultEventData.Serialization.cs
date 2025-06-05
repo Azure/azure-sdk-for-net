@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(MapsGeofenceResultEventDataConverter))]
     public partial class MapsGeofenceResultEventData : IUtf8JsonSerializable, IJsonModel<MapsGeofenceResultEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapsGeofenceResultEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -122,7 +120,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(MapsGeofenceResultEventData)} does not support writing '{options.Format}' format.");
             }
@@ -160,20 +158,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class MapsGeofenceResultEventDataConverter : JsonConverter<MapsGeofenceResultEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, MapsGeofenceResultEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override MapsGeofenceResultEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeMapsGeofenceResultEventData(document.RootElement);
-            }
         }
     }
 }

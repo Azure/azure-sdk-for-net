@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Single-network slice selection assistance information (S-NSSAI). </summary>
+    /// <summary>
+    /// Single-network slice selection assistance information (S-NSSAI).
+    /// Serialized Name: Snssai
+    /// </summary>
     public partial class Snssai
     {
         /// <summary>
@@ -46,15 +49,24 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="Snssai"/>. </summary>
-        /// <param name="sst"> Slice/service type (SST). </param>
+        /// <param name="sst">
+        /// Slice/service type (SST).
+        /// Serialized Name: Snssai.sst
+        /// </param>
         public Snssai(int sst)
         {
             Sst = sst;
         }
 
         /// <summary> Initializes a new instance of <see cref="Snssai"/>. </summary>
-        /// <param name="sst"> Slice/service type (SST). </param>
-        /// <param name="sd"> Slice differentiator (SD). </param>
+        /// <param name="sst">
+        /// Slice/service type (SST).
+        /// Serialized Name: Snssai.sst
+        /// </param>
+        /// <param name="sd">
+        /// Slice differentiator (SD).
+        /// Serialized Name: Snssai.sd
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal Snssai(int sst, string sd, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -68,10 +80,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> Slice/service type (SST). </summary>
+        /// <summary>
+        /// Slice/service type (SST).
+        /// Serialized Name: Snssai.sst
+        /// </summary>
         [WirePath("sst")]
         public int Sst { get; set; }
-        /// <summary> Slice differentiator (SD). </summary>
+        /// <summary>
+        /// Slice differentiator (SD).
+        /// Serialized Name: Snssai.sd
+        /// </summary>
         [WirePath("sd")]
         public string Sd { get; set; }
     }

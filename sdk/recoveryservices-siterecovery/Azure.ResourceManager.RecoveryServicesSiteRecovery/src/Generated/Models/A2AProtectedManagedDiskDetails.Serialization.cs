@@ -129,11 +129,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState);
             }
-            if (Optional.IsCollectionDefined(SiteRecoveryAllowedDiskLevelOperation))
+            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
             {
                 writer.WritePropertyName("allowedDiskLevelOperation"u8);
                 writer.WriteStartArray();
-                foreach (var item in SiteRecoveryAllowedDiskLevelOperation)
+                foreach (var item in AllowedDiskLevelOperation)
                 {
                     writer.WriteStringValue(item);
                 }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             double? dataPendingInStagingStorageAccountInMB = default;
             double? dataPendingAtSourceAgentInMB = default;
             string diskState = default;
-            IList<string> allowedDiskLevelOperation = default;
+            IReadOnlyList<string> allowedDiskLevelOperation = default;
             bool? isDiskEncrypted = default;
             string secretIdentifier = default;
             ResourceIdentifier dekKeyVaultArmId = default;
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support writing '{options.Format}' format.");
             }

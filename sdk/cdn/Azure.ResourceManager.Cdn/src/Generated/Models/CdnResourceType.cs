@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Type of CDN resource used in CheckNameAvailability.
-    /// Serialized Name: ResourceType
-    /// </summary>
+    /// <summary> Type of CDN resource used in CheckNameAvailability. </summary>
     public readonly partial struct CdnResourceType : IEquatable<CdnResourceType>
     {
         private readonly string _value;
@@ -27,6 +24,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         private const string EndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
         private const string FrontDoorEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
+
+        /// <summary> Microsoft.Cdn/Profiles/Endpoints. </summary>
+        public static CdnResourceType Endpoints { get; } = new CdnResourceType(EndpointsValue);
+        /// <summary> Microsoft.Cdn/Profiles/AfdEndpoints. </summary>
+        public static CdnResourceType FrontDoorEndpoints { get; } = new CdnResourceType(FrontDoorEndpointsValue);
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are the same. </summary>
         public static bool operator ==(CdnResourceType left, CdnResourceType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are not the same. </summary>

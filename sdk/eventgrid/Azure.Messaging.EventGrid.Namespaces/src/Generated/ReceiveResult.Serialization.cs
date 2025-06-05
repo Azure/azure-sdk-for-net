@@ -9,16 +9,14 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
-    public partial class ReceiveResult : IJsonModel<ReceiveResult>
+    public partial class ReceiveResult : IUtf8JsonSerializable, IJsonModel<ReceiveResult>
     {
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReceiveResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
         void IJsonModel<ReceiveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -30,30 +28,28 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReceiveResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Details)
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (ReceiveDetails item in Details)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                foreach (var item in _additionalBinaryDataProperties)
+                foreach (var item in _serializedAdditionalRawData)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
+				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -62,83 +58,72 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ReceiveResult IJsonModel<ReceiveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
-
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReceiveResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReceiveResult IJsonModel<ReceiveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReceiveResult)} does not support reading '{format}' format.");
             }
+
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReceiveResult(document.RootElement, options);
         }
 
-        /// <param name="element"> The JSON element to deserialize. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ReceiveResult DeserializeReceiveResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static ReceiveResult DeserializeReceiveResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<ReceiveDetails> details = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            foreach (var prop in element.EnumerateObject())
+            IReadOnlyList<ReceiveDetails> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
             {
-                if (prop.NameEquals("value"u8))
+                if (property.NameEquals("value"u8))
                 {
                     List<ReceiveDetails> array = new List<ReceiveDetails>();
-                    foreach (var item in prop.Value.EnumerateArray())
+                    foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ReceiveDetails.DeserializeReceiveDetails(item, options));
                     }
-                    details = array;
+                    value = array;
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ReceiveResult(details, additionalBinaryDataProperties);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReceiveResult(value, serializedAdditionalRawData);
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ReceiveResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReceiveResult>.Write(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridNamespacesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ReceiveResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        ReceiveResult IPersistableModel<ReceiveResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
-
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ReceiveResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        ReceiveResult IPersistableModel<ReceiveResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
+
             switch (format)
             {
                 case "J":
-                    using (JsonDocument document = JsonDocument.Parse(data))
                     {
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeReceiveResult(document.RootElement, options);
                     }
                 default:
@@ -146,27 +131,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
             }
         }
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReceiveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="receiveResult"> The <see cref="ReceiveResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ReceiveResult receiveResult)
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReceiveResult FromResponse(Response response)
         {
-            if (receiveResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(receiveResult, ModelSerializationExtensions.WireOptions);
-            return content;
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeReceiveResult(document.RootElement);
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ReceiveResult"/> from. </param>
-        public static explicit operator ReceiveResult(Response result)
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
         {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeReceiveResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

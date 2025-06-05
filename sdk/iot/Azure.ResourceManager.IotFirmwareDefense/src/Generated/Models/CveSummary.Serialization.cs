@@ -35,30 +35,65 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(CriticalCveCount))
+            if (Optional.IsDefined(Critical))
             {
-                writer.WritePropertyName("criticalCveCount"u8);
-                writer.WriteNumberValue(CriticalCveCount.Value);
+                if (Critical != null)
+                {
+                    writer.WritePropertyName("critical"u8);
+                    writer.WriteNumberValue(Critical.Value);
+                }
+                else
+                {
+                    writer.WriteNull("critical");
+                }
             }
-            if (Optional.IsDefined(HighCveCount))
+            if (Optional.IsDefined(High))
             {
-                writer.WritePropertyName("highCveCount"u8);
-                writer.WriteNumberValue(HighCveCount.Value);
+                if (High != null)
+                {
+                    writer.WritePropertyName("high"u8);
+                    writer.WriteNumberValue(High.Value);
+                }
+                else
+                {
+                    writer.WriteNull("high");
+                }
             }
-            if (Optional.IsDefined(MediumCveCount))
+            if (Optional.IsDefined(Medium))
             {
-                writer.WritePropertyName("mediumCveCount"u8);
-                writer.WriteNumberValue(MediumCveCount.Value);
+                if (Medium != null)
+                {
+                    writer.WritePropertyName("medium"u8);
+                    writer.WriteNumberValue(Medium.Value);
+                }
+                else
+                {
+                    writer.WriteNull("medium");
+                }
             }
-            if (Optional.IsDefined(LowCveCount))
+            if (Optional.IsDefined(Low))
             {
-                writer.WritePropertyName("lowCveCount"u8);
-                writer.WriteNumberValue(LowCveCount.Value);
+                if (Low != null)
+                {
+                    writer.WritePropertyName("low"u8);
+                    writer.WriteNumberValue(Low.Value);
+                }
+                else
+                {
+                    writer.WriteNull("low");
+                }
             }
-            if (Optional.IsDefined(UnknownCveCount))
+            if (Optional.IsDefined(Unknown))
             {
-                writer.WritePropertyName("unknownCveCount"u8);
-                writer.WriteNumberValue(UnknownCveCount.Value);
+                if (Unknown != null)
+                {
+                    writer.WritePropertyName("unknown"u8);
+                    writer.WriteNumberValue(Unknown.Value);
+                }
+                else
+                {
+                    writer.WriteNull("unknown");
+                }
             }
         }
 
@@ -82,74 +117,69 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             {
                 return null;
             }
-            long? criticalCveCount = default;
-            long? highCveCount = default;
-            long? mediumCveCount = default;
-            long? lowCveCount = default;
-            long? unknownCveCount = default;
+            long? critical = default;
+            long? high = default;
+            long? medium = default;
+            long? low = default;
+            long? unknown = default;
             FirmwareAnalysisSummaryType summaryType = default;
-            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("criticalCveCount"u8))
+                if (property.NameEquals("critical"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        critical = null;
                         continue;
                     }
-                    criticalCveCount = property.Value.GetInt64();
+                    critical = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("highCveCount"u8))
+                if (property.NameEquals("high"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        high = null;
                         continue;
                     }
-                    highCveCount = property.Value.GetInt64();
+                    high = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("mediumCveCount"u8))
+                if (property.NameEquals("medium"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        medium = null;
                         continue;
                     }
-                    mediumCveCount = property.Value.GetInt64();
+                    medium = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lowCveCount"u8))
+                if (property.NameEquals("low"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        low = null;
                         continue;
                     }
-                    lowCveCount = property.Value.GetInt64();
+                    low = property.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("unknownCveCount"u8))
+                if (property.NameEquals("unknown"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        unknown = null;
                         continue;
                     }
-                    unknownCveCount = property.Value.GetInt64();
+                    unknown = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("summaryType"u8))
                 {
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,13 +190,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new CveSummary(
                 summaryType,
-                provisioningState,
                 serializedAdditionalRawData,
-                criticalCveCount,
-                highCveCount,
-                mediumCveCount,
-                lowCveCount,
-                unknownCveCount);
+                critical,
+                high,
+                medium,
+                low,
+                unknown);
         }
 
         BinaryData IPersistableModel<CveSummary>.Write(ModelReaderWriterOptions options)
@@ -176,7 +205,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(CveSummary)} does not support writing '{options.Format}' format.");
             }

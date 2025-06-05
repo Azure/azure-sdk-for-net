@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeUserResource : IJsonModel<DataBoxEdgeUserData>
     {
-        private static DataBoxEdgeUserData s_dataDeserializationInstance;
-        private static DataBoxEdgeUserData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataBoxEdgeUserData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeUserData>)Data).Write(writer, options);
 
-        DataBoxEdgeUserData IJsonModel<DataBoxEdgeUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeUserData>)DataDeserializationInstance).Create(ref reader, options);
+        DataBoxEdgeUserData IJsonModel<DataBoxEdgeUserData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeUserData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataBoxEdgeUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeUserData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
+        BinaryData IPersistableModel<DataBoxEdgeUserData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataBoxEdgeUserData IPersistableModel<DataBoxEdgeUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeUserData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
+        DataBoxEdgeUserData IPersistableModel<DataBoxEdgeUserData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeUserData>(data, options);
 
-        string IPersistableModel<DataBoxEdgeUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeUserData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxEdgeUserData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeUserData>)Data).GetFormatFromOptions(options);
     }
 }

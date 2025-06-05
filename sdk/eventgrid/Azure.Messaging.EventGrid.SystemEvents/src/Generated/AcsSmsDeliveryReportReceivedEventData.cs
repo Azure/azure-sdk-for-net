@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -14,23 +15,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
-        /// <param name="messageId"> The identity of the SMS message. </param>
-        /// <param name="from"> The identity of SMS message sender. </param>
-        /// <param name="to"> The identity of SMS message receiver. </param>
-        /// <param name="deliveryStatus"> Status of Delivery. </param>
-        /// <param name="deliveryStatusDetails"> Details about Delivery Status. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/>, <paramref name="to"/>, <paramref name="deliveryStatus"/> or <paramref name="deliveryStatusDetails"/> is null. </exception>
-        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails) : base(messageId, @from, to)
+        /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="deliveryAttempts"/> is null. </exception>
+        internal AcsSmsDeliveryReportReceivedEventData(IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts)
         {
-            Argument.AssertNotNull(messageId, nameof(messageId));
-            Argument.AssertNotNull(@from, nameof(@from));
-            Argument.AssertNotNull(to, nameof(to));
-            Argument.AssertNotNull(deliveryStatus, nameof(deliveryStatus));
-            Argument.AssertNotNull(deliveryStatusDetails, nameof(deliveryStatusDetails));
+            Argument.AssertNotNull(deliveryAttempts, nameof(deliveryAttempts));
 
-            DeliveryStatus = deliveryStatus;
-            DeliveryStatusDetails = deliveryStatusDetails;
-            DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
+            DeliveryAttempts = deliveryAttempts.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricInternetGatewayResource : IJsonModel<NetworkFabricInternetGatewayData>
     {
-        private static NetworkFabricInternetGatewayData s_dataDeserializationInstance;
-        private static NetworkFabricInternetGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkFabricInternetGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternetGatewayData>)Data).Write(writer, options);
 
-        NetworkFabricInternetGatewayData IJsonModel<NetworkFabricInternetGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternetGatewayData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkFabricInternetGatewayData IJsonModel<NetworkFabricInternetGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricInternetGatewayData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricInternetGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricInternetGatewayData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        BinaryData IPersistableModel<NetworkFabricInternetGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkFabricInternetGatewayData IPersistableModel<NetworkFabricInternetGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricInternetGatewayData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        NetworkFabricInternetGatewayData IPersistableModel<NetworkFabricInternetGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricInternetGatewayData>(data, options);
 
-        string IPersistableModel<NetworkFabricInternetGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricInternetGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricInternetGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricInternetGatewayData>)Data).GetFormatFromOptions(options);
     }
 }

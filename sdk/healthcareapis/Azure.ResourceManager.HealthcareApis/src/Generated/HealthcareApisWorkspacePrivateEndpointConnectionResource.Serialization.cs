@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.HealthcareApis
 {
     public partial class HealthcareApisWorkspacePrivateEndpointConnectionResource : IJsonModel<HealthcareApisPrivateEndpointConnectionData>
     {
-        private static HealthcareApisPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static HealthcareApisPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        HealthcareApisPrivateEndpointConnectionData IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        HealthcareApisPrivateEndpointConnectionData IJsonModel<HealthcareApisPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HealthcareApisPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HealthcareApisPrivateEndpointConnectionData>(Data, options, AzureResourceManagerHealthcareApisContext.Default);
+        BinaryData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        HealthcareApisPrivateEndpointConnectionData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(data, options, AzureResourceManagerHealthcareApisContext.Default);
+        HealthcareApisPrivateEndpointConnectionData IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HealthcareApisPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<HealthcareApisPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HealthcareApisPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

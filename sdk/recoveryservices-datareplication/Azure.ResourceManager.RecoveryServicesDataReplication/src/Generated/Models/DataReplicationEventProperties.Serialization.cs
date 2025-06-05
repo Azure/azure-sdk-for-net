@@ -86,11 +86,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             writer.WritePropertyName("customProperties"u8);
             writer.WriteObjectValue(CustomProperties, options);
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -137,8 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string description = default;
             string correlationId = default;
             IReadOnlyList<DataReplicationHealthErrorInfo> healthErrors = default;
-            DataReplicationEventCustomProperties customProperties = default;
-            DataReplicationProvisioningState? provisioningState = default;
+            EventModelCustomProperties customProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -207,16 +201,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (property.NameEquals("customProperties"u8))
                 {
-                    customProperties = DataReplicationEventCustomProperties.DeserializeDataReplicationEventCustomProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new DataReplicationProvisioningState(property.Value.GetString());
+                    customProperties = EventModelCustomProperties.DeserializeEventModelCustomProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -236,7 +221,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 correlationId,
                 healthErrors ?? new ChangeTrackingList<DataReplicationHealthErrorInfo>(),
                 customProperties,
-                provisioningState,
                 serializedAdditionalRawData);
         }
 
@@ -247,7 +231,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationEventProperties)} does not support writing '{options.Format}' format.");
             }

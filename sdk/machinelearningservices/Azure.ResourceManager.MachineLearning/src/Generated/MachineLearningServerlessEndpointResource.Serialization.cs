@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.MachineLearning
 {
     public partial class MachineLearningServerlessEndpointResource : IJsonModel<MachineLearningServerlessEndpointData>
     {
-        private static MachineLearningServerlessEndpointData s_dataDeserializationInstance;
-        private static MachineLearningServerlessEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<MachineLearningServerlessEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningServerlessEndpointData>)Data).Write(writer, options);
 
-        MachineLearningServerlessEndpointData IJsonModel<MachineLearningServerlessEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningServerlessEndpointData>)DataDeserializationInstance).Create(ref reader, options);
+        MachineLearningServerlessEndpointData IJsonModel<MachineLearningServerlessEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MachineLearningServerlessEndpointData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MachineLearningServerlessEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MachineLearningServerlessEndpointData>(Data, options, AzureResourceManagerMachineLearningContext.Default);
+        BinaryData IPersistableModel<MachineLearningServerlessEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MachineLearningServerlessEndpointData IPersistableModel<MachineLearningServerlessEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningServerlessEndpointData>(data, options, AzureResourceManagerMachineLearningContext.Default);
+        MachineLearningServerlessEndpointData IPersistableModel<MachineLearningServerlessEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MachineLearningServerlessEndpointData>(data, options);
 
-        string IPersistableModel<MachineLearningServerlessEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningServerlessEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MachineLearningServerlessEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MachineLearningServerlessEndpointData>)Data).GetFormatFromOptions(options);
     }
 }

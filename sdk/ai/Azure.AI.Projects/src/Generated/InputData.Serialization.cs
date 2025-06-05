@@ -77,7 +77,8 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "dataset": return InputDataset.DeserializeInputDataset(element, options);
+                    case "app_insights": return ApplicationInsightsConfiguration.DeserializeApplicationInsightsConfiguration(element, options);
+                    case "dataset": return Dataset.DeserializeDataset(element, options);
                 }
             }
             return UnknownInputData.DeserializeUnknownInputData(element, options);
@@ -90,7 +91,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InputData)} does not support writing '{options.Format}' format.");
             }

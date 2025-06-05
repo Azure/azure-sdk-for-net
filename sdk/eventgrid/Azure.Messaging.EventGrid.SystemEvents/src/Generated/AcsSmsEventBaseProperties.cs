@@ -46,19 +46,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/>. </summary>
-        /// <param name="messageId"> The identity of the SMS message. </param>
-        /// <param name="from"> The identity of SMS message sender. </param>
-        /// <param name="to"> The identity of SMS message receiver. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/> or <paramref name="to"/> is null. </exception>
-        internal AcsSmsEventBaseProperties(string messageId, string @from, string to)
+        internal AcsSmsEventBaseProperties()
         {
-            Argument.AssertNotNull(messageId, nameof(messageId));
-            Argument.AssertNotNull(@from, nameof(@from));
-            Argument.AssertNotNull(to, nameof(to));
-
-            MessageId = messageId;
-            From = @from;
-            To = to;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/>. </summary>
@@ -72,11 +61,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             From = @from;
             To = to;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AcsSmsEventBaseProperties"/> for deserialization. </summary>
-        internal AcsSmsEventBaseProperties()
-        {
         }
 
         /// <summary> The identity of the SMS message. </summary>

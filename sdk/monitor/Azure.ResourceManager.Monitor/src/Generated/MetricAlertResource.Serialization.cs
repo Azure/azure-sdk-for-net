@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Monitor
 {
     public partial class MetricAlertResource : IJsonModel<MetricAlertData>
     {
-        private static MetricAlertData s_dataDeserializationInstance;
-        private static MetricAlertData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<MetricAlertData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MetricAlertData>)Data).Write(writer, options);
 
-        MetricAlertData IJsonModel<MetricAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetricAlertData>)DataDeserializationInstance).Create(ref reader, options);
+        MetricAlertData IJsonModel<MetricAlertData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MetricAlertData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MetricAlertData>(Data, options, AzureResourceManagerMonitorContext.Default);
+        BinaryData IPersistableModel<MetricAlertData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        MetricAlertData IPersistableModel<MetricAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricAlertData>(data, options, AzureResourceManagerMonitorContext.Default);
+        MetricAlertData IPersistableModel<MetricAlertData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MetricAlertData>(data, options);
 
-        string IPersistableModel<MetricAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetricAlertData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<MetricAlertData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MetricAlertData>)Data).GetFormatFromOptions(options);
     }
 }

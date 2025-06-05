@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         private const string ResynchronizationCompletedValue = "ResynchronizationCompleted";
         private const string ResynchronizationFailedValue = "ResynchronizationFailed";
 
-        /// <summary> Resynchronization is not active. </summary>
+        /// <summary> None. </summary>
         public static DataReplicationResynchronizationState None { get; } = new DataReplicationResynchronizationState(NoneValue);
-        /// <summary> Resynchronization has been initiated. </summary>
+        /// <summary> ResynchronizationInitiated. </summary>
         public static DataReplicationResynchronizationState ResynchronizationInitiated { get; } = new DataReplicationResynchronizationState(ResynchronizationInitiatedValue);
-        /// <summary> Resynchronization has been completed successfully. </summary>
+        /// <summary> ResynchronizationCompleted. </summary>
         public static DataReplicationResynchronizationState ResynchronizationCompleted { get; } = new DataReplicationResynchronizationState(ResynchronizationCompletedValue);
-        /// <summary> Resynchronization has failed and would need to be started again. </summary>
+        /// <summary> ResynchronizationFailed. </summary>
         public static DataReplicationResynchronizationState ResynchronizationFailed { get; } = new DataReplicationResynchronizationState(ResynchronizationFailedValue);
         /// <summary> Determines if two <see cref="DataReplicationResynchronizationState"/> values are the same. </summary>
         public static bool operator ==(DataReplicationResynchronizationState left, DataReplicationResynchronizationState right) => left.Equals(right);

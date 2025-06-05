@@ -7,7 +7,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.OpenAI.Chat;
 
-[CodeGenType("AzureChatDataSource")]
+[CodeGenModel("AzureChatDataSource")]
 [Experimental("AOAI001")]
 public abstract partial class ChatDataSource
 { }

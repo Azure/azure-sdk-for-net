@@ -63,10 +63,10 @@ namespace Azure.ResourceManager.Storage
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(StorageAccountProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(StorageAccountProvisioningState.Value.ToString());
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
             if (options.Format != "W" && Optional.IsDefined(PrimaryEndpoints))
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Storage
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            StorageAccountProvisioningState? provisioningState = default;
+            StorageProvisioningState? provisioningState = default;
             StorageAccountEndpoints primaryEndpoints = default;
             AzureLocation? primaryLocation = default;
             StorageAccountStatus? statusOfPrimary = default;
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Storage
                             {
                                 continue;
                             }
-                            provisioningState = new StorageAccountProvisioningState(property0.Value.GetString());
+                            provisioningState = property0.Value.GetString().ToStorageProvisioningState();
                             continue;
                         }
                         if (property0.NameEquals("primaryEndpoints"u8))
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.Storage
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountProvisioningState), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    provisioningState: ");
@@ -1061,10 +1061,10 @@ namespace Azure.ResourceManager.Storage
             }
             else
             {
-                if (Optional.IsDefined(StorageAccountProvisioningState))
+                if (Optional.IsDefined(ProvisioningState))
                 {
                     builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{StorageAccountProvisioningState.Value.ToString()}'");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
                 }
             }
 
@@ -1708,7 +1708,7 @@ namespace Azure.ResourceManager.Storage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

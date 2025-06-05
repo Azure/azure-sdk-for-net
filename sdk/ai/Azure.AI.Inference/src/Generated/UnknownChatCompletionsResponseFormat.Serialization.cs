@@ -83,7 +83,7 @@ namespace Azure.AI.Inference
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIInferenceContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ChatCompletionsResponseFormat)} does not support writing '{options.Format}' format.");
             }

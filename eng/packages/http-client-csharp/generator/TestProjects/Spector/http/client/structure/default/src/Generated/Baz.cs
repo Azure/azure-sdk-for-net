@@ -7,13 +7,13 @@
 
 using Azure.Core.Pipeline;
 
-namespace Client.Structure.Service._Baz
+namespace Client.Structure.Service
 {
     public partial class Baz
     {
         protected Baz() => throw null;
 
-        public virtual HttpPipeline Pipeline => throw null;
+        public HttpPipeline Pipeline => throw null;
 
         public virtual BazFoo GetBazFooClient() => throw null;
     }

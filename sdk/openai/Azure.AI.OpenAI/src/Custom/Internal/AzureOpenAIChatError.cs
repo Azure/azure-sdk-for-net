@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace Azure.AI.OpenAI;
 
 [Experimental("AOAI001")]
-[CodeGenType("AzureOpenAIChatError")]
+[CodeGenModel("AzureOpenAIChatError")]
 internal partial class AzureOpenAIChatError
 {
     internal static AzureOpenAIChatError TryCreateFromResponse(PipelineResponse response)
@@ -18,7 +18,7 @@ internal partial class AzureOpenAIChatError
         {
             using JsonDocument errorDocument = JsonDocument.Parse(response.Content);
             AzureOpenAIChatErrorResponse errorResponse
-                = AzureOpenAIChatErrorResponse.DeserializeAzureOpenAIChatErrorResponse(errorDocument.RootElement, ModelSerializationExtensions.WireOptions);
+                = AzureOpenAIChatErrorResponse.DeserializeAzureOpenAIChatErrorResponse(errorDocument.RootElement);
             return errorResponse.Error;
         }
         catch (InvalidOperationException)

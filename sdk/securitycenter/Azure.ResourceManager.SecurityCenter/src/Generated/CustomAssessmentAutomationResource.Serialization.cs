@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class CustomAssessmentAutomationResource : IJsonModel<CustomAssessmentAutomationData>
     {
-        private static CustomAssessmentAutomationData s_dataDeserializationInstance;
-        private static CustomAssessmentAutomationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CustomAssessmentAutomationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomAssessmentAutomationData>)Data).Write(writer, options);
 
-        CustomAssessmentAutomationData IJsonModel<CustomAssessmentAutomationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomAssessmentAutomationData>)DataDeserializationInstance).Create(ref reader, options);
+        CustomAssessmentAutomationData IJsonModel<CustomAssessmentAutomationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomAssessmentAutomationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CustomAssessmentAutomationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomAssessmentAutomationData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<CustomAssessmentAutomationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CustomAssessmentAutomationData IPersistableModel<CustomAssessmentAutomationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomAssessmentAutomationData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        CustomAssessmentAutomationData IPersistableModel<CustomAssessmentAutomationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomAssessmentAutomationData>(data, options);
 
-        string IPersistableModel<CustomAssessmentAutomationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomAssessmentAutomationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CustomAssessmentAutomationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomAssessmentAutomationData>)Data).GetFormatFromOptions(options);
     }
 }

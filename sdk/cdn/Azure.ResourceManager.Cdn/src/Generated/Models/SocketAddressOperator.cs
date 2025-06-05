@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes operator to be matched
-    /// Serialized Name: SocketAddrOperator
-    /// </summary>
+    /// <summary> Describes operator to be matched. </summary>
     public readonly partial struct SocketAddressOperator : IEquatable<SocketAddressOperator>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string AnyValue = "Any";
         private const string IPMatchValue = "IPMatch";
 
-        /// <summary>
-        /// Any
-        /// Serialized Name: SocketAddrOperator.Any
-        /// </summary>
+        /// <summary> Any. </summary>
         public static SocketAddressOperator Any { get; } = new SocketAddressOperator(AnyValue);
-        /// <summary>
-        /// IPMatch
-        /// Serialized Name: SocketAddrOperator.IPMatch
-        /// </summary>
+        /// <summary> IPMatch. </summary>
         public static SocketAddressOperator IPMatch { get; } = new SocketAddressOperator(IPMatchValue);
         /// <summary> Determines if two <see cref="SocketAddressOperator"/> values are the same. </summary>
         public static bool operator ==(SocketAddressOperator left, SocketAddressOperator right) => left.Equals(right);

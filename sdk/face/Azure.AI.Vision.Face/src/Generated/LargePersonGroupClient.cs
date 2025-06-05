@@ -73,9 +73,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            CreateRequest1 createRequest1 = new CreateRequest1(name, userData, recognitionModel, null);
+            CreateRequest createRequest = new CreateRequest(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CreateAsync(createRequest1.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await CreateAsync(createRequest.ToRequestContent(), context).ConfigureAwait(false);
             return response;
         }
 
@@ -91,9 +91,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            CreateRequest1 createRequest1 = new CreateRequest1(name, userData, recognitionModel, null);
+            CreateRequest createRequest = new CreateRequest(name, userData, recognitionModel, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = Create(createRequest1.ToRequestContent(), context);
+            Response response = Create(createRequest.ToRequestContent(), context);
             return response;
         }
 
@@ -1080,9 +1080,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceFromUrlRequest1 addFaceFromUrlRequest1 = new AddFaceFromUrlRequest1(uri, null);
+            AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AddFaceFromUrlImplAsync(personId, addFaceFromUrlRequest1.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
+            Response response = await AddFaceFromUrlImplAsync(personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context).ConfigureAwait(false);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 
@@ -1099,9 +1099,9 @@ namespace Azure.AI.Vision.Face
         {
             Argument.AssertNotNull(uri, nameof(uri));
 
-            AddFaceFromUrlRequest1 addFaceFromUrlRequest1 = new AddFaceFromUrlRequest1(uri, null);
+            AddFaceFromUrlRequest addFaceFromUrlRequest = new AddFaceFromUrlRequest(uri, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AddFaceFromUrlImpl(personId, addFaceFromUrlRequest1.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
+            Response response = AddFaceFromUrlImpl(personId, addFaceFromUrlRequest.ToRequestContent(), targetFace, detectionModel?.ToString(), userData, context);
             return Response.FromValue(AddFaceResult.FromResponse(response), response);
         }
 

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoDataConnectionResource : IJsonModel<KustoDataConnectionData>
     {
-        private static KustoDataConnectionData s_dataDeserializationInstance;
-        private static KustoDataConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<KustoDataConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoDataConnectionData>)Data).Write(writer, options);
 
-        KustoDataConnectionData IJsonModel<KustoDataConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDataConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        KustoDataConnectionData IJsonModel<KustoDataConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoDataConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoDataConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoDataConnectionData>(Data, options, AzureResourceManagerKustoContext.Default);
+        BinaryData IPersistableModel<KustoDataConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KustoDataConnectionData IPersistableModel<KustoDataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDataConnectionData>(data, options, AzureResourceManagerKustoContext.Default);
+        KustoDataConnectionData IPersistableModel<KustoDataConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoDataConnectionData>(data, options);
 
-        string IPersistableModel<KustoDataConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDataConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<KustoDataConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoDataConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

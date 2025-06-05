@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Terraform.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerTerraformContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(TerraformExportResult)} does not support writing '{options.Format}' format.");
             }

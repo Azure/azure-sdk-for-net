@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Resources
 
         GenericResource IOperationSource<GenericResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GenericResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
+            var data = ModelReaderWriter.Read<GenericResourceData>(response.Content);
             return new GenericResource(_client, data);
         }
 
         async ValueTask<GenericResource> IOperationSource<GenericResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GenericResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerContext.Default);
+            var data = ModelReaderWriter.Read<GenericResourceData>(response.Content);
             return await Task.FromResult(new GenericResource(_client, data)).ConfigureAwait(false);
         }
     }

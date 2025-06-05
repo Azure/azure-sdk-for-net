@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,25 +10,19 @@
 
 ### Other Changes
 
-## 1.1.0 (2025-04-01)
-
-### Features Added
-
-- Upgraded api-version tag from '2023-03-15' to '2024-12-01'.
-- Enabled support for MultiCloud.
-
 ## 1.0.0 (2024-11-29)
 
 ### Features Added
 
-- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Release SDK for MultiCloud
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ## 1.0.0-beta.4 (2023-11-29)
 
 ### Features Added
 
-- Enabled mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
 
 ### Other Changes
 
@@ -38,7 +32,7 @@
 
 ### Features Added
 
-- Enabled the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
+- Enable the model factory feature for model mocking, more information can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-mocking-factory-builder).
 
 ### Other Changes
 

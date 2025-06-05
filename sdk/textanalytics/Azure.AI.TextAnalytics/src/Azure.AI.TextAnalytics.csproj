@@ -13,14 +13,13 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 
   <!-- Import the Text Analytics legacy generated source -->
   <ItemGroup>
-    <Compile
-      Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*"
-      Exclude="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/Models/AzureAITextAnalyticsLegacyContext.cs"
-      LinkBase="Shared/Legacy/Generated" />
+    <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Generated/**/*" LinkBase="Shared/Legacy/Generated" />
     <Compile Include="../../Azure.AI.TextAnalytics.Legacy.Shared/src/Custom/**/*" LinkBase="Shared/Legacy/Custom" />
   </ItemGroup>
 

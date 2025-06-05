@@ -89,21 +89,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
-            if (options.Format != "W" && Optional.IsDefined(DiskBlockSize))
-            {
-                writer.WritePropertyName("diskBlockSize"u8);
-                writer.WriteNumberValue(DiskBlockSize.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DiskLogicalSectorSize))
-            {
-                writer.WritePropertyName("diskLogicalSectorSize"u8);
-                writer.WriteNumberValue(DiskLogicalSectorSize.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(DiskPhysicalSectorSize))
-            {
-                writer.WritePropertyName("diskPhysicalSectorSize"u8);
-                writer.WriteNumberValue(DiskPhysicalSectorSize.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -152,9 +137,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             long? capacityInBytes = default;
             bool? isDynamic = default;
             string diskType = default;
-            long? diskBlockSize = default;
-            long? diskLogicalSectorSize = default;
-            long? diskPhysicalSectorSize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -230,33 +212,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     diskType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("diskBlockSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskBlockSize = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("diskLogicalSectorSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskLogicalSectorSize = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("diskPhysicalSectorSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    diskPhysicalSectorSize = property.Value.GetInt64();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -275,9 +230,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 capacityInBytes,
                 isDynamic,
                 diskType,
-                diskBlockSize,
-                diskLogicalSectorSize,
-                diskPhysicalSectorSize,
                 serializedAdditionalRawData);
         }
 
@@ -288,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVToAzStackHciProtectedDiskProperties)} does not support writing '{options.Format}' format.");
             }

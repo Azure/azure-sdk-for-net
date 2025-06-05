@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Media
 
         MediaAssetTrackResource IOperationSource<MediaAssetTrackResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MediaAssetTrackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
+            var data = ModelReaderWriter.Read<MediaAssetTrackData>(response.Content);
             return new MediaAssetTrackResource(_client, data);
         }
 
         async ValueTask<MediaAssetTrackResource> IOperationSource<MediaAssetTrackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<MediaAssetTrackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
+            var data = ModelReaderWriter.Read<MediaAssetTrackData>(response.Content);
             return await Task.FromResult(new MediaAssetTrackResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetChaosExperiments_ListAllExperimentsInASubscription()
         {
-            // Generated from example definition: 2025-01-01/Experiments_ListAll.json
-            // this example is just showing the usage of "Experiment_ListAll" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/ListExperimentsInASubscription.json
+            // this example is just showing the usage of "Experiments_ListAll" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -35,7 +35,8 @@ namespace Azure.ResourceManager.Chaos.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ChaosExperimentResource item in subscriptionResource.GetChaosExperimentsAsync())
+            string continuationToken = null;
+            await foreach (ChaosExperimentResource item in subscriptionResource.GetChaosExperimentsAsync(continuationToken: continuationToken))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

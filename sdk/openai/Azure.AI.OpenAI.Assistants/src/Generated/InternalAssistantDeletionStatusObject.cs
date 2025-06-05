@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    /// <summary> The InternalAssistantDeletionStatusObject. </summary>
+    /// <summary> The InternalAssistantDeletionStatus_object. </summary>
     internal readonly partial struct InternalAssistantDeletionStatusObject : IEquatable<InternalAssistantDeletionStatusObject>
     {
         private readonly string _value;

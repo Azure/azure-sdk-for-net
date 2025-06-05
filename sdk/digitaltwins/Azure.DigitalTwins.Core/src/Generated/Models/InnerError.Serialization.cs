@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
-    public partial class InnerError : IUtf8JsonSerializable
+    internal partial class InnerError : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {

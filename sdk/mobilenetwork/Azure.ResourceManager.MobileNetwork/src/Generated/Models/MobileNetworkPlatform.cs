@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Platform specific packet core control plane version properties. </summary>
+    /// <summary>
+    /// Platform specific packet core control plane version properties.
+    /// Serialized Name: Platform
+    /// </summary>
     public partial class MobileNetworkPlatform
     {
         /// <summary>
@@ -52,13 +55,34 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkPlatform"/>. </summary>
-        /// <param name="platformType"> The platform type where this version can be deployed. </param>
-        /// <param name="versionState"> The state of this packet core control plane version on this platform. </param>
-        /// <param name="minimumPlatformSoftwareVersion"> The minimum software version of the platform where this packet core version can be deployed. </param>
-        /// <param name="maximumPlatformSoftwareVersion"> The maximum software version of the platform where this packet core version can be deployed. </param>
-        /// <param name="recommendedVersion"> Indicates whether this is the recommended version for this platform. </param>
-        /// <param name="obsoleteVersion"> Indicates whether this version is obsoleted for this platform. </param>
-        /// <param name="haUpgradesAvailable"> The list of versions to which a high availability upgrade from this version is supported. </param>
+        /// <param name="platformType">
+        /// The platform type where this version can be deployed.
+        /// Serialized Name: Platform.platformType
+        /// </param>
+        /// <param name="versionState">
+        /// The state of this packet core control plane version on this platform.
+        /// Serialized Name: Platform.versionState
+        /// </param>
+        /// <param name="minimumPlatformSoftwareVersion">
+        /// The minimum software version of the platform where this packet core version can be deployed.
+        /// Serialized Name: Platform.minimumPlatformSoftwareVersion
+        /// </param>
+        /// <param name="maximumPlatformSoftwareVersion">
+        /// The maximum software version of the platform where this packet core version can be deployed.
+        /// Serialized Name: Platform.maximumPlatformSoftwareVersion
+        /// </param>
+        /// <param name="recommendedVersion">
+        /// Indicates whether this is the recommended version for this platform.
+        /// Serialized Name: Platform.recommendedVersion
+        /// </param>
+        /// <param name="obsoleteVersion">
+        /// Indicates whether this version is obsoleted for this platform.
+        /// Serialized Name: Platform.obsoleteVersion
+        /// </param>
+        /// <param name="haUpgradesAvailable">
+        /// The list of versions to which a high availability upgrade from this version is supported.
+        /// Serialized Name: Platform.haUpgradesAvailable
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkPlatform(MobileNetworkPlatformType? platformType, MobileNetworkVersionState? versionState, string minimumPlatformSoftwareVersion, string maximumPlatformSoftwareVersion, MobileNetworkRecommendedVersion? recommendedVersion, MobileNetworkObsoleteVersion? obsoleteVersion, IList<string> haUpgradesAvailable, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,25 +96,46 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The platform type where this version can be deployed. </summary>
+        /// <summary>
+        /// The platform type where this version can be deployed.
+        /// Serialized Name: Platform.platformType
+        /// </summary>
         [WirePath("platformType")]
         public MobileNetworkPlatformType? PlatformType { get; set; }
-        /// <summary> The state of this packet core control plane version on this platform. </summary>
+        /// <summary>
+        /// The state of this packet core control plane version on this platform.
+        /// Serialized Name: Platform.versionState
+        /// </summary>
         [WirePath("versionState")]
         public MobileNetworkVersionState? VersionState { get; set; }
-        /// <summary> The minimum software version of the platform where this packet core version can be deployed. </summary>
+        /// <summary>
+        /// The minimum software version of the platform where this packet core version can be deployed.
+        /// Serialized Name: Platform.minimumPlatformSoftwareVersion
+        /// </summary>
         [WirePath("minimumPlatformSoftwareVersion")]
         public string MinimumPlatformSoftwareVersion { get; set; }
-        /// <summary> The maximum software version of the platform where this packet core version can be deployed. </summary>
+        /// <summary>
+        /// The maximum software version of the platform where this packet core version can be deployed.
+        /// Serialized Name: Platform.maximumPlatformSoftwareVersion
+        /// </summary>
         [WirePath("maximumPlatformSoftwareVersion")]
         public string MaximumPlatformSoftwareVersion { get; set; }
-        /// <summary> Indicates whether this is the recommended version for this platform. </summary>
+        /// <summary>
+        /// Indicates whether this is the recommended version for this platform.
+        /// Serialized Name: Platform.recommendedVersion
+        /// </summary>
         [WirePath("recommendedVersion")]
         public MobileNetworkRecommendedVersion? RecommendedVersion { get; set; }
-        /// <summary> Indicates whether this version is obsoleted for this platform. </summary>
+        /// <summary>
+        /// Indicates whether this version is obsoleted for this platform.
+        /// Serialized Name: Platform.obsoleteVersion
+        /// </summary>
         [WirePath("obsoleteVersion")]
         public MobileNetworkObsoleteVersion? ObsoleteVersion { get; set; }
-        /// <summary> The list of versions to which a high availability upgrade from this version is supported. </summary>
+        /// <summary>
+        /// The list of versions to which a high availability upgrade from this version is supported.
+        /// Serialized Name: Platform.haUpgradesAvailable
+        /// </summary>
         [WirePath("haUpgradesAvailable")]
         public IList<string> HaUpgradesAvailable { get; }
     }

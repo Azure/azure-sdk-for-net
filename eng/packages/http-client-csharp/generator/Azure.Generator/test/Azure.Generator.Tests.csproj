@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../src/Azure.Generator.csproj" />
-    <ProjectReference Include="common\Azure.Generator.Tests.Common.csproj" />
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
@@ -23,7 +22,6 @@
 
   <ItemGroup>
     <Compile Remove="**\TestData\**\*.cs" />
-    <Compile Remove="common\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,9 +29,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="common\**" />
-  </ItemGroup>
-
+  
 </Project>

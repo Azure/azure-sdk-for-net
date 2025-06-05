@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.Amqp;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Messaging.ServiceBus.Tests.Samples
@@ -18,12 +17,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Samples
             {
                 string fullyQualifiedNamespace = TestEnvironment.FullyQualifiedNamespace;
                 string queueName = scope.QueueName;
+                var credential = TestEnvironment.Credential;
 
                 #region Snippet:ServiceBusWriteReceivedMessage
 #if SNIPPET
-                var credential = new DefaultAzureCredential();
-#else
-                var credential = TestEnvironment.Credential;
+                DefaultAzureCredential credential = new();
 #endif
                 ServiceBusClient client1 = new(fullyQualifiedNamespace, credential);
                 ServiceBusSender sender = client1.CreateSender(queueName);

@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement
     {
         internal int _initialConcurrency;
         internal int _maxConcurrency;
-        public static ResourceMonitor _resourceMonitor;
+        public static CpuMonitor _cpuPerformance;
         internal int _finalReason; // ConcurrencyTunerState
         internal int _finalConcurrency;
         internal SemaphoreSlim _lockFinal;
@@ -31,7 +31,7 @@ namespace Azure.Storage.DataMovement
         {
             _initialConcurrency = initialConcurrency;
             _maxConcurrency = maxConcurrency;
-            _resourceMonitor = new ResourceMonitor();
+            _cpuPerformance = new CpuMonitor();
             _finalReason = (int) ConcurrencyTunerState.ConcurrencyReasonNone;
             _finalConcurrency = _initialConcurrency;
             _observations = Channel.CreateUnbounded<ConcurrencyObservation>();

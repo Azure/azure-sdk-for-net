@@ -1,11 +1,5 @@
 namespace Azure.ResourceManager.IotOperations
 {
-    public partial class AzureResourceManagerIotOperationsContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureResourceManagerIotOperationsContext() { }
-        public static Azure.ResourceManager.IotOperations.AzureResourceManagerIotOperationsContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class IotOperationsBrokerAuthenticationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.IotOperations.IotOperationsBrokerAuthenticationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.IotOperationsBrokerAuthenticationResource>, System.Collections.IEnumerable
     {
         protected IotOperationsBrokerAuthenticationCollection() { }

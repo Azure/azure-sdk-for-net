@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApiManagementContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HttpHeaderConfiguration)} does not support writing '{options.Format}' format.");
             }

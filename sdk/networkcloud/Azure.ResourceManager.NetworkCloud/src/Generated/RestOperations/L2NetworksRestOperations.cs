@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2025-02-01";
+            _apiVersion = apiVersion ?? "2024-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch, string ifNoneMatch)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -325,14 +325,6 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(l2NetworkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -347,19 +339,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -376,19 +366,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="data"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, data, ifMatch, ifNoneMatch);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -400,7 +388,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string l2NetworkName, string ifMatch, string ifNoneMatch)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string l2NetworkName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -414,7 +402,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string l2NetworkName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -429,14 +417,6 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(l2NetworkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
             return message;
@@ -446,18 +426,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, l2NetworkName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, l2NetworkName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -474,18 +452,16 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string l2NetworkName, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response Delete(string subscriptionId, string resourceGroupName, string l2NetworkName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, l2NetworkName, ifMatch, ifNoneMatch);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, l2NetworkName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -498,7 +474,7 @@ namespace Azure.ResourceManager.NetworkCloud
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, string ifMatch, string ifNoneMatch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -512,7 +488,7 @@ namespace Azure.ResourceManager.NetworkCloud
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, string ifMatch, string ifNoneMatch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -527,14 +503,6 @@ namespace Azure.ResourceManager.NetworkCloud
             uri.AppendPath(l2NetworkName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
-            if (ifMatch != null)
-            {
-                request.Headers.Add("If-Match", ifMatch);
-            }
-            if (ifNoneMatch != null)
-            {
-                request.Headers.Add("If-None-Match", ifNoneMatch);
-            }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
@@ -549,19 +517,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="patch"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<NetworkCloudL2NetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public async Task<Response<NetworkCloudL2NetworkData>> UpdateAsync(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, patch, ifMatch, ifNoneMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -582,19 +548,17 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="l2NetworkName"> The name of the L2 network. </param>
         /// <param name="patch"> The request body. </param>
-        /// <param name="ifMatch"> The ETag of the transformation. Omit this value to always overwrite the current resource. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
-        /// <param name="ifNoneMatch"> Set to '*' to allow a new record set to be created, but to prevent updating an existing resource. Other values will result in error from server as they are not supported. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="l2NetworkName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="l2NetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<NetworkCloudL2NetworkData> Update(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, string ifMatch = null, string ifNoneMatch = null, CancellationToken cancellationToken = default)
+        public Response<NetworkCloudL2NetworkData> Update(string subscriptionId, string resourceGroupName, string l2NetworkName, NetworkCloudL2NetworkPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(l2NetworkName, nameof(l2NetworkName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, patch, ifMatch, ifNoneMatch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, l2NetworkName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {

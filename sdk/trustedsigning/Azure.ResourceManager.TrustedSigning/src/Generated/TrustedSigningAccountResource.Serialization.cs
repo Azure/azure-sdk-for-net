@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.TrustedSigning
 {
     public partial class TrustedSigningAccountResource : IJsonModel<TrustedSigningAccountData>
     {
-        private static TrustedSigningAccountData s_dataDeserializationInstance;
-        private static TrustedSigningAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<TrustedSigningAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningAccountData>)Data).Write(writer, options);
 
-        TrustedSigningAccountData IJsonModel<TrustedSigningAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        TrustedSigningAccountData IJsonModel<TrustedSigningAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrustedSigningAccountData>(Data, options, AzureResourceManagerTrustedSigningContext.Default);
+        BinaryData IPersistableModel<TrustedSigningAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningAccountData>(data, options, AzureResourceManagerTrustedSigningContext.Default);
+        TrustedSigningAccountData IPersistableModel<TrustedSigningAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningAccountData>(data, options);
 
-        string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<TrustedSigningAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningAccountData>)Data).GetFormatFromOptions(options);
     }
 }

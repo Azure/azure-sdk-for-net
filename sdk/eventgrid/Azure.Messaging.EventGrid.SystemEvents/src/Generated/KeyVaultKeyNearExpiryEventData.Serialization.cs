@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(KeyVaultKeyNearExpiryEventDataConverter))]
     public partial class KeyVaultKeyNearExpiryEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultKeyNearExpiryEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultKeyNearExpiryEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -46,15 +44,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             writer.WriteStringValue(ObjectName);
             writer.WritePropertyName("Version"u8);
             writer.WriteStringValue(Version);
-            if (Optional.IsDefined(Nbf))
+            if (Optional.IsDefined(NBF))
             {
                 writer.WritePropertyName("NBF"u8);
-                writer.WriteNumberValue(Nbf.Value);
+                writer.WriteNumberValue(NBF.Value);
             }
-            if (Optional.IsDefined(Exp))
+            if (Optional.IsDefined(EXP))
             {
                 writer.WritePropertyName("EXP"u8);
-                writer.WriteNumberValue(Exp.Value);
+                writer.WriteNumberValue(EXP.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -171,7 +169,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultKeyNearExpiryEventData)} does not support writing '{options.Format}' format.");
             }
@@ -209,20 +207,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class KeyVaultKeyNearExpiryEventDataConverter : JsonConverter<KeyVaultKeyNearExpiryEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, KeyVaultKeyNearExpiryEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override KeyVaultKeyNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeKeyVaultKeyNearExpiryEventData(document.RootElement);
-            }
         }
     }
 }

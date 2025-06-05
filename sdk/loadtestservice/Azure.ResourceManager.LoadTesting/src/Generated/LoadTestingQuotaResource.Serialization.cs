@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.LoadTesting
 {
     public partial class LoadTestingQuotaResource : IJsonModel<LoadTestingQuotaData>
     {
-        private static LoadTestingQuotaData s_dataDeserializationInstance;
-        private static LoadTestingQuotaData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<LoadTestingQuotaData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingQuotaData>)Data).Write(writer, options);
 
-        LoadTestingQuotaData IJsonModel<LoadTestingQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingQuotaData>)DataDeserializationInstance).Create(ref reader, options);
+        LoadTestingQuotaData IJsonModel<LoadTestingQuotaData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LoadTestingQuotaData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LoadTestingQuotaData>(Data, options, AzureResourceManagerLoadTestingContext.Default);
+        BinaryData IPersistableModel<LoadTestingQuotaData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        LoadTestingQuotaData IPersistableModel<LoadTestingQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestingQuotaData>(data, options, AzureResourceManagerLoadTestingContext.Default);
+        LoadTestingQuotaData IPersistableModel<LoadTestingQuotaData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LoadTestingQuotaData>(data, options);
 
-        string IPersistableModel<LoadTestingQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadTestingQuotaData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<LoadTestingQuotaData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LoadTestingQuotaData>)Data).GetFormatFromOptions(options);
     }
 }

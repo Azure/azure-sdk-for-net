@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
+    internal partial class UploadFileRequest : IUtf8JsonSerializable, IJsonModel<UploadFileRequest>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UploadFileRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -153,7 +153,7 @@ namespace Azure.AI.OpenAI.Assistants
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIOpenAIAssistantsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "MFD":
                     return SerializeMultipart(options);
                 default:

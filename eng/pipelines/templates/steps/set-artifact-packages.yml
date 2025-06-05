@@ -3,7 +3,6 @@ parameters:
   Artifacts: []
   IncludeIndirect: true
   Restore: false
-  SetOverrideFile: true
 steps:
   # Package-Properties folder contains the package properties for all discovered packages that were either A) affected by the PR or
   # B) explicitly present in the service directory. This repo splits the builds into two categories: "mgmt" and "dataplane". While
@@ -47,8 +46,7 @@ steps:
       ./eng/scripts/splittestdependencies/set-artifact-packages.ps1 `
         -ProjectNames "$(ProjectNames)" `
         -PackageInfoFolder "${{ parameters.PackageInfo }}" `
-        -OutputPath $(Build.SourcesDirectory)/projlist `
-        -SetOverrideFile $${{ parameters.SetOverrideFile }}
+        -OutputPath $(Build.SourcesDirectory)/projlist
     displayName: Resolve Service and Project List
     condition: ne(variables['ProjectNames'], '')
 

@@ -33,23 +33,23 @@ namespace Azure.Security.CodeTransparency
         }
 
         /// <summary> Initializes a new instance of CertificateClient.</summary>
-        /// <param name="endpoint"> The Identity Service URL. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> </exception>
-        public CodeTransparencyCertificateClient(Uri endpoint) : this(endpoint, new CodeTransparencyClientOptions())
+        /// <param name="certificateEndpoint"> The Identity Service URL. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
+        public CodeTransparencyCertificateClient(Uri certificateEndpoint) : this(certificateEndpoint, new CodeTransparencyClientOptions())
         {
         }
 
         /// <summary> Initializes a new instance of CertificateClient.</summary>
-        /// <param name="endpoint"> The Identity Service URL. </param>
+        /// <param name="certificateEndpoint"> The Identity Service URL. </param>
         /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> </exception>
-        public CodeTransparencyCertificateClient(Uri endpoint, CodeTransparencyClientOptions options)
+        /// <exception cref="ArgumentNullException"> <paramref name="certificateEndpoint"/> </exception>
+        public CodeTransparencyCertificateClient(Uri certificateEndpoint, CodeTransparencyClientOptions options)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(certificateEndpoint, nameof(certificateEndpoint));
             Argument.AssertNotNull(options, nameof(options));
             ClientDiagnostics = new(options, true);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _certificateEndpoint = endpoint;
+            _certificateEndpoint = certificateEndpoint;
             _results = new ConcurrentDictionary<string, ServiceIdentityResult>();
             _cacheTTLSec = options.CacheTTLSeconds;
         }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ServiceEndpointPolicyDefinitionResource : IJsonModel<ServiceEndpointPolicyDefinitionData>
     {
-        private static ServiceEndpointPolicyDefinitionData s_dataDeserializationInstance;
-        private static ServiceEndpointPolicyDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ServiceEndpointPolicyDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEndpointPolicyDefinitionData>)Data).Write(writer, options);
 
-        ServiceEndpointPolicyDefinitionData IJsonModel<ServiceEndpointPolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEndpointPolicyDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
+        ServiceEndpointPolicyDefinitionData IJsonModel<ServiceEndpointPolicyDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ServiceEndpointPolicyDefinitionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ServiceEndpointPolicyDefinitionData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ServiceEndpointPolicyDefinitionData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ServiceEndpointPolicyDefinitionData IPersistableModel<ServiceEndpointPolicyDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ServiceEndpointPolicyDefinitionData>(data, options);
 
-        string IPersistableModel<ServiceEndpointPolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEndpointPolicyDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ServiceEndpointPolicyDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ServiceEndpointPolicyDefinitionData>)Data).GetFormatFromOptions(options);
     }
 }

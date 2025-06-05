@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class CustomIPPrefixResource : IJsonModel<CustomIPPrefixData>
     {
-        private static CustomIPPrefixData s_dataDeserializationInstance;
-        private static CustomIPPrefixData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CustomIPPrefixData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CustomIPPrefixData>)Data).Write(writer, options);
 
-        CustomIPPrefixData IJsonModel<CustomIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomIPPrefixData>)DataDeserializationInstance).Create(ref reader, options);
+        CustomIPPrefixData IJsonModel<CustomIPPrefixData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CustomIPPrefixData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CustomIPPrefixData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<CustomIPPrefixData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CustomIPPrefixData IPersistableModel<CustomIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomIPPrefixData>(data, options, AzureResourceManagerNetworkContext.Default);
+        CustomIPPrefixData IPersistableModel<CustomIPPrefixData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CustomIPPrefixData>(data, options);
 
-        string IPersistableModel<CustomIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomIPPrefixData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CustomIPPrefixData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CustomIPPrefixData>)Data).GetFormatFromOptions(options);
     }
 }

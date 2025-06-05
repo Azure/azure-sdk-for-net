@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Describes if it is in detection mode or prevention mode at policy level.
-    /// Serialized Name: PolicyMode
-    /// </summary>
+    /// <summary> Describes if it is in detection mode or prevention mode at policy level. </summary>
     public readonly partial struct PolicyMode : IEquatable<PolicyMode>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.Cdn.Models
         private const string PreventionValue = "Prevention";
         private const string DetectionValue = "Detection";
 
-        /// <summary>
-        /// Prevention
-        /// Serialized Name: PolicyMode.Prevention
-        /// </summary>
+        /// <summary> Prevention. </summary>
         public static PolicyMode Prevention { get; } = new PolicyMode(PreventionValue);
-        /// <summary>
-        /// Detection
-        /// Serialized Name: PolicyMode.Detection
-        /// </summary>
+        /// <summary> Detection. </summary>
         public static PolicyMode Detection { get; } = new PolicyMode(DetectionValue);
         /// <summary> Determines if two <see cref="PolicyMode"/> values are the same. </summary>
         public static bool operator ==(PolicyMode left, PolicyMode right) => left.Equals(right);

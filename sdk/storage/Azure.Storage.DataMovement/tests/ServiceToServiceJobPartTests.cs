@@ -129,8 +129,6 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.FromResult(properties));
             mockSource.Setup(r => r.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(httpAuthorization));
-            mockSource.Setup(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(true));
 
             // Set up Destination to copy in one shot with a large chunk size and smaller total length.
             Mock<StorageResourceItem> mockDestination = GetStorageResourceItem();
@@ -140,9 +138,6 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(Task.CompletedTask);
             mockDestination.Setup(r => r.MaxSupportedSingleTransferSize).Returns(Constants.MB);
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(Constants.MB);
-
-            SingleItemStorageResourceContainer source = new(mockSource.Object);
-            SingleItemStorageResourceContainer destination = new(mockDestination.Object);
 
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
@@ -155,8 +150,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferJobInternal job = new(
                 new TransferOperation(id: transferId),
-                source,
-                destination,
+                mockSource.Object,
+                mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -165,9 +161,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1,
-                mockSource.Object,
-                mockDestination.Object) as ServiceToServiceJobPart;
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             // Act
@@ -204,8 +198,6 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceItemProperties properties = GetResourceProperties(length);
             mockSource.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(properties));
-            mockSource.Setup(b => b.ShouldItemTransferAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(true));
 
             // Setup destination with small chunk size and a larger source total length
             // to cause chunked copy
@@ -218,9 +210,6 @@ namespace Azure.Storage.DataMovement.Tests
             mockDestination.Setup(r => r.MaxSupportedChunkSize).Returns(chunkSize);
             mockDestination.Setup(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
-            SingleItemStorageResourceContainer source = new(mockSource.Object);
-            SingleItemStorageResourceContainer destination = new(mockDestination.Object);
-
             // Set up default checkpointer with transfer job
             LocalTransferCheckpointer checkpointer = new(default);
             await checkpointer.AddNewJobAsync(
@@ -232,8 +221,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferJobInternal job = new(
                 new TransferOperation(id: transferId),
-                source,
-                destination,
+                mockSource.Object,
+                mockDestination.Object,
+                ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -242,9 +232,7 @@ namespace Azure.Storage.DataMovement.Tests
                 new ClientDiagnostics(ClientOptions.Default));
             ServiceToServiceJobPart jobPart = await ServiceToServiceJobPart.CreateJobPartAsync(
                 job,
-                1,
-                mockSource.Object,
-                mockDestination.Object) as ServiceToServiceJobPart;
+                1) as ServiceToServiceJobPart;
             jobPart.SetQueueChunkDelegate(mockPartQueueChunkTask.Object);
 
             await jobPart.ProcessPartToChunkAsync();

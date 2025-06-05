@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Peering
 {
     public partial class PeeringRegisteredAsnResource : IJsonModel<PeeringRegisteredAsnData>
     {
-        private static PeeringRegisteredAsnData s_dataDeserializationInstance;
-        private static PeeringRegisteredAsnData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<PeeringRegisteredAsnData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredAsnData>)Data).Write(writer, options);
 
-        PeeringRegisteredAsnData IJsonModel<PeeringRegisteredAsnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredAsnData>)DataDeserializationInstance).Create(ref reader, options);
+        PeeringRegisteredAsnData IJsonModel<PeeringRegisteredAsnData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PeeringRegisteredAsnData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<PeeringRegisteredAsnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PeeringRegisteredAsnData>(Data, options, AzureResourceManagerPeeringContext.Default);
+        BinaryData IPersistableModel<PeeringRegisteredAsnData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        PeeringRegisteredAsnData IPersistableModel<PeeringRegisteredAsnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringRegisteredAsnData>(data, options, AzureResourceManagerPeeringContext.Default);
+        PeeringRegisteredAsnData IPersistableModel<PeeringRegisteredAsnData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PeeringRegisteredAsnData>(data, options);
 
-        string IPersistableModel<PeeringRegisteredAsnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringRegisteredAsnData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<PeeringRegisteredAsnData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PeeringRegisteredAsnData>)Data).GetFormatFromOptions(options);
     }
 }

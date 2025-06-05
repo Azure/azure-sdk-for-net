@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataMigration
 
         SqlMigrationServiceResource IOperationSource<SqlMigrationServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
+            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content);
             return new SqlMigrationServiceResource(_client, data);
         }
 
         async ValueTask<SqlMigrationServiceResource> IOperationSource<SqlMigrationServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataMigrationContext.Default);
+            var data = ModelReaderWriter.Read<SqlMigrationServiceData>(response.Content);
             return await Task.FromResult(new SqlMigrationServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

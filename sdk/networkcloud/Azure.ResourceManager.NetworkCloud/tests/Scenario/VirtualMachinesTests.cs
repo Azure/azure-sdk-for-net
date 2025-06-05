@@ -8,7 +8,6 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 },
                 SshPublicKeys =
                 {
-                    new NetworkCloudSshPublicKey(TestEnvironment.VMSSHPubicKey)
+                    new NetworkCloudSshPublicKey("ssh-rsa REDACTED")
                 },
                 VmImageRepositoryCredentials = new ImageRepositoryCredentials
                 (
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.IsNotEmpty(listBySubscription);
 
             // Delete
-            var deleteResult = await virtualMachine.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            var deleteResult = await virtualMachine.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

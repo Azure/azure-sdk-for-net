@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Hci
 {
     public partial class ArcSettingResource : IJsonModel<ArcSettingData>
     {
-        private static ArcSettingData s_dataDeserializationInstance;
-        private static ArcSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ArcSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ArcSettingData>)Data).Write(writer, options);
 
-        ArcSettingData IJsonModel<ArcSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArcSettingData>)DataDeserializationInstance).Create(ref reader, options);
+        ArcSettingData IJsonModel<ArcSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ArcSettingData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ArcSettingData>(Data, options, AzureResourceManagerHciContext.Default);
+        BinaryData IPersistableModel<ArcSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ArcSettingData IPersistableModel<ArcSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcSettingData>(data, options, AzureResourceManagerHciContext.Default);
+        ArcSettingData IPersistableModel<ArcSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ArcSettingData>(data, options);
 
-        string IPersistableModel<ArcSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArcSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ArcSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ArcSettingData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
 {
@@ -36,24 +37,16 @@ namespace Azure.ResourceManager.Network
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsCollectionDefined(EnabledLogCategories))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("enabledLogCategories"u8);
-                writer.WriteStartArray();
-                foreach (var item in EnabledLogCategories)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Version))
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
-                writer.WritePropertyName("version"u8);
-                writer.WriteStringValue(Version);
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WriteEndObject();
         }
 
         NetworkSecurityPerimeterLoggingConfigurationData IJsonModel<NetworkSecurityPerimeterLoggingConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,16 +69,34 @@ namespace Azure.ResourceManager.Network
             {
                 return null;
             }
+            NetworkSecurityPerimeterLoggingConfigurationProperties properties = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            IList<string> enabledLogCategories = default;
-            string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = NetworkSecurityPerimeterLoggingConfigurationProperties.DeserializeNetworkSecurityPerimeterLoggingConfigurationProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -110,37 +121,6 @@ namespace Azure.ResourceManager.Network
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("enabledLogCategories"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            enabledLogCategories = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("version"u8))
-                        {
-                            version = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -152,8 +132,8 @@ namespace Azure.ResourceManager.Network
                 name,
                 type,
                 systemData,
-                enabledLogCategories ?? new ChangeTrackingList<string>(),
-                version,
+                properties,
+                etag,
                 serializedAdditionalRawData);
         }
 
@@ -164,7 +144,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkSecurityPerimeterLoggingConfigurationData)} does not support writing '{options.Format}' format.");
             }

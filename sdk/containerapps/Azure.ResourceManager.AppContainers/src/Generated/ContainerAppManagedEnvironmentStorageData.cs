@@ -70,7 +70,18 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary> Storage properties. </summary>
-        [WirePath("properties")]
-        public ManagedEnvironmentStorageProperties Properties { get; set; }
+        internal ManagedEnvironmentStorageProperties Properties { get; set; }
+        /// <summary> Azure file properties. </summary>
+        [WirePath("properties.azureFile")]
+        public ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile
+        {
+            get => Properties is null ? default : Properties.AzureFile;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ManagedEnvironmentStorageProperties();
+                Properties.AzureFile = value;
+            }
+        }
     }
 }

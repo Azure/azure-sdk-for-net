@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("maximum"u8);
                 writer.WriteStringValue(Maximum);
             }
-            if (options.Format != "W" && Optional.IsDefined(IndividualSkuUsable))
-            {
-                writer.WritePropertyName("individualSkuUsable"u8);
-                writer.WriteStringValue(IndividualSkuUsable);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +83,6 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             string usable = default;
             string maximum = default;
-            string individualSkuUsable = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,18 +97,13 @@ namespace Azure.ResourceManager.DataBox.Models
                     maximum = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("individualSkuUsable"u8))
-                {
-                    individualSkuUsable = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoxSkuCapacity(usable, maximum, individualSkuUsable, serializedAdditionalRawData);
+            return new DataBoxSkuCapacity(usable, maximum, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxSkuCapacity>.Write(ModelReaderWriterOptions options)
@@ -124,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxSkuCapacity)} does not support writing '{options.Format}' format.");
             }

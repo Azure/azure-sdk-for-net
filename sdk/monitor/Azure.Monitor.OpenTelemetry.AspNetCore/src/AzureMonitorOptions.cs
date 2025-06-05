@@ -77,7 +77,6 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore
             exporterOptions.DisableOfflineStorage = DisableOfflineStorage;
             exporterOptions.SamplingRatio = SamplingRatio;
             exporterOptions.StorageDirectory = StorageDirectory;
-            exporterOptions.EnableLiveMetrics = EnableLiveMetrics;
             if (Transport != null)
             {
                 exporterOptions.Transport = Transport;

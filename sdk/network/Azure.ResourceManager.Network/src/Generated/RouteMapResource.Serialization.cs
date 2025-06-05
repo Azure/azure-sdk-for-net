@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class RouteMapResource : IJsonModel<RouteMapData>
     {
-        private static RouteMapData s_dataDeserializationInstance;
-        private static RouteMapData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<RouteMapData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RouteMapData>)Data).Write(writer, options);
 
-        RouteMapData IJsonModel<RouteMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteMapData>)DataDeserializationInstance).Create(ref reader, options);
+        RouteMapData IJsonModel<RouteMapData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RouteMapData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<RouteMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RouteMapData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<RouteMapData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        RouteMapData IPersistableModel<RouteMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteMapData>(data, options, AzureResourceManagerNetworkContext.Default);
+        RouteMapData IPersistableModel<RouteMapData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RouteMapData>(data, options);
 
-        string IPersistableModel<RouteMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteMapData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<RouteMapData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RouteMapData>)Data).GetFormatFromOptions(options);
     }
 }

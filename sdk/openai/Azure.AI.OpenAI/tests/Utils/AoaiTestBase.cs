@@ -22,7 +22,6 @@ using OpenAI.Embeddings;
 using OpenAI.Files;
 using OpenAI.FineTuning;
 using OpenAI.Images;
-using OpenAI.Responses;
 using OpenAI.TestFramework;
 using OpenAI.TestFramework.Recording.Proxy;
 using OpenAI.TestFramework.Recording.Proxy.Service;
@@ -364,7 +363,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     protected virtual TClient GetTestClient(IConfiguration? config, TestClientOptions? options = null, TokenCredential? tokenCredential = null, ApiKeyCredential? keyCredential = null)
     {
         AzureOpenAIClient topLevelClient = GetTestTopLevelClient(config, options, tokenCredential, keyCredential);
-        return GetTestClient<TClient>(topLevelClient, config!, deploymentName: null, wrapClient: options?.DisableClientWrapping != true);
+        return GetTestClient<TClient>(topLevelClient, config!);
     }
 
     /// <summary>
@@ -376,7 +375,7 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
     /// <param name="config">The configuration to use to get the deployment information (if needed).</param>
     /// <returns>The instrumented client instance to use.</returns>
     /// <exception cref="NotImplementedException">Support for the type of client being requested has not been implemented yet.</exception>
-    protected virtual TExplicitClient GetTestClient<TExplicitClient>(AzureOpenAIClient topLevelClient, IConfiguration config, string? deploymentName = null, bool wrapClient = true)
+    protected virtual TExplicitClient GetTestClient<TExplicitClient>(AzureOpenAIClient topLevelClient, IConfiguration config, string? deploymentName = null)
     {
         Func<string> getDeployment = () => deploymentName ?? config?.Deployment ?? throw CreateKeyNotFoundEx("deployment");
         object clientObject;
@@ -407,9 +406,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(ImageClient):
                 clientObject = topLevelClient.GetImageClient(getDeployment());
                 break;
-            case nameof(OpenAIResponseClient):
-                clientObject = topLevelClient.GetOpenAIResponseClient(getDeployment());
-                break;
             case nameof(VectorStoreClient):
                 clientObject = topLevelClient.GetVectorStoreClient();
                 break;
@@ -423,11 +419,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             default:
                 throw new NotImplementedException($"Test client helpers not yet implemented for {typeof(TExplicitClient)}");
         };
-
-        if (!wrapClient)
-        {
-            return (TExplicitClient)clientObject;
-        }
 
         object instrumented = WrapClient(
             typeof(TExplicitClient),
@@ -583,9 +574,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
             case nameof(VectorStore):
                 _vectorStoreIdsToDelete.Add(id);
                 break;
-            case nameof(CreateVectorStoreOperation):
-                _vectorStoreIdsToDelete.Add(id);
-                break;
             case nameof(CreateBatchOperation):
                 _batchIdsToDelete.Add(id);
                 break;
@@ -637,7 +625,6 @@ public class AoaiTestBase<TClient> : RecordedClientTestBase where TClient : clas
                 OpenAIFile file => file.Id,
                 ThreadRun run => run.Id,
                 VectorStore store => store.Id,
-                CreateVectorStoreOperation op => op.VectorStoreId,
                 CreateBatchOperation batchOperation => batchOperation.BatchId,
                 _ => throw new NotImplementedException(),
             });
@@ -779,5 +766,4 @@ public class TestClientOptions : AzureOpenAIClientOptions
 
     public bool ShouldOutputRequests { get; set; } = Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true";
     public bool ShouldOutputResponses { get; set; } = Environment.GetEnvironmentVariable("AOAI_SUPPRESS_TRAFFIC_DUMP") != "true";
-    public bool DisableClientWrapping { get; set; }
 }

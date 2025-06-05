@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Support
 {
     public partial class TenantSupportTicketResource : IJsonModel<SupportTicketData>
     {
-        private static SupportTicketData s_dataDeserializationInstance;
-        private static SupportTicketData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SupportTicketData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SupportTicketData>)Data).Write(writer, options);
 
-        SupportTicketData IJsonModel<SupportTicketData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportTicketData>)DataDeserializationInstance).Create(ref reader, options);
+        SupportTicketData IJsonModel<SupportTicketData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SupportTicketData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SupportTicketData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SupportTicketData>(Data, options, AzureResourceManagerSupportContext.Default);
+        BinaryData IPersistableModel<SupportTicketData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SupportTicketData IPersistableModel<SupportTicketData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportTicketData>(data, options, AzureResourceManagerSupportContext.Default);
+        SupportTicketData IPersistableModel<SupportTicketData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SupportTicketData>(data, options);
 
-        string IPersistableModel<SupportTicketData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportTicketData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SupportTicketData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SupportTicketData>)Data).GetFormatFromOptions(options);
     }
 }

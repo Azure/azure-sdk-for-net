@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Kusto
 {
     public partial class KustoAttachedDatabaseConfigurationResource : IJsonModel<KustoAttachedDatabaseConfigurationData>
     {
-        private static KustoAttachedDatabaseConfigurationData s_dataDeserializationInstance;
-        private static KustoAttachedDatabaseConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<KustoAttachedDatabaseConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)Data).Write(writer, options);
 
-        KustoAttachedDatabaseConfigurationData IJsonModel<KustoAttachedDatabaseConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        KustoAttachedDatabaseConfigurationData IJsonModel<KustoAttachedDatabaseConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<KustoAttachedDatabaseConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<KustoAttachedDatabaseConfigurationData>(Data, options, AzureResourceManagerKustoContext.Default);
+        BinaryData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        KustoAttachedDatabaseConfigurationData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoAttachedDatabaseConfigurationData>(data, options, AzureResourceManagerKustoContext.Default);
+        KustoAttachedDatabaseConfigurationData IPersistableModel<KustoAttachedDatabaseConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<KustoAttachedDatabaseConfigurationData>(data, options);
 
-        string IPersistableModel<KustoAttachedDatabaseConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoAttachedDatabaseConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<KustoAttachedDatabaseConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<KustoAttachedDatabaseConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

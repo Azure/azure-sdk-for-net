@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkFabricData)} does not support writing '{options.Format}' format.");
             }

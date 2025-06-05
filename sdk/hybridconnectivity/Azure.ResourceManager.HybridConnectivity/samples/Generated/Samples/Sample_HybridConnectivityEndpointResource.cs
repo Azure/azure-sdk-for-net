@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsGetCustom()
         {
-            // Generated from example definition: 2024-12-01/EndpointsGetCustom.json
-            // this example is just showing the usage of "EndpointResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsGetCustom.json
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsGetDefault()
         {
-            // Generated from example definition: 2024-12-01/EndpointsGetDefault.json
-            // this example is just showing the usage of "EndpointResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsGetDefault.json
+            // this example is just showing the usage of "Endpoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,8 +78,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_HybridConnectivityEndpointsDeleteDefault()
         {
-            // Generated from example definition: 2024-12-01/EndpointsDeleteDefault.json
-            // this example is just showing the usage of "EndpointResource_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsDeleteDefault.json
+            // this example is just showing the usage of "Endpoints_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_HybridConnectivityEndpointsPatchDefault()
         {
-            // Generated from example definition: 2024-12-01/EndpointsPatchDefault.json
-            // this example is just showing the usage of "EndpointResource_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsPatchDefault.json
+            // this example is just showing the usage of "Endpoints_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCredentials_HybridConnectivityEndpointsPostListCredentials()
         {
-            // Generated from example definition: 2024-12-01/EndpointsPostListCredentials.json
-            // this example is just showing the usage of "EndpointResources_ListCredentials" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsPostListCredentials.json
+            // this example is just showing the usage of "Endpoints_ListCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIngressGatewayCredentials_HybridConnectivityEndpointsPostListIngressGatewayCredentials()
         {
-            // Generated from example definition: 2024-12-01/EndpointsPostListIngressGatewayCredentials.json
-            // this example is just showing the usage of "EndpointResources_ListIngressGatewayCredentials" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsPostListIngressGatewayCredentials.json
+            // this example is just showing the usage of "Endpoints_ListIngressGatewayCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedProxyDetails_HybridConnectivityEndpointsPostListManagedProxyDetails()
         {
-            // Generated from example definition: 2024-12-01/EndpointsPostListManagedProxyDetails.json
-            // this example is just showing the usage of "EndpointResources_ListManagedProxyDetails" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hybridconnectivity/resource-manager/Microsoft.HybridConnectivity/stable/2023-03-15/examples/EndpointsPostListManagedProxyDetails.json
+            // this example is just showing the usage of "Endpoints_ListManagedProxyDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

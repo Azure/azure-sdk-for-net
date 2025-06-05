@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingAssociatedTenantResource : IJsonModel<BillingAssociatedTenantData>
     {
-        private static BillingAssociatedTenantData s_dataDeserializationInstance;
-        private static BillingAssociatedTenantData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<BillingAssociatedTenantData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingAssociatedTenantData>)Data).Write(writer, options);
 
-        BillingAssociatedTenantData IJsonModel<BillingAssociatedTenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAssociatedTenantData>)DataDeserializationInstance).Create(ref reader, options);
+        BillingAssociatedTenantData IJsonModel<BillingAssociatedTenantData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingAssociatedTenantData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingAssociatedTenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingAssociatedTenantData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<BillingAssociatedTenantData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BillingAssociatedTenantData IPersistableModel<BillingAssociatedTenantData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAssociatedTenantData>(data, options, AzureResourceManagerBillingContext.Default);
+        BillingAssociatedTenantData IPersistableModel<BillingAssociatedTenantData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingAssociatedTenantData>(data, options);
 
-        string IPersistableModel<BillingAssociatedTenantData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAssociatedTenantData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<BillingAssociatedTenantData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingAssociatedTenantData>)Data).GetFormatFromOptions(options);
     }
 }

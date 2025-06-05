@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.CustomerInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCustomerInsightsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ProfileResourceFormatData)} does not support writing '{options.Format}' format.");
             }

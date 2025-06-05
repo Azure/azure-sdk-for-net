@@ -124,16 +124,6 @@ namespace Azure.Compute.Batch
                 writer.WritePropertyName("startTaskInfo"u8);
                 writer.WriteObjectValue(StartTaskInfo, options);
             }
-            if (Optional.IsCollectionDefined(CertificateReferences))
-            {
-                writer.WritePropertyName("certificateReferences"u8);
-                writer.WriteStartArray();
-                foreach (var item in CertificateReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
@@ -218,7 +208,6 @@ namespace Azure.Compute.Batch
             IReadOnlyList<BatchTaskInfo> recentTasks = default;
             BatchStartTask startTask = default;
             BatchStartTaskInfo startTaskInfo = default;
-            IReadOnlyList<BatchCertificateReference> certificateReferences = default;
             IReadOnlyList<BatchNodeError> errors = default;
             bool? isDedicated = default;
             BatchNodeEndpointConfiguration endpointConfiguration = default;
@@ -366,20 +355,6 @@ namespace Azure.Compute.Batch
                     startTaskInfo = BatchStartTaskInfo.DeserializeBatchStartTaskInfo(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("certificateReferences"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BatchCertificateReference> array = new List<BatchCertificateReference>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(BatchCertificateReference.DeserializeBatchCertificateReference(item, options));
-                    }
-                    certificateReferences = array;
-                    continue;
-                }
                 if (property.NameEquals("errors"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -454,7 +429,6 @@ namespace Azure.Compute.Batch
                 recentTasks ?? new ChangeTrackingList<BatchTaskInfo>(),
                 startTask,
                 startTaskInfo,
-                certificateReferences ?? new ChangeTrackingList<BatchCertificateReference>(),
                 errors ?? new ChangeTrackingList<BatchNodeError>(),
                 isDedicated,
                 endpointConfiguration,
@@ -470,7 +444,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BatchNode)} does not support writing '{options.Format}' format.");
             }

@@ -10,10 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// CDN Ip address group
-    /// Serialized Name: IpAddressGroup
-    /// </summary>
+    /// <summary> CDN Ip address group. </summary>
     public partial class IPAddressGroup
     {
         /// <summary>
@@ -56,18 +53,9 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="IPAddressGroup"/>. </summary>
-        /// <param name="deliveryRegion">
-        /// The delivery region of the ip address group
-        /// Serialized Name: IpAddressGroup.deliveryRegion
-        /// </param>
-        /// <param name="ipv4Addresses">
-        /// The list of ip v4 addresses.
-        /// Serialized Name: IpAddressGroup.ipv4Addresses
-        /// </param>
-        /// <param name="ipv6Addresses">
-        /// The list of ip v6 addresses.
-        /// Serialized Name: IpAddressGroup.ipv6Addresses
-        /// </param>
+        /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
+        /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
+        /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal IPAddressGroup(string deliveryRegion, IList<CidrIPAddress> ipv4Addresses, IList<CidrIPAddress> ipv6Addresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -77,20 +65,11 @@ namespace Azure.ResourceManager.Cdn.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// The delivery region of the ip address group
-        /// Serialized Name: IpAddressGroup.deliveryRegion
-        /// </summary>
+        /// <summary> The delivery region of the ip address group. </summary>
         public string DeliveryRegion { get; set; }
-        /// <summary>
-        /// The list of ip v4 addresses.
-        /// Serialized Name: IpAddressGroup.ipv4Addresses
-        /// </summary>
+        /// <summary> The list of ip v4 addresses. </summary>
         public IList<CidrIPAddress> IPv4Addresses { get; }
-        /// <summary>
-        /// The list of ip v6 addresses.
-        /// Serialized Name: IpAddressGroup.ipv6Addresses
-        /// </summary>
+        /// <summary> The list of ip v6 addresses. </summary>
         public IList<CidrIPAddress> IPv6Addresses { get; }
     }
 }

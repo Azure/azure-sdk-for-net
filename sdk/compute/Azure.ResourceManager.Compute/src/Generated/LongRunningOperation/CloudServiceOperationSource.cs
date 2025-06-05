@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         CloudServiceResource IOperationSource<CloudServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<CloudServiceData>(response.Content);
             return new CloudServiceResource(_client, data);
         }
 
         async ValueTask<CloudServiceResource> IOperationSource<CloudServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CloudServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<CloudServiceData>(response.Content);
             return await Task.FromResult(new CloudServiceResource(_client, data)).ConfigureAwait(false);
         }
     }

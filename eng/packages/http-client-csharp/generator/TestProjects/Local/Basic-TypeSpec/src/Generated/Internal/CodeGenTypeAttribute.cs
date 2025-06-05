@@ -12,7 +12,6 @@ namespace BasicTypeSpec
     [AttributeUsage((AttributeTargets.Class | AttributeTargets.Enum | AttributeTargets.Struct))]
     internal partial class CodeGenTypeAttribute : Attribute
     {
-        /// <param name="originalName"> The original name of the type. </param>
         public CodeGenTypeAttribute(string originalName)
         {
             OriginalName = originalName;

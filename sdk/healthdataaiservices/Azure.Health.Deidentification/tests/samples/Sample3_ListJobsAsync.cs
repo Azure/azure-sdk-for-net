@@ -4,9 +4,12 @@
 #nullable disable
 
 using System;
+using System.Text.Json;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Health.Deidentification.Tests;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Health.Deidentification.Samples
@@ -30,7 +33,7 @@ namespace Azure.Health.Deidentification.Samples
 
             await foreach (DeidentificationJob job in jobs)
             {
-                Console.WriteLine($"Job Name: {job.JobName}");
+                Console.WriteLine($"Job Name: {job.Name}");
                 Console.WriteLine($"Job Status: {job.Status}");
             }
             #endregion

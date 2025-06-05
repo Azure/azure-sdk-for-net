@@ -7,7 +7,6 @@ using System;
 using System.Diagnostics;
 using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OpenTelemetry;
@@ -74,11 +73,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                if (exporterOptions.EnableLiveMetrics == true)
-                {
-                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorTraceExporter));
-                }
-
                 builder.SetSampler(new ApplicationInsightsSampler(exporterOptions.SamplingRatio));
 
                 if (credential != null)
@@ -87,8 +81,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
-
-                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 builder.AddProcessor(new CompositeProcessor<Activity>(new BaseProcessor<Activity>[]
                 {
@@ -144,19 +136,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     configure(exporterOptions);
                 }
 
-                if (exporterOptions.EnableLiveMetrics == true)
-                {
-                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorMetricExporter));
-                }
-
                 if (credential != null)
                 {
                     // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
-
-                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 return new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions))
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta };
@@ -186,11 +171,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
             var options = new AzureMonitorExporterOptions();
             configure?.Invoke(options);
-
-            if (options.EnableLiveMetrics == true)
-            {
-                AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
-            }
 
             if (credential != null)
             {
@@ -252,19 +232,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     exporterOptions = sp.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(finalOptionsName);
                 }
 
-                if (exporterOptions.EnableLiveMetrics == true)
-                {
-                    AzureMonitorExporterEventSource.Log.LiveMetricsNotSupported(methodName: nameof(AddAzureMonitorLogExporter));
-                }
-
                 if (credential != null)
                 {
                     // Credential can be set by either AzureMonitorExporterOptions or Extension Method Parameter.
                     // Options should take precedence.
                     exporterOptions.Credential ??= credential;
                 }
-
-                sp.EnsureNoUseAzureMonitorExporterRegistrations();
 
                 // TODO: Do we need provide an option to alter BatchExportLogRecordProcessorOptions?
                 return new BatchLogRecordExportProcessor(new AzureMonitorLogExporter(exporterOptions));

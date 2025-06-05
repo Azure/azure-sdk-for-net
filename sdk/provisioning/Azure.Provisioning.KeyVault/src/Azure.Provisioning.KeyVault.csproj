@@ -12,10 +12,6 @@
     <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Azure.Provisioning" />
-  </ItemGroup>
-
   <!-- TODO: Consider adding DataPlane dependencies here like:
   <ItemGroup>
     <PackageReference Include="Azure.Security.KeyVault.Administration" />

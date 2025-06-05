@@ -10,52 +10,68 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for the request header action.
-    /// Serialized Name: HeaderActionParameters
-    /// </summary>
-    public partial class HeaderActionProperties : DeliveryRuleActionProperties
+    /// <summary> Defines the parameters for the request header action. </summary>
+    public partial class HeaderActionProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="headerAction">
-        /// Action to perform
-        /// Serialized Name: HeaderActionParameters.headerAction
-        /// </param>
-        /// <param name="headerName">
-        /// Name of the header to modify
-        /// Serialized Name: HeaderActionParameters.headerName
-        /// </param>
+        /// <param name="actionType"></param>
+        /// <param name="headerAction"> Action to perform. </param>
+        /// <param name="headerName"> Name of the header to modify. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
-        public HeaderActionProperties(HeaderAction headerAction, string headerName)
+        public HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName)
         {
             Argument.AssertNotNull(headerName, nameof(headerName));
 
+            ActionType = actionType;
             HeaderAction = headerAction;
             HeaderName = headerName;
-            TypeName = DeliveryRuleActionParametersType.DeliveryRuleHeaderActionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleActionParameters.typeName. </param>
+        /// <param name="actionType"></param>
+        /// <param name="headerAction"> Action to perform. </param>
+        /// <param name="headerName"> Name of the header to modify. </param>
+        /// <param name="value"> Value for the specified action. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="headerAction">
-        /// Action to perform
-        /// Serialized Name: HeaderActionParameters.headerAction
-        /// </param>
-        /// <param name="headerName">
-        /// Name of the header to modify
-        /// Serialized Name: HeaderActionParameters.headerName
-        /// </param>
-        /// <param name="value">
-        /// Value for the specified action
-        /// Serialized Name: HeaderActionParameters.value
-        /// </param>
-        internal HeaderActionProperties(DeliveryRuleActionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, HeaderAction headerAction, string headerName, string value) : base(typeName, serializedAdditionalRawData)
+        internal HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName, string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ActionType = actionType;
             HeaderAction = headerAction;
             HeaderName = headerName;
             Value = value;
-            TypeName = typeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="HeaderActionProperties"/> for deserialization. </summary>
@@ -63,20 +79,13 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Action to perform
-        /// Serialized Name: HeaderActionParameters.headerAction
-        /// </summary>
+        /// <summary> Gets or sets the action type. </summary>
+        public HeaderActionType ActionType { get; set; }
+        /// <summary> Action to perform. </summary>
         public HeaderAction HeaderAction { get; set; }
-        /// <summary>
-        /// Name of the header to modify
-        /// Serialized Name: HeaderActionParameters.headerName
-        /// </summary>
+        /// <summary> Name of the header to modify. </summary>
         public string HeaderName { get; set; }
-        /// <summary>
-        /// Value for the specified action
-        /// Serialized Name: HeaderActionParameters.value
-        /// </summary>
+        /// <summary> Value for the specified action. </summary>
         public string Value { get; set; }
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ContainerServicePrivateEndpointConnectionResource : IJsonModel<ContainerServicePrivateEndpointConnectionData>
     {
-        private static ContainerServicePrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static ContainerServicePrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ContainerServicePrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServicePrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        ContainerServicePrivateEndpointConnectionData IJsonModel<ContainerServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServicePrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        ContainerServicePrivateEndpointConnectionData IJsonModel<ContainerServicePrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServicePrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServicePrivateEndpointConnectionData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
+        BinaryData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ContainerServicePrivateEndpointConnectionData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServicePrivateEndpointConnectionData>(data, options, AzureResourceManagerContainerServiceContext.Default);
+        ContainerServicePrivateEndpointConnectionData IPersistableModel<ContainerServicePrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServicePrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<ContainerServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServicePrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerServicePrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServicePrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

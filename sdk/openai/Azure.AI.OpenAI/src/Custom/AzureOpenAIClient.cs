@@ -15,7 +15,6 @@ global using OpenAI.Moderations;
 global using OpenAI.VectorStores;
 #if !AZURE_OPENAI_GA
 global using OpenAI.RealtimeConversation;
-global using OpenAI.Responses;
 #endif
 
 using System.ClientModel;
@@ -35,7 +34,6 @@ using Azure.AI.OpenAI.Assistants;
 using Azure.AI.OpenAI.FineTuning;
 using Azure.AI.OpenAI.RealtimeConversation;
 using Azure.AI.OpenAI.VectorStores;
-using Azure.AI.OpenAI.Responses;
 #endif
 
 #pragma warning disable AZC0007
@@ -278,17 +276,6 @@ public partial class AzureOpenAIClient : OpenAIClient
 #else
     // Not yet present in OpenAI GA dependency
 #endif
-
-    public override OpenAIResponseClient GetOpenAIResponseClient()
-    {
-        return new AzureOpenAIResponseClient(Pipeline, null, _endpoint, _options);
-    }
-
-    public override OpenAIResponseClient GetOpenAIResponseClient(string deploymentName)
-    {
-        Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
-        return new AzureOpenAIResponseClient(Pipeline, deploymentName, _endpoint, _options);
-    }
 
     private static ClientPipeline CreatePipeline(PipelinePolicy authenticationPolicy, AzureOpenAIClientOptions options)
         => ClientPipeline.Create(

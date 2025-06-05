@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
 {
     public partial class ConnectedClusterStorageClassResource : IJsonModel<ConnectedClusterStorageClassData>
     {
-        private static ConnectedClusterStorageClassData s_dataDeserializationInstance;
-        private static ConnectedClusterStorageClassData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ConnectedClusterStorageClassData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterStorageClassData>)Data).Write(writer, options);
 
-        ConnectedClusterStorageClassData IJsonModel<ConnectedClusterStorageClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterStorageClassData>)DataDeserializationInstance).Create(ref reader, options);
+        ConnectedClusterStorageClassData IJsonModel<ConnectedClusterStorageClassData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ConnectedClusterStorageClassData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ConnectedClusterStorageClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ConnectedClusterStorageClassData>(Data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+        BinaryData IPersistableModel<ConnectedClusterStorageClassData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ConnectedClusterStorageClassData IPersistableModel<ConnectedClusterStorageClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterStorageClassData>(data, options, AzureResourceManagerContainerOrchestratorRuntimeContext.Default);
+        ConnectedClusterStorageClassData IPersistableModel<ConnectedClusterStorageClassData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ConnectedClusterStorageClassData>(data, options);
 
-        string IPersistableModel<ConnectedClusterStorageClassData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterStorageClassData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ConnectedClusterStorageClassData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ConnectedClusterStorageClassData>)Data).GetFormatFromOptions(options);
     }
 }

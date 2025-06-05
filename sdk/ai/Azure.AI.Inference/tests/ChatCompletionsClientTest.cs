@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -60,7 +59,6 @@ namespace Azure.AI.Inference.Tests
         [TestCase(TargetModel.MistralSmall)]
         [TestCase(TargetModel.GitHubGpt4o)]
         [TestCase(TargetModel.AoaiGpt4o)]
-        [TestCase(TargetModel.PhiAudioModel)]
         public async Task TestChatCompletions(TargetModel targetModel)
         {
             var endpoint = targetModel switch
@@ -68,7 +66,6 @@ namespace Azure.AI.Inference.Tests
                 TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
                 TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
                 TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
-                TargetModel.PhiAudioModel => new Uri(TestEnvironment.PhiAudioEndpoint),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -77,7 +74,6 @@ namespace Azure.AI.Inference.Tests
                 TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
                 TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
                 TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
-                TargetModel.PhiAudioModel => new AzureKeyCredential(TestEnvironment.PhiAudioKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -176,15 +172,13 @@ namespace Azure.AI.Inference.Tests
 
             var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, clientOptions);
 
-            var messages = new List<ChatRequestMessage>
-            {
-                new ChatRequestSystemMessage("You are a helpful assistant."),
-                new ChatRequestUserMessage("How many feet are in a mile?"),
-            };
-
             var requestOptions = new ChatCompletionsOptions()
             {
-                Messages = messages,
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("How many feet are in a mile?"),
+                },
                 MaxTokens = 512,
             };
 
@@ -207,17 +201,13 @@ namespace Azure.AI.Inference.Tests
             string model = null;
             bool gotRole = false;
 
+            // await ProcessStreamingResponse(response, messages);
+
             await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
             {
                 Assert.That(chatUpdate, Is.Not.Null);
 
                 Assert.That(chatUpdate.Id, Is.Not.Null.Or.Empty);
-                if (chatUpdate.Id == "")
-                {
-                    Assert.That(chatUpdate.ContentUpdate, Is.Null.Or.Empty);
-                    continue;
-                }
-
                 Assert.That(chatUpdate.Created, Is.GreaterThan(new DateTimeOffset(new DateTime(2023, 1, 1))));
                 Assert.That(chatUpdate.Created, Is.LessThan(DateTimeOffset.UtcNow.AddDays(7)));
 
@@ -247,7 +237,7 @@ namespace Azure.AI.Inference.Tests
             Assert.IsTrue(!string.IsNullOrEmpty(model));
             Assert.IsTrue(gotRole);
             var result = contentBuilder.ToString();
-            Assert.That(result, Is.Not.Null.Or.Empty);
+            Assert.That(contentBuilder.ToString(), Is.Not.Null.Or.Empty);
         }
 
         [RecordedTest]
@@ -574,7 +564,7 @@ namespace Azure.AI.Inference.Tests
             if (targetModel == TargetModel.AoaiAudioModel)
             {
                 OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-11-01-preview");
-                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
             }
 
             var client = CreateClient(endpoint, credential, clientOptions);
@@ -607,9 +597,20 @@ namespace Azure.AI.Inference.Tests
 
             var requestOptions = new ChatCompletionsOptions()
             {
-                Messages = messages,
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."),
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
+                        audioContentItem),
+                },
                 MaxTokens = 2048,
             };
+
+            if (targetModel == TargetModel.PhiAudioModel)
+            {
+                requestOptions.Model = "phi-4-multimodal-instruct-1";
+            }
 
             Response<ChatCompletions> response = null;
             try
@@ -891,12 +892,12 @@ namespace Azure.AI.Inference.Tests
             if (targetModel == TargetModel.AoaiGpt4o)
             {
                 OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
-                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
             }
             else if (targetModel == TargetModel.GitHubGpt4o)
             {
                 OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
-                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerRetry);
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
             }
 
             var client = CreateClient(endpoint, credential, clientOptions);
@@ -972,16 +973,16 @@ namespace Azure.AI.Inference.Tests
             structuredJson.RootElement.TryGetProperty("steps", out var steps);
             structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
 
-            Assert.AreEqual(JsonValueKind.Array, ingredients.ValueKind);
-            Assert.AreEqual(JsonValueKind.Array, steps.ValueKind);
+            Assert.AreEqual(ingredients.ValueKind, JsonValueKind.Array);
+            Assert.AreEqual(steps.ValueKind, JsonValueKind.Array);
             foreach (JsonElement stepElement in steps.EnumerateArray())
             {
                 stepElement.TryGetProperty("ingredients", out var stepIngredients);
                 stepElement.TryGetProperty("directions", out var stepDirections);
-                Assert.AreEqual(JsonValueKind.Array, stepIngredients.ValueKind);
-                Assert.AreEqual(JsonValueKind.String, stepDirections.ValueKind);
+                Assert.AreEqual(stepIngredients.ValueKind, JsonValueKind.Array);
+                Assert.AreEqual(stepDirections.ValueKind, JsonValueKind.String);
             }
-            Assert.AreEqual(JsonValueKind.String, bakeTime.ValueKind);
+            Assert.AreEqual(bakeTime.ValueKind, JsonValueKind.String);
         }
 
         #region Helpers
@@ -1129,8 +1130,7 @@ namespace Azure.AI.Inference.Tests
             {
                 return new Uri("https://sanitized");
             }
-
-            return new Uri("https://github.com/Azure/azure-sdk-for-net/raw/refs/heads/main/sdk/ai/Azure.AI.Inference/tests/Data/hello_how_are_you.mp3");
+            return new Uri("https://www.learningcontainer.com/wp-content/uploads/2020/02/Kalimba-online-audio-converter.com_-1.wav");
         }
 
         private async Task ProcessStreamingResponse(StreamingResponse<StreamingChatCompletionsUpdate> response, List<ChatRequestMessage> messages)
@@ -1344,27 +1344,6 @@ namespace Azure.AI.Inference.Tests
                         }
                 }
             }
-        }
-
-        private string GetAssetRepoLocalPath()
-        {
-            var process = new Process()
-            {
-                StartInfo = new ProcessStartInfo
-                {
-                    FileName = "test-proxy",
-                    Arguments = "config locate -a ..\\assets.json",
-                    RedirectStandardOutput = true,
-                    UseShellExecute = false,
-                    CreateNoWindow = true,
-                }
-            };
-
-            process.Start();
-            string result = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
-
-            return result.Trim();
         }
 
         #endregion

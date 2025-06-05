@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 
         NetworkFabricInternetGatewayResource IOperationSource<NetworkFabricInternetGatewayResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayData>(response.Content);
             return new NetworkFabricInternetGatewayResource(_client, data);
         }
 
         async ValueTask<NetworkFabricInternetGatewayResource> IOperationSource<NetworkFabricInternetGatewayResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerManagedNetworkFabricContext.Default);
+            var data = ModelReaderWriter.Read<NetworkFabricInternetGatewayData>(response.Content);
             return await Task.FromResult(new NetworkFabricInternetGatewayResource(_client, data)).ConfigureAwait(false);
         }
     }

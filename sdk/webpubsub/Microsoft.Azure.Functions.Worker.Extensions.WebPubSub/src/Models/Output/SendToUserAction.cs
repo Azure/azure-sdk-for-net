@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Functions.Worker
         /// <summary>
         /// Message to send.
         /// </summary>
-        [JsonConverter(typeof(System.BinaryDataJsonConverter))]
+        [JsonConverter(typeof(BinaryDataJsonConverter))]
         public BinaryData Data { get; set; }
 
         /// <summary>

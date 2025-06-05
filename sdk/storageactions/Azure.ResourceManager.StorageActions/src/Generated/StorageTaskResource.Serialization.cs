@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.StorageActions
 {
     public partial class StorageTaskResource : IJsonModel<StorageTaskData>
     {
-        private static StorageTaskData s_dataDeserializationInstance;
-        private static StorageTaskData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<StorageTaskData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskData>)Data).Write(writer, options);
 
-        StorageTaskData IJsonModel<StorageTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskData>)DataDeserializationInstance).Create(ref reader, options);
+        StorageTaskData IJsonModel<StorageTaskData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StorageTaskData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StorageTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StorageTaskData>(Data, options, AzureResourceManagerStorageActionsContext.Default);
+        BinaryData IPersistableModel<StorageTaskData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        StorageTaskData IPersistableModel<StorageTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTaskData>(data, options, AzureResourceManagerStorageActionsContext.Default);
+        StorageTaskData IPersistableModel<StorageTaskData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StorageTaskData>(data, options);
 
-        string IPersistableModel<StorageTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTaskData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<StorageTaskData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StorageTaskData>)Data).GetFormatFromOptions(options);
     }
 }

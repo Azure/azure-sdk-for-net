@@ -4,7 +4,6 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Identity;
 using Azure.Messaging.ServiceBus.Administration;
 using NUnit.Framework;
 

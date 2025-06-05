@@ -57,8 +57,15 @@ namespace Azure.ResourceManager.Cdn
             }
             if (Optional.IsDefined(PreValidatedCustomDomainResource))
             {
-                writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
-                JsonSerializer.Serialize(writer, PreValidatedCustomDomainResource);
+                if (PreValidatedCustomDomainResource != null)
+                {
+                    writer.WritePropertyName("preValidatedCustomDomainResourceId"u8);
+                    writer.WriteObjectValue(PreValidatedCustomDomainResource, options);
+                }
+                else
+                {
+                    writer.WriteNull("preValidatedCustomDomainResourceId");
+                }
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -126,7 +133,7 @@ namespace Azure.ResourceManager.Cdn
             string profileName = default;
             FrontDoorCustomDomainHttpsContent tlsSettings = default;
             WritableSubResource azureDnsZone = default;
-            WritableSubResource preValidatedCustomDomainResourceId = default;
+            FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId preValidatedCustomDomainResourceId = default;
             FrontDoorProvisioningState? provisioningState = default;
             FrontDoorDeploymentStatus? deploymentStatus = default;
             DomainValidationState? domainValidationState = default;
@@ -197,9 +204,10 @@ namespace Azure.ResourceManager.Cdn
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
+                                preValidatedCustomDomainResourceId = null;
                                 continue;
                             }
-                            preValidatedCustomDomainResourceId = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            preValidatedCustomDomainResourceId = FrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId.DeserializeFrontDoorCustomDomainUpdatePropertiesParametersPreValidatedCustomDomainResourceId(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -291,7 +299,7 @@ namespace Azure.ResourceManager.Cdn
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCdnContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FrontDoorCustomDomainData)} does not support writing '{options.Format}' format.");
             }

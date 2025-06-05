@@ -115,6 +115,7 @@ namespace Azure.AI.Inference.Tests.Samples
 #else
             var endpoint = new Uri(TestEnvironment.AoaiEndpoint);
             var credential = TestEnvironment.Credential;
+
 #endif
 
             AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();

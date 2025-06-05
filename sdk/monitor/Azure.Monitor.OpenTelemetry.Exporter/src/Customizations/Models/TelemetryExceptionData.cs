@@ -4,7 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -13,15 +16,17 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     {
         internal const int MaxExceptionCountToSave = 10;
 
-        public TelemetryExceptionData(int version, LogRecord logRecord, string? message, ChangeTrackingDictionary<string, string> properties) : base(version)
+        public TelemetryExceptionData(int version, LogRecord logRecord) : base(version)
         {
             if (logRecord.Exception == null)
             {
                 throw new ArgumentNullException(nameof(logRecord), "logRecord.Exception cannot be null.");
             }
 
-            Properties = properties;
+            Properties = new ChangeTrackingDictionary<string, string>();
             Measurements = new ChangeTrackingDictionary<string, double>();
+
+            var message = LogsHelper.GetMessageAndSetProperties(logRecord, Properties);
 
 #pragma warning disable CS0618 // Type or member is obsolete
             // TODO: Remove warning disable with next Stable release.

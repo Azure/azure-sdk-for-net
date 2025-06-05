@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DataBoxEdgeOrderResource IOperationSource<DataBoxEdgeOrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(response.Content);
             return new DataBoxEdgeOrderResource(_client, data);
         }
 
         async ValueTask<DataBoxEdgeOrderResource> IOperationSource<DataBoxEdgeOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            var data = ModelReaderWriter.Read<DataBoxEdgeOrderData>(response.Content);
             return await Task.FromResult(new DataBoxEdgeOrderResource(_client, data)).ConfigureAwait(false);
         }
     }

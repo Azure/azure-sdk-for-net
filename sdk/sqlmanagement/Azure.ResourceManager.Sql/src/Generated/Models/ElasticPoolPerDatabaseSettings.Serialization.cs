@@ -45,11 +45,6 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("maxCapacity"u8);
                 writer.WriteNumberValue(MaxCapacity.Value);
             }
-            if (Optional.IsDefined(AutoPauseDelay))
-            {
-                writer.WritePropertyName("autoPauseDelay"u8);
-                writer.WriteNumberValue(AutoPauseDelay.Value);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +84,6 @@ namespace Azure.ResourceManager.Sql.Models
             }
             double? minCapacity = default;
             double? maxCapacity = default;
-            int? autoPauseDelay = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,22 +106,13 @@ namespace Azure.ResourceManager.Sql.Models
                     maxCapacity = property.Value.GetDouble();
                     continue;
                 }
-                if (property.NameEquals("autoPauseDelay"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    autoPauseDelay = property.Value.GetInt32();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticPoolPerDatabaseSettings(minCapacity, maxCapacity, autoPauseDelay, serializedAdditionalRawData);
+            return new ElasticPoolPerDatabaseSettings(minCapacity, maxCapacity, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -171,21 +156,6 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoPauseDelay), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  autoPauseDelay: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AutoPauseDelay))
-                {
-                    builder.Append("  autoPauseDelay: ");
-                    builder.AppendLine($"{AutoPauseDelay.Value}");
-                }
-            }
-
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -197,7 +167,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Initializes a new instance of <see cref="FileShareRecoveryPoint"/>. </summary>
         public FileShareRecoveryPoint()
         {
-            RecoveryPointTierDetails = new ChangeTrackingList<RecoveryPointTierInformation>();
             ObjectType = "AzureFileShareRecoveryPoint";
         }
 
@@ -28,15 +27,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="fileShareSnapshotUri"> Contains Url to the snapshot of fileshare, if applicable. </param>
         /// <param name="recoveryPointSizeInGB"> Contains recovery point size. </param>
         /// <param name="recoveryPointProperties"> Properties of Recovery Point. </param>
-        /// <param name="recoveryPointTierDetails"> Recovery point tier information. </param>
-        internal FileShareRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties, IList<RecoveryPointTierInformation> recoveryPointTierDetails) : base(objectType, serializedAdditionalRawData)
+        internal FileShareRecoveryPoint(string objectType, IDictionary<string, BinaryData> serializedAdditionalRawData, string recoveryPointType, DateTimeOffset? recoveryPointOn, Uri fileShareSnapshotUri, int? recoveryPointSizeInGB, RecoveryPointProperties recoveryPointProperties) : base(objectType, serializedAdditionalRawData)
         {
             RecoveryPointType = recoveryPointType;
             RecoveryPointOn = recoveryPointOn;
             FileShareSnapshotUri = fileShareSnapshotUri;
             RecoveryPointSizeInGB = recoveryPointSizeInGB;
             RecoveryPointProperties = recoveryPointProperties;
-            RecoveryPointTierDetails = recoveryPointTierDetails;
             ObjectType = objectType ?? "AzureFileShareRecoveryPoint";
         }
 
@@ -50,7 +47,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public int? RecoveryPointSizeInGB { get; set; }
         /// <summary> Properties of Recovery Point. </summary>
         public RecoveryPointProperties RecoveryPointProperties { get; set; }
-        /// <summary> Recovery point tier information. </summary>
-        public IList<RecoveryPointTierInformation> RecoveryPointTierDetails { get; }
     }
 }

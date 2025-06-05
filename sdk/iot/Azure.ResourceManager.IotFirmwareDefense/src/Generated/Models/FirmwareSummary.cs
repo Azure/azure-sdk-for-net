@@ -14,14 +14,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     public partial class FirmwareSummary : FirmwareAnalysisSummaryProperties
     {
         /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
-        public FirmwareSummary()
+        internal FirmwareSummary()
         {
             SummaryType = FirmwareAnalysisSummaryType.Firmware;
         }
 
         /// <summary> Initializes a new instance of <see cref="FirmwareSummary"/>. </summary>
-        /// <param name="summaryType"> The type of summary. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="summaryType"> Describes the type of summary. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extractedSize"> Total extracted size of the firmware in bytes. </param>
         /// <param name="fileSize"> Firmware file size in bytes. </param>
@@ -30,7 +29,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="binaryCount"> Binary count. </param>
         /// <param name="analysisTimeSeconds"> Time used for analysis. </param>
         /// <param name="rootFileSystems"> The number of root file systems found. </param>
-        internal FirmwareSummary(FirmwareAnalysisSummaryType summaryType, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems) : base(summaryType, provisioningState, serializedAdditionalRawData)
+        internal FirmwareSummary(FirmwareAnalysisSummaryType summaryType, IDictionary<string, BinaryData> serializedAdditionalRawData, long? extractedSize, long? fileSize, long? extractedFileCount, long? componentCount, long? binaryCount, long? analysisTimeSeconds, long? rootFileSystems) : base(summaryType, serializedAdditionalRawData)
         {
             ExtractedSize = extractedSize;
             FileSize = fileSize;
@@ -43,18 +42,18 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         }
 
         /// <summary> Total extracted size of the firmware in bytes. </summary>
-        public long? ExtractedSize { get; set; }
+        public long? ExtractedSize { get; }
         /// <summary> Firmware file size in bytes. </summary>
-        public long? FileSize { get; set; }
+        public long? FileSize { get; }
         /// <summary> Extracted file count. </summary>
-        public long? ExtractedFileCount { get; set; }
+        public long? ExtractedFileCount { get; }
         /// <summary> Components count. </summary>
-        public long? ComponentCount { get; set; }
+        public long? ComponentCount { get; }
         /// <summary> Binary count. </summary>
-        public long? BinaryCount { get; set; }
+        public long? BinaryCount { get; }
         /// <summary> Time used for analysis. </summary>
-        public long? AnalysisTimeSeconds { get; set; }
+        public long? AnalysisTimeSeconds { get; }
         /// <summary> The number of root file systems found. </summary>
-        public long? RootFileSystems { get; set; }
+        public long? RootFileSystems { get; }
     }
 }

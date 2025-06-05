@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Sql
 
         OutboundFirewallRuleResource IOperationSource<OutboundFirewallRuleResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OutboundFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<OutboundFirewallRuleData>(response.Content);
             return new OutboundFirewallRuleResource(_client, data);
         }
 
         async ValueTask<OutboundFirewallRuleResource> IOperationSource<OutboundFirewallRuleResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<OutboundFirewallRuleData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            var data = ModelReaderWriter.Read<OutboundFirewallRuleData>(response.Content);
             return await Task.FromResult(new OutboundFirewallRuleResource(_client, data)).ConfigureAwait(false);
         }
     }

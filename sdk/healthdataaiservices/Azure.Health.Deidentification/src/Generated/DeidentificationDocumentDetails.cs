@@ -46,29 +46,29 @@ namespace Azure.Health.Deidentification
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentDetails"/>. </summary>
-        /// <param name="inputLocation"> Location for the input. </param>
+        /// <param name="input"> Location for the input. </param>
         /// <param name="status"> Status of the document. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="inputLocation"/> is null. </exception>
-        internal DeidentificationDocumentDetails(DeidentificationDocumentLocation inputLocation, OperationStatus status)
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        internal DeidentificationDocumentDetails(DeidentificationDocumentLocation input, OperationState status)
         {
-            Argument.AssertNotNull(inputLocation, nameof(inputLocation));
+            Argument.AssertNotNull(input, nameof(input));
 
-            InputLocation = inputLocation;
+            Input = input;
             Status = status;
         }
 
         /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentDetails"/>. </summary>
         /// <param name="id"> Id of the document details. </param>
-        /// <param name="inputLocation"> Location for the input. </param>
-        /// <param name="outputLocation"> Location for the output. </param>
+        /// <param name="input"> Location for the input. </param>
+        /// <param name="output"> Location for the output. </param>
         /// <param name="status"> Status of the document. </param>
         /// <param name="error"> Error when document fails. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeidentificationDocumentDetails(string id, DeidentificationDocumentLocation inputLocation, DeidentificationDocumentLocation outputLocation, OperationStatus status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationDocumentDetails(string id, DeidentificationDocumentLocation input, DeidentificationDocumentLocation output, OperationState status, ResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            InputLocation = inputLocation;
-            OutputLocation = outputLocation;
+            Input = input;
+            Output = output;
             Status = status;
             Error = error;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -82,11 +82,11 @@ namespace Azure.Health.Deidentification
         /// <summary> Id of the document details. </summary>
         public string Id { get; }
         /// <summary> Location for the input. </summary>
-        public DeidentificationDocumentLocation InputLocation { get; }
+        public DeidentificationDocumentLocation Input { get; }
         /// <summary> Location for the output. </summary>
-        public DeidentificationDocumentLocation OutputLocation { get; }
+        public DeidentificationDocumentLocation Output { get; }
         /// <summary> Status of the document. </summary>
-        public OperationStatus Status { get; }
+        public OperationState Status { get; }
         /// <summary> Error when document fails. </summary>
         public ResponseError Error { get; }
     }

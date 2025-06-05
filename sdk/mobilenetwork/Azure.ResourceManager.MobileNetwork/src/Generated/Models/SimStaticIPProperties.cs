@@ -12,7 +12,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Static IP configuration for a SIM, scoped to a particular attached data network and slice. </summary>
+    /// <summary>
+    /// Static IP configuration for a SIM, scoped to a particular attached data network and slice.
+    /// Serialized Name: SimStaticIpProperties
+    /// </summary>
     public partial class SimStaticIPProperties
     {
         /// <summary>
@@ -53,9 +56,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimStaticIPProperties"/>. </summary>
-        /// <param name="attachedDataNetwork"> The attached data network on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The attached data network must be in the same location as the SIM. </param>
-        /// <param name="slice"> The network slice on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The slice must be in the same location as the SIM. </param>
-        /// <param name="staticIP"> The static IP configuration for the SIM to use at the defined network scope. </param>
+        /// <param name="attachedDataNetwork">
+        /// The attached data network on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The attached data network must be in the same location as the SIM.
+        /// Serialized Name: SimStaticIpProperties.attachedDataNetwork
+        /// </param>
+        /// <param name="slice">
+        /// The network slice on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The slice must be in the same location as the SIM.
+        /// Serialized Name: SimStaticIpProperties.slice
+        /// </param>
+        /// <param name="staticIP">
+        /// The static IP configuration for the SIM to use at the defined network scope.
+        /// Serialized Name: SimStaticIpProperties.staticIp
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimStaticIPProperties(WritableSubResource attachedDataNetwork, WritableSubResource slice, SimStaticIPPropertiesStaticIP staticIP, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -65,7 +77,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The attached data network on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The attached data network must be in the same location as the SIM. </summary>
+        /// <summary>
+        /// The attached data network on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The attached data network must be in the same location as the SIM.
+        /// Serialized Name: SimStaticIpProperties.attachedDataNetwork
+        /// </summary>
         internal WritableSubResource AttachedDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("attachedDataNetwork.id")]
@@ -80,7 +95,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> The network slice on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The slice must be in the same location as the SIM. </summary>
+        /// <summary>
+        /// The network slice on which the static IP address will be used. The combination of attached data network and slice defines the network scope of the IP address. The slice must be in the same location as the SIM.
+        /// Serialized Name: SimStaticIpProperties.slice
+        /// </summary>
         internal WritableSubResource Slice { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("slice.id")]
@@ -95,9 +113,15 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> The static IP configuration for the SIM to use at the defined network scope. </summary>
+        /// <summary>
+        /// The static IP configuration for the SIM to use at the defined network scope.
+        /// Serialized Name: SimStaticIpProperties.staticIp
+        /// </summary>
         internal SimStaticIPPropertiesStaticIP StaticIP { get; set; }
-        /// <summary> The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network. </summary>
+        /// <summary>
+        /// The IPv4 address assigned to the SIM at this network scope. This address must be in the userEquipmentStaticAddressPoolPrefix defined in the attached data network.
+        /// Serialized Name: SimStaticIpPropertiesStaticIp.ipv4Address
+        /// </summary>
         [WirePath("staticIp.ipv4Address")]
         public string StaticIPIPv4Address
         {

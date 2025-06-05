@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StreamAnalytics
 
         StreamingJobResource IOperationSource<StreamingJobResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StreamingJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStreamAnalyticsContext.Default);
+            var data = ModelReaderWriter.Read<StreamingJobData>(response.Content);
             return new StreamingJobResource(_client, data);
         }
 
         async ValueTask<StreamingJobResource> IOperationSource<StreamingJobResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<StreamingJobData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerStreamAnalyticsContext.Default);
+            var data = ModelReaderWriter.Read<StreamingJobData>(response.Content);
             return await Task.FromResult(new StreamingJobResource(_client, data)).ConfigureAwait(false);
         }
     }

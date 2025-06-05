@@ -9,7 +9,7 @@ using System;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> A Key Vault account setting. </summary>
+    /// <summary> The Setting. </summary>
     public partial class KeyVaultSetting
     {
         /// <summary> The account setting to be updated. </summary>

@@ -21,28 +21,22 @@ public static class SearchExtensions
     /// <param name="provider"></param>
     /// <param name="indexName"></param>
     /// <returns></returns>
-    public static SearchClient GetSearchClient(this ClientConnectionProvider provider, string indexName)
+    public static SearchClient GetSearchClient(this ConnectionProvider provider, string indexName)
     {
-        SearchClientKey searchClientKey = new(indexName);
-        SearchClient searchClient = provider.Subclients.GetClient(searchClientKey, () => CreateSearchClient(provider, indexName));
+        SearchClient searchClient = provider.Subclients.GetClient(() => CreateSearchClient(provider, indexName), indexName);
         return searchClient;
     }
 
-    private static SearchClient CreateSearchClient(this ClientConnectionProvider provider, string indexName)
+    private static SearchClient CreateSearchClient(this ConnectionProvider provider, string indexName)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchClient).FullName!);
-
         if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
-
-        return connection.CredentialKind switch
-        {
-            CredentialKind.ApiKeyString => new SearchClient(uri, indexName, new AzureKeyCredential((string)connection.Credential!)),
-            CredentialKind.TokenCredential => new SearchClient(uri, indexName, (TokenCredential)connection.Credential!),
-            _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
-        };
+        return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new SearchClient(uri, indexName, connection.Credential as TokenCredential)
+            : new SearchClient(uri, indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -50,28 +44,22 @@ public static class SearchExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <returns></returns>
-    public static SearchIndexClient GetSearchIndexClient(this ClientConnectionProvider provider)
+    public static SearchIndexClient GetSearchIndexClient(this ConnectionProvider provider)
     {
-        SearchIndexClientKey searchIndexClientKey = new();
-        SearchIndexClient searchIndexClient = provider.Subclients.GetClient(searchIndexClientKey, () => CreateSearchIndexClient(provider));
+        SearchIndexClient searchIndexClient = provider.Subclients.GetClient(() => CreateSearchIndexClient(provider), null);
         return searchIndexClient;
     }
 
-    private static SearchIndexClient CreateSearchIndexClient(this ClientConnectionProvider provider)
+    private static SearchIndexClient CreateSearchIndexClient(this ConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchIndexClient).FullName!);
-
         if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
-
-        return connection.CredentialKind switch
-        {
-            CredentialKind.ApiKeyString => new SearchIndexClient(uri, new AzureKeyCredential((string)connection.Credential!)),
-            CredentialKind.TokenCredential => new SearchIndexClient(uri, (TokenCredential)connection.Credential!),
-            _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
-        };
+        return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new SearchIndexClient(uri, connection.Credential as TokenCredential)
+            : new SearchIndexClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
@@ -79,33 +67,21 @@ public static class SearchExtensions
     /// </summary>
     /// <param name="provider"></param>
     /// <returns></returns>
-    public static SearchIndexerClient GetSearchIndexerClient(this ClientConnectionProvider provider)
+    public static SearchIndexerClient GetSearchIndexerClient(this ConnectionProvider provider)
     {
-        SearchIndexerClientKey searchIndexerClientKey = new();
-        SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(searchIndexerClientKey, () => CreateSearchIndexerClient(provider));
+        SearchIndexerClient searchIndexerClient = provider.Subclients.GetClient(() => CreateSearchIndexerClient(provider), null);
         return searchIndexerClient;
     }
 
-    private static SearchIndexerClient CreateSearchIndexerClient(this ClientConnectionProvider provider)
+    private static SearchIndexerClient CreateSearchIndexerClient(this ConnectionProvider provider)
     {
         ClientConnection connection = provider.GetConnection(typeof(SearchIndexClient).FullName!);
-
         if (!connection.TryGetLocatorAsUri(out Uri? uri) || uri is null)
         {
             throw new InvalidOperationException("Invalid URI.");
         }
-
-        return connection.CredentialKind switch
-        {
-            CredentialKind.ApiKeyString => new SearchIndexerClient(uri, new AzureKeyCredential((string)connection.Credential!)),
-            CredentialKind.TokenCredential => new SearchIndexerClient(uri, (TokenCredential)connection.Credential!),
-            _ => throw new InvalidOperationException($"Unsupported credential kind: {connection.CredentialKind}")
-        };
+        return connection.Authentication == ClientAuthenticationMethod.Credential
+            ? new SearchIndexerClient(uri, connection.Credential as TokenCredential)
+            : new SearchIndexerClient(uri, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
-
-    private record SearchClientKey(string IndexName);
-
-    private record SearchIndexClientKey();
-
-    private record SearchIndexerClientKey();
 }

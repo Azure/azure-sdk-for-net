@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -16,14 +17,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="labels"/> or <paramref name="tags"/> is null. </exception>
-        internal AcsRouterJobQueuedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags) : base(labels, tags)
+        /// <param name="attachedWorkerSelectors"> Router Job Queued Attached Worker Selector. </param>
+        /// <param name="requestedWorkerSelectors"> Router Job Queued Requested Worker Selector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="labels"/>, <paramref name="tags"/>, <paramref name="attachedWorkerSelectors"/> or <paramref name="requestedWorkerSelectors"/> is null. </exception>
+        internal AcsRouterJobQueuedEventData(IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, IEnumerable<AcsRouterWorkerSelector> attachedWorkerSelectors, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors) : base(labels, tags)
         {
             Argument.AssertNotNull(labels, nameof(labels));
             Argument.AssertNotNull(tags, nameof(tags));
+            Argument.AssertNotNull(attachedWorkerSelectors, nameof(attachedWorkerSelectors));
+            Argument.AssertNotNull(requestedWorkerSelectors, nameof(requestedWorkerSelectors));
 
-            AttachedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
-            RequestedWorkerSelectors = new ChangeTrackingList<AcsRouterWorkerSelector>();
+            AttachedWorkerSelectors = attachedWorkerSelectors.ToList();
+            RequestedWorkerSelectors = requestedWorkerSelectors.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterJobQueuedEventData"/>. </summary>

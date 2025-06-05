@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         WorkloadNetworkVmGroupResource IOperationSource<WorkloadNetworkVmGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(response.Content);
             return new WorkloadNetworkVmGroupResource(_client, data);
         }
 
         async ValueTask<WorkloadNetworkVmGroupResource> IOperationSource<WorkloadNetworkVmGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<WorkloadNetworkVmGroupData>(response.Content);
             return await Task.FromResult(new WorkloadNetworkVmGroupResource(_client, data)).ConfigureAwait(false);
         }
     }

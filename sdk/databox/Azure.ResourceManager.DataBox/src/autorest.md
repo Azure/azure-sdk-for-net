@@ -8,12 +8,11 @@ azure-arm: true
 csharp: true
 library-name: DataBox
 namespace: Azure.ResourceManager.DataBox
-require: https://github.com/Azure/azure-rest-api-specs/blob/535377f6ef91e9d847bbee77d55871eb8b37b7b2/specification/databox/resource-manager/readme.md
-#tag: package-2025-02
+require: https://github.com/Azure/azure-rest-api-specs/blob/8e20af0463637085b47a018ec9c8372a2242bdac/specification/databox/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
   skipped-operations:
   - Jobs_Update
@@ -22,9 +21,6 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-
-#mgmt-debug:
-#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -147,11 +143,6 @@ rename-mapping:
   JobSecrets.dcAccessSecurityCode: DataCenterAccessSecurityCode
   MarkDevicesShippedRequest.deliverToDcPackageDetails: DeliverToDataCenterPackageDetails
   LastMitigationActionOnJob.actionDateTimeInUtc: ActionPerformedOn
-  TransportAvailabilityRequest: TransportAvailabilityContent
-  DeviceCapabilityRequest: DeviceCapabilityContent
-  JobResource.properties.allDevicesLost: AreAllDevicesLost
-  ModelName: DeviceModelName
-  DataboxJobSecrets: DataBoxJobSecrets
 
 override-operation-name:
   Service_ListAvailableSkusByResourceGroup: GetAvailableSkus

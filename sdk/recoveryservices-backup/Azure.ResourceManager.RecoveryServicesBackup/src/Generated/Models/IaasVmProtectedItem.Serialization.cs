@@ -106,11 +106,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteObjectValue(ExtendedProperties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyType))
-            {
-                writer.WritePropertyName("policyType"u8);
-                writer.WriteStringValue(PolicyType);
-            }
         }
 
         IaasVmProtectedItem IJsonModel<IaasVmProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -153,7 +148,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string protectedItemDataId = default;
             IaasVmProtectedItemExtendedInfo extendedInfo = default;
             IaasVmBackupExtendedProperties extendedProperties = default;
-            string policyType = default;
             string protectedItemType = "AzureIaaSVMProtectedItem";
             BackupManagementType? backupManagementType = default;
             BackupDataSourceType? workloadType = default;
@@ -277,11 +271,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         continue;
                     }
                     extendedProperties = IaasVmBackupExtendedProperties.DeserializeIaasVmBackupExtendedProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("policyType"u8))
-                {
-                    policyType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("protectedItemType"u8))
@@ -474,8 +463,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 lastBackupTime,
                 protectedItemDataId,
                 extendedInfo,
-                extendedProperties,
-                policyType);
+                extendedProperties);
         }
 
         BinaryData IPersistableModel<IaasVmProtectedItem>.Write(ModelReaderWriterOptions options)
@@ -485,7 +473,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(IaasVmProtectedItem)} does not support writing '{options.Format}' format.");
             }

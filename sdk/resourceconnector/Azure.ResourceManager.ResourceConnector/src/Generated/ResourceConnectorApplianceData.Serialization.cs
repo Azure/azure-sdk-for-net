@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ResourceConnector
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourceConnectorContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ResourceConnectorApplianceData)} does not support writing '{options.Format}' format.");
             }

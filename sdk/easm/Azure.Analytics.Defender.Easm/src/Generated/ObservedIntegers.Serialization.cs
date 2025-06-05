@@ -174,7 +174,7 @@ namespace Azure.Analytics.Defender.Easm
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAnalyticsDefenderEasmContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(ObservedIntegers)} does not support writing '{options.Format}' format.");
             }

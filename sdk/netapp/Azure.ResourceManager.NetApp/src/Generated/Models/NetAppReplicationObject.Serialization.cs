@@ -64,16 +64,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("remoteVolumeRegion"u8);
                 writer.WriteStringValue(RemoteVolumeRegion);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(DestinationReplications))
-            {
-                writer.WritePropertyName("destinationReplications"u8);
-                writer.WriteStartArray();
-                foreach (var item in DestinationReplications)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -117,7 +107,6 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier remoteVolumeResourceId = default;
             RemotePath remotePath = default;
             string remoteVolumeRegion = default;
-            IReadOnlyList<NetAppDestinationReplication> destinationReplications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,20 +157,6 @@ namespace Azure.ResourceManager.NetApp.Models
                     remoteVolumeRegion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("destinationReplications"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<NetAppDestinationReplication> array = new List<NetAppDestinationReplication>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(NetAppDestinationReplication.DeserializeNetAppDestinationReplication(item, options));
-                    }
-                    destinationReplications = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -195,7 +170,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 remoteVolumeResourceId,
                 remotePath,
                 remoteVolumeRegion,
-                destinationReplications ?? new ChangeTrackingList<NetAppDestinationReplication>(),
                 serializedAdditionalRawData);
         }
 
@@ -206,7 +180,7 @@ namespace Azure.ResourceManager.NetApp.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetAppReplicationObject)} does not support writing '{options.Format}' format.");
             }

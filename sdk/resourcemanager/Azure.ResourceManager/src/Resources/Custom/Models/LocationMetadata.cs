@@ -4,7 +4,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
@@ -23,14 +22,8 @@ namespace Azure.ResourceManager.Resources.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteLongitude(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (Longitude.HasValue)
-            {
-                writer.WriteStringValue(Longitude.Value.ToString(CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                writer.WriteNullValue();
-            }
+            if (Longitude != null)
+                writer.WriteStringValue(Longitude.ToString());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -39,20 +32,14 @@ namespace Azure.ResourceManager.Resources.Models
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;
 
-            longitude = double.Parse(property.Value.GetString(), CultureInfo.InvariantCulture);
+            longitude = double.Parse(property.Value.GetString());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal void WriteLatitude(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (Latitude.HasValue)
-            {
-                writer.WriteStringValue(Latitude.Value.ToString(CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                writer.WriteNullValue();
-            }
+            if (Latitude != null)
+                writer.WriteStringValue(Latitude.ToString());
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -61,7 +48,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (property.Value.ValueKind == JsonValueKind.Null)
                 return;
 
-            latitude = double.Parse(property.Value.GetString(), CultureInfo.InvariantCulture);
+            latitude = double.Parse(property.Value.GetString());
         }
     }
 }

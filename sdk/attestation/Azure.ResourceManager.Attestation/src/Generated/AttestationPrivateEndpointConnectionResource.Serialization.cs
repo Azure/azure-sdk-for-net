@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Attestation
 {
     public partial class AttestationPrivateEndpointConnectionResource : IJsonModel<AttestationPrivateEndpointConnectionData>
     {
-        private static AttestationPrivateEndpointConnectionData s_dataDeserializationInstance;
-        private static AttestationPrivateEndpointConnectionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<AttestationPrivateEndpointConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AttestationPrivateEndpointConnectionData>)Data).Write(writer, options);
 
-        AttestationPrivateEndpointConnectionData IJsonModel<AttestationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttestationPrivateEndpointConnectionData>)DataDeserializationInstance).Create(ref reader, options);
+        AttestationPrivateEndpointConnectionData IJsonModel<AttestationPrivateEndpointConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AttestationPrivateEndpointConnectionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AttestationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AttestationPrivateEndpointConnectionData>(Data, options, AzureResourceManagerAttestationContext.Default);
+        BinaryData IPersistableModel<AttestationPrivateEndpointConnectionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        AttestationPrivateEndpointConnectionData IPersistableModel<AttestationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttestationPrivateEndpointConnectionData>(data, options, AzureResourceManagerAttestationContext.Default);
+        AttestationPrivateEndpointConnectionData IPersistableModel<AttestationPrivateEndpointConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AttestationPrivateEndpointConnectionData>(data, options);
 
-        string IPersistableModel<AttestationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttestationPrivateEndpointConnectionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<AttestationPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AttestationPrivateEndpointConnectionData>)Data).GetFormatFromOptions(options);
     }
 }

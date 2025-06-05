@@ -7,7 +7,6 @@ using Azure.ResourceManager.NetworkCloud.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -33,17 +32,16 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             NetworkCloudBmcKeySetCollection collection = cluster.GetNetworkCloudBmcKeySets();
 
             // Create
-            // Note: The UUIDs in this test are fake and was randomly generated for the test
             NetworkCloudBmcKeySetData data = new NetworkCloudBmcKeySetData
             (
                 cluster.Data.Location,
                 cluster.Data.ClusterExtendedLocation,
-                "6f935d96-417e-4cf3-b099-30995848e8fd",
+                "fake-ag-id",
                 TestEnvironment.DayFromNow,
                 BmcKeySetPrivilegeLevel.ReadOnly,
                 new KeySetUser[]
                 {
-                new KeySetUser("test-user", "test-user-description", new NetworkCloudSshPublicKey(TestEnvironment.BMCSSHPubicKey), "6f935d96-417e-4cf3-b099-30995848e8fb", null){}
+                new KeySetUser("username",new NetworkCloudSshPublicKey("ssh-rsa REDACTED")){}
                 }
             )
             {
@@ -80,7 +78,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            var deleteResult = await bmcKeySet.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
+            var deleteResult = await bmcKeySet.DeleteAsync(WaitUntil.Completed);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

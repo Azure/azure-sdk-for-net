@@ -10,8 +10,8 @@ namespace OpenTelemetry.Resources.Azure;
 /// </summary>
 internal sealed class AzureVMResourceDetector : IResourceDetector
 {
-    internal static readonly IReadOnlyCollection<string> ExpectedAzureAmsFields =
-    [
+    internal static readonly IReadOnlyCollection<string> ExpectedAzureAmsFields = new string[]
+    {
         ResourceAttributeConstants.AzureVmScaleSetName,
         ResourceAttributeConstants.AzureVmSku,
         ResourceSemanticConventions.AttributeCloudPlatform,
@@ -23,8 +23,8 @@ internal sealed class AzureVMResourceDetector : IResourceDetector
         ResourceSemanticConventions.AttributeHostType,
         ResourceSemanticConventions.AttributeOsType,
         ResourceSemanticConventions.AttributeOsVersion,
-        ResourceSemanticConventions.AttributeServiceInstance
-    ];
+        ResourceSemanticConventions.AttributeServiceInstance,
+    };
 
     private static Resource? vmResource;
 

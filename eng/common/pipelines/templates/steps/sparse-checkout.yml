@@ -14,9 +14,6 @@ parameters:
   - name: TokenToUseForAuth
     type: string
     default: ''
-  - name: PreserveAuthToken
-    type: boolean
-    default: false
 
 steps:
   - ${{ if not(parameters.SkipCheckoutNone) }}:
@@ -140,7 +137,7 @@ steps:
       pwsh: true
       workingDirectory: $(System.DefaultWorkingDirectory)
 
-  - ${{ if and(ne(parameters.TokenToUseForAuth, ''), not(parameters.PreserveAuthToken)) }}:
+  - ${{ if ne(parameters.TokenToUseForAuth, '') }}:
     - pwsh: |
         git config unset --global "http.extraheader"
       displayName: Removing git config auth header

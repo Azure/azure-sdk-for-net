@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.NetworkFunction
 
         CollectorPolicyResource IOperationSource<CollectorPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CollectorPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
+            var data = ModelReaderWriter.Read<CollectorPolicyData>(response.Content);
             return new CollectorPolicyResource(_client, data);
         }
 
         async ValueTask<CollectorPolicyResource> IOperationSource<CollectorPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<CollectorPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNetworkFunctionContext.Default);
+            var data = ModelReaderWriter.Read<CollectorPolicyData>(response.Content);
             return await Task.FromResult(new CollectorPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

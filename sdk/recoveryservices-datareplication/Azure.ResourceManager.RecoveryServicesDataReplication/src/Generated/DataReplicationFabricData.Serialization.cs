@@ -37,11 +37,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
-            {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
-            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteObjectValue(Properties, options);
         }
 
         DataReplicationFabricData IJsonModel<DataReplicationFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -77,10 +74,6 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             {
                 if (property.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     properties = DataReplicationFabricProperties.DeserializeDataReplicationFabricProperties(property.Value, options);
                     continue;
                 }
@@ -151,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationFabricData)} does not support writing '{options.Format}' format.");
             }

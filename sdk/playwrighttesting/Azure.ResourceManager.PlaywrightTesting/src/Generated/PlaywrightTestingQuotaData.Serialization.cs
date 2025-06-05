@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPlaywrightTestingContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(PlaywrightTestingQuotaData)} does not support writing '{options.Format}' format.");
             }

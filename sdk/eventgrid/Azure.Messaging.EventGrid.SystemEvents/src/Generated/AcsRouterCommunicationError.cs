@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Router Communication Error. </summary>
-    internal partial class AcsRouterCommunicationError
+    public partial class AcsRouterCommunicationError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +48,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>
         /// <param name="innererror"> Router Communication Inner Error. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="innererror"/> is null. </exception>
-        internal AcsRouterCommunicationError(AcsRouterCommunicationError innererror)
+        /// <param name="details"> List of Router Communication Errors. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="innererror"/> or <paramref name="details"/> is null. </exception>
+        internal AcsRouterCommunicationError(AcsRouterCommunicationError innererror, IEnumerable<AcsRouterCommunicationError> details)
         {
             Argument.AssertNotNull(innererror, nameof(innererror));
+            Argument.AssertNotNull(details, nameof(details));
 
             Innererror = innererror;
-            Details = new ChangeTrackingList<AcsRouterCommunicationError>();
+            Details = details.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRouterCommunicationError"/>. </summary>

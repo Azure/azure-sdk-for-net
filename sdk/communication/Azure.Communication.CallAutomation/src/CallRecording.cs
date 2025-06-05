@@ -61,8 +61,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart,
-                    PostProcessingOptions = options.PostProcessingOptions,
+                    PauseOnStart = options.PauseOnStart
                 };
 
                 if (options.CallLocator != null)
@@ -133,8 +132,7 @@ namespace Azure.Communication.CallAutomation
                     RecordingChannelType = options.RecordingChannel,
                     RecordingContentType = options.RecordingContent,
                     RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart,
-                    PostProcessingOptions = options.PostProcessingOptions,
+                    PauseOnStart = options.PauseOnStart
                 };
 
                 if (options.CallLocator != null)

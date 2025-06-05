@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DevTestLabs
 {
     public partial class DevTestLabCostResource : IJsonModel<DevTestLabCostData>
     {
-        private static DevTestLabCostData s_dataDeserializationInstance;
-        private static DevTestLabCostData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DevTestLabCostData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCostData>)Data).Write(writer, options);
 
-        DevTestLabCostData IJsonModel<DevTestLabCostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCostData>)DataDeserializationInstance).Create(ref reader, options);
+        DevTestLabCostData IJsonModel<DevTestLabCostData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DevTestLabCostData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DevTestLabCostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DevTestLabCostData>(Data, options, AzureResourceManagerDevTestLabsContext.Default);
+        BinaryData IPersistableModel<DevTestLabCostData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DevTestLabCostData IPersistableModel<DevTestLabCostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabCostData>(data, options, AzureResourceManagerDevTestLabsContext.Default);
+        DevTestLabCostData IPersistableModel<DevTestLabCostData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DevTestLabCostData>(data, options);
 
-        string IPersistableModel<DevTestLabCostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabCostData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DevTestLabCostData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DevTestLabCostData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -10,51 +10,67 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary>
-    /// Defines the parameters for RequestBody match conditions
-    /// Serialized Name: RequestBodyMatchConditionParameters
-    /// </summary>
-    public partial class RequestBodyMatchCondition : DeliveryRuleConditionProperties
+    /// <summary> Defines the parameters for RequestBody match conditions. </summary>
+    public partial class RequestBodyMatchCondition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
-        /// <param name="requestBodyOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestBodyMatchConditionParameters.operator
-        /// </param>
-        public RequestBodyMatchCondition(RequestBodyOperator requestBodyOperator)
+        /// <param name="conditionType"></param>
+        /// <param name="requestBodyOperator"> Describes operator to be matched. </param>
+        public RequestBodyMatchCondition(RequestBodyMatchConditionType conditionType, RequestBodyOperator requestBodyOperator)
         {
+            ConditionType = conditionType;
             RequestBodyOperator = requestBodyOperator;
             MatchValues = new ChangeTrackingList<string>();
             Transforms = new ChangeTrackingList<PreTransformCategory>();
-            TypeName = DeliveryRuleConditionParametersType.DeliveryRuleRequestBodyConditionParameters;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/>. </summary>
-        /// <param name="typeName"> Serialized Name: DeliveryRuleConditionParameters.typeName. </param>
+        /// <param name="conditionType"></param>
+        /// <param name="requestBodyOperator"> Describes operator to be matched. </param>
+        /// <param name="negateCondition"> Describes if this is negate condition or not. </param>
+        /// <param name="matchValues"> The match value for the condition of the delivery rule. </param>
+        /// <param name="transforms"> List of transforms. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="requestBodyOperator">
-        /// Describes operator to be matched
-        /// Serialized Name: RequestBodyMatchConditionParameters.operator
-        /// </param>
-        /// <param name="negateCondition">
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestBodyMatchConditionParameters.negateCondition
-        /// </param>
-        /// <param name="matchValues">
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestBodyMatchConditionParameters.matchValues
-        /// </param>
-        /// <param name="transforms">
-        /// List of transforms
-        /// Serialized Name: RequestBodyMatchConditionParameters.transforms
-        /// </param>
-        internal RequestBodyMatchCondition(DeliveryRuleConditionParametersType typeName, IDictionary<string, BinaryData> serializedAdditionalRawData, RequestBodyOperator requestBodyOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms) : base(typeName, serializedAdditionalRawData)
+        internal RequestBodyMatchCondition(RequestBodyMatchConditionType conditionType, RequestBodyOperator requestBodyOperator, bool? negateCondition, IList<string> matchValues, IList<PreTransformCategory> transforms, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            ConditionType = conditionType;
             RequestBodyOperator = requestBodyOperator;
             NegateCondition = negateCondition;
             MatchValues = matchValues;
             Transforms = transforms;
-            TypeName = typeName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Initializes a new instance of <see cref="RequestBodyMatchCondition"/> for deserialization. </summary>
@@ -62,25 +78,15 @@ namespace Azure.ResourceManager.Cdn.Models
         {
         }
 
-        /// <summary>
-        /// Describes operator to be matched
-        /// Serialized Name: RequestBodyMatchConditionParameters.operator
-        /// </summary>
+        /// <summary> Gets or sets the condition type. </summary>
+        public RequestBodyMatchConditionType ConditionType { get; set; }
+        /// <summary> Describes operator to be matched. </summary>
         public RequestBodyOperator RequestBodyOperator { get; set; }
-        /// <summary>
-        /// Describes if this is negate condition or not
-        /// Serialized Name: RequestBodyMatchConditionParameters.negateCondition
-        /// </summary>
+        /// <summary> Describes if this is negate condition or not. </summary>
         public bool? NegateCondition { get; set; }
-        /// <summary>
-        /// The match value for the condition of the delivery rule
-        /// Serialized Name: RequestBodyMatchConditionParameters.matchValues
-        /// </summary>
+        /// <summary> The match value for the condition of the delivery rule. </summary>
         public IList<string> MatchValues { get; }
-        /// <summary>
-        /// List of transforms
-        /// Serialized Name: RequestBodyMatchConditionParameters.transforms
-        /// </summary>
+        /// <summary> List of transforms. </summary>
         public IList<PreTransformCategory> Transforms { get; }
     }
 }

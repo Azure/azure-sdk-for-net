@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
-                WriteResourceUri(writer, options);
+                writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
             if (Optional.IsDefined(ConnectionType))
             {
@@ -89,7 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (property.NameEquals("resourceUri"u8))
                 {
-                    DeserializeResourceUri(property, ref resourceUri);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    resourceUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("connectionType"u8))
@@ -113,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(VirtualHubInboundRoutesContent)} does not support writing '{options.Format}' format.");
             }

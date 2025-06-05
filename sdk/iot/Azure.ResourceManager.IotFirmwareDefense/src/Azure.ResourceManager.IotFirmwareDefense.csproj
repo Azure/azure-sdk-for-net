@@ -1,11 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.2</Version>
-    <ApiCompatVersion>1.0.1</ApiCompatVersion>
+    <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.IotFirmwareDefense</PackageId>
-    <Description>Azure Resource Manager client SDK for Azure firmware analysis</Description>
-    <PackageTags>azure;management;arm;resource manager;iotfirmwaredefense;firmware analysis</PackageTags>
+    <Description>Azure Resource Manager client SDK for Azure resource provider IotFirmwareDefense.</Description>
+    <PackageTags>azure;management;arm;resource manager;iotfirmwaredefense</PackageTags>
   </PropertyGroup>
 </Project>

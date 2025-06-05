@@ -37,38 +37,87 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ExtractedSize))
             {
-                writer.WritePropertyName("extractedSize"u8);
-                writer.WriteNumberValue(ExtractedSize.Value);
+                if (ExtractedSize != null)
+                {
+                    writer.WritePropertyName("extractedSize"u8);
+                    writer.WriteNumberValue(ExtractedSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("extractedSize");
+                }
             }
             if (Optional.IsDefined(FileSize))
             {
-                writer.WritePropertyName("fileSize"u8);
-                writer.WriteNumberValue(FileSize.Value);
+                if (FileSize != null)
+                {
+                    writer.WritePropertyName("fileSize"u8);
+                    writer.WriteNumberValue(FileSize.Value);
+                }
+                else
+                {
+                    writer.WriteNull("fileSize");
+                }
             }
             if (Optional.IsDefined(ExtractedFileCount))
             {
-                writer.WritePropertyName("extractedFileCount"u8);
-                writer.WriteNumberValue(ExtractedFileCount.Value);
+                if (ExtractedFileCount != null)
+                {
+                    writer.WritePropertyName("extractedFileCount"u8);
+                    writer.WriteNumberValue(ExtractedFileCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("extractedFileCount");
+                }
             }
             if (Optional.IsDefined(ComponentCount))
             {
-                writer.WritePropertyName("componentCount"u8);
-                writer.WriteNumberValue(ComponentCount.Value);
+                if (ComponentCount != null)
+                {
+                    writer.WritePropertyName("componentCount"u8);
+                    writer.WriteNumberValue(ComponentCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("componentCount");
+                }
             }
             if (Optional.IsDefined(BinaryCount))
             {
-                writer.WritePropertyName("binaryCount"u8);
-                writer.WriteNumberValue(BinaryCount.Value);
+                if (BinaryCount != null)
+                {
+                    writer.WritePropertyName("binaryCount"u8);
+                    writer.WriteNumberValue(BinaryCount.Value);
+                }
+                else
+                {
+                    writer.WriteNull("binaryCount");
+                }
             }
             if (Optional.IsDefined(AnalysisTimeSeconds))
             {
-                writer.WritePropertyName("analysisTimeSeconds"u8);
-                writer.WriteNumberValue(AnalysisTimeSeconds.Value);
+                if (AnalysisTimeSeconds != null)
+                {
+                    writer.WritePropertyName("analysisTimeSeconds"u8);
+                    writer.WriteNumberValue(AnalysisTimeSeconds.Value);
+                }
+                else
+                {
+                    writer.WriteNull("analysisTimeSeconds");
+                }
             }
             if (Optional.IsDefined(RootFileSystems))
             {
-                writer.WritePropertyName("rootFileSystems"u8);
-                writer.WriteNumberValue(RootFileSystems.Value);
+                if (RootFileSystems != null)
+                {
+                    writer.WritePropertyName("rootFileSystems"u8);
+                    writer.WriteNumberValue(RootFileSystems.Value);
+                }
+                else
+                {
+                    writer.WriteNull("rootFileSystems");
+                }
             }
         }
 
@@ -100,7 +149,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             long? analysisTimeSeconds = default;
             long? rootFileSystems = default;
             FirmwareAnalysisSummaryType summaryType = default;
-            FirmwareProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,6 +157,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        extractedSize = null;
                         continue;
                     }
                     extractedSize = property.Value.GetInt64();
@@ -118,6 +167,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        fileSize = null;
                         continue;
                     }
                     fileSize = property.Value.GetInt64();
@@ -127,6 +177,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        extractedFileCount = null;
                         continue;
                     }
                     extractedFileCount = property.Value.GetInt64();
@@ -136,6 +187,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        componentCount = null;
                         continue;
                     }
                     componentCount = property.Value.GetInt64();
@@ -145,6 +197,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        binaryCount = null;
                         continue;
                     }
                     binaryCount = property.Value.GetInt64();
@@ -154,6 +207,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        analysisTimeSeconds = null;
                         continue;
                     }
                     analysisTimeSeconds = property.Value.GetInt64();
@@ -163,6 +217,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        rootFileSystems = null;
                         continue;
                     }
                     rootFileSystems = property.Value.GetInt64();
@@ -173,15 +228,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                     summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -190,7 +236,6 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new FirmwareSummary(
                 summaryType,
-                provisioningState,
                 serializedAdditionalRawData,
                 extractedSize,
                 fileSize,
@@ -208,7 +253,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(FirmwareSummary)} does not support writing '{options.Format}' format.");
             }

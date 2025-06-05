@@ -5,7 +5,7 @@ using System;
 using Azure.ResourceManager.ApiManagement.Models;
 using NUnit.Framework;
 
-namespace Azure.ResourceManager.ApiManagement.Tests
+namespace Azure.ResourceManager.ApiManagement.Tests.Scenario
 {
     public class ArmApiManagementModelFactoryTests
     {

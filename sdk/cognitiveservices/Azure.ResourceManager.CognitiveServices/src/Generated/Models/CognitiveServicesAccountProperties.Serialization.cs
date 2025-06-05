@@ -212,31 +212,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("raiMonitorConfig"u8);
                 writer.WriteObjectValue(RaiMonitorConfig, options);
             }
-            if (Optional.IsDefined(NetworkInjections))
-            {
-                writer.WritePropertyName("networkInjections"u8);
-                writer.WriteObjectValue(NetworkInjections, options);
-            }
-            if (Optional.IsDefined(AllowProjectManagement))
-            {
-                writer.WritePropertyName("allowProjectManagement"u8);
-                writer.WriteBooleanValue(AllowProjectManagement.Value);
-            }
-            if (Optional.IsDefined(DefaultProject))
-            {
-                writer.WritePropertyName("defaultProject"u8);
-                writer.WriteStringValue(DefaultProject);
-            }
-            if (Optional.IsCollectionDefined(AssociatedProjects))
-            {
-                writer.WritePropertyName("associatedProjects"u8);
-                writer.WriteStartArray();
-                foreach (var item in AssociatedProjects)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -303,10 +278,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             IReadOnlyList<CommitmentPlanAssociation> commitmentPlanAssociations = default;
             AbusePenalty abusePenalty = default;
             RaiMonitorConfig raiMonitorConfig = default;
-            AIFoundryNetworkInjection networkInjections = default;
-            bool? allowProjectManagement = default;
-            string defaultProject = default;
-            IList<string> associatedProjects = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -586,43 +557,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     raiMonitorConfig = RaiMonitorConfig.DeserializeRaiMonitorConfig(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("networkInjections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    networkInjections = AIFoundryNetworkInjection.DeserializeAIFoundryNetworkInjection(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("allowProjectManagement"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowProjectManagement = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("defaultProject"u8))
-                {
-                    defaultProject = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("associatedProjects"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    associatedProjects = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -659,10 +593,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 commitmentPlanAssociations ?? new ChangeTrackingList<CommitmentPlanAssociation>(),
                 abusePenalty,
                 raiMonitorConfig,
-                networkInjections,
-                allowProjectManagement,
-                defaultProject,
-                associatedProjects ?? new ChangeTrackingList<string>(),
                 serializedAdditionalRawData);
         }
 
@@ -1226,96 +1156,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetworkInjections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  networkInjections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(NetworkInjections))
-                {
-                    builder.Append("  networkInjections: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, NetworkInjections, options, 2, false, "  networkInjections: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProjectManagement), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  allowProjectManagement: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AllowProjectManagement))
-                {
-                    builder.Append("  allowProjectManagement: ");
-                    var boolValue = AllowProjectManagement.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultProject), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  defaultProject: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DefaultProject))
-                {
-                    builder.Append("  defaultProject: ");
-                    if (DefaultProject.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{DefaultProject}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{DefaultProject}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssociatedProjects), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  associatedProjects: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(AssociatedProjects))
-                {
-                    if (AssociatedProjects.Any())
-                    {
-                        builder.Append("  associatedProjects: ");
-                        builder.AppendLine("[");
-                        foreach (var item in AssociatedProjects)
-                        {
-                            if (item == null)
-                            {
-                                builder.Append("null");
-                                continue;
-                            }
-                            if (item.Contains(Environment.NewLine))
-                            {
-                                builder.AppendLine("    '''");
-                                builder.AppendLine($"{item}'''");
-                            }
-                            else
-                            {
-                                builder.AppendLine($"    '{item}'");
-                            }
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -1327,7 +1167,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

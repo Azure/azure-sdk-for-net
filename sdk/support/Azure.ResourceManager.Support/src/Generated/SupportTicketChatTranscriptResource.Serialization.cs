@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Support
 {
     public partial class SupportTicketChatTranscriptResource : IJsonModel<ChatTranscriptDetailData>
     {
-        private static ChatTranscriptDetailData s_dataDeserializationInstance;
-        private static ChatTranscriptDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ChatTranscriptDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ChatTranscriptDetailData>)Data).Write(writer, options);
 
-        ChatTranscriptDetailData IJsonModel<ChatTranscriptDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChatTranscriptDetailData>)DataDeserializationInstance).Create(ref reader, options);
+        ChatTranscriptDetailData IJsonModel<ChatTranscriptDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ChatTranscriptDetailData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ChatTranscriptDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ChatTranscriptDetailData>(Data, options, AzureResourceManagerSupportContext.Default);
+        BinaryData IPersistableModel<ChatTranscriptDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ChatTranscriptDetailData IPersistableModel<ChatTranscriptDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChatTranscriptDetailData>(data, options, AzureResourceManagerSupportContext.Default);
+        ChatTranscriptDetailData IPersistableModel<ChatTranscriptDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ChatTranscriptDetailData>(data, options);
 
-        string IPersistableModel<ChatTranscriptDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChatTranscriptDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ChatTranscriptDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ChatTranscriptDetailData>)Data).GetFormatFromOptions(options);
     }
 }

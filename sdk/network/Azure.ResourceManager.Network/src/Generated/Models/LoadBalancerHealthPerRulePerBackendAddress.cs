@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -53,14 +52,14 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerHealthPerRulePerBackendAddress"/>. </summary>
         /// <param name="ipAddress"> The IP address belonging to the backend address. </param>
-        /// <param name="networkInterfaceIPConfigurationResourceId"> Resource ID of the Network Interface IP Configuration. </param>
+        /// <param name="networkInterfaceIPConfigurationId"> The id of the network interface ip configuration belonging to the backend address. </param>
         /// <param name="state"> The current health of the backend instances that is associated to the LB rule. </param>
         /// <param name="reason"> The explanation of the State. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadBalancerHealthPerRulePerBackendAddress(string ipAddress, ResourceIdentifier networkInterfaceIPConfigurationResourceId, string state, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerHealthPerRulePerBackendAddress(string ipAddress, NetworkInterfaceIPConfigurationData networkInterfaceIPConfigurationId, string state, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddress = ipAddress;
-            NetworkInterfaceIPConfigurationResourceId = networkInterfaceIPConfigurationResourceId;
+            NetworkInterfaceIPConfigurationId = networkInterfaceIPConfigurationId;
             State = state;
             Reason = reason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -68,8 +67,8 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The IP address belonging to the backend address. </summary>
         public string IPAddress { get; }
-        /// <summary> Resource ID of the Network Interface IP Configuration. </summary>
-        public ResourceIdentifier NetworkInterfaceIPConfigurationResourceId { get; }
+        /// <summary> The id of the network interface ip configuration belonging to the backend address. </summary>
+        public NetworkInterfaceIPConfigurationData NetworkInterfaceIPConfigurationId { get; }
         /// <summary> The current health of the backend instances that is associated to the LB rule. </summary>
         public string State { get; }
         /// <summary> The explanation of the State. </summary>

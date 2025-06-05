@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
 {
     public partial class NetworkFabricResource : IJsonModel<NetworkFabricData>
     {
-        private static NetworkFabricData s_dataDeserializationInstance;
-        private static NetworkFabricData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<NetworkFabricData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricData>)Data).Write(writer, options);
 
-        NetworkFabricData IJsonModel<NetworkFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricData>)DataDeserializationInstance).Create(ref reader, options);
+        NetworkFabricData IJsonModel<NetworkFabricData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkFabricData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkFabricData>(Data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        BinaryData IPersistableModel<NetworkFabricData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        NetworkFabricData IPersistableModel<NetworkFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricData>(data, options, AzureResourceManagerManagedNetworkFabricContext.Default);
+        NetworkFabricData IPersistableModel<NetworkFabricData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkFabricData>(data, options);
 
-        string IPersistableModel<NetworkFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkFabricData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkFabricData>)Data).GetFormatFromOptions(options);
     }
 }

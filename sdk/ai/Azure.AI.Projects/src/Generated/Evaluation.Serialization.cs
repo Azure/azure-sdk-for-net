@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("data"u8);
             writer.WriteObjectValue(Data, options);
@@ -50,6 +50,11 @@ namespace Azure.AI.Projects
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                writer.WriteObjectValue(SystemData, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -127,6 +132,7 @@ namespace Azure.AI.Projects
             InputData data = default;
             string displayName = default;
             string description = default;
+            SystemData systemData = default;
             string status = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> properties = default;
@@ -153,6 +159,15 @@ namespace Azure.AI.Projects
                 if (property.NameEquals("description"u8))
                 {
                     description = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = SystemData.DeserializeSystemData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -209,6 +224,7 @@ namespace Azure.AI.Projects
                 data,
                 displayName,
                 description,
+                systemData,
                 status,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
@@ -223,7 +239,7 @@ namespace Azure.AI.Projects
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(Evaluation)} does not support writing '{options.Format}' format.");
             }

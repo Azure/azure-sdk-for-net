@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ContainerService
 {
     public partial class ContainerServiceManagedClusterResource : IJsonModel<ContainerServiceManagedClusterData>
     {
-        private static ContainerServiceManagedClusterData s_dataDeserializationInstance;
-        private static ContainerServiceManagedClusterData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ContainerServiceManagedClusterData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceManagedClusterData>)Data).Write(writer, options);
 
-        ContainerServiceManagedClusterData IJsonModel<ContainerServiceManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceManagedClusterData>)DataDeserializationInstance).Create(ref reader, options);
+        ContainerServiceManagedClusterData IJsonModel<ContainerServiceManagedClusterData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerServiceManagedClusterData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerServiceManagedClusterData>(Data, options, AzureResourceManagerContainerServiceContext.Default);
+        BinaryData IPersistableModel<ContainerServiceManagedClusterData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceManagedClusterData>(data, options, AzureResourceManagerContainerServiceContext.Default);
+        ContainerServiceManagedClusterData IPersistableModel<ContainerServiceManagedClusterData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerServiceManagedClusterData>(data, options);
 
-        string IPersistableModel<ContainerServiceManagedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceManagedClusterData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerServiceManagedClusterData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerServiceManagedClusterData>)Data).GetFormatFromOptions(options);
     }
 }

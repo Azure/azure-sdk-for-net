@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 BaseSizeTiB = 2,
                 ExtendedCapacitySizeTiB = 7,
             };
-            patch.ScaleUpProperties = new ElasticSanScaleUpProperties
+            patch.ScaleUpProperties = new ScaleUpProperties
             {
                 UnusedSizeTiB = 2,
                 IncreaseCapacityUnitByTiB = 2,

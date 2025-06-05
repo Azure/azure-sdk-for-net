@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsHuntCommentResource : IJsonModel<SecurityInsightsHuntCommentData>
     {
-        private static SecurityInsightsHuntCommentData s_dataDeserializationInstance;
-        private static SecurityInsightsHuntCommentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityInsightsHuntCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntCommentData>)Data).Write(writer, options);
 
-        SecurityInsightsHuntCommentData IJsonModel<SecurityInsightsHuntCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntCommentData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityInsightsHuntCommentData IJsonModel<SecurityInsightsHuntCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsHuntCommentData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsHuntCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsHuntCommentData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        BinaryData IPersistableModel<SecurityInsightsHuntCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityInsightsHuntCommentData IPersistableModel<SecurityInsightsHuntCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsHuntCommentData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        SecurityInsightsHuntCommentData IPersistableModel<SecurityInsightsHuntCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsHuntCommentData>(data, options);
 
-        string IPersistableModel<SecurityInsightsHuntCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsHuntCommentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsHuntCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsHuntCommentData>)Data).GetFormatFromOptions(options);
     }
 }

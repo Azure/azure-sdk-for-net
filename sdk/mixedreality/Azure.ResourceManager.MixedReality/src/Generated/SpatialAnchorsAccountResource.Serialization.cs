@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.MixedReality
 {
     public partial class SpatialAnchorsAccountResource : IJsonModel<SpatialAnchorsAccountData>
     {
-        private static SpatialAnchorsAccountData s_dataDeserializationInstance;
-        private static SpatialAnchorsAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SpatialAnchorsAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SpatialAnchorsAccountData>)Data).Write(writer, options);
 
-        SpatialAnchorsAccountData IJsonModel<SpatialAnchorsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpatialAnchorsAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        SpatialAnchorsAccountData IJsonModel<SpatialAnchorsAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SpatialAnchorsAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SpatialAnchorsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SpatialAnchorsAccountData>(Data, options, AzureResourceManagerMixedRealityContext.Default);
+        BinaryData IPersistableModel<SpatialAnchorsAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SpatialAnchorsAccountData IPersistableModel<SpatialAnchorsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpatialAnchorsAccountData>(data, options, AzureResourceManagerMixedRealityContext.Default);
+        SpatialAnchorsAccountData IPersistableModel<SpatialAnchorsAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SpatialAnchorsAccountData>(data, options);
 
-        string IPersistableModel<SpatialAnchorsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpatialAnchorsAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SpatialAnchorsAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SpatialAnchorsAccountData>)Data).GetFormatFromOptions(options);
     }
 }

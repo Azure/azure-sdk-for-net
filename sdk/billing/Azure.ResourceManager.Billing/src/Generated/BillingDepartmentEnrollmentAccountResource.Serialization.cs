@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Billing
 {
     public partial class BillingDepartmentEnrollmentAccountResource : IJsonModel<BillingEnrollmentAccountData>
     {
-        private static BillingEnrollmentAccountData s_dataDeserializationInstance;
-        private static BillingEnrollmentAccountData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<BillingEnrollmentAccountData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BillingEnrollmentAccountData>)Data).Write(writer, options);
 
-        BillingEnrollmentAccountData IJsonModel<BillingEnrollmentAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingEnrollmentAccountData>)DataDeserializationInstance).Create(ref reader, options);
+        BillingEnrollmentAccountData IJsonModel<BillingEnrollmentAccountData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BillingEnrollmentAccountData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<BillingEnrollmentAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BillingEnrollmentAccountData>(Data, options, AzureResourceManagerBillingContext.Default);
+        BinaryData IPersistableModel<BillingEnrollmentAccountData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        BillingEnrollmentAccountData IPersistableModel<BillingEnrollmentAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingEnrollmentAccountData>(data, options, AzureResourceManagerBillingContext.Default);
+        BillingEnrollmentAccountData IPersistableModel<BillingEnrollmentAccountData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BillingEnrollmentAccountData>(data, options);
 
-        string IPersistableModel<BillingEnrollmentAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingEnrollmentAccountData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<BillingEnrollmentAccountData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BillingEnrollmentAccountData>)Data).GetFormatFromOptions(options);
     }
 }

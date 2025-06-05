@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.EventGrid
 {
     public partial class DomainEventSubscriptionResource : IJsonModel<EventGridSubscriptionData>
     {
-        private static EventGridSubscriptionData s_dataDeserializationInstance;
-        private static EventGridSubscriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<EventGridSubscriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<EventGridSubscriptionData>)Data).Write(writer, options);
 
-        EventGridSubscriptionData IJsonModel<EventGridSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridSubscriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        EventGridSubscriptionData IJsonModel<EventGridSubscriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<EventGridSubscriptionData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<EventGridSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<EventGridSubscriptionData>(Data, options, AzureResourceManagerEventGridContext.Default);
+        BinaryData IPersistableModel<EventGridSubscriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        EventGridSubscriptionData IPersistableModel<EventGridSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridSubscriptionData>(data, options, AzureResourceManagerEventGridContext.Default);
+        EventGridSubscriptionData IPersistableModel<EventGridSubscriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<EventGridSubscriptionData>(data, options);
 
-        string IPersistableModel<EventGridSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridSubscriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<EventGridSubscriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<EventGridSubscriptionData>)Data).GetFormatFromOptions(options);
     }
 }

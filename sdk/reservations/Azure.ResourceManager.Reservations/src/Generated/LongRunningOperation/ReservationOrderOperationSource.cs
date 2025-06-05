@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Reservations
 
         ReservationOrderResource IOperationSource<ReservationOrderResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ReservationOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
+            var data = ModelReaderWriter.Read<ReservationOrderData>(response.Content);
             return new ReservationOrderResource(_client, data);
         }
 
         async ValueTask<ReservationOrderResource> IOperationSource<ReservationOrderResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ReservationOrderData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
+            var data = ModelReaderWriter.Read<ReservationOrderData>(response.Content);
             return await Task.FromResult(new ReservationOrderResource(_client, data)).ConfigureAwait(false);
         }
     }

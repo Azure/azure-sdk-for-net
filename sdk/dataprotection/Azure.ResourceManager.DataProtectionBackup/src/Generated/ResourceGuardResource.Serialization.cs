@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataProtectionBackup
 {
     public partial class ResourceGuardResource : IJsonModel<ResourceGuardData>
     {
-        private static ResourceGuardData s_dataDeserializationInstance;
-        private static ResourceGuardData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ResourceGuardData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardData>)Data).Write(writer, options);
 
-        ResourceGuardData IJsonModel<ResourceGuardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardData>)DataDeserializationInstance).Create(ref reader, options);
+        ResourceGuardData IJsonModel<ResourceGuardData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceGuardData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceGuardData>(Data, options, AzureResourceManagerDataProtectionBackupContext.Default);
+        BinaryData IPersistableModel<ResourceGuardData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardData>(data, options, AzureResourceManagerDataProtectionBackupContext.Default);
+        ResourceGuardData IPersistableModel<ResourceGuardData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceGuardData>(data, options);
 
-        string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGuardData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceGuardData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceGuardData>)Data).GetFormatFromOptions(options);
     }
 }

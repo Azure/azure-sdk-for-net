@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Compute
 {
     public partial class CloudServiceRoleInstanceResource : IJsonModel<CloudServiceRoleInstanceData>
     {
-        private static CloudServiceRoleInstanceData s_dataDeserializationInstance;
-        private static CloudServiceRoleInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CloudServiceRoleInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceRoleInstanceData>)Data).Write(writer, options);
 
-        CloudServiceRoleInstanceData IJsonModel<CloudServiceRoleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceRoleInstanceData>)DataDeserializationInstance).Create(ref reader, options);
+        CloudServiceRoleInstanceData IJsonModel<CloudServiceRoleInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CloudServiceRoleInstanceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CloudServiceRoleInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CloudServiceRoleInstanceData>(Data, options, AzureResourceManagerComputeContext.Default);
+        BinaryData IPersistableModel<CloudServiceRoleInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CloudServiceRoleInstanceData IPersistableModel<CloudServiceRoleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceRoleInstanceData>(data, options, AzureResourceManagerComputeContext.Default);
+        CloudServiceRoleInstanceData IPersistableModel<CloudServiceRoleInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CloudServiceRoleInstanceData>(data, options);
 
-        string IPersistableModel<CloudServiceRoleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceRoleInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CloudServiceRoleInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CloudServiceRoleInstanceData>)Data).GetFormatFromOptions(options);
     }
 }

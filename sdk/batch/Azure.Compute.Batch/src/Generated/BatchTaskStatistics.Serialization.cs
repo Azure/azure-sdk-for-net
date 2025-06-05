@@ -47,9 +47,9 @@ namespace Azure.Compute.Batch
             writer.WritePropertyName("wallClockTime"u8);
             writer.WriteStringValue(WallClockTime, "P");
             writer.WritePropertyName("readIOps"u8);
-            writer.WriteStringValue(ReadIOps.ToString());
+            writer.WriteNumberValue(ReadIOps);
             writer.WritePropertyName("writeIOps"u8);
-            writer.WriteStringValue(WriteIOps.ToString());
+            writer.WriteNumberValue(WriteIOps);
             writer.WritePropertyName("readIOGiB"u8);
             writer.WriteNumberValue(ReadIOGiB);
             writer.WritePropertyName("writeIOGiB"u8);
@@ -140,12 +140,12 @@ namespace Azure.Compute.Batch
                 }
                 if (property.NameEquals("readIOps"u8))
                 {
-                    readIOps = long.Parse(property.Value.GetString());
+                    readIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("writeIOps"u8))
                 {
-                    writeIOps = long.Parse(property.Value.GetString());
+                    writeIOps = property.Value.GetInt64();
                     continue;
                 }
                 if (property.NameEquals("readIOGiB"u8))
@@ -191,7 +191,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(BatchTaskStatistics)} does not support writing '{options.Format}' format.");
             }

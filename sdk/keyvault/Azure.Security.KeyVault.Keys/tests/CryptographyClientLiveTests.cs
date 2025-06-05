@@ -83,12 +83,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
-        {
-            await SignVerifyDataRoundTripInternal(algorithm);
-        }
-
-        protected async Task SignVerifyDataRoundTripInternal(SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -130,12 +125,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignVerifyDataStreamRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
-        {
-            await SignVerifyDataStreamRoundTripInternal(algorithm);
-        }
-
-        protected async Task SignVerifyDataStreamRoundTripInternal(SignatureAlgorithm algorithm)
+        public async Task SignVerifyDataStreamRoundTrip([EnumValues] SignatureAlgorithm algorithm)
         {
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -185,12 +175,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // We do not test using ES256K below since macOS doesn't support it; various ideas to work around that adversely affect runtime code too much.
 
         [RecordedTest]
-        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
-        {
-            await LocalSignVerifyRoundTripInternal(algorithm);
-        }
-
-        protected async Task LocalSignVerifyRoundTripInternal(SignatureAlgorithm algorithm)
+        public async Task LocalSignVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
 #if NET462
             if (algorithm.GetEcKeyCurveName() != default)
@@ -267,12 +252,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K), nameof(SignatureAlgorithm.HS256), nameof(SignatureAlgorithm.HS384), nameof(SignatureAlgorithm.HS512) })] SignatureAlgorithm algorithm)
-        {
-            await SignLocalVerifyRoundTripInternal(algorithm);
-        }
-
-        protected async Task SignLocalVerifyRoundTripInternal(SignatureAlgorithm algorithm)
+        public async Task SignLocalVerifyRoundTrip([EnumValues(Exclude = new[] { nameof(SignatureAlgorithm.ES256K) })] SignatureAlgorithm algorithm)
         {
 #if NET462
             if (algorithm.GetEcKeyCurveName() != default)
@@ -287,13 +267,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 Assert.Ignore("RSA-PSS signature padding is not supported on .NET Framework.");
             }
 #endif
-
-            if ((algorithm == SignatureAlgorithm.HS256 ||
-                 algorithm == SignatureAlgorithm.HS384 ||
-                 algorithm == SignatureAlgorithm.HS512) && !IsManagedHSM)
-            {
-                Assert.Ignore("HMAC signature algorithms are only supported in Managed HSM");
-            }
 
             KeyVaultKey key = await CreateTestKey(algorithm);
             RegisterForCleanup(key.Name);
@@ -485,9 +458,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                 case EncryptionAlgorithm.RsaOaepValue:
                 case EncryptionAlgorithm.RsaOaep256Value:
                     return await Client.CreateKeyAsync(keyName, KeyType.Rsa);
-                case EncryptionAlgorithm.CkmAesKeyWrapValue:
-                case EncryptionAlgorithm.CkmAesKeyWrapPadValue:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }
@@ -570,12 +540,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
                     return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P384 });
                 case SignatureAlgorithm.ES512Value:
                     return await Client.CreateEcKeyAsync(new CreateEcKeyOptions(keyName, false) { CurveName = KeyCurveName.P521 });
-                case SignatureAlgorithm.HS256Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 256 });
-                case SignatureAlgorithm.HS384Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 512});
-                case SignatureAlgorithm.HS512Value:
-                    return await Client.CreateOctKeyAsync(new CreateOctKeyOptions(keyName) { KeySize = 512 });
                 default:
                     throw new ArgumentException("Invalid Algorithm", nameof(algorithm));
             }

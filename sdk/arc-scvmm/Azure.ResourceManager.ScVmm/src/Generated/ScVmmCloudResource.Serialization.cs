@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmCloudResource : IJsonModel<ScVmmCloudData>
     {
-        private static ScVmmCloudData s_dataDeserializationInstance;
-        private static ScVmmCloudData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ScVmmCloudData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmCloudData>)Data).Write(writer, options);
 
-        ScVmmCloudData IJsonModel<ScVmmCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmCloudData>)DataDeserializationInstance).Create(ref reader, options);
+        ScVmmCloudData IJsonModel<ScVmmCloudData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmCloudData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmCloudData>(Data, options, AzureResourceManagerScVmmContext.Default);
+        BinaryData IPersistableModel<ScVmmCloudData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ScVmmCloudData IPersistableModel<ScVmmCloudData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmCloudData>(data, options, AzureResourceManagerScVmmContext.Default);
+        ScVmmCloudData IPersistableModel<ScVmmCloudData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmCloudData>(data, options);
 
-        string IPersistableModel<ScVmmCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmCloudData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ScVmmCloudData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmCloudData>)Data).GetFormatFromOptions(options);
     }
 }

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityCenter
 {
     public partial class SecurityComplianceResource : IJsonModel<SecurityComplianceData>
     {
-        private static SecurityComplianceData s_dataDeserializationInstance;
-        private static SecurityComplianceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityComplianceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityComplianceData>)Data).Write(writer, options);
 
-        SecurityComplianceData IJsonModel<SecurityComplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityComplianceData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityComplianceData IJsonModel<SecurityComplianceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityComplianceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityComplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityComplianceData>(Data, options, AzureResourceManagerSecurityCenterContext.Default);
+        BinaryData IPersistableModel<SecurityComplianceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityComplianceData IPersistableModel<SecurityComplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityComplianceData>(data, options, AzureResourceManagerSecurityCenterContext.Default);
+        SecurityComplianceData IPersistableModel<SecurityComplianceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityComplianceData>(data, options);
 
-        string IPersistableModel<SecurityComplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityComplianceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityComplianceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityComplianceData>)Data).GetFormatFromOptions(options);
     }
 }

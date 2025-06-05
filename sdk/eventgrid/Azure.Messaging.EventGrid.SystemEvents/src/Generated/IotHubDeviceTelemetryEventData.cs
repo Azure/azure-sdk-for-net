@@ -18,7 +18,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/>, <paramref name="properties"/> or <paramref name="systemProperties"/> is null. </exception>
-        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
+        internal IotHubDeviceTelemetryEventData(IReadOnlyDictionary<string, BinaryData> body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties) : base(body, properties, systemProperties)
         {
             Argument.AssertNotNull(body, nameof(body));
             Argument.AssertNotNull(properties, nameof(properties));
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> Application properties are user-defined strings that can be added to the message. These fields are optional. </param>
         /// <param name="systemProperties"> System properties help identify contents and source of the messages. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubDeviceTelemetryEventData(object body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(body, properties, systemProperties, serializedAdditionalRawData)
+        internal IotHubDeviceTelemetryEventData(IReadOnlyDictionary<string, BinaryData> body, IReadOnlyDictionary<string, string> properties, IReadOnlyDictionary<string, string> systemProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(body, properties, systemProperties, serializedAdditionalRawData)
         {
         }
 

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.PostgreSql
 
         PostgreSqlPrivateEndpointConnectionResource IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(response.Content);
             return new PostgreSqlPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<PostgreSqlPrivateEndpointConnectionResource> IOperationSource<PostgreSqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            var data = ModelReaderWriter.Read<PostgreSqlPrivateEndpointConnectionData>(response.Content);
             return await Task.FromResult(new PostgreSqlPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(StorageMoverCredentials)} does not support writing '{options.Format}' format.");
             }

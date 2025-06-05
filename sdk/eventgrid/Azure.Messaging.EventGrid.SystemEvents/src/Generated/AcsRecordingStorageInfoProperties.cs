@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -46,9 +47,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/>. </summary>
-        internal AcsRecordingStorageInfoProperties()
+        /// <param name="recordingChunks"> List of details of recording chunks information. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="recordingChunks"/> is null. </exception>
+        internal AcsRecordingStorageInfoProperties(IEnumerable<AcsRecordingChunkInfoProperties> recordingChunks)
         {
-            RecordingChunks = new ChangeTrackingList<AcsRecordingChunkInfoProperties>();
+            Argument.AssertNotNull(recordingChunks, nameof(recordingChunks));
+
+            RecordingChunks = recordingChunks.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/>. </summary>
@@ -58,6 +63,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             RecordingChunks = recordingChunks;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcsRecordingStorageInfoProperties"/> for deserialization. </summary>
+        internal AcsRecordingStorageInfoProperties()
+        {
         }
 
         /// <summary> List of details of recording chunks information. </summary>

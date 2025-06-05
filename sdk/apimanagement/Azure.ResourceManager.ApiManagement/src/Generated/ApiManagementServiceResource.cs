@@ -38,8 +38,6 @@ namespace Azure.ResourceManager.ApiManagement
 
         private readonly ClientDiagnostics _apiManagementServiceClientDiagnostics;
         private readonly ApiManagementServiceRestOperations _apiManagementServiceRestClient;
-        private readonly ClientDiagnostics _allPoliciesClientDiagnostics;
-        private readonly AllPoliciesRestOperations _allPoliciesRestClient;
         private readonly ClientDiagnostics _apiClientDiagnostics;
         private readonly ApiRestOperations _apiRestClient;
         private readonly ClientDiagnostics _defaultClientDiagnostics;
@@ -56,8 +54,6 @@ namespace Azure.ResourceManager.ApiManagement
         private readonly OutboundNetworkDependenciesEndpointsRestOperations _outboundNetworkDependenciesEndpointsRestClient;
         private readonly ClientDiagnostics _policyDescriptionClientDiagnostics;
         private readonly PolicyDescriptionRestOperations _policyDescriptionRestClient;
-        private readonly ClientDiagnostics _policyRestrictionValidationsClientDiagnostics;
-        private readonly PolicyRestrictionValidationsRestOperations _policyRestrictionValidationsRestClient;
         private readonly ClientDiagnostics _apiManagementServicePortalSettingsClientDiagnostics;
         private readonly PortalSettingsRestOperations _apiManagementServicePortalSettingsRestClient;
         private readonly ClientDiagnostics _apiManagementProductProductClientDiagnostics;
@@ -101,8 +97,6 @@ namespace Azure.ResourceManager.ApiManagement
             _apiManagementServiceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServiceApiVersion);
             _apiManagementServiceRestClient = new ApiManagementServiceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServiceApiVersion);
-            _allPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _allPoliciesRestClient = new AllPoliciesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _apiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ApiResource.ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ApiResource.ResourceType, out string apiApiVersion);
             _apiRestClient = new ApiRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiApiVersion);
@@ -120,8 +114,6 @@ namespace Azure.ResourceManager.ApiManagement
             _outboundNetworkDependenciesEndpointsRestClient = new OutboundNetworkDependenciesEndpointsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _policyDescriptionClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
             _policyDescriptionRestClient = new PolicyDescriptionRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
-            _policyRestrictionValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-            _policyRestrictionValidationsRestClient = new PolicyRestrictionValidationsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
             _apiManagementServicePortalSettingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string apiManagementServicePortalSettingsApiVersion);
             _apiManagementServicePortalSettingsRestClient = new PortalSettingsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementServicePortalSettingsApiVersion);
@@ -186,7 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +209,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -255,7 +247,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -285,7 +277,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -322,7 +314,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -353,7 +345,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -391,7 +383,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,7 +414,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -460,7 +452,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -491,7 +483,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -529,7 +521,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -560,7 +552,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -598,7 +590,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -629,7 +621,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -667,7 +659,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -698,7 +690,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -736,7 +728,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -767,7 +759,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -805,7 +797,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -836,7 +828,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -874,7 +866,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -905,7 +897,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -943,7 +935,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -974,7 +966,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1012,7 +1004,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1041,7 +1033,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1077,7 +1069,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1108,7 +1100,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1146,7 +1138,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1177,7 +1169,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1215,7 +1207,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1244,7 +1236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1280,7 +1272,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1311,7 +1303,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1349,7 +1341,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1380,7 +1372,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1418,7 +1410,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1447,7 +1439,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1483,7 +1475,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1514,7 +1506,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1552,7 +1544,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1584,7 +1576,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1601,75 +1593,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<PolicyFragmentContractResource> GetPolicyFragmentContract(string id, PolicyFragmentContentFormat? format = null, CancellationToken cancellationToken = default)
         {
             return GetPolicyFragmentContracts().Get(id, format, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of PolicyRestrictionContractResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of PolicyRestrictionContractResources and their operations over a PolicyRestrictionContractResource. </returns>
-        public virtual PolicyRestrictionContractCollection GetPolicyRestrictionContracts()
-        {
-            return GetCachedClient(client => new PolicyRestrictionContractCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get the policy restriction of the Api Management service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<PolicyRestrictionContractResource>> GetPolicyRestrictionContractAsync(string policyRestrictionId, CancellationToken cancellationToken = default)
-        {
-            return await GetPolicyRestrictionContracts().GetAsync(policyRestrictionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the policy restriction of the Api Management service.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/policyRestrictions/{policyRestrictionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestriction_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PolicyRestrictionContractResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="policyRestrictionId"> Policy restrictions after an entity level. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="policyRestrictionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="policyRestrictionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<PolicyRestrictionContractResource> GetPolicyRestrictionContract(string policyRestrictionId, CancellationToken cancellationToken = default)
-        {
-            return GetPolicyRestrictionContracts().Get(policyRestrictionId, cancellationToken);
         }
 
         /// <summary> Gets a collection of PortalConfigContractResources in the ApiManagementService. </summary>
@@ -1692,7 +1615,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1723,7 +1646,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1761,7 +1684,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1792,7 +1715,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1851,7 +1774,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1882,7 +1805,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1920,7 +1843,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1951,7 +1874,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1989,7 +1912,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2020,7 +1943,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2058,7 +1981,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2089,7 +2012,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2127,7 +2050,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2156,7 +2079,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2192,7 +2115,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2223,7 +2146,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2261,7 +2184,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2290,7 +2213,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2326,7 +2249,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2357,7 +2280,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2373,75 +2296,6 @@ namespace Azure.ResourceManager.ApiManagement
         public virtual Response<ApiManagementUserResource> GetApiManagementUser(string userId, CancellationToken cancellationToken = default)
         {
             return GetApiManagementUsers().Get(userId, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of ApiManagementWorkspaceLinksResources in the ApiManagementService. </summary>
-        /// <returns> An object representing collection of ApiManagementWorkspaceLinksResources and their operations over a ApiManagementWorkspaceLinksResource. </returns>
-        public virtual ApiManagementWorkspaceLinksCollection GetAllApiManagementWorkspaceLinks()
-        {
-            return GetCachedClient(client => new ApiManagementWorkspaceLinksCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets an API Management WorkspaceLink resource description.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApiManagementWorkspaceLinksResource>> GetApiManagementWorkspaceLinksAsync(string workspaceId, CancellationToken cancellationToken = default)
-        {
-            return await GetAllApiManagementWorkspaceLinks().GetAsync(workspaceId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets an API Management WorkspaceLink resource description.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/workspaceLinks/{workspaceId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>ApiManagementWorkspaceLink_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApiManagementWorkspaceLinksResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="workspaceId"> Workspace identifier. Must be unique in the current API Management service instance. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="workspaceId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="workspaceId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApiManagementWorkspaceLinksResource> GetApiManagementWorkspaceLinks(string workspaceId, CancellationToken cancellationToken = default)
-        {
-            return GetAllApiManagementWorkspaceLinks().Get(workspaceId, cancellationToken);
         }
 
         /// <summary> Gets a collection of WorkspaceContractResources in the ApiManagementService. </summary>
@@ -2464,7 +2318,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2495,7 +2349,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2526,7 +2380,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2566,7 +2420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2606,7 +2460,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2648,7 +2502,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2690,7 +2544,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2736,7 +2590,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2770,58 +2624,6 @@ namespace Azure.ResourceManager.ApiManagement
         }
 
         /// <summary>
-        /// Status of all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllPolicies_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AllPoliciesContract> GetAllPoliciesByServiceAsync(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Status of all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/allPolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>AllPolicies_ListByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AllPoliciesContract"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AllPoliciesContract> GetAllPoliciesByService(CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _allPoliciesRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _allPoliciesRestClient.CreateListByServiceNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AllPoliciesContract.DeserializeAllPoliciesContract(e), _allPoliciesClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetAllPoliciesByService", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Lists a collection of apis associated with tags.
         /// <list type="bullet">
         /// <item>
@@ -2834,7 +2636,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2868,7 +2670,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -2902,7 +2704,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2944,7 +2746,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2986,7 +2788,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3012,7 +2814,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3038,7 +2840,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3077,7 +2879,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3116,7 +2918,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3156,7 +2958,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3196,7 +2998,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3236,7 +3038,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3276,7 +3078,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3307,7 +3109,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3338,7 +3140,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3379,7 +3181,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3420,7 +3222,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3461,7 +3263,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3502,7 +3304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3544,7 +3346,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3586,7 +3388,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3628,7 +3430,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3670,7 +3472,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3696,7 +3498,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3722,7 +3524,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3768,7 +3570,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3814,7 +3616,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3860,7 +3662,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3906,7 +3708,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3949,7 +3751,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -3992,7 +3794,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4030,7 +3832,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4068,7 +3870,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4111,7 +3913,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4154,7 +3956,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4179,7 +3981,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4204,7 +4006,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4239,7 +4041,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4274,7 +4076,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4299,7 +4101,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4324,7 +4126,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4350,7 +4152,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4361,82 +4163,6 @@ namespace Azure.ResourceManager.ApiManagement
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _policyDescriptionRestClient.CreateListByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scope);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(e), _policyDescriptionClientDiagnostics, Pipeline, "ApiManagementServiceResource.GetPolicyDescriptions", "value", null, cancellationToken);
-        }
-
-        /// <summary>
-        /// Validate all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestrictionValidations_ByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<ArmOperation<GitOperationResultContractData>> ByServicePolicyRestrictionValidationAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
-            scope.Start();
-            try
-            {
-                var response = await _policyRestrictionValidationsRestClient.ByServiceAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Validate all policies of API Management services.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/validatePolicies</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PolicyRestrictionValidations_ByService</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual ArmOperation<GitOperationResultContractData> ByServicePolicyRestrictionValidation(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            using var scope = _policyRestrictionValidationsClientDiagnostics.CreateScope("ApiManagementServiceResource.ByServicePolicyRestrictionValidation");
-            scope.Start();
-            try
-            {
-                var response = _policyRestrictionValidationsRestClient.ByService(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new ApiManagementArmOperation<GitOperationResultContractData>(new GitOperationResultContractDataOperationSource(), _policyRestrictionValidationsClientDiagnostics, Pipeline, _policyRestrictionValidationsRestClient.CreateByServiceRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name).Request, response, OperationFinalStateVia.Location);
-                if (waitUntil == WaitUntil.Completed)
-                    operation.WaitForCompletion(cancellationToken);
-                return operation;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary>
@@ -4452,7 +4178,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4481,7 +4207,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4510,7 +4236,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4544,7 +4270,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -4578,7 +4304,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4608,7 +4334,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4638,7 +4364,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4670,7 +4396,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4702,7 +4428,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4743,7 +4469,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4784,7 +4510,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4827,7 +4553,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4870,7 +4596,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4896,7 +4622,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4922,7 +4648,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4955,7 +4681,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4988,7 +4714,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5021,7 +4747,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5054,7 +4780,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5087,7 +4813,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5120,7 +4846,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5153,7 +4879,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5186,7 +4912,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5218,7 +4944,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5250,7 +4976,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5283,7 +5009,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5316,7 +5042,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5350,7 +5076,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5384,7 +5110,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5415,7 +5141,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5446,7 +5172,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5475,7 +5201,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5504,7 +5230,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5547,7 +5273,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5590,7 +5316,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5633,7 +5359,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5676,7 +5402,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5719,7 +5445,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5762,7 +5488,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5797,7 +5523,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -5832,7 +5558,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5894,7 +5620,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -5956,7 +5682,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6013,7 +5739,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6070,7 +5796,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -6130,7 +5856,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-05-01</description>
+        /// <description>2023-03-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

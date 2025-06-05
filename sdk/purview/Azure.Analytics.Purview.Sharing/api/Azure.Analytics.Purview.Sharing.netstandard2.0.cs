@@ -1,11 +1,5 @@
 namespace Azure.Analytics.Purview.Sharing
 {
-    public partial class AzureAnalyticsPurviewSharingContext : System.ClientModel.Primitives.ModelReaderWriterContext
-    {
-        internal AzureAnalyticsPurviewSharingContext() { }
-        public static Azure.Analytics.Purview.Sharing.AzureAnalyticsPurviewSharingContext Default { get { throw null; } }
-        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
-    }
     public partial class PurviewShareClientOptions : Azure.Core.ClientOptions
     {
         public PurviewShareClientOptions(Azure.Analytics.Purview.Sharing.PurviewShareClientOptions.ServiceVersion version = Azure.Analytics.Purview.Sharing.PurviewShareClientOptions.ServiceVersion.V2023_05_30_Preview) { }

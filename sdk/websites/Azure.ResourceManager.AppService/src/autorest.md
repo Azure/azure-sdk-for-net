@@ -10,12 +10,12 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: AppService
 namespace: Azure.ResourceManager.AppService
-require: https://github.com/Azure/azure-rest-api-specs/blob/c9c3e8b9ec547d82c487f36f1126228f9eef0e79/specification/web/resource-manager/readme.md
-#tag: package-2024-11
+require: https://github.com/Azure/azure-rest-api-specs/blob/0410d404c68289cb1737d06bba92133bb84b515c/specification/web/resource-manager/readme.md
+#tag: package-2024-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../tests/Generated
+  output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -90,7 +90,6 @@ request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}: AppServicePlanHybridConnectionNamespaceRelay
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}: AppServicePlanVirtualNetworkConnection
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/serverfarms/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}: AppServicePlanVirtualNetworkConnectionGateway
-  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/certificates/{name}: AppCertificate
 
 override-operation-name:
   Diagnostics_ExecuteSiteAnalysis: Execute
@@ -142,7 +141,6 @@ override-operation-name:
   WebApps_ListProcessThreads: GetSiteProcessThreads
   WebApps_ListProcessThreadsSlot: GetSiteSlotProcessThreads
   WebApps_ListInstanceProcessThreadsSlot: GetSiteSlotInstanceProcessThreads
-  RegionalCheckNameAvailability: CheckDnlResourceNameAvailability
 
 no-property-type-replacement:
 - ApiManagementConfig
@@ -230,7 +228,6 @@ rename-mapping:
   AppServiceEnvironmentResource.properties.zoneRedundant: IsZoneRedundant
   AppServiceEnvironmentResource: AppServiceEnvironment
   AppserviceGithubToken: AppServiceGithubToken
-  AppServicePlan.properties.asyncScalingEnabled: IsAsyncScalingEnabled
   AppServicePlan.properties.elasticScaleEnabled: IsElasticScaleEnabled
   AppServicePlan.properties.freeOfferExpirationTime: FreeOfferExpireOn
   AppServicePlan.properties.hyperV: IsHyperV
@@ -306,7 +303,6 @@ rename-mapping:
   Certificate: AppCertificate
   CertificateCollection: AppCertificateListResult
   CertificateDetails.thumbprint: ThumbprintString
-  CertificatePatchResource: AppCertificatePatch
   CertificatePatchResource.properties.keyVaultId: -|arm-id
   CertificatePatchResource.properties.thumbprint: ThumbprintString
   CertificatePatchResource.properties.valid: IsValid
@@ -354,7 +350,6 @@ rename-mapping:
   DiagnosticDetectorCollection: DiagnosticDetectorListResult
   Dimension.toBeExportedForShoebox: IsToBeExportedForShoebox
   Dimension: MetricDimension
-  DnlResourceNameAvailability: DnlResourceNameAvailabilityResult
   Domain.properties.autoRenew: IsAutoRenew
   Domain.properties.expirationTime: ExpireOn
   Domain.properties.privacy: IsDomainPrivacyEnabled
@@ -410,7 +405,6 @@ rename-mapping:
   HybridConnection.properties.relayArmUri: relayArmId|arm-id
   HybridConnectionCollection: HybridConnectionListResult
   IdentifierCollection: AppServiceIdentifierListResult
-  InAvailabilityReasonType: AppServiceNameUnavailableReason
   InboundEnvironmentEndpointCollection: InboundEnvironmentEndpointListResult
   InsightStatus: DetectorInsightStatus
   IpAddress: WebAppIPAddress
@@ -446,11 +440,6 @@ rename-mapping:
   Nonce: LoginFlowNonceSettings
   OpenAuthenticationAccessPolicies.policies: OpenAuthenticationPolicyList
   OutboundEnvironmentEndpointCollection: OutboundEnvironmentEndpointListResult
-  OutboundVnetRouting.allTraffic: IsAllTrafficEnabled
-  OutboundVnetRouting.applicationTraffic: IsApplicationTrafficEnabled
-  OutboundVnetRouting.contentShareTraffic: IsContentShareTrafficEnabled
-  OutboundVnetRouting.imagePullTraffic: IsImagePullTrafficEnabled
-  OutboundVnetRouting.backupRestoreTraffic: IsBackupRestoreTrafficEnabled
   ParameterType: WebAppParameterType
   PerfMonCounterCollection: PerfMonCounterListResult
   PerfMonResponse: PerfMonResponseInfo
@@ -492,9 +481,7 @@ rename-mapping:
   ResourceHealthMetadata.properties.signalAvailability: IsSignalAvailable
   ResourceHealthMetadataCollection: ResourceHealthMetadataListResult
   ResourceMetricDefinitionCollection: ResourceMetricDefinitionListResult
-  ResourceNameAvailability: AppServiceNameAvailabilityResult
   ResourceNameAvailability.nameAvailable: IsNameAvailable
-  ResourceNameAvailabilityRequest: AppServiceNameAvailabilityRequest
   ResourceReference.id: -|arm-id
   ResourceReference.type: -|resource-type
   ResourceReference: WorkflowResourceReference
@@ -511,8 +498,6 @@ rename-mapping:
   ScaleRule: ContainerAppScaleRule
   ScaleRuleAuth: ContainerAppScaleRuleAuth
   Site.properties.clientAffinityEnabled: IsClientAffinityEnabled
-  Site.properties.clientAffinityPartitioningEnabled: IsClientAffinityPartitioningEnabled
-  Site.properties.clientAffinityProxyEnabled: IsClientAffinityProxyEnabled
   Site.properties.clientCertEnabled: IsClientCertEnabled
   Site.properties.enabled: IsEnabled
   Site.properties.endToEndEncryptionEnabled: IsEndToEndEncryptionEnabled
@@ -522,10 +507,13 @@ rename-mapping:
   Site.properties.reserved: IsReserved
   Site.properties.scmSiteAlsoStopped: IsScmSiteAlsoStopped
   Site.properties.serverFarmId: AppServicePlanId|arm-id
-  Site.properties.sshEnabled: IsSshEnabled
   Site.properties.storageAccountRequired: IsStorageAccountRequired
   Site.properties.suspendedTill: SuspendOn
   Site.properties.virtualNetworkSubnetId: -|arm-id
+  Site.properties.vnetBackupRestoreEnabled: IsVnetBackupRestoreEnabled
+  Site.properties.vnetContentShareEnabled: IsVnetContentShareEnabled
+  Site.properties.vnetImagePullEnabled: IsVnetImagePullEnabled
+  Site.properties.vnetRouteAllEnabled: IsVnetRouteAllEnabled
   Site: WebSite
   SiteAuthSettings.properties.clientSecretCertificateThumbprint: ClientSecretCertificateThumbprintString
   SiteAuthSettings.properties.enabled: IsEnabled
@@ -564,7 +552,6 @@ rename-mapping:
   SiteLogsConfig.properties.detailedErrorMessages: IsDetailedErrorMessages  # The autogened name by safe flatten which can't be renamed by other configs
   SiteLogsConfig.properties.failedRequestsTracing: IsFailedRequestsTracing  # The autogened name by safe flatten which can't be renamed by other configs
   SitePatchResource.properties.clientAffinityEnabled: IsClientAffinityEnabled
-  SitePatchResource.properties.clientAffinityProxyEnabled: IsClientAffinityProxyEnabled
   SitePatchResource.properties.clientCertEnabled: IsClientCertEnabled
   SitePatchResource.properties.enabled: IsEnabled
   SitePatchResource.properties.hostNamesDisabled: IsHostNameDisabled
@@ -1081,7 +1068,7 @@ directive:
             "200": {
                 "description": "OK.",
                 "schema": {
-                    "$ref": "./CommonDefinitions.json#/definitions/Certificate"
+                    "$ref": "#/definitions/Certificate"
                 }
             },
             "202": {

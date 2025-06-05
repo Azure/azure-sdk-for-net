@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.DataFactory
 {
     public partial class DataFactoryLinkedServiceResource : IJsonModel<DataFactoryLinkedServiceData>
     {
-        private static DataFactoryLinkedServiceData s_dataDeserializationInstance;
-        private static DataFactoryLinkedServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<DataFactoryLinkedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryLinkedServiceData>)Data).Write(writer, options);
 
-        DataFactoryLinkedServiceData IJsonModel<DataFactoryLinkedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryLinkedServiceData>)DataDeserializationInstance).Create(ref reader, options);
+        DataFactoryLinkedServiceData IJsonModel<DataFactoryLinkedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataFactoryLinkedServiceData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<DataFactoryLinkedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataFactoryLinkedServiceData>(Data, options, AzureResourceManagerDataFactoryContext.Default);
+        BinaryData IPersistableModel<DataFactoryLinkedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        DataFactoryLinkedServiceData IPersistableModel<DataFactoryLinkedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryLinkedServiceData>(data, options, AzureResourceManagerDataFactoryContext.Default);
+        DataFactoryLinkedServiceData IPersistableModel<DataFactoryLinkedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataFactoryLinkedServiceData>(data, options);
 
-        string IPersistableModel<DataFactoryLinkedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryLinkedServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<DataFactoryLinkedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataFactoryLinkedServiceData>)Data).GetFormatFromOptions(options);
     }
 }

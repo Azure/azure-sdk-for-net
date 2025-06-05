@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Chaos.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Duration = duration;
-            Type = ExperimentActionType.Delay;
+            ActionType = "delay";
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/>. </summary>
+        /// <param name="actionType"> Enum that discriminates between action models. </param>
         /// <param name="name"> String that represents a Capability URN. </param>
-        /// <param name="type"> Chaos experiment action discriminator type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="duration"> ISO8601 formatted string that represents a duration. </param>
-        internal ChaosDelayAction(string name, ExperimentActionType type, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration) : base(name, type, serializedAdditionalRawData)
+        internal ChaosDelayAction(string actionType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan duration) : base(actionType, name, serializedAdditionalRawData)
         {
             Duration = duration;
-            Type = type;
+            ActionType = actionType ?? "delay";
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosDelayAction"/> for deserialization. </summary>

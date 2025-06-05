@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.KubernetesConfiguration
 
         KubernetesFluxConfigurationResource IOperationSource<KubernetesFluxConfigurationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesFluxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesConfigurationContext.Default);
+            var data = ModelReaderWriter.Read<KubernetesFluxConfigurationData>(response.Content);
             return new KubernetesFluxConfigurationResource(_client, data);
         }
 
         async ValueTask<KubernetesFluxConfigurationResource> IOperationSource<KubernetesFluxConfigurationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<KubernetesFluxConfigurationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerKubernetesConfigurationContext.Default);
+            var data = ModelReaderWriter.Read<KubernetesFluxConfigurationData>(response.Content);
             return await Task.FromResult(new KubernetesFluxConfigurationResource(_client, data)).ConfigureAwait(false);
         }
     }

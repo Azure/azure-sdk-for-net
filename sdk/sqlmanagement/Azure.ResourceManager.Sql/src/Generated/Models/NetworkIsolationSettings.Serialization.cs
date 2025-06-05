@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -115,51 +114,6 @@ namespace Azure.ResourceManager.Sql.Models
             return new NetworkIsolationSettings(storageAccountResourceId, sqlServerResourceId, serializedAdditionalRawData);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageAccountResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  storageAccountResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(StorageAccountResourceId))
-                {
-                    builder.Append("  storageAccountResourceId: ");
-                    builder.AppendLine($"'{StorageAccountResourceId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlServerResourceId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  sqlServerResourceId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SqlServerResourceId))
-                {
-                    builder.Append("  sqlServerResourceId: ");
-                    builder.AppendLine($"'{SqlServerResourceId.ToString()}'");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
         BinaryData IPersistableModel<NetworkIsolationSettings>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<NetworkIsolationSettings>)this).GetFormatFromOptions(options) : options.Format;
@@ -167,9 +121,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(NetworkIsolationSettings)} does not support writing '{options.Format}' format.");
             }

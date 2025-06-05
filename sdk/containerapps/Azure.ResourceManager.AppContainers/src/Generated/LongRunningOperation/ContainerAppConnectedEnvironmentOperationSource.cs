@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.AppContainers
 
         ContainerAppConnectedEnvironmentResource IOperationSource<ContainerAppConnectedEnvironmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            var data = ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(response.Content);
             return new ContainerAppConnectedEnvironmentResource(_client, data);
         }
 
         async ValueTask<ContainerAppConnectedEnvironmentResource> IOperationSource<ContainerAppConnectedEnvironmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppContainersContext.Default);
+            var data = ModelReaderWriter.Read<ContainerAppConnectedEnvironmentData>(response.Content);
             return await Task.FromResult(new ContainerAppConnectedEnvironmentResource(_client, data)).ConfigureAwait(false);
         }
     }

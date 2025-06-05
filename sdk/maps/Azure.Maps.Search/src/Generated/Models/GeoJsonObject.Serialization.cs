@@ -22,6 +22,7 @@ namespace Azure.Maps.Search.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Boundary": return BoundaryInternal.DeserializeBoundaryInternal(element);
                     case "Feature": return GeoJsonFeature.DeserializeGeoJsonFeature(element);
                     case "FeatureCollection": return GeoJsonFeatureCollection.DeserializeGeoJsonFeatureCollection(element);
                     case "GeoJsonGeometry": return GeoJsonGeometry.DeserializeGeoJsonGeometry(element);

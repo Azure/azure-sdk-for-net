@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRouteCircuitPeeringResource : IJsonModel<ExpressRouteCircuitPeeringData>
     {
-        private static ExpressRouteCircuitPeeringData s_dataDeserializationInstance;
-        private static ExpressRouteCircuitPeeringData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ExpressRouteCircuitPeeringData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitPeeringData>)Data).Write(writer, options);
 
-        ExpressRouteCircuitPeeringData IJsonModel<ExpressRouteCircuitPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitPeeringData>)DataDeserializationInstance).Create(ref reader, options);
+        ExpressRouteCircuitPeeringData IJsonModel<ExpressRouteCircuitPeeringData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRouteCircuitPeeringData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRouteCircuitPeeringData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ExpressRouteCircuitPeeringData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ExpressRouteCircuitPeeringData IPersistableModel<ExpressRouteCircuitPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ExpressRouteCircuitPeeringData IPersistableModel<ExpressRouteCircuitPeeringData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRouteCircuitPeeringData>(data, options);
 
-        string IPersistableModel<ExpressRouteCircuitPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitPeeringData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRouteCircuitPeeringData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRouteCircuitPeeringData>)Data).GetFormatFromOptions(options);
     }
 }

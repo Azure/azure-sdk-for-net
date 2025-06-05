@@ -42,10 +42,7 @@ namespace Microsoft.Azure.Storage.DataMovement.Perf
                 _sourceContainer.GetDirectoryReference(string.Empty),
                 _destinationContainer.GetDirectoryReference(string.Empty),
                 CopyMethod.ServiceSideSyncCopy,
-                new CopyDirectoryOptions()
-                {
-                    Recursive = true
-                },
+                options: null,
                 DefaultTransferContext,
                 CancellationToken.None);  // Don't pass cancellation token to let ransfer finish gracefully
             AssertTransferStatus(transfer);

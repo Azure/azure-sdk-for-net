@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Billing
 
         BillingEnrollmentAccountRoleAssignmentResource IOperationSource<BillingEnrollmentAccountRoleAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content);
             return new BillingEnrollmentAccountRoleAssignmentResource(_client, data);
         }
 
         async ValueTask<BillingEnrollmentAccountRoleAssignmentResource> IOperationSource<BillingEnrollmentAccountRoleAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerBillingContext.Default);
+            var data = ModelReaderWriter.Read<BillingRoleAssignmentData>(response.Content);
             return await Task.FromResult(new BillingEnrollmentAccountRoleAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }

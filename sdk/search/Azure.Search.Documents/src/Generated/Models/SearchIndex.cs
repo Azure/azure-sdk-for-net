@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,7 +16,6 @@ namespace Azure.Search.Documents.Indexes.Models
     {
         /// <summary> Initializes a new instance of <see cref="SearchIndex"/>. </summary>
         /// <param name="name"> The name of the index. </param>
-        /// <param name="description"> The description of the index. </param>
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="scoringProfiles"> The scoring profiles for the index. </param>
         /// <param name="defaultScoringProfile"> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </param>
@@ -56,12 +54,10 @@ namespace Azure.Search.Documents.Indexes.Models
         /// </param>
         /// <param name="semanticSearch"> Defines parameters for a search index that influence semantic capabilities. </param>
         /// <param name="vectorSearch"> Contains configuration options related to vector search. </param>
-        /// <param name="permissionFilterOption"> A value indicating whether permission filtering is enabled for the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
-        internal SearchIndex(string name, string description, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, string etag)
+        internal SearchIndex(string name, IList<SearchField> fields, IList<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IList<SearchSuggester> suggesters, IList<LexicalAnalyzer> analyzers, IList<LexicalTokenizer> tokenizers, IList<TokenFilter> tokenFilters, IList<CharFilter> charFilters, IList<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, string etag)
         {
             Name = name;
-            Description = description;
             _fields = fields;
             ScoringProfiles = scoringProfiles;
             DefaultScoringProfile = defaultScoringProfile;
@@ -76,11 +72,8 @@ namespace Azure.Search.Documents.Indexes.Models
             Similarity = similarity;
             SemanticSearch = semanticSearch;
             VectorSearch = vectorSearch;
-            PermissionFilterOption = permissionFilterOption;
             _etag = etag;
         }
-        /// <summary> The description of the index. </summary>
-        public string Description { get; set; }
         /// <summary> The name of the scoring profile to use if none is specified in the query. If this property is not set and no scoring profile is specified in the query, then default scoring (tf-idf) will be used. </summary>
         public string DefaultScoringProfile { get; set; }
         /// <summary> Options to control Cross-Origin Resource Sharing (CORS) for the index. </summary>
@@ -97,7 +90,5 @@ namespace Azure.Search.Documents.Indexes.Models
         public SemanticSearch SemanticSearch { get; set; }
         /// <summary> Contains configuration options related to vector search. </summary>
         public VectorSearch VectorSearch { get; set; }
-        /// <summary> A value indicating whether permission filtering is enabled for the index. </summary>
-        public SearchIndexPermissionFilterOption? PermissionFilterOption { get; set; }
     }
 }

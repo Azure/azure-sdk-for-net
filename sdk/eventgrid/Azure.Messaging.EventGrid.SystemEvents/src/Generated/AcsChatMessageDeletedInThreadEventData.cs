@@ -14,17 +14,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageDeletedInThreadEventData : AcsChatMessageEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageDeletedInThreadEventData"/>. </summary>
-        /// <param name="threadId"> The chat thread id. </param>
-        /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="type"> The type of the message. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/>, <paramref name="senderCommunicationIdentifier"/> or <paramref name="type"/> is null. </exception>
-        internal AcsChatMessageDeletedInThreadEventData(string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string type) : base(threadId, messageId, senderCommunicationIdentifier, type)
+        /// <exception cref="ArgumentNullException"> <paramref name="senderCommunicationIdentifier"/> is null. </exception>
+        internal AcsChatMessageDeletedInThreadEventData(CommunicationIdentifierModel senderCommunicationIdentifier) : base(senderCommunicationIdentifier)
         {
-            Argument.AssertNotNull(threadId, nameof(threadId));
-            Argument.AssertNotNull(messageId, nameof(messageId));
             Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
-            Argument.AssertNotNull(type, nameof(type));
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageDeletedInThreadEventData"/>. </summary>

@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class ExpressRoutePortsLocationResource : IJsonModel<ExpressRoutePortsLocationData>
     {
-        private static ExpressRoutePortsLocationData s_dataDeserializationInstance;
-        private static ExpressRoutePortsLocationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ExpressRoutePortsLocationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortsLocationData>)Data).Write(writer, options);
 
-        ExpressRoutePortsLocationData IJsonModel<ExpressRoutePortsLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortsLocationData>)DataDeserializationInstance).Create(ref reader, options);
+        ExpressRoutePortsLocationData IJsonModel<ExpressRoutePortsLocationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ExpressRoutePortsLocationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ExpressRoutePortsLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ExpressRoutePortsLocationData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<ExpressRoutePortsLocationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ExpressRoutePortsLocationData IPersistableModel<ExpressRoutePortsLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRoutePortsLocationData>(data, options, AzureResourceManagerNetworkContext.Default);
+        ExpressRoutePortsLocationData IPersistableModel<ExpressRoutePortsLocationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ExpressRoutePortsLocationData>(data, options);
 
-        string IPersistableModel<ExpressRoutePortsLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRoutePortsLocationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ExpressRoutePortsLocationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ExpressRoutePortsLocationData>)Data).GetFormatFromOptions(options);
     }
 }

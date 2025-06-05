@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Relay
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelayContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(RelayPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }

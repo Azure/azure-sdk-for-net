@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Projects.KeyVault;
 using NUnit.Framework;
 
 namespace Azure.Projects.Tests;

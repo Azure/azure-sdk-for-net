@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Network
 {
     public partial class SubnetResource : IJsonModel<SubnetData>
     {
-        private static SubnetData s_dataDeserializationInstance;
-        private static SubnetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SubnetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SubnetData>)Data).Write(writer, options);
 
-        SubnetData IJsonModel<SubnetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubnetData>)DataDeserializationInstance).Create(ref reader, options);
+        SubnetData IJsonModel<SubnetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SubnetData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SubnetData>(Data, options, AzureResourceManagerNetworkContext.Default);
+        BinaryData IPersistableModel<SubnetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SubnetData IPersistableModel<SubnetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubnetData>(data, options, AzureResourceManagerNetworkContext.Default);
+        SubnetData IPersistableModel<SubnetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SubnetData>(data, options);
 
-        string IPersistableModel<SubnetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubnetData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SubnetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SubnetData>)Data).GetFormatFromOptions(options);
     }
 }

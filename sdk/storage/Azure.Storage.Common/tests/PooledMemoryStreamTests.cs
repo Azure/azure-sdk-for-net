@@ -44,13 +44,11 @@ namespace Azure.Storage.Tests
         [TestCase(Constants.KB, 256)] // buffer split size smaller than data
         [TestCase(Constants.KB, 2 * Constants.KB)] // buffer split size larger than data.
         [TestCase(Constants.KB + 11, 256)] // content doesn't line up with buffers (extremely unlikely any array pool implementation will add exactly 11 bytes more than requested across 4 buffers)
-        public void ReadStream(int dataSize, int bufferPartitionSize)
+        public async Task ReadStream(int dataSize, int bufferPartitionSize)
         {
             PredictableStream originalStream = new PredictableStream();
-            PooledMemoryStream arrayPoolStream = new(_pool, bufferPartitionSize);
-            originalStream.CopyToExactInternal(arrayPoolStream, dataSize, async: false, cancellationToken: default).EnsureCompleted();
+            PooledMemoryStream arrayPoolStream = await PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, _pool, bufferPartitionSize, true, default);
             originalStream.Position = 0;
-            arrayPoolStream.Position = 0;
 
             byte[] originalStreamData = new byte[dataSize];
             byte[] poolStreamData = new byte[dataSize];
@@ -69,9 +67,8 @@ namespace Azure.Storage.Tests
             const long dataSize = (long)int.MaxValue + Constants.MB;
             const int bufferPartitionSize = 512 * Constants.MB;
             PredictableStream originalStream = new PredictableStream();
-            PooledMemoryStream arrayPoolStream = new(_pool, bufferPartitionSize);
-            originalStream.CopyToExactInternal(arrayPoolStream, dataSize, async: false, cancellationToken: default).EnsureCompleted();
-            arrayPoolStream.Position = 0;
+            PooledMemoryStream arrayPoolStream = PooledMemoryStream.BufferStreamPartitionInternal(originalStream, dataSize, dataSize, _pool, bufferPartitionSize, false, default).EnsureCompleted();
+            originalStream.Position = 0;
 
             // assert it holds the correct amount of data. other tests assert data validity and it's so expensive to do that here.
             // test without blowing up memory

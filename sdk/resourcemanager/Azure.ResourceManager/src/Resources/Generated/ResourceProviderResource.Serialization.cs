@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Resources
 {
     public partial class ResourceProviderResource : IJsonModel<ResourceProviderData>
     {
-        private static ResourceProviderData s_dataDeserializationInstance;
-        private static ResourceProviderData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<ResourceProviderData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ResourceProviderData>)Data).Write(writer, options);
 
-        ResourceProviderData IJsonModel<ResourceProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceProviderData>)DataDeserializationInstance).Create(ref reader, options);
+        ResourceProviderData IJsonModel<ResourceProviderData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ResourceProviderData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ResourceProviderData>(Data, options, AzureResourceManagerContext.Default);
+        BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        ResourceProviderData IPersistableModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceProviderData>(data, options, AzureResourceManagerContext.Default);
+        ResourceProviderData IPersistableModel<ResourceProviderData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ResourceProviderData>(data, options);
 
-        string IPersistableModel<ResourceProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceProviderData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<ResourceProviderData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ResourceProviderData>)Data).GetFormatFromOptions(options);
     }
 }

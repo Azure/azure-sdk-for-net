@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class CassandraViewGetResultResource : IJsonModel<CassandraViewGetResultData>
     {
-        private static CassandraViewGetResultData s_dataDeserializationInstance;
-        private static CassandraViewGetResultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<CassandraViewGetResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CassandraViewGetResultData>)Data).Write(writer, options);
 
-        CassandraViewGetResultData IJsonModel<CassandraViewGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraViewGetResultData>)DataDeserializationInstance).Create(ref reader, options);
+        CassandraViewGetResultData IJsonModel<CassandraViewGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CassandraViewGetResultData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<CassandraViewGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CassandraViewGetResultData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
+        BinaryData IPersistableModel<CassandraViewGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        CassandraViewGetResultData IPersistableModel<CassandraViewGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraViewGetResultData>(data, options, AzureResourceManagerCosmosDBContext.Default);
+        CassandraViewGetResultData IPersistableModel<CassandraViewGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CassandraViewGetResultData>(data, options);
 
-        string IPersistableModel<CassandraViewGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraViewGetResultData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<CassandraViewGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CassandraViewGetResultData>)Data).GetFormatFromOptions(options);
     }
 }

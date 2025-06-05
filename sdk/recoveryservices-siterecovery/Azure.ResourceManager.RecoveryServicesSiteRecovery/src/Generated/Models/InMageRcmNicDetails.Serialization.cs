@@ -100,11 +100,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("testIPAddressType"u8);
                 writer.WriteStringValue(TestIPAddressType.Value.ToString());
             }
-            if (Optional.IsDefined(TargetNicName))
-            {
-                writer.WritePropertyName("targetNicName"u8);
-                writer.WriteStringValue(TargetNicName);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -155,7 +150,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string testSubnetName = default;
             IPAddress testIPAddress = default;
             SiteRecoveryEthernetAddressType? testIPAddressType = default;
-            string targetNicName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -253,11 +247,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     testIPAddressType = new SiteRecoveryEthernetAddressType(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetNicName"u8))
-                {
-                    targetNicName = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -278,7 +267,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 testSubnetName,
                 testIPAddress,
                 testIPAddressType,
-                targetNicName,
                 serializedAdditionalRawData);
         }
 
@@ -289,7 +277,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmNicDetails)} does not support writing '{options.Format}' format.");
             }

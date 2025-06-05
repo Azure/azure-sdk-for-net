@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -17,7 +16,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary>
         /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -47,14 +46,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceDeleteFailureEventData"/>. </summary>
-        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
-        /// <param name="claimsJson"> The properties of the claims. </param>
-        /// <param name="httpRequestJson"> The details of the operation. </param>
-        internal ResourceDeleteFailureEventData(JsonElement authorizationJson, JsonElement claimsJson, JsonElement httpRequestJson)
+        /// <param name="authorization"> The requested authorization for the operation. </param>
+        /// <param name="claims"> The properties of the claims. </param>
+        /// <param name="httpRequest"> The details of the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="authorization"/>, <paramref name="claims"/> or <paramref name="httpRequest"/> is null. </exception>
+        internal ResourceDeleteFailureEventData(ResourceAuthorization authorization, IReadOnlyDictionary<string, string> claims, ResourceHttpRequest httpRequest)
         {
-            AuthorizationJson = authorizationJson;
-            ClaimsJson = claimsJson;
-            HttpRequestJson = httpRequestJson;
+            Argument.AssertNotNull(authorization, nameof(authorization));
+            Argument.AssertNotNull(claims, nameof(claims));
+            Argument.AssertNotNull(httpRequest, nameof(httpRequest));
+
+            Authorization = authorization;
+            Claims = claims;
+            HttpRequest = httpRequest;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceDeleteFailureEventData"/>. </summary>
@@ -65,12 +69,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="resourceUri"> The URI of the resource in the operation. </param>
         /// <param name="operationName"> The operation that was performed. </param>
         /// <param name="status"> The status of the operation. </param>
-        /// <param name="authorizationJson"> The requested authorization for the operation. </param>
-        /// <param name="claimsJson"> The properties of the claims. </param>
+        /// <param name="authorization"> The requested authorization for the operation. </param>
+        /// <param name="claims"> The properties of the claims. </param>
         /// <param name="correlationId"> An operation ID used for troubleshooting. </param>
-        /// <param name="httpRequestJson"> The details of the operation. </param>
+        /// <param name="httpRequest"> The details of the operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceDeleteFailureEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, JsonElement authorizationJson, JsonElement claimsJson, string correlationId, JsonElement httpRequestJson, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceDeleteFailureEventData(string tenantId, string subscriptionId, string resourceGroup, string resourceProvider, string resourceUri, string operationName, string status, ResourceAuthorization authorization, IReadOnlyDictionary<string, string> claims, string correlationId, ResourceHttpRequest httpRequest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TenantId = tenantId;
             SubscriptionId = subscriptionId;
@@ -79,10 +83,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ResourceUri = resourceUri;
             OperationName = operationName;
             Status = status;
-            AuthorizationJson = authorizationJson;
-            ClaimsJson = claimsJson;
+            Authorization = authorization;
+            Claims = claims;
             CorrelationId = correlationId;
-            HttpRequestJson = httpRequestJson;
+            HttpRequest = httpRequest;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -105,7 +109,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public string OperationName { get; }
         /// <summary> The status of the operation. </summary>
         public string Status { get; }
+        /// <summary> The requested authorization for the operation. </summary>
+        public ResourceAuthorization Authorization { get; }
+        /// <summary> The properties of the claims. </summary>
+        public IReadOnlyDictionary<string, string> Claims { get; }
         /// <summary> An operation ID used for troubleshooting. </summary>
         public string CorrelationId { get; }
+        /// <summary> The details of the operation. </summary>
+        public ResourceHttpRequest HttpRequest { get; }
     }
 }

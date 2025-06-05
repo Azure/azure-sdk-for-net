@@ -11,13 +11,13 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric Lakehouse linked service. </summary>
+    /// <summary> Microsoft Fabric LakeHouse linked service. </summary>
     public partial class LakeHouseLinkedService : DataFactoryLinkedServiceProperties
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseLinkedService"/>. </summary>
         public LakeHouseLinkedService()
         {
-            LinkedServiceType = "Lakehouse";
+            LinkedServiceType = "LakeHouse";
         }
 
         /// <summary> Initializes a new instance of <see cref="LakeHouseLinkedService"/>. </summary>
@@ -29,9 +29,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="annotations"> List of tags that can be used for describing the linked service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="workspaceId"> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </param>
-        /// <param name="artifactId"> The ID of Microsoft Fabric Lakehouse artifact. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against Microsoft Fabric Lakehouse. Type: string (or Expression with resultType string). </param>
-        /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against Microsoft Fabric Lakehouse. </param>
+        /// <param name="artifactId"> The ID of Microsoft Fabric LakeHouse artifact. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalId"> The ID of the application used to authenticate against Microsoft Fabric LakeHouse. Type: string (or Expression with resultType string). </param>
+        /// <param name="servicePrincipalKey"> The Key of the application used to authenticate against Microsoft Fabric LakeHouse. </param>
         /// <param name="tenant"> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="servicePrincipalCredentialType"> The service principal credential type to use in Server-To-Server authentication. 'ServicePrincipalKey' for key/secret, 'ServicePrincipalCert' for certificate. Type: string (or Expression with resultType string). </param>
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             EncryptedCredential = encryptedCredential;
             ServicePrincipalCredentialType = servicePrincipalCredentialType;
             ServicePrincipalCredential = servicePrincipalCredential;
-            LinkedServiceType = linkedServiceType ?? "Lakehouse";
+            LinkedServiceType = linkedServiceType ?? "LakeHouse";
         }
 
         /// <summary> The ID of Microsoft Fabric workspace. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> WorkspaceId { get; set; }
-        /// <summary> The ID of Microsoft Fabric Lakehouse artifact. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The ID of Microsoft Fabric LakeHouse artifact. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ArtifactId { get; set; }
-        /// <summary> The ID of the application used to authenticate against Microsoft Fabric Lakehouse. Type: string (or Expression with resultType string). </summary>
+        /// <summary> The ID of the application used to authenticate against Microsoft Fabric LakeHouse. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
-        /// <summary> The Key of the application used to authenticate against Microsoft Fabric Lakehouse. </summary>
+        /// <summary> The Key of the application used to authenticate against Microsoft Fabric LakeHouse. </summary>
         public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }

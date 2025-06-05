@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseWorkloadGroupResource : IJsonModel<SynapseWorkloadGroupData>
     {
-        private static SynapseWorkloadGroupData s_dataDeserializationInstance;
-        private static SynapseWorkloadGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseWorkloadGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkloadGroupData>)Data).Write(writer, options);
 
-        SynapseWorkloadGroupData IJsonModel<SynapseWorkloadGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkloadGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseWorkloadGroupData IJsonModel<SynapseWorkloadGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseWorkloadGroupData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseWorkloadGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseWorkloadGroupData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseWorkloadGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseWorkloadGroupData IPersistableModel<SynapseWorkloadGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkloadGroupData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseWorkloadGroupData IPersistableModel<SynapseWorkloadGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseWorkloadGroupData>(data, options);
 
-        string IPersistableModel<SynapseWorkloadGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkloadGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseWorkloadGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseWorkloadGroupData>)Data).GetFormatFromOptions(options);
     }
 }

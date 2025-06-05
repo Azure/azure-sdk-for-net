@@ -110,16 +110,6 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("parametersLink"u8);
                 writer.WriteObjectValue(ParametersLink, options);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Extensions))
-            {
-                writer.WritePropertyName("extensions"u8);
-                writer.WriteStartArray();
-                foreach (var item in Extensions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -140,23 +130,23 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("templateHash"u8);
                 writer.WriteStringValue(TemplateHash);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResourceDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(OutputResources))
             {
                 writer.WritePropertyName("outputResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in OutputResourceDetails)
+                foreach (var item in OutputResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResourceDetails))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidatedResources))
             {
                 writer.WritePropertyName("validatedResources"u8);
                 writer.WriteStartArray();
-                foreach (var item in ValidatedResourceDetails)
+                foreach (var item in ValidatedResources)
                 {
-                    writer.WriteObjectValue(item, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -227,13 +217,12 @@ namespace Azure.ResourceManager.Resources.Models
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
             ArmDeploymentParametersLink parametersLink = default;
-            IReadOnlyList<ArmDeploymentExtensionDefinition> extensions = default;
             ArmDeploymentMode? mode = default;
             DebugSetting debugSetting = default;
             ErrorDeploymentExtended onErrorDeployment = default;
             string templateHash = default;
-            IReadOnlyList<ArmResourceReference> outputResources = default;
-            IReadOnlyList<ArmResourceReference> validatedResources = default;
+            IReadOnlyList<SubResource> outputResources = default;
+            IReadOnlyList<SubResource> validatedResources = default;
             ResponseError error = default;
             IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             ValidationLevel? validationLevel = default;
@@ -337,20 +326,6 @@ namespace Azure.ResourceManager.Resources.Models
                     parametersLink = ArmDeploymentParametersLink.DeserializeArmDeploymentParametersLink(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("extensions"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ArmDeploymentExtensionDefinition> array = new List<ArmDeploymentExtensionDefinition>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(item, options));
-                    }
-                    extensions = array;
-                    continue;
-                }
                 if (property.NameEquals("mode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -389,10 +364,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ArmResourceReference> array = new List<ArmResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmResourceReference.DeserializeArmResourceReference(item, options));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                     }
                     outputResources = array;
                     continue;
@@ -403,10 +378,10 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    List<ArmResourceReference> array = new List<ArmResourceReference>();
+                    List<SubResource> array = new List<SubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ArmResourceReference.DeserializeArmResourceReference(item, options));
+                        array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
                     }
                     validatedResources = array;
                     continue;
@@ -460,13 +435,12 @@ namespace Azure.ResourceManager.Resources.Models
                 templateLink,
                 parameters,
                 parametersLink,
-                extensions ?? new ChangeTrackingList<ArmDeploymentExtensionDefinition>(),
                 mode,
                 debugSetting,
                 onErrorDeployment,
                 templateHash,
-                outputResources ?? new ChangeTrackingList<ArmResourceReference>(),
-                validatedResources ?? new ChangeTrackingList<ArmResourceReference>(),
+                outputResources ?? new ChangeTrackingList<SubResource>(),
+                validatedResources ?? new ChangeTrackingList<SubResource>(),
                 error,
                 diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(),
                 validationLevel,
@@ -660,29 +634,6 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extensions), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  extensions: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(Extensions))
-                {
-                    if (Extensions.Any())
-                    {
-                        builder.Append("  extensions: ");
-                        builder.AppendLine("[");
-                        foreach (var item in Extensions)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  extensions: ");
-                        }
-                        builder.AppendLine("  ]");
-                    }
-                }
-            }
-
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -754,7 +705,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputResourceDetails), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputResources), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  outputResources: ");
@@ -762,13 +713,13 @@ namespace Azure.ResourceManager.Resources.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(OutputResourceDetails))
+                if (Optional.IsCollectionDefined(OutputResources))
                 {
-                    if (OutputResourceDetails.Any())
+                    if (OutputResources.Any())
                     {
                         builder.Append("  outputResources: ");
                         builder.AppendLine("[");
-                        foreach (var item in OutputResourceDetails)
+                        foreach (var item in OutputResources)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  outputResources: ");
                         }
@@ -777,7 +728,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResourceDetails), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResources), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  validatedResources: ");
@@ -785,13 +736,13 @@ namespace Azure.ResourceManager.Resources.Models
             }
             else
             {
-                if (Optional.IsCollectionDefined(ValidatedResourceDetails))
+                if (Optional.IsCollectionDefined(ValidatedResources))
                 {
-                    if (ValidatedResourceDetails.Any())
+                    if (ValidatedResources.Any())
                     {
                         builder.Append("  validatedResources: ");
                         builder.AppendLine("[");
-                        foreach (var item in ValidatedResourceDetails)
+                        foreach (var item in ValidatedResources)
                         {
                             BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  validatedResources: ");
                         }
@@ -864,7 +815,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 case "bicep":
                     return SerializeBicep(options);
                 default:

@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute
 
         GalleryInVmAccessControlProfileVersionResource IOperationSource<GalleryInVmAccessControlProfileVersionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryInVmAccessControlProfileVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<GalleryInVmAccessControlProfileVersionData>(response.Content);
             return new GalleryInVmAccessControlProfileVersionResource(_client, data);
         }
 
         async ValueTask<GalleryInVmAccessControlProfileVersionResource> IOperationSource<GalleryInVmAccessControlProfileVersionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<GalleryInVmAccessControlProfileVersionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            var data = ModelReaderWriter.Read<GalleryInVmAccessControlProfileVersionData>(response.Content);
             return await Task.FromResult(new GalleryInVmAccessControlProfileVersionResource(_client, data)).ConfigureAwait(false);
         }
     }

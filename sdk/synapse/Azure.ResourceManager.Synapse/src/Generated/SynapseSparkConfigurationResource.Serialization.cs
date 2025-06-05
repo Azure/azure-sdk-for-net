@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseSparkConfigurationResource : IJsonModel<SynapseSparkConfigurationData>
     {
-        private static SynapseSparkConfigurationData s_dataDeserializationInstance;
-        private static SynapseSparkConfigurationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SynapseSparkConfigurationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSparkConfigurationData>)Data).Write(writer, options);
 
-        SynapseSparkConfigurationData IJsonModel<SynapseSparkConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSparkConfigurationData>)DataDeserializationInstance).Create(ref reader, options);
+        SynapseSparkConfigurationData IJsonModel<SynapseSparkConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseSparkConfigurationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseSparkConfigurationData>(Data, options, AzureResourceManagerSynapseContext.Default);
+        BinaryData IPersistableModel<SynapseSparkConfigurationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SynapseSparkConfigurationData IPersistableModel<SynapseSparkConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSparkConfigurationData>(data, options, AzureResourceManagerSynapseContext.Default);
+        SynapseSparkConfigurationData IPersistableModel<SynapseSparkConfigurationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseSparkConfigurationData>(data, options);
 
-        string IPersistableModel<SynapseSparkConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSparkConfigurationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseSparkConfigurationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseSparkConfigurationData>)Data).GetFormatFromOptions(options);
     }
 }

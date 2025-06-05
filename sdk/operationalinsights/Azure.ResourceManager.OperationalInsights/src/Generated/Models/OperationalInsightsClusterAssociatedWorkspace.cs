@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsClusterAssociatedWorkspace"/>. </summary>
-        /// <param name="workspaceId"> Associated workspace immutable id. </param>
-        /// <param name="workspaceName"> Associated workspace resource name. </param>
-        /// <param name="resourceId"> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </param>
+        /// <param name="workspaceId"> The id of the assigned workspace. </param>
+        /// <param name="workspaceName"> The name id the assigned workspace. </param>
+        /// <param name="resourceId"> The ResourceId id the assigned workspace. </param>
         /// <param name="associatedOn"> The time of workspace association. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal OperationalInsightsClusterAssociatedWorkspace(Guid? workspaceId, string workspaceName, ResourceIdentifier resourceId, DateTimeOffset? associatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -66,13 +66,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Associated workspace immutable id. </summary>
+        /// <summary> The id of the assigned workspace. </summary>
         [WirePath("workspaceId")]
         public Guid? WorkspaceId { get; }
-        /// <summary> Associated workspace resource name. </summary>
+        /// <summary> The name id the assigned workspace. </summary>
         [WirePath("workspaceName")]
         public string WorkspaceName { get; }
-        /// <summary> Associated workspace arm resource id, in the form of: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}. </summary>
+        /// <summary> The ResourceId id the assigned workspace. </summary>
         [WirePath("resourceId")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The time of workspace association. </summary>

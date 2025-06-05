@@ -19,14 +19,12 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IndexingMode? mode = default;
-            string allDocsInitialTrackingState = default;
-            string allDocsFinalTrackingState = default;
-            string resetDocsInitialTrackingState = default;
-            string resetDocsFinalTrackingState = default;
+            string allDocsInitialChangeTrackingState = default;
+            string allDocsFinalChangeTrackingState = default;
+            string resetDocsInitialChangeTrackingState = default;
+            string resetDocsFinalChangeTrackingState = default;
             IReadOnlyList<string> resetDocumentKeys = default;
             IReadOnlyList<string> resetDatasourceDocumentIds = default;
-            string resyncInitialTrackingState = default;
-            string resyncFinalTrackingState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -38,24 +36,24 @@ namespace Azure.Search.Documents.Indexes.Models
                     mode = new IndexingMode(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("allDocsInitialTrackingState"u8))
+                if (property.NameEquals("allDocsInitialChangeTrackingState"u8))
                 {
-                    allDocsInitialTrackingState = property.Value.GetString();
+                    allDocsInitialChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("allDocsFinalTrackingState"u8))
+                if (property.NameEquals("allDocsFinalChangeTrackingState"u8))
                 {
-                    allDocsFinalTrackingState = property.Value.GetString();
+                    allDocsFinalChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resetDocsInitialTrackingState"u8))
+                if (property.NameEquals("resetDocsInitialChangeTrackingState"u8))
                 {
-                    resetDocsInitialTrackingState = property.Value.GetString();
+                    resetDocsInitialChangeTrackingState = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("resetDocsFinalTrackingState"u8))
+                if (property.NameEquals("resetDocsFinalChangeTrackingState"u8))
                 {
-                    resetDocsFinalTrackingState = property.Value.GetString();
+                    resetDocsFinalChangeTrackingState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("resetDocumentKeys"u8))
@@ -86,27 +84,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     resetDatasourceDocumentIds = array;
                     continue;
                 }
-                if (property.NameEquals("resyncInitialTrackingState"u8))
-                {
-                    resyncInitialTrackingState = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resyncFinalTrackingState"u8))
-                {
-                    resyncFinalTrackingState = property.Value.GetString();
-                    continue;
-                }
             }
             return new IndexerState(
                 mode,
-                allDocsInitialTrackingState,
-                allDocsFinalTrackingState,
-                resetDocsInitialTrackingState,
-                resetDocsFinalTrackingState,
+                allDocsInitialChangeTrackingState,
+                allDocsFinalChangeTrackingState,
+                resetDocsInitialChangeTrackingState,
+                resetDocsFinalChangeTrackingState,
                 resetDocumentKeys ?? new ChangeTrackingList<string>(),
-                resetDatasourceDocumentIds ?? new ChangeTrackingList<string>(),
-                resyncInitialTrackingState,
-                resyncFinalTrackingState);
+                resetDatasourceDocumentIds ?? new ChangeTrackingList<string>());
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

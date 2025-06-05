@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Avs
 
         PlacementPolicyResource IOperationSource<PlacementPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content);
             return new PlacementPolicyResource(_client, data);
         }
 
         async ValueTask<PlacementPolicyResource> IOperationSource<PlacementPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            var data = ModelReaderWriter.Read<PlacementPolicyData>(response.Content);
             return await Task.FromResult(new PlacementPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }

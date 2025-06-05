@@ -13,7 +13,10 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Per-slice settings. </summary>
+    /// <summary>
+    /// Per-slice settings
+    /// Serialized Name: SliceConfiguration
+    /// </summary>
     public partial class MobileNetworkSliceConfiguration
     {
         /// <summary>
@@ -49,9 +52,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceConfiguration"/>. </summary>
-        /// <param name="slice"> A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy. </param>
-        /// <param name="defaultDataNetwork"> The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy. </param>
-        /// <param name="dataNetworkConfigurations"> The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
+        /// <param name="slice">
+        /// A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy.
+        /// Serialized Name: SliceConfiguration.slice
+        /// </param>
+        /// <param name="defaultDataNetwork">
+        /// The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy.
+        /// Serialized Name: SliceConfiguration.defaultDataNetwork
+        /// </param>
+        /// <param name="dataNetworkConfigurations">
+        /// The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
+        /// Serialized Name: SliceConfiguration.dataNetworkConfigurations
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="slice"/>, <paramref name="defaultDataNetwork"/> or <paramref name="dataNetworkConfigurations"/> is null. </exception>
         public MobileNetworkSliceConfiguration(WritableSubResource slice, WritableSubResource defaultDataNetwork, IEnumerable<DataNetworkConfiguration> dataNetworkConfigurations)
         {
@@ -65,9 +77,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkSliceConfiguration"/>. </summary>
-        /// <param name="slice"> A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy. </param>
-        /// <param name="defaultDataNetwork"> The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy. </param>
-        /// <param name="dataNetworkConfigurations"> The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </param>
+        /// <param name="slice">
+        /// A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy.
+        /// Serialized Name: SliceConfiguration.slice
+        /// </param>
+        /// <param name="defaultDataNetwork">
+        /// The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy.
+        /// Serialized Name: SliceConfiguration.defaultDataNetwork
+        /// </param>
+        /// <param name="dataNetworkConfigurations">
+        /// The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
+        /// Serialized Name: SliceConfiguration.dataNetworkConfigurations
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkSliceConfiguration(WritableSubResource slice, WritableSubResource defaultDataNetwork, IList<DataNetworkConfiguration> dataNetworkConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -82,7 +103,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy. </summary>
+        /// <summary>
+        /// A reference to the slice that these settings apply to. The slice must be in the same location as the SIM policy.
+        /// Serialized Name: SliceConfiguration.slice
+        /// </summary>
         internal WritableSubResource Slice { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("slice.id")]
@@ -97,7 +121,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy. </summary>
+        /// <summary>
+        /// The default data network to use if the UE does not explicitly specify it. Configuration for this object must exist in the `dataNetworkConfigurations` map. The data network must be in the same location as the SIM policy.
+        /// Serialized Name: SliceConfiguration.defaultDataNetwork
+        /// </summary>
         internal WritableSubResource DefaultDataNetwork { get; set; }
         /// <summary> Gets or sets Id. </summary>
         [WirePath("defaultDataNetwork.id")]
@@ -112,7 +139,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             }
         }
 
-        /// <summary> The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item. </summary>
+        /// <summary>
+        /// The allowed data networks and the settings to use for them. The list must not contain duplicate items and must contain at least one item.
+        /// Serialized Name: SliceConfiguration.dataNetworkConfigurations
+        /// </summary>
         [WirePath("dataNetworkConfigurations")]
         public IList<DataNetworkConfiguration> DataNetworkConfigurations { get; }
     }

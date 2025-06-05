@@ -18,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 return null;
             }
-            OperationStatus? status = default;
+            string status = default;
             string statusDetails = default;
             KeyVaultServiceError error = default;
             DateTimeOffset? startTime = default;
@@ -29,11 +29,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             {
                 if (property.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    status = new OperationStatus(property.Value.GetString());
+                    status = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("statusDetails"u8))

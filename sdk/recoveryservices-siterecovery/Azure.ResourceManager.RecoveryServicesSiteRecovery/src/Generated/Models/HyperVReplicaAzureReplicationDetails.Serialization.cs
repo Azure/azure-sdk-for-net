@@ -180,11 +180,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType);
             }
-            if (Optional.IsDefined(LinuxLicenseType))
-            {
-                writer.WritePropertyName("linuxLicenseType"u8);
-                writer.WriteStringValue(LinuxLicenseType.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(LastRecoveryPointReceived))
             {
                 writer.WritePropertyName("lastRecoveryPointReceived"u8);
@@ -254,11 +249,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(TargetVmSecurityProfile))
-            {
-                writer.WritePropertyName("targetVmSecurityProfile"u8);
-                writer.WriteObjectValue(TargetVmSecurityProfile, options);
-            }
         }
 
         HyperVReplicaAzureReplicationDetails IJsonModel<HyperVReplicaAzureReplicationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -308,7 +298,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string useManagedDisks = default;
             string licenseType = default;
             string sqlServerLicenseType = default;
-            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
             DateTimeOffset? lastRecoveryPointReceived = default;
             IReadOnlyDictionary<string, string> targetVmTags = default;
             IReadOnlyDictionary<string, string> seedManagedDiskTags = default;
@@ -316,7 +305,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyDictionary<string, string> targetNicTags = default;
             IReadOnlyList<HyperVReplicaAzureManagedDiskDetails> protectedManagedDisks = default;
             IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
-            RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -523,15 +511,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     sqlServerLicenseType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("linuxLicenseType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
-                    continue;
-                }
                 if (property.NameEquals("lastRecoveryPointReceived"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -625,15 +604,6 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     allAvailableOSUpgradeConfigurations = array;
                     continue;
                 }
-                if (property.NameEquals("targetVmSecurityProfile"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
-                    continue;
-                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -675,15 +645,13 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 useManagedDisks,
                 licenseType,
                 sqlServerLicenseType,
-                linuxLicenseType,
                 lastRecoveryPointReceived,
                 targetVmTags ?? new ChangeTrackingDictionary<string, string>(),
                 seedManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetManagedDiskTags ?? new ChangeTrackingDictionary<string, string>(),
                 targetNicTags ?? new ChangeTrackingDictionary<string, string>(),
                 protectedManagedDisks ?? new ChangeTrackingList<HyperVReplicaAzureManagedDiskDetails>(),
-                allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>(),
-                targetVmSecurityProfile);
+                allAvailableOSUpgradeConfigurations ?? new ChangeTrackingList<OSUpgradeSupportedVersions>());
         }
 
         BinaryData IPersistableModel<HyperVReplicaAzureReplicationDetails>.Write(ModelReaderWriterOptions options)
@@ -693,7 +661,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{options.Format}' format.");
             }

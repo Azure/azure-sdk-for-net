@@ -38,33 +38,6 @@ namespace Azure.ResourceManager.NetApp.Models
             return new NetAppFilePathAvailabilityContent(name, subnetId, availabilityZone, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppUsageResult"/>. </summary>
-        /// <param name="id"> The id of the usage. </param>
-        /// <param name="name"> The name of the usage. </param>
-        /// <param name="currentValue"> The current usage value for the subscription. </param>
-        /// <param name="limit"> The limit of the usage. </param>
-        /// <param name="unit"> The unit of the usage. </param>
-        /// <returns> A new <see cref="Models.NetAppUsageResult"/> instance for mocking. </returns>
-        public static NetAppUsageResult NetAppUsageResult(string id = null, NetAppUsageName name = null, int? currentValue = null, int? limit = null, string unit = null)
-        {
-            return new NetAppUsageResult(
-                id,
-                name,
-                currentValue,
-                limit,
-                unit,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppUsageName"/>. </summary>
-        /// <param name="value"> The name of the usage. </param>
-        /// <param name="localizedValue"> The localized name of the usage. </param>
-        /// <returns> A new <see cref="Models.NetAppUsageName"/> instance for mocking. </returns>
-        public static NetAppUsageName NetAppUsageName(string value = null, string localizedValue = null)
-        {
-            return new NetAppUsageName(value, localizedValue, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.NetAppSubscriptionQuotaItem"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -164,10 +137,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <returns> A new <see cref="NetApp.NetAppAccountData"/> instance for mocking. </returns>
-        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null, string nfsV4IdDomain = null, MultiAdStatus? multiAdStatus = null)
+        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ETag? etag = null, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null)
         {
             tags ??= new Dictionary<string, string>();
             activeDirectories ??= new List<NetAppAccountActiveDirectory>();
@@ -185,8 +156,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 activeDirectories?.ToList(),
                 encryption,
                 disableShowmount,
-                nfsV4IdDomain,
-                multiAdStatus,
                 serializedAdditionalRawData: null);
         }
 
@@ -269,11 +238,10 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <summary> Initializes a new instance of <see cref="Models.NetAppEncryptionIdentity"/>. </summary>
         /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
         /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
-        /// <param name="federatedClientId"> ClientId of the multi-tenant AAD Application. Used to access cross-tenant keyvaults. </param>
         /// <returns> A new <see cref="Models.NetAppEncryptionIdentity"/> instance for mocking. </returns>
-        public static NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId = null, string userAssignedIdentity = null, string federatedClientId = null)
+        public static NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId = null, string userAssignedIdentity = null)
         {
-            return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, federatedClientId, serializedAdditionalRawData: null);
+            return new NetAppEncryptionIdentity(principalId, userAssignedIdentity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppAccountPatch"/>. </summary>
@@ -288,10 +256,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="activeDirectories"> Active Directories. </param>
         /// <param name="encryption"> Encryption settings. </param>
         /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <param name="nfsV4IdDomain"> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </param>
-        /// <param name="multiAdStatus"> MultiAD Status for the account. </param>
         /// <returns> A new <see cref="Models.NetAppAccountPatch"/> instance for mocking. </returns>
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null, string nfsV4IdDomain = null, MultiAdStatus? multiAdStatus = null)
+        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<NetAppAccountActiveDirectory> activeDirectories = null, NetAppAccountEncryption encryption = null, bool? disableShowmount = null)
         {
             tags ??= new Dictionary<string, string>();
             activeDirectories ??= new List<NetAppAccountActiveDirectory>();
@@ -308,8 +274,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 activeDirectories?.ToList(),
                 encryption,
                 disableShowmount,
-                nfsV4IdDomain,
-                multiAdStatus,
                 serializedAdditionalRawData: null);
         }
 
@@ -576,12 +540,9 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
         /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
         /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        /// <param name="destinationReplications"> A list of destination replications. </param>
         /// <returns> A new <see cref="Models.NetAppReplicationObject"/> instance for mocking. </returns>
-        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, RemotePath remotePath = null, string remoteVolumeRegion = null, IEnumerable<NetAppDestinationReplication> destinationReplications = null)
+        public static NetAppReplicationObject NetAppReplicationObject(string replicationId = null, NetAppEndpointType? endpointType = null, NetAppReplicationSchedule? replicationSchedule = null, ResourceIdentifier remoteVolumeResourceId = null, RemotePath remotePath = null, string remoteVolumeRegion = null)
         {
-            destinationReplications ??= new List<NetAppDestinationReplication>();
-
             return new NetAppReplicationObject(
                 replicationId,
                 endpointType,
@@ -589,19 +550,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 remoteVolumeResourceId,
                 remotePath,
                 remoteVolumeRegion,
-                destinationReplications?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetAppDestinationReplication"/>. </summary>
-        /// <param name="resourceId"> The resource ID of the remote volume. </param>
-        /// <param name="replicationType"> Indicates whether the replication is cross zone or cross region. </param>
-        /// <param name="region"> The remote region for the destination volume. </param>
-        /// <param name="zone"> The remote zone for the destination volume. </param>
-        /// <returns> A new <see cref="Models.NetAppDestinationReplication"/> instance for mocking. </returns>
-        public static NetAppDestinationReplication NetAppDestinationReplication(ResourceIdentifier resourceId = null, NetAppReplicationType? replicationType = null, string region = null, string zone = null)
-        {
-            return new NetAppDestinationReplication(resourceId, replicationType, region, zone, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NetAppVolumeRelocationProperties"/>. </summary>
@@ -1297,8 +1246,6 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
         /// <param name="createdOn"> The creation date of the backup. </param>
-        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
-        /// <param name="completionOn"> The completion date of the backup. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="size"> Size of backup in bytes. </param>
         /// <param name="label"> Label for backup. </param>
@@ -1308,9 +1255,8 @@ namespace Azure.ResourceManager.NetApp.Models
         /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
         /// <param name="snapshotName"> The name of the snapshot. </param>
         /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
-        /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <returns> A new <see cref="NetApp.NetAppBackupData"/> instance for mocking. </returns>
-        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupId = null, DateTimeOffset? createdOn = null, DateTimeOffset? snapshotCreationOn = null, DateTimeOffset? completionOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, ResourceIdentifier backupPolicyArmResourceId = null, bool? isLargeVolume = null)
+        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string backupId = null, DateTimeOffset? createdOn = null, string provisioningState = null, long? size = null, string label = null, NetAppBackupType? backupType = null, string failureReason = null, ResourceIdentifier volumeResourceId = null, bool? useExistingSnapshot = null, string snapshotName = null, ResourceIdentifier backupPolicyArmResourceId = null)
         {
             return new NetAppBackupData(
                 id,
@@ -1319,8 +1265,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 systemData,
                 backupId,
                 createdOn,
-                snapshotCreationOn,
-                completionOn,
                 provisioningState,
                 size,
                 label,
@@ -1330,7 +1274,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 useExistingSnapshot,
                 snapshotName,
                 backupPolicyArmResourceId,
-                isLargeVolume,
                 serializedAdditionalRawData: null);
         }
 
@@ -1368,92 +1311,6 @@ namespace Azure.ResourceManager.NetApp.Models
             fileList ??= new List<string>();
 
             return new NetAppVolumeBackupBackupRestoreFilesContent(fileList?.ToList(), restoreFilePath, destinationVolumeId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.NetAppAccountData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.NetAppAccountData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppAccountData NetAppAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ETag? etag, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount)
-        {
-            return NetAppAccountData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, etag: etag, identity: identity, provisioningState: provisioningState, activeDirectories: activeDirectories, encryption: encryption, disableShowmount: disableShowmount, nfsV4IdDomain: default, multiAdStatus: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity" />. </summary>
-        /// <param name="principalId"> The principal ID (object ID) of the identity used to authenticate with key vault. Read-only. </param>
-        /// <param name="userAssignedIdentity"> The ARM resource identifier of the user assigned identity used to authenticate with key vault. Applicable if identity.type has 'UserAssigned'. It should match key of identity.userAssignedIdentities. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppEncryptionIdentity" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppEncryptionIdentity NetAppEncryptionIdentity(string principalId, string userAssignedIdentity)
-        {
-            return NetAppEncryptionIdentity(principalId: principalId, userAssignedIdentity: userAssignedIdentity, federatedClientId: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppAccountPatch" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity used for the resource. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="activeDirectories"> Active Directories. </param>
-        /// <param name="encryption"> Encryption settings. </param>
-        /// <param name="disableShowmount"> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppAccountPatch" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppAccountPatch NetAppAccountPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IEnumerable<NetAppAccountActiveDirectory> activeDirectories, NetAppAccountEncryption encryption, bool? disableShowmount)
-        {
-            return NetAppAccountPatch(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, activeDirectories: activeDirectories, encryption: encryption, disableShowmount: disableShowmount, nfsV4IdDomain: default, multiAdStatus: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppReplicationObject" />. </summary>
-        /// <param name="replicationId"> Id. </param>
-        /// <param name="endpointType"> Indicates whether the local volume is the source or destination for the Volume Replication. </param>
-        /// <param name="replicationSchedule"> Schedule. </param>
-        /// <param name="remoteVolumeResourceId"> The resource ID of the remote volume. Required for cross region and cross zone replication. </param>
-        /// <param name="remotePath"> The full path to a volume that is to be migrated into ANF. Required for Migration volumes. </param>
-        /// <param name="remoteVolumeRegion"> The remote region for the other end of the Volume Replication. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppReplicationObject" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppReplicationObject NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, RemotePath remotePath, string remoteVolumeRegion)
-        {
-            return NetAppReplicationObject(replicationId: replicationId, endpointType: endpointType, replicationSchedule: replicationSchedule, remoteVolumeResourceId: remoteVolumeResourceId, remotePath: remotePath, remoteVolumeRegion: remoteVolumeRegion, destinationReplications: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.NetAppBackupData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
-        /// <param name="createdOn"> The creation date of the backup. </param>
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="size"> Size of backup in bytes. </param>
-        /// <param name="label"> Label for backup. </param>
-        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
-        /// <param name="failureReason"> Failure reason. </param>
-        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
-        /// <param name="useExistingSnapshot"> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </param>
-        /// <param name="snapshotName"> The name of the snapshot. </param>
-        /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.NetApp.NetAppBackupData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetAppBackupData NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId)
-        {
-            return NetAppBackupData(id: id, name: name, resourceType: resourceType, systemData: systemData, backupId: backupId, createdOn: createdOn, snapshotCreationOn: default, completionOn: default, provisioningState: provisioningState, size: size, label: label, backupType: backupType, failureReason: failureReason, volumeResourceId: volumeResourceId, useExistingSnapshot: useExistingSnapshot, snapshotName: snapshotName, backupPolicyArmResourceId: backupPolicyArmResourceId, isLargeVolume: default);
         }
 
         /// <summary> Initializes a new instance of NetAppVolumeBackupStatus. </summary>
@@ -1947,7 +1804,7 @@ namespace Azure.ResourceManager.NetApp.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetAppReplicationObject NetAppReplicationObject(string replicationId, NetAppEndpointType? endpointType, NetAppReplicationSchedule? replicationSchedule, ResourceIdentifier remoteVolumeResourceId, string remoteVolumeRegion)
         {
-            return NetAppReplicationObject(replicationId: replicationId, endpointType: endpointType, replicationSchedule: replicationSchedule, remoteVolumeResourceId: remoteVolumeResourceId, remotePath: default, remoteVolumeRegion: remoteVolumeRegion, destinationReplications: default);
+            return NetAppReplicationObject(replicationId: replicationId, endpointType: endpointType, replicationSchedule: replicationSchedule, remoteVolumeResourceId: remoteVolumeResourceId, remotePath: default, remoteVolumeRegion: remoteVolumeRegion);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetApp.Models.NetAppVolumeReplication" />. </summary>

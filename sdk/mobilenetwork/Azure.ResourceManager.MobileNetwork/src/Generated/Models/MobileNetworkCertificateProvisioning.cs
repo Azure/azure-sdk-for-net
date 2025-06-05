@@ -10,7 +10,10 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> Certificate provisioning state. </summary>
+    /// <summary>
+    /// Certificate provisioning state
+    /// Serialized Name: CertificateProvisioning
+    /// </summary>
     public partial class MobileNetworkCertificateProvisioning
     {
         /// <summary>
@@ -51,8 +54,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MobileNetworkCertificateProvisioning"/>. </summary>
-        /// <param name="state"> The certificate's provisioning state. </param>
-        /// <param name="reason"> Reason for certificate provisioning failure. </param>
+        /// <param name="state">
+        /// The certificate's provisioning state
+        /// Serialized Name: CertificateProvisioning.state
+        /// </param>
+        /// <param name="reason">
+        /// Reason for certificate provisioning failure.
+        /// Serialized Name: CertificateProvisioning.reason
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileNetworkCertificateProvisioning(CertificateProvisioningState? state, string reason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -61,10 +70,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The certificate's provisioning state. </summary>
+        /// <summary>
+        /// The certificate's provisioning state
+        /// Serialized Name: CertificateProvisioning.state
+        /// </summary>
         [WirePath("state")]
         public CertificateProvisioningState? State { get; }
-        /// <summary> Reason for certificate provisioning failure. </summary>
+        /// <summary>
+        /// Reason for certificate provisioning failure.
+        /// Serialized Name: CertificateProvisioning.reason
+        /// </summary>
         [WirePath("reason")]
         public string Reason { get; }
     }

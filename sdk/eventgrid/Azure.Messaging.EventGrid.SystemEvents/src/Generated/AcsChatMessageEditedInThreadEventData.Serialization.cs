@@ -9,12 +9,10 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsChatMessageEditedInThreadEventDataConverter))]
     public partial class AcsChatMessageEditedInThreadEventData : IUtf8JsonSerializable, IJsonModel<AcsChatMessageEditedInThreadEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatMessageEditedInThreadEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -37,19 +35,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("messageBody"u8);
-            writer.WriteStringValue(MessageBody);
-            if (Optional.IsCollectionDefined(Metadata))
+            if (Optional.IsDefined(MessageBody))
             {
-                writer.WritePropertyName("metadata"u8);
-                writer.WriteStartObject();
-                foreach (var item in Metadata)
-                {
-                    writer.WritePropertyName(item.Key);
-                    writer.WriteStringValue(item.Value);
-                }
-                writer.WriteEndObject();
+                writer.WritePropertyName("messageBody"u8);
+                writer.WriteStringValue(MessageBody);
             }
+            writer.WritePropertyName("metadata"u8);
+            writer.WriteStartObject();
+            foreach (var item in Metadata)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteStringValue(item.Value);
+            }
+            writer.WriteEndObject();
             if (Optional.IsDefined(EditTime))
             {
                 writer.WritePropertyName("editTime"u8);
@@ -99,10 +97,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -185,7 +179,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 type,
                 version,
                 messageBody,
-                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                metadata,
                 editTime);
         }
 
@@ -196,7 +190,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
+                    return ModelReaderWriter.Write(this, options);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatMessageEditedInThreadEventData)} does not support writing '{options.Format}' format.");
             }
@@ -234,20 +228,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        internal partial class AcsChatMessageEditedInThreadEventDataConverter : JsonConverter<AcsChatMessageEditedInThreadEventData>
-        {
-            public override void Write(Utf8JsonWriter writer, AcsChatMessageEditedInThreadEventData model, JsonSerializerOptions options)
-            {
-                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
-            }
-
-            public override AcsChatMessageEditedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-            {
-                using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsChatMessageEditedInThreadEventData(document.RootElement);
-            }
         }
     }
 }

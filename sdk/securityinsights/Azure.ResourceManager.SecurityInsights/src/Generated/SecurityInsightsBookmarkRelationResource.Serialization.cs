@@ -13,17 +13,14 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class SecurityInsightsBookmarkRelationResource : IJsonModel<SecurityInsightsIncidentRelationData>
     {
-        private static SecurityInsightsIncidentRelationData s_dataDeserializationInstance;
-        private static SecurityInsightsIncidentRelationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
-
         void IJsonModel<SecurityInsightsIncidentRelationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentRelationData>)Data).Write(writer, options);
 
-        SecurityInsightsIncidentRelationData IJsonModel<SecurityInsightsIncidentRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentRelationData>)DataDeserializationInstance).Create(ref reader, options);
+        SecurityInsightsIncidentRelationData IJsonModel<SecurityInsightsIncidentRelationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SecurityInsightsIncidentRelationData>)Data).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SecurityInsightsIncidentRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SecurityInsightsIncidentRelationData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        BinaryData IPersistableModel<SecurityInsightsIncidentRelationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
 
-        SecurityInsightsIncidentRelationData IPersistableModel<SecurityInsightsIncidentRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentRelationData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
+        SecurityInsightsIncidentRelationData IPersistableModel<SecurityInsightsIncidentRelationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SecurityInsightsIncidentRelationData>(data, options);
 
-        string IPersistableModel<SecurityInsightsIncidentRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentRelationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        string IPersistableModel<SecurityInsightsIncidentRelationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SecurityInsightsIncidentRelationData>)Data).GetFormatFromOptions(options);
     }
 }

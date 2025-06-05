@@ -11,7 +11,10 @@ using System.Linq;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary> The SIMs to upload. </summary>
+    /// <summary>
+    /// The SIMs to upload.
+    /// Serialized Name: SimUploadList
+    /// </summary>
     public partial class SimUploadList
     {
         /// <summary>
@@ -47,7 +50,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SimUploadList"/>. </summary>
-        /// <param name="sims"> A list of SIMs to upload. </param>
+        /// <param name="sims">
+        /// A list of SIMs to upload.
+        /// Serialized Name: SimUploadList.sims
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sims"/> is null. </exception>
         public SimUploadList(IEnumerable<SimNameAndProperties> sims)
         {
@@ -57,7 +63,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SimUploadList"/>. </summary>
-        /// <param name="sims"> A list of SIMs to upload. </param>
+        /// <param name="sims">
+        /// A list of SIMs to upload.
+        /// Serialized Name: SimUploadList.sims
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SimUploadList(IList<SimNameAndProperties> sims, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -70,7 +79,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary> A list of SIMs to upload. </summary>
+        /// <summary>
+        /// A list of SIMs to upload.
+        /// Serialized Name: SimUploadList.sims
+        /// </summary>
         [WirePath("sims")]
         public IList<SimNameAndProperties> Sims { get; }
     }
