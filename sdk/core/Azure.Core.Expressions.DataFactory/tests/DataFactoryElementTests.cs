@@ -1204,7 +1204,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
                     throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
                 }
 
-                return ModelReaderWriter.Write(this, options);
+                return ModelReaderWriter.Write(this, options, DataFactoryContext.Default);
             }
 
             TestModel IPersistableModel<TestModel>.Create(BinaryData data, ModelReaderWriterOptions options)
