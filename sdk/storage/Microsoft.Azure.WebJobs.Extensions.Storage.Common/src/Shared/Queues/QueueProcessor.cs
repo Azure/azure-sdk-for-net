@@ -175,8 +175,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// Delete the specified message.
         /// </summary>
         /// <param name="message">The message to delete.</param>
+        /// /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use. Should not be passed into DeleteMessageAsync</param>
         /// <returns></returns>
-        protected virtual async Task DeleteMessageAsync(QueueMessage message)
+        protected virtual async Task DeleteMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
             try
             {
