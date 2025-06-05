@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class TargetResource : IUtf8JsonSerializable, IJsonModel<TargetResource>
+    public partial class ArmResourceReference : IUtf8JsonSerializable, IJsonModel<ArmResourceReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetResource>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmResourceReference>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TargetResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ArmResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,33 +29,28 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceReference)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Id))
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(ResourceName))
-            {
-                writer.WritePropertyName("resourceName"u8);
-                writer.WriteStringValue(ResourceName);
-            }
-            if (Optional.IsDefined(ResourceType))
-            {
-                writer.WritePropertyName("resourceType"u8);
-                writer.WriteStringValue(ResourceType.Value);
-            }
-            if (Optional.IsDefined(Extension))
+            if (options.Format != "W" && Optional.IsDefined(Extension))
             {
                 writer.WritePropertyName("extension"u8);
                 writer.WriteObjectValue(Extension, options);
             }
-            if (Optional.IsDefined(Identifiers))
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Identifiers))
             {
                 writer.WritePropertyName("identifiers"u8);
 #if NET6_0_OR_GREATER
@@ -67,15 +62,10 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (Optional.IsDefined(ApiVersion))
+            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
-            }
-            if (Optional.IsDefined(SymbolicName))
-            {
-                writer.WritePropertyName("symbolicName"u8);
-                writer.WriteStringValue(SymbolicName);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,19 +84,19 @@ namespace Azure.ResourceManager.Resources.Models
             }
         }
 
-        TargetResource IJsonModel<TargetResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ArmResourceReference IJsonModel<ArmResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmResourceReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTargetResource(document.RootElement, options);
+            return DeserializeArmResourceReference(document.RootElement, options);
         }
 
-        internal static TargetResource DeserializeTargetResource(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ArmResourceReference DeserializeArmResourceReference(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -114,34 +104,22 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 return null;
             }
-            string id = default;
-            string resourceName = default;
-            ResourceType? resourceType = default;
+            ResourceIdentifier id = default;
             ArmDeploymentExtensionDefinition extension = default;
+            string resourceType = default;
             BinaryData identifiers = default;
             string apiVersion = default;
-            string symbolicName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
                 {
-                    id = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceName"u8))
-                {
-                    resourceName = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("resourceType"u8))
-                {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    resourceType = new ResourceType(property.Value.GetString());
+                    id = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("extension"u8))
@@ -151,6 +129,11 @@ namespace Azure.ResourceManager.Resources.Models
                         continue;
                     }
                     extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("resourceType"u8))
+                {
+                    resourceType = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("identifiers"u8))
@@ -167,25 +150,18 @@ namespace Azure.ResourceManager.Resources.Models
                     apiVersion = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("symbolicName"u8))
-                {
-                    symbolicName = property.Value.GetString();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TargetResource(
+            return new ArmResourceReference(
                 id,
-                resourceName,
-                resourceType,
                 extension,
+                resourceType,
                 identifiers,
                 apiVersion,
-                symbolicName,
                 serializedAdditionalRawData);
         }
 
@@ -211,53 +187,7 @@ namespace Azure.ResourceManager.Resources.Models
                 if (Optional.IsDefined(Id))
                 {
                     builder.Append("  id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceName))
-                {
-                    builder.Append("  resourceName: ");
-                    if (ResourceName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ResourceName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ResourceName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  resourceType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ResourceType))
-                {
-                    builder.Append("  resourceType: ");
-                    builder.AppendLine($"'{ResourceType.Value.ToString()}'");
+                    builder.AppendLine($"'{Id.ToString()}'");
                 }
             }
 
@@ -273,6 +203,29 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     builder.Append("  extension: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Extension, options, 2, false, "  extension: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  resourceType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ResourceType))
+                {
+                    builder.Append("  resourceType: ");
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
                 }
             }
 
@@ -314,36 +267,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SymbolicName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  symbolicName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SymbolicName))
-                {
-                    builder.Append("  symbolicName: ");
-                    if (SymbolicName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SymbolicName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SymbolicName}'");
-                    }
-                }
-            }
-
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<TargetResource>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ArmResourceReference>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -352,26 +282,26 @@ namespace Azure.ResourceManager.Resources.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceReference)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TargetResource IPersistableModel<TargetResource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ArmResourceReference IPersistableModel<ArmResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetResource>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ArmResourceReference>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTargetResource(document.RootElement, options);
+                        return DeserializeArmResourceReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmResourceReference)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TargetResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ArmResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
