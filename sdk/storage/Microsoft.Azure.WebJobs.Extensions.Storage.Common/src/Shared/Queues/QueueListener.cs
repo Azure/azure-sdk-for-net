@@ -179,6 +179,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger.LogDebug($"Storage queue listener started ({_details})");
             return Task.FromResult(0);
         }
+
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             CancellationTokenRegistration? registration = null;
