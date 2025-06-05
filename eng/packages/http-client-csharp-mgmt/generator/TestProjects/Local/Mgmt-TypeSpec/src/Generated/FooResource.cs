@@ -276,5 +276,47 @@ namespace MgmtTypeSpec
                 throw;
             }
         }
+
+       /// <summary>
+       /// Add a tag to the current resource.
+       /// </summary>
+        public virtual Response<FooResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
+
+            using var scope = _fooClientDiagnostics.CreateScope("FooResource.AddTag");
+            scope.Start();
+            try
+            {
+                if (CanUseTagResource(cancellationToken: cancellationToken))
+                {
+                    var originalTags = GetTagResource().Get(cancellationToken);
+                    originalTags.Value.Data.TagValues[key] = value;
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    }
+                    ;
+                    HttpMessage message = _fooRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<FooData> response = Response.FromValue((FooData)result, result);
+                    return Response.FromValue(new FooResource(Client, response.Value), response.GetRawResponse());
+                }
+                else
+                {
+                    var current = Get(cancellationToken: cancellationToken).Value.Data;
+                    current.Tags[key] = value;
+                    var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
+                }
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
     }
 }

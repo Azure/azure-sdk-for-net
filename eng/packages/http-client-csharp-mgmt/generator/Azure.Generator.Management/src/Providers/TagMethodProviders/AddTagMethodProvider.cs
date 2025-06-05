@@ -53,7 +53,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var cancellationTokenParameter = new ParameterProvider("cancellationToken", $"The cancellation token to use.", new CSharpType(typeof(CancellationToken)), defaultValue: Default);
 
             return [keyParameter, valueParameter, cancellationTokenParameter];
-        }        private MethodBodyStatement[] BuildBodyStatements()
+        }
+
+        private MethodBodyStatement[] BuildBodyStatements()
         {
             var keyParam = _signature.Parameters[0];
             var valueParam = _signature.Parameters[1];
@@ -83,29 +85,27 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var primaryPath = new List<MethodBodyStatement>
             {
                 // var originalTags = GetTagResource().Get(cancellationToken);
-                Declare("originalTags", out var originalTagsVar,
-                    This.Invoke("GetTagResource").Invoke("Get", [cancellationTokenParam])),
-                
+                Declare("originalTags", typeof(object), This.Invoke("GetTagResource").Invoke("Get", [cancellationTokenParam]), out var originalTagsVar),
+
                 // originalTags.Value.Data.TagValues[key] = value;
-                new IndexExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
+                new IndexerExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
                     .Assign(valueParam).Terminate(),
-                
+
                 // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 This.Invoke("GetTagResource").Invoke("CreateOrUpdate", [
                     Static(typeof(Azure.WaitUntil)).Property("Completed"),
                     originalTagsVar.Property("Value").Property("Data"),
                     cancellationTokenParam
                 ]).Terminate(),
-                
+
                 // var originalResponse = _restClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                Declare("originalResponse", out var originalResponseVar,
-                    _resourceClientProvider.GetRestClientField().Invoke("Get", [
+                Declare("originalResponse", typeof(object), _resourceClientProvider.GetRestClientField().Invoke("Get", [
                         This.Property("Id").Property("SubscriptionId"),
                         This.Property("Id").Property("ResourceGroupName"),
                         This.Property("Id").Property("Name"),
                         cancellationTokenParam
-                    ])),
-                
+                    ]), out var originalResponseVar),
+
                 // return Response.FromValue(new ResourceType(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
                     New.Instance(_resourceClientProvider.ResourceClientCSharpType, [
@@ -120,22 +120,20 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var secondaryPath = new List<MethodBodyStatement>
             {
                 // var current = Get(cancellationToken: cancellationToken).Value.Data;
-                Declare("current", out var currentVar,
-                    This.Invoke("Get", [cancellationTokenParam])
-                        .Property("Value").Property("Data")),
-                
+                Declare("current", typeof(object), This.Invoke("Get", [cancellationTokenParam])
+                        .Property("Value").Property("Data"), out var currentVar),
+
                 // current.Tags[key] = value;
-                new IndexExpression(currentVar.Property("Tags"), keyParam)
+                new IndexerExpression(currentVar.Property("Tags"), keyParam)
                     .Assign(valueParam).Terminate(),
-                
+
                 // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
-                Declare("result", out var resultVar,
-                    This.Invoke("Update", [
+                Declare("result", typeof(object), This.Invoke("Update", [
                         Static(typeof(Azure.WaitUntil)).Property("Completed"),
                         currentVar,
                         cancellationTokenParam
-                    ])),
-                
+                    ]), out var resultVar),
+
                 // return Response.FromValue(result.Value, result.GetRawResponse());
                 Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
                     resultVar.Property("Value"),
@@ -143,7 +141,17 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 ]))
             };
 
-            var ifStatement = new IfStatement(canUseTagResourceCondition, primaryPath, secondaryPath);
+            var ifStatement = new IfStatement(canUseTagResourceCondition)
+            {
+                // Primary path statements
+                primaryPath[0], primaryPath[1], primaryPath[2], primaryPath[3], primaryPath[4]
+            };
+
+            // Add else block for secondary path
+            foreach (var statement in secondaryPath)
+            {
+                ifStatement.Add(statement);
+            }
 
             tryStatements.Add(ifStatement);
 
