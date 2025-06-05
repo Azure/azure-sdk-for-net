@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.OperationalInsights
 {
     public partial class OperationalInsightsLinkedServiceResource : IJsonModel<OperationalInsightsLinkedServiceData>
     {
+        private static OperationalInsightsLinkedServiceData s_dataDeserializationInstance;
+        private static OperationalInsightsLinkedServiceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<OperationalInsightsLinkedServiceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedServiceData>)Data).Write(writer, options);
 
-        OperationalInsightsLinkedServiceData IJsonModel<OperationalInsightsLinkedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedServiceData>)Data).Create(ref reader, options);
+        OperationalInsightsLinkedServiceData IJsonModel<OperationalInsightsLinkedServiceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<OperationalInsightsLinkedServiceData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<OperationalInsightsLinkedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<OperationalInsightsLinkedServiceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<OperationalInsightsLinkedServiceData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        OperationalInsightsLinkedServiceData IPersistableModel<OperationalInsightsLinkedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsLinkedServiceData>(data, options);
+        OperationalInsightsLinkedServiceData IPersistableModel<OperationalInsightsLinkedServiceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<OperationalInsightsLinkedServiceData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<OperationalInsightsLinkedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsLinkedServiceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<OperationalInsightsLinkedServiceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<OperationalInsightsLinkedServiceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

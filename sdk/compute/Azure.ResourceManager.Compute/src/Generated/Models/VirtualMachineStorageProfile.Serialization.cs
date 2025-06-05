@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("diskControllerType"u8);
                 writer.WriteStringValue(DiskControllerType.Value.ToString());
             }
+            if (Optional.IsDefined(AlignRegionalDisksToVmZone))
+            {
+                writer.WritePropertyName("alignRegionalDisksToVMZone"u8);
+                writer.WriteBooleanValue(AlignRegionalDisksToVmZone.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,6 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineOSDisk osDisk = default;
             IList<VirtualMachineDataDisk> dataDisks = default;
             DiskControllerType? diskControllerType = default;
+            bool? alignRegionalDisksToVmZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -145,13 +151,28 @@ namespace Azure.ResourceManager.Compute.Models
                     diskControllerType = new DiskControllerType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("alignRegionalDisksToVMZone"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    alignRegionalDisksToVmZone = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VirtualMachineStorageProfile(imageReference, osDisk, dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>(), diskControllerType, serializedAdditionalRawData);
+            return new VirtualMachineStorageProfile(
+                imageReference,
+                osDisk,
+                dataDisks ?? new ChangeTrackingList<VirtualMachineDataDisk>(),
+                diskControllerType,
+                alignRegionalDisksToVmZone,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineStorageProfile>.Write(ModelReaderWriterOptions options)
@@ -161,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineStorageProfile)} does not support writing '{options.Format}' format.");
             }

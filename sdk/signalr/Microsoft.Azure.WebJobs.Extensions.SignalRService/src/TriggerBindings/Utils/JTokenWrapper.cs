@@ -35,15 +35,8 @@ internal class JTokenWrapperJsonConverter : System.Text.Json.Serialization.JsonC
 
     public override void Write(Utf8JsonWriter writer, JTokenWrapper value, JsonSerializerOptions options)
     {
-#if NET6_0_OR_GREATER
         var jsonString = JsonConvert.SerializeObject(value.Value);
         writer.WriteRawValue(jsonString);
-#elif NETSTANDARD2_0
-        // No need to implement.
-        // First of all, the SignalR extensions for host process always run on .NET 6 or greater runtime when this class is first written.
-        // Even if somehow the extensions run on .NET Framework, the JsonHubProtocol would use Newtonsoft.Json for serialization and this class would not be used.
-        throw new NotImplementedException("Serializing Newtonsoft.Json.JsonToken with System.Text.Json is not implemented. ");
-#endif
     }
 }
 

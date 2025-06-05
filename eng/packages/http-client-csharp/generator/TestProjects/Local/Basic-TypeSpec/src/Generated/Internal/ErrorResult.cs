@@ -23,6 +23,7 @@ namespace BasicTypeSpec
         /// <summary> Gets the Value. </summary>
         public override T Value => throw _exception;
 
+        /// <summary></summary>
         public override Response GetRawResponse()
         {
             return _response;

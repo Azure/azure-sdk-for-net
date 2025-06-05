@@ -9,6 +9,7 @@ using System.Net;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using Azure.Core.TestFramework;
 using Azure.Identity;
 using Azure.Storage.Files.Shares.Models;
@@ -180,6 +181,13 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             bool exists = await aadFileClient.ExistsAsync();
             Assert.IsNotNull(exists);
+        }
+
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareFileClient("UseDevelopmentStorage=true", "share", "dir/file"));
+            Assert.AreEqual("connectionString", ex.ParamName);
         }
 
         [RecordedTest]
@@ -2377,22 +2385,25 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("CannotVerifyCopySource", e.ErrorCode));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task StartCopyAsync_SourceErrorAndStatusCode()
         {
             await using DisposingFile test = await SharesClientBuilder.GetTestFileAsync();
-            ShareFileClient file = test.File;
+            ShareFileClient srcFile = InstrumentClient(test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName()));
+            await srcFile.CreateAsync(maxSize: Constants.KB);
+            ShareFileClient destFile = InstrumentClient(test.File.GetParentShareDirectoryClient().GetFileClient(GetNewFileName()));
+            await destFile.CreateAsync(maxSize: Constants.KB);
+            Uri sourceUri = srcFile.GenerateSasUri(ShareFileSasPermissions.Write, GetUtcNow().AddDays(1));
 
             // Act
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                file.StartCopyAsync(sourceUri: s_invalidUri),
+                destFile.StartCopyAsync(sourceUri: sourceUri),
                 e =>
                 {
-                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 400"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: InvalidQueryParameterValue"));
-                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: Value for one of the query parameters specified in the request URI is invalid."));
+                    Assert.IsTrue(e.Message.Contains("CopySourceStatusCode: 403"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorCode: AuthorizationPermissionMismatch"));
+                    Assert.IsTrue(e.Message.Contains("CopySourceErrorMessage: This request is not authorized to perform this operation using this permission."));
                 });
         }
 
@@ -4892,7 +4903,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/44324")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
         public async Task UploadRangeFromUriAsync_SourceErrorAndStatusCode()
         {
@@ -6866,7 +6876,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync()
         {
@@ -6916,11 +6925,10 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             Assert.AreNotEqual(default, getSymLinkResponse.Value.ETag);
             Assert.AreNotEqual(default, getSymLinkResponse.Value.LastModified);
-            Assert.AreEqual(source.Uri.ToString(), getSymLinkResponse.Value.LinkText);
+            Assert.AreEqual(WebUtility.UrlEncode(source.Uri.ToString()), getSymLinkResponse.Value.LinkText);
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync_Error()
         {
@@ -6943,7 +6951,6 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
-        [PlaybackOnly("https://github.com/Azure/azure-sdk-for-net/issues/46907")]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2025_05_05)]
         public async Task CreateGetSymbolicLinkAsync_OAuth()
         {

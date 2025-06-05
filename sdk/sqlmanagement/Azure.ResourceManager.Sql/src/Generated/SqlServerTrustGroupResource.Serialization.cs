@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class SqlServerTrustGroupResource : IJsonModel<SqlServerTrustGroupData>
     {
+        private static SqlServerTrustGroupData s_dataDeserializationInstance;
+        private static SqlServerTrustGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SqlServerTrustGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerTrustGroupData>)Data).Write(writer, options);
 
-        SqlServerTrustGroupData IJsonModel<SqlServerTrustGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerTrustGroupData>)Data).Create(ref reader, options);
+        SqlServerTrustGroupData IJsonModel<SqlServerTrustGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SqlServerTrustGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<SqlServerTrustGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SqlServerTrustGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
-        SqlServerTrustGroupData IPersistableModel<SqlServerTrustGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerTrustGroupData>(data, options);
+        SqlServerTrustGroupData IPersistableModel<SqlServerTrustGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SqlServerTrustGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<SqlServerTrustGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerTrustGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SqlServerTrustGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SqlServerTrustGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

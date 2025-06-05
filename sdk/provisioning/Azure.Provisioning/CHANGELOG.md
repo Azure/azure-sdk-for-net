@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.0.1 (2025-05-30)
+
+### Bugs Fixed
+
+- Now floating number values are properly serialized into bicep via `json()` function ([#48249](https://github.com/Azure/azure-sdk-for-net/issues/48249))
+- Fixed issues in interpolated strings ([#48493](https://github.com/Azure/azure-sdk-for-net/issues/48493))
+
 ## 1.0.0 (2024-10-25)
 
 ### Features Added

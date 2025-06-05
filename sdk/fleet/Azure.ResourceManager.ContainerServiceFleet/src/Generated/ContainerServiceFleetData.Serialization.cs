@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 writer.WritePropertyName("hubProfile"u8);
                 writer.WriteObjectValue(HubProfile, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue(Status, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -92,6 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             SystemData systemData = default;
             FleetProvisioningState? provisioningState = default;
             FleetHubProfile hubProfile = default;
+            ContainerServiceFleetStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,6 +190,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                             hubProfile = FleetHubProfile.DeserializeFleetHubProfile(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("status"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            status = ContainerServiceFleetStatus.DeserializeContainerServiceFleetStatus(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -204,6 +219,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
                 identity,
                 provisioningState,
                 hubProfile,
+                status,
                 serializedAdditionalRawData);
         }
 
@@ -214,7 +230,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ContainerServiceFleetData)} does not support writing '{options.Format}' format.");
             }

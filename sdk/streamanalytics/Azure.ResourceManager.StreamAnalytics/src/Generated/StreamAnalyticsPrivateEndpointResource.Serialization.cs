@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     public partial class StreamAnalyticsPrivateEndpointResource : IJsonModel<StreamAnalyticsPrivateEndpointData>
     {
+        private static StreamAnalyticsPrivateEndpointData s_dataDeserializationInstance;
+        private static StreamAnalyticsPrivateEndpointData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StreamAnalyticsPrivateEndpointData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StreamAnalyticsPrivateEndpointData>)Data).Write(writer, options);
 
-        StreamAnalyticsPrivateEndpointData IJsonModel<StreamAnalyticsPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamAnalyticsPrivateEndpointData>)Data).Create(ref reader, options);
+        StreamAnalyticsPrivateEndpointData IJsonModel<StreamAnalyticsPrivateEndpointData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamAnalyticsPrivateEndpointData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamAnalyticsPrivateEndpointData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        StreamAnalyticsPrivateEndpointData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamAnalyticsPrivateEndpointData>(data, options);
+        StreamAnalyticsPrivateEndpointData IPersistableModel<StreamAnalyticsPrivateEndpointData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamAnalyticsPrivateEndpointData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        string IPersistableModel<StreamAnalyticsPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamAnalyticsPrivateEndpointData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StreamAnalyticsPrivateEndpointData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamAnalyticsPrivateEndpointData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

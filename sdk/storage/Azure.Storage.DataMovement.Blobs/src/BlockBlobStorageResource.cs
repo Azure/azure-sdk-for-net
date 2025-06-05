@@ -373,5 +373,25 @@ namespace Azure.Storage.DataMovement.Blobs
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken = default)
             => Task.CompletedTask;
+
+        /// <summary>
+        /// Creates this resource an empty directory stub. This is only intended to be used
+        /// for HNS accounts as empty directories do not exist on FNS accounts.
+        ///
+        /// Creates an empty Block Blob with the hdi_isfolder metadata. All other properties
+        /// of the blob are left default.
+        /// </summary>
+        internal async Task CreateEmptyDirectoryStubAsync(CancellationToken cancellationToken = default)
+        {
+            Dictionary<string, string> folderMetadata = new() {
+                { DataMovementBlobConstants.FolderMetadataKey, "true" }
+            };
+
+            BlobUploadOptions options = new()
+            {
+                Metadata = folderMetadata
+            };
+            await BlobClient.UploadAsync(Stream.Null, options, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

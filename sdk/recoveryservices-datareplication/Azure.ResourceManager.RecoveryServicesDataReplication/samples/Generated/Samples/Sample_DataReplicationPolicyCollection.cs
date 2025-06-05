@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_PolicyCreate()
+        public async Task CreateOrUpdate_PutsThePolicy()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Create.json
-            // this example is just showing the usage of "Policy_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Policy_Create.json
+            // this example is just showing the usage of "PolicyModel_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             string policyName = "fafqwc";
-            DataReplicationPolicyData data = new DataReplicationPolicyData(new DataReplicationPolicyProperties(new GeneralPolicyModelCustomProperties()));
+            DataReplicationPolicyData data = new DataReplicationPolicyData
+            {
+                Properties = new DataReplicationPolicyProperties(default),
+            };
             ArmOperation<DataReplicationPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyName, data);
             DataReplicationPolicyResource result = lro.Value;
 
@@ -54,10 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_PolicyGet()
+        public async Task Get_GetsThePolicy()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Get.json
-            // this example is just showing the usage of "Policy_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Policy_Get.json
+            // this example is just showing the usage of "PolicyModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,10 +91,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_PolicyList()
+        public async Task GetAll_ListsThePolicies()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_List.json
-            // this example is just showing the usage of "Policy_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Policy_List.json
+            // this example is just showing the usage of "PolicyModel_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -124,10 +127,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_PolicyGet()
+        public async Task Exists_GetsThePolicy()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Get.json
-            // this example is just showing the usage of "Policy_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Policy_Get.json
+            // this example is just showing the usage of "PolicyModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -154,10 +157,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_PolicyGet()
+        public async Task GetIfExists_GetsThePolicy()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/Policy_Get.json
-            // this example is just showing the usage of "Policy_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/Policy_Get.json
+            // this example is just showing the usage of "PolicyModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class StaticSiteCustomDomainOverviewResource : IJsonModel<StaticSiteCustomDomainOverviewData>
     {
+        private static StaticSiteCustomDomainOverviewData s_dataDeserializationInstance;
+        private static StaticSiteCustomDomainOverviewData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StaticSiteCustomDomainOverviewData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)Data).Write(writer, options);
 
-        StaticSiteCustomDomainOverviewData IJsonModel<StaticSiteCustomDomainOverviewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)Data).Create(ref reader, options);
+        StaticSiteCustomDomainOverviewData IJsonModel<StaticSiteCustomDomainOverviewData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StaticSiteCustomDomainOverviewData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<StaticSiteCustomDomainOverviewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<StaticSiteCustomDomainOverviewData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StaticSiteCustomDomainOverviewData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
-        StaticSiteCustomDomainOverviewData IPersistableModel<StaticSiteCustomDomainOverviewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(data, options);
+        StaticSiteCustomDomainOverviewData IPersistableModel<StaticSiteCustomDomainOverviewData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<StaticSiteCustomDomainOverviewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteCustomDomainOverviewData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StaticSiteCustomDomainOverviewData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StaticSiteCustomDomainOverviewData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

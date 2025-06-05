@@ -4,7 +4,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- We don't care about XML doc comments on test types and members -->
-    <NoWarn>$(NoWarn);CS1591;CS8002;SA1402;SA1507;SA1508;SA1633;SA1028;SA1505;OPENAI001;AOAI001</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;CS8002;SA1402;SA1507;SA1508;SA1633;SA1028;SA1505;NU1604;OPENAI001;AOAI001</NoWarn>
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -30,20 +30,21 @@
     <ProjectReference Include="..\..\tools\TestFramework\src\OpenAI.TestFramework.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+      <ExternalSourceFramework>netstandard2.0</ExternalSourceFramework>
+      <ExternalSourceFramework Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">net8.0</ExternalSourceFramework>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Condition="'$(ExternalOpenAILibrary)' != ''"
-               Include="$([System.IO.Path]::GetFileName('$(ExternalOpenAILibrary)'))"
-               HintPath="$(ExternalOpenAILibrary)" />
-    <Reference Condition="'$(ExternalAzureCoreLibrary)' != ''"
-               Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))"
-               HintPath="$(ExternalAzureCoreLibrary)" />
+    <Reference Condition="'$(UseExternalOpenAILibrary)' != ''" Include="$([System.IO.Path]::GetFileName('../../external/$(ExternalSourceFramework)/OpenAI.dll'))" HintPath="../../external/$(ExternalSourceFramework)/OpenAI.dll" />
+    <Reference Condition="'$(ExternalAzureCoreLibrary)' != ''" Include="$([System.IO.Path]::GetFileName('$(ExternalAzureCoreLibrary)'))" HintPath="$(ExternalAzureCoreLibrary)" />
   </ItemGroup>
 
   <Choose>
     <When Condition="'$(GAServiceVersionLabel)' != ''">
       <PropertyGroup>
         <DefineConstants>AZURE_OPENAI_GA</DefineConstants>
-        <VersionSuffix/>
+        <VersionSuffix />
       </PropertyGroup>
     </When>
     <Otherwise>

@@ -26,6 +26,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 {
     public class PageBlobStorageResourceTests : DataMovementBlobTestBase
     {
+        private readonly AccessTier DefaultAccessTier = AccessTier.P40;
         private const string DefaultContentType = "text/plain";
         private const string DefaultContentEncoding = "gzip";
         private const string DefaultContentLanguage = "en-US";
@@ -671,7 +672,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<PageBlobClient> mockDestination = new(
                 new Uri("https://storageaccount.blob.core.windows.net/container/destination"),
                 new BlobClientOptions());
-
             int length = 1024;
             var data = GetRandomBuffer(length);
             using var stream = new MemoryStream(data);
@@ -711,6 +711,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
+                { DataMovementConstants.ResourceProperties.AccessTier, DefaultAccessTier },
                 { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                 { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
@@ -739,6 +740,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 length,
                 It.Is<PageBlobCreateOptions>(
                     options =>
+                        options.PremiumPageBlobAccessTier.ToString().Equals(DefaultAccessTier.ToString()) &&
                         options.HttpHeaders.ContentType == DefaultContentType &&
                         options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
@@ -813,6 +815,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
+                { DataMovementConstants.ResourceProperties.AccessTier, DefaultAccessTier },
                 { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                 { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
@@ -841,6 +844,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 length,
                 It.Is<PageBlobCreateOptions>(
                     options =>
+                        options.PremiumPageBlobAccessTier.ToString().Equals(DefaultAccessTier.ToString()) &&
                         options.HttpHeaders.ContentType == DefaultContentType &&
                         options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
@@ -910,6 +914,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     new MockResponse(201))));
             PageBlobStorageResourceOptions resourceOptions = new()
             {
+                AccessTier = default,
                 CacheControl = default,
                 ContentDisposition = default,
                 ContentLanguage = default,
@@ -924,6 +929,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
+                { DataMovementConstants.ResourceProperties.AccessTier, DefaultAccessTier },
                 { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                 { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
@@ -950,8 +956,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.That(data, Is.EqualTo(fileContentStream.AsBytes().ToArray()));
             mockDestination.Verify(b => b.CreateAsync(
                 length,
-                It.Is<PageBlobCreateOptions>(
-                    options => options.Metadata == default),
+            It.Is<PageBlobCreateOptions>(
+                    options =>
+                        options.Metadata == default &&
+                        options.PremiumPageBlobAccessTier == default &&
+                        options.HttpHeaders.ContentType == default &&
+                        options.HttpHeaders.ContentEncoding == default &&
+                        options.HttpHeaders.ContentLanguage == default &&
+                        options.HttpHeaders.ContentDisposition == default &&
+                        options.HttpHeaders.CacheControl == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(
@@ -1337,6 +1350,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
+                { DataMovementConstants.ResourceProperties.AccessTier, DefaultAccessTier },
                 { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                 { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
@@ -1366,6 +1380,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 length,
                 It.Is<PageBlobCreateOptions>(
                     options =>
+                        options.PremiumPageBlobAccessTier.ToString().Equals(DefaultAccessTier.ToString()) &&
                         options.HttpHeaders.ContentType == DefaultContentType &&
                         options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
                         options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
@@ -1435,6 +1450,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     new MockResponse(201))));
             PageBlobStorageResourceOptions resourceOptions = new()
             {
+                AccessTier = default,
                 CacheControl = default,
                 ContentDisposition = default,
                 ContentLanguage = default,
@@ -1449,6 +1465,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             Dictionary<string, object> sourceProperties = new()
             {
+                { DataMovementConstants.ResourceProperties.AccessTier, DefaultAccessTier },
                 { DataMovementConstants.ResourceProperties.ContentType, DefaultContentType },
                 { DataMovementConstants.ResourceProperties.ContentEncoding, DefaultContentEncoding },
                 { DataMovementConstants.ResourceProperties.ContentLanguage, DefaultContentLanguage },
@@ -1477,7 +1494,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             mockDestination.Verify(b => b.CreateAsync(
                 length,
                 It.Is<PageBlobCreateOptions>(
-                    options => options.Metadata == default),
+                    options =>
+                        options.Metadata == default &&
+                        options.PremiumPageBlobAccessTier == default &&
+                        options.HttpHeaders.ContentType == default &&
+                        options.HttpHeaders.ContentEncoding == default &&
+                        options.HttpHeaders.ContentLanguage == default &&
+                        options.HttpHeaders.ContentDisposition == default &&
+                        options.HttpHeaders.CacheControl == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.Verify(b => b.UploadPagesFromUriAsync(

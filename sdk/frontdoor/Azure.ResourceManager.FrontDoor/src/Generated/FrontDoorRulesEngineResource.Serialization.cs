@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.FrontDoor
 {
     public partial class FrontDoorRulesEngineResource : IJsonModel<FrontDoorRulesEngineData>
     {
+        private static FrontDoorRulesEngineData s_dataDeserializationInstance;
+        private static FrontDoorRulesEngineData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FrontDoorRulesEngineData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRulesEngineData>)Data).Write(writer, options);
 
-        FrontDoorRulesEngineData IJsonModel<FrontDoorRulesEngineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRulesEngineData>)Data).Create(ref reader, options);
+        FrontDoorRulesEngineData IJsonModel<FrontDoorRulesEngineData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FrontDoorRulesEngineData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<FrontDoorRulesEngineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<FrontDoorRulesEngineData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FrontDoorRulesEngineData>(Data, options, AzureResourceManagerFrontDoorContext.Default);
 
-        FrontDoorRulesEngineData IPersistableModel<FrontDoorRulesEngineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorRulesEngineData>(data, options);
+        FrontDoorRulesEngineData IPersistableModel<FrontDoorRulesEngineData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FrontDoorRulesEngineData>(data, options, AzureResourceManagerFrontDoorContext.Default);
 
-        string IPersistableModel<FrontDoorRulesEngineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRulesEngineData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FrontDoorRulesEngineData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FrontDoorRulesEngineData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

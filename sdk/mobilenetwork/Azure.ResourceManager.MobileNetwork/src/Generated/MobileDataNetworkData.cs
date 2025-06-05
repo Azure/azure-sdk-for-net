@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.MobileNetwork
     /// <summary>
     /// A class representing the MobileDataNetwork data model.
     /// Data network resource. Must be created in the same location as its parent mobile network.
-    /// Serialized Name: DataNetwork
     /// </summary>
     public partial class MobileDataNetworkData : TrackedResourceData
     {
@@ -65,14 +64,8 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the data network resource.
-        /// Serialized Name: DataNetwork.properties.provisioningState
-        /// </param>
-        /// <param name="description">
-        /// An optional description for this data network.
-        /// Serialized Name: DataNetwork.properties.description
-        /// </param>
+        /// <param name="provisioningState"> The provisioning state of the data network resource. </param>
+        /// <param name="description"> An optional description for this data network. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal MobileDataNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkProvisioningState? provisioningState, string description, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
@@ -86,16 +79,10 @@ namespace Azure.ResourceManager.MobileNetwork
         {
         }
 
-        /// <summary>
-        /// The provisioning state of the data network resource.
-        /// Serialized Name: DataNetwork.properties.provisioningState
-        /// </summary>
+        /// <summary> The provisioning state of the data network resource. </summary>
         [WirePath("properties.provisioningState")]
         public MobileNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary>
-        /// An optional description for this data network.
-        /// Serialized Name: DataNetwork.properties.description
-        /// </summary>
+        /// <summary> An optional description for this data network. </summary>
         [WirePath("properties.description")]
         public string Description { get; set; }
     }

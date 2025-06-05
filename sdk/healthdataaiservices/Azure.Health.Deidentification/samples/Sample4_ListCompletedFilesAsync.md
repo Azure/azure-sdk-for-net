@@ -10,8 +10,8 @@ AsyncPageable<DeidentificationDocumentDetails> files = client.GetJobDocumentsAsy
 
 await foreach (DeidentificationDocumentDetails file in files)
 {
-    Console.WriteLine($"File Name: {file.Input.Location}");
+    Console.WriteLine($"File Name: {file.InputLocation.Location}");
     Console.WriteLine($"File Status: {file.Status}");
-    Console.WriteLine($"File Output Path: {file.Output.Location}");
+    Console.WriteLine($"File Output Path: {file.OutputLocation.Location}");
 }
 ```

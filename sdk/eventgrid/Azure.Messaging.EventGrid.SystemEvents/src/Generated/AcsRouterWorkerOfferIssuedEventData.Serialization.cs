@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterWorkerOfferIssuedEventDataConverter))]
     public partial class AcsRouterWorkerOfferIssuedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterWorkerOfferIssuedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterWorkerOfferIssuedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -258,7 +260,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterWorkerOfferIssuedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -296,6 +298,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterWorkerOfferIssuedEventDataConverter : JsonConverter<AcsRouterWorkerOfferIssuedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterWorkerOfferIssuedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterWorkerOfferIssuedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterWorkerOfferIssuedEventData(document.RootElement);
+            }
         }
     }
 }

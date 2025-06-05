@@ -16,6 +16,18 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
+            if (Optional.IsDefined(OutputFormat))
+            {
+                if (OutputFormat != null)
+                {
+                    writer.WritePropertyName("outputFormat"u8);
+                    writer.WriteStringValue(OutputFormat.Value.ToString());
+                }
+                else
+                {
+                    writer.WriteNull("outputFormat");
+                }
+            }
             if (Optional.IsDefined(OutputMode))
             {
                 if (OutputMode != null)
@@ -38,6 +50,35 @@ namespace Azure.Search.Documents.Indexes.Models
                 else
                 {
                     writer.WriteNull("markdownHeaderDepth");
+                }
+            }
+            if (Optional.IsCollectionDefined(ExtractionOptions))
+            {
+                if (ExtractionOptions != null)
+                {
+                    writer.WritePropertyName("extractionOptions"u8);
+                    writer.WriteStartArray();
+                    foreach (var item in ExtractionOptions)
+                    {
+                        writer.WriteStringValue(item.ToString());
+                    }
+                    writer.WriteEndArray();
+                }
+                else
+                {
+                    writer.WriteNull("extractionOptions");
+                }
+            }
+            if (Optional.IsDefined(ChunkingProperties))
+            {
+                if (ChunkingProperties != null)
+                {
+                    writer.WritePropertyName("chunkingProperties"u8);
+                    writer.WriteObjectValue(ChunkingProperties);
+                }
+                else
+                {
+                    writer.WriteNull("chunkingProperties");
                 }
             }
             writer.WritePropertyName("@odata.type"u8);
@@ -80,8 +121,11 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
+            DocumentIntelligenceLayoutSkillOutputFormat? outputFormat = default;
             DocumentIntelligenceLayoutSkillOutputMode? outputMode = default;
             DocumentIntelligenceLayoutSkillMarkdownHeaderDepth? markdownHeaderDepth = default;
+            IList<DocumentIntelligenceLayoutSkillExtractionOptions> extractionOptions = default;
+            DocumentIntelligenceLayoutSkillChunkingProperties chunkingProperties = default;
             string odataType = default;
             string name = default;
             string description = default;
@@ -90,6 +134,16 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("outputFormat"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        outputFormat = null;
+                        continue;
+                    }
+                    outputFormat = new DocumentIntelligenceLayoutSkillOutputFormat(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("outputMode"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -108,6 +162,31 @@ namespace Azure.Search.Documents.Indexes.Models
                         continue;
                     }
                     markdownHeaderDepth = new DocumentIntelligenceLayoutSkillMarkdownHeaderDepth(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("extractionOptions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        extractionOptions = null;
+                        continue;
+                    }
+                    List<DocumentIntelligenceLayoutSkillExtractionOptions> array = new List<DocumentIntelligenceLayoutSkillExtractionOptions>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(new DocumentIntelligenceLayoutSkillExtractionOptions(item.GetString()));
+                    }
+                    extractionOptions = array;
+                    continue;
+                }
+                if (property.NameEquals("chunkingProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        chunkingProperties = null;
+                        continue;
+                    }
+                    chunkingProperties = DocumentIntelligenceLayoutSkillChunkingProperties.DeserializeDocumentIntelligenceLayoutSkillChunkingProperties(property.Value);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))
@@ -158,8 +237,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 context,
                 inputs,
                 outputs,
+                outputFormat,
                 outputMode,
-                markdownHeaderDepth);
+                markdownHeaderDepth,
+                extractionOptions ?? new ChangeTrackingList<DocumentIntelligenceLayoutSkillExtractionOptions>(),
+                chunkingProperties);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

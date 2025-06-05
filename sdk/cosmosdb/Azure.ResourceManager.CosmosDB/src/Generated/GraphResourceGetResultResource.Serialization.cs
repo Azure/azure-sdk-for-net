@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.CosmosDB
 {
     public partial class GraphResourceGetResultResource : IJsonModel<GraphResourceGetResultData>
     {
+        private static GraphResourceGetResultData s_dataDeserializationInstance;
+        private static GraphResourceGetResultData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<GraphResourceGetResultData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<GraphResourceGetResultData>)Data).Write(writer, options);
 
-        GraphResourceGetResultData IJsonModel<GraphResourceGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GraphResourceGetResultData>)Data).Create(ref reader, options);
+        GraphResourceGetResultData IJsonModel<GraphResourceGetResultData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<GraphResourceGetResultData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<GraphResourceGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<GraphResourceGetResultData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<GraphResourceGetResultData>(Data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        GraphResourceGetResultData IPersistableModel<GraphResourceGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphResourceGetResultData>(data, options);
+        GraphResourceGetResultData IPersistableModel<GraphResourceGetResultData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<GraphResourceGetResultData>(data, options, AzureResourceManagerCosmosDBContext.Default);
 
-        string IPersistableModel<GraphResourceGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GraphResourceGetResultData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<GraphResourceGetResultData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<GraphResourceGetResultData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,5 +1,11 @@
 namespace Azure.ResourceManager.MobileNetwork
 {
+    public partial class AzureResourceManagerMobileNetworkContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureResourceManagerMobileNetworkContext() { }
+        public static Azure.ResourceManager.MobileNetwork.AzureResourceManagerMobileNetworkContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ExtendedUEInfoCollection : Azure.ResourceManager.ArmCollection
     {
         protected ExtendedUEInfoCollection() { }
@@ -1600,8 +1606,12 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public MobileNetworkPlatformType(string value) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType AKSHCI { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType AksHci { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType ThreePAzureStackHCI { get { throw null; } }
+        public static Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType ThreePAzureStackHci { get { throw null; } }
         public bool Equals(Azure.ResourceManager.MobileNetwork.Models.MobileNetworkPlatformType other) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }

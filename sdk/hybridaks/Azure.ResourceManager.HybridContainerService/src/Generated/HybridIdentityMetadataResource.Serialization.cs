@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.HybridContainerService
 {
     public partial class HybridIdentityMetadataResource : IJsonModel<HybridIdentityMetadataData>
     {
+        private static HybridIdentityMetadataData s_dataDeserializationInstance;
+        private static HybridIdentityMetadataData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<HybridIdentityMetadataData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridIdentityMetadataData>)Data).Write(writer, options);
 
-        HybridIdentityMetadataData IJsonModel<HybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridIdentityMetadataData>)Data).Create(ref reader, options);
+        HybridIdentityMetadataData IJsonModel<HybridIdentityMetadataData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridIdentityMetadataData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<HybridIdentityMetadataData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridIdentityMetadataData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        HybridIdentityMetadataData IPersistableModel<HybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridIdentityMetadataData>(data, options);
+        HybridIdentityMetadataData IPersistableModel<HybridIdentityMetadataData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridIdentityMetadataData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<HybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridIdentityMetadataData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<HybridIdentityMetadataData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridIdentityMetadataData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

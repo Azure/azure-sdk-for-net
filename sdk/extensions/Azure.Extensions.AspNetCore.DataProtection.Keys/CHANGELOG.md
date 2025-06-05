@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,24 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.0 (2025-05-19)
+
+### Features Added
+
+- Overloads were added to accept a `Uri`-typed key identifier to all protection methods.  _(A community contribution, courtesy of [MattKotsenas](https://github.com/abatishchev))_
+
+## 1.5.0 (2025-05-06)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Data Protection libraries better with their contributions to this release:
+
+- Matt Kotsenas _([GitHub](https://github.com/MattKotsenas))_
+
+### Features Added
+
+- An overload was added to `ProtectKeysWithAzureKeyVault` which allows for resolving the key identifier dynamically using `IServiceProvider` rather than using a static identifier.  _(A community contribution, courtesy of [MattKotsenas](https://github.com/MattKotsenas))_
 
 ## 1.4.0 (2025-02-11)
 

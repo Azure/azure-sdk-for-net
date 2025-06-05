@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ElasticSan
 {
     public partial class ElasticSanSnapshotResource : IJsonModel<ElasticSanSnapshotData>
     {
+        private static ElasticSanSnapshotData s_dataDeserializationInstance;
+        private static ElasticSanSnapshotData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ElasticSanSnapshotData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanSnapshotData>)Data).Write(writer, options);
 
-        ElasticSanSnapshotData IJsonModel<ElasticSanSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanSnapshotData>)Data).Create(ref reader, options);
+        ElasticSanSnapshotData IJsonModel<ElasticSanSnapshotData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ElasticSanSnapshotData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ElasticSanSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ElasticSanSnapshotData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ElasticSanSnapshotData>(Data, options, AzureResourceManagerElasticSanContext.Default);
 
-        ElasticSanSnapshotData IPersistableModel<ElasticSanSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanSnapshotData>(data, options);
+        ElasticSanSnapshotData IPersistableModel<ElasticSanSnapshotData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ElasticSanSnapshotData>(data, options, AzureResourceManagerElasticSanContext.Default);
 
-        string IPersistableModel<ElasticSanSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanSnapshotData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ElasticSanSnapshotData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ElasticSanSnapshotData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

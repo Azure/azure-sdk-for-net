@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationPolicyProperties"/>. </summary>
         /// <param name="customProperties">
         /// Policy model custom properties.
-        /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>, <see cref="GeneralPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationPolicyCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyCustomProperties"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customProperties"/> is null. </exception>
-        public DataReplicationPolicyProperties(PolicyModelCustomProperties customProperties)
+        public DataReplicationPolicyProperties(DataReplicationPolicyCustomProperties customProperties)
         {
             Argument.AssertNotNull(customProperties, nameof(customProperties));
 
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="provisioningState"> Gets or sets the provisioning state of the policy. </param>
         /// <param name="customProperties">
         /// Policy model custom properties.
-        /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>, <see cref="GeneralPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationPolicyCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyCustomProperties"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationPolicyProperties(DataReplicationProvisioningState? provisioningState, PolicyModelCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataReplicationPolicyProperties(DataReplicationProvisioningState? provisioningState, DataReplicationPolicyCustomProperties customProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CustomProperties = customProperties;
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public DataReplicationProvisioningState? ProvisioningState { get; }
         /// <summary>
         /// Policy model custom properties.
-        /// Please note <see cref="PolicyModelCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyModelCustomProperties"/>, <see cref="GeneralPolicyModelCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyModelCustomProperties"/>.
+        /// Please note <see cref="DataReplicationPolicyCustomProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="HyperVToAzStackHciPolicyCustomProperties"/> and <see cref="VMwareToAzStackHciPolicyCustomProperties"/>.
         /// </summary>
-        public PolicyModelCustomProperties CustomProperties { get; set; }
+        public DataReplicationPolicyCustomProperties CustomProperties { get; set; }
     }
 }
