@@ -86,7 +86,7 @@
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
-    <PackageReference Update="System.ClientModel" Version="1.4.1" />
+    <PackageReference Update="System.ClientModel" Version="1.4.2" />
     <PackageReference Update="System.IO.Hashing" Version="8.0.0" />
     <PackageReference Update="System.Memory" Version="4.5.5" />
     <PackageReference Update="System.Memory.Data" Version="6.0.1" />
