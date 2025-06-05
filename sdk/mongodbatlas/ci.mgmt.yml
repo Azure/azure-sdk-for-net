@@ -11,8 +11,8 @@ pr:
     - release/*
   paths:
     include:
-    - sdk/mongodbatlas/ci.mgmt.yml
-    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas/
+    - sdk/mongodbatlas/ci.mgmt.yml
+    - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas/
 
 
 extends:

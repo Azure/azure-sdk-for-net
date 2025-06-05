@@ -83,8 +83,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ObjectType = objectType;
             ObjectName = objectName;
             Version = version;
-            NBF = nbf;
-            EXP = exp;
+            Nbf = nbf;
+            Exp = exp;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,8 +104,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The version of the object that triggered this event. </summary>
         public string Version { get; }
         /// <summary> Not before date of the object that triggered this event. </summary>
-        public float? NBF { get; }
+        public float? Nbf { get; }
         /// <summary> The expiration date of the object that triggered this event. </summary>
-        public float? EXP { get; }
+        public float? Exp { get; }
     }
 }

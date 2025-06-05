@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(EventGridMqttClientSessionDisconnectedEventDataConverter))]
     public partial class EventGridMqttClientSessionDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<EventGridMqttClientSessionDisconnectedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventGridMqttClientSessionDisconnectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -178,6 +180,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class EventGridMqttClientSessionDisconnectedEventDataConverter : JsonConverter<EventGridMqttClientSessionDisconnectedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, EventGridMqttClientSessionDisconnectedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override EventGridMqttClientSessionDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEventGridMqttClientSessionDisconnectedEventData(document.RootElement);
+            }
         }
     }
 }

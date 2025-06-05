@@ -9,8 +9,10 @@ using System;
 using System.Threading;
 using Azure;
 using Azure.Core.Pipeline;
+using Payload.Pageable;
+using Payload.Pageable._ServerDrivenPagination.ContinuationToken;
 
-namespace Payload.Pageable
+namespace Payload.Pageable._ServerDrivenPagination
 {
     public partial class ServerDrivenPagination
     {

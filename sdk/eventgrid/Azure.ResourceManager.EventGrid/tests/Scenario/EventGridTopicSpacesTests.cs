@@ -53,6 +53,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
 
             Assert.AreEqual(EventGridNamespace.Data.Name, namespaceName);
         }
+
         [Test]
         public async Task TopicSpacesCreateGetUpdateDelete()
         {
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.EventGrid.Tests.Scenario
             Assert.AreEqual("Updated Topic Space Description", updatedTopicSpace.Data.Description);
             await updatedTopicSpace.DeleteAsync(WaitUntil.Completed);
         }
+
         [Test]
         public async Task ListTopicSpaces()
         {

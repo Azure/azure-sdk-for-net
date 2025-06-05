@@ -19,7 +19,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="editedByCommunicationIdentifier"/>, <paramref name="properties"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatThreadPropertiesUpdatedEventData(string threadId, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties, IReadOnlyDictionary<string, string> metadata) : base(threadId)
+        internal AcsChatThreadPropertiesUpdatedEventData(string threadId, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata) : base(threadId)
         {
             Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));
@@ -41,7 +41,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="editTime"> The time at which the properties of the thread were updated. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
-        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, BinaryData> properties, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, serializedAdditionalRawData, createTime, version)
+        internal AcsChatThreadPropertiesUpdatedEventData(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createTime, long? version, CommunicationIdentifierModel editedByCommunicationIdentifier, DateTimeOffset? editTime, IReadOnlyDictionary<string, object> properties, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, serializedAdditionalRawData, createTime, version)
         {
             EditedByCommunicationIdentifier = editedByCommunicationIdentifier;
             EditTime = editTime;
@@ -58,37 +58,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         public CommunicationIdentifierModel EditedByCommunicationIdentifier { get; }
         /// <summary> The time at which the properties of the thread were updated. </summary>
         public DateTimeOffset? EditTime { get; }
-        /// <summary>
-        /// The updated thread properties
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IReadOnlyDictionary<string, BinaryData> Properties { get; }
         /// <summary> The thread metadata. </summary>
         public IReadOnlyDictionary<string, string> Metadata { get; }
     }
