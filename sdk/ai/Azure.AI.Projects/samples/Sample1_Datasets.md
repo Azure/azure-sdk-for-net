@@ -74,10 +74,10 @@ datasets.Delete(datasetName, datasetVersion2);
 ## Asynchronous sample:
 ```C# Snippet:AI_Projects_DatasetsExampleAsync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
 var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
 var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
-var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
 var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
