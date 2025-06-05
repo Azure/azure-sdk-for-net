@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace BasicTypeSpec
 {
@@ -161,18 +160,6 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ListWithContinuationTokenResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="listWithContinuationTokenResponse"> The <see cref="ListWithContinuationTokenResponse"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ListWithContinuationTokenResponse listWithContinuationTokenResponse)
-        {
-            if (listWithContinuationTokenResponse == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(listWithContinuationTokenResponse, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ListWithContinuationTokenResponse"/> from. </param>
         public static explicit operator ListWithContinuationTokenResponse(Response result)
