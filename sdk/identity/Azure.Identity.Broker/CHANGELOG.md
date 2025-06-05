@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0-beta.3 (2025-06-10)
 
 ### Features Added
 
 - Support broker on Linux.
-
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 
