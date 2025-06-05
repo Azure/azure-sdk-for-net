@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Updated retry policy behavior when the service is throttling and the `TryTimeout` is shorter than the standard throttling time of 30 seconds.  Previously, the operation was immediately canceled with a server busy exception.  With these changes, the operation will begin consuming retry attempts while throttling until either the server busy state is cleared or all configured retry attempts are exhausted.  ([#50121](https://github.com/Azure/azure-sdk-for-net/issues/50121))
+
 ## 7.19.0 (2025-04-08)
 
 ### Features Added
@@ -23,6 +25,8 @@
 - Added jitter to the lock renewal timer to reduce the likelihood of lock renewal collisions when using the `ServiceBusProcessor` or the `ServiceBusSessionProcessor`.
 
 - Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 7.18.4 (2025-02-11)
 

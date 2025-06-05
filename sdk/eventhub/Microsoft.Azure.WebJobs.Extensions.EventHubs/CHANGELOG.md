@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
 ## 6.5.1 (2025-04-09)
 
 ### Bugs Fixed

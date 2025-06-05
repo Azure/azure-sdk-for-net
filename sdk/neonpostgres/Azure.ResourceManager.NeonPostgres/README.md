@@ -1,6 +1,6 @@
-# Microsoft Azure liftrneon management client library for .NET
+# Microsoft Azure Neon Postgres management client library for .NET
 
-**[Describe the service briefly first.]**
+Neon is a cloud-native Postgres solution designed for modern applications. It offers a serverless, fully managed, and scalable Postgres database. Neon's advanced features include autoscaling, scale-to-zero, database branching, instant point-in-time restore, and time travel queries. Neon simplifies database management with seamless integration into your existing workflows, providing a powerful, cost-efficient solution for developers and businesses. 
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,10 +14,10 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure liftrneon management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Neon Postgres management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.NeonPostgres --prerelease
+dotnet add package Azure.ResourceManager.NeonPostgres
 ```
 
 ### Prerequisites

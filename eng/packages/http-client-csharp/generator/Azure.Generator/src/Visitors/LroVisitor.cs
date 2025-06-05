@@ -88,7 +88,7 @@ namespace Azure.Generator.Visitors
             var returnType = (responseType, method.IsProtocolMethod) switch
             {
                 (null, _) => typeof(Operation),
-                (not null, true) => new CSharpType(typeof(Operation), typeof(BinaryData)),
+                (not null, true) => new CSharpType(typeof(Operation<>), typeof(BinaryData)),
                 _ => new CSharpType(typeof(Operation<>), AzureClientGenerator.Instance.TypeFactory.CreateCSharpType(responseType)!),
             };
             var isAsync = method.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Async);
@@ -140,7 +140,7 @@ namespace Azure.Generator.Visitors
                     var resultVariable = (assignmentExpression.Variable as DeclarationExpression)?.Variable!;
                     if (serviceMethod.Response.Type != null)
                     {
-                        resultVariable.Update(type: new CSharpType(typeof(Operation), typeof(BinaryData)));
+                        resultVariable.Update(type: new CSharpType(typeof(Operation<>), typeof(BinaryData)));
                     }
                     else
                     {
