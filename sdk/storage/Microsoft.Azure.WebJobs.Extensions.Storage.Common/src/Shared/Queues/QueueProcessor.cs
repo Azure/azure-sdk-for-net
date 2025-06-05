@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </remarks>
         /// <param name="message">The message to complete processing for.</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
-        ///  <param name="cancellationToken">Should not be used in this method</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         internal protected virtual async Task CompleteProcessingMessageAsync(QueueMessage message, FunctionResult result, CancellationToken cancellationToken)
         {
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// </summary>
         /// <param name="message">The poison message.</param>
         /// <param name="poisonQueue">The poison queue to copy the message to.</param>
-        /// /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use, should not be set here</param>
+        /// /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
         protected virtual async Task CopyMessageToPoisonQueueAsync(QueueMessage message, QueueClient poisonQueue, CancellationToken cancellationToken)
         {
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// Delete the specified message.
         /// </summary>
         /// <param name="message">The message to delete.</param>
-        /// /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use. Should not be passed into DeleteMessageAsync</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use, should not be set here</param>
         /// <returns></returns>
         protected virtual async Task DeleteMessageAsync(QueueMessage message, CancellationToken cancellationToken)
         {
