@@ -23,8 +23,8 @@ namespace Azure.AI.Projects.Tests
             var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
             var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
             var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
-            var filePath = "sample_folder/sample_file1.txt";
-            var folderPath = "sample_folder";
+            var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
+            var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var connectionName = TestEnvironment.CONNECTIONNAME;
@@ -103,8 +103,8 @@ namespace Azure.AI.Projects.Tests
             var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
             var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
             var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
-            var filePath = "sample_folder/sample_file1.txt";
-            var folderPath = "sample_folder";
+            var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
+            var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
 #else
             var endpoint = TestEnvironment.PROJECTENDPOINT;
             var datasetName = TestEnvironment.DATASETNAME;
