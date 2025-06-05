@@ -89,7 +89,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         {
             if (result.Succeeded)
             {
-                await DeleteMessageAsync(message).ConfigureAwait(false);
+                await DeleteMessageAsync(message, CancellationToken.None).ConfigureAwait(false);
             }
             else if (_poisonQueue != null)
             {
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
             if (_poisonQueue != null)
             {
                 await CopyMessageToPoisonQueueAsync(message, _poisonQueue, CancellationToken.None).ConfigureAwait(false);
-                await DeleteMessageAsync(message).ConfigureAwait(false);
+                await DeleteMessageAsync(message, CancellationToken.None).ConfigureAwait(false);
             }
         }
 
