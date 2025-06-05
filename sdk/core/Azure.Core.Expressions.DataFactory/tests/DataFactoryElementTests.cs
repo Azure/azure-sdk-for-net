@@ -1088,13 +1088,6 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         private string GetSerializedString<T>(DataFactoryElement<T> payload)
         {
             return ((IPersistableModel< DataFactoryElement<T>>)payload).Write(ModelReaderWriterOptions.Json).ToString();
-            //using var ms = new MemoryStream();
-            //using Utf8JsonWriter writer = new Utf8JsonWriter(ms);
-            //JsonSerializer.Serialize(writer, payload);
-            //writer.Flush();
-            //ms.Position = 0;
-            //using var sr = new StreamReader(ms);
-            //return sr.ReadToEnd();
         }
 
         [Test]
