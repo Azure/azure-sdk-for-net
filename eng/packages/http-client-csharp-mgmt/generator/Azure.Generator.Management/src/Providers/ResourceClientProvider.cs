@@ -7,11 +7,8 @@ using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
-<<<<<<< HEAD
 using Azure.Generator.Management.Snippets;
-=======
 using Azure.Generator.Management.Providers.TagMethodProviders;
->>>>>>> bddbf56f132 (first commit.)
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
