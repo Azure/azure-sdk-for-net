@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace Azure.ResourceManager.ApiCenter.Models
+namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    /// <summary> The response of a Service list operation. </summary>
-    internal partial class ApiCenterServiceListResult
+    /// <summary> Account key object for connection credential. </summary>
+    internal partial class ConnectionAccountKey
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,35 +45,22 @@ namespace Azure.ResourceManager.ApiCenter.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
-        /// <param name="value"> The Service items on this page. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ApiCenterServiceListResult(IEnumerable<ApiCenterServiceData> value)
+        /// <summary> Initializes a new instance of <see cref="ConnectionAccountKey"/>. </summary>
+        public ConnectionAccountKey()
         {
-            Argument.AssertNotNull(value, nameof(value));
-
-            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/>. </summary>
-        /// <param name="value"> The Service items on this page. </param>
-        /// <param name="nextLink"> The link to the next page of items. </param>
+        /// <summary> Initializes a new instance of <see cref="ConnectionAccountKey"/>. </summary>
+        /// <param name="key"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApiCenterServiceListResult(IReadOnlyList<ApiCenterServiceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectionAccountKey(string key, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
-            NextLink = nextLink;
+            Key = key;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenterServiceListResult"/> for deserialization. </summary>
-        internal ApiCenterServiceListResult()
-        {
-        }
-
-        /// <summary> The Service items on this page. </summary>
-        public IReadOnlyList<ApiCenterServiceData> Value { get; }
-        /// <summary> The link to the next page of items. </summary>
-        public Uri NextLink { get; }
+        /// <summary> Gets or sets the key. </summary>
+        [WirePath("key")]
+        public string Key { get; set; }
     }
 }

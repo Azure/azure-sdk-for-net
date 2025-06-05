@@ -1,5 +1,21 @@
 # Release History
 
+## 1.0.0-beta.6 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.5 (2025-06-04)
+
+### Other Changes
+
+- Reshipping due to issue with symbols publishing in previous version.
+
 ## 1.0.0-beta.4 (2025-06-03)
 
 ### Features Added

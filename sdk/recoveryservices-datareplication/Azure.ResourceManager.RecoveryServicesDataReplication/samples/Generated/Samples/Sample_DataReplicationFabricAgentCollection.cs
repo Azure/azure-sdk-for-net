@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             string fabricAgentName = "M";
             DataReplicationFabricAgentData data = new DataReplicationFabricAgentData
             {
-                Properties = new DataReplicationFabricAgentProperties("envzcoijbqhtrpncbjbhk", "y", new DataReplicationIdentity(Guid.Parse("joclkkdovixwapephhxaqtefubhhmq"), "cwktzrwajuvfyyymfstpey", "khsiaqfbpuhp", "dkjobanyqgzenivyxhvavottpc", "bubwwbowfhdmujrt"), new DataReplicationIdentity(Guid.Parse("joclkkdovixwapephhxaqtefubhhmq"), "cwktzrwajuvfyyymfstpey", "khsiaqfbpuhp", "dkjobanyqgzenivyxhvavottpc", "bubwwbowfhdmujrt"), null),
+                Properties = new DataReplicationFabricAgentProperties("envzcoijbqhtrpncbjbhk", "y", new DataReplicationIdentity(Guid.Parse("joclkkdovixwapephhxaqtefubhhmq"), "cwktzrwajuvfyyymfstpey", "khsiaqfbpuhp", "dkjobanyqgzenivyxhvavottpc", "bubwwbowfhdmujrt"), new DataReplicationIdentity(Guid.Parse("joclkkdovixwapephhxaqtefubhhmq"), "cwktzrwajuvfyyymfstpey", "khsiaqfbpuhp", "dkjobanyqgzenivyxhvavottpc", "bubwwbowfhdmujrt"), default),
             };
             ArmOperation<DataReplicationFabricAgentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fabricAgentName, data);
             DataReplicationFabricAgentResource result = lro.Value;
