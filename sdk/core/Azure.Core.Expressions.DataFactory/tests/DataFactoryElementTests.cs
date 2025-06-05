@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
@@ -543,15 +544,15 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var docString = JsonDocument.Parse(StringJson);
             var dfeString = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docString.RootElement)!;
-            Assert.AreEqual(StringJson, JsonSerializer.Serialize(dfeString));
+            Assert.AreEqual(StringJson, GetSerializedString(dfeString));
 
             var docBool = JsonDocument.Parse(BoolJson);
             var dfeBool = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docBool.RootElement)!;
-            Assert.AreEqual(BoolJson, JsonSerializer.Serialize(dfeBool));
+            Assert.AreEqual(BoolJson, GetSerializedString(dfeBool));
 
             var docInt = JsonDocument.Parse(IntJson);
             var dfeInt = DataFactoryElementJsonConverter.Deserialize<BinaryData>(docInt.RootElement)!;
-            Assert.AreEqual(IntJson, JsonSerializer.Serialize(dfeInt));
+            Assert.AreEqual(IntJson, GetSerializedString(dfeInt));
         }
 
         [Test]
@@ -1086,13 +1087,14 @@ namespace Azure.Core.Expressions.DataFactory.Tests
 
         private string GetSerializedString<T>(DataFactoryElement<T> payload)
         {
-            using var ms = new MemoryStream();
-            using Utf8JsonWriter writer = new Utf8JsonWriter(ms);
-            JsonSerializer.Serialize(writer, payload);
-            writer.Flush();
-            ms.Position = 0;
-            using var sr = new StreamReader(ms);
-            return sr.ReadToEnd();
+            return ((IPersistableModel< DataFactoryElement<T>>)payload).Write(ModelReaderWriterOptions.Json).ToString();
+            //using var ms = new MemoryStream();
+            //using Utf8JsonWriter writer = new Utf8JsonWriter(ms);
+            //JsonSerializer.Serialize(writer, payload);
+            //writer.Flush();
+            //ms.Position = 0;
+            //using var sr = new StreamReader(ms);
+            //return sr.ReadToEnd();
         }
 
         [Test]
@@ -1163,13 +1165,72 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         }
 
         [JsonConverter(typeof(TestModelConverter))]
-        public class TestModel
+        public class TestModel : IJsonModel<TestModel>
         {
             public int A { get; set; }
 
             public bool B { get; set; }
 
-            public override string ToString() => $"A: {A},B: {B}";
+            void IJsonModel<TestModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
+                if (format != "J")
+                {
+                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
+                }
+
+                writer.WriteStartObject();
+                writer.WritePropertyName("A");
+                writer.WriteNumberValue(A);
+                writer.WritePropertyName("B");
+                writer.WriteBooleanValue(B);
+                writer.WriteEndObject();
+            }
+
+            TestModel IJsonModel<TestModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
+                if (format != "J")
+                {
+                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
+                }
+
+                using var document = JsonDocument.ParseValue(ref reader);
+                return new TestModel()
+                {
+                    A = document.RootElement.GetProperty("A").GetInt32(),
+                    B = document.RootElement.GetProperty("B").GetBoolean()
+                };
+            }
+
+            BinaryData IPersistableModel<TestModel>.Write(ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
+                if (format != "J")
+                {
+                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
+                }
+
+                return ModelReaderWriter.Write(this, options);
+            }
+
+            TestModel IPersistableModel<TestModel>.Create(BinaryData data, ModelReaderWriterOptions options)
+            {
+                var format = options.Format == "W" ? ((IPersistableModel<TestModel>)this).GetFormatFromOptions(options) : options.Format;
+                if (format != "J")
+                {
+                    throw new FormatException($"The model {nameof(TestModel)} does not support '{format}' format.");
+                }
+
+                using var document = JsonDocument.Parse(data);
+                return new TestModel()
+                {
+                    A = document.RootElement.GetProperty("A").GetInt32(),
+                    B = document.RootElement.GetProperty("B").GetBoolean()
+                };
+            }
+
+            string IPersistableModel<TestModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
         }
 
         private class TestModelConverter : JsonConverter<TestModel>

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" VersionOverride="1.36.0" />
+    <PackageReference Include="System.ClientModel" />
   </ItemGroup>
 
   <ItemGroup>

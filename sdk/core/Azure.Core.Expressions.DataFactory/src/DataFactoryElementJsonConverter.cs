@@ -67,78 +67,6 @@ namespace Azure.Core.Expressions.DataFactory
             throw new InvalidOperationException($"Unable to convert {typeToConvert.Name} into a DataFactoryElement<T>");
         }
 
-        public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
-        {
-            switch (value)
-            {
-                case null:
-                    writer.WriteNullValue();
-                    break;
-                case DataFactoryElement<string?> stringElement:
-                    Serialize(writer, stringElement);
-                    break;
-                case DataFactoryElement<int> intElement:
-                    Serialize(writer, intElement);
-                    break;
-                case DataFactoryElement<int?> nullableIntElement:
-                    Serialize(writer, nullableIntElement);
-                    break;
-                case DataFactoryElement<double> doubleElement:
-                    Serialize(writer, doubleElement);
-                    break;
-                case DataFactoryElement<double?> nullableDoubleElement:
-                    Serialize(writer, nullableDoubleElement);
-                    break;
-                case DataFactoryElement<bool> boolElement:
-                    Serialize(writer, boolElement);
-                    break;
-                case DataFactoryElement<bool?> nullableBoolElement:
-                    Serialize(writer, nullableBoolElement);
-                    break;
-                case DataFactoryElement<DateTimeOffset> dtoElement:
-                    Serialize(writer, dtoElement);
-                    break;
-                case DataFactoryElement<DateTimeOffset?> nullableDtoElement:
-                    Serialize(writer, nullableDtoElement);
-                    break;
-                case DataFactoryElement<TimeSpan> timespanElement:
-                    Serialize(writer, timespanElement);
-                    break;
-                case DataFactoryElement<TimeSpan?> nullableTimespanElement:
-                    Serialize(writer, nullableTimespanElement);
-                    break;
-                case DataFactoryElement<Uri?> uriElement:
-                    Serialize(writer, uriElement);
-                    break;
-                case DataFactoryElement<IList<string?>?> stringListElement:
-                    Serialize<IList<string?>?>(writer, stringListElement);
-                    break;
-                case DataFactoryElement<IDictionary<string, string?>?> keyValuePairElement:
-                    Serialize(writer, keyValuePairElement);
-                    break;
-                case DataFactoryElement<IDictionary<string, BinaryData?>?> keyValuePairElement:
-                    Serialize(writer, keyValuePairElement);
-                    break;
-                case DataFactoryElement<BinaryData?> binaryDataElement:
-                    Serialize(writer, binaryDataElement);
-                    break;
-                default:
-                {
-                    if (TryGetGenericDataFactoryList(value.GetType(), out Type? genericListType))
-                    {
-                        var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(SerializeGenericList));
-                        methodInfo!.Invoke(null, new object[] { writer, value });
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
-                    }
-
-                    break;
-                }
-            }
-        }
-
         private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
         {
             return typeof(DataFactoryElementJsonConverter)
@@ -172,111 +100,6 @@ namespace Azure.Core.Expressions.DataFactory
         }
 
         private static bool IsGenericListType(Type type) => type == typeof(IList<>);
-
-        private static void Serialize<T>(Utf8JsonWriter writer, DataFactoryElement<T?> element)
-        {
-            if (element.Kind == DataFactoryElementKind.Literal)
-            {
-                switch (element.Literal)
-                {
-                    case TimeSpan timeSpan:
-                        writer.WriteStringValue(timeSpan, "c");
-                        break;
-                    case Uri uri:
-                        writer.WriteStringValue(uri.AbsoluteUri);
-                        break;
-                    case IList<string> stringList:
-                        writer.WriteStartArray();
-                        foreach (string? item in stringList)
-                        {
-                            writer.WriteStringValue(item);
-                        }
-                        writer.WriteEndArray();
-                        break;
-                    case IDictionary<string, string?> dictionary:
-                        writer.WriteStartObject();
-                        foreach (KeyValuePair<string, string?> pair in dictionary)
-                        {
-                            writer.WritePropertyName(pair.Key);
-                            writer.WriteStringValue(pair.Value);
-                        }
-                        writer.WriteEndObject();
-                        break;
-                    case IDictionary<string, BinaryData?> dictionary:
-                        writer.WriteStartObject();
-                        foreach (KeyValuePair<string, BinaryData?> pair in dictionary)
-                        {
-                            writer.WritePropertyName(pair.Key);
-                            if (pair.Value != null)
-                            {
-                                using JsonDocument document = JsonDocument.Parse(pair.Value.ToString());
-                                document.RootElement.WriteTo(writer);
-                            }
-                            else
-                            {
-                                writer.WriteNullValue();
-                            }
-                        }
-                        writer.WriteEndObject();
-                        break;
-                    case BinaryData binaryData:
-                        using (JsonDocument document = JsonDocument.Parse(binaryData.ToString()))
-                        {
-                            document.RootElement.WriteTo(writer);
-                        }
-                        break;
-                    default:
-                        writer.WriteObjectValue(element.Literal!);
-                        break;
-                }
-            }
-            else if (element.Kind == DataFactoryElementKind.Expression)
-            {
-                SerializeExpression(writer, element.ExpressionString!);
-            }
-            else
-            {
-                writer.WriteObjectValue(element.Secret!);
-            }
-        }
-
-        private static void SerializeGenericList<T>(Utf8JsonWriter writer, DataFactoryElement<IList<T?>?> element)
-        {
-            if (element.Kind == DataFactoryElementKind.Literal)
-            {
-                if (element.Literal == null)
-                {
-                    writer.WriteNullValue();
-                    return;
-                }
-
-                writer.WriteStartArray();
-                foreach (T? elem in element.Literal!)
-                {
-                    // underlying T must have a JsonConverter defined
-                    JsonSerializer.Serialize(writer, elem!);
-                }
-                writer.WriteEndArray();
-            }
-            else if (element.Kind == DataFactoryElementKind.Expression)
-            {
-                SerializeExpression(writer, element.ExpressionString!);
-            }
-            else
-            {
-                writer.WriteObjectValue(element.Secret!);
-            }
-        }
-
-        private static void SerializeExpression(Utf8JsonWriter writer, string value)
-        {
-            writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteStringValue("Expression");
-            writer.WritePropertyName("value");
-            writer.WriteStringValue(value);
-            writer.WriteEndObject();
-        }
 
         private static DataFactoryElement<IList<T?>?> DeserializeGenericList<T>(JsonElement json)
         {
@@ -398,6 +221,11 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             return element != null;
+        }
+
+        public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
+        {
+            throw new NotImplementedException();
         }
     }
 }

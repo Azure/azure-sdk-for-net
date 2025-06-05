@@ -4,6 +4,7 @@
 #nullable enable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -68,12 +69,15 @@ namespace Azure.Core
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue(this Utf8JsonWriter writer, object value)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions? options = null)
         {
             switch (value)
             {
                 case null:
                     writer.WriteNullValue();
+                    break;
+                case IJsonModel<T> jsonModel:
+                    jsonModel.Write(writer, options ?? new ModelReaderWriterOptions("W"));
                     break;
                 case IUtf8JsonSerializable serializable:
                     serializable.Write(writer);
@@ -129,7 +133,7 @@ namespace Azure.Core
                     foreach (KeyValuePair<string, object> pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue(pair.Value);
+                        writer.WriteObjectValue<object>(pair.Value);
                     }
                     writer.WriteEndObject();
                     break;
@@ -137,7 +141,7 @@ namespace Azure.Core
                     writer.WriteStartArray();
                     foreach (object item in objectEnumerable)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<object>(item);
                     }
                     writer.WriteEndArray();
                     break;
