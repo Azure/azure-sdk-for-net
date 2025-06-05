@@ -179,35 +179,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _logger.LogDebug($"Storage queue listener started ({_details})");
             return Task.FromResult(0);
         }
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            CancellationTokenRegistration? registration = null;
+            if (_drainModeManager is null || !_drainModeManager.IsDrainModeEnabled)
+            {
+                _logger.LogDebug($"Drain mode is not enabled, storage queue listener will stop immediately ({_details})");
+                _executionCancellationTokenSource.Cancel();
+                registration = cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel());
+            }
+            else
+            {
+                _logger.LogDebug($"Drain mode is enabled, storage queue listener will stop after processing current messages ({_details})");
+            }
 
-       public async Task StopAsync(CancellationToken cancellationToken)
-       {
-           if (_drainModeManager == null || !_drainModeManager.IsDrainModeEnabled)
-           {
-               _logger.LogDebug($"Drain mode is not enabled, storage queue listener will stop immediately ({_details})");
-               // Non-drain mode: cancel execution and link host cancellation to shutdown
-               _executionCancellationTokenSource.Cancel();
-               using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
-               {
-                   ThrowIfDisposed();
-                   _timer.Cancel();
-                   await Task.WhenAll(_processing).ConfigureAwait(false);
-                   await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
-                   _logger.LogDebug($"Drain mode is not enabled, storage queue listener stopped ({_details})");
-               }
-           }
-           else
-           {
-               // Drain mode: do NOT link host cancellation to shutdown token so that the listener can complete processing
-               _logger.LogDebug($"Drain mode is enabled, storage queue listener will stop after processing current messages ({_details})");
-               ThrowIfDisposed();
-               _timer.Cancel();
-               await Task.WhenAll(_processing).ConfigureAwait(false);
-               await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
-               _logger.LogDebug($"Drain mode is enabled, storage queue listener stopped ({_details})");
-           }
+            ThrowIfDisposed();
+            _timer.Cancel();
+            await Task.WhenAll(_processing).ConfigureAwait(false);
+            await _timer.StopAsync(cancellationToken).ConfigureAwait(false);
+            _logger.LogDebug($"Storage queue listener stopped ({_details})");
+
+            registration?.Dispose();
         }
-        
+
         public void Dispose()
         {
             if (!_disposed)
