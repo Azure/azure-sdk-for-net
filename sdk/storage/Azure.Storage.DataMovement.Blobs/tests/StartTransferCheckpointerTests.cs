@@ -73,13 +73,13 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(disposingLocalDirectory.DirectoryPath)
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(disposingLocalDirectory.DirectoryPath)
             };
             TransferManager transferManager = new TransferManager(managerOptions);
 
             TransferOptions transferOptions = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
 
             // Start transfer and await for completion. This transfer will fail

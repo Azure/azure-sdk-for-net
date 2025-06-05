@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Resources
 
         DeploymentStackResource IOperationSource<DeploymentStackResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DeploymentStackData.DeserializeDeploymentStackData(document.RootElement);
+            var data = ModelReaderWriter.Read<DeploymentStackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
             return new DeploymentStackResource(_client, data);
         }
 
         async ValueTask<DeploymentStackResource> IOperationSource<DeploymentStackResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DeploymentStackData.DeserializeDeploymentStackData(document.RootElement);
-            return new DeploymentStackResource(_client, data);
+            var data = ModelReaderWriter.Read<DeploymentStackData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerResourcesContext.Default);
+            return await Task.FromResult(new DeploymentStackResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

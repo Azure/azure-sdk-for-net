@@ -1,16 +1,47 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.6 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.5 (2025-05-14)
+
+### Other Changes
+
+- Updated support for `AIInferenceExtensions` methods to consume stable SCM version.
+
+## 1.0.0-beta.4 (2025-03-18)
+
+### Features Added
+
+- Added extension methods to get `ChatCompletionsClient` and `EmbeddingsClient` using [AIProjectClient](https://learn.microsoft.com/dotnet/api/azure.ai.projects.aiprojectclient?view=azure-dotnet-preview).
+
+### Bugs Fixed
+
+- Fixed an issue with the audio samples not properly showcasing the intended workflow.
+
+## 1.0.0-beta.3 (2025-02-13)
+
+### Features Added
+
+- Added new `ImageEmbeddingsClient`, to provide support for generating embeddings with model input. See sample for more information.
+- Added support for Chat Completions with audio input, for supported models.
+- Added support for Chat Completions with structured output.
+- Added support for providing a "Developer" message to models which support it.
+
+### Breaking Changes
+
+- `ChatCompletionsResponseFormatJSON` has been renamed to `ChatCompletionsResponseFormatJsonObject`.
+
+### Bugs Fixed
+
+- Fixed an issue where `usage` wasn't being properly included in chat responses.
 
 ## 1.0.0-beta.2 (2024-10-24)
 

@@ -111,6 +111,36 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMinCapacities))
+            {
+                writer.WritePropertyName("supportedMinCapacities"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedMinCapacities)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
+            {
+                writer.WritePropertyName("supportedAutoPauseDelay"u8);
+                writer.WriteObjectValue(SupportedAutoPauseDelay, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedPerDatabaseAutoPauseDelay))
+            {
+                writer.WritePropertyName("supportedPerDatabaseAutoPauseDelay"u8);
+                writer.WriteObjectValue(SupportedPerDatabaseAutoPauseDelay, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedZones))
+            {
+                writer.WritePropertyName("supportedZones"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedZones)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -129,7 +159,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -168,6 +198,10 @@ namespace Azure.ResourceManager.Sql.Models
             IReadOnlyList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability> supportedPerDatabaseMaxPerformanceLevels = default;
             bool? zoneRedundant = default;
             IReadOnlyList<MaintenanceConfigurationCapability> supportedMaintenanceConfigurations = default;
+            IReadOnlyList<MinCapacityCapability> supportedMinCapacities = default;
+            AutoPauseDelayTimeRange supportedAutoPauseDelay = default;
+            PerDatabaseAutoPauseDelayTimeRange supportedPerDatabaseAutoPauseDelay = default;
+            IReadOnlyList<ZonePinningCapability> supportedZones = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -289,6 +323,52 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedMaintenanceConfigurations = array;
                     continue;
                 }
+                if (property.NameEquals("supportedMinCapacities"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<MinCapacityCapability> array = new List<MinCapacityCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(MinCapacityCapability.DeserializeMinCapacityCapability(item, options));
+                    }
+                    supportedMinCapacities = array;
+                    continue;
+                }
+                if (property.NameEquals("supportedAutoPauseDelay"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedAutoPauseDelay = AutoPauseDelayTimeRange.DeserializeAutoPauseDelayTimeRange(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("supportedPerDatabaseAutoPauseDelay"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    supportedPerDatabaseAutoPauseDelay = PerDatabaseAutoPauseDelayTimeRange.DeserializePerDatabaseAutoPauseDelayTimeRange(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("supportedZones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ZonePinningCapability> array = new List<ZonePinningCapability>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(ZonePinningCapability.DeserializeZonePinningCapability(item, options));
+                    }
+                    supportedZones = array;
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -320,6 +400,10 @@ namespace Azure.ResourceManager.Sql.Models
                 supportedPerDatabaseMaxPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>(),
                 zoneRedundant,
                 supportedMaintenanceConfigurations ?? new ChangeTrackingList<MaintenanceConfigurationCapability>(),
+                supportedMinCapacities ?? new ChangeTrackingList<MinCapacityCapability>(),
+                supportedAutoPauseDelay,
+                supportedPerDatabaseAutoPauseDelay,
+                supportedZones ?? new ChangeTrackingList<ZonePinningCapability>(),
                 status,
                 reason,
                 serializedAdditionalRawData);
@@ -527,6 +611,82 @@ namespace Azure.ResourceManager.Sql.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMinCapacities), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedMinCapacities: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedMinCapacities))
+                {
+                    if (SupportedMinCapacities.Any())
+                    {
+                        builder.Append("  supportedMinCapacities: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedMinCapacities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedMinCapacities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAutoPauseDelay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedAutoPauseDelay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedAutoPauseDelay))
+                {
+                    builder.Append("  supportedAutoPauseDelay: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false, "  supportedAutoPauseDelay: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedPerDatabaseAutoPauseDelay), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedPerDatabaseAutoPauseDelay: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SupportedPerDatabaseAutoPauseDelay))
+                {
+                    builder.Append("  supportedPerDatabaseAutoPauseDelay: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedPerDatabaseAutoPauseDelay, options, 2, false, "  supportedPerDatabaseAutoPauseDelay: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedZones), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  supportedZones: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(SupportedZones))
+                {
+                    if (SupportedZones.Any())
+                    {
+                        builder.Append("  supportedZones: ");
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedZones)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedZones: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -576,7 +736,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -592,7 +752,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticPoolPerformanceLevelCapability(document.RootElement, options);
                     }
                 default:

@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.BotService.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBotServiceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support writing '{options.Format}' format.");
             }
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBotChannelGetWithKeysResult(document.RootElement, options);
                     }
                 default:

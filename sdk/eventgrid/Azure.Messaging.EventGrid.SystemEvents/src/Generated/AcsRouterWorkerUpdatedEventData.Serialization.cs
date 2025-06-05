@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterWorkerUpdatedEventDataConverter))]
     public partial class AcsRouterWorkerUpdatedEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterWorkerUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterWorkerUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -39,20 +41,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("workerId"u8);
                 writer.WriteStringValue(WorkerId);
             }
-            writer.WritePropertyName("queueAssignments"u8);
-            writer.WriteStartArray();
-            foreach (var item in QueueAssignments)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("queueAssignments"u8);
+                writer.WriteStartArray();
+                foreach (var item in QueueAssignments)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("channelConfigurations"u8);
-            writer.WriteStartArray();
-            foreach (var item in ChannelConfigurations)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("channelConfigurations"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChannelConfigurations)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (Optional.IsDefined(TotalCapacity))
             {
                 writer.WritePropertyName("totalCapacity"u8);
@@ -74,13 +82,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(item.Value);
             }
             writer.WriteEndObject();
-            writer.WritePropertyName("updatedWorkerProperties"u8);
-            writer.WriteStartArray();
-            foreach (var item in UpdatedWorkerProperties)
+            if (options.Format != "W")
             {
-                writer.WriteStringValue(item.ToString());
+                writer.WritePropertyName("updatedWorkerProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in UpdatedWorkerProperties)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,7 +100,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -217,7 +228,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterWorkerUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -231,7 +242,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterWorkerUpdatedEventData(document.RootElement, options);
                     }
                 default:
@@ -245,7 +256,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsRouterWorkerUpdatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRouterWorkerUpdatedEventData(document.RootElement);
         }
 
@@ -255,6 +266,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterWorkerUpdatedEventDataConverter : JsonConverter<AcsRouterWorkerUpdatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterWorkerUpdatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterWorkerUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterWorkerUpdatedEventData(document.RootElement);
+            }
         }
     }
 }

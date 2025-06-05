@@ -83,7 +83,7 @@ namespace Azure.AI.Inference
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIInferenceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChatRequestMessage)} does not support writing '{options.Format}' format.");
             }
@@ -97,7 +97,7 @@ namespace Azure.AI.Inference
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChatRequestMessage(document.RootElement, options);
                     }
                 default:
@@ -111,7 +111,7 @@ namespace Azure.AI.Inference
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new UnknownChatRequestMessage FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeUnknownChatRequestMessage(document.RootElement);
         }
 

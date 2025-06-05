@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(HealthcareDicomImageUpdatedEventDataConverter))]
     public partial class HealthcareDicomImageUpdatedEventData : IUtf8JsonSerializable, IJsonModel<HealthcareDicomImageUpdatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HealthcareDicomImageUpdatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,31 +36,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(HealthcareDicomImageUpdatedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PartitionName))
-            {
-                writer.WritePropertyName("partitionName"u8);
-                writer.WriteStringValue(PartitionName);
-            }
-            if (Optional.IsDefined(ImageStudyInstanceUid))
-            {
-                writer.WritePropertyName("imageStudyInstanceUid"u8);
-                writer.WriteStringValue(ImageStudyInstanceUid);
-            }
-            if (Optional.IsDefined(ImageSeriesInstanceUid))
-            {
-                writer.WritePropertyName("imageSeriesInstanceUid"u8);
-                writer.WriteStringValue(ImageSeriesInstanceUid);
-            }
-            if (Optional.IsDefined(ImageSopInstanceUid))
-            {
-                writer.WritePropertyName("imageSopInstanceUid"u8);
-                writer.WriteStringValue(ImageSopInstanceUid);
-            }
-            if (Optional.IsDefined(ServiceHostName))
-            {
-                writer.WritePropertyName("serviceHostName"u8);
-                writer.WriteStringValue(ServiceHostName);
-            }
+            writer.WritePropertyName("partitionName"u8);
+            writer.WriteStringValue(PartitionName);
+            writer.WritePropertyName("imageStudyInstanceUid"u8);
+            writer.WriteStringValue(ImageStudyInstanceUid);
+            writer.WritePropertyName("imageSeriesInstanceUid"u8);
+            writer.WriteStringValue(ImageSeriesInstanceUid);
+            writer.WritePropertyName("imageSopInstanceUid"u8);
+            writer.WriteStringValue(ImageSopInstanceUid);
+            writer.WritePropertyName("serviceHostName"u8);
+            writer.WriteStringValue(ServiceHostName);
             if (Optional.IsDefined(SequenceNumber))
             {
                 writer.WritePropertyName("sequenceNumber"u8);
@@ -72,7 +59,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -168,7 +155,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HealthcareDicomImageUpdatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -182,7 +169,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHealthcareDicomImageUpdatedEventData(document.RootElement, options);
                     }
                 default:
@@ -196,7 +183,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static HealthcareDicomImageUpdatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeHealthcareDicomImageUpdatedEventData(document.RootElement);
         }
 
@@ -206,6 +193,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class HealthcareDicomImageUpdatedEventDataConverter : JsonConverter<HealthcareDicomImageUpdatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, HealthcareDicomImageUpdatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override HealthcareDicomImageUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeHealthcareDicomImageUpdatedEventData(document.RootElement);
+            }
         }
     }
 }

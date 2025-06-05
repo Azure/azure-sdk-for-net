@@ -46,8 +46,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionEventData"/>. </summary>
-        internal AvsScriptExecutionEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <param name="cmdletId"> Cmdlet referenced in the execution that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="cmdletId"/> is null. </exception>
+        internal AvsScriptExecutionEventData(string operationId, string cmdletId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
+            Argument.AssertNotNull(cmdletId, nameof(cmdletId));
+
+            OperationId = operationId;
+            CmdletId = cmdletId;
             Output = new ChangeTrackingList<string>();
         }
 
@@ -62,6 +70,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             CmdletId = cmdletId;
             Output = output;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsScriptExecutionEventData"/> for deserialization. </summary>
+        internal AvsScriptExecutionEventData()
+        {
         }
 
         /// <summary> Id of the operation that caused this event. </summary>

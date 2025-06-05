@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.InformaticaDataManagement
 
         InformaticaOrganizationResource IOperationSource<InformaticaOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement);
+            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
             return new InformaticaOrganizationResource(_client, data);
         }
 
         async ValueTask<InformaticaOrganizationResource> IOperationSource<InformaticaOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = InformaticaOrganizationData.DeserializeInformaticaOrganizationData(document.RootElement);
-            return new InformaticaOrganizationResource(_client, data);
+            var data = ModelReaderWriter.Read<InformaticaOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerInformaticaDataManagementContext.Default);
+            return await Task.FromResult(new InformaticaOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

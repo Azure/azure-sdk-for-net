@@ -72,6 +72,27 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.AreEqual(createResponse.Value.ETag, propertiesResponse.Value.ETag);
         }
 
+        [Test]
+        public void Ctor_ConnectionString_CustomUri()
+        {
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var directoryName = "directoryName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var fileEndpoint = new Uri("http://customdomain/" + accountName);
+            var fileSecondaryEndpoint = new Uri("http://customdomain/" + accountName + "-secondary");
+
+            var connectionString = new StorageConnectionString(credentials, (default, default), (default, default), (default, default), (fileEndpoint, fileSecondaryEndpoint));
+
+            ShareDirectoryClient directoryClient = new ShareDirectoryClient(connectionString.ToString(true), shareName, directoryName);
+
+            Assert.AreEqual(accountName, directoryClient.AccountName);
+            Assert.AreEqual(shareName, directoryClient.ShareName);
+            Assert.AreEqual(directoryName, directoryClient.Path);
+        }
+
         [RecordedTest]
         public async Task Ctor_AzureSasCredential()
         {
@@ -88,6 +109,24 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Assert
             Assert.IsNotNull(properties);
+        }
+
+        [Test]
+        public void Ctor_SharedKey_AccountName()
+        {
+            // Arrange
+            var accountName = "accountName";
+            var shareName = "shareName";
+            var directoryName = "directoryName";
+            var accountKey = Convert.ToBase64String(new byte[] { 0, 1, 2, 3, 4, 5 });
+            var credentials = new StorageSharedKeyCredential(accountName, accountKey);
+            var shareEndpoint = new Uri($"https://customdomain/{shareName}/{directoryName}");
+
+            ShareDirectoryClient ShareDirectoryClient = new ShareDirectoryClient(shareEndpoint, credentials);
+
+            Assert.AreEqual(accountName, ShareDirectoryClient.AccountName);
+            Assert.AreEqual(shareName, ShareDirectoryClient.ShareName);
+            Assert.AreEqual(directoryName, ShareDirectoryClient.Path);
         }
 
         [RecordedTest]
@@ -157,6 +196,13 @@ namespace Azure.Storage.Files.Shares.Tests
             // Assert
             bool exists = await aadDirClient.ExistsAsync();
             Assert.IsNotNull(exists);
+        }
+
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareDirectoryClient("UseDevelopmentStorage=true", "share", "dir"));
+            Assert.AreEqual("connectionString", ex.ParamName);
         }
 
         [RecordedTest]

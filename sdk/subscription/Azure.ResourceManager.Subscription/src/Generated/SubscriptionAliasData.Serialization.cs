@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Subscription
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSubscriptionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionAliasData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Subscription
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSubscriptionAliasData(document.RootElement, options);
                     }
                 default:

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CosmosDBTableRoleAssignmentResource IOperationSource<CosmosDBTableRoleAssignmentResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CosmosDBTableRoleAssignmentData.DeserializeCosmosDBTableRoleAssignmentData(document.RootElement);
+            var data = ModelReaderWriter.Read<CosmosDBTableRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CosmosDBTableRoleAssignmentResource(_client, data);
         }
 
         async ValueTask<CosmosDBTableRoleAssignmentResource> IOperationSource<CosmosDBTableRoleAssignmentResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CosmosDBTableRoleAssignmentData.DeserializeCosmosDBTableRoleAssignmentData(document.RootElement);
-            return new CosmosDBTableRoleAssignmentResource(_client, data);
+            var data = ModelReaderWriter.Read<CosmosDBTableRoleAssignmentData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            return await Task.FromResult(new CosmosDBTableRoleAssignmentResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsChatMessageEditedInThreadEventDataConverter))]
     public partial class AcsChatMessageEditedInThreadEventData : IUtf8JsonSerializable, IJsonModel<AcsChatMessageEditedInThreadEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsChatMessageEditedInThreadEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,21 +37,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(MessageBody))
+            writer.WritePropertyName("messageBody"u8);
+            writer.WriteStringValue(MessageBody);
+            if (Optional.IsCollectionDefined(Metadata))
             {
-                writer.WritePropertyName("messageBody"u8);
-                writer.WriteStringValue(MessageBody);
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            writer.WritePropertyName("metadata"u8);
-            writer.WriteStartObject();
-            foreach (var item in Metadata)
+            if (Optional.IsDefined(EditTime))
             {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
+                writer.WritePropertyName("editTime"u8);
+                writer.WriteStringValue(EditTime.Value, "O");
             }
-            writer.WriteEndObject();
-            writer.WritePropertyName("editTime"u8);
-            writer.WriteStringValue(EditTime, "O");
         }
 
         AcsChatMessageEditedInThreadEventData IJsonModel<AcsChatMessageEditedInThreadEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -74,11 +79,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string messageBody = default;
             IReadOnlyDictionary<string, string> metadata = default;
-            DateTimeOffset editTime = default;
+            DateTimeOffset? editTime = default;
             string messageId = default;
             CommunicationIdentifierModel senderCommunicationIdentifier = default;
             string senderDisplayName = default;
-            DateTimeOffset composeTime = default;
+            DateTimeOffset? composeTime = default;
             string type = default;
             long? version = default;
             string transactionId = default;
@@ -94,6 +99,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("metadata"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
@@ -104,6 +113,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("editTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     editTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -124,6 +137,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("composeTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     composeTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -168,7 +185,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 type,
                 version,
                 messageBody,
-                metadata,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 editTime);
         }
 
@@ -179,7 +196,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsChatMessageEditedInThreadEventData)} does not support writing '{options.Format}' format.");
             }
@@ -193,7 +210,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsChatMessageEditedInThreadEventData(document.RootElement, options);
                     }
                 default:
@@ -207,7 +224,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsChatMessageEditedInThreadEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsChatMessageEditedInThreadEventData(document.RootElement);
         }
 
@@ -217,6 +234,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsChatMessageEditedInThreadEventDataConverter : JsonConverter<AcsChatMessageEditedInThreadEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsChatMessageEditedInThreadEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsChatMessageEditedInThreadEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsChatMessageEditedInThreadEventData(document.RootElement);
+            }
         }
     }
 }

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(CoreConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(CoreConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(CoreConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HBaseConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(HBaseConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(HBaseConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HdfsConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(HdfsConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(HdfsConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HiveConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(HiveConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(HiveConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(MapReduceConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(MapReduceConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(MapReduceConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(OozieConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(OozieConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(OozieConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(StormConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(StormConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(StormConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(YarnConfiguration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(YarnConfiguration))
+                using (JsonDocument document = JsonDocument.Parse(YarnConfiguration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(HeadNodeSize);
 #else
-                using (JsonDocument document = JsonDocument.Parse(HeadNodeSize))
+                using (JsonDocument document = JsonDocument.Parse(HeadNodeSize, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(DataNodeSize);
 #else
-                using (JsonDocument document = JsonDocument.Parse(DataNodeSize))
+                using (JsonDocument document = JsonDocument.Parse(DataNodeSize, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ZookeeperNodeSize);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ZookeeperNodeSize))
+                using (JsonDocument document = JsonDocument.Parse(ZookeeperNodeSize, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -762,7 +762,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightOnDemandLinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -776,7 +776,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightOnDemandLinkedService(document.RootElement, options);
                     }
                 default:

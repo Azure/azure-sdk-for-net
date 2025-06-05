@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerKubernetesConfigurationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -950,7 +950,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKubernetesClusterExtensionData(document.RootElement, options);
                     }
                 default:

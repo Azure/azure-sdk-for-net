@@ -55,7 +55,7 @@ namespace Azure.AI.Vision.Face
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -140,7 +140,7 @@ namespace Azure.AI.Vision.Face
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAIVisionFaceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FaceTrainingResult)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +154,7 @@ namespace Azure.AI.Vision.Face
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFaceTrainingResult(document.RootElement, options);
                     }
                 default:
@@ -168,7 +168,7 @@ namespace Azure.AI.Vision.Face
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FaceTrainingResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFaceTrainingResult(document.RootElement);
         }
 

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Reservations
 
         ReservationDetailResource IOperationSource<ReservationDetailResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
+            var data = ModelReaderWriter.Read<ReservationDetailData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
             return new ReservationDetailResource(_client, data);
         }
 
         async ValueTask<ReservationDetailResource> IOperationSource<ReservationDetailResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ReservationDetailData.DeserializeReservationDetailData(document.RootElement);
-            return new ReservationDetailResource(_client, data);
+            var data = ModelReaderWriter.Read<ReservationDetailData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerReservationsContext.Default);
+            return await Task.FromResult(new ReservationDetailResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

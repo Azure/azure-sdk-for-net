@@ -83,6 +83,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("scheduledEventsPolicy"u8);
                 writer.WriteObjectValue(ScheduledEventsPolicy, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(VirtualMachineScaleSetMigrationInfo))
+            {
+                writer.WritePropertyName("virtualMachineScaleSetMigrationInfo"u8);
+                writer.WriteObjectValue(VirtualMachineScaleSetMigrationInfo, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -114,6 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             WritableSubResource proximityPlacementGroup = default;
             IReadOnlyList<InstanceViewStatus> statuses = default;
             ScheduledEventsPolicy scheduledEventsPolicy = default;
+            VirtualMachineScaleSetMigrationInfo virtualMachineScaleSetMigrationInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,6 +220,15 @@ namespace Azure.ResourceManager.Compute.Models
                             scheduledEventsPolicy = ScheduledEventsPolicy.DeserializeScheduledEventsPolicy(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("virtualMachineScaleSetMigrationInfo"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualMachineScaleSetMigrationInfo = VirtualMachineScaleSetMigrationInfo.DeserializeVirtualMachineScaleSetMigrationInfo(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -232,7 +247,8 @@ namespace Azure.ResourceManager.Compute.Models
                 virtualMachines ?? new ChangeTrackingList<WritableSubResource>(),
                 proximityPlacementGroup,
                 statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
-                scheduledEventsPolicy);
+                scheduledEventsPolicy,
+                virtualMachineScaleSetMigrationInfo);
         }
 
         BinaryData IPersistableModel<AvailabilitySetPatch>.Write(ModelReaderWriterOptions options)
@@ -242,7 +258,7 @@ namespace Azure.ResourceManager.Compute.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvailabilitySetPatch)} does not support writing '{options.Format}' format.");
             }
@@ -256,7 +272,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvailabilitySetPatch(document.RootElement, options);
                     }
                 default:

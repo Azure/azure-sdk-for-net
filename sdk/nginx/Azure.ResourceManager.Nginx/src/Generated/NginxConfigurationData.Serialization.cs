@@ -42,11 +42,6 @@ namespace Azure.ResourceManager.Nginx
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
         }
 
         NginxConfigurationData IJsonModel<NginxConfigurationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -70,7 +65,6 @@ namespace Azure.ResourceManager.Nginx
                 return null;
             }
             NginxConfigurationProperties properties = default;
-            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -86,15 +80,6 @@ namespace Azure.ResourceManager.Nginx
                         continue;
                     }
                     properties = NginxConfigurationProperties.DeserializeNginxConfigurationProperties(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("location"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -133,7 +118,6 @@ namespace Azure.ResourceManager.Nginx
                 type,
                 systemData,
                 properties,
-                location,
                 serializedAdditionalRawData);
         }
 
@@ -144,7 +128,7 @@ namespace Azure.ResourceManager.Nginx
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NginxConfigurationData)} does not support writing '{options.Format}' format.");
             }
@@ -158,7 +142,7 @@ namespace Azure.ResourceManager.Nginx
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxConfigurationData(document.RootElement, options);
                     }
                 default:

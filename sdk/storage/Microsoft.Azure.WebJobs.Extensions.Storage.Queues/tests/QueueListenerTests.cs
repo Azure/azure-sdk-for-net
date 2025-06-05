@@ -774,8 +774,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode manager is null.");
         }
 
-        // Removed SetCancellationToken method as reflection is no longer needed.
-
         [Test]
         public void Get_TargetScale_IsNotNull()
         {

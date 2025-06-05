@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DataBoxEdge
 
         DiagnosticProactiveLogCollectionSettingResource IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DiagnosticProactiveLogCollectionSettingData.DeserializeDiagnosticProactiveLogCollectionSettingData(document.RootElement);
+            var data = ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
             return new DiagnosticProactiveLogCollectionSettingResource(_client, data);
         }
 
         async ValueTask<DiagnosticProactiveLogCollectionSettingResource> IOperationSource<DiagnosticProactiveLogCollectionSettingResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DiagnosticProactiveLogCollectionSettingData.DeserializeDiagnosticProactiveLogCollectionSettingData(document.RootElement);
-            return new DiagnosticProactiveLogCollectionSettingResource(_client, data);
+            var data = ModelReaderWriter.Read<DiagnosticProactiveLogCollectionSettingData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDataBoxEdgeContext.Default);
+            return await Task.FromResult(new DiagnosticProactiveLogCollectionSettingResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

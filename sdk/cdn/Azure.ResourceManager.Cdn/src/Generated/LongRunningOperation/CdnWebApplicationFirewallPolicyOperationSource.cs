@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Cdn
 
         CdnWebApplicationFirewallPolicyResource IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new CdnWebApplicationFirewallPolicyResource(_client, data);
         }
 
         async ValueTask<CdnWebApplicationFirewallPolicyResource> IOperationSource<CdnWebApplicationFirewallPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CdnWebApplicationFirewallPolicyData.DeserializeCdnWebApplicationFirewallPolicyData(document.RootElement);
-            return new CdnWebApplicationFirewallPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<CdnWebApplicationFirewallPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            return await Task.FromResult(new CdnWebApplicationFirewallPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

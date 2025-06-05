@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
 
         BackupPrivateEndpointConnectionResource IOperationSource<BackupPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = BackupPrivateEndpointConnectionData.DeserializeBackupPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
             return new BackupPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<BackupPrivateEndpointConnectionResource> IOperationSource<BackupPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = BackupPrivateEndpointConnectionData.DeserializeBackupPrivateEndpointConnectionData(document.RootElement);
-            return new BackupPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<BackupPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesBackupContext.Default);
+            return await Task.FromResult(new BackupPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

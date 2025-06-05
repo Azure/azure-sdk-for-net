@@ -1,10 +1,8 @@
 # Release History
 
-## 1.1.0-beta.5 (Unreleased)
+## 1.1.0-beta.7 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -12,11 +10,28 @@
 
 ### Other Changes
 
+## 1.1.0-beta.6 (2025-05-08)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-preview-2023-06' to 'package-preview-2024-09'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/96955c9cf1998abe8b24d44a79ea2c5cce9b9c46/specification/confidentialledger/resource-manager/readme.md.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.45.0 to 1.46.0
+- Upgraded Azure.ResourceManager from 1.13.0 to 1.13.1
+
+## 1.1.0-beta.5 (2025-03-11)
+
+### Features Added
+
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ## 1.1.0-beta.4 (2024-05-07)
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-preview-2023-01' to 'package-preview-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/de1bc645b4c91e6cb3fddb5588c102ca050dd4da/specification/confidentialledger/resource-manager/readme.md
+- Upgraded api-version tag from 'package-preview-2023-01' to 'package-preview-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/de1bc645b4c91e6cb3fddb5588c102ca050dd4da/specification/confidentialledger/resource-manager/readme.md.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Enable long-running operation rehydration.
 

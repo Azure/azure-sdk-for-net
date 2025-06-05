@@ -123,12 +123,12 @@ namespace Azure.Storage.DataMovement.Tests
             string destinationProviderId = _testDestinationProviderId,
             bool isContainer = false,
             TransferStatus status = default,
-            StorageResourceCheckpointData sourceCheckpointData = default,
-            StorageResourceCheckpointData destinationCheckpointData = default)
+            StorageResourceCheckpointDetails sourceCheckpointDetails = default,
+            StorageResourceCheckpointDetails destinationCheckpointDetails = default)
         {
             status ??= new TransferStatus();
-            sourceCheckpointData ??= MockResourceCheckpointData.DefaultInstance;
-            destinationCheckpointData ??= MockResourceCheckpointData.DefaultInstance;
+            sourceCheckpointDetails ??= MockResourceCheckpointDetails.DefaultInstance;
+            destinationCheckpointDetails ??= MockResourceCheckpointDetails.DefaultInstance;
 
             JobPlanHeader header = new JobPlanHeader(
                 DataMovementConstants.JobPlanFile.SchemaVersion,
@@ -142,8 +142,8 @@ namespace Azure.Storage.DataMovement.Tests
                 status,
                 parentSourcePath,
                 parentDestinationPath,
-                sourceCheckpointData,
-                destinationCheckpointData);
+                sourceCheckpointDetails,
+                destinationCheckpointDetails);
 
             string filePath = Path.Combine(checkpointPath, $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}");
             using (FileStream stream = File.Create(filePath))

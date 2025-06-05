@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.HDInsight
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHDInsightContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(HDInsightPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.HDInsight
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeHDInsightPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

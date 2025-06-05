@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         ServiceFabricManagedClusterVersion value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         ServiceFabricManagedClusterVersion value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         ServiceFabricManagedClusterVersion value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         ServiceFabricManagedClusterVersion value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ServiceFabricManagedClusterVersion.DeserializeServiceFabricManagedClusterVersion(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case 200:
                     {
                         IReadOnlyList<ServiceFabricManagedClusterVersion> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<ServiceFabricManagedClusterVersion> array = new List<ServiceFabricManagedClusterVersion>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {

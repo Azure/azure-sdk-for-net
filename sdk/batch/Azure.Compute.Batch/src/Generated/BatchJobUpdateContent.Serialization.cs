@@ -74,6 +74,11 @@ namespace Azure.Compute.Batch
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(NetworkConfiguration))
+            {
+                writer.WritePropertyName("networkConfiguration"u8);
+                writer.WriteObjectValue(NetworkConfiguration, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,7 +87,7 @@ namespace Azure.Compute.Batch
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -118,6 +123,7 @@ namespace Azure.Compute.Batch
             BatchPoolInfo poolInfo = default;
             OnAllBatchTasksComplete? onAllTasksComplete = default;
             IList<MetadataItem> metadata = default;
+            BatchJobNetworkConfiguration networkConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,6 +196,15 @@ namespace Azure.Compute.Batch
                     metadata = array;
                     continue;
                 }
+                if (property.NameEquals("networkConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkConfiguration = BatchJobNetworkConfiguration.DeserializeBatchJobNetworkConfiguration(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -204,6 +219,7 @@ namespace Azure.Compute.Batch
                 poolInfo,
                 onAllTasksComplete,
                 metadata ?? new ChangeTrackingList<MetadataItem>(),
+                networkConfiguration,
                 serializedAdditionalRawData);
         }
 
@@ -214,7 +230,7 @@ namespace Azure.Compute.Batch
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureComputeBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchJobUpdateContent)} does not support writing '{options.Format}' format.");
             }
@@ -228,7 +244,7 @@ namespace Azure.Compute.Batch
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchJobUpdateContent(document.RootElement, options);
                     }
                 default:
@@ -242,7 +258,7 @@ namespace Azure.Compute.Batch
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BatchJobUpdateContent FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeBatchJobUpdateContent(document.RootElement);
         }
 

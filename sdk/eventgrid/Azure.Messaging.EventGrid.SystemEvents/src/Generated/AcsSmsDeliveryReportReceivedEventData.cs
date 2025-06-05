@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -15,15 +14,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsSmsDeliveryReportReceivedEventData : AcsSmsEventBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
-        /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
-        /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deliveryAttempts"/> is null. </exception>
-        internal AcsSmsDeliveryReportReceivedEventData(IEnumerable<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset receivedTimestamp)
+        /// <param name="messageId"> The identity of the SMS message. </param>
+        /// <param name="from"> The identity of SMS message sender. </param>
+        /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <param name="deliveryStatus"> Status of Delivery. </param>
+        /// <param name="deliveryStatusDetails"> Details about Delivery Status. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="messageId"/>, <paramref name="from"/>, <paramref name="to"/>, <paramref name="deliveryStatus"/> or <paramref name="deliveryStatusDetails"/> is null. </exception>
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, string deliveryStatus, string deliveryStatusDetails) : base(messageId, @from, to)
         {
-            Argument.AssertNotNull(deliveryAttempts, nameof(deliveryAttempts));
+            Argument.AssertNotNull(messageId, nameof(messageId));
+            Argument.AssertNotNull(@from, nameof(@from));
+            Argument.AssertNotNull(to, nameof(to));
+            Argument.AssertNotNull(deliveryStatus, nameof(deliveryStatus));
+            Argument.AssertNotNull(deliveryStatusDetails, nameof(deliveryStatusDetails));
 
-            DeliveryAttempts = deliveryAttempts.ToList();
-            ReceivedTimestamp = receivedTimestamp;
+            DeliveryStatus = deliveryStatus;
+            DeliveryStatusDetails = deliveryStatusDetails;
+            DeliveryAttempts = new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsSmsDeliveryReportReceivedEventData"/>. </summary>
@@ -36,7 +43,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="deliveryAttempts"> List of details of delivery attempts made. </param>
         /// <param name="receivedTimestamp"> The time at which the SMS delivery report was received. </param>
         /// <param name="tag"> Customer Content. </param>
-        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset receivedTimestamp, string tag) : base(messageId, @from, to, serializedAdditionalRawData)
+        internal AcsSmsDeliveryReportReceivedEventData(string messageId, string @from, string to, IDictionary<string, BinaryData> serializedAdditionalRawData, string deliveryStatus, string deliveryStatusDetails, IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts, DateTimeOffset? receivedTimestamp, string tag) : base(messageId, @from, to, serializedAdditionalRawData)
         {
             DeliveryStatus = deliveryStatus;
             DeliveryStatusDetails = deliveryStatusDetails;
@@ -57,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> List of details of delivery attempts made. </summary>
         public IReadOnlyList<AcsSmsDeliveryAttemptProperties> DeliveryAttempts { get; }
         /// <summary> The time at which the SMS delivery report was received. </summary>
-        public DateTimeOffset ReceivedTimestamp { get; }
+        public DateTimeOffset? ReceivedTimestamp { get; }
         /// <summary> Customer Content. </summary>
         public string Tag { get; }
     }

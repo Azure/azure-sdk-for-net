@@ -259,11 +259,17 @@ namespace Azure
         protected internal abstract bool TryGetHeader(string name, out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public sealed partial class ResponseError
+    public sealed partial class ResponseError : System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>
     {
+        public ResponseError() { }
         public ResponseError(string? code, string? message) { }
         public string? Code { get { throw null; } }
         public string? Message { get { throw null; } }
+        Azure.ResponseError System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResponseError System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
@@ -307,6 +313,12 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCoreContext() { }
+        public static Azure.Core.AzureCoreContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
     {
@@ -346,6 +358,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation MexicoCentral { get { throw null; } }
         public string Name { get { throw null; } }
         public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
@@ -358,6 +371,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SouthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation SpainCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenSouth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
@@ -763,11 +777,14 @@ namespace Azure.Core
         public void Apply(Azure.Core.HttpMessage message) { }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TokenCredential
+    public abstract partial class TokenCredential : System.ClientModel.AuthenticationTokenProvider
     {
         protected TokenCredential() { }
+        public override System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
+        public override System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
+        public override System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TokenRequestContext

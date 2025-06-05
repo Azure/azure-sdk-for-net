@@ -8,8 +8,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "196",
         "Content-Type": "application/json",
-        "traceparent": "00-49e90db7b6f20921acfcad908131dd07-9f340111adfcf981-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-a2020d62af54d2fffae08ed6e3f8045c-ccff5c08280d992a-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -21,14 +21,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "13",
+        "Age": "8",
         "Connection": "keep-alive",
-        "Content-Length": "2545",
+        "Content-Length": "2546",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:28 GMT",
+        "Date": "Fri, 21 Mar 2025 01:32:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-c5rds",
+        "Via": "1.1 draft-oms-77dd86f8d5-zx9jt",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -204,21 +204,21 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.6771397Z",
-                "a8dbe2f47de9520d",
+                "2025-03-21T01:21:29.0583873Z",
+                "344725678ca95556",
                 "localhost:9998",
                 "HTTP",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                3.3064,
+                84.2878,
                 "<250ms",
-                "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
+                "{\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\",\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\"}",
                 null,
                 "",
-                "afdfc0a94e8f58a9101da682a3462054",
-                "afdfc0a94e8f58a9101da682a3462054",
+                "eb731e87e4ccf6dbcca037f93bacddc6",
+                "eb731e87e4ccf6dbcca037f93bacddc6",
                 "",
                 "",
                 "",
@@ -237,7 +237,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet8.0.14:otel1.11.2:ext1.4.0-alpha.20250320",
                 1,
                 "",
                 "",
@@ -258,8 +258,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "191",
         "Content-Type": "application/json",
-        "traceparent": "00-69a3d352fa6c6f76be2b2a85e21b627b-8589378c6ef81010-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-144917ab3e54b3e8531c0e672f52d724-638b269d5682904a-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -271,14 +271,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "11",
+        "Age": "8",
         "Connection": "keep-alive",
-        "Content-Length": "2514",
+        "Content-Length": "2515",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:28 GMT",
+        "Date": "Fri, 21 Mar 2025 01:32:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-mxkjz",
+        "Via": "1.1 draft-oms-77dd86f8d5-85hxs",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -454,21 +454,21 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.6790279Z",
-                "52206518d825c398",
+                "2025-03-21T01:21:29.1023762Z",
+                "0ce130a7e1246774",
                 "",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                1.3723,
+                40.7264,
                 "<250ms",
                 "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
                 null,
                 "GET /",
-                "afdfc0a94e8f58a9101da682a3462054",
+                "eb731e87e4ccf6dbcca037f93bacddc6",
                 null,
-                "a8dbe2f47de9520d",
+                "344725678ca95556",
                 "",
                 "",
                 "",
@@ -487,7 +487,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet8.0.14:otel1.11.2:ext1.4.0-alpha.20250320",
                 1,
                 "",
                 "",
@@ -508,8 +508,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "270",
         "Content-Type": "application/json",
-        "traceparent": "00-4f36d5a22019124861edef50bd47fa74-cd1118b297fc4580-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-d2dd5b1650409b6136cd2605c4c970d1-174f50787ec314d9-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -521,14 +521,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "11",
+        "Age": "7",
         "Connection": "keep-alive",
         "Content-Length": "2131",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:28 GMT",
+        "Date": "Fri, 21 Mar 2025 01:32:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-zw9pf",
+        "Via": "1.1 draft-oms-77dd86f8d5-bwnnf",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -672,13 +672,13 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.8171598Z",
+                "2025-03-21T01:21:29.2618028Z",
                 "http.client.request.duration",
                 1,
-                0.0035298,
-                0.0035298,
-                0.0035298,
-                "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"server.address\":\"localhost\",\"server.port\":\"9998\",\"url.scheme\":\"http\"}",
+                0.1019874,
+                0.1019874,
+                0.1019874,
+                "{\"http.request.method\":\"GET\",\"server.address\":\"localhost\",\"server.port\":\"9998\",\"url.scheme\":\"http\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\"}",
                 "",
                 "",
                 "",
@@ -700,7 +700,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet8.0.14:otel1.11.2:ext1.4.0-alpha.20250320",
                 "Azure",
                 "AppMetrics",
                 "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
@@ -718,8 +718,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "197",
         "Content-Type": "application/json",
-        "traceparent": "00-ba2b58cca8feefc3eb88a89e7aa6cada-b49a557e4a10f642-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-680cf90349714f3c006f70f08c48ba00-fd78c277aa04bcd2-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -731,14 +731,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "8",
+        "Age": "6",
         "Connection": "keep-alive",
-        "Content-Length": "2091",
+        "Content-Length": "2093",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:28 GMT",
+        "Date": "Fri, 21 Mar 2025 01:32:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-jjhz5",
+        "Via": "1.1 draft-oms-77dd86f8d5-ch8cg",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -882,13 +882,13 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.8171643Z",
+                "2025-03-21T01:21:29.263022Z",
                 "http.server.request.duration",
                 1,
-                0.001328,
-                0.001328,
-                0.001328,
-                "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"http.route\":\"/\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\"}",
+                0.0464082,
+                0.0464082,
+                0.0464082,
+                "{\"http.request.method\":\"GET\",\"url.scheme\":\"http\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"http.route\":\"/\"}",
                 "",
                 "",
                 "",
@@ -910,7 +910,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet8.0.14:otel1.11.2:ext1.4.0-alpha.20250320",
                 "Azure",
                 "AppMetrics",
                 "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
@@ -928,8 +928,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "190",
         "Content-Type": "application/json",
-        "traceparent": "00-0afb66b5bb014533293598e2bb9b65f6-80348c5114fdc6bd-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-763a76e02c9f3d30b182c94dbd1eb7b0-b264e2fcd2c16fd9-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -941,14 +941,14 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "7",
+        "Age": "4",
         "Connection": "keep-alive",
         "Content-Length": "2084",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:29 GMT",
+        "Date": "Fri, 21 Mar 2025 01:32:18 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-n8sk5",
+        "Via": "1.1 draft-oms-77dd86f8d5-d8kx2",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -1096,14 +1096,14 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.6802073Z",
+                "2025-03-21T01:21:29.1391891Z",
                 "Message via ILogger",
                 1,
                 "{\"CategoryName\":\"CustomCategoryName\"}",
                 null,
                 "",
-                "afdfc0a94e8f58a9101da682a3462054",
-                "52206518d825c398",
+                "eb731e87e4ccf6dbcca037f93bacddc6",
+                "0ce130a7e1246774",
                 "",
                 "",
                 "",
@@ -1122,7 +1122,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet8.0.14:otel1.11.2:ext1.4.0-alpha.20250320",
                 1,
                 "",
                 "",
@@ -1143,8 +1143,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "196",
         "Content-Type": "application/json",
-        "traceparent": "00-49650c730e56e214c023820cb9d414e8-b7e33980ef566fbb-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-5b6f8494c08787e09320ccfa690a406f-9c32f11e1c480df8-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1156,14 +1156,836 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "4",
         "Connection": "keep-alive",
-        "Content-Length": "2545",
+        "Content-Length": "1645",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:29 GMT",
+        "Date": "Fri, 21 Mar 2025 01:32:19 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-x5zbt",
+        "Via": "1.1 draft-oms-77dd86f8d5-4k77x",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": []
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e1407f81-4e84-4943-843a-0494dd4700e5/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-caf34349d86b7d4c789da57b11daa52d-d557a4ddd65a8287-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "30",
+        "Connection": "keep-alive",
+        "Content-Length": "1645",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Mar 2025 01:32:49 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-77dd86f8d5-b99gd",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": []
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e1407f81-4e84-4943-843a-0494dd4700e5/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-4a9034776bff97b7e33c37ecfcef08af-b99f5fc13f19d36d-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "60",
+        "Connection": "keep-alive",
+        "Content-Length": "1645",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Mar 2025 01:33:20 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-77dd86f8d5-ln5m2",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": []
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e1407f81-4e84-4943-843a-0494dd4700e5/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-26bc93fc149a5ca0b19dd6cd039492bd-038b097f61d27011-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Age": "90",
+        "Connection": "keep-alive",
+        "Content-Length": "1645",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Mar 2025 01:33:50 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-77dd86f8d5-9w6zc",
+        "X-Content-Type-Options": "nosniff"
+      },
+      "ResponseBody": {
+        "tables": [
+          {
+            "name": "PrimaryResult",
+            "columns": [
+              {
+                "name": "TenantId",
+                "type": "string"
+              },
+              {
+                "name": "TimeGenerated",
+                "type": "datetime"
+              },
+              {
+                "name": "Id",
+                "type": "string"
+              },
+              {
+                "name": "Target",
+                "type": "string"
+              },
+              {
+                "name": "DependencyType",
+                "type": "string"
+              },
+              {
+                "name": "Name",
+                "type": "string"
+              },
+              {
+                "name": "Data",
+                "type": "string"
+              },
+              {
+                "name": "Success",
+                "type": "bool"
+              },
+              {
+                "name": "ResultCode",
+                "type": "string"
+              },
+              {
+                "name": "DurationMs",
+                "type": "real"
+              },
+              {
+                "name": "PerformanceBucket",
+                "type": "string"
+              },
+              {
+                "name": "Properties",
+                "type": "dynamic"
+              },
+              {
+                "name": "Measurements",
+                "type": "dynamic"
+              },
+              {
+                "name": "OperationName",
+                "type": "string"
+              },
+              {
+                "name": "OperationId",
+                "type": "string"
+              },
+              {
+                "name": "ParentId",
+                "type": "string"
+              },
+              {
+                "name": "SyntheticSource",
+                "type": "string"
+              },
+              {
+                "name": "SessionId",
+                "type": "string"
+              },
+              {
+                "name": "UserId",
+                "type": "string"
+              },
+              {
+                "name": "UserAuthenticatedId",
+                "type": "string"
+              },
+              {
+                "name": "UserAccountId",
+                "type": "string"
+              },
+              {
+                "name": "AppVersion",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleName",
+                "type": "string"
+              },
+              {
+                "name": "AppRoleInstance",
+                "type": "string"
+              },
+              {
+                "name": "ClientType",
+                "type": "string"
+              },
+              {
+                "name": "ClientModel",
+                "type": "string"
+              },
+              {
+                "name": "ClientOS",
+                "type": "string"
+              },
+              {
+                "name": "ClientIP",
+                "type": "string"
+              },
+              {
+                "name": "ClientCity",
+                "type": "string"
+              },
+              {
+                "name": "ClientStateOrProvince",
+                "type": "string"
+              },
+              {
+                "name": "ClientCountryOrRegion",
+                "type": "string"
+              },
+              {
+                "name": "ClientBrowser",
+                "type": "string"
+              },
+              {
+                "name": "ResourceGUID",
+                "type": "string"
+              },
+              {
+                "name": "IKey",
+                "type": "string"
+              },
+              {
+                "name": "SDKVersion",
+                "type": "string"
+              },
+              {
+                "name": "ItemCount",
+                "type": "int"
+              },
+              {
+                "name": "ReferencedItemId",
+                "type": "string"
+              },
+              {
+                "name": "ReferencedType",
+                "type": "string"
+              },
+              {
+                "name": "SourceSystem",
+                "type": "string"
+              },
+              {
+                "name": "Type",
+                "type": "string"
+              },
+              {
+                "name": "_ResourceId",
+                "type": "string"
+              }
+            ],
+            "rows": []
+          }
+        ]
+      }
+    },
+    {
+      "RequestUri": "https://api.loganalytics.io/v1/workspaces/e1407f81-4e84-4943-843a-0494dd4700e5/query",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "Content-Length": "196",
+        "Content-Type": "application/json",
+        "traceparent": "00-17095c5f66ef87d8f5e783f5be86bab0-9e2b0ede36ef1255-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": {
+        "query": "AppDependencies | where Data == 'http://localhost:9998/' | where AppRoleName == '[TestServiceNamespace]/TestServiceName' | top 1 by TimeGenerated",
+        "timespan": "PT30M"
+      },
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
+        "Connection": "keep-alive",
+        "Content-Length": "2546",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 21 Mar 2025 01:34:21 GMT",
+        "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
+        "Vary": "Accept-Encoding",
+        "Via": "1.1 draft-oms-77dd86f8d5-pdtl6",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -1339,21 +2161,21 @@
             "rows": [
               [
                 "e1407f81-4e84-4943-843a-0494dd4700e5",
-                "2024-09-11T19:08:05.6771397Z",
-                "a8dbe2f47de9520d",
+                "2025-03-21T01:32:16.5232095Z",
+                "2cf9a68d2eaae828",
                 "localhost:9998",
                 "HTTP",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                3.3064,
+                3.4483,
                 "<250ms",
-                "{\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\",\"CustomProperty1\":\"Value1\",\"network.protocol.version\":\"1.1\"}",
+                "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
                 null,
                 "",
-                "afdfc0a94e8f58a9101da682a3462054",
-                "afdfc0a94e8f58a9101da682a3462054",
+                "56d2ea437c84a6ebbc85c1815755674f",
+                "56d2ea437c84a6ebbc85c1815755674f",
                 "",
                 "",
                 "",
@@ -1372,7 +2194,7 @@
                 "Other",
                 "d64e2b0b-7f11-41ec-b85e-5bd69ee688e2",
                 "3f8e759a-2c28-4cc7-b260-9b343fb2a3ff",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet9.0.3:otel1.11.2:ext1.4.0-alpha.20250320-d",
                 1,
                 "",
                 "",
@@ -1393,8 +2215,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "191",
         "Content-Type": "application/json",
-        "traceparent": "00-543a4c2008d6f002366ba3499796788a-e9861fc916c88b4b-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-0197cfd314ddb68c6f9ba7536fce03a9-85619fb467b0d100-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1406,14 +2228,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "12",
         "Connection": "keep-alive",
-        "Content-Length": "2514",
+        "Content-Length": "2515",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:29 GMT",
+        "Date": "Fri, 21 Mar 2025 01:34:21 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-p2nbm",
+        "Via": "1.1 draft-oms-77dd86f8d5-74gwh",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -1589,21 +2410,21 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.6790279Z",
-                "52206518d825c398",
+                "2025-03-21T01:32:16.5254361Z",
+                "e85e26648cdb7821",
                 "",
                 "GET /",
                 "http://localhost:9998/",
                 true,
                 "200",
-                1.3723,
+                1.1673,
                 "<250ms",
                 "{\"network.protocol.version\":\"1.1\",\"CustomProperty1\":\"Value1\",\"_MS.ProcessedByMetricExtractors\":\"(Name: X,Ver:'1.1')\"}",
                 null,
                 "GET /",
-                "afdfc0a94e8f58a9101da682a3462054",
+                "56d2ea437c84a6ebbc85c1815755674f",
                 null,
-                "a8dbe2f47de9520d",
+                "2cf9a68d2eaae828",
                 "",
                 "",
                 "",
@@ -1622,7 +2443,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet9.0.3:otel1.11.2:ext1.4.0-alpha.20250320-d",
                 1,
                 "",
                 "",
@@ -1643,8 +2464,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "270",
         "Content-Type": "application/json",
-        "traceparent": "00-06a15fc15e62ba3d98d09b243b9b218c-b983dcd4895e899b-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-cffc5aa09348834cfc3fe6399b57c2ad-095a720e4285a2bb-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1656,14 +2477,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "13",
         "Connection": "keep-alive",
-        "Content-Length": "2131",
+        "Content-Length": "2128",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:30 GMT",
+        "Date": "Fri, 21 Mar 2025 01:34:22 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-wt758",
+        "Via": "1.1 draft-oms-77dd86f8d5-vn2rh",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -1807,12 +2627,12 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.8171598Z",
+                "2025-03-21T01:32:16.574434Z",
                 "http.client.request.duration",
                 1,
-                0.0035298,
-                0.0035298,
-                0.0035298,
+                0.003239,
+                0.003239,
+                0.003239,
                 "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"network.protocol.version\":\"1.1\",\"server.address\":\"localhost\",\"server.port\":\"9998\",\"url.scheme\":\"http\"}",
                 "",
                 "",
@@ -1835,7 +2655,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet9.0.3:otel1.11.2:ext1.4.0-alpha.20250320-d",
                 "Azure",
                 "AppMetrics",
                 "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
@@ -1853,8 +2673,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "197",
         "Content-Type": "application/json",
-        "traceparent": "00-c95b401466bb65b8d45e28c88b5a85e5-190049be63942e1c-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-372fda5cd06a5a3c75e5eacea6f0230b-824f89abcbfb208e-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -1866,14 +2686,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "9",
         "Connection": "keep-alive",
-        "Content-Length": "2091",
+        "Content-Length": "2095",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:30 GMT",
+        "Date": "Fri, 21 Mar 2025 01:34:22 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-6xpm7",
+        "Via": "1.1 draft-oms-77dd86f8d5-c6hj5",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -2017,12 +2836,12 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.8171643Z",
+                "2025-03-21T01:32:16.5747209Z",
                 "http.server.request.duration",
                 1,
-                0.001328,
-                0.001328,
-                0.001328,
+                0.0011411,
+                0.0011411,
+                0.0011411,
                 "{\"http.request.method\":\"GET\",\"http.response.status_code\":\"200\",\"http.route\":\"/\",\"network.protocol.version\":\"1.1\",\"url.scheme\":\"http\"}",
                 "",
                 "",
@@ -2045,7 +2864,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet9.0.3:otel1.11.2:ext1.4.0-alpha.20250320-d",
                 "Azure",
                 "AppMetrics",
                 "/subscriptions/65b2f83e-7bf1-4be3-bafc-3a4163265a52/resourcegroups/tileetest06201346/providers/microsoft.insights/components/te3fca6a3c26958b8-ai-1"
@@ -2063,8 +2882,8 @@
         "Authorization": "Sanitized",
         "Content-Length": "190",
         "Content-Type": "application/json",
-        "traceparent": "00-6231a54d94bc28f157aea03553b34d8a-cdd187d63a208946-00",
-        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 8.0.8; Microsoft Windows 10.0.22631)",
+        "traceparent": "00-3285604e4b0244d66b25be5b0867ee10-6ef41fe40d3e3de0-00",
+        "User-Agent": "azsdk-net-Monitor.Query/1.1.0 (.NET 9.0.3; Microsoft Windows 10.0.26100)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
       },
@@ -2076,14 +2895,13 @@
       "ResponseHeaders": {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Expose-Headers": "Retry-After,Age,WWW-Authenticate,x-resource-identities,x-ms-status-location",
-        "Age": "8",
         "Connection": "keep-alive",
-        "Content-Length": "2084",
+        "Content-Length": "2085",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Wed, 11 Sep 2024 19:11:30 GMT",
+        "Date": "Fri, 21 Mar 2025 01:34:23 GMT",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains",
         "Vary": "Accept-Encoding",
-        "Via": "1.1 draft-oms-6ddbddd5f9-7lzqk",
+        "Via": "1.1 draft-oms-77dd86f8d5-6x29v",
         "X-Content-Type-Options": "nosniff"
       },
       "ResponseBody": {
@@ -2231,14 +3049,14 @@
             "rows": [
               [
                 "33d8a320-00c3-4ec8-a6a4-8692b07a6841",
-                "2024-09-11T19:08:05.6802073Z",
+                "2025-03-21T01:32:16.5264616Z",
                 "Message via ILogger",
                 1,
                 "{\"CategoryName\":\"CustomCategoryName\"}",
                 null,
                 "",
-                "afdfc0a94e8f58a9101da682a3462054",
-                "52206518d825c398",
+                "56d2ea437c84a6ebbc85c1815755674f",
+                "e85e26648cdb7821",
                 "",
                 "",
                 "",
@@ -2257,7 +3075,7 @@
                 "Other",
                 "a98f261a-124b-425a-931e-8dc00af2e65c",
                 "53e1f7f0-9975-4995-830a-414a26e9450a",
-                "dotnet8.0.8:otel1.9.0:ext1.4.0-alpha.20240911-d",
+                "dotnet9.0.3:otel1.11.2:ext1.4.0-alpha.20250320-d",
                 1,
                 "",
                 "",
@@ -2274,7 +3092,7 @@
   "Variables": {
     "CONNECTION_STRING": "InstrumentationKey=53e1f7f0-9975-4995-830a-414a26e9450a;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=a98f261a-124b-425a-931e-8dc00af2e65c",
     "LOGS_ENDPOINT": "https://api.loganalytics.io",
-    "RandomSeed": "701551544",
+    "RandomSeed": "1495543119",
     "SECONDARY_CONNECTION_STRING": "InstrumentationKey=3f8e759a-2c28-4cc7-b260-9b343fb2a3ff;IngestionEndpoint=https://westus-0.in.applicationinsights.azure.com/;LiveEndpoint=https://westus.livediagnostics.monitor.azure.com/;ApplicationId=d64e2b0b-7f11-41ec-b85e-5bd69ee688e2",
     "SECONDARY_WORKSPACE_ID": "e1407f81-4e84-4943-843a-0494dd4700e5",
     "WORKSPACE_ID": "33d8a320-00c3-4ec8-a6a4-8692b07a6841"

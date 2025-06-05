@@ -165,7 +165,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthInsightsRadiologyInsightsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FhirR4Quantity)} does not support writing '{options.Format}' format.");
             }
@@ -179,7 +179,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFhirR4Quantity(document.RootElement, options);
                     }
                 default:
@@ -193,7 +193,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new FhirR4Quantity FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFhirR4Quantity(document.RootElement);
         }
 

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsRouterJobWaitingForActivationEventDataConverter))]
     public partial class AcsRouterJobWaitingForActivationEventData : IUtf8JsonSerializable, IJsonModel<AcsRouterJobWaitingForActivationEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsRouterJobWaitingForActivationEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -40,22 +42,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            writer.WritePropertyName("expiredAttachedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in ExpiredAttachedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("expiredAttachedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredAttachedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("expiredRequestedWorkerSelectors"u8);
-            writer.WriteStartArray();
-            foreach (var item in ExpiredRequestedWorkerSelectors)
+            if (options.Format != "W")
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("expiredRequestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExpiredRequestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
-            writer.WritePropertyName("scheduledOn"u8);
-            writer.WriteStringValue(ScheduledOn, "O");
+            if (Optional.IsDefined(ScheduledOn))
+            {
+                writer.WritePropertyName("scheduledOn"u8);
+                writer.WriteStringValue(ScheduledOn.Value, "O");
+            }
             writer.WritePropertyName("unavailableForMatching"u8);
             writer.WriteBooleanValue(UnavailableForMatching);
         }
@@ -83,7 +94,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             int? priority = default;
             IReadOnlyList<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default;
             IReadOnlyList<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default;
-            DateTimeOffset scheduledOn = default;
+            DateTimeOffset? scheduledOn = default;
             bool unavailableForMatching = default;
             string queueId = default;
             IReadOnlyDictionary<string, string> labels = default;
@@ -126,6 +137,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("scheduledOn"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     scheduledOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -202,7 +217,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterJobWaitingForActivationEventData)} does not support writing '{options.Format}' format.");
             }
@@ -216,7 +231,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterJobWaitingForActivationEventData(document.RootElement, options);
                     }
                 default:
@@ -230,7 +245,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsRouterJobWaitingForActivationEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRouterJobWaitingForActivationEventData(document.RootElement);
         }
 
@@ -240,6 +255,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsRouterJobWaitingForActivationEventDataConverter : JsonConverter<AcsRouterJobWaitingForActivationEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsRouterJobWaitingForActivationEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsRouterJobWaitingForActivationEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsRouterJobWaitingForActivationEventData(document.RootElement);
+            }
         }
     }
 }

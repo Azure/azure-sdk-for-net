@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudVmClusterData.DeserializeCloudVmClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudVmClusterData.DeserializeCloudVmClusterData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         IReadOnlyList<PrivateIPAddressResult> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<PrivateIPAddressResult> array = new List<PrivateIPAddressResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -757,7 +757,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         IReadOnlyList<PrivateIPAddressResult> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<PrivateIPAddressResult> array = new List<PrivateIPAddressResult>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -905,7 +905,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -932,7 +932,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -983,7 +983,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 case 200:
                     {
                         CloudVmClusterListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = CloudVmClusterListResult.DeserializeCloudVmClusterListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

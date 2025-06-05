@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Media
 
         MediaLiveOutputResource IOperationSource<MediaLiveOutputResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MediaLiveOutputData.DeserializeMediaLiveOutputData(document.RootElement);
+            var data = ModelReaderWriter.Read<MediaLiveOutputData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
             return new MediaLiveOutputResource(_client, data);
         }
 
         async ValueTask<MediaLiveOutputResource> IOperationSource<MediaLiveOutputResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MediaLiveOutputData.DeserializeMediaLiveOutputData(document.RootElement);
-            return new MediaLiveOutputResource(_client, data);
+            var data = ModelReaderWriter.Read<MediaLiveOutputData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMediaContext.Default);
+            return await Task.FromResult(new MediaLiveOutputResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure;
 using Azure.AI.Language.Text.Authoring;
-using Azure.AI.Language.Text.Authoring.Models;
 using Azure.AI.Language.Text.Authoring.Tests;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -21,29 +20,28 @@ namespace Azure.AI.Language.Text.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+            TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample5_TextAuthoring_TrainAsync
             string projectName = "LoanAgreements";
+            TextAuthoringProject projectClient = client.GetProject(projectName);
 
-            var trainingJobConfig = new TrainingJobDetails(
+            var trainingJobConfig = new TextAuthoringTrainingJobDetails(
                 modelLabel: "model1",
                 trainingConfigVersion: "latest"
             )
             {
-                EvaluationOptions = new EvaluationDetails
+                EvaluationOptions = new TextAuthoringEvaluationDetails
                 {
-                    Kind = EvaluationKind.Percentage,
+                    Kind = TextAuthoringEvaluationKind.Percentage,
                     TestingSplitPercentage = 20,
                     TrainingSplitPercentage = 80
                 }
             };
 
-            Operation<TrainingJobResult> operation = await authoringClient.TrainAsync(
+            Operation<TextAuthoringTrainingJobResult> operation = await projectClient.TrainAsync(
                 waitUntil: WaitUntil.Completed,
-                projectName: projectName,
-                body: trainingJobConfig
+                details: trainingJobConfig
             );
 
             string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

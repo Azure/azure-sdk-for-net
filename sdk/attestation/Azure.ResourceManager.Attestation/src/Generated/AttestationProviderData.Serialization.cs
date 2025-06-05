@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Attestation
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAttestationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AttestationProviderData)} does not support writing '{options.Format}' format.");
             }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Attestation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAttestationProviderData(document.RootElement, options);
                     }
                 default:

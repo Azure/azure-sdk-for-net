@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         ManagedInstanceLongTermRetentionPolicyResource IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new ManagedInstanceLongTermRetentionPolicyResource(_client, data);
         }
 
         async ValueTask<ManagedInstanceLongTermRetentionPolicyResource> IOperationSource<ManagedInstanceLongTermRetentionPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = ManagedInstanceLongTermRetentionPolicyData.DeserializeManagedInstanceLongTermRetentionPolicyData(document.RootElement);
-            return new ManagedInstanceLongTermRetentionPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<ManagedInstanceLongTermRetentionPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new ManagedInstanceLongTermRetentionPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

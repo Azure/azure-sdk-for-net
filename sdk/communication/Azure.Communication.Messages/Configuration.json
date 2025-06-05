@@ -2,11 +2,11 @@
   "output-folder": ".",
   "namespace": "Azure.Communication.Messages",
   "library-name": "Azure.Communication.Messages",
-  "model-namespace": false,
   "flavor": "azure",
   "use-model-reader-writer": true,
   "shared-source-folders": [
     "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
     "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
-  ]
+  ],
+  "model-namespace": false
 }

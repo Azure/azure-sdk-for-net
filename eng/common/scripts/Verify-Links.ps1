@@ -45,6 +45,15 @@
   .PARAMETER outputCacheFile
   Path to a file that the script will output all the validated links after running all checks.
 
+  .PARAMETER localGithubClonedRoot
+  Path to the root of a local github clone. This is used to resolve links to local files in the repo instead of making web requests.
+
+  .PARAMETER localBuildRepoName
+  The name of the repo that is being built. This is used to resolve links to local files in the repo instead of making web requests.
+
+  .PARAMETER localBuildRepoPath
+  The path to the local build repo. This is used to resolve links to local files in the repo instead of making web requests.
+
   .PARAMETER requestTimeoutSec
   The number of seconds before we timeout when sending an individual web request. Default is 15 seconds.
 
@@ -72,7 +81,10 @@ param (
   [string] $userAgent,
   [string] $inputCacheFile,
   [string] $outputCacheFile,
-  [string] $requestTimeoutSec  = 15
+  [string] $localGithubClonedRoot = "",
+  [string] $localBuildRepoName = "",
+  [string] $localBuildRepoPath = "",
+  [string] $requestTimeoutSec = 15
 )
 
 Set-StrictMode -Version 3.0
@@ -80,6 +92,23 @@ Set-StrictMode -Version 3.0
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 
 function ProcessLink([System.Uri]$linkUri) {
+  # To help improve performance and rate limiting issues with github links we try to resolve them based on a local clone if one exists.
+  if (($localGithubClonedRoot -or $localBuildRepoName) -and $linkUri -match '^https://github.com/(?<org>Azure)/(?<repo>[^/]+)/(?:blob|tree)/(main|.*_[^/]+|.*/v[^/]+)/(?<path>.*)$') {
+
+    if ($localBuildRepoName -eq ($matches['org'] + "/" + $matches['repo'])) {
+      # If the link is to the current repo, use the local build path
+      $localPath = Join-Path $localBuildRepoPath $matches['path']
+    }
+    else {
+      # Otherwise use the local github clone path
+      $localPath = Join-Path $localGithubClonedRoot $matches['repo'] $matches['path']
+    }
+
+    if (Test-Path $localPath) {
+      return $true
+    }
+    return ProcessStandardLink $linkUri
+  }
   if ($linkUri -match '^https?://?github\.com/(?<account>)[^/]+/(?<repo>)[^/]+/wiki/.+') {
     # in an unauthenticated session, urls for missing pages will redirect to the wiki root
     return ProcessRedirectLink $linkUri -invalidStatusCodes 302
@@ -89,8 +118,9 @@ function ProcessLink([System.Uri]$linkUri) {
     # and invalid links return a 302 redirecting the user to a Bing search 
     return ProcessRedirectLink $linkUri -invalidStatusCodes 302
   }
-  elseif ($linkUri -match '^https?://crates\.io/(?<path>(crates|users|teams)/.+)') {
-    return ProcessCratesIoLink $linkUri $matches.path
+  elseif ($linkUri -match '^https?://crates\.io(/(?<path>(crates|users|teams)/.+))?') {
+    # See comment in function below for details.
+    return ProcessCratesIoLink $linkUri $matches['path']
   }
   else {
     return ProcessStandardLink $linkUri
@@ -113,8 +143,14 @@ function ProcessRedirectLink([System.Uri]$linkUri, [int[]]$invalidStatusCodes) {
 }
 
 function ProcessCratesIoLink([System.Uri]$linkUri, $path) {
-  # Crates.io links are handled by a SPA. Even for missing pages, the response will be a 200, and the spa will only
-  # show a 404 page after it makes a request to the api. We can check the api to see if the page exists.
+  # crates.io is an SPA that will return a 404 if no 'accept: text/html' header is sent; however, even if you do
+  # send that header it will 200 on every request - even for missing pages. If a create/user/team path was sent,
+  # call into their API documented at https://doc.rust-lang.org/cargo/reference/registry-web-api.html; otherwise,
+  # assume the page exists since there's no other way to know.
+  if (!$path) {
+    return $true
+  }
+
   $apiUri = "https://crates.io/api/v1/$path"
 
   # Invoke-WebRequest will throw an exception for invalid status codes. They are handled in CheckLink
@@ -149,7 +185,7 @@ $emptyLinkMessage = "There is at least one empty link in the page. Please replac
 if (!$userAgent) {
   $userAgent = "Chrome/87.0.4280.88"
 }
-function NormalizeUrl([string]$url){
+function NormalizeUrl([string]$url) {
   if (Test-Path $url) {
     $url = "file://" + (Resolve-Path $url).ToString();
   }
@@ -247,14 +283,14 @@ function ParseLinks([string]$baseUri, [string]$htmlContent)
   $hrefRegex = "<a[^>]+href\s*=\s*[""']?(?<href>[^""']*)[""']?"
   $regexOptions = [System.Text.RegularExpressions.RegexOptions]"Singleline, IgnoreCase";
 
-  $hrefs = [RegEx]::Matches($htmlContent, $hrefRegex, $regexOptions);
+  $matches = [RegEx]::Matches($htmlContent, $hrefRegex, $regexOptions);
 
-  #$hrefs | Foreach-Object { Write-Host $_ }
+  Write-Verbose "Found $($matches.Count) raw href's in page $baseUri";
 
-  Write-Verbose "Found $($hrefs.Count) raw href's in page $baseUri";
-  [string[]] $links = $hrefs | ForEach-Object { ResolveUri $baseUri $_.Groups["href"].Value }
+  # Html encoded urls in anchor hrefs need to be decoded
+  $urls = $matches | ForEach-Object { [System.Web.HttpUtility]::HtmlDecode($_.Groups["href"].Value) }
 
-  #$links | Foreach-Object { Write-Host $_ }
+  [string[]] $links = $urls | ForEach-Object { ResolveUri $baseUri $_ }
 
   if ($null -eq $links) {
     $links = @()
@@ -500,6 +536,7 @@ if ($inputCacheFile)
   $goodLinks = $cacheContent.Split("`n").Where({ $_.Trim() -ne "" -and !$_.StartsWith("#") })
 
   foreach ($goodLink in $goodLinks) {
+    $goodLink = $goodLink.Trim()
     $checkedLinks[$goodLink] = $true
   }
 }
@@ -580,7 +617,7 @@ try {
 
   if ($outputCacheFile)
   {
-    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString() }) | Sort-Object
+    $goodLinks = $checkedLinks.Keys.Where({ "True" -eq $checkedLinks[$_].ToString()}) | Sort-Object -Unique
 
     Write-Host "Writing the list of validated links to $outputCacheFile"
     $goodLinks | Set-Content $outputCacheFile

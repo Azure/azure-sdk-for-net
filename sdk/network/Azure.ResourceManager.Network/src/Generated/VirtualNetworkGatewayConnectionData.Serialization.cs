@@ -103,6 +103,16 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("connectionMode"u8);
                 writer.WriteStringValue(ConnectionMode.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(TunnelProperties))
+            {
+                writer.WritePropertyName("tunnelProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in TunnelProperties)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(SharedKey))
             {
                 writer.WritePropertyName("sharedKey"u8);
@@ -243,6 +253,7 @@ namespace Azure.ResourceManager.Network
             int? routingWeight = default;
             int? dpdTimeoutSeconds = default;
             VirtualNetworkGatewayConnectionMode? connectionMode = default;
+            IList<VirtualNetworkGatewayConnectionTunnelProperties> tunnelProperties = default;
             string sharedKey = default;
             VirtualNetworkGatewayConnectionStatus? connectionStatus = default;
             IReadOnlyList<TunnelConnectionHealth> tunnelConnectionStatus = default;
@@ -422,6 +433,20 @@ namespace Azure.ResourceManager.Network
                                 continue;
                             }
                             connectionMode = new VirtualNetworkGatewayConnectionMode(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("tunnelProperties"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VirtualNetworkGatewayConnectionTunnelProperties> array = new List<VirtualNetworkGatewayConnectionTunnelProperties>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VirtualNetworkGatewayConnectionTunnelProperties.DeserializeVirtualNetworkGatewayConnectionTunnelProperties(item, options));
+                            }
+                            tunnelProperties = array;
                             continue;
                         }
                         if (property0.NameEquals("sharedKey"u8))
@@ -612,6 +637,7 @@ namespace Azure.ResourceManager.Network
                 routingWeight,
                 dpdTimeoutSeconds,
                 connectionMode,
+                tunnelProperties ?? new ChangeTrackingList<VirtualNetworkGatewayConnectionTunnelProperties>(),
                 sharedKey,
                 connectionStatus,
                 tunnelConnectionStatus ?? new ChangeTrackingList<TunnelConnectionHealth>(),
@@ -637,7 +663,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkGatewayConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -651,7 +677,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualNetworkGatewayConnectionData(document.RootElement, options);
                     }
                 default:

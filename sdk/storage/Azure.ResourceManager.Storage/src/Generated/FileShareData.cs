@@ -65,7 +65,14 @@ namespace Azure.ResourceManager.Storage
         /// <param name="systemData"> The systemData. </param>
         /// <param name="lastModifiedOn"> Returns the date and time the share was last modified. </param>
         /// <param name="metadata"> A name-value pair to associate with the share as metadata. </param>
-        /// <param name="shareQuota"> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </param>
+        /// <param name="shareQuota"> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </param>
+        /// <param name="provisionedIops"> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </param>
+        /// <param name="provisionedBandwidthMibps"> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </param>
+        /// <param name="includedBurstIops"> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="maxBurstCreditsForIops"> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedQuotaDowngradeOn"> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedProvisionedIopsDowngradeOn"> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
+        /// <param name="nextAllowedProvisionedBandwidthDowngradeOn"> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </param>
         /// <param name="enabledProtocol"> The authentication protocol that is used for the file share. Can only be specified when creating a share. </param>
         /// <param name="rootSquash"> The property is for NFS share only. The default is NoRootSquash. </param>
         /// <param name="version"> The version of the share. </param>
@@ -81,13 +88,21 @@ namespace Azure.ResourceManager.Storage
         /// <param name="leaseDuration"> Specifies whether the lease on a share is of infinite or fixed duration, only when the share is leased. </param>
         /// <param name="signedIdentifiers"> List of stored access policies specified on the share. </param>
         /// <param name="snapshotOn"> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </param>
+        /// <param name="fileSharePaidBursting"> File Share Paid Bursting properties. </param>
         /// <param name="etag"> Resource Etag. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal FileShareData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastModifiedOn, IDictionary<string, string> metadata, int? shareQuota, int? provisionedIops, int? provisionedBandwidthMibps, int? includedBurstIops, long? maxBurstCreditsForIops, DateTimeOffset? nextAllowedQuotaDowngradeOn, DateTimeOffset? nextAllowedProvisionedIopsDowngradeOn, DateTimeOffset? nextAllowedProvisionedBandwidthDowngradeOn, FileShareEnabledProtocol? enabledProtocol, RootSquashType? rootSquash, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, FileShareAccessTier? accessTier, DateTimeOffset? accessTierChangeOn, string accessTierStatus, long? shareUsageBytes, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IList<StorageSignedIdentifier> signedIdentifiers, DateTimeOffset? snapshotOn, FileSharePropertiesFileSharePaidBursting fileSharePaidBursting, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LastModifiedOn = lastModifiedOn;
             Metadata = metadata;
             ShareQuota = shareQuota;
+            ProvisionedIops = provisionedIops;
+            ProvisionedBandwidthMibps = provisionedBandwidthMibps;
+            IncludedBurstIops = includedBurstIops;
+            MaxBurstCreditsForIops = maxBurstCreditsForIops;
+            NextAllowedQuotaDowngradeOn = nextAllowedQuotaDowngradeOn;
+            NextAllowedProvisionedIopsDowngradeOn = nextAllowedProvisionedIopsDowngradeOn;
+            NextAllowedProvisionedBandwidthDowngradeOn = nextAllowedProvisionedBandwidthDowngradeOn;
             EnabledProtocol = enabledProtocol;
             RootSquash = rootSquash;
             Version = version;
@@ -103,6 +118,7 @@ namespace Azure.ResourceManager.Storage
             LeaseDuration = leaseDuration;
             SignedIdentifiers = signedIdentifiers;
             SnapshotOn = snapshotOn;
+            FileSharePaidBursting = fileSharePaidBursting;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -113,9 +129,30 @@ namespace Azure.ResourceManager.Storage
         /// <summary> A name-value pair to associate with the share as metadata. </summary>
         [WirePath("properties.metadata")]
         public IDictionary<string, string> Metadata { get; }
-        /// <summary> The maximum size of the share, in gigabytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. </summary>
+        /// <summary> The provisioned size of the share, in gibibytes. Must be greater than 0, and less than or equal to 5TB (5120). For Large File Shares, the maximum size is 102400. For file shares created under Files Provisioned v2 account type, please refer to the GetFileServiceUsage API response for the minimum and maximum allowed provisioned storage size. </summary>
         [WirePath("properties.shareQuota")]
         public int? ShareQuota { get; set; }
+        /// <summary> The provisioned IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned IOPS. </summary>
+        [WirePath("properties.provisionedIops")]
+        public int? ProvisionedIops { get; set; }
+        /// <summary> The provisioned bandwidth of the share, in mebibytes per second. This property is only for file shares created under Files Provisioned v2 account type. Please refer to the GetFileServiceUsage API response for the minimum and maximum allowed value for provisioned bandwidth. </summary>
+        [WirePath("properties.provisionedBandwidthMibps")]
+        public int? ProvisionedBandwidthMibps { get; set; }
+        /// <summary> The calculated burst IOPS of the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.includedBurstIops")]
+        public int? IncludedBurstIops { get; }
+        /// <summary> The calculated maximum burst credits for the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.maxBurstCreditsForIops")]
+        public long? MaxBurstCreditsForIops { get; }
+        /// <summary> Returns the next allowed provisioned storage size downgrade time for the share. This property is only for file shares created under Files Provisioned v1 SSD and Files Provisioned v2 account type. </summary>
+        [WirePath("properties.nextAllowedQuotaDowngradeTime")]
+        public DateTimeOffset? NextAllowedQuotaDowngradeOn { get; }
+        /// <summary> Returns the next allowed provisioned IOPS downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.nextAllowedProvisionedIopsDowngradeTime")]
+        public DateTimeOffset? NextAllowedProvisionedIopsDowngradeOn { get; }
+        /// <summary> Returns the next allowed provisioned bandwidth downgrade time for the share. This property is only for file shares created under Files Provisioned v2 account type. </summary>
+        [WirePath("properties.nextAllowedProvisionedBandwidthDowngradeTime")]
+        public DateTimeOffset? NextAllowedProvisionedBandwidthDowngradeOn { get; }
         /// <summary> The authentication protocol that is used for the file share. Can only be specified when creating a share. </summary>
         [WirePath("properties.enabledProtocols")]
         public FileShareEnabledProtocol? EnabledProtocol { get; set; }
@@ -161,6 +198,9 @@ namespace Azure.ResourceManager.Storage
         /// <summary> Creation time of share snapshot returned in the response of list shares with expand param "snapshots". </summary>
         [WirePath("properties.snapshotTime")]
         public DateTimeOffset? SnapshotOn { get; }
+        /// <summary> File Share Paid Bursting properties. </summary>
+        [WirePath("properties.fileSharePaidBursting")]
+        public FileSharePropertiesFileSharePaidBursting FileSharePaidBursting { get; set; }
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }

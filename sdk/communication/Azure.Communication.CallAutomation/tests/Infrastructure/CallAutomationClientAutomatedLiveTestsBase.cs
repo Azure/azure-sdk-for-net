@@ -57,14 +57,16 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             BodyKeySanitizers.Add(new BodyKeySanitizer("..sourceDisplayName") { Value = SanitizeValue });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..incomingCallContext") { Value = SanitizeValue });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..recordingStateCallbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..transportUrl") { Value = @"wss://sanitized.skype.com" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..cognitiveServicesEndpoint") { Value = @"https://sanitized.skype.com" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("$..operationContext") { Value = "Sanitized" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
-            BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx) { Value = SanitizeValue });
-            UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex) { Value = SanitizeValue });
-        }
+                BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
+                UriRegexSanitizers.Add(new UriRegexSanitizer(URIDomainRegEx) { Value = "https://sanitized.skype.com" });
+                UriRegexSanitizers.Add(new UriRegexSanitizer(TestDispatcherQNameRegEx) { Value = SanitizeValue });
+                UriRegexSanitizers.Add(new UriRegexSanitizer(ACSUserIdInUrlRegex) { Value = SanitizeValue });
+            }
 
         public bool SkipCallAutomationInteractionLiveTests
             => TestEnvironment.Mode != RecordedTestMode.Playback && Environment.GetEnvironmentVariable("SKIP_CALLAUTOMATION_INTERACTION_LIVE_TESTS") == "TRUE";

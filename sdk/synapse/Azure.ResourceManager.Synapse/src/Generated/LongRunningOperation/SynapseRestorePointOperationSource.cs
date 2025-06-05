@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Synapse
 
         SynapseRestorePointResource IOperationSource<SynapseRestorePointResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SynapseRestorePointData.DeserializeSynapseRestorePointData(document.RootElement);
+            var data = ModelReaderWriter.Read<SynapseRestorePointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
             return new SynapseRestorePointResource(_client, data);
         }
 
         async ValueTask<SynapseRestorePointResource> IOperationSource<SynapseRestorePointResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SynapseRestorePointData.DeserializeSynapseRestorePointData(document.RootElement);
-            return new SynapseRestorePointResource(_client, data);
+            var data = ModelReaderWriter.Read<SynapseRestorePointData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSynapseContext.Default);
+            return await Task.FromResult(new SynapseRestorePointResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

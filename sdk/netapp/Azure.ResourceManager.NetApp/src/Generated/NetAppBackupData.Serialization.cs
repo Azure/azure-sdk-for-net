@@ -49,6 +49,30 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("creationDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(SnapshotCreationOn))
+            {
+                if (SnapshotCreationOn != null)
+                {
+                    writer.WritePropertyName("snapshotCreationDate"u8);
+                    writer.WriteStringValue(SnapshotCreationOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("snapshotCreationDate");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(CompletionOn))
+            {
+                if (CompletionOn != null)
+                {
+                    writer.WritePropertyName("completionDate"u8);
+                    writer.WriteStringValue(CompletionOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("completionDate");
+                }
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -125,6 +149,8 @@ namespace Azure.ResourceManager.NetApp
             SystemData systemData = default;
             string backupId = default;
             DateTimeOffset? creationDate = default;
+            DateTimeOffset? snapshotCreationDate = default;
+            DateTimeOffset? completionDate = default;
             string provisioningState = default;
             long? size = default;
             string label = default;
@@ -184,6 +210,26 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             creationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("snapshotCreationDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                snapshotCreationDate = null;
+                                continue;
+                            }
+                            snapshotCreationDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
+                        if (property0.NameEquals("completionDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                completionDate = null;
+                                continue;
+                            }
+                            completionDate = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -272,6 +318,8 @@ namespace Azure.ResourceManager.NetApp
                 systemData,
                 backupId,
                 creationDate,
+                snapshotCreationDate,
+                completionDate,
                 provisioningState,
                 size,
                 label,
@@ -292,7 +340,7 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppBackupData)} does not support writing '{options.Format}' format.");
             }
@@ -306,7 +354,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppBackupData(document.RootElement, options);
                     }
                 default:

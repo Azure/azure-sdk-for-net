@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Blueprint
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Versions);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Versions))
+                using (JsonDocument document = JsonDocument.Parse(Versions, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Blueprint
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Layout);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Layout))
+                using (JsonDocument document = JsonDocument.Parse(Layout, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Blueprint
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBlueprintContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BlueprintData)} does not support writing '{options.Format}' format.");
             }
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Blueprint
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBlueprintData(document.RootElement, options);
                     }
                 default:

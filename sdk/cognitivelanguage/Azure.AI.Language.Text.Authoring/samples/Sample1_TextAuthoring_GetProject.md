@@ -7,9 +7,8 @@ To create an AuthoringClient, you will need the service endpoint and credentials
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -19,14 +18,15 @@ To retrieve metadata of a project, call GetProject on the TextAnalysisAuthoring 
 
 ```C# Snippet:Sample1_TextAuthoring_GetProject
 string projectName = "MyTextProject";
+TextAuthoringProject projectClient = client.GetProject(projectName);
 
-Response<ProjectMetadata> response = authoringClient.GetProject(projectName);
-ProjectMetadata projectMetadata = response.Value;
+Response<TextAuthoringProjectMetadata> response = projectClient.GetProject();
+TextAuthoringProjectMetadata projectMetadata = response.Value;
 
 Console.WriteLine($"Project Name: {projectMetadata.ProjectName}");
 Console.WriteLine($"Language: {projectMetadata.Language}");
-Console.WriteLine($"Created DateTime: {projectMetadata.CreatedDateTime}");
-Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedDateTime}");
+Console.WriteLine($"Created DateTime: {projectMetadata.CreatedOn}");
+Console.WriteLine($"Last Modified DateTime: {projectMetadata.LastModifiedOn}");
 Console.WriteLine($"Description: {projectMetadata.Description}");
 ```
 

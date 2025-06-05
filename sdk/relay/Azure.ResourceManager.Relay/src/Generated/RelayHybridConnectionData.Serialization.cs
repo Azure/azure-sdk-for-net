@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Relay
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRelayContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RelayHybridConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Relay
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRelayHybridConnectionData(document.RootElement, options);
                     }
                 default:

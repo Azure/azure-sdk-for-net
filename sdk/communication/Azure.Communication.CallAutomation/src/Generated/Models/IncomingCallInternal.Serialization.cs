@@ -99,7 +99,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static IncomingCallInternal FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeIncomingCallInternal(document.RootElement);
         }
     }

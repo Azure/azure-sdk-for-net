@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.SecurityCenter
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RegulatoryComplianceControlData)} does not support writing '{options.Format}' format.");
             }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.SecurityCenter
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRegulatoryComplianceControlData(document.RootElement, options);
                     }
                 default:

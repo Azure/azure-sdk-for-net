@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Batch.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Data);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Data))
+                using (JsonDocument document = JsonDocument.Parse(Data, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Batch.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBatchContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BatchAccountCertificateCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBatchAccountCertificateCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:

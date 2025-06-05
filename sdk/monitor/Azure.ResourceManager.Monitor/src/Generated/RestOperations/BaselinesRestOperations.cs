@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> **Lists the metric baseline values for a resource**. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MetricBaselinesResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetricBaselinesResponse.DeserializeMetricBaselinesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor
         /// <summary> **Lists the metric baseline values for a resource**. </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Special case: If a metricname itself has a comma in it then use %2 to indicate it. Eg: 'Metric,Name1' should be **'Metric%2Name1'**. </param>
-        /// <param name="metricnamespace"> Metric namespace to query metric definitions for. </param>
+        /// <param name="metricnamespace"> Metric namespace that contains the requested metric names. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MetricBaselinesResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetricBaselinesResponse.DeserializeMetricBaselinesResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

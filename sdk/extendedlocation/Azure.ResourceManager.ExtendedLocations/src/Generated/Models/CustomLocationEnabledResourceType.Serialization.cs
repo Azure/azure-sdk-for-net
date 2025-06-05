@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerExtendedLocationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CustomLocationEnabledResourceType)} does not support writing '{options.Format}' format.");
             }
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomLocationEnabledResourceType(document.RootElement, options);
                     }
                 default:

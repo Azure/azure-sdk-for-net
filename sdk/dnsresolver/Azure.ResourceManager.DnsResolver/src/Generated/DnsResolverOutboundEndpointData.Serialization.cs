@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.DnsResolver
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsResolverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DnsResolverOutboundEndpointData)} does not support writing '{options.Format}' format.");
             }
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DnsResolver
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDnsResolverOutboundEndpointData(document.RootElement, options);
                     }
                 default:

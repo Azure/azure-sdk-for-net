@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Elastic
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticTagRuleData)} does not support writing '{options.Format}' format.");
             }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Elastic
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticTagRuleData(document.RootElement, options);
                     }
                 default:

@@ -5,8 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using Azure.Communication.CallAutomation.Tests.Infrastructure;
+using NUnit.Framework;
 
 namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 {
@@ -35,6 +35,26 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
 
         [TestCaseSource(nameof(TestData_OperationsAsyncWithStatus))]
         public async Task RecordingOperationsAsync_WithRecordingStatus_Success(Func<CallRecording, Task<Response<RecordingStateResult>>> operation)
+        {
+            CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
+
+            Response<RecordingStateResult> result = await operation(callRecording);
+            Assert.AreEqual("dummyRecordingId", result.Value.RecordingId);
+            Assert.AreEqual(RecordingState.Active, result.Value.RecordingState);
+        }
+
+        [TestCaseSource(nameof(TestData_OperationsWithCallConnectionIdWithStatus))]
+        public void RecordingOperations_WithCallConnectionId_WithRecordingStatus_Success(Func<CallRecording, RecordingStateResult> operation)
+        {
+            CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
+
+            RecordingStateResult result = operation(callRecording);
+            Assert.AreEqual("dummyRecordingId", result.RecordingId);
+            Assert.AreEqual(RecordingState.Active, result.RecordingState);
+        }
+
+        [TestCaseSource(nameof(TestData_OperationsAsyncWithCallConnectionIdWithStatus))]
+        public async Task RecordingOperationsAsync_WithCallConnectionId_WithRecordingStatus_Success(Func<CallRecording, Task<Response<RecordingStateResult>>> operation)
         {
             CallRecording callRecording = getMockCallRecording(200, responseContent: DummyRecordingStatusResponse);
 
@@ -172,15 +192,61 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             };
         }
 
+        private static IEnumerable<object?[]> TestData_OperationsWithCallConnectionIdWithStatus()
+        {
+            return new[]
+            {
+                new Func<CallRecording, RecordingStateResult>?[]
+                {
+                   callRecording => callRecording.Start(new StartRecordingOptions(CallConnectionId) {
+                       RecordingStateCallbackUri = _callBackUri,
+                       ChannelAffinity = testChannelAffinities
+                   })
+                },
+                new Func<CallRecording, RecordingStateResult>?[]
+                {
+                   callRecording => callRecording.GetState(RecordingId)
+                }
+            };
+        }
+
+        private static IEnumerable<object?[]> TestData_OperationsAsyncWithCallConnectionIdWithStatus()
+        {
+            return new[]
+            {
+                new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
+                {
+                   callRecording => callRecording.StartAsync(new StartRecordingOptions(CallConnectionId) {
+                       RecordingStateCallbackUri = _callBackUri,
+                       ChannelAffinity = testChannelAffinities
+                   })
+                },
+                new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
+                {
+                   callRecording => callRecording.GetStateAsync(RecordingId)
+                }
+            };
+        }
+
         private static IEnumerable<object?[]> TestData_Operations404()
         {
             return new[]
             {
-                new Func<CallRecording, TestDelegate>?[]
+               new Func<CallRecording, TestDelegate>?[]
                 {
                     callRecording => () =>
                         callRecording.Start(
                             new StartRecordingOptions(_callLocator)
+                            {
+                                RecordingStateCallbackUri = _callBackUri,
+                                ChannelAffinity = testChannelAffinities
+                            })
+                },
+               new Func<CallRecording, TestDelegate>?[]
+                {
+                    callRecording => () =>
+                        callRecording.Start(
+                            new StartRecordingOptions("callconnectionid")
                             {
                                 RecordingStateCallbackUri = _callBackUri,
                                 ChannelAffinity = testChannelAffinities
@@ -196,6 +262,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                         AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test") },
                         ChannelAffinity = testChannelAffinities,
                         PauseOnStart = false,
+                        PostProcessingOptions = new PostProcessingOptions(
+                            new TranscriptionSettings(true)
+                        )
                     })
                 },
                 new Func<CallRecording, TestDelegate>?[]
@@ -238,6 +307,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
                        RecordingFormat = RecordingFormat.Mp4,
                        ChannelAffinity = testChannelAffinities,
                        PauseOnStart = false,
+                       PostProcessingOptions = new PostProcessingOptions(
+                            new TranscriptionSettings(true)
+                        ),
                        AudioChannelParticipantOrdering = { new CommunicationUserIdentifier("test"),}
                    }).ConfigureAwait(false),
                 },

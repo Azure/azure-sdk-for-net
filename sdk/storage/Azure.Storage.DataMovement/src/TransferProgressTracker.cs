@@ -14,7 +14,7 @@ namespace Azure.Storage.DataMovement
     /// </summary>
     internal class TransferProgressTracker : IAsyncDisposable
     {
-        private class ProgressEventArgs
+        internal class ProgressEventArgs
         {
             public int CompletedChange { get; set; } = 0;
             public int SkippedChange { get; set; } = 0;
@@ -24,7 +24,7 @@ namespace Azure.Storage.DataMovement
             public long BytesChange { get; set; } = 0;
         }
 
-        private readonly ProgressHandlerOptions _options;
+        private readonly TransferProgressHandlerOptions _options;
 
         private IProcessor<ProgressEventArgs> _progressProcessor;
         private long _completedCount = 0;
@@ -34,10 +34,17 @@ namespace Azure.Storage.DataMovement
         private long _queuedCount = 0;
         private long _bytesTransferred = 0;
 
-        public TransferProgressTracker(ProgressHandlerOptions options)
+        public TransferProgressTracker(TransferProgressHandlerOptions options)
         {
             _options = options;
             _progressProcessor = ChannelProcessing.NewProcessor<ProgressEventArgs>(readers: 1);
+            _progressProcessor.Process = ProcessProgressEvent;
+        }
+
+        internal TransferProgressTracker(IProcessor<ProgressEventArgs> progressProcessor, TransferProgressHandlerOptions options)
+        {
+            _options = options;
+            _progressProcessor = progressProcessor;
             _progressProcessor.Process = ProcessProgressEvent;
         }
 
@@ -96,7 +103,7 @@ namespace Azure.Storage.DataMovement
             cancellationToken).ConfigureAwait(false);
         }
 
-        public async ValueTask IncrementBytesTransferred(long bytesTransferred, CancellationToken cancellationToken)
+        public async ValueTask IncrementBytesTransferredAsync(long bytesTransferred, CancellationToken cancellationToken)
         {
             if (_options?.TrackBytesTransferred == true)
             {
@@ -139,7 +146,7 @@ namespace Azure.Storage.DataMovement
                 FailedCount = _failedCount,
                 InProgressCount = _inProgressCount,
                 QueuedCount = _queuedCount,
-                BytesTransferred = _options.TrackBytesTransferred ? _bytesTransferred : null
+                BytesTransferred = _options?.TrackBytesTransferred == true ? _bytesTransferred : null
             };
             _options?.ProgressHandler?.Report(progress);
 

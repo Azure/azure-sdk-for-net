@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -22,32 +21,30 @@ To import project data, call ImportAsync on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample2_TextAuthoring_ImportAsync
 string projectName = "LoanAgreements";
-
-var projectMetadata = new CreateProjectDetails(
+TextAuthoringProject projectClient = client.GetProject(projectName);
+var projectMetadata = new TextAuthoringCreateProjectDetails(
     projectKind: "CustomEntityRecognition",
     storageInputContainerName: "loanagreements",
-    projectName: projectName,
     language: "en"
 )
 {
     Description = "This is a sample dataset provided by the Azure Language service team to help users get started with Custom named entity recognition. The provided sample dataset contains 20 loan agreements drawn up between two entities.",
-    Multilingual = false,
-    Settings = new ProjectSettings()
+    Multilingual = false
 };
 
-var projectAssets = new ExportedCustomEntityRecognitionProjectAssets
+var projectAssets = new ExportedCustomEntityRecognitionProjectAsset
 {
     Entities =
     {
-        new ExportedEntity
+        new TextAuthoringExportedEntity
         {
             Category= "Date"
         },
-        new ExportedEntity
+        new TextAuthoringExportedEntity
         {
             Category= "LenderName"
         },
-        new ExportedEntity
+        new TextAuthoringExportedEntity
         {
             Category= "LenderAddress"
         }
@@ -127,7 +124,7 @@ var projectAssets = new ExportedCustomEntityRecognitionProjectAssets
     }
 };
 
-var exportedProject = new ExportedProject(
+var exportedProject = new TextAuthoringExportedProject(
     projectFileVersion: "2022-05-01",
     stringIndexType: StringIndexType.Utf16CodeUnit,
     metadata: projectMetadata)
@@ -135,9 +132,8 @@ var exportedProject = new ExportedProject(
     Assets = projectAssets
 };
 
-Operation operation = await authoringClient.ImportAsync(
+Operation operation = await projectClient.ImportAsync(
     waitUntil: WaitUntil.Completed,
-    projectName: projectName,
     body: exportedProject
 );
 

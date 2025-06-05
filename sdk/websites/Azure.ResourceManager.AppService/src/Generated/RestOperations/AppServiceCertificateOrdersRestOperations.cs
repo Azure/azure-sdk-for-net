@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -640,7 +640,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderData.DeserializeAppServiceCertificateOrderData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -705,7 +705,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -803,7 +803,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1138,7 +1138,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateData.DeserializeAppServiceCertificateData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1569,7 +1569,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         SiteSeal value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SiteSeal.DeserializeSiteSeal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1600,7 +1600,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         SiteSeal value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SiteSeal.DeserializeSiteSeal(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1749,7 +1749,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<CertificateOrderAction> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<CertificateOrderAction> array = new List<CertificateOrderAction>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1783,7 +1783,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<CertificateOrderAction> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<CertificateOrderAction> array = new List<CertificateOrderAction>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1853,7 +1853,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceCertificateEmail> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1887,7 +1887,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         IReadOnlyList<AppServiceCertificateEmail> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         List<AppServiceCertificateEmail> array = new List<AppServiceCertificateEmail>();
                         foreach (var item in document.RootElement.EnumerateArray())
                         {
@@ -1941,7 +1941,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1968,7 +1968,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2019,7 +2019,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2048,7 +2048,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateOrderListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateOrderListResult.DeserializeAppServiceCertificateOrderListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2101,7 +2101,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2132,7 +2132,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceCertificateListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceCertificateListResult.DeserializeAppServiceCertificateListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -50,6 +50,33 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
+            if (Optional.IsDefined(Extension))
+            {
+                writer.WritePropertyName("extension"u8);
+                writer.WriteObjectValue(Extension, options);
+            }
+            if (Optional.IsDefined(Identifiers))
+            {
+                writer.WritePropertyName("identifiers"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Identifiers);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Identifiers, ModelSerializationExtensions.JsonDocumentOptions))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsDefined(SymbolicName))
+            {
+                writer.WritePropertyName("symbolicName"u8);
+                writer.WriteStringValue(SymbolicName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -58,7 +85,7 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -90,6 +117,10 @@ namespace Azure.ResourceManager.Resources.Models
             string id = default;
             string resourceName = default;
             ResourceType? resourceType = default;
+            ArmDeploymentExtensionDefinition extension = default;
+            BinaryData identifiers = default;
+            string apiVersion = default;
+            string symbolicName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,13 +144,49 @@ namespace Azure.ResourceManager.Resources.Models
                     resourceType = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("extension"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extension = ArmDeploymentExtensionDefinition.DeserializeArmDeploymentExtensionDefinition(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identifiers"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identifiers = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("apiVersion"u8))
+                {
+                    apiVersion = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("symbolicName"u8))
+                {
+                    symbolicName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TargetResource(id, resourceName, resourceType, serializedAdditionalRawData);
+            return new TargetResource(
+                id,
+                resourceName,
+                resourceType,
+                extension,
+                identifiers,
+                apiVersion,
+                symbolicName,
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -194,6 +261,82 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Extension), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  extension: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Extension))
+                {
+                    builder.Append("  extension: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Extension, options, 2, false, "  extension: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identifiers), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  identifiers: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Identifiers))
+                {
+                    builder.Append("  identifiers: ");
+                    builder.AppendLine($"'{Identifiers.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiVersion), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  apiVersion: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ApiVersion))
+                {
+                    builder.Append("  apiVersion: ");
+                    if (ApiVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApiVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApiVersion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SymbolicName), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  symbolicName: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(SymbolicName))
+                {
+                    builder.Append("  symbolicName: ");
+                    if (SymbolicName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SymbolicName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SymbolicName}'");
+                    }
+                }
+            }
+
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
         }
@@ -205,7 +348,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -221,7 +364,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTargetResource(document.RootElement, options);
                     }
                 default:

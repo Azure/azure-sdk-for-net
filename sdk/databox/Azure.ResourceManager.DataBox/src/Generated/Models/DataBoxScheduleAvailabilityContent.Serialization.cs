@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.DataBox.Models
             AzureLocation storageLocation = default;
             DataBoxSkuName skuName = default;
             string country = default;
+            DeviceModelName? model = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,13 +80,22 @@ namespace Azure.ResourceManager.DataBox.Models
                     country = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = property.Value.GetString().ToDeviceModelName();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
+            return new DataBoxScheduleAvailabilityContent(storageLocation, skuName, country, model, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -95,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
@@ -109,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataBoxScheduleAvailabilityContent(document.RootElement, options);
                     }
                 default:

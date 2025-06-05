@@ -18,17 +18,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
-
-            string projectName = "SampleProject";
-            string trainedModelLabel = "SampleModel";
+            ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
 
             #region Snippet:Sample11_ConversationsAuthoring_DeleteTrainedModel
-            Response response = authoringClient.DeleteTrainedModel(
-                projectName: projectName,
-                trainedModelLabel: trainedModelLabel
-            );
+            string projectName = "SampleProject";
+            string trainedModelLabel = "SampleModel";
+            ConversationAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
+
+            Response response = trainedModelClient.DeleteTrainedModel();
 
             Console.WriteLine($"Delete Trained Model Response Status: {response.Status}");
             #endregion

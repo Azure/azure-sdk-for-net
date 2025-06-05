@@ -37,12 +37,12 @@ namespace Azure.Health.Deidentification
             if (options.Format != "W")
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WriteStringValue(JobName);
             }
-            if (Optional.IsDefined(Operation))
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation.Value.ToString());
+                writer.WriteStringValue(OperationType.Value.ToString());
             }
             writer.WritePropertyName("sourceLocation"u8);
             writer.WriteObjectValue(SourceLocation, options);
@@ -91,7 +91,7 @@ namespace Azure.Health.Deidentification
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -125,7 +125,7 @@ namespace Azure.Health.Deidentification
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
             DeidentificationJobCustomizationOptions customizations = default;
-            OperationState status = default;
+            OperationStatus status = default;
             ResponseError error = default;
             DateTimeOffset lastUpdatedAt = default;
             DateTimeOffset createdAt = default;
@@ -170,7 +170,7 @@ namespace Azure.Health.Deidentification
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationState(property.Value.GetString());
+                    status = new OperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -238,7 +238,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeidentificationJob)} does not support writing '{options.Format}' format.");
             }
@@ -252,7 +252,7 @@ namespace Azure.Health.Deidentification
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeidentificationJob(document.RootElement, options);
                     }
                 default:
@@ -266,7 +266,7 @@ namespace Azure.Health.Deidentification
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static DeidentificationJob FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeDeidentificationJob(document.RootElement);
         }
 

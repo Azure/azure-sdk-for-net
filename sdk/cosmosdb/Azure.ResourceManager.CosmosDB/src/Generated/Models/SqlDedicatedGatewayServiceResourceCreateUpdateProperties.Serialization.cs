@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support writing '{options.Format}' format.");
             }
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(document.RootElement, options);
                     }
                 default:

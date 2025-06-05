@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSpringAppDiscoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SpringBootSiteData)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSpringBootSiteData(document.RootElement, options);
                     }
                 default:

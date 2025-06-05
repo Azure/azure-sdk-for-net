@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.SecurityCenter
 
         DevOpsOrgResource IOperationSource<DevOpsOrgResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DevOpsOrgData.DeserializeDevOpsOrgData(document.RootElement);
+            var data = ModelReaderWriter.Read<DevOpsOrgData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
             return new DevOpsOrgResource(_client, data);
         }
 
         async ValueTask<DevOpsOrgResource> IOperationSource<DevOpsOrgResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DevOpsOrgData.DeserializeDevOpsOrgData(document.RootElement);
-            return new DevOpsOrgResource(_client, data);
+            var data = ModelReaderWriter.Read<DevOpsOrgData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSecurityCenterContext.Default);
+            return await Task.FromResult(new DevOpsOrgResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

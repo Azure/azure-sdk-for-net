@@ -74,11 +74,31 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(PublicIPAddressesV6))
+            {
+                writer.WritePropertyName("publicIpAddressesV6"u8);
+                writer.WriteStartArray();
+                foreach (var item in PublicIPAddressesV6)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(PublicIPPrefixes))
             {
                 writer.WritePropertyName("publicIpPrefixes"u8);
                 writer.WriteStartArray();
                 foreach (var item in PublicIPPrefixes)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(PublicIPPrefixesV6))
+            {
+                writer.WritePropertyName("publicIpPrefixesV6"u8);
+                writer.WriteStartArray();
+                foreach (var item in PublicIPPrefixesV6)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
@@ -93,6 +113,11 @@ namespace Azure.ResourceManager.Network
                     JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SourceVirtualNetwork))
+            {
+                writer.WritePropertyName("sourceVirtualNetwork"u8);
+                JsonSerializer.Serialize(writer, SourceVirtualNetwork);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -137,8 +162,11 @@ namespace Azure.ResourceManager.Network
             IDictionary<string, string> tags = default;
             int? idleTimeoutInMinutes = default;
             IList<WritableSubResource> publicIPAddresses = default;
+            IList<WritableSubResource> publicIPAddressesV6 = default;
             IList<WritableSubResource> publicIPPrefixes = default;
+            IList<WritableSubResource> publicIPPrefixesV6 = default;
             IReadOnlyList<WritableSubResource> subnets = default;
+            WritableSubResource sourceVirtualNetwork = default;
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -255,6 +283,20 @@ namespace Azure.ResourceManager.Network
                             publicIPAddresses = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicIpAddressesV6"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            publicIPAddressesV6 = array;
+                            continue;
+                        }
                         if (property0.NameEquals("publicIpPrefixes"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -269,6 +311,20 @@ namespace Azure.ResourceManager.Network
                             publicIPPrefixes = array;
                             continue;
                         }
+                        if (property0.NameEquals("publicIpPrefixesV6"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WritableSubResource> array = new List<WritableSubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                            }
+                            publicIPPrefixesV6 = array;
+                            continue;
+                        }
                         if (property0.NameEquals("subnets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -281,6 +337,15 @@ namespace Azure.ResourceManager.Network
                                 array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
                             }
                             subnets = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("sourceVirtualNetwork"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sourceVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("resourceGuid"u8))
@@ -322,8 +387,11 @@ namespace Azure.ResourceManager.Network
                 etag,
                 idleTimeoutInMinutes,
                 publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPAddressesV6 ?? new ChangeTrackingList<WritableSubResource>(),
                 publicIPPrefixes ?? new ChangeTrackingList<WritableSubResource>(),
+                publicIPPrefixesV6 ?? new ChangeTrackingList<WritableSubResource>(),
                 subnets ?? new ChangeTrackingList<WritableSubResource>(),
+                sourceVirtualNetwork,
                 resourceGuid,
                 provisioningState);
         }
@@ -335,7 +403,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NatGatewayData)} does not support writing '{options.Format}' format.");
             }
@@ -349,7 +417,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNatGatewayData(document.RootElement, options);
                     }
                 default:

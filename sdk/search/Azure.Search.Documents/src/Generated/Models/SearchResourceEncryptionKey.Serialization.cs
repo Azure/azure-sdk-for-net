@@ -17,8 +17,11 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultKeyName"u8);
             writer.WriteStringValue(KeyName);
-            writer.WritePropertyName("keyVaultKeyVersion"u8);
-            writer.WriteStringValue(KeyVersion);
+            if (Optional.IsDefined(KeyVersion))
+            {
+                writer.WritePropertyName("keyVaultKeyVersion"u8);
+                writer.WriteStringValue(KeyVersion);
+            }
             writer.WritePropertyName("keyVaultUri"u8);
             writer.WriteStringValue(_vaultUri);
             if (Optional.IsDefined(AccessCredentialsInternal))
@@ -96,7 +99,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchResourceEncryptionKey FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchResourceEncryptionKey(document.RootElement);
         }
 

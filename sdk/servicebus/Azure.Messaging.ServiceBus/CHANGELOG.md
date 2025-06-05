@@ -1,10 +1,42 @@
 # Release History
 
-## 7.19.0-beta.1 (Unreleased)
+## 7.20.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+
+### Bugs Fixed
+
+- Fixed a bug where the custom port associated with a local emulator endpoint was reset by the `ServiceBusAdministrationClient`.
+
+### Other Changes
+
+- Updated retry policy behavior when the service is throttling and the `TryTimeout` is shorter than the standard throttling time of 30 seconds.  Previously, the operation was immediately canceled with a server busy exception.  With these changes, the operation will begin consuming retry attempts while throttling until either the server busy state is cleared or all configured retry attempts are exhausted.  ([#50121](https://github.com/Azure/azure-sdk-for-net/issues/50121))
+
+## 7.19.0 (2025-04-08)
+
+### Features Added
+
+- `ServiceBusClientOptions` now supports registering a callback delegate for participating in the validation of SSL certificates when connections are established.  This delegate may override the built-in validation and allow or deny certificates based on application-specific logic.
+
+### Other Changes
+
+- Added jitter to the lock renewal timer to reduce the likelihood of lock renewal collisions when using the `ServiceBusProcessor` or the `ServiceBusSessionProcessor`.
+
+- Enhanced retry logic to consider additional cases for web socket-based failures.  In many cases, a `WebSocketException` is triggered which wraps a `SocketException` with the details for the specific network conditions.  Retry decisions are now based on the internal exception, if present, to ensure retries are correctly applied.
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+## 7.18.4 (2025-02-11)
+
+### Bugs Fixed
+
+- Fixed an issue with the `AmqpReceiver` class where a drain failure during a `ReceiveMessagesAsync` operation would cause message ordering to be violated. ([#47822](https://github.com/Azure/azure-sdk-for-net/issues/47822))
+
+- Fixed an issue where an error response from the Service Bus administration service without a body was incorrectly parsed, resulting in a null argument exception obscuring the actual failure response. ([#47517](https://github.com/Azure/azure-sdk-for-net/issues/47517))
+
+## 7.18.3 (2025-01-17)
 
 ### Bugs Fixed
 
@@ -15,6 +47,8 @@
 - Added annotations to make the package compatible with trimming and native AOT compilation.
 
 - Updated the `Microsoft.Azure.Amqp` dependency to 2.6.9, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+
+- Updated the transitive dependency on `System.Text.Json` to 6.0.10 via `Azure.Core` 1.44.1.  Though Service Bus does not perform JSON serialization and was not vulnerable, the .NET 9 SDK was emitting warnings during scans due to a flaw in the previous `System.Text.Json` dependency.
 
 ## 7.18.2 (2024-10-08)
 

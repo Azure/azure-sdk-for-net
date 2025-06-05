@@ -60,10 +60,20 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("partitionCount"u8);
                 writer.WriteNumberValue(PartitionCount.Value);
             }
+            if (Optional.IsDefined(Endpoint))
+            {
+                writer.WritePropertyName("endpoint"u8);
+                writer.WriteStringValue(Endpoint.AbsoluteUri);
+            }
             if (Optional.IsDefined(HostingMode))
             {
                 writer.WritePropertyName("hostingMode"u8);
                 writer.WriteStringValue(HostingMode.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(ComputeType))
+            {
+                writer.WritePropertyName("computeType"u8);
+                writer.WriteStringValue(ComputeType.Value.ToString());
             }
             if (Optional.IsDefined(PublicInternetAccess))
             {
@@ -159,6 +169,16 @@ namespace Azure.ResourceManager.Search.Models
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradeAvailable))
+            {
+                writer.WritePropertyName("upgradeAvailable"u8);
+                writer.WriteBooleanValue(IsUpgradeAvailable.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServiceUpgradeOn))
+            {
+                writer.WritePropertyName("serviceUpgradeDate"u8);
+                writer.WriteStringValue(ServiceUpgradeOn.Value, "O");
+            }
             writer.WriteEndObject();
         }
 
@@ -192,7 +212,9 @@ namespace Azure.ResourceManager.Search.Models
             SystemData systemData = default;
             int? replicaCount = default;
             int? partitionCount = default;
+            Uri endpoint = default;
             SearchServiceHostingMode? hostingMode = default;
+            SearchServiceComputeType? computeType = default;
             SearchServicePublicInternetAccess? publicNetworkAccess = default;
             SearchServiceStatus? status = default;
             string statusDetails = default;
@@ -206,6 +228,8 @@ namespace Azure.ResourceManager.Search.Models
             IReadOnlyList<SearchPrivateEndpointConnectionData> privateEndpointConnections = default;
             IReadOnlyList<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = default;
             ETag? eTag = default;
+            bool? upgradeAvailable = default;
+            DateTimeOffset? serviceUpgradeDate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -298,6 +322,15 @@ namespace Azure.ResourceManager.Search.Models
                             partitionCount = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("endpoint"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            endpoint = new Uri(property0.Value.GetString());
+                            continue;
+                        }
                         if (property0.NameEquals("hostingMode"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -305,6 +338,15 @@ namespace Azure.ResourceManager.Search.Models
                                 continue;
                             }
                             hostingMode = property0.Value.GetString().ToSearchServiceHostingMode();
+                            continue;
+                        }
+                        if (property0.NameEquals("computeType"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            computeType = new SearchServiceComputeType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("publicNetworkAccess"u8))
@@ -437,6 +479,24 @@ namespace Azure.ResourceManager.Search.Models
                             eTag = new ETag(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("upgradeAvailable"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            upgradeAvailable = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceUpgradeDate"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            serviceUpgradeDate = property0.Value.GetDateTimeOffset("O");
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -457,7 +517,9 @@ namespace Azure.ResourceManager.Search.Models
                 identity,
                 replicaCount,
                 partitionCount,
+                endpoint,
                 hostingMode,
+                computeType,
                 publicNetworkAccess,
                 status,
                 statusDetails,
@@ -471,6 +533,8 @@ namespace Azure.ResourceManager.Search.Models
                 privateEndpointConnections ?? new ChangeTrackingList<SearchPrivateEndpointConnectionData>(),
                 sharedPrivateLinkResources ?? new ChangeTrackingList<SharedSearchServicePrivateLinkResourceData>(),
                 eTag,
+                upgradeAvailable,
+                serviceUpgradeDate,
                 serializedAdditionalRawData);
         }
 
@@ -652,6 +716,21 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Endpoint), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    endpoint: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Endpoint))
+                {
+                    builder.Append("    endpoint: ");
+                    builder.AppendLine($"'{Endpoint.AbsoluteUri}'");
+                }
+            }
+
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingMode), out propertyOverride);
             if (hasPropertyOverride)
             {
@@ -664,6 +743,21 @@ namespace Azure.ResourceManager.Search.Models
                 {
                     builder.Append("    hostingMode: ");
                     builder.AppendLine($"'{HostingMode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeType), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    computeType: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ComputeType))
+                {
+                    builder.Append("    computeType: ");
+                    builder.AppendLine($"'{ComputeType.Value.ToString()}'");
                 }
             }
 
@@ -895,6 +989,38 @@ namespace Azure.ResourceManager.Search.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsUpgradeAvailable), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    upgradeAvailable: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsUpgradeAvailable))
+                {
+                    builder.Append("    upgradeAvailable: ");
+                    var boolValue = IsUpgradeAvailable.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceUpgradeOn), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    serviceUpgradeDate: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ServiceUpgradeOn))
+                {
+                    builder.Append("    serviceUpgradeDate: ");
+                    var formattedDateTimeString = TypeFormatters.ToString(ServiceUpgradeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -907,7 +1033,7 @@ namespace Azure.ResourceManager.Search.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSearchContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -923,7 +1049,7 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSearchServicePatch(document.RootElement, options);
                     }
                 default:

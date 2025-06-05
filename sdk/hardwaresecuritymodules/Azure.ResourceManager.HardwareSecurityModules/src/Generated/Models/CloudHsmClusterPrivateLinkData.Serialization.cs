@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHardwareSecurityModulesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCloudHsmClusterPrivateLinkData(document.RootElement, options);
                     }
                 default:

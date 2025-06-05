@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Dynatrace
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDynatraceContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DynatraceTagRuleData)} does not support writing '{options.Format}' format.");
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Dynatrace
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDynatraceTagRuleData(document.RootElement, options);
                     }
                 default:

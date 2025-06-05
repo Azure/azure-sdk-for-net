@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppService
 
         WebSiteSourceControlResource IOperationSource<WebSiteSourceControlResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
+            var data = ModelReaderWriter.Read<SiteSourceControlData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new WebSiteSourceControlResource(_client, data);
         }
 
         async ValueTask<WebSiteSourceControlResource> IOperationSource<WebSiteSourceControlResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SiteSourceControlData.DeserializeSiteSourceControlData(document.RootElement);
-            return new WebSiteSourceControlResource(_client, data);
+            var data = ModelReaderWriter.Read<SiteSourceControlData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            return await Task.FromResult(new WebSiteSourceControlResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

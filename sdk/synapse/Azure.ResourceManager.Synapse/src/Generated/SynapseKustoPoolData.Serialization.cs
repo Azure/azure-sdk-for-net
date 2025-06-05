@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Synapse
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSynapseContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support writing '{options.Format}' format.");
             }
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Synapse
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSynapseKustoPoolData(document.RootElement, options);
                     }
                 default:

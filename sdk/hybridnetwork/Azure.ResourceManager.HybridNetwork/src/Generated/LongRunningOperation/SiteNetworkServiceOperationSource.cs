@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork
 
         SiteNetworkServiceResource IOperationSource<SiteNetworkServiceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement);
+            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
             return new SiteNetworkServiceResource(_client, data);
         }
 
         async ValueTask<SiteNetworkServiceResource> IOperationSource<SiteNetworkServiceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SiteNetworkServiceData.DeserializeSiteNetworkServiceData(document.RootElement);
-            return new SiteNetworkServiceResource(_client, data);
+            var data = ModelReaderWriter.Read<SiteNetworkServiceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridNetworkContext.Default);
+            return await Task.FromResult(new SiteNetworkServiceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

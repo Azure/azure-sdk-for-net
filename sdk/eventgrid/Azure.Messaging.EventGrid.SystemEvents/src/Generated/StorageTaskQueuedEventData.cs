@@ -46,30 +46,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskQueuedEventData"/>. </summary>
-        /// <param name="queuedDateTime"> The time at which a storage task was queued. </param>
-        internal StorageTaskQueuedEventData(DateTimeOffset queuedDateTime)
+        internal StorageTaskQueuedEventData()
         {
-            QueuedDateTime = queuedDateTime;
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskQueuedEventData"/>. </summary>
         /// <param name="queuedDateTime"> The time at which a storage task was queued. </param>
         /// <param name="taskExecutionId"> The execution id for a storage task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTaskQueuedEventData(DateTimeOffset queuedDateTime, string taskExecutionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageTaskQueuedEventData(DateTimeOffset? queuedDateTime, string taskExecutionId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             QueuedDateTime = queuedDateTime;
             TaskExecutionId = taskExecutionId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageTaskQueuedEventData"/> for deserialization. </summary>
-        internal StorageTaskQueuedEventData()
-        {
-        }
-
         /// <summary> The time at which a storage task was queued. </summary>
-        public DateTimeOffset QueuedDateTime { get; }
+        public DateTimeOffset? QueuedDateTime { get; }
         /// <summary> The execution id for a storage task. </summary>
         public string TaskExecutionId { get; }
     }

@@ -1342,7 +1342,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMobileNetworkContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1358,7 +1358,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeUEInfo4G(document.RootElement, options);
                     }
                 default:

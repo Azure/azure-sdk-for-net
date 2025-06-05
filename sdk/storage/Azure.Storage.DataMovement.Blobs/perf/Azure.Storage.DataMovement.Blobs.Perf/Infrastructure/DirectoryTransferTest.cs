@@ -14,7 +14,6 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
     public abstract class DirectoryTransferTest<TOptions> : PerfTest<TOptions> where TOptions : DirectoryTransferOptions
     {
         protected BlobServiceClient BlobServiceClient { get; }
-        protected LocalFilesStorageResourceProvider LocalFileResourceProvider { get; }
         protected BlobsStorageResourceProvider BlobResourceProvider { get; }
 
         private TransferManager _transferManager;
@@ -23,14 +22,13 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         public DirectoryTransferTest(TOptions options) : base(options)
         {
             BlobServiceClient = new BlobServiceClient(PerfTestEnvironment.Instance.StorageEndpoint, PerfTestEnvironment.Instance.Credential);
-            LocalFileResourceProvider = new LocalFilesStorageResourceProvider();
             BlobResourceProvider = new BlobsStorageResourceProvider(PerfTestEnvironment.Instance.Credential);
             _transferTimeout = TimeSpan.FromSeconds(Options.Duration);
 
             TransferManagerOptions managerOptions = new()
             {
-                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
-                CheckpointerOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure,
+                CheckpointStoreOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.DisableCheckpoint() : default,
                 MaximumConcurrency = Options.Concurrency
             };
             _transferManager = new TransferManager(managerOptions);
@@ -85,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         {
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                 InitialTransferSize = Options.InitialTransferSize,
                 MaximumTransferChunkSize = Options.ChunkSize,
             };

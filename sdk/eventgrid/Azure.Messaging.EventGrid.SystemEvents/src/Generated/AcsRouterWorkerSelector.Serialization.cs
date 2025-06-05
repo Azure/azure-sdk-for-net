@@ -39,23 +39,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            writer.WritePropertyName("labelOperator"u8);
-            writer.WriteStringValue(LabelOperator.ToString());
-            writer.WritePropertyName("value"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(LabelValue);
-#else
-            using (JsonDocument document = JsonDocument.Parse(LabelValue))
+            if (Optional.IsDefined(Operator))
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
+                writer.WritePropertyName("labelOperator"u8);
+                writer.WriteStringValue(Operator.Value.ToString());
             }
-#endif
+            writer.WritePropertyName("value"u8);
+            writer.WriteObjectValue<object>(LabelValue, options);
             writer.WritePropertyName("ttlSeconds"u8);
-            writer.WriteNumberValue(TimeToLive);
-            writer.WritePropertyName("state"u8);
-            writer.WriteStringValue(SelectorState.ToString());
-            writer.WritePropertyName("expirationTime"u8);
-            writer.WriteStringValue(ExpirationTime, "O");
+            writer.WriteNumberValue(TtlSeconds.Value);
+            if (Optional.IsDefined(SelectorState))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(SelectorState.Value.ToString());
+            }
+            if (Optional.IsDefined(ExpirationTime))
+            {
+                writer.WritePropertyName("expirationTime"u8);
+                writer.WriteStringValue(ExpirationTime.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -94,11 +96,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string key = default;
-            AcsRouterLabelOperator labelOperator = default;
-            BinaryData value = default;
-            double ttlSeconds = default;
-            AcsRouterWorkerSelectorState state = default;
-            DateTimeOffset expirationTime = default;
+            AcsRouterLabelOperator? labelOperator = default;
+            object value = default;
+            double? ttlSeconds = default;
+            AcsRouterWorkerSelectorState? state = default;
+            DateTimeOffset? expirationTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,12 +112,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("labelOperator"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     labelOperator = new AcsRouterLabelOperator(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("value"u8))
                 {
-                    value = BinaryData.FromString(property.Value.GetRawText());
+                    value = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("ttlSeconds"u8))
@@ -125,11 +131,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("state"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     state = new AcsRouterWorkerSelectorState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("expirationTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     expirationTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -156,7 +170,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsRouterWorkerSelector)} does not support writing '{options.Format}' format.");
             }
@@ -170,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsRouterWorkerSelector(document.RootElement, options);
                     }
                 default:
@@ -184,7 +198,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsRouterWorkerSelector FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsRouterWorkerSelector(document.RootElement);
         }
 

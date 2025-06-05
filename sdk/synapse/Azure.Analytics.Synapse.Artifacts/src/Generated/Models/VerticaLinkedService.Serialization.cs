@@ -21,6 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -64,6 +69,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteObjectValue<object>(ConnectionString);
             }
+            if (Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                writer.WriteObjectValue<object>(Server);
+            }
+            if (Optional.IsDefined(Port))
+            {
+                writer.WritePropertyName("port"u8);
+                writer.WriteObjectValue<object>(Port);
+            }
+            if (Optional.IsDefined(Uid))
+            {
+                writer.WritePropertyName("uid"u8);
+                writer.WriteObjectValue<object>(Uid);
+            }
+            if (Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteObjectValue<object>(Database);
+            }
             if (Optional.IsDefined(Pwd))
             {
                 writer.WritePropertyName("pwd"u8);
@@ -90,11 +115,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             object connectionString = default;
+            object server = default;
+            object port = default;
+            object uid = default;
+            object database = default;
             AzureKeyVaultSecretReference pwd = default;
             object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
@@ -104,6 +134,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -173,6 +208,42 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                             connectionString = property0.Value.GetObject();
                             continue;
                         }
+                        if (property0.NameEquals("server"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            server = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("port"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            port = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("uid"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            uid = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("database"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            database = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("pwd"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -199,12 +270,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new VerticaLinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties,
                 connectionString,
+                server,
+                port,
+                uid,
+                database,
                 pwd,
                 encryptedCredential);
         }
@@ -213,7 +289,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new VerticaLinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeVerticaLinkedService(document.RootElement);
         }
 

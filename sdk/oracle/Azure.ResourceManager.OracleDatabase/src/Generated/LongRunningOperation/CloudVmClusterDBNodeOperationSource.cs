@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.OracleDatabase
 
         CloudVmClusterDBNodeResource IOperationSource<CloudVmClusterDBNodeResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(document.RootElement);
+            var data = ModelReaderWriter.Read<CloudVmClusterDBNodeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
             return new CloudVmClusterDBNodeResource(_client, data);
         }
 
         async ValueTask<CloudVmClusterDBNodeResource> IOperationSource<CloudVmClusterDBNodeResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CloudVmClusterDBNodeData.DeserializeCloudVmClusterDBNodeData(document.RootElement);
-            return new CloudVmClusterDBNodeResource(_client, data);
+            var data = ModelReaderWriter.Read<CloudVmClusterDBNodeData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerOracleDatabaseContext.Default);
+            return await Task.FromResult(new CloudVmClusterDBNodeResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

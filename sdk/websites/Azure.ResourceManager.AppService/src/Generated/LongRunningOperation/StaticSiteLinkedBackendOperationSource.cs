@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteLinkedBackendResource IOperationSource<StaticSiteLinkedBackendResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
+            var data = ModelReaderWriter.Read<StaticSiteLinkedBackendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new StaticSiteLinkedBackendResource(_client, data);
         }
 
         async ValueTask<StaticSiteLinkedBackendResource> IOperationSource<StaticSiteLinkedBackendResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StaticSiteLinkedBackendData.DeserializeStaticSiteLinkedBackendData(document.RootElement);
-            return new StaticSiteLinkedBackendResource(_client, data);
+            var data = ModelReaderWriter.Read<StaticSiteLinkedBackendData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            return await Task.FromResult(new StaticSiteLinkedBackendResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

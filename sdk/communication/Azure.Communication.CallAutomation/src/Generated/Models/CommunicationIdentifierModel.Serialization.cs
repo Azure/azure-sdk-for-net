@@ -46,6 +46,11 @@ namespace Azure.Communication
                 writer.WritePropertyName("microsoftTeamsApp"u8);
                 writer.WriteObjectValue(MicrosoftTeamsApp);
             }
+            if (CallAutomation.Optional.IsDefined(TeamsExtensionUser))
+            {
+                writer.WritePropertyName("teamsExtensionUser"u8);
+                writer.WriteObjectValue(TeamsExtensionUser);
+            }
             writer.WriteEndObject();
         }
 
@@ -61,6 +66,7 @@ namespace Azure.Communication
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
             MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
+            TeamsExtensionUserIdentifierModel teamsExtensionUser = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -113,6 +119,15 @@ namespace Azure.Communication
                     microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value);
                     continue;
                 }
+                if (property.NameEquals("teamsExtensionUser"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    teamsExtensionUser = TeamsExtensionUserIdentifierModel.DeserializeTeamsExtensionUserIdentifierModel(property.Value);
+                    continue;
+                }
             }
             return new CommunicationIdentifierModel(
                 kind,
@@ -120,14 +135,15 @@ namespace Azure.Communication
                 communicationUser,
                 phoneNumber,
                 microsoftTeamsUser,
-                microsoftTeamsApp);
+                microsoftTeamsApp,
+                teamsExtensionUser);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CommunicationIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCommunicationIdentifierModel(document.RootElement);
         }
 

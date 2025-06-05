@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppService
 
         StaticSiteCustomDomainOverviewResource IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(document.RootElement);
+            var data = ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
             return new StaticSiteCustomDomainOverviewResource(_client, data);
         }
 
         async ValueTask<StaticSiteCustomDomainOverviewResource> IOperationSource<StaticSiteCustomDomainOverviewResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = StaticSiteCustomDomainOverviewData.DeserializeStaticSiteCustomDomainOverviewData(document.RootElement);
-            return new StaticSiteCustomDomainOverviewResource(_client, data);
+            var data = ModelReaderWriter.Read<StaticSiteCustomDomainOverviewData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppServiceContext.Default);
+            return await Task.FromResult(new StaticSiteCustomDomainOverviewResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -32,6 +32,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override long MaxSupportedChunkSize => Constants.Blob.Page.MaxPageBlockBytes;
 
+        protected override int MaxSupportedChunkCount => int.MaxValue;
+
         protected override long? Length => ResourceProperties?.ResourceLength;
 
         public PageBlobStorageResource()
@@ -309,23 +311,17 @@ namespace Azure.Storage.DataMovement.Blobs
             return await BlobClient.DeleteIfExistsAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new BlobSourceCheckpointData();
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new BlobDestinationCheckpointData(
-                blobType: new(BlobType.Page),
-                contentType: _options?.ContentType,
-                contentEncoding: _options?.ContentEncoding,
-                contentLanguage: _options?.ContentLanguage,
-                contentDisposition: _options?.ContentDisposition,
-                cacheControl: _options?.CacheControl,
-                accessTier: _options?.AccessTier,
-                metadata: _options?.Metadata,
-                tags: default);
+            return new BlobDestinationCheckpointDetails(
+                isBlobTypeSet: true,
+                blobType: BlobType.Page,
+                blobOptions: _options);
         }
 
         // no-op for get permissions

@@ -14,16 +14,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatMessageReceivedInThreadEventData : AcsChatMessageEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
+        /// <param name="threadId"> The chat thread id. </param>
+        /// <param name="messageId"> The chat message id. </param>
         /// <param name="senderCommunicationIdentifier"> The communication identifier of the sender. </param>
-        /// <param name="composeTime"> The original compose time of the message. </param>
-        /// <param name="metadata"> The chat message metadata. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="senderCommunicationIdentifier"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatMessageReceivedInThreadEventData(CommunicationIdentifierModel senderCommunicationIdentifier, DateTimeOffset composeTime, IReadOnlyDictionary<string, string> metadata) : base(senderCommunicationIdentifier, composeTime)
+        /// <param name="type"> The type of the message. </param>
+        /// <param name="messageBody"> The body of the chat message. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="messageId"/>, <paramref name="senderCommunicationIdentifier"/>, <paramref name="type"/> or <paramref name="messageBody"/> is null. </exception>
+        internal AcsChatMessageReceivedInThreadEventData(string threadId, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string type, string messageBody) : base(threadId, messageId, senderCommunicationIdentifier, type)
         {
+            Argument.AssertNotNull(threadId, nameof(threadId));
+            Argument.AssertNotNull(messageId, nameof(messageId));
             Argument.AssertNotNull(senderCommunicationIdentifier, nameof(senderCommunicationIdentifier));
-            Argument.AssertNotNull(metadata, nameof(metadata));
+            Argument.AssertNotNull(type, nameof(type));
+            Argument.AssertNotNull(messageBody, nameof(messageBody));
 
-            Metadata = metadata;
+            MessageBody = messageBody;
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsChatMessageReceivedInThreadEventData"/>. </summary>
@@ -38,7 +44,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="version"> The version of the message. </param>
         /// <param name="messageBody"> The body of the chat message. </param>
         /// <param name="metadata"> The chat message metadata. </param>
-        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, serializedAdditionalRawData, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
+        internal AcsChatMessageReceivedInThreadEventData(string transactionId, string threadId, IDictionary<string, BinaryData> serializedAdditionalRawData, string messageId, CommunicationIdentifierModel senderCommunicationIdentifier, string senderDisplayName, DateTimeOffset? composeTime, string type, long? version, string messageBody, IReadOnlyDictionary<string, string> metadata) : base(transactionId, threadId, serializedAdditionalRawData, messageId, senderCommunicationIdentifier, senderDisplayName, composeTime, type, version)
         {
             MessageBody = messageBody;
             Metadata = metadata;

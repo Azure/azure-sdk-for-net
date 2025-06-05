@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-04-01";
+            _apiVersion = apiVersion ?? "2024-11-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -577,7 +577,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticCategoryData.DeserializeDiagnosticCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticCategoryData.DeserializeDiagnosticCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -783,7 +783,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticAnalysis value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticAnalysis.DeserializeDiagnosticAnalysis(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1035,7 +1035,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticAnalysis value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticAnalysis.DeserializeDiagnosticAnalysis(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1106,7 +1106,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1137,7 +1137,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1212,7 +1212,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DetectorDefinitionResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1247,7 +1247,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DetectorDefinitionResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1353,7 +1353,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticDetectorResponse.DeserializeDiagnosticDetectorResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1389,7 +1389,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticDetectorResponse.DeserializeDiagnosticDetectorResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1460,7 +1460,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1491,7 +1491,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1631,7 +1631,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorData.DeserializeAppServiceDetectorData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1704,7 +1704,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1735,7 +1735,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1810,7 +1810,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticCategoryData.DeserializeDiagnosticCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1845,7 +1845,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticCategoryData.DeserializeDiagnosticCategoryData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1924,7 +1924,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1957,7 +1957,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2038,7 +2038,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2075,7 +2075,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebSiteAnalysisDefinitionData.DeserializeWebSiteAnalysisDefinitionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2187,7 +2187,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticAnalysis value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticAnalysis.DeserializeDiagnosticAnalysis(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2225,7 +2225,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticAnalysis value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticAnalysis.DeserializeDiagnosticAnalysis(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2302,7 +2302,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2335,7 +2335,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2416,7 +2416,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DetectorDefinitionResourceData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2453,7 +2453,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DetectorDefinitionResourceData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DetectorDefinitionResourceData.DeserializeDetectorDefinitionResourceData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2565,7 +2565,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticDetectorResponse.DeserializeDiagnosticDetectorResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2603,7 +2603,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticDetectorResponse.DeserializeDiagnosticDetectorResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2656,7 +2656,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2687,7 +2687,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2740,7 +2740,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2771,7 +2771,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2824,7 +2824,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2855,7 +2855,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2910,7 +2910,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2943,7 +2943,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -2998,7 +2998,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3031,7 +3031,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3086,7 +3086,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3119,7 +3119,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         AppServiceDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AppServiceDetectorListResult.DeserializeAppServiceDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3174,7 +3174,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3207,7 +3207,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticCategoryListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticCategoryListResult.DeserializeDiagnosticCategoryListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3264,7 +3264,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3299,7 +3299,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         WebSiteAnalysisDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = WebSiteAnalysisDefinitionListResult.DeserializeWebSiteAnalysisDefinitionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3356,7 +3356,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -3391,7 +3391,7 @@ namespace Azure.ResourceManager.AppService
                 case 200:
                     {
                         DiagnosticDetectorListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = DiagnosticDetectorListResult.DeserializeDiagnosticDetectorListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

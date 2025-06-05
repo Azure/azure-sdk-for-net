@@ -34,6 +34,7 @@ namespace Azure.Communication
     public sealed partial class CommunicationTokenCredential : System.IDisposable
     {
         public CommunicationTokenCredential(Azure.Communication.CommunicationTokenRefreshOptions options) { }
+        public CommunicationTokenCredential(Azure.Communication.EntraCommunicationTokenCredentialOptions options) { }
         public CommunicationTokenCredential(string token) { }
         public void Dispose() { }
         public Azure.Core.AccessToken GetToken(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -52,6 +53,13 @@ namespace Azure.Communication
         public override string RawId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class EntraCommunicationTokenCredentialOptions
+    {
+        public EntraCommunicationTokenCredentialOptions(string resourceEndpoint, Azure.Core.TokenCredential entraTokenCredential) { }
+        public string ResourceEndpoint { get { throw null; } }
+        public string[] Scopes { get { throw null; } set { } }
+        public Azure.Core.TokenCredential TokenCredential { get { throw null; } }
     }
     public partial class MicrosoftTeamsAppIdentifier : Azure.Communication.CommunicationIdentifier
     {
@@ -75,8 +83,21 @@ namespace Azure.Communication
     public partial class PhoneNumberIdentifier : Azure.Communication.CommunicationIdentifier
     {
         public PhoneNumberIdentifier(string phoneNumber, string rawId = null) { }
+        public string AssertedId { get { throw null; } }
+        public bool IsAnonymous { get { throw null; } }
         public string PhoneNumber { get { throw null; } }
         public override string RawId { get { throw null; } }
+        public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class TeamsExtensionUserIdentifier : Azure.Communication.CommunicationIdentifier
+    {
+        public TeamsExtensionUserIdentifier(string userId, string tenantId, string resourceId, Azure.Communication.CommunicationCloudEnvironment? cloud = default(Azure.Communication.CommunicationCloudEnvironment?), string rawId = null) { }
+        public Azure.Communication.CommunicationCloudEnvironment Cloud { get { throw null; } }
+        public override string RawId { get { throw null; } }
+        public string ResourceId { get { throw null; } }
+        public string TenantId { get { throw null; } }
+        public string UserId { get { throw null; } }
         public override bool Equals(Azure.Communication.CommunicationIdentifier other) { throw null; }
         public override string ToString() { throw null; }
     }

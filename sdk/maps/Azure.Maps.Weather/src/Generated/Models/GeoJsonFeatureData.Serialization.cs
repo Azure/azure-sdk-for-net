@@ -56,7 +56,7 @@ namespace Azure.Maps.Weather.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static GeoJsonFeatureData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeGeoJsonFeatureData(document.RootElement);
         }
     }

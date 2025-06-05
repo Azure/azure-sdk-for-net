@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("enableInternetSecurity"u8);
                 writer.WriteBooleanValue(EnableInternetSecurity.Value);
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationPolicyGroupAssociations))
+            if (Optional.IsCollectionDefined(ConfigurationPolicyGroups))
             {
                 writer.WritePropertyName("configurationPolicyGroupAssociations"u8);
                 writer.WriteStartArray();
-                foreach (var item in ConfigurationPolicyGroupAssociations)
+                foreach (var item in ConfigurationPolicyGroups)
                 {
                     JsonSerializer.Serialize(writer, item);
                 }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             VirtualNetworkAddressSpace vpnClientAddressPool = default;
             RoutingConfiguration routingConfiguration = default;
             bool? enableInternetSecurity = default;
-            IReadOnlyList<WritableSubResource> configurationPolicyGroupAssociations = default;
+            IList<WritableSubResource> configurationPolicyGroupAssociations = default;
             IReadOnlyList<VpnServerConfigurationPolicyGroupData> previousConfigurationPolicyGroupAssociations = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(P2SConnectionConfiguration)} does not support writing '{options.Format}' format.");
             }
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeP2SConnectionConfiguration(document.RootElement, options);
                     }
                 default:

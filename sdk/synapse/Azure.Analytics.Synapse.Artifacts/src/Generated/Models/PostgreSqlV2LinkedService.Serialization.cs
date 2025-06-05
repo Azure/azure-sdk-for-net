@@ -21,6 +21,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
@@ -70,6 +75,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteObjectValue<object>(Username);
             writer.WritePropertyName("database"u8);
             writer.WriteObjectValue<object>(Database);
+            writer.WritePropertyName("authenticationType"u8);
+            writer.WriteObjectValue<object>(AuthenticationType);
             writer.WritePropertyName("sslMode"u8);
             writer.WriteObjectValue<object>(SslMode);
             if (Optional.IsDefined(Schema))
@@ -158,6 +165,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
+            string version = default;
             IntegrationRuntimeReference connectVia = default;
             string description = default;
             IDictionary<string, ParameterSpecification> parameters = default;
@@ -166,6 +174,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             object port = default;
             object username = default;
             object database = default;
+            object authenticationType = default;
             object sslMode = default;
             object schema = default;
             object pooling = default;
@@ -188,6 +197,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 if (property.NameEquals("type"u8))
                 {
                     type = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("version"u8))
+                {
+                    version = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("connectVia"u8))
@@ -270,6 +284,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         if (property0.NameEquals("database"u8))
                         {
                             database = property0.Value.GetObject();
+                            continue;
+                        }
+                        if (property0.NameEquals("authenticationType"u8))
+                        {
+                            authenticationType = property0.Value.GetObject();
                             continue;
                         }
                         if (property0.NameEquals("sslMode"u8))
@@ -411,6 +430,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties = additionalPropertiesDictionary;
             return new PostgreSqlV2LinkedService(
                 type,
+                version,
                 connectVia,
                 description,
                 parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
@@ -420,6 +440,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 port,
                 username,
                 database,
+                authenticationType,
                 sslMode,
                 schema,
                 pooling,
@@ -441,7 +462,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new PostgreSqlV2LinkedService FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializePostgreSqlV2LinkedService(document.RootElement);
         }
 

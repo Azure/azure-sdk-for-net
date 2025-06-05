@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.ApiManagement
     {
         ConnectivityCheckResult IOperationSource<ConnectivityCheckResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement);
         }
 
         async ValueTask<ConnectivityCheckResult> IOperationSource<ConnectivityCheckResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement);
         }
     }

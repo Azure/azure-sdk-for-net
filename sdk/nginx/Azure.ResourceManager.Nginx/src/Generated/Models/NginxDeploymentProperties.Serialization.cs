@@ -44,11 +44,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("nginxVersion"u8);
                 writer.WriteStringValue(NginxVersion);
             }
-            if (Optional.IsDefined(ManagedResourceGroup))
-            {
-                writer.WritePropertyName("managedResourceGroup"u8);
-                writer.WriteStringValue(ManagedResourceGroup);
-            }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
@@ -89,6 +84,11 @@ namespace Azure.ResourceManager.Nginx.Models
                 writer.WritePropertyName("nginxAppProtect"u8);
                 writer.WriteObjectValue(NginxAppProtect, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(DataplaneApiEndpoint))
+            {
+                writer.WritePropertyName("dataplaneApiEndpoint"u8);
+                writer.WriteStringValue(DataplaneApiEndpoint);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Nginx.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -128,7 +128,6 @@ namespace Azure.ResourceManager.Nginx.Models
             }
             NginxProvisioningState? provisioningState = default;
             string nginxVersion = default;
-            string managedResourceGroup = default;
             NginxNetworkProfile networkProfile = default;
             string ipAddress = default;
             bool? enableDiagnosticsSupport = default;
@@ -137,6 +136,7 @@ namespace Azure.ResourceManager.Nginx.Models
             AutoUpgradeProfile autoUpgradeProfile = default;
             NginxDeploymentUserProfile userProfile = default;
             NginxDeploymentPropertiesNginxAppProtect nginxAppProtect = default;
+            string dataplaneApiEndpoint = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -153,11 +153,6 @@ namespace Azure.ResourceManager.Nginx.Models
                 if (property.NameEquals("nginxVersion"u8))
                 {
                     nginxVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("managedResourceGroup"u8))
-                {
-                    managedResourceGroup = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("networkProfile"u8))
@@ -228,6 +223,11 @@ namespace Azure.ResourceManager.Nginx.Models
                     nginxAppProtect = NginxDeploymentPropertiesNginxAppProtect.DeserializeNginxDeploymentPropertiesNginxAppProtect(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("dataplaneApiEndpoint"u8))
+                {
+                    dataplaneApiEndpoint = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -237,7 +237,6 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentProperties(
                 provisioningState,
                 nginxVersion,
-                managedResourceGroup,
                 networkProfile,
                 ipAddress,
                 enableDiagnosticsSupport,
@@ -246,6 +245,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 autoUpgradeProfile,
                 userProfile,
                 nginxAppProtect,
+                dataplaneApiEndpoint,
                 serializedAdditionalRawData);
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Nginx.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNginxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NginxDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Nginx.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNginxDeploymentProperties(document.RootElement, options);
                     }
                 default:

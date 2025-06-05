@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 ## Load a Snapshot Asynchronously
@@ -21,11 +20,10 @@ To load a snapshot, call LoadSnapshotAsync on the TextAnalysisAuthoring client.
 ```C# Snippet:Sample8_TextAuthoring_LoadSnapshotAsync
 string projectName = "LoanAgreements";
 string trainedModelLabel = "ModelLabel"; // Replace with your actual model label.
+TextAuthoringTrainedModel trainedModelClient = client.GetTrainedModel(projectName, trainedModelLabel);
 
-Operation operation = await authoringClient.LoadSnapshotAsync(
-    waitUntil: WaitUntil.Completed,
-    projectName: projectName,
-    trainedModelLabel: trainedModelLabel
+Operation operation = await trainedModelClient.LoadSnapshotAsync(
+    waitUntil: WaitUntil.Completed
 );
 
 string operationLocation = operation.GetRawResponse().Headers.TryGetValue("operation-location", out var location) ? location : null;

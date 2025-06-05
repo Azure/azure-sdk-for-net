@@ -39,6 +39,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
             }
+            if (Optional.IsDefined(RecipientMailServerHostName))
+            {
+                writer.WritePropertyName("recipientMailServerHostName"u8);
+                writer.WriteStringValue(RecipientMailServerHostName);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -47,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -77,6 +82,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string statusMessage = default;
+            string recipientMailServerHostName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,13 +92,18 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     statusMessage = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("recipientMailServerHostName"u8))
+                {
+                    recipientMailServerHostName = property.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage, serializedAdditionalRawData);
+            return new AcsEmailDeliveryReportStatusDetails(statusMessage, recipientMailServerHostName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AcsEmailDeliveryReportStatusDetails>.Write(ModelReaderWriterOptions options)
@@ -102,7 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsEmailDeliveryReportStatusDetails)} does not support writing '{options.Format}' format.");
             }
@@ -116,7 +127,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsEmailDeliveryReportStatusDetails(document.RootElement, options);
                     }
                 default:
@@ -130,7 +141,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AcsEmailDeliveryReportStatusDetails FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsEmailDeliveryReportStatusDetails(document.RootElement);
         }
 

@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(BackupPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeBackupPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

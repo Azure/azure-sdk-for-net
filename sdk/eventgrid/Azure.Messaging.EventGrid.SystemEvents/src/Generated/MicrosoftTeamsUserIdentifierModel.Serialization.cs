@@ -41,8 +41,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            writer.WritePropertyName("cloud"u8);
-            writer.WriteStringValue(Cloud.ToString());
+            if (Optional.IsDefined(Cloud))
+            {
+                writer.WritePropertyName("cloud"u8);
+                writer.WriteStringValue(Cloud.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -51,7 +54,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,7 +85,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string userId = default;
             bool? isAnonymous = default;
-            CommunicationCloudEnvironmentModel cloud = default;
+            CommunicationCloudEnvironmentModel? cloud = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,6 +106,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("cloud"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     cloud = new CommunicationCloudEnvironmentModel(property.Value.GetString());
                     continue;
                 }
@@ -122,7 +129,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MicrosoftTeamsUserIdentifierModel)} does not support writing '{options.Format}' format.");
             }
@@ -136,7 +143,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMicrosoftTeamsUserIdentifierModel(document.RootElement, options);
                     }
                 default:
@@ -150,7 +157,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MicrosoftTeamsUserIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMicrosoftTeamsUserIdentifierModel(document.RootElement);
         }
 

@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedServiceIdentitiesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFederatedIdentityCredentialData(document.RootElement, options);
                     }
                 default:

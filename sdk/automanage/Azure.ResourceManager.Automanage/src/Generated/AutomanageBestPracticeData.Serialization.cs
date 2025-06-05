@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automanage
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Configuration);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Configuration))
+                using (JsonDocument document = JsonDocument.Parse(Configuration, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automanage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomanageContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomanageBestPracticeData)} does not support writing '{options.Format}' format.");
             }
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Automanage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutomanageBestPracticeData(document.RootElement, options);
                     }
                 default:

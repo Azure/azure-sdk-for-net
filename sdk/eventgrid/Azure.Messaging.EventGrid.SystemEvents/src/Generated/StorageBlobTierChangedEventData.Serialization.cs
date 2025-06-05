@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageBlobTierChangedEventDataConverter))]
     public partial class StorageBlobTierChangedEventData : IUtf8JsonSerializable, IJsonModel<StorageBlobTierChangedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageBlobTierChangedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -64,6 +66,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("blobType"u8);
                 writer.WriteStringValue(BlobType);
             }
+            writer.WritePropertyName("accessTier"u8);
+            writer.WriteStringValue(AccessTier.ToString());
+            writer.WritePropertyName("previousTier"u8);
+            writer.WriteStringValue(PreviousTier.ToString());
             if (Optional.IsDefined(Url))
             {
                 writer.WritePropertyName("url"u8);
@@ -80,25 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WriteStringValue(Identity);
             }
             writer.WritePropertyName("storageDiagnostics"u8);
-            writer.WriteStartObject();
-            foreach (var item in StorageDiagnostics)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue<object>(StorageDiagnostics, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,7 +95,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -142,10 +130,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string contentType = default;
             long? contentLength = default;
             string blobType = default;
+            StorageBlobAccessTier accessTier = default;
+            StorageBlobAccessTier previousTier = default;
             string url = default;
             string sequencer = default;
             string identity = default;
-            IReadOnlyDictionary<string, BinaryData> storageDiagnostics = default;
+            object storageDiagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -184,6 +174,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     blobType = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("accessTier"u8))
+                {
+                    accessTier = new StorageBlobAccessTier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("previousTier"u8))
+                {
+                    previousTier = new StorageBlobAccessTier(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("url"u8))
                 {
                     url = property.Value.GetString();
@@ -201,19 +201,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("storageDiagnostics"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    storageDiagnostics = dictionary;
+                    storageDiagnostics = property.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,6 +217,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 contentType,
                 contentLength,
                 blobType,
+                accessTier,
+                previousTier,
                 url,
                 sequencer,
                 identity,
@@ -243,7 +233,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageBlobTierChangedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -257,7 +247,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageBlobTierChangedEventData(document.RootElement, options);
                     }
                 default:
@@ -271,7 +261,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static StorageBlobTierChangedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStorageBlobTierChangedEventData(document.RootElement);
         }
 
@@ -281,6 +271,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class StorageBlobTierChangedEventDataConverter : JsonConverter<StorageBlobTierChangedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageBlobTierChangedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override StorageBlobTierChangedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageBlobTierChangedEventData(document.RootElement);
+            }
         }
     }
 }

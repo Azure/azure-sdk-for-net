@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NeonPostgres
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNeonPostgresContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NeonOrganizationData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.NeonPostgres
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNeonOrganizationData(document.RootElement, options);
                     }
                 default:

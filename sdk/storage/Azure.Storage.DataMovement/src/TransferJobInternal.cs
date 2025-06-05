@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Buffers;
 using System.Collections.Generic;
@@ -14,11 +15,7 @@ namespace Azure.Storage.DataMovement
 {
     internal class TransferJobInternal : IAsyncDisposable
     {
-        internal delegate Task<JobPartInternal> CreateJobPartSingleAsync(
-            TransferJobInternal job,
-            int partNumber);
-
-        internal delegate Task<JobPartInternal> CreateJobPartMultiAsync(
+        internal delegate Task<JobPartInternal> CreateJobPartAsync(
             TransferJobInternal job,
             int partNumber,
             StorageResourceItem sourceResource,
@@ -26,9 +23,7 @@ namespace Azure.Storage.DataMovement
 
         internal TransferOperation _transferOperation { get; set; }
 
-        private readonly CreateJobPartSingleAsync _createJobPartSingleAsync;
-
-        private readonly CreateJobPartMultiAsync _createJobPartMultiAsync;
+        private readonly CreateJobPartAsync _createJobPartAsync;
 
         /// <summary>
         /// Plan file writer for the respective job
@@ -39,16 +34,6 @@ namespace Azure.Storage.DataMovement
         /// Internal progress tracker for tracking and reporting progress of the transfer
         /// </summary>
         internal TransferProgressTracker _progressTracker;
-
-        /// <summary>
-        /// Source resource
-        /// </summary>
-        internal StorageResourceItem _sourceResource;
-
-        /// <summary>
-        /// Destination Resource
-        /// </summary>
-        internal StorageResourceItem _destinationResource;
 
         /// <summary>
         /// Source resource
@@ -78,12 +63,6 @@ namespace Azure.Storage.DataMovement
         internal long? _initialTransferSize { get; set; }
 
         /// <summary>
-        /// Defines whether the transfer will be only a single transfer, or
-        /// a container transfer
-        /// </summary>
-        internal bool _isSingleResource;
-
-        /// <summary>
         /// The error handling options
         /// </summary>
         internal TransferErrorMode _errorMode;
@@ -91,7 +70,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Determines how files are created or if they should be overwritten if they already exists
         /// </summary>
-        internal StorageResourceCreationPreference _creationPreference;
+        internal StorageResourceCreationMode _creationPreference;
 
         /// <summary>
         /// Event handler for tracking status changes in job parts.
@@ -111,7 +90,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Number of single transfers skipped during Transfer due to no overwrite allowed as specified in
-        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/>
+        /// <see cref="StorageResourceCreationMode.SkipIfExists"/>
         /// </summary>
         public SyncAsyncEventHandler<TransferItemSkippedEventArgs> TransferSkippedEventHandler { get; internal set; }
 
@@ -145,13 +124,12 @@ namespace Azure.Storage.DataMovement
 
         private TransferJobInternal(
             TransferOperation transferOperation,
-            CreateJobPartSingleAsync createJobPartSingleAsync,
-            CreateJobPartMultiAsync createJobPartMultiAsync,
+            CreateJobPartAsync createJobPartAsync,
             ITransferCheckpointer checkPointer,
             TransferErrorMode errorHandling,
             long? initialTransferSize,
             long? maximumTransferChunkSize,
-            StorageResourceCreationPreference creationPreference,
+            StorageResourceCreationMode creationPreference,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
@@ -163,8 +141,7 @@ namespace Azure.Storage.DataMovement
 
             _transferOperation = transferOperation ?? throw Errors.ArgumentNull(nameof(transferOperation));
             _transferOperation.Status.SetTransferStateChange(TransferState.Queued);
-            _createJobPartSingleAsync = createJobPartSingleAsync;
-            _createJobPartMultiAsync = createJobPartMultiAsync;
+            _createJobPartAsync = createJobPartAsync;
             _checkpointer = checkPointer;
             _arrayPool = arrayPool;
             _jobParts = new List<JobPartInternal>();
@@ -193,58 +170,21 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal TransferJobInternal(
             TransferOperation transferOperation,
-            StorageResourceItem sourceResource,
-            StorageResourceItem destinationResource,
-            CreateJobPartSingleAsync createJobPartSingleAsync,
-            CreateJobPartMultiAsync createJobPartMultiAsync,
-            TransferOptions transferOptions,
-            ITransferCheckpointer checkpointer,
-            TransferErrorMode errorHandling,
-            ArrayPool<byte> arrayPool,
-            ClientDiagnostics clientDiagnostics)
-            : this(transferOperation,
-                  createJobPartSingleAsync,
-                  createJobPartMultiAsync,
-                  checkpointer,
-                  errorHandling,
-                  transferOptions.InitialTransferSize,
-                  transferOptions.MaximumTransferChunkSize,
-                  transferOptions.CreationPreference,
-                  arrayPool,
-                  transferOptions.GetTransferStatus(),
-                  transferOptions.GetFailed(),
-                  transferOptions.GetSkipped(),
-                  default,
-                  clientDiagnostics)
-        {
-            _sourceResource = sourceResource;
-            _destinationResource = destinationResource;
-            _isSingleResource = true;
-            _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
-        }
-
-        /// <summary>
-        /// Create Storage Transfer Job.
-        /// </summary>
-        internal TransferJobInternal(
-            TransferOperation transferOperation,
             StorageResourceContainer sourceResource,
             StorageResourceContainer destinationResource,
-            CreateJobPartSingleAsync createJobPartSingleAsync,
-            CreateJobPartMultiAsync createJobPartMultiAsync,
+            CreateJobPartAsync createJobPartAsync,
             TransferOptions transferOptions,
             ITransferCheckpointer checkpointer,
             TransferErrorMode errorHandling,
             ArrayPool<byte> arrayPool,
             ClientDiagnostics clientDiagnostics)
             : this(transferOperation,
-                  createJobPartSingleAsync,
-                  createJobPartMultiAsync,
+                  createJobPartAsync,
                   checkpointer,
                   errorHandling,
                   transferOptions.InitialTransferSize,
                   transferOptions.MaximumTransferChunkSize,
-                  transferOptions.CreationPreference,
+                  transferOptions.CreationMode,
                   arrayPool,
                   transferOptions.GetTransferStatus(),
                   transferOptions.GetFailed(),
@@ -254,7 +194,6 @@ namespace Azure.Storage.DataMovement
         {
             _sourceResourceContainer = sourceResource;
             _destinationResourceContainer = destinationResource;
-            _isSingleResource = false;
             _progressTracker = new TransferProgressTracker(transferOptions?.ProgressHandlerOptions);
         }
 
@@ -288,39 +227,18 @@ namespace Azure.Storage.DataMovement
                 await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                 yield break;
             }
-            int partNumber = 0;
 
+            // Starting brand new job
             if (_jobParts.Count == 0)
             {
-                // Starting brand new job
-                if (_isSingleResource)
+                await foreach (JobPartInternal part in EnumerateAndCreateJobPartsAsync().ConfigureAwait(false))
                 {
-                    JobPartInternal part = default;
-                    try
-                    {
-                        // Single resource transfer, we can skip to chunking the job.
-                        part = await _createJobPartSingleAsync(this, partNumber).ConfigureAwait(false);
-                        AppendJobPart(part);
-                        await OnAllResourcesEnumeratedAsync().ConfigureAwait(false);
-                    }
-                    catch (Exception ex)
-                    {
-                        await InvokeFailedArgAsync(ex).ConfigureAwait(false);
-                        yield break;
-                    }
                     yield return part;
                 }
-                else
-                {
-                    await foreach (JobPartInternal part in EnumerateAndCreateJobPartsAsync().ConfigureAwait(false))
-                    {
-                        yield return part;
-                    }
-                }
             }
+            // Resuming old job with existing job parts
             else
             {
-                // Resuming old job with existing job parts
                 foreach (JobPartInternal part in _jobParts)
                 {
                     if (!part.JobPartStatus.HasCompletedSuccessfully)
@@ -420,7 +338,10 @@ namespace Azure.Storage.DataMovement
 
                     try
                     {
-                        await subContainer.CreateIfNotExistsAsync(_cancellationToken).ConfigureAwait(false);
+                        StorageResourceContainer sourceContainer = (StorageResourceContainer)current;
+                        StorageResourceContainerProperties sourceProperties =
+                            await sourceContainer.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
+                        await subContainer.CreateIfNotExistsAsync(sourceProperties, _cancellationToken).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
@@ -432,16 +353,25 @@ namespace Azure.Storage.DataMovement
                 {
                     if (!existingSources.Contains(current.Uri))
                     {
-                        string containerUriPath = _sourceResourceContainer.Uri.GetPath();
-                        string sourceName = string.IsNullOrEmpty(containerUriPath)
-                            ? current.Uri.GetPath()
-                            : current.Uri.GetPath().Substring(containerUriPath.Length + 1);
-
                         JobPartInternal part;
                         try
                         {
+                            string sourceName;
+                            // For single item transfers, the container Uri will equal the item Uri.
+                            // Set the source name to the full Uri.
+                            if (_sourceResourceContainer.Uri == current.Uri)
+                            {
+                                sourceName = current.Uri.AbsoluteUri;
+                            }
+                            // Real container trasnfer
+                            else
+                            {
+                                string containerUriPath = _sourceResourceContainer.Uri.GetPath();
+                                sourceName = current.Uri.GetPath().Substring(containerUriPath.Length + 1);
+                            }
+
                             StorageResourceItem sourceItem = (StorageResourceItem)current;
-                            part = await _createJobPartMultiAsync(
+                            part = await _createJobPartAsync(
                                 this,
                                 partNumber,
                                 sourceItem,
@@ -493,8 +423,8 @@ namespace Azure.Storage.DataMovement
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _transferOperation.Id,
-                            (StorageResource)_sourceResource ?? _sourceResourceContainer,
-                            (StorageResource)_destinationResource ?? _destinationResourceContainer,
+                            _sourceResourceContainer,
+                            _destinationResourceContainer,
                             ex,
                             false,
                             _cancellationToken),
@@ -522,8 +452,8 @@ namespace Azure.Storage.DataMovement
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
                             _transferOperation.Id,
-                            _sourceResource,
-                            _destinationResource,
+                            _sourceResourceContainer,
+                            _destinationResourceContainer,
                             cancellationException,
                             false,
                             _cancellationToken),

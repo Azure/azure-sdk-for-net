@@ -1,5 +1,11 @@
 namespace Azure.Communication.Rooms
 {
+    public partial class AzureCommunicationRoomsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCommunicationRoomsContext() { }
+        public static Azure.Communication.Rooms.AzureCommunicationRoomsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CommunicationRoom
     {
         internal CommunicationRoom() { }
@@ -24,6 +30,7 @@ namespace Azure.Communication.Rooms
         private readonly int _dummyPrimitive;
         public ParticipantRole(string value) { throw null; }
         public static Azure.Communication.Rooms.ParticipantRole Attendee { get { throw null; } }
+        public static Azure.Communication.Rooms.ParticipantRole Collaborator { get { throw null; } }
         public static Azure.Communication.Rooms.ParticipantRole Consumer { get { throw null; } }
         public static Azure.Communication.Rooms.ParticipantRole Presenter { get { throw null; } }
         public bool Equals(Azure.Communication.Rooms.ParticipantRole other) { throw null; }
@@ -72,11 +79,12 @@ namespace Azure.Communication.Rooms
     }
     public partial class RoomsClientOptions : Azure.Core.ClientOptions
     {
-        public RoomsClientOptions(Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion version = Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion.V2024_04_15) { }
+        public RoomsClientOptions(Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion version = Azure.Communication.Rooms.RoomsClientOptions.ServiceVersion.V2025_03_13) { }
         public enum ServiceVersion
         {
             V2023_06_14 = 1,
             V2024_04_15 = 2,
+            V2025_03_13 = 3,
         }
     }
     public static partial class RoomsModelFactory

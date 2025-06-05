@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Network
     {
         IList<ExpressRouteFailoverSingleTestDetails> IOperationSource<IList<ExpressRouteFailoverSingleTestDetails>>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<ExpressRouteFailoverSingleTestDetails> array = new List<ExpressRouteFailoverSingleTestDetails>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network
 
         async ValueTask<IList<ExpressRouteFailoverSingleTestDetails>> IOperationSource<IList<ExpressRouteFailoverSingleTestDetails>>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<ExpressRouteFailoverSingleTestDetails> array = new List<ExpressRouteFailoverSingleTestDetails>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

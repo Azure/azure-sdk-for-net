@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaloAltoNetworksFirewallStatusData.DeserializePaloAltoNetworksFirewallStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaloAltoNetworksFirewallStatusData.DeserializePaloAltoNetworksFirewallStatusData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case 200:
                     {
                         PaloAltoNetworksFirewallStatusListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaloAltoNetworksFirewallStatusListResult.DeserializePaloAltoNetworksFirewallStatusListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

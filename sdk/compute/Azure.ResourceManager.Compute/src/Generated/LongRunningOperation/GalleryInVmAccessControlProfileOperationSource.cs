@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Compute
 
         GalleryInVmAccessControlProfileResource IOperationSource<GalleryInVmAccessControlProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<GalleryInVmAccessControlProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
             return new GalleryInVmAccessControlProfileResource(_client, data);
         }
 
         async ValueTask<GalleryInVmAccessControlProfileResource> IOperationSource<GalleryInVmAccessControlProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
-            return new GalleryInVmAccessControlProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<GalleryInVmAccessControlProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerComputeContext.Default);
+            return await Task.FromResult(new GalleryInVmAccessControlProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

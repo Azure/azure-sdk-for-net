@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlFlexibleServerData.DeserializeMySqlFlexibleServerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         HighAvailabilityValidationEstimation value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HighAvailabilityValidationEstimation.DeserializeHighAvailabilityValidationEstimation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         HighAvailabilityValidationEstimation value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HighAvailabilityValidationEstimation.DeserializeHighAvailabilityValidationEstimation(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1158,7 +1158,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1236,7 +1236,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1263,7 +1263,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         MySqlFlexibleServerListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MySqlFlexibleServerListResult.DeserializeMySqlFlexibleServerListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

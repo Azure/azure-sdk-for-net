@@ -93,11 +93,11 @@ namespace Azure.Storage.DataMovement
             internal const int ParentSourcePathLengthIndex = ParentSourcePathOffsetIndex + IntSizeInBytes;
             internal const int ParentDestPathOffsetIndex = ParentSourcePathLengthIndex + IntSizeInBytes;
             internal const int ParentDestPathLengthIndex = ParentDestPathOffsetIndex + IntSizeInBytes;
-            internal const int SourceCheckpointDataOffsetIndex = ParentDestPathLengthIndex + IntSizeInBytes;
-            internal const int SourceCheckpointDataLengthIndex = SourceCheckpointDataOffsetIndex + IntSizeInBytes;
-            internal const int DestinationCheckpointDataOffsetIndex = SourceCheckpointDataLengthIndex + IntSizeInBytes;
-            internal const int DestinationCheckpointDataLengthIndex = DestinationCheckpointDataOffsetIndex + IntSizeInBytes;
-            internal const int VariableLengthStartIndex = DestinationCheckpointDataLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDetailsOffsetIndex = ParentDestPathLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDetailsLengthIndex = SourceCheckpointDetailsOffsetIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDetailsOffsetIndex = SourceCheckpointDetailsLengthIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDetailsLengthIndex = DestinationCheckpointDetailsOffsetIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = DestinationCheckpointDetailsLengthIndex + IntSizeInBytes;
         }
 
         /// <summary>
@@ -161,6 +161,11 @@ namespace Azure.Storage.DataMovement
             internal const string FilePermissions = "FilePermissions";
             internal const string SourceFilePermissionKey = "SourceFilePermissionKey";
             internal const string DestinationFilePermissionKey = "DestinationFilePermissionKey";
+            internal const string Owner = "Owner";
+            internal const string Group = "Group";
+            internal const string FileMode = "FileMode";
+            internal const string FileType = "FileType";
+            internal const string LinkCount = "LinkCount";
         }
     }
 }

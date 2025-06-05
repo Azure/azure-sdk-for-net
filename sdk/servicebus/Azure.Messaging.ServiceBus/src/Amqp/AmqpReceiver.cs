@@ -199,11 +199,11 @@ namespace Azure.Messaging.ServiceBus.Amqp
                         // it is okay to register the user provided cancellationToken from the AcceptNextSessionAsync call in
                         // the fault tolerant object because session receivers are never reconnected.
                         cancellationToken: cancellationToken),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, Identifier));
 
             _managementLink = new FaultTolerantAmqpObject<RequestResponseAmqpLink>(
                 timeout => OpenManagementLinkAsync(timeout),
-                link => _connectionScope.CloseLink(link));
+                link => _connectionScope.CloseLink(link, Identifier));
             _messageConverter = messageConverter;
         }
 
@@ -373,7 +373,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
                 if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
                 {
-                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                    await SafeDrainLinkAsync(link, cancellationToken).ConfigureAwait(false);
 
                     // These workarounds are necessary in order to resume prefetching after the link has been drained
                     // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
@@ -417,6 +417,34 @@ namespace Azure.Messaging.ServiceBus.Amqp
                     .Throw();
 
                 throw; // will never be reached
+            }
+        }
+
+        /// <summary>
+        /// Drains an AMQP link. When drain failure happens we make sure to close the link to ensure ordering.
+        /// </summary>
+        /// <param name="link">The AMPQ link to drain.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        /// <returns>A task to be resolved on when the operation has completed.</returns>
+        public async Task SafeDrainLinkAsync(ReceivingAmqpLink link, CancellationToken cancellationToken)
+        {
+            try
+            {
+                ServiceBusEventSource.Log.DrainLinkStart(Identifier);
+                await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                ServiceBusEventSource.Log.DrainLinkComplete(Identifier);
+            }
+            catch (Exception ex)
+            {
+                ServiceBusEventSource.Log.DrainLinkException(Identifier, ex.ToString());
+
+                // Drain failure that does not fault AMQP link will cause ordering to be violated. Force close
+                // AMQP link to ensure ordering is maintained.
+                // Detailed explanation as to why ordering is violated: https://github.com/Azure/azure-sdk-for-net/issues/47822
+                if (_prefetchCount > 0)
+                {
+                    _connectionScope.CloseLink(link, Identifier);
+                }
             }
         }
 

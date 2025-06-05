@@ -52,6 +52,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                JsonSerializer.Serialize(writer, Identity);
+            }
         }
 
         DataReplicationVaultPatch IJsonModel<DataReplicationVaultPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -76,6 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
             IDictionary<string, string> tags = default;
             DataReplicationVaultProperties properties = default;
+            ManagedServiceIdentity identity = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -105,6 +111,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         continue;
                     }
                     properties = DataReplicationVaultProperties.DeserializeDataReplicationVaultProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("identity"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -144,6 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties,
+                identity,
                 serializedAdditionalRawData);
         }
 
@@ -154,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesDataReplicationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support writing '{options.Format}' format.");
             }
@@ -168,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDataReplicationVaultPatch(document.RootElement, options);
                     }
                 default:

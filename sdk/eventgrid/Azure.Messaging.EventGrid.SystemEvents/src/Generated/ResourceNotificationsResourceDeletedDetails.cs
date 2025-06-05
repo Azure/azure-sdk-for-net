@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -49,28 +50,37 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
-        internal ResourceNotificationsResourceDeletedDetails()
+        /// <param name="resource"> id of the resource for which the event is being emitted. </param>
+        /// <param name="name"> name of the resource for which the event is being emitted. </param>
+        /// <param name="type"> the type of the resource for which the event is being emitted. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resource"/>, <paramref name="name"/> or <paramref name="type"/> is null. </exception>
+        internal ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource, string name, string type)
         {
+            Argument.AssertNotNull(resource, nameof(resource));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(type, nameof(type));
+
+            Resource = resource;
+            Name = name;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/>. </summary>
-        /// <param name="id"> id of the resource for which the event is being emitted. </param>
+        /// <param name="resource"> id of the resource for which the event is being emitted. </param>
         /// <param name="name"> name of the resource for which the event is being emitted. </param>
         /// <param name="type"> the type of the resource for which the event is being emitted. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceNotificationsResourceDeletedDetails(string id, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceNotificationsResourceDeletedDetails(ResourceIdentifier resource, string name, string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
+            Resource = resource;
             Name = name;
             Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> id of the resource for which the event is being emitted. </summary>
-        public string Id { get; }
-        /// <summary> name of the resource for which the event is being emitted. </summary>
-        public string Name { get; }
-        /// <summary> the type of the resource for which the event is being emitted. </summary>
-        public string Type { get; }
+        /// <summary> Initializes a new instance of <see cref="ResourceNotificationsResourceDeletedDetails"/> for deserialization. </summary>
+        internal ResourceNotificationsResourceDeletedDetails()
+        {
+        }
     }
 }

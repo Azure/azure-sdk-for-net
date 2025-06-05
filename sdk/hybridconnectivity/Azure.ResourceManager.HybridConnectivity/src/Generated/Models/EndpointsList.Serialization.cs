@@ -34,20 +34,17 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 throw new FormatException($"The model {nameof(EndpointsList)} does not support writing '{format}' format.");
             }
 
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue(item, options);
+            }
+            writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
-                writer.WriteStringValue(NextLink);
-            }
-            if (Optional.IsCollectionDefined(Value))
-            {
-                writer.WritePropertyName("value"u8);
-                writer.WriteStartArray();
-                foreach (var item in Value)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteStringValue(NextLink.AbsoluteUri);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -57,7 +54,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,23 +83,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            string nextLink = default;
             IReadOnlyList<HybridConnectivityEndpointData> value = default;
+            Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("nextLink"u8))
-                {
-                    nextLink = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     List<HybridConnectivityEndpointData> array = new List<HybridConnectivityEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
@@ -111,13 +99,22 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     value = array;
                     continue;
                 }
+                if (property.NameEquals("nextLink"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    nextLink = new Uri(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EndpointsList(nextLink, value ?? new ChangeTrackingList<HybridConnectivityEndpointData>(), serializedAdditionalRawData);
+            return new EndpointsList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointsList>.Write(ModelReaderWriterOptions options)
@@ -127,7 +124,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EndpointsList)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +138,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEndpointsList(document.RootElement, options);
                     }
                 default:

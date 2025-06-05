@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerPaloAltoNetworksNgfwContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PaloAltoNetworksFirewallStatusData)} does not support writing '{options.Format}' format.");
             }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePaloAltoNetworksFirewallStatusData(document.RootElement, options);
                     }
                 default:

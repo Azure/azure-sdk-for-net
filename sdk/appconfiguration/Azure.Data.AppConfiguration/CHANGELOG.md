@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.7.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.6.1 (2025-05-09)
+
+### Features Added
+
+- Added AOT annotations to support AOT compilation.
+
+## 1.6.0 (2025-03-11)
+
+### Features Added
+
+- Added support for specifying the token credential's Microsoft Entra audience when creating a client.
 
 ## 1.5.0 (2024-08-06)
 

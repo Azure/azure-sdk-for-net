@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppVolumeSnapshotData)} does not support writing '{options.Format}' format.");
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppVolumeSnapshotData(document.RootElement, options);
                     }
                 default:

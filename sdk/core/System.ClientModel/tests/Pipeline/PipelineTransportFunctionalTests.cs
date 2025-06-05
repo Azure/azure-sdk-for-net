@@ -1,19 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.TestFramework;
-using ClientModel.Tests;
-using ClientModel.Tests.Mocks;
-using Microsoft.AspNetCore.Http.Features;
-using NUnit.Framework;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.IO;
-using System.Net;
-using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.TestFramework;
+using ClientModel.Tests.Mocks;
+using Microsoft.AspNetCore.Http.Features;
+using NUnit.Framework;
 using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Pipeline;

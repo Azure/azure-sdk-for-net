@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerManagedNetworkFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetworkPacketBrokerData)} does not support writing '{options.Format}' format.");
             }
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkPacketBrokerData(document.RootElement, options);
                     }
                 default:

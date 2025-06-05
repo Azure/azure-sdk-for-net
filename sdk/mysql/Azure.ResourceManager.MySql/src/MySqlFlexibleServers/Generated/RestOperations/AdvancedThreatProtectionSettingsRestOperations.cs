@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         AdvancedThreatProtectionData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdvancedThreatProtectionData.DeserializeAdvancedThreatProtectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         AdvancedThreatProtectionData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdvancedThreatProtectionData.DeserializeAdvancedThreatProtectionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         AdvancedThreatProtectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdvancedThreatProtectionListResult.DeserializeAdvancedThreatProtectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         AdvancedThreatProtectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdvancedThreatProtectionListResult.DeserializeAdvancedThreatProtectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         AdvancedThreatProtectionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AdvancedThreatProtectionListResult.DeserializeAdvancedThreatProtectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 case 200:
                     {
                         AdvancedThreatProtectionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AdvancedThreatProtectionListResult.DeserializeAdvancedThreatProtectionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

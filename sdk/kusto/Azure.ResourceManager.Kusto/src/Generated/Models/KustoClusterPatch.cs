@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Kusto.Models
             AllowedIPRangeList = new ChangeTrackingList<string>();
             AcceptedAudiences = new ChangeTrackingList<AcceptedAudience>();
             AllowedFqdnList = new ChangeTrackingList<string>();
+            CalloutPolicies = new ChangeTrackingList<KustoCalloutPolicy>();
             PrivateEndpointConnections = new ChangeTrackingList<KustoPrivateEndpointConnectionData>();
         }
 
@@ -90,12 +91,14 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="isAutoStopEnabled"> A boolean value that indicates if the cluster could be automatically stopped (due to lack of data or no activity for many days). </param>
         /// <param name="restrictOutboundNetworkAccess"> Whether or not to restrict outbound network access.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="allowedFqdnList"> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </param>
+        /// <param name="calloutPolicies"> List of callout policies for egress from Cluster. </param>
         /// <param name="publicIPType"> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </param>
         /// <param name="virtualClusterGraduationProperties"> Virtual Cluster graduation properties. </param>
         /// <param name="privateEndpointConnections"> A list of private endpoint connections. </param>
         /// <param name="migrationCluster"> Properties of the peer cluster involved in a migration to/from this cluster. </param>
+        /// <param name="zoneStatus"> Indicates whether the cluster is zonal or non-zonal. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal KustoClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, KustoSku sku, IList<string> zones, ManagedServiceIdentity identity, KustoClusterState? state, KustoProvisioningState? provisioningState, Uri uri, Uri dataIngestionUri, string stateReason, IList<KustoClusterTrustedExternalTenant> trustedExternalTenants, OptimizedAutoscale optimizedAutoscale, bool? isDiskEncryptionEnabled, bool? isStreamingIngestEnabled, KustoClusterVirtualNetworkConfiguration virtualNetworkConfiguration, KustoKeyVaultProperties keyVaultProperties, bool? isPurgeEnabled, KustoLanguageExtensionList languageExtensions, bool? isDoubleEncryptionEnabled, KustoClusterPublicNetworkAccess? publicNetworkAccess, IList<string> allowedIPRangeList, KustoClusterEngineType? engineType, IList<AcceptedAudience> acceptedAudiences, bool? isAutoStopEnabled, KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess, IList<string> allowedFqdnList, IList<KustoCalloutPolicy> calloutPolicies, KustoClusterPublicIPType? publicIPType, string virtualClusterGraduationProperties, IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections, MigrationClusterProperties migrationCluster, KustoClusterZoneStatus? zoneStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Zones = zones;
@@ -121,10 +124,12 @@ namespace Azure.ResourceManager.Kusto.Models
             IsAutoStopEnabled = isAutoStopEnabled;
             RestrictOutboundNetworkAccess = restrictOutboundNetworkAccess;
             AllowedFqdnList = allowedFqdnList;
+            CalloutPolicies = calloutPolicies;
             PublicIPType = publicIPType;
             VirtualClusterGraduationProperties = virtualClusterGraduationProperties;
             PrivateEndpointConnections = privateEndpointConnections;
             MigrationCluster = migrationCluster;
+            ZoneStatus = zoneStatus;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -192,6 +197,8 @@ namespace Azure.ResourceManager.Kusto.Models
         public KustoClusterNetworkAccessFlag? RestrictOutboundNetworkAccess { get; set; }
         /// <summary> List of allowed FQDNs(Fully Qualified Domain Name) for egress from Cluster. </summary>
         public IList<string> AllowedFqdnList { get; }
+        /// <summary> List of callout policies for egress from Cluster. </summary>
+        public IList<KustoCalloutPolicy> CalloutPolicies { get; }
         /// <summary> Indicates what public IP type to create - IPv4 (default), or DualStack (both IPv4 and IPv6). </summary>
         public KustoClusterPublicIPType? PublicIPType { get; set; }
         /// <summary> Virtual Cluster graduation properties. </summary>
@@ -200,5 +207,7 @@ namespace Azure.ResourceManager.Kusto.Models
         public IReadOnlyList<KustoPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> Properties of the peer cluster involved in a migration to/from this cluster. </summary>
         public MigrationClusterProperties MigrationCluster { get; }
+        /// <summary> Indicates whether the cluster is zonal or non-zonal. </summary>
+        public KustoClusterZoneStatus? ZoneStatus { get; }
     }
 }

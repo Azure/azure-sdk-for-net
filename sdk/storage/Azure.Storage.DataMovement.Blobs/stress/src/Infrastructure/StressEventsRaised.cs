@@ -137,8 +137,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                 {
                     Assert.Fail(
                         $"Failure occurred at Transfer id: {failure.TransferId}.\n" +
-                        $"Source Resource Path: {failure.SourceResource.Uri.AbsoluteUri}\n" +
-                        $"Destination Resource Path: {failure.DestinationResource.Uri.AbsoluteUri}\n" +
+                        $"Source Resource Path: {failure.Source.Uri.AbsoluteUri}\n" +
+                        $"Destination Resource Path: {failure.Destination.Uri.AbsoluteUri}\n" +
                         $"Exception Message: {failure.Exception.Message}\n" +
                         $"Exception Stack: {failure.Exception.StackTrace}\n");
                 }
@@ -177,8 +177,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SingleCompletedEvents);
             Assert.AreEqual(1, SkippedEvents.Count);
-            Assert.NotNull(SkippedEvents.First().SourceResource.Uri);
-            Assert.NotNull(SkippedEvents.First().DestinationResource.Uri);
+            Assert.NotNull(SkippedEvents.First().Source.Uri);
+            Assert.NotNull(SkippedEvents.First().Destination.Uri);
 
             AssertTransferStatusCollection(
                 new TransferStatus[] {
@@ -202,8 +202,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             foreach (TransferItemFailedEventArgs args in FailedEvents)
             {
                 Assert.NotNull(args.Exception);
-                Assert.NotNull(args.SourceResource.Uri);
-                Assert.NotNull(args.DestinationResource.Uri);
+                Assert.NotNull(args.Source.Uri);
+                Assert.NotNull(args.Destination.Uri);
             }
 
             AssertTransferStatusCollection(

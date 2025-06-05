@@ -17,13 +17,13 @@ namespace Azure.ResourceManager.Network
     {
         VpnProfileResponse IOperationSource<VpnProfileResponse>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             return VpnProfileResponse.DeserializeVpnProfileResponse(document.RootElement);
         }
 
         async ValueTask<VpnProfileResponse> IOperationSource<VpnProfileResponse>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             return VpnProfileResponse.DeserializeVpnProfileResponse(document.RootElement);
         }
     }

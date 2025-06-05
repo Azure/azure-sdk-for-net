@@ -42,6 +42,9 @@ namespace Azure.Storage.DataMovement.Tests
             Preserve = 1,
             NoPreserve = 2,
             NewProperties = 3,
+            PreserveNoPermissions = 4,
+            PreserveNfs = 5,
+            PreserveNfsNoPermissions = 6,
         }
 
         /// <summary>
@@ -242,7 +245,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             // Initialize transferManager
@@ -371,7 +374,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);
@@ -522,7 +525,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
 
             // Act
@@ -567,7 +570,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
 
             // Act
@@ -626,7 +629,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         #region Single Concurrency
-        internal async Task CreateDirectoryTree(
+        internal async Task CreateDirectoryTreeAsync(
             TSourceContainerClient client,
             string sourcePrefix,
             int size)
@@ -660,7 +663,7 @@ namespace Azure.Storage.DataMovement.Tests
             string destPrefix = "destFolder";
             await CreateDirectoryInSourceAsync(sourceContainer, sourcePrefix);
             await CreateDirectoryInDestinationAsync(destinationContainer, destPrefix);
-            await CreateDirectoryTree(sourceContainer, sourcePrefix, size);
+            await CreateDirectoryTreeAsync(sourceContainer, sourcePrefix, size);
 
             // Create storage resource containers
             StorageResourceContainer sourceResource = GetSourceStorageResourceContainer(sourceContainer, sourcePrefix);
@@ -728,7 +731,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -766,7 +769,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -803,7 +806,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationMode = StorageResourceCreationMode.FailIfExists,
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512
             };

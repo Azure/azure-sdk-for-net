@@ -46,12 +46,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
-        /// <param name="firstEnqueueTime"> The first time from the queue. </param>
-        /// <param name="lastEnqueueTime"> The last time from the queue. </param>
-        internal EventHubCaptureFileCreatedEventData(DateTimeOffset firstEnqueueTime, DateTimeOffset lastEnqueueTime)
+        /// <param name="fileurl"> The path to the capture file. </param>
+        /// <param name="fileType"> The file type of the capture file. </param>
+        /// <param name="partitionId"> The shard ID. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileurl"/>, <paramref name="fileType"/> or <paramref name="partitionId"/> is null. </exception>
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId)
         {
-            FirstEnqueueTime = firstEnqueueTime;
-            LastEnqueueTime = lastEnqueueTime;
+            Argument.AssertNotNull(fileurl, nameof(fileurl));
+            Argument.AssertNotNull(fileType, nameof(fileType));
+            Argument.AssertNotNull(partitionId, nameof(partitionId));
+
+            Fileurl = fileurl;
+            FileType = fileType;
+            PartitionId = partitionId;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubCaptureFileCreatedEventData"/>. </summary>
@@ -65,7 +72,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="firstEnqueueTime"> The first time from the queue. </param>
         /// <param name="lastEnqueueTime"> The last time from the queue. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset firstEnqueueTime, DateTimeOffset lastEnqueueTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EventHubCaptureFileCreatedEventData(string fileurl, string fileType, string partitionId, int? sizeInBytes, int? eventCount, int? firstSequenceNumber, int? lastSequenceNumber, DateTimeOffset? firstEnqueueTime, DateTimeOffset? lastEnqueueTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fileurl = fileurl;
             FileType = fileType;
@@ -99,8 +106,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The last sequence number from the queue. </summary>
         public int? LastSequenceNumber { get; }
         /// <summary> The first time from the queue. </summary>
-        public DateTimeOffset FirstEnqueueTime { get; }
+        public DateTimeOffset? FirstEnqueueTime { get; }
         /// <summary> The last time from the queue. </summary>
-        public DateTimeOffset LastEnqueueTime { get; }
+        public DateTimeOffset? LastEnqueueTime { get; }
     }
 }

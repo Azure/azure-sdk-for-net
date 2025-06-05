@@ -126,7 +126,7 @@ namespace Azure.Storage
                 throw Errors.ArgumentNull(nameof(accountName));
             }
 
-            conn._accountName = accountName;
+            conn.AccountName = accountName;
             var sasToken = (storageCredentials is SharedAccessSignatureCredentials sasCredentials) ? sasCredentials.SasToken : default;
 
             var scheme = useHttps ? Constants.Https : Constants.Http;
@@ -205,9 +205,9 @@ namespace Azure.Storage
                 listOfSettings.Add(ToString(conn.Credentials, exportSecrets));
             }
 
-            if (!string.IsNullOrWhiteSpace(conn._accountName) && (conn.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
+            if (!string.IsNullOrWhiteSpace(conn.AccountName) && (conn.Credentials is StorageSharedKeyCredential sharedKeyCredentials ? string.IsNullOrWhiteSpace(sharedKeyCredentials.AccountName) : true))
             {
-                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, conn._accountName));
+                listOfSettings.Add(string.Format(CultureInfo.InvariantCulture, "{0}={1}", Constants.ConnectionStrings.AccountNameSetting, conn.AccountName));
             }
 
             return string.Join(";", listOfSettings);

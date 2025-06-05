@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -21,7 +22,7 @@ namespace Azure.Maps.Search.Models
             string name = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("iso"u8))
+                if (property.NameEquals("ISO"u8))
                 {
                     iso = property.Value.GetString();
                     continue;
@@ -39,7 +40,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static AddressCountryRegion FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAddressCountryRegion(document.RootElement);
         }
     }

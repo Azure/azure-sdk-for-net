@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.MySql
 
         MySqlPrivateEndpointConnectionResource IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<MySqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
             return new MySqlPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<MySqlPrivateEndpointConnectionResource> IOperationSource<MySqlPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = MySqlPrivateEndpointConnectionData.DeserializeMySqlPrivateEndpointConnectionData(document.RootElement);
-            return new MySqlPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<MySqlPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerMySqlContext.Default);
+            return await Task.FromResult(new MySqlPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

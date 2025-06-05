@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.NotificationHubs
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNotificationHubsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NotificationHubData)} does not support writing '{options.Format}' format.");
             }
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.NotificationHubs
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNotificationHubData(document.RootElement, options);
                     }
                 default:

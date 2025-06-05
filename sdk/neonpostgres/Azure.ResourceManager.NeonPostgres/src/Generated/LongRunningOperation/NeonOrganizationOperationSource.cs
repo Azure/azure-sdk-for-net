@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.NeonPostgres
 
         NeonOrganizationResource IOperationSource<NeonOrganizationResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = NeonOrganizationData.DeserializeNeonOrganizationData(document.RootElement);
+            var data = ModelReaderWriter.Read<NeonOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNeonPostgresContext.Default);
             return new NeonOrganizationResource(_client, data);
         }
 
         async ValueTask<NeonOrganizationResource> IOperationSource<NeonOrganizationResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = NeonOrganizationData.DeserializeNeonOrganizationData(document.RootElement);
-            return new NeonOrganizationResource(_client, data);
+            var data = ModelReaderWriter.Read<NeonOrganizationData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerNeonPostgresContext.Default);
+            return await Task.FromResult(new NeonOrganizationResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

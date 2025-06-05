@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.HybridNetwork
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PublisherData)} does not support writing '{options.Format}' format.");
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridNetwork
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializePublisherData(document.RootElement, options);
                     }
                 default:

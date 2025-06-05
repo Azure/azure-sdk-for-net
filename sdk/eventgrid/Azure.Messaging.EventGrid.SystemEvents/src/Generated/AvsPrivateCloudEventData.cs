@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEventData"/>. </summary>
-        internal AvsPrivateCloudEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal AvsPrivateCloudEventData(string operationId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
+
+            OperationId = operationId;
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEventData"/>. </summary>
@@ -57,6 +62,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         {
             OperationId = operationId;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudEventData"/> for deserialization. </summary>
+        internal AvsPrivateCloudEventData()
+        {
         }
 
         /// <summary> Id of the operation that caused this event. </summary>

@@ -95,10 +95,20 @@ namespace Azure.ResourceManager.Network
                 writer.WritePropertyName("enablePrivateIpAddress"u8);
                 writer.WriteBooleanValue(EnablePrivateIPAddress.Value);
             }
+            if (Optional.IsDefined(VirtualNetworkGatewayMigrationStatus))
+            {
+                writer.WritePropertyName("virtualNetworkGatewayMigrationStatus"u8);
+                writer.WriteObjectValue(VirtualNetworkGatewayMigrationStatus, options);
+            }
             if (Optional.IsDefined(Active))
             {
                 writer.WritePropertyName("activeActive"u8);
                 writer.WriteBooleanValue(Active.Value);
+            }
+            if (Optional.IsDefined(EnableHighBandwidthVpnGateway))
+            {
+                writer.WritePropertyName("enableHighBandwidthVpnGateway"u8);
+                writer.WriteBooleanValue(EnableHighBandwidthVpnGateway.Value);
             }
             if (Optional.IsDefined(DisableIPSecReplayProtection))
             {
@@ -238,7 +248,9 @@ namespace Azure.ResourceManager.Network
             VpnGatewayGeneration? vpnGatewayGeneration = default;
             bool? enableBgp = default;
             bool? enablePrivateIPAddress = default;
+            VirtualNetworkGatewayMigrationStatus virtualNetworkGatewayMigrationStatus = default;
             bool? activeActive = default;
+            bool? enableHighBandwidthVpnGateway = default;
             bool? disableIPSecReplayProtection = default;
             WritableSubResource gatewayDefaultSite = default;
             VirtualNetworkGatewaySku sku = default;
@@ -411,6 +423,15 @@ namespace Azure.ResourceManager.Network
                             enablePrivateIPAddress = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("virtualNetworkGatewayMigrationStatus"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualNetworkGatewayMigrationStatus = VirtualNetworkGatewayMigrationStatus.DeserializeVirtualNetworkGatewayMigrationStatus(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("activeActive"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -418,6 +439,15 @@ namespace Azure.ResourceManager.Network
                                 continue;
                             }
                             activeActive = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("enableHighBandwidthVpnGateway"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enableHighBandwidthVpnGateway = property0.Value.GetBoolean();
                             continue;
                         }
                         if (property0.NameEquals("disableIPSecReplayProtection"u8))
@@ -614,7 +644,9 @@ namespace Azure.ResourceManager.Network
                 vpnGatewayGeneration,
                 enableBgp,
                 enablePrivateIPAddress,
+                virtualNetworkGatewayMigrationStatus,
                 activeActive,
+                enableHighBandwidthVpnGateway,
                 disableIPSecReplayProtection,
                 gatewayDefaultSite,
                 sku,
@@ -642,7 +674,7 @@ namespace Azure.ResourceManager.Network
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualNetworkGatewayData)} does not support writing '{options.Format}' format.");
             }
@@ -656,7 +688,7 @@ namespace Azure.ResourceManager.Network
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualNetworkGatewayData(document.RootElement, options);
                     }
                 default:

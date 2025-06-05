@@ -73,7 +73,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         GetHierarchiesPage value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GetHierarchiesPage.DeserializeGetHierarchiesPage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -95,7 +95,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         GetHierarchiesPage value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GetHierarchiesPage.DeserializeGetHierarchiesPage(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -146,7 +146,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         HierarchiesBatchResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HierarchiesBatchResponse.DeserializeHierarchiesBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.IoT.TimeSeriesInsights
                 case 200:
                     {
                         HierarchiesBatchResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HierarchiesBatchResponse.DeserializeHierarchiesBatchResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

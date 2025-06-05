@@ -545,11 +545,13 @@ namespace Azure.Storage.DataMovement.Tests
                 { "Metadata", metadata },
                 { "Tags", tags }
             };
-            StorageResourceItemProperties properties = new(
-                resourceLength: expectedLength,
-                eTag: new ETag("etag"),
-                lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                properties: sourceProperties);
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = expectedLength,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = sourceProperties
+            };
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: expectedLength,
                 blockSize: blockSize,

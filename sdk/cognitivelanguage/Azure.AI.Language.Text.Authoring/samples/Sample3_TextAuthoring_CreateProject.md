@@ -9,9 +9,8 @@ To create an `AuthoringClient`, you will need the service endpoint and credentia
 ```C# Snippet:CreateTextAuthoringClientForSpecificApiVersion
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your apikey");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-TextAnalysisAuthoring authoringClient = client.GetTextAnalysisAuthoringClient();
+TextAnalysisAuthoringClientOptions options = new TextAnalysisAuthoringClientOptions(TextAnalysisAuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
+TextAnalysisAuthoringClient client = new TextAnalysisAuthoringClient(endpoint, credential, options);
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from environment variables, configuration settings, or any other secure approach that works for your application.
@@ -22,17 +21,18 @@ To create a new project, call CreateProject on the TextAnalysisAuthoring client.
 
 ```C# Snippet:Sample3_TextAuthoring_CreateProject
 string projectName = "MyNewProject";
-var projectData = new
+TextAuthoringProject projectClient = client.GetProject(projectName);
+var projectData = new TextAuthoringCreateProjectDetails(
+    projectKind: "customMultiLabelClassification",
+    storageInputContainerName: "e2e0test0data",
+    language: "en"
+)
 {
-    projectName = projectName,
-    language = "en",
-    projectKind = "CustomEntityRecognition",
-    description = "Project description for a Custom Entity Recognition project",
-    multilingual = true
+    Description = "Project description for a Custom Entity Recognition project",
+    Multilingual = true
 };
 
-using RequestContent content = RequestContent.Create(projectData);
-Response response = authoringClient.CreateProject(projectName, content);
+Response response = projectClient.CreateProject(projectData);
 
 Console.WriteLine($"Project created with status: {response.Status}");
 ```

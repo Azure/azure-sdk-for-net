@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.HybridContainerService
 
         HybridContainerServiceAgentPoolResource IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
             return new HybridContainerServiceAgentPoolResource(_client, data);
         }
 
         async ValueTask<HybridContainerServiceAgentPoolResource> IOperationSource<HybridContainerServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = HybridContainerServiceAgentPoolData.DeserializeHybridContainerServiceAgentPoolData(document.RootElement);
-            return new HybridContainerServiceAgentPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHybridContainerServiceContext.Default);
+            return await Task.FromResult(new HybridContainerServiceAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

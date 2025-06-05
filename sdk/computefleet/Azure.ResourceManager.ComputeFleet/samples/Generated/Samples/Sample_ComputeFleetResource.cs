@@ -239,6 +239,7 @@ DiskIopsReadWrite = 27L,
 DiskMbpsReadWrite = 2L,
 DeleteOption = ComputeFleetDiskDeleteOptionType.Delete,
 }},
+                    DiskControllerType = new ComputeFleetDiskControllerType("uzb"),
                 },
                 NetworkProfile = new ComputeFleetVmssNetworkProfile
                 {

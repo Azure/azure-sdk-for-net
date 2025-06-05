@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDevOpsInfrastructureContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DevOpsPoolData)} does not support writing '{options.Format}' format.");
             }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDevOpsPoolData(document.RootElement, options);
                     }
                 default:

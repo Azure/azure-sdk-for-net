@@ -29,6 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
 
         /// <summary> Initializes a new instance of <see cref="WarehouseLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
+        /// <param name="version"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
         /// <param name="parameters"> Parameters for linked service. </param>
@@ -51,7 +52,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// Please note <see cref="SecretBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureKeyVaultSecretReference"/> and <see cref="SecureString"/>.
         /// </param>
-        internal WarehouseLinkedService(string type, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object artifactId, object endpoint, object workspaceId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, string encryptedCredential, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(type, connectVia, description, parameters, annotations, additionalProperties)
+        internal WarehouseLinkedService(string type, string version, IntegrationRuntimeReference connectVia, string description, IDictionary<string, ParameterSpecification> parameters, IList<object> annotations, IDictionary<string, object> additionalProperties, object artifactId, object endpoint, object workspaceId, object servicePrincipalId, SecretBase servicePrincipalKey, object tenant, string encryptedCredential, object servicePrincipalCredentialType, SecretBase servicePrincipalCredential) : base(type, version, connectVia, description, parameters, annotations, additionalProperties)
         {
             ArtifactId = artifactId;
             Endpoint = endpoint;

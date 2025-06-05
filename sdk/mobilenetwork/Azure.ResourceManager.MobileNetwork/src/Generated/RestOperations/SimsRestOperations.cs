@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileNetworkSimData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MobileNetworkSimData.DeserializeMobileNetworkSimData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         MobileNetworkSimData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MobileNetworkSimData.DeserializeMobileNetworkSimData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         SimListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SimListResult.DeserializeSimListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         SimListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SimListResult.DeserializeSimListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -944,7 +944,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         SimListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SimListResult.DeserializeSimListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -975,7 +975,7 @@ namespace Azure.ResourceManager.MobileNetwork
                 case 200:
                     {
                         SimListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SimListResult.DeserializeSimListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

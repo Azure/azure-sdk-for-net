@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDefenderEasmContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EasmLabelPatch)} does not support writing '{options.Format}' format.");
             }
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEasmLabelPatch(document.RootElement, options);
                     }
                 default:

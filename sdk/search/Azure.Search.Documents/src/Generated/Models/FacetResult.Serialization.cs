@@ -19,6 +19,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             long? count = default;
+            double? sum = default;
             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
             IReadOnlyDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -31,6 +32,15 @@ namespace Azure.Search.Documents.Models
                         continue;
                     }
                     count = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("sum"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sum = property.Value.GetDouble();
                     continue;
                 }
                 if (property.NameEquals("@search.facets"u8))
@@ -62,14 +72,14 @@ namespace Azure.Search.Documents.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new FacetResult(count, searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(), additionalProperties);
+            return new FacetResult(count, sum, searchFacets ?? new ChangeTrackingDictionary<string, IList<FacetResult>>(), additionalProperties);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static FacetResult FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeFacetResult(document.RootElement);
         }
     }

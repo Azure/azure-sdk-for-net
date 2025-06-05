@@ -47,39 +47,31 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
-        /// <param name="recordingStartTime"> The time at which the recording started. </param>
-        /// <param name="recordingContentType"> The recording content type- AudioVideo, or Audio. </param>
-        /// <param name="recordingChannelKind"> The recording  channel type - Mixed, Unmixed. </param>
-        /// <param name="recordingFormatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recordingStorageInfo"/> is null. </exception>
-        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset recordingStartTime, RecordingContentType recordingContentType, RecordingChannelType recordingChannelKind, RecordingFormatType recordingFormatType)
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo)
         {
             Argument.AssertNotNull(recordingStorageInfo, nameof(recordingStorageInfo));
 
             RecordingStorageInfo = recordingStorageInfo;
-            RecordingStartTime = recordingStartTime;
-            RecordingContentType = recordingContentType;
-            RecordingChannelKind = recordingChannelKind;
-            RecordingFormatType = recordingFormatType;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsRecordingFileStatusUpdatedEventData"/>. </summary>
         /// <param name="recordingStorageInfo"> The details of recording storage information. </param>
         /// <param name="recordingStartTime"> The time at which the recording started. </param>
         /// <param name="recordingDurationMs"> The recording duration in milliseconds. </param>
-        /// <param name="recordingContentType"> The recording content type- AudioVideo, or Audio. </param>
-        /// <param name="recordingChannelKind"> The recording  channel type - Mixed, Unmixed. </param>
-        /// <param name="recordingFormatType"> The recording format type - Mp4, Mp3, Wav. </param>
+        /// <param name="contentType"> The recording content type- AudioVideo, or Audio. </param>
+        /// <param name="channelType"> The recording  channel type - Mixed, Unmixed. </param>
+        /// <param name="formatType"> The recording format type - Mp4, Mp3, Wav. </param>
         /// <param name="sessionEndReason"> The reason for ending recording session. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset recordingStartTime, long? recordingDurationMs, RecordingContentType recordingContentType, RecordingChannelType recordingChannelKind, RecordingFormatType recordingFormatType, string sessionEndReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsRecordingFileStatusUpdatedEventData(AcsRecordingStorageInfoProperties recordingStorageInfo, DateTimeOffset? recordingStartTime, long? recordingDurationMs, AcsRecordingContentType? contentType, AcsRecordingChannelType? channelType, AcsRecordingFormatType? formatType, string sessionEndReason, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecordingStorageInfo = recordingStorageInfo;
             RecordingStartTime = recordingStartTime;
             RecordingDurationMs = recordingDurationMs;
-            RecordingContentType = recordingContentType;
-            RecordingChannelKind = recordingChannelKind;
-            RecordingFormatType = recordingFormatType;
+            ContentType = contentType;
+            ChannelType = channelType;
+            FormatType = formatType;
             SessionEndReason = sessionEndReason;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -92,15 +84,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The details of recording storage information. </summary>
         public AcsRecordingStorageInfoProperties RecordingStorageInfo { get; }
         /// <summary> The time at which the recording started. </summary>
-        public DateTimeOffset RecordingStartTime { get; }
+        public DateTimeOffset? RecordingStartTime { get; }
         /// <summary> The recording duration in milliseconds. </summary>
         public long? RecordingDurationMs { get; }
         /// <summary> The recording content type- AudioVideo, or Audio. </summary>
-        public RecordingContentType RecordingContentType { get; }
+        public AcsRecordingContentType? ContentType { get; }
         /// <summary> The recording  channel type - Mixed, Unmixed. </summary>
-        public RecordingChannelType RecordingChannelKind { get; }
+        public AcsRecordingChannelType? ChannelType { get; }
         /// <summary> The recording format type - Mp4, Mp3, Wav. </summary>
-        public RecordingFormatType RecordingFormatType { get; }
+        public AcsRecordingFormatType? FormatType { get; }
         /// <summary> The reason for ending recording session. </summary>
         public string SessionEndReason { get; }
     }

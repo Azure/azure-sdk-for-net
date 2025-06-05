@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.GraphServices
 
         GraphServicesAccountResource IOperationSource<GraphServicesAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
+            var data = ModelReaderWriter.Read<GraphServicesAccountResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGraphServicesContext.Default);
             return new GraphServicesAccountResource(_client, data);
         }
 
         async ValueTask<GraphServicesAccountResource> IOperationSource<GraphServicesAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = GraphServicesAccountResourceData.DeserializeGraphServicesAccountResourceData(document.RootElement);
-            return new GraphServicesAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<GraphServicesAccountResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerGraphServicesContext.Default);
+            return await Task.FromResult(new GraphServicesAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

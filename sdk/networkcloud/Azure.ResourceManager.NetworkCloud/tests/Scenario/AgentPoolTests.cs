@@ -8,6 +8,7 @@ using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                     AdminUsername = "azure",
                     SshPublicKeys =
                     {
-                    new NetworkCloudSshPublicKey("ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDHvXnJdrBmW052RUfpkGLj30ndi6jf4+i161ECfrVcUglfKmAlU8cfDCW/s6Bfppz80GkFscZpOH8h0erfigggPpFq5/2XblFitooqQ0Hxm091/rswg4t/27N49l5fiom8sD3kki4zRkmpgenwHTcZgUpBpQjd4DUrJxZ5zYF1wLop9Qu3ptsE3njSONzDYRIZv/WLjVuMfrUSByHp+jfaaOLHTIIB4fJvo6dQUZxE20w2iDHV3tEkmnTo84eba97VMueQD6OzJPEyWZMRpz8UYWOd0IXeRqiFu1lawNblZhwNT/ojNZfpB3af/YDzwQCZgTcTRyNNhL4o/blKUmug0daSsnv4ixQyU00X5Dt1G/3nLUdrz9A3s3b7K1w+BdB5E9v9gdBVSF2+XwZI9ooaAxfuOb0f/jP3CYLJ43SXISTRnIDpcf5qytjs1Xo+yYyJMvzLL59mhAyb3p/cD+Y3/s3WhAx+l0XOKpzXnblrv9d3q4c2tWmm/SyFqthaqd0= admin@test-vm")
+                    new NetworkCloudSshPublicKey("ssh-rsa REDACTED")
                     },
                 },
                 AgentOptions = new NetworkCloudAgentConfiguration(12)
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
             Assert.AreEqual(patch.Tags, updateResult.Value.Data.Tags);
 
             // Delete
-            var deleteResult = await agentPool.DeleteAsync(WaitUntil.Completed);
+            var deleteResult = await agentPool.DeleteAsync(WaitUntil.Completed, CancellationToken.None);
             Assert.IsTrue(deleteResult.HasCompleted);
         }
     }

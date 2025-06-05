@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Automation
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomationSourceControlData)} does not support writing '{options.Format}' format.");
             }
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Automation
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutomationSourceControlData(document.RootElement, options);
                     }
                 default:

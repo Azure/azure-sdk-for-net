@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
 
         PostgreSqlFlexibleServersPrivateEndpointConnectionResource IOperationSource<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PostgreSqlFlexibleServersPrivateEndpointConnectionData.DeserializePostgreSqlFlexibleServersPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
             return new PostgreSqlFlexibleServersPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<PostgreSqlFlexibleServersPrivateEndpointConnectionResource> IOperationSource<PostgreSqlFlexibleServersPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PostgreSqlFlexibleServersPrivateEndpointConnectionData.DeserializePostgreSqlFlexibleServersPrivateEndpointConnectionData(document.RootElement);
-            return new PostgreSqlFlexibleServersPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<PostgreSqlFlexibleServersPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPostgreSqlContext.Default);
+            return await Task.FromResult(new PostgreSqlFlexibleServersPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

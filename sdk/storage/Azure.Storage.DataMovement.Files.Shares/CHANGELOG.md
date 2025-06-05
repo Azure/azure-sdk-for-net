@@ -1,14 +1,57 @@
 # Release History
 
-## 12.0.0-beta.4 (Unreleased)
+## 12.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for preserving NFS properties and permissions in Share Files and Share Directories for Share-to-Share copy transfers.
+- Added support for preserving SMB properties and permissions in Share Directories for Share-to-Share copy transfers.
+- Added basic support for handling hard links and soft links in NFS Share-to-Share copy and Share-to-local download transfers.
 
 ### Breaking Changes
+- Added protocol validation for Share-to-Share copy transfers. Validation is enabled by default and will fail the transfer if there are no share-level permissions. To bypass this, please enable `SkipProtocolValidation`.
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.1.0 (2025-02-27)
+
+### Features added
+- Added support for anonymous access by adding a default constructor for `ShareFilesStorageResourceProvider`.
+
+### Bugs Fixed
+- Fixed an issue that would prevent transfers of large files (>200 GiB) for certain destination resource types.
+
+## 12.0.0 (2025-02-11)
+
+### Breaking Changes
+- Changed `ShareFileStorangeResourceOptions.FilePermissions` from `DataTransferProperty` to `bool?`
+- Changed the following types from `DataTranferProperty<string>` to `string`
+    - `ShareFileStorageResourceOptions.ContentType`
+    - `ShareFileStorageResourceOptions.ContentDisposition`
+    - `ShareFileStorageResourceOptions.CacheControl`
+- Changed the following types from `DataTransferProperty<string[]>` to `string[]`
+    - `ShareFileStorageResourceOptions.ContentEncoding`
+    - `ShareFileStorageResourceOptions.ContentLanguage`
+- Changed the following types from `DataTransferProperty<IDictionary<string, string>>` to `IDictionary<string, string>`
+    - `ShareFileStorageResourceOptions.FileMetadata`
+    - `ShareFileStorageResourceOptions.DirectoryMetadata`
+- Changed the following types from `DataTransferProperty<DateTimeOffset?>` to `DateTimeOffset?`
+    -  `ShareFileStorageResourceOptions.FileCreatedOn`
+     - `ShareFileStorageResourceOptions.FileLastWrittenOn`
+     - `ShareFileStorageResourceOptions.FileChangedOn`
+- Changed `ShareDirectoryClient.StartUploadDirectoryAsync` to `ShareDirectoryClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
+- Changed `ShareDirectoryClient.StartDownloadToDirectoryAsync` to `ShareDirectoryClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
+- Several refactors to `ShareFilesStorageResourceProvider`:
+  - Removed nested delegates `GetStorageSharedKeyCredential`, `GetTokenCredential`, and `GetAzureSasCredential`.
+  - Removed default constructor.
+  - Removed constructor overload for `GetTokenCredential` entirely.
+  - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
+  - Changed `FromFile` and `FromDirectory` to async, returning a `ValueTask`, and renamed to `FromFileAsync` and `FromDirectoryAsync` respectively.
+  - Changed `FromClient` methods to `static` methods.
+
+### Bugs Fixed
+- Fixed File Attributes with ReadOnly does not transfer / copy correctly bug #2167
 
 ## 12.0.0-beta.3 (2024-10-14)
 

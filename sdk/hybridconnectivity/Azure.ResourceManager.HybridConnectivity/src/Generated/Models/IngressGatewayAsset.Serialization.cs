@@ -34,27 +34,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 throw new FormatException($"The model {nameof(IngressGatewayAsset)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("ingress"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(Hostname))
-            {
-                writer.WritePropertyName("hostname"u8);
-                writer.WriteStringValue(Hostname);
-            }
-            writer.WritePropertyName("aadProfile"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(ServerId))
-            {
-                writer.WritePropertyName("serverId"u8);
-                writer.WriteStringValue(ServerId.Value);
-            }
-            if (Optional.IsDefined(TenantId))
-            {
-                writer.WritePropertyName("tenantId"u8);
-                writer.WriteStringValue(TenantId.Value);
-            }
-            writer.WriteEndObject();
-            writer.WriteEndObject();
             writer.WritePropertyName("relay"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(NamespaceName))
@@ -88,6 +67,27 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WriteStringValue(ServiceConfigurationToken);
             }
             writer.WriteEndObject();
+            writer.WritePropertyName("ingress"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Hostname))
+            {
+                writer.WritePropertyName("hostname"u8);
+                writer.WriteStringValue(Hostname);
+            }
+            writer.WritePropertyName("aadProfile"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServerId))
+            {
+                writer.WritePropertyName("serverId"u8);
+                writer.WriteStringValue(ServerId.Value);
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            writer.WriteEndObject();
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -125,19 +125,65 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 return null;
             }
-            string hostname = default;
-            Guid? serverId = default;
-            Guid? tenantId = default;
             string namespaceName = default;
             string namespaceNameSuffix = default;
             string hybridConnectionName = default;
             string accessKey = default;
             long? expiresOn = default;
             string serviceConfigurationToken = default;
+            string hostname = default;
+            Guid? serverId = default;
+            Guid? tenantId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("relay"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("namespaceName"u8))
+                        {
+                            namespaceName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("namespaceNameSuffix"u8))
+                        {
+                            namespaceNameSuffix = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("hybridConnectionName"u8))
+                        {
+                            hybridConnectionName = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("accessKey"u8))
+                        {
+                            accessKey = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("expiresOn"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            expiresOn = property0.Value.GetInt64();
+                            continue;
+                        }
+                        if (property0.NameEquals("serviceConfigurationToken"u8))
+                        {
+                            serviceConfigurationToken = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 if (property.NameEquals("ingress"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -185,52 +231,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     }
                     continue;
                 }
-                if (property.NameEquals("relay"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("namespaceName"u8))
-                        {
-                            namespaceName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("namespaceNameSuffix"u8))
-                        {
-                            namespaceNameSuffix = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("hybridConnectionName"u8))
-                        {
-                            hybridConnectionName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accessKey"u8))
-                        {
-                            accessKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("expiresOn"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            expiresOn = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("serviceConfigurationToken"u8))
-                        {
-                            serviceConfigurationToken = property0.Value.GetString();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -238,15 +238,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new IngressGatewayAsset(
-                hostname,
-                serverId,
-                tenantId,
                 namespaceName,
                 namespaceNameSuffix,
                 hybridConnectionName,
                 accessKey,
                 expiresOn,
                 serviceConfigurationToken,
+                hostname,
+                serverId,
+                tenantId,
                 serializedAdditionalRawData);
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IngressGatewayAsset)} does not support writing '{options.Format}' format.");
             }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIngressGatewayAsset(document.RootElement, options);
                     }
                 default:

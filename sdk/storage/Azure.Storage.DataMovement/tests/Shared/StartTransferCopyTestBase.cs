@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyObjectCopyFromUriInfo> copyObjectInfo = new List<VerifyObjectCopyFromUriInfo>(objectCount);
@@ -502,7 +502,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             List<string> objectNames = new List<string>() { name };
@@ -530,7 +530,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
@@ -568,7 +568,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists,
+                CreationMode = StorageResourceCreationMode.SkipIfExists,
             };
 
             // Create new source block object.
@@ -630,7 +630,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to fail and keep track of the failure.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationMode = StorageResourceCreationMode.FailIfExists,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             // Create new source object.
@@ -759,7 +759,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -805,7 +805,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -835,12 +835,14 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task CopyRemoteObjects_VerifyProperties(
             TSourceContainerClient sourceContainer,
             TDestinationContainerClient destinationContainer,
-            TransferPropertiesTestType propertiesType)
+            TransferPropertiesTestType propertiesType,
+            long size = Constants.KB,
+            long? chunkSize = default)
         {
             // Create blob with properties
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
-                objectLength: 0,
+                objectLength: size,
                 createResource: true);
             // Set preserve properties
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
@@ -853,7 +855,10 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 propertiesTestType: propertiesType);
 
-            TransferOptions options = new TransferOptions();
+            TransferOptions options = new()
+            {
+                MaximumTransferChunkSize = chunkSize,
+            };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManager transferManager = new TransferManager();
 
@@ -927,6 +932,25 @@ namespace Azure.Storage.DataMovement.Tests
                 source.Container,
                 destination.Container,
                 TransferPropertiesTestType.NewProperties);
+        }
+
+        [RecordedTest]
+        [TestCase((int) TransferPropertiesTestType.Default)]
+        [TestCase((int) TransferPropertiesTestType.Preserve)]
+        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
+        [TestCase((int) TransferPropertiesTestType.NewProperties)]
+        public virtual async Task SourceObjectToDestinationObject_VerifyProperties_Chunks(int propertiesType)
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                (TransferPropertiesTestType) propertiesType,
+                size: Constants.KB,
+                chunkSize: Constants.KB / 2);
         }
     }
 }

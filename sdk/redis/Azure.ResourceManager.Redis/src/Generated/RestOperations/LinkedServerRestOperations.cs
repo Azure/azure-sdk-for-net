@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisLinkedServerWithPropertyData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisLinkedServerWithPropertyData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisLinkedServerWithPropertyData.DeserializeRedisLinkedServerWithPropertyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisLinkedServerWithPropertiesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisLinkedServerWithPropertiesList.DeserializeRedisLinkedServerWithPropertiesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisLinkedServerWithPropertiesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisLinkedServerWithPropertiesList.DeserializeRedisLinkedServerWithPropertiesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisLinkedServerWithPropertiesList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = RedisLinkedServerWithPropertiesList.DeserializeRedisLinkedServerWithPropertiesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Redis
                 case 200:
                     {
                         RedisLinkedServerWithPropertiesList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = RedisLinkedServerWithPropertiesList.DeserializeRedisLinkedServerWithPropertiesList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

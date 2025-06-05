@@ -147,7 +147,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         AnalyzeJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -178,7 +178,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         AnalyzeJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -231,7 +231,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         HealthcareJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -256,7 +256,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         HealthcareJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -460,7 +460,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         EntitiesResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntitiesResult.DeserializeEntitiesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -492,7 +492,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         EntitiesResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntitiesResult.DeserializeEntitiesResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -572,7 +572,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         PiiResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PiiResult.DeserializePiiResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -609,7 +609,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         PiiResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PiiResult.DeserializePiiResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -676,7 +676,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         EntityLinkingResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = EntityLinkingResult.DeserializeEntityLinkingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -708,7 +708,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         EntityLinkingResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = EntityLinkingResult.DeserializeEntityLinkingResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -770,7 +770,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         KeyPhraseResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = KeyPhraseResult.DeserializeKeyPhraseResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -801,7 +801,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         KeyPhraseResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = KeyPhraseResult.DeserializeKeyPhraseResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -863,7 +863,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         LanguageResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = LanguageResult.DeserializeLanguageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -894,7 +894,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         LanguageResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = LanguageResult.DeserializeLanguageResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -966,7 +966,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         SentimentResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SentimentResponse.DeserializeSentimentResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -999,7 +999,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         SentimentResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SentimentResponse.DeserializeSentimentResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1043,7 +1043,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         HealthcareJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1071,7 +1071,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         HealthcareJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1115,7 +1115,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         AnalyzeJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1143,7 +1143,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         AnalyzeJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1186,7 +1186,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         HealthcareJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1214,7 +1214,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         HealthcareJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = HealthcareJobState.DeserializeHealthcareJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1257,7 +1257,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         AnalyzeJobState value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1285,7 +1285,7 @@ namespace Azure.AI.TextAnalytics.Legacy
                 case 200:
                     {
                         AnalyzeJobState value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = AnalyzeJobState.DeserializeAnalyzeJobState(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

@@ -154,12 +154,12 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> **Lists the metric data for a subscription**. </summary>
+        /// <summary> **Lists the metric data for a subscription**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling). </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="region"> The region where the metrics you want reside. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve.
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         SubscriptionScopeMetricResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionScopeMetricResponse.DeserializeSubscriptionScopeMetricResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,12 +200,12 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> **Lists the metric data for a subscription**. </summary>
+        /// <summary> **Lists the metric data for a subscription**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling). </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="region"> The region where the metrics you want reside. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve.
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         SubscriptionScopeMetricResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionScopeMetricResponse.DeserializeSubscriptionScopeMetricResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -371,13 +371,13 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. </summary>
+        /// <summary> **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling). </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="region"> The region where the metrics you want reside. </param>
         /// <param name="content"> Parameters serialized in the body. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve.
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         SubscriptionScopeMetricResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SubscriptionScopeMetricResponse.DeserializeSubscriptionScopeMetricResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -418,13 +418,13 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. </summary>
+        /// <summary> **Lists the metric data for a subscription**. Parameters can be specified on either query params or the body. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling). </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="region"> The region where the metrics you want reside. </param>
         /// <param name="content"> Parameters serialized in the body. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve.
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         SubscriptionScopeMetricResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SubscriptionScopeMetricResponse.DeserializeSubscriptionScopeMetricResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -581,11 +581,11 @@ namespace Azure.ResourceManager.Monitor
             return message;
         }
 
-        /// <summary> **Lists the metric values for a resource**. </summary>
+        /// <summary> **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling). </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve.
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MonitorResponse.DeserializeMonitorResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -624,11 +624,11 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
-        /// <summary> **Lists the metric values for a resource**. </summary>
+        /// <summary> **Lists the metric values for a resource**. This API used the [default ARM throttling limits](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/request-limits-and-throttling). </summary>
         /// <param name="resourceUri"> The identifier of the resource. </param>
         /// <param name="timespan"> The timespan of the query. It is a string with the following format 'startDateTime_ISO/endDateTime_ISO'. </param>
         /// <param name="interval"> The interval (i.e. timegrain) of the query. </param>
-        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. </param>
+        /// <param name="metricnames"> The names of the metrics (comma separated) to retrieve. Limit 20 metrics. </param>
         /// <param name="aggregation"> The list of aggregation types (comma separated) to retrieve. </param>
         /// <param name="top">
         /// The maximum number of records to retrieve.
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Monitor
                 case 200:
                     {
                         MonitorResponse value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MonitorResponse.DeserializeMonitorResponse(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

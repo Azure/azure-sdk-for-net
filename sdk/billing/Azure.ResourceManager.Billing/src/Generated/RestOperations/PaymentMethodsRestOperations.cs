@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodLinksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodLinksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingPaymentMethodLinkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingPaymentMethodLinkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingPaymentMethodLinkData.DeserializeBillingPaymentMethodLinkData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingPaymentMethodData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingPaymentMethodData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingPaymentMethodData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         BillingPaymentMethodData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = BillingPaymentMethodData.DeserializeBillingPaymentMethodData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodLinksListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodLinksListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentMethodLinksListResult.DeserializePaymentMethodLinksListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -789,7 +789,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -813,7 +813,7 @@ namespace Azure.ResourceManager.Billing
                 case 200:
                     {
                         PaymentMethodsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = PaymentMethodsListResult.DeserializePaymentMethodsListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

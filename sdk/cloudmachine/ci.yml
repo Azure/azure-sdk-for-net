@@ -33,29 +33,22 @@ pr:
     - eng/common/
 #endif
 
-# Switch to canary to test canary 1es branch. 1es template validation will set this parameter
-# to canary on run.
-parameters:
-- name: oneESTemplateTag
-  type: string
-  default: release
-  values:
-    - release
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: cloudmachine
-    oneESTemplateTag: ${{ parameters.oneESTemplateTag }}
     ArtifactName: packages
     Artifacts:
-    - name: Azure.CloudMachine
-      safeName: AzureCloudMachine
-    - name: Azure.CloudMachine.All
-      safeName: AzureCloudMachineAll
-    - name: Azure.CloudMachine.Web
-      safeName: AzureCloudMachineWeb
-    - name: Azure.CloudMachine.OpenAI
-      safeName: AzureCloudMachineOpenAI
-    - name: Azure.Provisioning.CloudMachine
-      safeName: AzureProvisioningCloudMachine
+    - name: Azure.Projects
+      safeName: AzureProjects
+    - name: Azure.Projects.Web
+      safeName: AzureProjectsWeb
+    - name: Azure.Projects.AI
+      safeName: AzureProjectAI
+    - name: Azure.Projects.Provisioning
+      safeName: AzureProjectsProvisioning
+    - name: Azure.Projects.AI.Foundry
+      safeName: AzureProjectsAIFoundry
+    - name: Azure.Projects.Tsp
+      safeName: AzureProjectsTsp
+

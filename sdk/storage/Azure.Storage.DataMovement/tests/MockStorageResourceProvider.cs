@@ -28,12 +28,12 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(properties, getSource: true));
+        protected internal override ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
+            => new(FromTransferProperties(properties, getSource: true));
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
-            => Task.FromResult(FromTransferProperties(properties, getSource: false));
+        protected internal override ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
+            => new(FromTransferProperties(properties, getSource: false));
 
         private StorageResource FromTransferProperties(TransferProperties properties, bool getSource)
         {

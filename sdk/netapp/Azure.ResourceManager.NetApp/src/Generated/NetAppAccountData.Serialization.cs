@@ -94,17 +94,10 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("nfsV4IDDomain");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(IsMultiAdEnabled))
+            if (options.Format != "W" && Optional.IsDefined(MultiAdStatus))
             {
-                if (IsMultiAdEnabled != null)
-                {
-                    writer.WritePropertyName("isMultiAdEnabled"u8);
-                    writer.WriteBooleanValue(IsMultiAdEnabled.Value);
-                }
-                else
-                {
-                    writer.WriteNull("isMultiAdEnabled");
-                }
+                writer.WritePropertyName("multiAdStatus"u8);
+                writer.WriteStringValue(MultiAdStatus.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -142,7 +135,7 @@ namespace Azure.ResourceManager.NetApp
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
             string nfsV4IdDomain = default;
-            bool? isMultiAdEnabled = default;
+            MultiAdStatus? multiAdStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -266,14 +259,13 @@ namespace Azure.ResourceManager.NetApp
                             nfsV4IdDomain = property0.Value.GetString();
                             continue;
                         }
-                        if (property0.NameEquals("isMultiAdEnabled"u8))
+                        if (property0.NameEquals("multiAdStatus"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                isMultiAdEnabled = null;
                                 continue;
                             }
-                            isMultiAdEnabled = property0.Value.GetBoolean();
+                            multiAdStatus = new MultiAdStatus(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -299,7 +291,7 @@ namespace Azure.ResourceManager.NetApp
                 encryption,
                 disableShowmount,
                 nfsV4IdDomain,
-                isMultiAdEnabled,
+                multiAdStatus,
                 serializedAdditionalRawData);
         }
 
@@ -310,7 +302,7 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(NetAppAccountData)} does not support writing '{options.Format}' format.");
             }
@@ -324,7 +316,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetAppAccountData(document.RootElement, options);
                     }
                 default:

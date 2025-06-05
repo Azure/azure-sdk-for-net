@@ -51,8 +51,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
-        internal SubscriptionValidationResponse()
+        /// <param name="validationResponse"> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="validationResponse"/> is null. </exception>
+        internal SubscriptionValidationResponse(string validationResponse)
         {
+            Argument.AssertNotNull(validationResponse, nameof(validationResponse));
+
+            ValidationResponse = validationResponse;
         }
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
@@ -63,8 +68,5 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ValidationResponse = validationResponse;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
-        /// <summary> The validation response sent by the subscriber to Azure Event Grid to complete the validation of an event subscription. </summary>
-        public string ValidationResponse { get; }
     }
 }

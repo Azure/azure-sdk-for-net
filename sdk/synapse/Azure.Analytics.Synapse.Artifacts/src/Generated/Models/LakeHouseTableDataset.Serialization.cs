@@ -71,6 +71,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
+            if (Optional.IsDefined(SchemaTypePropertiesSchema))
+            {
+                writer.WritePropertyName("schema"u8);
+                writer.WriteObjectValue<object>(SchemaTypePropertiesSchema);
+            }
             if (Optional.IsDefined(Table))
             {
                 writer.WritePropertyName("table"u8);
@@ -99,6 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             IDictionary<string, ParameterSpecification> parameters = default;
             IList<object> annotations = default;
             DatasetFolder folder = default;
+            object schema0 = default;
             object table = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -190,6 +196,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
+                        if (property0.NameEquals("schema"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            schema0 = property0.Value.GetObject();
+                            continue;
+                        }
                         if (property0.NameEquals("table"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -215,6 +230,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations ?? new ChangeTrackingList<object>(),
                 folder,
                 additionalProperties,
+                schema0,
                 table);
         }
 
@@ -222,7 +238,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new LakeHouseTableDataset FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeLakeHouseTableDataset(document.RootElement);
         }
 

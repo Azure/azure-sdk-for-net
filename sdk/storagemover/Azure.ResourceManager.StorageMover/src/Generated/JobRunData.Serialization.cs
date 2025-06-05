@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.StorageMover
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SourceProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(SourceProperties))
+                using (JsonDocument document = JsonDocument.Parse(SourceProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.StorageMover
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TargetProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(TargetProperties))
+                using (JsonDocument document = JsonDocument.Parse(TargetProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.StorageMover
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(JobDefinitionProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(JobDefinitionProperties))
+                using (JsonDocument document = JsonDocument.Parse(JobDefinitionProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.StorageMover
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageMoverContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(JobRunData)} does not support writing '{options.Format}' format.");
             }
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.StorageMover
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeJobRunData(document.RootElement, options);
                     }
                 default:

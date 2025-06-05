@@ -40,6 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     case "AzureDatabricksDeltaLakeImportCommand": return AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(element);
                     case "SnowflakeImportCopyCommand": return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element);
+                    case "TeradataImportCommand": return TeradataImportCommand.DeserializeTeradataImportCommand(element);
                 }
             }
             return UnknownImportSettings.DeserializeUnknownImportSettings(element);
@@ -49,7 +50,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static ImportSettings FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeImportSettings(document.RootElement);
         }
 

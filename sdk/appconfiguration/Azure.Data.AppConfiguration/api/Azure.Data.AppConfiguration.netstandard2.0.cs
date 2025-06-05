@@ -1,5 +1,30 @@
 namespace Azure.Data.AppConfiguration
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AppConfigurationAudience : System.IEquatable<Azure.Data.AppConfiguration.AppConfigurationAudience>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AppConfigurationAudience(string value) { throw null; }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzureChina { get { throw null; } }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzureGovernment { get { throw null; } }
+        public static Azure.Data.AppConfiguration.AppConfigurationAudience AzurePublicCloud { get { throw null; } }
+        public bool Equals(Azure.Data.AppConfiguration.AppConfigurationAudience other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
+        public static implicit operator Azure.Data.AppConfiguration.AppConfigurationAudience (string value) { throw null; }
+        public static bool operator !=(Azure.Data.AppConfiguration.AppConfigurationAudience left, Azure.Data.AppConfiguration.AppConfigurationAudience right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AzureDataAppConfigurationContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureDataAppConfigurationContext() { }
+        public static Azure.Data.AppConfiguration.AzureDataAppConfigurationContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class ConfigurationClient
     {
         protected ConfigurationClient() { }
@@ -74,6 +99,7 @@ namespace Azure.Data.AppConfiguration
     public partial class ConfigurationClientOptions : Azure.Core.ClientOptions
     {
         public ConfigurationClientOptions(Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion version = Azure.Data.AppConfiguration.ConfigurationClientOptions.ServiceVersion.V2023_11_01) { }
+        public Azure.Data.AppConfiguration.AppConfigurationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
             V1_0 = 0,

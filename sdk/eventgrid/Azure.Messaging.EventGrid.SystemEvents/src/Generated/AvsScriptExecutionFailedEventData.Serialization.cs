@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AvsScriptExecutionFailedEventDataConverter))]
     public partial class AvsScriptExecutionFailedEventData : IUtf8JsonSerializable, IJsonModel<AvsScriptExecutionFailedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AvsScriptExecutionFailedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -115,7 +117,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AvsScriptExecutionFailedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -129,7 +131,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAvsScriptExecutionFailedEventData(document.RootElement, options);
                     }
                 default:
@@ -143,7 +145,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AvsScriptExecutionFailedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAvsScriptExecutionFailedEventData(document.RootElement);
         }
 
@@ -153,6 +155,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AvsScriptExecutionFailedEventDataConverter : JsonConverter<AvsScriptExecutionFailedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AvsScriptExecutionFailedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AvsScriptExecutionFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAvsScriptExecutionFailedEventData(document.RootElement);
+            }
         }
     }
 }

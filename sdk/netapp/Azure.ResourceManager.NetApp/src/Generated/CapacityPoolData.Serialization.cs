@@ -68,18 +68,6 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("utilizedThroughputMibps"u8);
                 writer.WriteNumberValue(UtilizedThroughputMibps.Value);
             }
-            if (Optional.IsDefined(CustomThroughputMibps))
-            {
-                if (CustomThroughputMibps != null)
-                {
-                    writer.WritePropertyName("customThroughputMibps"u8);
-                    writer.WriteNumberValue(CustomThroughputMibps.Value);
-                }
-                else
-                {
-                    writer.WriteNull("customThroughputMibps");
-                }
-            }
             if (Optional.IsDefined(QosType))
             {
                 writer.WritePropertyName("qosType"u8);
@@ -138,7 +126,6 @@ namespace Azure.ResourceManager.NetApp
             string provisioningState = default;
             float? totalThroughputMibps = default;
             float? utilizedThroughputMibps = default;
-            float? customThroughputMibps = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
             CapacityPoolEncryptionType? encryptionType = default;
@@ -249,16 +236,6 @@ namespace Azure.ResourceManager.NetApp
                             utilizedThroughputMibps = property0.Value.GetSingle();
                             continue;
                         }
-                        if (property0.NameEquals("customThroughputMibps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                customThroughputMibps = null;
-                                continue;
-                            }
-                            customThroughputMibps = property0.Value.GetSingle();
-                            continue;
-                        }
                         if (property0.NameEquals("qosType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -310,7 +287,6 @@ namespace Azure.ResourceManager.NetApp
                 provisioningState,
                 totalThroughputMibps,
                 utilizedThroughputMibps,
-                customThroughputMibps,
                 qosType,
                 coolAccess,
                 encryptionType,
@@ -324,7 +300,7 @@ namespace Azure.ResourceManager.NetApp
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetAppContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CapacityPoolData)} does not support writing '{options.Format}' format.");
             }
@@ -338,7 +314,7 @@ namespace Azure.ResourceManager.NetApp
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCapacityPoolData(document.RootElement, options);
                     }
                 default:

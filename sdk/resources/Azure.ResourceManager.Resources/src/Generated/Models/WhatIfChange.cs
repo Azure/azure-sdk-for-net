@@ -46,29 +46,32 @@ namespace Azure.ResourceManager.Resources.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
-        /// <param name="resourceId"> Resource ID. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> is null. </exception>
-        internal WhatIfChange(string resourceId, WhatIfChangeType changeType)
+        internal WhatIfChange(WhatIfChangeType changeType)
         {
-            Argument.AssertNotNull(resourceId, nameof(resourceId));
-
-            ResourceId = resourceId;
             ChangeType = changeType;
             Delta = new ChangeTrackingList<WhatIfPropertyChange>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WhatIfChange"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
+        /// <param name="deploymentId"> The resource id of the Deployment responsible for this change. </param>
+        /// <param name="symbolicName"> The symbolic name of the resource responsible for this change. </param>
+        /// <param name="identifiers"> A subset of properties that uniquely identify a Bicep extensible resource because it lacks a resource id like an Azure resource has. </param>
+        /// <param name="extension"> The extension the resource was deployed with. </param>
         /// <param name="changeType"> Type of change that will be made to the resource when the deployment is executed. </param>
         /// <param name="unsupportedReason"> The explanation about why the resource is unsupported by What-If. </param>
         /// <param name="before"> The snapshot of the resource before the deployment is executed. </param>
         /// <param name="after"> The predicted snapshot of the resource after the deployment is executed. </param>
         /// <param name="delta"> The predicted changes to resource properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfChange(string resourceId, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WhatIfChange(string resourceId, string deploymentId, string symbolicName, BinaryData identifiers, ArmDeploymentExtensionDefinition extension, WhatIfChangeType changeType, string unsupportedReason, BinaryData before, BinaryData after, IReadOnlyList<WhatIfPropertyChange> delta, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
+            DeploymentId = deploymentId;
+            SymbolicName = symbolicName;
+            Identifiers = identifiers;
+            Extension = extension;
             ChangeType = changeType;
             UnsupportedReason = unsupportedReason;
             Before = before;
@@ -85,6 +88,47 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Resource ID. </summary>
         [WirePath("resourceId")]
         public string ResourceId { get; }
+        /// <summary> The resource id of the Deployment responsible for this change. </summary>
+        [WirePath("deploymentId")]
+        public string DeploymentId { get; }
+        /// <summary> The symbolic name of the resource responsible for this change. </summary>
+        [WirePath("symbolicName")]
+        public string SymbolicName { get; }
+        /// <summary>
+        /// A subset of properties that uniquely identify a Bicep extensible resource because it lacks a resource id like an Azure resource has.
+        /// <para>
+        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        [WirePath("identifiers")]
+        public BinaryData Identifiers { get; }
+        /// <summary> The extension the resource was deployed with. </summary>
+        [WirePath("extension")]
+        public ArmDeploymentExtensionDefinition Extension { get; }
         /// <summary> Type of change that will be made to the resource when the deployment is executed. </summary>
         [WirePath("changeType")]
         public WhatIfChangeType ChangeType { get; }

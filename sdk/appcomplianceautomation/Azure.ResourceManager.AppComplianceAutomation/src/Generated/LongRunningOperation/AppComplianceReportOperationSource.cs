@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation
 
         AppComplianceReportResource IOperationSource<AppComplianceReportResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppComplianceReportData.DeserializeAppComplianceReportData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppComplianceReportData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppComplianceAutomationContext.Default);
             return new AppComplianceReportResource(_client, data);
         }
 
         async ValueTask<AppComplianceReportResource> IOperationSource<AppComplianceReportResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppComplianceReportData.DeserializeAppComplianceReportData(document.RootElement);
-            return new AppComplianceReportResource(_client, data);
+            var data = ModelReaderWriter.Read<AppComplianceReportData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppComplianceAutomationContext.Default);
+            return await Task.FromResult(new AppComplianceReportResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

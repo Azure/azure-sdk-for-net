@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         MetadataEntityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetadataEntityListResult.DeserializeMetadataEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         MetadataEntityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetadataEntityListResult.DeserializeMetadataEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthMetadataEntityData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         ResourceHealthMetadataEntityData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = ResourceHealthMetadataEntityData.DeserializeResourceHealthMetadataEntityData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         MetadataEntityListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MetadataEntityListResult.DeserializeMetadataEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 case 200:
                     {
                         MetadataEntityListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MetadataEntityListResult.DeserializeMetadataEntityListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

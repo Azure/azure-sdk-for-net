@@ -71,6 +71,11 @@ namespace Azure.ResourceManager.Storage
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(Metrics))
+            {
+                writer.WritePropertyName("metrics"u8);
+                writer.WriteObjectValue(Metrics, options);
+            }
             writer.WriteEndObject();
         }
 
@@ -103,6 +108,7 @@ namespace Azure.ResourceManager.Storage
             string sourceAccount = default;
             string destinationAccount = default;
             IList<ObjectReplicationPolicyRule> rules = default;
+            ObjectReplicationPolicyPropertiesMetrics metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,6 +184,15 @@ namespace Azure.ResourceManager.Storage
                             rules = array;
                             continue;
                         }
+                        if (property0.NameEquals("metrics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            metrics = ObjectReplicationPolicyPropertiesMetrics.DeserializeObjectReplicationPolicyPropertiesMetrics(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -197,6 +212,7 @@ namespace Azure.ResourceManager.Storage
                 sourceAccount,
                 destinationAccount,
                 rules ?? new ChangeTrackingList<ObjectReplicationPolicyRule>(),
+                metrics,
                 serializedAdditionalRawData);
         }
 
@@ -374,6 +390,26 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsMetricsEnabled", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    metrics: ");
+                builder.AppendLine("{");
+                builder.AppendLine("      metrics: {");
+                builder.Append("        enabled: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("      }");
+                builder.AppendLine("    }");
+            }
+            else
+            {
+                if (Optional.IsDefined(Metrics))
+                {
+                    builder.Append("    metrics: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, Metrics, options, 4, false, "    metrics: ");
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -386,7 +422,7 @@ namespace Azure.ResourceManager.Storage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -402,7 +438,7 @@ namespace Azure.ResourceManager.Storage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeObjectReplicationPolicyData(document.RootElement, options);
                     }
                 default:

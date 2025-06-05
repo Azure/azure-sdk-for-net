@@ -68,6 +68,8 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="systemData"> The systemData. </param>
         /// <param name="backupId"> UUID v4 used to identify the Backup. </param>
         /// <param name="createdOn"> The creation date of the backup. </param>
+        /// <param name="snapshotCreationOn"> The snapshot creation date of the backup. </param>
+        /// <param name="completionOn"> The completion date of the backup. </param>
         /// <param name="provisioningState"> Azure lifecycle management. </param>
         /// <param name="size"> Size of backup in bytes. </param>
         /// <param name="label"> Label for backup. </param>
@@ -79,10 +81,12 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="backupPolicyArmResourceId"> ResourceId used to identify the backup policy. </param>
         /// <param name="isLargeVolume"> Specifies if the backup is for a large volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal NetAppBackupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string backupId, DateTimeOffset? createdOn, DateTimeOffset? snapshotCreationOn, DateTimeOffset? completionOn, string provisioningState, long? size, string label, NetAppBackupType? backupType, string failureReason, ResourceIdentifier volumeResourceId, bool? useExistingSnapshot, string snapshotName, ResourceIdentifier backupPolicyArmResourceId, bool? isLargeVolume, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             BackupId = backupId;
             CreatedOn = createdOn;
+            SnapshotCreationOn = snapshotCreationOn;
+            CompletionOn = completionOn;
             ProvisioningState = provisioningState;
             Size = size;
             Label = label;
@@ -105,6 +109,10 @@ namespace Azure.ResourceManager.NetApp
         public string BackupId { get; }
         /// <summary> The creation date of the backup. </summary>
         public DateTimeOffset? CreatedOn { get; }
+        /// <summary> The snapshot creation date of the backup. </summary>
+        public DateTimeOffset? SnapshotCreationOn { get; }
+        /// <summary> The completion date of the backup. </summary>
+        public DateTimeOffset? CompletionOn { get; }
         /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
         /// <summary> Size of backup in bytes. </summary>

@@ -1,6 +1,6 @@
 # Release History
 
-## 4.29.0-beta.1 (Unreleased)
+## 5.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 5.0.0-beta.1 (2025-06-04)
+
+### Features Added
+
+- Added a dependency on the `Azure.Messaging.EventGrid.SystemEvents` package.
+The system events are now referenced via type-forwarding.
+
+### Breaking Changes
+
+- Various system events have been updated to reflect the actual service behavior.
+There are no binary breaks or compilation breaks, but there are behavior breaking changes. For instance,
+some properties that were previously incorrectly marked as optional, have been marked as required.
+
+## 4.31.0 (2025-05-19)
+
+### Features Added
+
+- Added new communication events.
+- Added new API management events.
+- Add `EdgeSolutionVersionPublishedEventData` Edge event.
+
+## 4.30.0 (2025-02-14)
+
+### Features Added
+
+- Added `MessageId`, `MessageType`, and `Reaction` properties to the `AcsMessageReceivedEventData` event.
+- Added the `Animated` property to `AcsMessageMediaContent` event.
+
+## 4.29.0 (2025-01-21)
+
+### Features Added
+
+- Added `RecipientMailServerHostName` property to `AcsEmailDeliveryReportStatusDetails`.
+- Added `InternetMessageId` property to `AcsEmailDeliveryReportReceivedEventData` event.
+- Added `SegmentCount` property to `AcsSmsReceivedEventData` event.
 
 ## 4.28.0 (2024-11-18)
 

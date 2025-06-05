@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.TrustedSigning
 
         TrustedSigningCertificateProfileResource IOperationSource<TrustedSigningCertificateProfileResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(document.RootElement);
+            var data = ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
             return new TrustedSigningCertificateProfileResource(_client, data);
         }
 
         async ValueTask<TrustedSigningCertificateProfileResource> IOperationSource<TrustedSigningCertificateProfileResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = TrustedSigningCertificateProfileData.DeserializeTrustedSigningCertificateProfileData(document.RootElement);
-            return new TrustedSigningCertificateProfileResource(_client, data);
+            var data = ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
+            return await Task.FromResult(new TrustedSigningCertificateProfileResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

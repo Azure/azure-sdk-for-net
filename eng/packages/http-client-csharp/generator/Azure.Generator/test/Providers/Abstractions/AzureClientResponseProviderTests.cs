@@ -3,10 +3,10 @@
 
 using Azure.Generator.Tests.Common;
 using Azure.Generator.Tests.TestHelpers;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
 using System.Linq;
 using NUnit.Framework;
 using Azure.Generator.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 
 namespace Azure.Generator.Tests.Providers.Abstractions
 {
@@ -39,7 +39,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
         {
             MockHelpers.LoadMockPlugin();
             var pipelineExtensions =
-                AzureClientPlugin.Instance.OutputLibrary.TypeProviders.FirstOrDefault(t => t.Name == "ClientPipelineExtensions");
+                AzureClientGenerator.Instance.OutputLibrary.TypeProviders.FirstOrDefault(t => t.Name == "ClientPipelineExtensions");
             Assert.NotNull(pipelineExtensions);
             var method = pipelineExtensions!.Methods.FirstOrDefault(x => x.Signature.Name == "ProcessMessage");
             Assert.NotNull(method);
@@ -49,9 +49,9 @@ namespace Azure.Generator.Tests.Providers.Abstractions
 
         private static ClientProvider CreateMockClientProvider()
         {
-            var client = InputFactory.Client("TestClient", [InputFactory.Operation("foo")]);
+            var client = InputFactory.Client("TestClient", methods: [InputFactory.BasicServiceMethod("foo", InputFactory.Operation("foo"))]);
             MockHelpers.LoadMockPlugin(clientResponseApi: AzureClientResponseProvider.Instance);
-            var clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(client);
+            var clientProvider = AzureClientGenerator.Instance.TypeFactory.CreateClient(client)!;
             return clientProvider;
         }
     }

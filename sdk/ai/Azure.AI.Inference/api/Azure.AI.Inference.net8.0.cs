@@ -1,5 +1,10 @@
 namespace Azure.AI.Inference
 {
+    public static partial class AIInferenceExtensions
+    {
+        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
+        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this System.ClientModel.Primitives.ClientConnectionProvider provider) { throw null; }
+    }
     public static partial class AIInferenceModelFactory
     {
         public static Azure.AI.Inference.ChatChoice ChatChoice(int index = 0, Azure.AI.Inference.CompletionsFinishReason? finishReason = default(Azure.AI.Inference.CompletionsFinishReason?), Azure.AI.Inference.ChatResponseMessage message = null) { throw null; }
@@ -7,6 +12,7 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ChatCompletionsToolCall ChatCompletionsToolCall(string id = null, Azure.AI.Inference.ChatCompletionsToolCallType type = default(Azure.AI.Inference.ChatCompletionsToolCallType), Azure.AI.Inference.FunctionCall function = null) { throw null; }
         public static Azure.AI.Inference.ChatCompletionsToolDefinition ChatCompletionsToolDefinition(Azure.AI.Inference.ChatCompletionsToolDefinitionType type = default(Azure.AI.Inference.ChatCompletionsToolDefinitionType), Azure.AI.Inference.FunctionDefinition function = null) { throw null; }
         public static Azure.AI.Inference.ChatMessageTextContentItem ChatMessageTextContentItem(string text = null) { throw null; }
+        public static Azure.AI.Inference.ChatRequestDeveloperMessage ChatRequestDeveloperMessage(string content = null) { throw null; }
         public static Azure.AI.Inference.ChatRequestSystemMessage ChatRequestSystemMessage(string content = null) { throw null; }
         public static Azure.AI.Inference.ChatRequestToolMessage ChatRequestToolMessage(string content = null, string toolCallId = null) { throw null; }
         public static Azure.AI.Inference.ChatResponseMessage ChatResponseMessage(Azure.AI.Inference.ChatRole role = default(Azure.AI.Inference.ChatRole), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.ChatCompletionsToolCall> toolCalls = null) { throw null; }
@@ -14,11 +20,30 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.EmbeddingItem EmbeddingItem(System.BinaryData embedding = null, int index = 0) { throw null; }
         public static Azure.AI.Inference.EmbeddingsResult EmbeddingsResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.EmbeddingItem> data = null, Azure.AI.Inference.EmbeddingsUsage usage = null, string model = null) { throw null; }
         public static Azure.AI.Inference.EmbeddingsUsage EmbeddingsUsage(int promptTokens = 0, int totalTokens = 0) { throw null; }
+        public static Azure.AI.Inference.ImageEmbeddingInput ImageEmbeddingInput(string image = null, string text = null) { throw null; }
         public static Azure.AI.Inference.ModelInfo ModelInfo(string modelName = null, Azure.AI.Inference.ModelType modelType = default(Azure.AI.Inference.ModelType), string modelProviderName = null) { throw null; }
         public static Azure.AI.Inference.StreamingChatChoiceUpdate StreamingChatChoiceUpdate(int index = 0, Azure.AI.Inference.CompletionsFinishReason? finishReason = default(Azure.AI.Inference.CompletionsFinishReason?), Azure.AI.Inference.StreamingChatResponseMessageUpdate delta = null) { throw null; }
-        public static Azure.AI.Inference.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), string model = null, Azure.AI.Inference.CompletionsUsage usage = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatChoiceUpdate> choices = null) { throw null; }
+        public static Azure.AI.Inference.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), string model = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatChoiceUpdate> choices = null, Azure.AI.Inference.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.Inference.StreamingChatResponseMessageUpdate StreamingChatResponseMessageUpdate(Azure.AI.Inference.ChatRole? role = default(Azure.AI.Inference.ChatRole?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatResponseToolCallUpdate> toolCalls = null) { throw null; }
         public static Azure.AI.Inference.StreamingChatResponseToolCallUpdate StreamingChatResponseToolCallUpdate(string id = null, Azure.AI.Inference.FunctionCall function = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AudioContentFormat : System.IEquatable<Azure.AI.Inference.AudioContentFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AudioContentFormat(string value) { throw null; }
+        public static Azure.AI.Inference.AudioContentFormat Mp3 { get { throw null; } }
+        public static Azure.AI.Inference.AudioContentFormat Wav { get { throw null; } }
+        public bool Equals(Azure.AI.Inference.AudioContentFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Inference.AudioContentFormat left, Azure.AI.Inference.AudioContentFormat right) { throw null; }
+        public static implicit operator Azure.AI.Inference.AudioContentFormat (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Inference.AudioContentFormat left, Azure.AI.Inference.AudioContentFormat right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AzureAIInferenceClientOptions : Azure.Core.ClientOptions
     {
@@ -27,6 +52,12 @@ namespace Azure.AI.Inference
         {
             V2024_05_01_Preview = 1,
         }
+    }
+    public partial class AzureAIInferenceContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAIInferenceContext() { }
+        public static Azure.AI.Inference.AzureAIInferenceContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
     public partial class ChatChoice : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatChoice>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatChoice>
     {
@@ -144,6 +175,9 @@ namespace Azure.AI.Inference
     public abstract partial class ChatCompletionsResponseFormat : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormat>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>
     {
         protected ChatCompletionsResponseFormat() { }
+        public static Azure.AI.Inference.ChatCompletionsResponseFormat CreateJsonFormat() { throw null; }
+        public static Azure.AI.Inference.ChatCompletionsResponseFormat CreateJsonFormat(string jsonSchemaFormatName, System.Collections.Generic.IDictionary<string, System.BinaryData> jsonSchema, string jsonSchemaFormatDescription = null, bool? jsonSchemaIsStrict = default(bool?)) { throw null; }
+        public static Azure.AI.Inference.ChatCompletionsResponseFormat CreateTextFormat() { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Inference.ChatCompletionsResponseFormat System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -151,15 +185,15 @@ namespace Azure.AI.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormat>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ChatCompletionsResponseFormatJSON : Azure.AI.Inference.ChatCompletionsResponseFormat, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>
+    public partial class ChatCompletionsResponseFormatJsonObject : Azure.AI.Inference.ChatCompletionsResponseFormat, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>
     {
-        public ChatCompletionsResponseFormatJSON() { }
+        public ChatCompletionsResponseFormatJsonObject() { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Inference.ChatCompletionsResponseFormatJSON System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Inference.ChatCompletionsResponseFormatJSON System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJSON>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatJsonObject>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatCompletionsResponseFormatText : Azure.AI.Inference.ChatCompletionsResponseFormat, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatCompletionsResponseFormatText>
     {
@@ -265,6 +299,18 @@ namespace Azure.AI.Inference
         public static bool operator !=(Azure.AI.Inference.ChatCompletionsToolDefinitionType left, Azure.AI.Inference.ChatCompletionsToolDefinitionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ChatMessageAudioContentItem : Azure.AI.Inference.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageAudioContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>
+    {
+        public ChatMessageAudioContentItem(System.BinaryData bytes, Azure.AI.Inference.AudioContentFormat audioFormat) { }
+        public ChatMessageAudioContentItem(System.IO.Stream stream, Azure.AI.Inference.AudioContentFormat audioFormat) { }
+        public ChatMessageAudioContentItem(string audioFilePath, Azure.AI.Inference.AudioContentFormat audioFormat) { }
+        public ChatMessageAudioContentItem(System.Uri audioUri) { }
+        Azure.AI.Inference.ChatMessageAudioContentItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatMessageAudioContentItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class ChatMessageContentItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageContentItem>
     {
         protected ChatMessageContentItem() { }
@@ -307,6 +353,19 @@ namespace Azure.AI.Inference
         public static bool operator !=(Azure.AI.Inference.ChatMessageImageDetailLevel left, Azure.AI.Inference.ChatMessageImageDetailLevel right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ChatMessageInputAudio : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageInputAudio>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>
+    {
+        public ChatMessageInputAudio(string data, Azure.AI.Inference.AudioContentFormat format) { }
+        public string Data { get { throw null; } }
+        public Azure.AI.Inference.AudioContentFormat Format { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static Azure.AI.Inference.ChatMessageInputAudio Load(string path, Azure.AI.Inference.AudioContentFormat format) { throw null; }
+        Azure.AI.Inference.ChatMessageInputAudio System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageInputAudio>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageInputAudio>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatMessageInputAudio System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ChatMessageTextContentItem : Azure.AI.Inference.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageTextContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageTextContentItem>
     {
         public ChatMessageTextContentItem(string text) { }
@@ -333,6 +392,17 @@ namespace Azure.AI.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestAssistantMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestAssistantMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ChatRequestDeveloperMessage : Azure.AI.Inference.ChatRequestMessage, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestDeveloperMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>
+    {
+        public ChatRequestDeveloperMessage(string content) { }
+        public string Content { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatRequestDeveloperMessage System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatRequestDeveloperMessage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestDeveloperMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class ChatRequestMessage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestMessage>
     {
         protected ChatRequestMessage() { }
@@ -356,8 +426,9 @@ namespace Azure.AI.Inference
     }
     public partial class ChatRequestToolMessage : Azure.AI.Inference.ChatRequestMessage, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestToolMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatRequestToolMessage>
     {
+        public ChatRequestToolMessage(string toolCallId) { }
         public ChatRequestToolMessage(string content, string toolCallId) { }
-        public string Content { get { throw null; } }
+        public string Content { get { throw null; } set { } }
         public string ToolCallId { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Inference.ChatRequestToolMessage System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatRequestToolMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -400,6 +471,7 @@ namespace Azure.AI.Inference
         private readonly int _dummyPrimitive;
         public ChatRole(string value) { throw null; }
         public static Azure.AI.Inference.ChatRole Assistant { get { throw null; } }
+        public static Azure.AI.Inference.ChatRole Developer { get { throw null; } }
         public static Azure.AI.Inference.ChatRole System { get { throw null; } }
         public static Azure.AI.Inference.ChatRole Tool { get { throw null; } }
         public static Azure.AI.Inference.ChatRole User { get { throw null; } }
@@ -558,25 +630,6 @@ namespace Azure.AI.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.EmbeddingsUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.EmbeddingsUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ExtraParameters : System.IEquatable<Azure.AI.Inference.ExtraParameters>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ExtraParameters(string value) { throw null; }
-        public static Azure.AI.Inference.ExtraParameters Drop { get { throw null; } }
-        public static Azure.AI.Inference.ExtraParameters Error { get { throw null; } }
-        public static Azure.AI.Inference.ExtraParameters PassThrough { get { throw null; } }
-        public bool Equals(Azure.AI.Inference.ExtraParameters other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Inference.ExtraParameters left, Azure.AI.Inference.ExtraParameters right) { throw null; }
-        public static implicit operator Azure.AI.Inference.ExtraParameters (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Inference.ExtraParameters left, Azure.AI.Inference.ExtraParameters right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class FunctionCall : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.FunctionCall>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.FunctionCall>
     {
         public FunctionCall(string name, string arguments) { }
@@ -606,6 +659,50 @@ namespace Azure.AI.Inference
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.FunctionDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.FunctionDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ImageEmbeddingInput : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ImageEmbeddingInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingInput>
+    {
+        public ImageEmbeddingInput(string image) { }
+        public string Image { get { throw null; } }
+        public string Text { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static Azure.AI.Inference.ImageEmbeddingInput Load(string imageFilePath, string imageFormat, string text = null) { throw null; }
+        Azure.AI.Inference.ImageEmbeddingInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ImageEmbeddingInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ImageEmbeddingInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ImageEmbeddingInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImageEmbeddingsClient
+    {
+        protected ImageEmbeddingsClient() { }
+        public ImageEmbeddingsClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public ImageEmbeddingsClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Inference.AzureAIInferenceClientOptions options) { }
+        public ImageEmbeddingsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public ImageEmbeddingsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Inference.AzureAIInferenceClientOptions options) { }
+        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
+        public virtual Azure.Response<Azure.AI.Inference.EmbeddingsResult> Embed(Azure.AI.Inference.ImageEmbeddingsOptions imageEmbeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.EmbeddingsResult>> EmbedAsync(Azure.AI.Inference.ImageEmbeddingsOptions imageEmbeddingsOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response GetModelInfo(Azure.RequestContext context) { throw null; }
+        public virtual Azure.Response<Azure.AI.Inference.ModelInfo> GetModelInfo(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> GetModelInfoAsync(Azure.RequestContext context) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Inference.ModelInfo>> GetModelInfoAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class ImageEmbeddingsOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ImageEmbeddingsOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingsOptions>
+    {
+        public ImageEmbeddingsOptions(System.Collections.Generic.IEnumerable<Azure.AI.Inference.ImageEmbeddingInput> input) { }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
+        public int? Dimensions { get { throw null; } set { } }
+        public Azure.AI.Inference.EmbeddingEncodingFormat? EncodingFormat { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.AI.Inference.ImageEmbeddingInput> Input { get { throw null; } }
+        public Azure.AI.Inference.EmbeddingInputType? InputType { get { throw null; } set { } }
+        public string Model { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ImageEmbeddingsOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ImageEmbeddingsOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ImageEmbeddingsOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ImageEmbeddingsOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingsOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingsOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ImageEmbeddingsOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ModelInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ModelInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ModelInfo>
     {
         internal ModelInfo() { }
@@ -626,7 +723,7 @@ namespace Azure.AI.Inference
         private readonly int _dummyPrimitive;
         public ModelType(string value) { throw null; }
         public static Azure.AI.Inference.ModelType AudioGeneration { get { throw null; } }
-        public static Azure.AI.Inference.ModelType Chat { get { throw null; } }
+        public static Azure.AI.Inference.ModelType ChatCompletion { get { throw null; } }
         public static Azure.AI.Inference.ModelType Embeddings { get { throw null; } }
         public static Azure.AI.Inference.ModelType ImageEmbeddings { get { throw null; } }
         public static Azure.AI.Inference.ModelType ImageGeneration { get { throw null; } }
@@ -727,9 +824,15 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ChatCompletionsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ChatCompletionsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ChatCompletionsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.EmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.EmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.EmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ImageEmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ImageEmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Inference.ImageEmbeddingsClient, Azure.AI.Inference.AzureAIInferenceClientOptions> AddImageEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }

@@ -12,8 +12,7 @@ using Azure.Core;
 namespace Azure.Security.ConfidentialLedger
 {
     /// <summary>
-    /// Tracks the status of a call to <see cref="ConfidentialLedgerClient.PostLedgerEntry"/> and <see cref="ConfidentialLedgerClient.PostLedgerEntryAsync"/>
-    /// until completion.
+    /// Tracks the status of a call to and until completion.
     /// </summary>
     internal class PostLedgerEntryOperation : Operation, IOperation
     {
@@ -27,8 +26,7 @@ namespace Azure.Security.ConfidentialLedger
         /// Initializes a previously run operation with the given <paramref name="transactionId"/>.
         /// </summary>
         /// <param name="client"> Tje <see cref="ConfidentialLedgerClient"/>. </param>
-        /// <param name="transactionId"> The transaction id from a previous call to
-        /// <see cref="ConfidentialLedgerClient.PostLedgerEntry"/>.</param>
+        /// <param name="transactionId"> The transaction id from a previous call to. </param>
         public PostLedgerEntryOperation(ConfidentialLedgerClient client, string transactionId)
         {
             _client = client;
@@ -78,6 +76,10 @@ namespace Azure.Security.ConfidentialLedger
             }
             return OperationState.Pending(statusResponse);
         }
+
+        // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
+        RehydrationToken IOperation.GetRehydrationToken() =>
+            throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
 
         /// <summary>
         /// The transactionId of the posted ledger entry.

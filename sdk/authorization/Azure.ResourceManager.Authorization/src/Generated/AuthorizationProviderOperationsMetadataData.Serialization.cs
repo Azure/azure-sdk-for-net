@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.Authorization
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAuthorizationContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Authorization
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAuthorizationProviderOperationsMetadataData(document.RootElement, options);
                     }
                 default:

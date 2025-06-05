@@ -28,10 +28,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock <BlobStorageResourceContainer> mock = new Mock<BlobStorageResourceContainer>();
             mock.Setup(r => r.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
             mock.Setup(r => r.ProviderId).Returns("blob");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             mock.Setup(r => r.GetStorageResourceReference(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns<string,string>((path,resourceId) =>
                 {
@@ -45,10 +45,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<BlockBlobStorageResource> mock = new Mock<BlockBlobStorageResource>();
             mock.Setup(r => r.Uri).Returns(new Uri($"https://account.blob.core.windows.net/container/{blobName}"));
             mock.Setup(r => r.ResourceId).Returns("BlockBlob");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 
@@ -57,10 +57,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<PageBlobStorageResource> mock = new Mock<PageBlobStorageResource>();
             mock.Setup(r => r.Uri).Returns(new Uri($"https://account.blob.core.windows.net/container/{blobName}"));
             mock.Setup(r => r.ResourceId).Returns("PageBlob");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 
@@ -69,10 +69,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Mock<AppendBlobStorageResource> mock = new Mock<AppendBlobStorageResource>();
             mock.Setup(r => r.Uri).Returns(new Uri($"https://account.blob.core.windows.net/container/{blobName}"));
             mock.Setup(r => r.ResourceId).Returns("AppendBlob");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 
@@ -114,7 +114,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 new TransferOperation(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
-                ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
@@ -170,7 +169,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 new TransferOperation(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
-                ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,

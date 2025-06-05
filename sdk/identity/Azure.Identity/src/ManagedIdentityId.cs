@@ -45,6 +45,19 @@ namespace Azure.Identity
         /// <param name="id">The object ID of the user-assigned managed identity.</param>
         public static ManagedIdentityId FromUserAssignedObjectId(string id) =>
             new ManagedIdentityId(ManagedIdentityIdType.ObjectId, id);
+
+        /// <summary>
+        /// Returns the string representation of the <see cref="ManagedIdentityId"/>.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return _idType switch
+            {
+                ManagedIdentityIdType.SystemAssigned => "SystemAssigned",
+                _ => $"{_idType} {_userAssignedId}",
+            };
+        }
     }
 
     internal enum ManagedIdentityIdType

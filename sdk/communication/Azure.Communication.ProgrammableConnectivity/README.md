@@ -88,5 +88,3 @@ For more information about Microsoft Azure SDK, see [this website](https://azure
 ## Contributing
 
 APC is currently not accepting/expecting contributions for this codebase. Suggestions/issues are welcome.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%communication%2FAzure.Communication.ProgrammableConnectivity%2FREADME.png)

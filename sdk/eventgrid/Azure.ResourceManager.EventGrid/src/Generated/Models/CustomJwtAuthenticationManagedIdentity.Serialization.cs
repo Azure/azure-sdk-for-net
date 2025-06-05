@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventGrid.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 return null;
             }
             CustomJwtAuthenticationManagedIdentityType type = default;
-            string userAssignedIdentity = default;
+            ResourceIdentifier userAssignedIdentity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,11 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (property.NameEquals("userAssignedIdentity"u8))
                 {
-                    userAssignedIdentity = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    userAssignedIdentity = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -138,15 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 if (Optional.IsDefined(UserAssignedIdentity))
                 {
                     builder.Append("  userAssignedIdentity: ");
-                    if (UserAssignedIdentity.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserAssignedIdentity}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserAssignedIdentity}'");
-                    }
+                    builder.AppendLine($"'{UserAssignedIdentity.ToString()}'");
                 }
             }
 
@@ -161,7 +157,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerEventGridContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -177,7 +173,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCustomJwtAuthenticationManagedIdentity(document.RootElement, options);
                     }
                 default:

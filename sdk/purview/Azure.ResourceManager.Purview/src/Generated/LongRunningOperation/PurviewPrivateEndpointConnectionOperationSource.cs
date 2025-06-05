@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Purview
 
         PurviewPrivateEndpointConnectionResource IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement);
+            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
             return new PurviewPrivateEndpointConnectionResource(_client, data);
         }
 
         async ValueTask<PurviewPrivateEndpointConnectionResource> IOperationSource<PurviewPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = PurviewPrivateEndpointConnectionData.DeserializePurviewPrivateEndpointConnectionData(document.RootElement);
-            return new PurviewPrivateEndpointConnectionResource(_client, data);
+            var data = ModelReaderWriter.Read<PurviewPrivateEndpointConnectionData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerPurviewContext.Default);
+            return await Task.FromResult(new PurviewPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

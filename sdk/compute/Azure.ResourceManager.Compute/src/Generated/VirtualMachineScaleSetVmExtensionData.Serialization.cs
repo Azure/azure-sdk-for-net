@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Compute
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Settings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Settings))
+                using (JsonDocument document = JsonDocument.Parse(Settings, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Compute
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(ProtectedSettings);
 #else
-                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings))
+                using (JsonDocument document = JsonDocument.Parse(ProtectedSettings, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Compute
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support writing '{options.Format}' format.");
             }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Compute
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement, options);
                     }
                 default:

@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("disableOutboundSnat"u8);
                 writer.WriteBooleanValue(DisableOutboundSnat.Value);
             }
+            if (Optional.IsDefined(EnableConnectionTracking))
+            {
+                writer.WritePropertyName("enableConnectionTracking"u8);
+                writer.WriteBooleanValue(EnableConnectionTracking.Value);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -105,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.Network.Models
             bool? enableFloatingIP = default;
             bool? enableTcpReset = default;
             bool? disableOutboundSnat = default;
+            bool? enableConnectionTracking = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -255,6 +261,15 @@ namespace Azure.ResourceManager.Network.Models
                     disableOutboundSnat = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("enableConnectionTracking"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableConnectionTracking = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("provisioningState"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -280,6 +295,7 @@ namespace Azure.ResourceManager.Network.Models
                 enableFloatingIP,
                 enableTcpReset,
                 disableOutboundSnat,
+                enableConnectionTracking,
                 provisioningState,
                 additionalProperties);
         }
@@ -291,7 +307,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LoadBalancingRuleProperties)} does not support writing '{options.Format}' format.");
             }
@@ -305,7 +321,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLoadBalancingRuleProperties(document.RootElement, options);
                     }
                 default:

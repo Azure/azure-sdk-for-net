@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedAlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotSecurityAggregatedAlertList.DeserializeIotSecurityAggregatedAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedAlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotSecurityAggregatedAlertList.DeserializeIotSecurityAggregatedAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedAlertData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedAlertData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotSecurityAggregatedAlertData.DeserializeIotSecurityAggregatedAlertData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedAlertList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotSecurityAggregatedAlertList.DeserializeIotSecurityAggregatedAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -413,7 +413,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case 200:
                     {
                         IotSecurityAggregatedAlertList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotSecurityAggregatedAlertList.DeserializeIotSecurityAggregatedAlertList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

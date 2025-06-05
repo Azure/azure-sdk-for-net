@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMySqlContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MySqlFlexibleServerFullBackupStoreDetails)} does not support writing '{options.Format}' format.");
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMySqlFlexibleServerFullBackupStoreDetails(document.RootElement, options);
                     }
                 default:

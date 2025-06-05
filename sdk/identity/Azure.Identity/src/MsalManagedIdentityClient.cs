@@ -15,6 +15,7 @@ namespace Azure.Identity
     internal class MsalManagedIdentityClient
     {
         private readonly AsyncLockWithValue<IManagedIdentityApplication> _clientAsyncLock;
+        private readonly AsyncLockWithValue<IManagedIdentityApplication> _clientCaeAsyncLock;
         private bool _isForceRefreshEnabled { get; }
 
         internal bool IsSupportLoggingEnabled { get; }
@@ -22,6 +23,7 @@ namespace Azure.Identity
         internal bool DisableInstanceDiscovery { get; }
         internal CredentialPipeline Pipeline { get; }
         internal Uri AuthorityHost { get; }
+        protected string[] cp1Capabilities = ["CP1"];
 
         protected MsalManagedIdentityClient()
         { }
@@ -49,34 +51,45 @@ namespace Azure.Identity
 
             Pipeline = clientOptions.Pipeline;
             _clientAsyncLock = new AsyncLockWithValue<IManagedIdentityApplication>();
+            _clientCaeAsyncLock = new AsyncLockWithValue<IManagedIdentityApplication>();
             _isForceRefreshEnabled = clientOptions.IsForceRefreshEnabled;
         }
 
-        protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, CancellationToken cancellationToken)
+        protected ValueTask<IManagedIdentityApplication> CreateClientAsync(bool async, bool enableCae, CancellationToken cancellationToken)
         {
-            return CreateClientCoreAsync(async, cancellationToken);
+            return CreateClientCoreAsync(async, enableCae, cancellationToken);
         }
 
-        protected virtual ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, CancellationToken cancellationToken)
+        protected virtual ValueTask<IManagedIdentityApplication> CreateClientCoreAsync(bool async, bool enableCae, CancellationToken cancellationToken)
         {
+            string[] clientCapabilities =
+                enableCae ? cp1Capabilities : Array.Empty<string>();
+
             ManagedIdentityApplicationBuilder miAppBuilder = ManagedIdentityApplicationBuilder
                 .Create(ManagedIdentityId)
-                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline), false)
+                .WithHttpClientFactory(new HttpPipelineClientFactory(Pipeline.HttpPipeline, Pipeline.ClientOptions), false)
                 .WithLogging(AzureIdentityEventSource.Singleton, enablePiiLogging: IsSupportLoggingEnabled);
+
+            if (clientCapabilities.Length > 0)
+            {
+                miAppBuilder.WithClientCapabilities(clientCapabilities);
+            }
 
             return new ValueTask<IManagedIdentityApplication>(miAppBuilder.Build());
         }
 
-        protected async ValueTask<IManagedIdentityApplication> GetClientAsync(bool async, CancellationToken cancellationToken)
+        protected async ValueTask<IManagedIdentityApplication> GetClientAsync(bool async, bool enableCae, CancellationToken cancellationToken)
         {
-            using var asyncLock = await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
+            using var asyncLock = enableCae ?
+                await _clientCaeAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false) :
+                await _clientAsyncLock.GetLockOrValueAsync(async, cancellationToken).ConfigureAwait(false);
 
             if (asyncLock.HasValue)
             {
                 return asyncLock.Value;
             }
 
-            var client = await CreateClientAsync(async, cancellationToken).ConfigureAwait(false);
+            var client = await CreateClientAsync(async, enableCae, cancellationToken).ConfigureAwait(false);
             asyncLock.SetValue(client);
             return client;
         }
@@ -89,9 +102,14 @@ namespace Azure.Identity
 
         public virtual async ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, CancellationToken cancellationToken)
         {
-            IManagedIdentityApplication client = await GetClientAsync(async, cancellationToken).ConfigureAwait(false);
+            IManagedIdentityApplication client = await GetClientAsync(async, requestContext.IsCaeEnabled, cancellationToken).ConfigureAwait(false);
 
             var builder = client.AcquireTokenForManagedIdentity(requestContext.Scopes.FirstOrDefault());
+
+            if (!string.IsNullOrEmpty(requestContext.Claims))
+            {
+                builder.WithClaims(requestContext.Claims);
+            }
 
             if (_isForceRefreshEnabled)
             {

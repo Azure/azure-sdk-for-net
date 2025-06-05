@@ -34,21 +34,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MapsGeofenceGeometry)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(DeviceId))
-            {
-                writer.WritePropertyName("deviceId"u8);
-                writer.WriteStringValue(DeviceId);
-            }
+            writer.WritePropertyName("deviceId"u8);
+            writer.WriteStringValue(DeviceId);
             if (Optional.IsDefined(Distance))
             {
                 writer.WritePropertyName("distance"u8);
                 writer.WriteNumberValue(Distance.Value);
             }
-            if (Optional.IsDefined(GeometryId))
-            {
-                writer.WritePropertyName("geometryId"u8);
-                writer.WriteStringValue(GeometryId);
-            }
+            writer.WritePropertyName("geometryId"u8);
+            writer.WriteStringValue(GeometryId);
             if (Optional.IsDefined(NearestLat))
             {
                 writer.WritePropertyName("nearestLat"u8);
@@ -72,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -176,7 +170,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MapsGeofenceGeometry)} does not support writing '{options.Format}' format.");
             }
@@ -190,7 +184,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsGeofenceGeometry(document.RootElement, options);
                     }
                 default:
@@ -204,7 +198,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MapsGeofenceGeometry FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMapsGeofenceGeometry(document.RootElement);
         }
 

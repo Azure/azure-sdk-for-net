@@ -87,4 +87,4 @@ module storage './Azure.ResourceManager.Kusto/tests/Prerequisites/Data/storage.b
 
 output STORAGE_ACCOUNT_ID string = storage.outputs.STORAGE_ACCOUNT_ID
 output STORAGE_ACCOUNT_SAS_TOKEN string = storage.outputs.STORAGE_ACCOUNT_SAS_TOKEN
-output SCRIPT_URI string = storage.outputs.SCRIPT_URI
+output KUSTO_TENANT_ID string =  tenant().tenantId

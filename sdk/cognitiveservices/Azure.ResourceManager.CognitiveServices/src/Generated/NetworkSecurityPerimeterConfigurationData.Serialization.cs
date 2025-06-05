@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.CognitiveServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.CognitiveServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeNetworkSecurityPerimeterConfigurationData(document.RootElement, options);
                     }
                 default:

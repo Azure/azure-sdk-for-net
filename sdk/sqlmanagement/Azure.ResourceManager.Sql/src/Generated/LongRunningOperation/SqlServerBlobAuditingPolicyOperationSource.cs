@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Sql
 
         SqlServerBlobAuditingPolicyResource IOperationSource<SqlServerBlobAuditingPolicyResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(document.RootElement);
+            var data = ModelReaderWriter.Read<SqlServerBlobAuditingPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
             return new SqlServerBlobAuditingPolicyResource(_client, data);
         }
 
         async ValueTask<SqlServerBlobAuditingPolicyResource> IOperationSource<SqlServerBlobAuditingPolicyResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SqlServerBlobAuditingPolicyData.DeserializeSqlServerBlobAuditingPolicyData(document.RootElement);
-            return new SqlServerBlobAuditingPolicyResource(_client, data);
+            var data = ModelReaderWriter.Read<SqlServerBlobAuditingPolicyData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSqlContext.Default);
+            return await Task.FromResult(new SqlServerBlobAuditingPolicyResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

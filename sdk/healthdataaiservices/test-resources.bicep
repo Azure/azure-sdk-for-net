@@ -15,8 +15,8 @@ param baseName string
 param location string = resourceGroup().location
 
 @description('The location of the resource. By default, this is the same as the resource group.')
-param deidLocation string = 'eastus2euap'
-param deidLocationShort string = 'eup'
+param deidLocation string = 'eastus2'
+param deidLocationShort string = 'eus2'
 
 param deploymentTime string = utcNow('u')
 
@@ -26,7 +26,7 @@ var storageBlobDataContributor = 'ba92f5b4-2d11-453d-a403-e96b0029c9fe'
 
 var blobStorageName = take(toLower(replace('blob-${baseName}', '-', '')), 24)
 var blobContainerName = 'container-${baseName}'
-var deidServiceName = 'deid-${baseName}-${deidLocationShort}'
+var deidServiceName = take('deid-${deidLocationShort}-${baseName}', 24)
 
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   name: blobStorageName
@@ -187,7 +187,7 @@ resource storageRoleAssignment 'Microsoft.Authorization/roleAssignments@2020-04-
   scope: storageAccount
 }
 
-resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-02-28-preview' = {
+resource testDeidService 'microsoft.healthdataaiservices/deidservices@2024-09-20' = {
   name: deidServiceName
   location: deidLocation
   identity: {

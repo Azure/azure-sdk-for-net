@@ -36,8 +36,6 @@ namespace Azure.Storage.DataMovement.Tests
 
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
-        public LocalFilesStorageResourceProvider LocalResourceProvider { get; } = new();
-
         public StartTransferUploadDirectoryTestBase(bool async, RecordedTestMode? mode = null, bool isPageBlob = false)
             : base(async, mode)
         {
@@ -144,10 +142,10 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
-            StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(sourceLocalDirectoryPath);
+            StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(sourceLocalDirectoryPath);
             StorageResourceContainer destinationResource = GetStorageResourceContainer(destinationContainer);
 
             await new TransferValidator()
@@ -227,15 +225,15 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
-            StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+            StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             TransferOperation transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
@@ -296,15 +294,15 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationMode = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
-            StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+            StorageResourceContainer sourceResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
             TransferOperation transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
@@ -345,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await InitializeDestinationDataAsync(

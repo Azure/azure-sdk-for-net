@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageTaskQueuedEventDataConverter))]
     public partial class StorageTaskQueuedEventData : IUtf8JsonSerializable, IJsonModel<StorageTaskQueuedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskQueuedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,8 +36,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(StorageTaskQueuedEventData)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("queuedDateTime"u8);
-            writer.WriteStringValue(QueuedDateTime, "O");
+            if (Optional.IsDefined(QueuedDateTime))
+            {
+                writer.WritePropertyName("queuedDateTime"u8);
+                writer.WriteStringValue(QueuedDateTime.Value, "O");
+            }
             if (Optional.IsDefined(TaskExecutionId))
             {
                 writer.WritePropertyName("taskExecutionId"u8);
@@ -49,7 +54,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -78,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            DateTimeOffset queuedDateTime = default;
+            DateTimeOffset? queuedDateTime = default;
             string taskExecutionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -86,6 +91,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 if (property.NameEquals("queuedDateTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     queuedDateTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -110,7 +119,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskQueuedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -124,7 +133,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageTaskQueuedEventData(document.RootElement, options);
                     }
                 default:
@@ -138,7 +147,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static StorageTaskQueuedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeStorageTaskQueuedEventData(document.RootElement);
         }
 
@@ -148,6 +157,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class StorageTaskQueuedEventDataConverter : JsonConverter<StorageTaskQueuedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageTaskQueuedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override StorageTaskQueuedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageTaskQueuedEventData(document.RootElement);
+            }
         }
     }
 }

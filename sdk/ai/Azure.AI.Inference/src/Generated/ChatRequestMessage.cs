@@ -13,7 +13,7 @@ namespace Azure.AI.Inference
     /// <summary>
     /// An abstract representation of a chat message as provided in a request.
     /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+    /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestDeveloperMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
     /// </summary>
     public abstract partial class ChatRequestMessage
     {

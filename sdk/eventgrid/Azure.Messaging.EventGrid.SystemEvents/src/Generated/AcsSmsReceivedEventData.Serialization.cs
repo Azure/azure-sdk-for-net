@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsSmsReceivedEventDataConverter))]
     public partial class AcsSmsReceivedEventData : IUtf8JsonSerializable, IJsonModel<AcsSmsReceivedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsSmsReceivedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,13 +37,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Message))
+            writer.WritePropertyName("message"u8);
+            writer.WriteStringValue(Message);
+            if (Optional.IsDefined(ReceivedTimestamp))
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
+                writer.WritePropertyName("receivedTimestamp"u8);
+                writer.WriteStringValue(ReceivedTimestamp.Value, "O");
             }
-            writer.WritePropertyName("receivedTimestamp"u8);
-            writer.WriteStringValue(ReceivedTimestamp, "O");
+            writer.WritePropertyName("segmentCount"u8);
+            writer.WriteNumberValue(SegmentCount);
         }
 
         AcsSmsReceivedEventData IJsonModel<AcsSmsReceivedEventData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,7 +69,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 return null;
             }
             string message = default;
-            DateTimeOffset receivedTimestamp = default;
+            DateTimeOffset? receivedTimestamp = default;
+            int segmentCount = default;
             string messageId = default;
             string @from = default;
             string to = default;
@@ -80,7 +85,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("receivedTimestamp"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     receivedTimestamp = property.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (property.NameEquals("segmentCount"u8))
+                {
+                    segmentCount = property.Value.GetInt32();
                     continue;
                 }
                 if (property.NameEquals("messageId"u8))
@@ -110,7 +124,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 to,
                 serializedAdditionalRawData,
                 message,
-                receivedTimestamp);
+                receivedTimestamp,
+                segmentCount);
         }
 
         BinaryData IPersistableModel<AcsSmsReceivedEventData>.Write(ModelReaderWriterOptions options)
@@ -120,7 +135,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsSmsReceivedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -134,7 +149,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAcsSmsReceivedEventData(document.RootElement, options);
                     }
                 default:
@@ -148,7 +163,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new AcsSmsReceivedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeAcsSmsReceivedEventData(document.RootElement);
         }
 
@@ -158,6 +173,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsSmsReceivedEventDataConverter : JsonConverter<AcsSmsReceivedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsSmsReceivedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsSmsReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsSmsReceivedEventData(document.RootElement);
+            }
         }
     }
 }

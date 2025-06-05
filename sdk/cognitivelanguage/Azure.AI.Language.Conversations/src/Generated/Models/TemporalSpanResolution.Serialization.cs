@@ -149,7 +149,7 @@ namespace Azure.AI.Language.Conversations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TemporalSpanResolution)} does not support writing '{options.Format}' format.");
             }
@@ -163,7 +163,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTemporalSpanResolution(document.RootElement, options);
                     }
                 default:
@@ -177,7 +177,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new TemporalSpanResolution FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeTemporalSpanResolution(document.RootElement);
         }
 

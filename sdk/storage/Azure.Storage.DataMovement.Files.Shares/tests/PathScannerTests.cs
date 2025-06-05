@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 extern alias BaseShares;
+extern alias DMShare;
 
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using BaseShares::Azure.Storage.Files.Shares.Models;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
+using DMShare::Azure.Storage.DataMovement.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
@@ -59,7 +61,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             List<ShareFileStorageResource> files = new();
             List<ShareDirectoryStorageResourceContainer> directories = new();
             await foreach (StorageResource storageResource
-                in new PathScanner().ScanAsync(
+                in new SharesPathScanner().ScanAsync(
                     sourceDirectory: sourceDirectory.Object,
                     destinationShare: destinationShare.Object,
                     sourceOptions: default,
@@ -132,7 +134,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             List<ShareDirectoryStorageResourceContainer> directories = new();
             ShareFileTraits traits = ShareFileTraits.Attributes | ShareFileTraits.PermissionKey;
             await foreach (StorageResource storageResource
-                in new PathScanner().ScanAsync(
+                in new SharesPathScanner().ScanAsync(
                     sourceDirectory: mockDirectory.Object,
                     destinationShare: mockDestinationShare.Object,
                     sourceOptions: default,

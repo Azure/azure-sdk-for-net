@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FleetUpdateStrategyData)} does not support writing '{options.Format}' format.");
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFleetUpdateStrategyData(document.RootElement, options);
                     }
                 default:

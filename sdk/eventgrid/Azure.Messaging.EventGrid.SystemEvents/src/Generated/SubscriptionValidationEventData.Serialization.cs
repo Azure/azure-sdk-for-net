@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(SubscriptionValidationEventDataConverter))]
     public partial class SubscriptionValidationEventData : IUtf8JsonSerializable, IJsonModel<SubscriptionValidationEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionValidationEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,16 +36,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(SubscriptionValidationEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ValidationCode))
-            {
-                writer.WritePropertyName("validationCode"u8);
-                writer.WriteStringValue(ValidationCode);
-            }
-            if (Optional.IsDefined(ValidationUrl))
-            {
-                writer.WritePropertyName("validationUrl"u8);
-                writer.WriteStringValue(ValidationUrl);
-            }
+            writer.WritePropertyName("validationCode"u8);
+            writer.WriteStringValue(ValidationCode);
+            writer.WritePropertyName("validationUrl"u8);
+            writer.WriteStringValue(ValidationUrl);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +48,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -113,7 +109,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SubscriptionValidationEventData)} does not support writing '{options.Format}' format.");
             }
@@ -127,7 +123,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSubscriptionValidationEventData(document.RootElement, options);
                     }
                 default:
@@ -141,7 +137,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SubscriptionValidationEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSubscriptionValidationEventData(document.RootElement);
         }
 
@@ -151,6 +147,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class SubscriptionValidationEventDataConverter : JsonConverter<SubscriptionValidationEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, SubscriptionValidationEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override SubscriptionValidationEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSubscriptionValidationEventData(document.RootElement);
+            }
         }
     }
 }

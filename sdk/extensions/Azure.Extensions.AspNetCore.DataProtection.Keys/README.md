@@ -52,9 +52,8 @@ To protect keys using Azure Key Vault Key, configure the system with `ProtectKey
 ```C# Snippet:ProtectKeysWithAzureKeyVault
 public void ConfigureServices(IServiceCollection services)
 {
-    services
-        .AddDataProtection()
-        .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
+    services.AddDataProtection()
+            .ProtectKeysWithAzureKeyVault(new Uri("<Key-ID>"), new DefaultAzureCredential());
 }
 ```
 
@@ -75,8 +74,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fextensions%2FAzure.AspNetCore.Extensions.DataProtection.Keys%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/extensions/Azure.Extensions.AspNetCore.DataProtection.Keys/src

@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="CallLocatorInternal"/>. </summary>
         /// <param name="groupCallId"> The group call id. </param>
         /// <param name="serverCallId"> The server call id. </param>
-        /// <param name="roomId"> The Acs room id. </param>
+        /// <param name="roomId"> The Acs room id. (Not supported for Start Recording). </param>
         /// <param name="kind"> The call locator kind. </param>
         internal CallLocatorInternal(string groupCallId, string serverCallId, string roomId, CallLocatorKindInternal? kind)
         {
@@ -32,7 +32,7 @@ namespace Azure.Communication.CallAutomation
         public string GroupCallId { get; set; }
         /// <summary> The server call id. </summary>
         public string ServerCallId { get; set; }
-        /// <summary> The Acs room id. </summary>
+        /// <summary> The Acs room id. (Not supported for Start Recording). </summary>
         public string RoomId { get; set; }
         /// <summary> The call locator kind. </summary>
         public CallLocatorKindInternal? Kind { get; set; }

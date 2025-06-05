@@ -212,6 +212,7 @@ namespace Azure.Search.Documents.Models
                             Dictionary<string, object> facetValues = new Dictionary<string, object>();
                             IReadOnlyDictionary<string, IList<FacetResult>> searchFacets = default;
                             long? facetCount = null;
+                            double? facetSum = null;
                             foreach (JsonProperty facetProperty in facetValue.EnumerateObject())
                             {
                                 if (facetProperty.NameEquals(Constants.CountKeyJson.EncodedUtf8Bytes))
@@ -219,6 +220,13 @@ namespace Azure.Search.Documents.Models
                                     if (facetProperty.Value.ValueKind != JsonValueKind.Null)
                                     {
                                         facetCount = facetProperty.Value.GetInt64();
+                                    }
+                                }
+                                else if (facetProperty.NameEquals(Constants.SumKeyJson.EncodedUtf8Bytes))
+                                {
+                                    if (facetProperty.Value.ValueKind != JsonValueKind.Null)
+                                    {
+                                        facetSum = facetProperty.Value.GetDouble();
                                     }
                                 }
                                 else if (facetProperty.NameEquals(Constants.FacetsKeyJson.EncodedUtf8Bytes))
@@ -253,7 +261,7 @@ namespace Azure.Search.Documents.Models
                                     facetValues[facetProperty.Name] = value;
                                 }
                             }
-                            facets.Add(new FacetResult(facetCount, searchFacets, facetValues));
+                            facets.Add(new FacetResult(facetCount, facetSum, searchFacets, facetValues));
                         }
                         // Add the facet to the results
                         results.Facets[facetObject.Name] = facets;

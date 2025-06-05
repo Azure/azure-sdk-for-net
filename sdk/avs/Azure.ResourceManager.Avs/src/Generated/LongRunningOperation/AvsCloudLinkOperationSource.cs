@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Avs
 
         AvsCloudLinkResource IOperationSource<AvsCloudLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(document.RootElement);
+            var data = ModelReaderWriter.Read<AvsCloudLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
             return new AvsCloudLinkResource(_client, data);
         }
 
         async ValueTask<AvsCloudLinkResource> IOperationSource<AvsCloudLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AvsCloudLinkData.DeserializeAvsCloudLinkData(document.RootElement);
-            return new AvsCloudLinkResource(_client, data);
+            var data = ModelReaderWriter.Read<AvsCloudLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAvsContext.Default);
+            return await Task.FromResult(new AvsCloudLinkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

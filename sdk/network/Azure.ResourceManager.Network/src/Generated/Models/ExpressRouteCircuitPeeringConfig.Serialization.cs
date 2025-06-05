@@ -74,6 +74,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("routingRegistryName"u8);
                 writer.WriteStringValue(RoutingRegistryName);
             }
+            if (Optional.IsCollectionDefined(AdvertisedPublicPrefixInfo))
+            {
+                writer.WritePropertyName("advertisedPublicPrefixInfo"u8);
+                writer.WriteStartArray();
+                foreach (var item in AdvertisedPublicPrefixInfo)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -82,7 +92,7 @@ namespace Azure.ResourceManager.Network.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,6 +127,7 @@ namespace Azure.ResourceManager.Network.Models
             int? legacyMode = default;
             int? customerASN = default;
             string routingRegistryName = default;
+            IList<AdvertisedPublicPrefixProperties> advertisedPublicPrefixInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,6 +192,20 @@ namespace Azure.ResourceManager.Network.Models
                     routingRegistryName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("advertisedPublicPrefixInfo"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AdvertisedPublicPrefixProperties> array = new List<AdvertisedPublicPrefixProperties>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(AdvertisedPublicPrefixProperties.DeserializeAdvertisedPublicPrefixProperties(item, options));
+                    }
+                    advertisedPublicPrefixInfo = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -194,6 +219,7 @@ namespace Azure.ResourceManager.Network.Models
                 legacyMode,
                 customerASN,
                 routingRegistryName,
+                advertisedPublicPrefixInfo ?? new ChangeTrackingList<AdvertisedPublicPrefixProperties>(),
                 serializedAdditionalRawData);
         }
 
@@ -204,7 +230,7 @@ namespace Azure.ResourceManager.Network.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +244,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeExpressRouteCircuitPeeringConfig(document.RootElement, options);
                     }
                 default:

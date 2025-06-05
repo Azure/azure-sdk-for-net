@@ -67,6 +67,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 writer.WritePropertyName("enforceDataIntegrityCheckForIscsi"u8);
                 writer.WriteBooleanValue(EnforceDataIntegrityCheckForIscsi.Value);
             }
+            if (Optional.IsDefined(DeleteRetentionPolicy))
+            {
+                writer.WritePropertyName("deleteRetentionPolicy"u8);
+                writer.WriteObjectValue(DeleteRetentionPolicy, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -76,7 +81,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -109,8 +114,9 @@ namespace Azure.ResourceManager.ElasticSan.Models
             ElasticSanStorageTargetType? protocolType = default;
             ElasticSanEncryptionType? encryption = default;
             ElasticSanEncryptionProperties encryptionProperties = default;
-            NetworkRuleSet networkAcls = default;
+            ElasticSanNetworkRuleSet networkAcls = default;
             bool? enforceDataIntegrityCheckForIscsi = default;
+            ElasticSanDeleteRetentionPolicy deleteRetentionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                             {
                                 continue;
                             }
-                            networkAcls = NetworkRuleSet.DeserializeNetworkRuleSet(property0.Value, options);
+                            networkAcls = ElasticSanNetworkRuleSet.DeserializeElasticSanNetworkRuleSet(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("enforceDataIntegrityCheckForIscsi"u8))
@@ -176,6 +182,15 @@ namespace Azure.ResourceManager.ElasticSan.Models
                                 continue;
                             }
                             enforceDataIntegrityCheckForIscsi = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("deleteRetentionPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            deleteRetentionPolicy = ElasticSanDeleteRetentionPolicy.DeserializeElasticSanDeleteRetentionPolicy(property0.Value, options);
                             continue;
                         }
                     }
@@ -194,6 +209,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 encryptionProperties,
                 networkAcls,
                 enforceDataIntegrityCheckForIscsi,
+                deleteRetentionPolicy,
                 serializedAdditionalRawData);
         }
 
@@ -204,7 +220,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerElasticSanContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ElasticSanVolumeGroupPatch)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +234,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeElasticSanVolumeGroupPatch(document.RootElement, options);
                     }
                 default:

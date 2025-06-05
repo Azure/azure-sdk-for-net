@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDatadogContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DatadogAgreementResourceProperties)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDatadogAgreementResourceProperties(document.RootElement, options);
                     }
                 default:

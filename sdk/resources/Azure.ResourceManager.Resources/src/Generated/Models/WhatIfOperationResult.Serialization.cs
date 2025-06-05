@@ -58,6 +58,26 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(PotentialChanges))
+            {
+                writer.WritePropertyName("potentialChanges"u8);
+                writer.WriteStartArray();
+                foreach (var item in PotentialChanges)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
+            {
+                writer.WritePropertyName("diagnostics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Diagnostics)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +87,7 @@ namespace Azure.ResourceManager.Resources.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,6 +119,8 @@ namespace Azure.ResourceManager.Resources.Models
             string status = default;
             ResponseError error = default;
             IReadOnlyList<WhatIfChange> changes = default;
+            IReadOnlyList<WhatIfChange> potentialChanges = default;
+            IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,6 +162,34 @@ namespace Azure.ResourceManager.Resources.Models
                             changes = array;
                             continue;
                         }
+                        if (property0.NameEquals("potentialChanges"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<WhatIfChange> array = new List<WhatIfChange>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(WhatIfChange.DeserializeWhatIfChange(item, options));
+                            }
+                            potentialChanges = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("diagnostics"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<DeploymentDiagnosticsDefinition> array = new List<DeploymentDiagnosticsDefinition>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DeploymentDiagnosticsDefinition.DeserializeDeploymentDiagnosticsDefinition(item, options));
+                            }
+                            diagnostics = array;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -149,7 +199,13 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new WhatIfOperationResult(status, error, changes ?? new ChangeTrackingList<WhatIfChange>(), serializedAdditionalRawData);
+            return new WhatIfOperationResult(
+                status,
+                error,
+                changes ?? new ChangeTrackingList<WhatIfChange>(),
+                potentialChanges ?? new ChangeTrackingList<WhatIfChange>(),
+                diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(),
+                serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -226,6 +282,52 @@ namespace Azure.ResourceManager.Resources.Models
                 }
             }
 
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PotentialChanges), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    potentialChanges: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(PotentialChanges))
+                {
+                    if (PotentialChanges.Any())
+                    {
+                        builder.Append("    potentialChanges: ");
+                        builder.AppendLine("[");
+                        foreach (var item in PotentialChanges)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    potentialChanges: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Diagnostics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("    diagnostics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Diagnostics))
+                {
+                    if (Diagnostics.Any())
+                    {
+                        builder.Append("    diagnostics: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Diagnostics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    diagnostics: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
@@ -238,7 +340,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -254,7 +356,7 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeWhatIfOperationResult(document.RootElement, options);
                     }
                 default:

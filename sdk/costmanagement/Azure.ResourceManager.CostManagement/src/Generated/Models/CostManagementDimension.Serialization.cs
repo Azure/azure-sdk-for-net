@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CostManagementDimension)} does not support writing '{options.Format}' format.");
             }
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCostManagementDimension(document.RootElement, options);
                     }
                 default:

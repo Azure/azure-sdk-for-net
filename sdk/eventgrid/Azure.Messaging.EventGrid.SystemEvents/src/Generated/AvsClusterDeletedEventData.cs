@@ -14,8 +14,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AvsClusterDeletedEventData : AvsClusterEventData
     {
         /// <summary> Initializes a new instance of <see cref="AvsClusterDeletedEventData"/>. </summary>
-        internal AvsClusterDeletedEventData()
+        /// <param name="operationId"> Id of the operation that caused this event. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
+        internal AvsClusterDeletedEventData(string operationId) : base(operationId)
         {
+            Argument.AssertNotNull(operationId, nameof(operationId));
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsClusterDeletedEventData"/>. </summary>
@@ -25,6 +28,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="inMaintenanceHostNames"> Hosts in Maintenance mode in the cluster, if any. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal AvsClusterDeletedEventData(string operationId, IReadOnlyList<string> addedHostNames, IReadOnlyList<string> removedHostNames, IReadOnlyList<string> inMaintenanceHostNames, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(operationId, addedHostNames, removedHostNames, inMaintenanceHostNames, serializedAdditionalRawData)
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AvsClusterDeletedEventData"/> for deserialization. </summary>
+        internal AvsClusterDeletedEventData()
         {
         }
     }

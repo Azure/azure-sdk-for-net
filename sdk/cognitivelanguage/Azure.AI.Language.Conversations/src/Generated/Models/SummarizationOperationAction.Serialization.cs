@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Conversations.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureAILanguageConversationsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SummarizationOperationAction)} does not support writing '{options.Format}' format.");
             }
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSummarizationOperationAction(document.RootElement, options);
                     }
                 default:
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static new SummarizationOperationAction FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSummarizationOperationAction(document.RootElement);
         }
 

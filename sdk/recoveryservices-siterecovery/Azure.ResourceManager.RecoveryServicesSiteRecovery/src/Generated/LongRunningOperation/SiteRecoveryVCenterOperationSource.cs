@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
 
         SiteRecoveryVCenterResource IOperationSource<SiteRecoveryVCenterResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(document.RootElement);
+            var data = ModelReaderWriter.Read<SiteRecoveryVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
             return new SiteRecoveryVCenterResource(_client, data);
         }
 
         async ValueTask<SiteRecoveryVCenterResource> IOperationSource<SiteRecoveryVCenterResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SiteRecoveryVCenterData.DeserializeSiteRecoveryVCenterData(document.RootElement);
-            return new SiteRecoveryVCenterResource(_client, data);
+            var data = ModelReaderWriter.Read<SiteRecoveryVCenterData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+            return await Task.FromResult(new SiteRecoveryVCenterResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DnsResolver.Tests
     {
         private DnsResolverResource _dnsResolver;
 
-        public InboundEndpointTests(bool async) : base(async)//, RecordedTestMode.Record)
+        public InboundEndpointTests(bool async) : base(async) // RecordedTestMode.Record)
         {
         }
 

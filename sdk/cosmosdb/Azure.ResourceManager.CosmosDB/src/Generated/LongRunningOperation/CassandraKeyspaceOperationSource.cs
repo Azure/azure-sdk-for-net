@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.CosmosDB
 
         CassandraKeyspaceResource IOperationSource<CassandraKeyspaceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
+            var data = ModelReaderWriter.Read<CassandraKeyspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
             return new CassandraKeyspaceResource(_client, data);
         }
 
         async ValueTask<CassandraKeyspaceResource> IOperationSource<CassandraKeyspaceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = CassandraKeyspaceData.DeserializeCassandraKeyspaceData(document.RootElement);
-            return new CassandraKeyspaceResource(_client, data);
+            var data = ModelReaderWriter.Read<CassandraKeyspaceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCosmosDBContext.Default);
+            return await Task.FromResult(new CassandraKeyspaceResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

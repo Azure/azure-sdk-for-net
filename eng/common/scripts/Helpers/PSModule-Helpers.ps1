@@ -79,7 +79,7 @@ function moduleIsInstalled([string]$moduleName, [string]$version) {
   if ($version -as [Version]) {
     $modules = $modules.Where({ [Version]$_.Version -ge [Version]$version })
     if ($modules.Count -gt 0) {
-      Write-Host "Using module $($modules[0].Name) with version $($modules[0].Version)."
+      Write-Verbose "Using module $($modules[0].Name) with version $($modules[0].Version)."
       return $modules[0]
     }
   }
@@ -100,9 +100,9 @@ function installModule([string]$moduleName, [string]$version, $repoUrl) {
     Set-PSRepository -Name $repo.Name -InstallationPolicy "Trusted" | Out-Null
   }
 
-  Write-Host "Installing module $moduleName with min version $version from $repoUrl"
+  Write-Verbose "Installing module $moduleName with min version $version from $repoUrl"
   # Install under CurrentUser scope so that the end up under $CurrentUserModulePath for caching
-  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force
+  Install-Module $moduleName -MinimumVersion $version -Repository $repo.Name -Scope CurrentUser -Force -WhatIf:$false
   # Ensure module installed
   $modules = (Get-Module -ListAvailable $moduleName)
   if ($version -as [Version]) {
@@ -171,7 +171,7 @@ function Install-ModuleIfNotInstalled() {
       break
     }
 
-    Write-Host "Using module '$($module.Name)' with version '$($module.Version)'."
+    Write-Verbose "Using module '$($module.Name)' with version '$($module.Version)'."
   }
   finally {
     $mutex.ReleaseMutex()

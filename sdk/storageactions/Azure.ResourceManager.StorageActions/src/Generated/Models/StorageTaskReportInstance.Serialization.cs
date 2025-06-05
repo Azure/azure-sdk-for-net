@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStorageActionsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskReportInstance)} does not support writing '{options.Format}' format.");
             }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StorageActions.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStorageTaskReportInstance(document.RootElement, options);
                     }
                 default:

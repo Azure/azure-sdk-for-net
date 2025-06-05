@@ -191,7 +191,7 @@ public class TransferManagerTests
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
             srcResource.VerifySourceResourceOnPartProcess();
-            dstResource.VerifyDestinationResourceOnPartProcess();
+            dstResource.VerifyDestinationResourceOnPartProcess(chunked: chunksPerPart > 1);
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
         }
@@ -469,10 +469,6 @@ public class TransferManagerTests
             It.IsAny<CancellationToken>()));
         checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<TransferStatus>(),
             It.IsAny<CancellationToken>()), Times.Exactly(3));
-        if (!isContainer)
-        {
-            checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
-        }
         Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(TransferState.InProgress));
         Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(TransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
@@ -571,6 +567,39 @@ public class TransferManagerTests
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
     }
 
+    [Test]
+    public async Task BasicTransfer_NoOptions()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        int numFiles = 3;
+        Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri, numFiles);
+
+        // Don't pass options to test default options
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(1), "Failed to step through jobs queue.");
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numFiles), "Failed to step through parts queue.");
+        await ProcessChunksAssert(chunksProcessor, 1, numFiles, numFiles);
+
+        Assert.That(transfer.Status.HasCompletedSuccessfully);
+    }
+
     /// <summary>
     /// <see cref="TransferStatus"/> is stateful across transfer. This makes it difficult to verify mocks, as verifications
     /// are lazily performed. This captures deep copies of statuses for custom assertion.
@@ -613,17 +642,20 @@ internal static partial class MockExtensions
         items.Destination.SetupGet(r => r.TransferType).Returns(default(TransferOrder));
         items.Destination.SetupGet(r => r.MaxSupportedSingleTransferSize).Returns(Constants.GB);
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
+        items.Destination.SetupGet(r => r.MaxSupportedChunkCount).Returns(int.MaxValue);
 
         items.Source.Setup(r => r.GetPropertiesAsync(It.IsAny<CancellationToken>()))
             .Returns((CancellationToken cancellationToken) =>
             {
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                return Task.FromResult(new StorageResourceItemProperties(
-                    resourceLength: itemSize,
-                    default,
-                    default,
-                    default));
+                return Task.FromResult(new StorageResourceItemProperties()
+                {
+                    ResourceLength = itemSize
+                });
             });
+
+        items.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
             .Returns<long, long?, CancellationToken>((position, length, cancellationToken) =>
@@ -632,7 +664,7 @@ internal static partial class MockExtensions
                 return Task.FromResult(new StorageResourceReadStreamResult(
                     new Mock<Stream>().Object,
                     new HttpRange(position, length),
-                    new(itemSize, default, default, new())));
+                    new() { ResourceLength = itemSize }));
             });
 
         items.Source.Setup(r => r.IsContainer).Returns(false);
@@ -695,6 +727,9 @@ internal static partial class MockExtensions
         containers.Source.SetupGet(r => r.Uri).Returns(srcUri);
         containers.Destination.SetupGet(r => r.Uri).Returns(dstUri);
 
+        containers.Destination.Setup(r => r.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()))
+            .Returns(Task.CompletedTask);
+
         containers.Source.Setup(r => r.GetStorageResourcesAsync(It.IsAny<StorageResourceContainer>(), It.IsAny<CancellationToken>()))
             .Returns(SubResourcesAsAsyncEnumerable);
 
@@ -733,6 +768,7 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceItem> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
+        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnQueue(this Mock<StorageResourceContainer> srcResource)
@@ -743,12 +779,14 @@ internal static partial class MockExtensions
     public static void VerifyDestinationResourceOnQueue(this Mock<StorageResourceContainer> dstResource)
     {
         dstResource.VerifyGet(r => r.Uri);
+        dstResource.Verify(b => b.ValidateTransferAsync(It.IsAny<string>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()), Times.Once());
     }
 
     public static void VerifySourceResourceOnJobProcess(this Mock<StorageResourceItem> srcResource)
     {
         srcResource.VerifyGet(r => r.Uri);
         srcResource.VerifyGet(r => r.ResourceId);
+        srcResource.VerifyGet(r => r.IsContainer);
     }
 
     public static void VerifyDestinationResourceOnJobProcess(this Mock<StorageResourceItem> dstResource)
@@ -782,9 +820,13 @@ internal static partial class MockExtensions
         srcResource.Verify(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()), Times.AtMostOnce);
     }
 
-    public static void VerifyDestinationResourceOnPartProcess(this Mock<StorageResourceItem> dstResource)
+    public static void VerifyDestinationResourceOnPartProcess(this Mock<StorageResourceItem> dstResource, bool chunked)
     {
         dstResource.VerifyGet(r => r.TransferType, Times.AtMost(9999));
+        if (chunked)
+        {
+            dstResource.VerifyGet(r => r.MaxSupportedChunkCount, Times.Once);
+        }
         // TODO: a bug in multipart uploading can result in the first chunk being uploaded at part process
         // verify at most once to ensure there are no more than this bug.
         dstResource.Verify(r => r.CopyFromStreamAsync(

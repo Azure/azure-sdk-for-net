@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.NetworkFunction
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkFunctionContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureTrafficCollectorData)} does not support writing '{options.Format}' format.");
             }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.NetworkFunction
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureTrafficCollectorData(document.RootElement, options);
                     }
                 default:

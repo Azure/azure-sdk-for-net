@@ -12,10 +12,7 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The packet core to delete under a site.
-    /// Serialized Name: SiteDeletePacketCore
-    /// </summary>
+    /// <summary> The packet core to delete under a site. </summary>
     public partial class SiteDeletePacketCore
     {
         /// <summary>
@@ -56,10 +53,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SiteDeletePacketCore"/>. </summary>
-        /// <param name="packetCore">
-        /// Reference to an packet core control plane resource.
-        /// Serialized Name: SiteDeletePacketCore.packetCore
-        /// </param>
+        /// <param name="packetCore"> Reference to an packet core control plane resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal SiteDeletePacketCore(SubResource packetCore, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -67,10 +61,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// Reference to an packet core control plane resource.
-        /// Serialized Name: SiteDeletePacketCore.packetCore
-        /// </summary>
+        /// <summary> Reference to an packet core control plane resource. </summary>
         internal SubResource PacketCore { get; set; }
         /// <summary> Gets Id. </summary>
         [WirePath("packetCore.id")]

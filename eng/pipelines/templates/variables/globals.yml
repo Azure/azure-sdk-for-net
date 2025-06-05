@@ -12,6 +12,8 @@ variables:
   CollectCoverage: false
   NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages/
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+  AzuriteLocation: $(Pipeline.Workspace)/.storage/azurite
+  AzuriteVersion: 3.11.0
   DOTNET_CLI_TELEMETRY_OPTOUT: 1
   DOTNET_NOLOGO: 1
   Codeql.SkipTaskAutoInjection: true
@@ -20,5 +22,5 @@ variables:
   AdditionalTestFilters: "Placeholder!=DefaultIgnoreMe"
 
   # Docs publishing variables for repo/owner
-  DocRepoOwner: 'Azure'
+  DocRepoOwner: 'MicrosoftDocs'
   DocRepoName: 'azure-docs-sdk-dotnet'

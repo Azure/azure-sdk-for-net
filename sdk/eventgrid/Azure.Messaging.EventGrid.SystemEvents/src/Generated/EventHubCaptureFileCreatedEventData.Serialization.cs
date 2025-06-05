@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(EventHubCaptureFileCreatedEventDataConverter))]
     public partial class EventHubCaptureFileCreatedEventData : IUtf8JsonSerializable, IJsonModel<EventHubCaptureFileCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EventHubCaptureFileCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,21 +36,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Fileurl))
-            {
-                writer.WritePropertyName("fileUrl"u8);
-                writer.WriteStringValue(Fileurl);
-            }
-            if (Optional.IsDefined(FileType))
-            {
-                writer.WritePropertyName("fileType"u8);
-                writer.WriteStringValue(FileType);
-            }
-            if (Optional.IsDefined(PartitionId))
-            {
-                writer.WritePropertyName("partitionId"u8);
-                writer.WriteStringValue(PartitionId);
-            }
+            writer.WritePropertyName("fileUrl"u8);
+            writer.WriteStringValue(Fileurl);
+            writer.WritePropertyName("fileType"u8);
+            writer.WriteStringValue(FileType);
+            writer.WritePropertyName("partitionId"u8);
+            writer.WriteStringValue(PartitionId);
             if (Optional.IsDefined(SizeInBytes))
             {
                 writer.WritePropertyName("sizeInBytes"u8);
@@ -69,10 +62,16 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 writer.WritePropertyName("lastSequenceNumber"u8);
                 writer.WriteNumberValue(LastSequenceNumber.Value);
             }
-            writer.WritePropertyName("firstEnqueueTime"u8);
-            writer.WriteStringValue(FirstEnqueueTime, "O");
-            writer.WritePropertyName("lastEnqueueTime"u8);
-            writer.WriteStringValue(LastEnqueueTime, "O");
+            if (Optional.IsDefined(FirstEnqueueTime))
+            {
+                writer.WritePropertyName("firstEnqueueTime"u8);
+                writer.WriteStringValue(FirstEnqueueTime.Value, "O");
+            }
+            if (Optional.IsDefined(LastEnqueueTime))
+            {
+                writer.WritePropertyName("lastEnqueueTime"u8);
+                writer.WriteStringValue(LastEnqueueTime.Value, "O");
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -81,7 +80,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,8 +116,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             int? eventCount = default;
             int? firstSequenceNumber = default;
             int? lastSequenceNumber = default;
-            DateTimeOffset firstEnqueueTime = default;
-            DateTimeOffset lastEnqueueTime = default;
+            DateTimeOffset? firstEnqueueTime = default;
+            DateTimeOffset? lastEnqueueTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,11 +175,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("firstEnqueueTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     firstEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("lastEnqueueTime"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     lastEnqueueTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
@@ -210,7 +217,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(EventHubCaptureFileCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -224,7 +231,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement, options);
                     }
                 default:
@@ -238,7 +245,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static EventHubCaptureFileCreatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
         }
 
@@ -248,6 +255,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, EventHubCaptureFileCreatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override EventHubCaptureFileCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
+            }
         }
     }
 }

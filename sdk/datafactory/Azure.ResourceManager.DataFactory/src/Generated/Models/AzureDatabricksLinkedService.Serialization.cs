@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -184,6 +184,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("credential"u8);
                 writer.WriteObjectValue(Credential, options);
             }
+            if (Optional.IsDefined(DataSecurityMode))
+            {
+                writer.WritePropertyName("dataSecurityMode"u8);
+                JsonSerializer.Serialize(writer, DataSecurityMode);
+            }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -191,7 +196,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -244,6 +249,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             string encryptedCredential = default;
             DataFactoryElement<string> policyId = default;
             DataFactoryCredentialReference credential = default;
+            DataFactoryElement<string> dataSecurityMode = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -515,6 +521,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             credential = DataFactoryCredentialReference.DeserializeDataFactoryCredentialReference(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("dataSecurityMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dataSecurityMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -547,7 +562,8 @@ namespace Azure.ResourceManager.DataFactory.Models
                 newClusterEnableElasticDisk,
                 encryptedCredential,
                 policyId,
-                credential);
+                credential,
+                dataSecurityMode);
         }
 
         BinaryData IPersistableModel<AzureDatabricksLinkedService>.Write(ModelReaderWriterOptions options)
@@ -557,7 +573,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureDatabricksLinkedService)} does not support writing '{options.Format}' format.");
             }
@@ -571,7 +587,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureDatabricksLinkedService(document.RootElement, options);
                     }
                 default:

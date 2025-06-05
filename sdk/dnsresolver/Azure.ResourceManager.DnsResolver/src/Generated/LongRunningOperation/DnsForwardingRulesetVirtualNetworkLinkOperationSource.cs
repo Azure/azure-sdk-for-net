@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.DnsResolver
 
         DnsForwardingRulesetVirtualNetworkLinkResource IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(document.RootElement);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
             return new DnsForwardingRulesetVirtualNetworkLinkResource(_client, data);
         }
 
         async ValueTask<DnsForwardingRulesetVirtualNetworkLinkResource> IOperationSource<DnsForwardingRulesetVirtualNetworkLinkResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = DnsForwardingRulesetVirtualNetworkLinkData.DeserializeDnsForwardingRulesetVirtualNetworkLinkData(document.RootElement);
-            return new DnsForwardingRulesetVirtualNetworkLinkResource(_client, data);
+            var data = ModelReaderWriter.Read<DnsForwardingRulesetVirtualNetworkLinkData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerDnsResolverContext.Default);
+            return await Task.FromResult(new DnsForwardingRulesetVirtualNetworkLinkResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

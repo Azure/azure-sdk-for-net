@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Error);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Error))
+                using (JsonDocument document = JsonDocument.Parse(Error, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(TrackedProperties);
 #else
-                using (JsonDocument document = JsonDocument.Parse(TrackedProperties))
+                using (JsonDocument document = JsonDocument.Parse(TrackedProperties, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Logic
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLogicContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowRunActionData)} does not support writing '{options.Format}' format.");
             }
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLogicWorkflowRunActionData(document.RootElement, options);
                     }
                 default:

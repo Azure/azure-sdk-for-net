@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.RecoveryServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(RecoveryServicesPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.RecoveryServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeRecoveryServicesPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

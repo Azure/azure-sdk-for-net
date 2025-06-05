@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Logic
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(Definition);
 #else
-                using (JsonDocument document = JsonDocument.Parse(Definition))
+                using (JsonDocument document = JsonDocument.Parse(Definition, ModelSerializationExtensions.JsonDocumentOptions))
                 {
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Logic
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLogicContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support writing '{options.Format}' format.");
             }
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Logic
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLogicWorkflowData(document.RootElement, options);
                     }
                 default:

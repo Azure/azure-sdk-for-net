@@ -46,8 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterApiSpecification"/>. </summary>
-        internal ApiCenterApiSpecification()
+        /// <param name="name"> Specification name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        internal ApiCenterApiSpecification(string name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApiCenterApiSpecification"/>. </summary>
@@ -59,6 +64,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             Name = name;
             Version = version;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ApiCenterApiSpecification"/> for deserialization. </summary>
+        internal ApiCenterApiSpecification()
+        {
         }
 
         /// <summary> Specification name. </summary>

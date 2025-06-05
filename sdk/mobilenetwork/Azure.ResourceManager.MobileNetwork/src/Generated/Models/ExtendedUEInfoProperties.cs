@@ -12,7 +12,6 @@ namespace Azure.ResourceManager.MobileNetwork.Models
 {
     /// <summary>
     /// Extended UE Information Properties.
-    /// Serialized Name: ExtendedUeInfoProperties
     /// Please note <see cref="ExtendedUEInfoProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="UEInfo4G"/> and <see cref="UEInfo5G"/>.
     /// </summary>
@@ -56,14 +55,8 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ExtendedUEInfoProperties"/>. </summary>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: ExtendedUeInfoProperties.ratType
-        /// </param>
-        /// <param name="lastReadOn">
-        /// The timestamp of last UE info read from the packet core (UTC).
-        /// Serialized Name: ExtendedUeInfoProperties.lastReadAt
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="lastReadOn"> The timestamp of last UE info read from the packet core (UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ExtendedUEInfoProperties(RatType ratType, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -72,15 +65,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary>
-        /// RAT Type
-        /// Serialized Name: ExtendedUeInfoProperties.ratType
-        /// </summary>
+        /// <summary> RAT Type. </summary>
         internal RatType RatType { get; set; }
-        /// <summary>
-        /// The timestamp of last UE info read from the packet core (UTC).
-        /// Serialized Name: ExtendedUeInfoProperties.lastReadAt
-        /// </summary>
+        /// <summary> The timestamp of last UE info read from the packet core (UTC). </summary>
         [WirePath("lastReadAt")]
         public DateTimeOffset? LastReadOn { get; set; }
     }

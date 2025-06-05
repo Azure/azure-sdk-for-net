@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Confluent.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConfluentAgreement)} does not support writing '{options.Format}' format.");
             }
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConfluentAgreement(document.RootElement, options);
                     }
                 default:

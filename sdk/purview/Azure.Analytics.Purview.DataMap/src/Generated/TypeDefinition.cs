@@ -2123,7 +2123,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetHeadersAsync(includeTermTemplate, type?.ToString(), context).ConfigureAwait(false);
             IReadOnlyList<AtlasTypeDefHeader> value = default;
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
             List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {
@@ -2147,7 +2147,7 @@ namespace Azure.Analytics.Purview.DataMap
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetHeaders(includeTermTemplate, type?.ToString(), context);
             IReadOnlyList<AtlasTypeDefHeader> value = default;
-            using var document = JsonDocument.Parse(response.ContentStream);
+            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
             List<AtlasTypeDefHeader> array = new List<AtlasTypeDefHeader>();
             foreach (var item in document.RootElement.EnumerateArray())
             {

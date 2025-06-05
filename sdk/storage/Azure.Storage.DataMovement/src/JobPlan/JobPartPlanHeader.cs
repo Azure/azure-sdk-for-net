@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The resource creation preference.
         /// </summary>
-        public StorageResourceCreationPreference CreatePreference;
+        public StorageResourceCreationMode CreatePreference;
 
         /// <summary>
         /// Ths initial transfer size for the transfer.
@@ -84,7 +84,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationTypeId,
             string sourcePath,
             string destinationPath,
-            StorageResourceCreationPreference createPreference,
+            StorageResourceCreationMode createPreference,
             long initialTransferSize,
             long chunkSize,
             byte priority,
@@ -227,7 +227,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             int destinationPathLength = reader.ReadInt32();
 
             // CreatePreference
-            StorageResourceCreationPreference createPreference = (StorageResourceCreationPreference)reader.ReadByte();
+            StorageResourceCreationMode createPreference = (StorageResourceCreationMode)reader.ReadByte();
 
             // InitialTransferSize
             long initialTransferSize = reader.ReadInt64();

@@ -37,7 +37,7 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
         : func();
 
     #region Passthru
-    public override Uri Uri => ThrowOr(_inner.Uri);
+    public override Uri Uri => _inner.Uri;
 
     public override string ProviderId => ThrowOr(_inner.ProviderId);
 
@@ -48,6 +48,8 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
     protected internal override long MaxSupportedSingleTransferSize => ThrowOr(_inner.MaxSupportedSingleTransferSize);
 
     protected internal override long MaxSupportedChunkSize => ThrowOr(_inner.MaxSupportedChunkSize);
+
+    protected internal override int MaxSupportedChunkCount => ThrowOr(_inner.MaxSupportedChunkCount);
 
     protected internal override long? Length => ThrowOr(_inner.Length);
 
@@ -69,8 +71,8 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
     protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
         => ThrowOrDo(() => _inner.GetCopyAuthorizationHeaderAsync(cancellationToken));
 
-    protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
-        => ThrowOrDo(_inner.GetDestinationCheckpointData);
+    protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
+        => ThrowOrDo(_inner.GetDestinationCheckpointDetails);
 
     protected internal override Task<string> GetPermissionsAsync(StorageResourceItemProperties properties = null, CancellationToken cancellationToken = default)
         => ThrowOrDo(() => _inner.GetPermissionsAsync(properties, cancellationToken));
@@ -78,8 +80,8 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
     protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         => ThrowOrDo(() => _inner.GetPropertiesAsync(token));
 
-    protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
-        => ThrowOrDo(_inner.GetSourceCheckpointData);
+    protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
+        => ThrowOrDo(_inner.GetSourceCheckpointDetails);
 
     protected internal override Task<StorageResourceReadStreamResult> ReadStreamAsync(long position = 0, long? length = null, CancellationToken cancellationToken = default)
         => ThrowOrDo(() => _inner.ReadStreamAsync(position, length, cancellationToken));
@@ -142,6 +144,9 @@ public class StorageResourceContainerFailureWrapper : StorageResourceContainer
         }
     }
 
+    protected internal override Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        => ThrowOrDo(() => _inner.GetPropertiesAsync(cancellationToken));
+
     public override string ToString()
     {
         return base.ToString();
@@ -155,10 +160,10 @@ public class StorageResourceContainerFailureWrapper : StorageResourceContainer
     protected internal override Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)
         => ThrowOrDo(() => _inner.CreateIfNotExistsAsync(cancellationToken));
 
-    protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
-        => ThrowOrDo(_inner.GetDestinationCheckpointData);
+    protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
+        => ThrowOrDo(_inner.GetDestinationCheckpointDetails);
 
-    protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
-        => ThrowOrDo(_inner.GetSourceCheckpointData);
+    protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
+        => ThrowOrDo(_inner.GetSourceCheckpointDetails);
     #endregion
 }

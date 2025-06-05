@@ -24,8 +24,8 @@ namespace Azure.Storage.DataMovement.Tests
                 DefaultJobStatus,
                 DefaultSourcePath,
                 DefaultDestinationPath,
-                MockResourceCheckpointData.DefaultInstance,
-                MockResourceCheckpointData.DefaultInstance);
+                MockResourceCheckpointDetails.DefaultInstance,
+                MockResourceCheckpointDetails.DefaultInstance);
         }
 
         [Test]
@@ -101,8 +101,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(DefaultJobStatus, deserialized.JobStatus);
             Assert.AreEqual(DefaultSourcePath, deserialized.ParentSourcePath);
             Assert.AreEqual(DefaultDestinationPath, deserialized.ParentDestinationPath);
-            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.SourceCheckpointData);
-            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, deserialized.DestinationCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, deserialized.SourceCheckpointDetails);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, deserialized.DestinationCheckpointDetails);
         }
     }
 }

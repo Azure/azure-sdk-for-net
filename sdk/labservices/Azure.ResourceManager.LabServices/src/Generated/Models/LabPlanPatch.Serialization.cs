@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.LabServices.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerLabServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(LabPlanPatch)} does not support writing '{options.Format}' format.");
             }
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.LabServices.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeLabPlanPatch(document.RootElement, options);
                     }
                 default:

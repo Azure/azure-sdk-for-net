@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Number of bytes transferred across all files.
-        /// Only populated if <see cref="ProgressHandlerOptions.TrackBytesTransferred"/> is set.
+        /// Only populated if <see cref="TransferProgressHandlerOptions.TrackBytesTransferred"/> is set.
         /// </summary>
         public long? BytesTransferred { get; internal set; }
     }

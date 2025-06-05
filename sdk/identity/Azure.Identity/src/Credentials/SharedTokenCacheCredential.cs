@@ -90,8 +90,8 @@ namespace Azure.Identity
         /// <summary>
         /// Silently obtains an <see cref="AccessToken"/> for a user account if the user has already authenticated to another Microsoft application
         /// participating in SSO through a shared MSAL cache. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize
-        /// cache effectiveness.
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>
@@ -105,8 +105,8 @@ namespace Azure.Identity
         /// <summary>
         /// Silently obtains an <see cref="AccessToken"/> for a user account if the user has already authenticated to another Microsoft application
         /// participating in SSO through a shared MSAL cache. Acquired tokens are <see href="https://aka.ms/azsdk/net/identity/token-cache">cached</see>
-        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential instances to optimize
-        /// cache effectiveness.
+        /// by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, <see href="https://aka.ms/azsdk/net/identity/credential-reuse">reuse credential instances</see>
+        /// to optimize cache effectiveness.
         /// </summary>
         /// <param name="requestContext">The details of the authentication request.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime</param>

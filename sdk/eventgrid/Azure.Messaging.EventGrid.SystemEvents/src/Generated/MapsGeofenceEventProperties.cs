@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -47,14 +46,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceEventProperties"/>. </summary>
-        /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="geometries"/> is null. </exception>
-        internal MapsGeofenceEventProperties(IEnumerable<MapsGeofenceGeometry> geometries)
+        internal MapsGeofenceEventProperties()
         {
-            Argument.AssertNotNull(geometries, nameof(geometries));
-
             ExpiredGeofenceGeometryId = new ChangeTrackingList<string>();
-            Geometries = geometries.ToList();
+            Geometries = new ChangeTrackingList<MapsGeofenceGeometry>();
             InvalidPeriodGeofenceGeometryId = new ChangeTrackingList<string>();
         }
 
@@ -71,11 +66,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             InvalidPeriodGeofenceGeometryId = invalidPeriodGeofenceGeometryId;
             IsEventPublished = isEventPublished;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MapsGeofenceEventProperties"/> for deserialization. </summary>
-        internal MapsGeofenceEventProperties()
-        {
         }
 
         /// <summary> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </summary>

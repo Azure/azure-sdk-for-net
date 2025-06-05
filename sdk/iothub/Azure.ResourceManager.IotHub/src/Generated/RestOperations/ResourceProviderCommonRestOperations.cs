@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubUserSubscriptionQuotaListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = IotHubUserSubscriptionQuotaListResult.DeserializeIotHubUserSubscriptionQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotHub
                 case 200:
                     {
                         IotHubUserSubscriptionQuotaListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = IotHubUserSubscriptionQuotaListResult.DeserializeIotHubUserSubscriptionQuotaListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

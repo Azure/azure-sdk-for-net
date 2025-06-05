@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.2 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,42 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0 (2025-04-22)
+
+### Features Added
+
+- Upgraded api-version tag from `package-2022-12` to `package-2025-04`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/a55917cb512540bc3d0aec760d4e28712c3a4ae0/specification/containerregistry/resource-manager/readme.md.
+- Added new classes and methods for the following features
+    - Connected Registry
+    - Artifact Cache
+
+## 1.3.0-beta.3 (2025-04-10)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-11-preview' to 'package-2025-03-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/cb262725d128f6dfec4622cca03bc9e04e2d0f1f/specification/containerregistry/resource-manager/readme.md.
+- Added new struct `RoleAssignmentMode`.
+- Added new class `SourceRegistryCredentials`.
+- Added new attribute `RoleAssignmentMode` in `ContainerRegistryData` and `ContainerRegistryPatch`.
+- Added new attribute `SourceRegistry` in `ContainerRegistryCredentials`.
+- Added the following methods to `ContainerRegistryResource` with new signature:
+    - `ScheduleRun`
+    - `ScheduleRunAsync`
+- Added the following methods to `ContainerRegistryRunResource` with new signature:
+    - `Cancel`
+    - `CancelAsync`
+    - `Update`
+    - `UpdateAsync`
+- Added the following methods to `ContainerRegistryTaskResource` with new signature:
+    - `Update`
+    - `UpdateAsync`
+
+## 1.3.0-beta.2 (2025-01-24)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-01-preview' to 'package-2024-11-preview'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/0a27976a58c16279e827bda36004d1b74b3d922a/specification/containerregistry/resource-manager/readme.md.
 
 ## 1.3.0-beta.1 (2024-10-15)
 
@@ -133,4 +169,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

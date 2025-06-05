@@ -309,9 +309,11 @@ namespace Azure.Messaging.EventHubs.Tests
                     setMetadataCalled = true;
                 };
 
-                client.UploadAsyncCallback = (_, _, _, _, _, _, _, _) =>
+                client.UploadAsyncCallback = (_, _, _, conditions, _, _, _, _) =>
                 {
                     uploadBlobCalled = true;
+                    Assert.That(conditions.IfNoneMatch, Is.EqualTo(new ETag("*")), "The IfNoneMatch condition should be set.");
+                    Assert.That(conditions.IfMatch, Is.Null, "The IfMatch condition should be null.");
                 };
             });
 
@@ -354,6 +356,47 @@ namespace Azure.Messaging.EventHubs.Tests
 
             mockLog.Verify(m => m.GetCheckpointStart(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition));
             mockLog.Verify(m => m.GetCheckpointComplete(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, null, It.IsAny<DateTimeOffset>()));
+        }
+
+        /// <summary>
+        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
+        /// </summary>
+        ///
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(BlobCheckpointStoreInternal.NoOffsetPlaceholderText)]
+        public async Task GetCheckpointIgnoresPlaceholderOffsets(string placeholderOffset)
+        {
+            var expectedSequence = 133;
+            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
+            var partition = Guid.NewGuid().ToString();
+
+            var blobList = new List<BlobItem>
+            {
+                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
+                                           false,
+                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
+                                           "snapshot",
+                                           new Dictionary<string, string>
+                                           {
+                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
+                                               {BlobMetadataKey.Offset, placeholderOffset},
+                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                           })
+            };
+
+            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
+            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
+
+            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
+
+            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
+
+            var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
+            Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was not set.");
+            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
         }
 
         /// <summary>

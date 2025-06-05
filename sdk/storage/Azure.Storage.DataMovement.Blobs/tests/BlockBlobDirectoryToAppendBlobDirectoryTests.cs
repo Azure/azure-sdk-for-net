@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Stream contents = null,
             TransferPropertiesTestType propertiesTestType = TransferPropertiesTestType.Default,
             CancellationToken cancellationToken = default)
-            => CreateBlockBlobAsync(container, objectName, contents, cancellationToken);
+            => CreateBlockBlobAsync(container, objectLength, objectName, contents, cancellationToken);
 
         protected override StorageResourceContainer GetDestinationStorageResourceContainer(
             BlobContainerClient containerClient,
@@ -77,28 +77,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new AppendBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    Metadata = new(false)
-                };
-            }
-            else if (propertiesTestType == TransferPropertiesTestType.Preserve)
-            {
-                options = new AppendBlobStorageResourceOptions
-                {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    Metadata = new(true)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default
                 };
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobDirectoryPrefix = directoryPath,
-                BlobType = new(BlobType.Append),
+                BlobPrefix = directoryPath,
+                BlobType = BlobType.Append,
                 BlobOptions = options
             });
         }
@@ -110,8 +99,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 containerClient,
                 new BlobStorageResourceContainerOptions()
                 {
-                    BlobDirectoryPrefix = directoryPath,
-                    BlobType = new(BlobType.Block)
+                    BlobPrefix = directoryPath,
+                    BlobType = BlobType.Block
                 });
 
         protected internal override AppendBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)

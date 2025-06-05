@@ -121,6 +121,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WritePropertyName("multiVmGroupName"u8);
                 writer.WriteStringValue(MultiVmGroupName);
             }
+            if (Optional.IsDefined(SqlServerLicenseType))
+            {
+                writer.WritePropertyName("sqlServerLicenseType"u8);
+                writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
+            }
+            if (Optional.IsDefined(LinuxLicenseType))
+            {
+                writer.WritePropertyName("linuxLicenseType"u8);
+                writer.WriteStringValue(LinuxLicenseType.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(TargetVmTags))
+            {
+                writer.WritePropertyName("targetVmTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetVmTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SeedManagedDiskTags))
+            {
+                writer.WritePropertyName("seedManagedDiskTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in SeedManagedDiskTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetManagedDiskTags))
+            {
+                writer.WritePropertyName("targetManagedDiskTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetManagedDiskTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(TargetNicTags))
+            {
+                writer.WritePropertyName("targetNicTags"u8);
+                writer.WriteStartArray();
+                foreach (var item in TargetNicTags)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(UserSelectedOSName))
+            {
+                writer.WritePropertyName("userSelectedOSName"u8);
+                writer.WriteStringValue(UserSelectedOSName);
+            }
+            if (Optional.IsDefined(TargetVmSecurityProfile))
+            {
+                writer.WritePropertyName("targetVmSecurityProfile"u8);
+                writer.WriteObjectValue(TargetVmSecurityProfile, options);
+            }
         }
 
         InMageRcmEnableProtectionContent IJsonModel<InMageRcmEnableProtectionContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -161,6 +221,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string runAsAccountId = default;
             Guid processServerId = default;
             string multiVmGroupName = default;
+            SiteRecoverySqlServerLicenseType? sqlServerLicenseType = default;
+            RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType = default;
+            IList<UserCreatedResourceTag> targetVmTags = default;
+            IList<UserCreatedResourceTag> seedManagedDiskTags = default;
+            IList<UserCreatedResourceTag> targetManagedDiskTags = default;
+            IList<UserCreatedResourceTag> targetNicTags = default;
+            string userSelectedOSName = default;
+            RecoveryServicesSiteRecoverySecurityProfileProperties targetVmSecurityProfile = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -293,6 +361,94 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     multiVmGroupName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("sqlServerLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sqlServerLicenseType = new SiteRecoverySqlServerLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("linuxLicenseType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    linuxLicenseType = new RecoveryServicesSiteRecoveryLinuxLicenseType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("targetVmTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetVmTags = array;
+                    continue;
+                }
+                if (property.NameEquals("seedManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    seedManagedDiskTags = array;
+                    continue;
+                }
+                if (property.NameEquals("targetManagedDiskTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetManagedDiskTags = array;
+                    continue;
+                }
+                if (property.NameEquals("targetNicTags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<UserCreatedResourceTag> array = new List<UserCreatedResourceTag>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(UserCreatedResourceTag.DeserializeUserCreatedResourceTag(item, options));
+                    }
+                    targetNicTags = array;
+                    continue;
+                }
+                if (property.NameEquals("userSelectedOSName"u8))
+                {
+                    userSelectedOSName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("targetVmSecurityProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetVmSecurityProfile = RecoveryServicesSiteRecoverySecurityProfileProperties.DeserializeRecoveryServicesSiteRecoverySecurityProfileProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("instanceType"u8))
                 {
                     instanceType = property.Value.GetString();
@@ -324,7 +480,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 targetBootDiagnosticsStorageAccountId,
                 runAsAccountId,
                 processServerId,
-                multiVmGroupName);
+                multiVmGroupName,
+                sqlServerLicenseType,
+                linuxLicenseType,
+                targetVmTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                seedManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                targetManagedDiskTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                targetNicTags ?? new ChangeTrackingList<UserCreatedResourceTag>(),
+                userSelectedOSName,
+                targetVmSecurityProfile);
         }
 
         BinaryData IPersistableModel<InMageRcmEnableProtectionContent>.Write(ModelReaderWriterOptions options)
@@ -334,7 +498,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(InMageRcmEnableProtectionContent)} does not support writing '{options.Format}' format.");
             }
@@ -348,7 +512,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeInMageRcmEnableProtectionContent(document.RootElement, options);
                     }
                 default:

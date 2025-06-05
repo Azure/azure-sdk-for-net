@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformation"> The information of the experiment run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ChaosExperimentRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartedOn = startedOn;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <summary> String that represents the last action date time. </summary>
         public DateTimeOffset? LastActionOn { get; }
         /// <summary> The information of the experiment run. </summary>
-        internal ChaosExperimentRunInformation RunInformation { get; }
+        internal ExperimentExecutionDetailsPropertiesRunInformation RunInformation { get; }
         /// <summary> The steps of the experiment run. </summary>
         public IReadOnlyList<ChaosExperimentRunStepStatus> RunInformationSteps
         {

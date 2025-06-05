@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStreamAnalyticsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StreamingJobData)} does not support writing '{options.Format}' format.");
             }
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStreamingJobData(document.RootElement, options);
                     }
                 default:

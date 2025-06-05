@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.Cdn
 
         FrontDoorOriginGroupResource IOperationSource<FrontDoorOriginGroupResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(document.RootElement);
+            var data = ModelReaderWriter.Read<FrontDoorOriginGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
             return new FrontDoorOriginGroupResource(_client, data);
         }
 
         async ValueTask<FrontDoorOriginGroupResource> IOperationSource<FrontDoorOriginGroupResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = FrontDoorOriginGroupData.DeserializeFrontDoorOriginGroupData(document.RootElement);
-            return new FrontDoorOriginGroupResource(_client, data);
+            var data = ModelReaderWriter.Read<FrontDoorOriginGroupData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerCdnContext.Default);
+            return await Task.FromResult(new FrontDoorOriginGroupResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

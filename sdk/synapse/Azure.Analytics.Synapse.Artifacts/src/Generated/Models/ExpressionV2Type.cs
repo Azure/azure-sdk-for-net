@@ -26,6 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         private const string FieldValue = "Field";
         private const string UnaryValue = "Unary";
         private const string BinaryValue = "Binary";
+        private const string NAryValue = "NAry";
 
         /// <summary> Constant. </summary>
         public static ExpressionV2Type Constant { get; } = new ExpressionV2Type(ConstantValue);
@@ -35,6 +36,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         public static ExpressionV2Type Unary { get; } = new ExpressionV2Type(UnaryValue);
         /// <summary> Binary. </summary>
         public static ExpressionV2Type Binary { get; } = new ExpressionV2Type(BinaryValue);
+        /// <summary> NAry. </summary>
+        public static ExpressionV2Type NAry { get; } = new ExpressionV2Type(NAryValue);
         /// <summary> Determines if two <see cref="ExpressionV2Type"/> values are the same. </summary>
         public static bool operator ==(ExpressionV2Type left, ExpressionV2Type right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ExpressionV2Type"/> values are not the same. </summary>

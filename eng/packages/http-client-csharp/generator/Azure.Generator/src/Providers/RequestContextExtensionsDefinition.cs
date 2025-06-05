@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Generator.CSharp.Expressions;
-using Microsoft.Generator.CSharp.Primitives;
-using Microsoft.Generator.CSharp.Providers;
-using Microsoft.Generator.CSharp.Snippets;
-using Microsoft.Generator.CSharp.Statements;
+using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using System.IO;
 using System.Threading;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
+using Azure.Generator.Primitives;
+using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
 {
     internal class RequestContextExtensionsDefinition : TypeProvider
     {
-        protected override TypeSignatureModifiers GetDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Static;
+        protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Static;
 
         protected override string BuildName() => "RequestContextExtensions";
 
@@ -24,22 +24,21 @@ namespace Azure.Generator.Providers
 
         private MethodProvider BuildParse()
         {
-            var requestContextParameter = new ParameterProvider("requestContext", $"", typeof(RequestContext));
             var signature = new MethodSignature(
                 "Parse",
                 null,
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Static | MethodSignatureModifiers.Extension,
                 new CSharpType(typeof((CancellationToken, ErrorOptions))),
                 null,
-                [requestContextParameter]);
+                [KnownAzureParameters.RequestContext]);
 
             var method = new MethodProvider(signature, new MethodBodyStatement[]
             {
-                new IfStatement(requestContextParameter.Equal(Null))
+                new IfStatement(KnownAzureParameters.RequestContext.Equal(Null))
                 {
                     Return(new TupleExpression(Static<CancellationToken>().Property(nameof(CancellationToken.None)), Static<ErrorOptions>().Property(nameof(ErrorOptions.Default))))
                 },
-                Return(new TupleExpression(requestContextParameter.Property(nameof(RequestContext.CancellationToken)), requestContextParameter.Property(nameof(RequestContext.ErrorOptions))))
+                Return(new TupleExpression(KnownAzureParameters.RequestContext.Property(nameof(RequestContext.CancellationToken)), KnownAzureParameters.RequestContext.Property(nameof(RequestContext.ErrorOptions))))
             }, this);
             return method;
         }

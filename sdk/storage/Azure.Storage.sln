@@ -155,9 +155,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Files.Shares.Samples.Tests", "Azure.Storage.DataMovement.Files.Shares\samples\Azure.Storage.DataMovement.Files.Shares.Samples.Tests.csproj", "{A564BB94-1867-4D43-98AB-F3C38E9AFA30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Files.Shares\BlobToFileSharesTests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{B08F17FE-7AFA-4777-B179-0FE15883EA50}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Storage", "Azure.ResourceManager.Storage\src\Azure.ResourceManager.Storage.csproj", "{6EA8939A-537F-475E-B16C-F9E80825C6AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.DataMovement.Blobs.Files.Shares.Tests", "Azure.Storage.DataMovement.Blobs.Files.Shares\tests\Azure.Storage.DataMovement.Blobs.Files.Shares.Tests.csproj", "{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -337,14 +337,14 @@ Global
 		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A564BB94-1867-4D43-98AB-F3C38E9AFA30}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B08F17FE-7AFA-4777-B179-0FE15883EA50}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EA8939A-537F-475E-B16C-F9E80825C6AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CABDC4-DCC3-463C-910F-EEBD7B3DADE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

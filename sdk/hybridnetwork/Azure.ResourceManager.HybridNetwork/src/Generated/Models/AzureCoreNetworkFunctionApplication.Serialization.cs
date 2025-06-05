@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridNetworkContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AzureCoreNetworkFunctionApplication)} does not support writing '{options.Format}' format.");
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAzureCoreNetworkFunctionApplication(document.RootElement, options);
                     }
                 default:

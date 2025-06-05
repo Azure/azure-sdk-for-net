@@ -37,14 +37,14 @@ namespace Azure.Storage.DataMovement.Tests
             throw new NotImplementedException();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
         protected internal override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
@@ -66,6 +66,11 @@ namespace Azure.Storage.DataMovement.Tests
                 uri.Path = Path.Combine(uri.Path, $"file{i}");
                 yield return MockStorageResourceItem.MakeSourceResource(_fileSize, uri.Uri);
             }
+        }
+
+        protected internal override async Task<StorageResourceContainerProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        {
+            return await Task.FromResult(new StorageResourceContainerProperties());
         }
     }
 }

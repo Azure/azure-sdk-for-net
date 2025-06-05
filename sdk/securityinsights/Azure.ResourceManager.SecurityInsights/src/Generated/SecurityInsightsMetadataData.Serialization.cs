@@ -1005,7 +1005,7 @@ namespace Azure.ResourceManager.SecurityInsights
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityInsightsContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -1021,7 +1021,7 @@ namespace Azure.ResourceManager.SecurityInsights
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSecurityInsightsMetadataData(document.RootElement, options);
                     }
                 default:

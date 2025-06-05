@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/cb96711fe5924dd4b642f6ffc9195db3467ea2ed/specification/netapp/resource-manager/readme.md
-tag: package-preview-2024-07-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/d7a38bf0c0b5fbd9e893e05ad0a7dbee18ac3a8d/specification/netapp/resource-manager/readme.md
+tag: package-2025-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -239,7 +239,7 @@ rename-mapping:
   BreakFileLocksRequest.clientIp: -|ip-address
   BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent
   BackupRestoreFiles.destinationVolumeId: -|arm-id
-  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent  
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
   VolumeRelocationProperties: NetAppVolumeRelocationProperties
   FileAccessLogs: NetAppFileAccessLog
   GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
@@ -255,6 +255,9 @@ rename-mapping:
   BackupsMigrationRequest.backupVaultId: -|string
   ListQuotaReportResponse: NetAppVolumeQuotaReportListResult
   QuotaReport: NetAppVolumeQuotaReport
+  GetKeyVaultStatusResponse: NetAppKeyVaultStatusResult
+  UsageResult : NetAppUsageResult
+  UsageName: NetAppUsageName
 
 models-to-treat-empty-string-as-null:
 - VolumeSnapshotProperties
@@ -263,7 +266,7 @@ list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
-  # remove this operation because the Snapshots_Update defines an empty object
+  # remove this operation because the Snapshots_Update defines an empty object-
   - remove-operation: Snapshots_Update
 
 ```

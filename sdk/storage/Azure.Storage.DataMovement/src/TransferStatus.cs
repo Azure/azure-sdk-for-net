@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement
         /// If set to `false`, the transfer currently has no items that has been skipped.
         ///
         /// It's possible to never have any items skipped if
-        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/> is not enabled in the <see cref="TransferOptions.CreationPreference"/>.
+        /// <see cref="StorageResourceCreationMode.SkipIfExists"/> is not enabled in the <see cref="TransferOptions.CreationMode"/>.
         /// </summary>
         public bool HasSkippedItems => _hasSkippedItemValue != 0;
 

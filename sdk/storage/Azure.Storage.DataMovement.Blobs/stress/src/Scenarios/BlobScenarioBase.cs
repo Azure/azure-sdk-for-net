@@ -16,8 +16,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
         protected internal readonly Uri _destinationBlobUri;
         protected internal int _blobSize;
         protected internal readonly TokenCredential _tokenCredential;
-        protected internal BlobsStorageResourceProvider _blobsStorageResourceProvider;
-        protected internal LocalFilesStorageResourceProvider _localFilesStorageResourceProvider;
         protected internal BlobServiceClient _blobServiceClient;
 
         public BlobScenarioBase(
@@ -33,8 +31,6 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             _destinationBlobUri = blobUri;
             _blobSize = blobSize != default ? blobSize.Value : DataMovementBlobStressConstants.DefaultObjectSize;
             _tokenCredential = tokenCredential;
-            _blobsStorageResourceProvider = new BlobsStorageResourceProvider(tokenCredential);
-            _localFilesStorageResourceProvider = new LocalFilesStorageResourceProvider();
             _blobServiceClient = new BlobServiceClient(blobUri, tokenCredential);
         }
     }

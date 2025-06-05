@@ -8,12 +8,12 @@ azure-arm: true
 csharp: true
 library-name: Quota
 namespace: Azure.ResourceManager.Quota
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1f4d6fcf1bbb2e71a32bb2079de12f17fedf56a/specification/quota/resource-manager/readme.md
-#tag: package-2023-06-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/8abab3c9c1ff7c4f9d393c2ddb00e5f735289b37/specification/quota/resource-manager/readme.md
+#tag: package-2025-03-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -21,7 +21,7 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -69,8 +69,6 @@ rename-mapping:
   UsagesProperties.resourceType: ResourceTypeName
   QuotaProperties.resourceType: ResourceTypeName
   SubRequest.resourceType: ResourceTypeName
-  GroupQuotasEnforcementResponse: GroupQuotaEnforcement
-  GroupQuotasEnforcementResponseProperties: GroupQuotaEnforcementProperties
   GroupQuotasEntity: GroupQuotaEntity
   GroupQuotasEntityBase: GroupQuotaEntityBase
   GroupQuotaSubscriptionId: GroupQuotaSubscription
@@ -79,13 +77,7 @@ rename-mapping:
   SubmittedResourceRequestStatus: GroupQuotaRequestStatus
   SubmittedResourceRequestStatusProperties: GroupQuotaRequestStatusProperties
   SubmittedResourceRequestStatusProperties.requestSubmitTime: RequestSubmittedOn
-  AdditionalAttributes: GroupQuotaAdditionalAttributes
-  AdditionalAttributesPatch: GroupQuotaAdditionalAttributesPatch
   AllocatedToSubscription: SubscriptionAllocatedQuota
-  EnforcementState: GroupQuotaEnforcementState
-  EnvironmentType: GroupQuotaEnvironmentType
-  GroupingId: GroupQuotaGroupingId
-  GroupingIdType: GroupQuotaGroupingIdType
   RequestState: QuotaRequestStatus
   ResourceUsages: GroupQuotaResourceUsages
 

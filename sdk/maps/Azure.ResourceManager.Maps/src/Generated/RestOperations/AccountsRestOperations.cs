@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Maps
                 case 201:
                     {
                         MapsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccountData.DeserializeMapsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Maps
                 case 201:
                     {
                         MapsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccountData.DeserializeMapsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccountData.DeserializeMapsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccountData.DeserializeMapsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccountData.DeserializeMapsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -407,7 +407,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccountData.DeserializeMapsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountSasToken value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccountSasToken.DeserializeMapsAccountSasToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountSasToken value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccountSasToken.DeserializeMapsAccountSasToken(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccountKeys.DeserializeMapsAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccountKeys.DeserializeMapsAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -852,7 +852,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccountKeys.DeserializeMapsAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -883,7 +883,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccountKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccountKeys.DeserializeMapsAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -934,7 +934,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.Maps
                 case 200:
                     {
                         MapsAccounts value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MapsAccounts.DeserializeMapsAccounts(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

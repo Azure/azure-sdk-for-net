@@ -34,21 +34,30 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(CommunicationIdentifierModel)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind.ToString());
-            if (Optional.IsDefined(RawId))
+            if (Optional.IsDefined(Kind))
             {
-                writer.WritePropertyName("rawId"u8);
-                writer.WriteStringValue(RawId);
+                writer.WritePropertyName("kind"u8);
+                writer.WriteStringValue(Kind.Value.ToString());
             }
+            writer.WritePropertyName("rawId"u8);
+            writer.WriteStringValue(RawId);
             writer.WritePropertyName("communicationUser"u8);
             writer.WriteObjectValue(CommunicationUser, options);
-            writer.WritePropertyName("phoneNumber"u8);
-            writer.WriteObjectValue(PhoneNumber, options);
-            writer.WritePropertyName("microsoftTeamsUser"u8);
-            writer.WriteObjectValue(MicrosoftTeamsUser, options);
-            writer.WritePropertyName("microsoftTeamsApp"u8);
-            writer.WriteObjectValue(MicrosoftTeamsApp, options);
+            if (Optional.IsDefined(PhoneNumber))
+            {
+                writer.WritePropertyName("phoneNumber"u8);
+                writer.WriteObjectValue(PhoneNumber, options);
+            }
+            if (Optional.IsDefined(MicrosoftTeamsUser))
+            {
+                writer.WritePropertyName("microsoftTeamsUser"u8);
+                writer.WriteObjectValue(MicrosoftTeamsUser, options);
+            }
+            if (Optional.IsDefined(MicrosoftTeamsApp))
+            {
+                writer.WritePropertyName("microsoftTeamsApp"u8);
+                writer.WriteObjectValue(MicrosoftTeamsApp, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -86,19 +95,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            CommunicationIdentifierModelKind kind = default;
+            AcsCommunicationIdentifierKind? kind = default;
             string rawId = default;
             CommunicationUserIdentifierModel communicationUser = default;
             PhoneNumberIdentifierModel phoneNumber = default;
             MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = default;
-            MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = default;
+            AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = new CommunicationIdentifierModelKind(property.Value.GetString());
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kind = new AcsCommunicationIdentifierKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("rawId"u8))
@@ -113,17 +126,29 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("phoneNumber"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     phoneNumber = PhoneNumberIdentifierModel.DeserializePhoneNumberIdentifierModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsUser"u8))
                 {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     microsoftTeamsUser = MicrosoftTeamsUserIdentifierModel.DeserializeMicrosoftTeamsUserIdentifierModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("microsoftTeamsApp"u8))
                 {
-                    microsoftTeamsApp = MicrosoftTeamsAppIdentifierModel.DeserializeMicrosoftTeamsAppIdentifierModel(property.Value, options);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    microsoftTeamsApp = AcsMicrosoftTeamsAppIdentifier.DeserializeAcsMicrosoftTeamsAppIdentifier(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +174,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(CommunicationIdentifierModel)} does not support writing '{options.Format}' format.");
             }
@@ -163,7 +188,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeCommunicationIdentifierModel(document.RootElement, options);
                     }
                 default:
@@ -177,7 +202,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static CommunicationIdentifierModel FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeCommunicationIdentifierModel(document.RootElement);
         }
 

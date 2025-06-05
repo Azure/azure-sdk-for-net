@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.SignalR
 
         SignalRResource IOperationSource<SignalRResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = SignalRData.DeserializeSignalRData(document.RootElement);
+            var data = ModelReaderWriter.Read<SignalRData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
             return new SignalRResource(_client, data);
         }
 
         async ValueTask<SignalRResource> IOperationSource<SignalRResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = SignalRData.DeserializeSignalRData(document.RootElement);
-            return new SignalRResource(_client, data);
+            var data = ModelReaderWriter.Read<SignalRData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerSignalRContext.Default);
+            return await Task.FromResult(new SignalRResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

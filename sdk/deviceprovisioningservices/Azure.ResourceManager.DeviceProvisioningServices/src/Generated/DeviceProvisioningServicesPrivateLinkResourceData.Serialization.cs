@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDeviceProvisioningServicesContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeviceProvisioningServicesPrivateLinkResourceData)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeDeviceProvisioningServicesPrivateLinkResourceData(document.RootElement, options);
                     }
                 default:

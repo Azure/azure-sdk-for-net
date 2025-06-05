@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAgFoodPlatformContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AgFoodPlatformPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.AgFoodPlatform
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAgFoodPlatformPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:

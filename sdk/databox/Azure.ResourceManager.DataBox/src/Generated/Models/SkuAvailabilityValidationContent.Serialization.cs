@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model.Value.ToSerialString());
+            }
         }
 
         SkuAvailabilityValidationContent IJsonModel<SkuAvailabilityValidationContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxJobTransferType transferType = default;
             string country = default;
             AzureLocation location = default;
+            DeviceModelName? model = default;
             DataBoxValidationInputDiscriminator validationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,6 +100,15 @@ namespace Azure.ResourceManager.DataBox.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("model"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    model = property.Value.GetString().ToDeviceModelName();
+                    continue;
+                }
                 if (property.NameEquals("validationType"u8))
                 {
                     validationType = property.Value.GetString().ToDataBoxValidationInputDiscriminator();
@@ -111,7 +126,8 @@ namespace Azure.ResourceManager.DataBox.Models
                 deviceType,
                 transferType,
                 country,
-                location);
+                location,
+                model);
         }
 
         BinaryData IPersistableModel<SkuAvailabilityValidationContent>.Write(ModelReaderWriterOptions options)
@@ -121,7 +137,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support writing '{options.Format}' format.");
             }
@@ -135,7 +151,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeSkuAvailabilityValidationContent(document.RootElement, options);
                     }
                 default:

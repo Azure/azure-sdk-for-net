@@ -538,7 +538,7 @@ namespace Azure.Search.Documents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static SearchOptions FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeSearchOptions(document.RootElement);
         }
 

@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.AppPlatform
 
         AppPlatformBuildServiceAgentPoolResource IOperationSource<AppPlatformBuildServiceAgentPoolResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(document.RootElement);
+            var data = ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
             return new AppPlatformBuildServiceAgentPoolResource(_client, data);
         }
 
         async ValueTask<AppPlatformBuildServiceAgentPoolResource> IOperationSource<AppPlatformBuildServiceAgentPoolResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = AppPlatformBuildServiceAgentPoolData.DeserializeAppPlatformBuildServiceAgentPoolData(document.RootElement);
-            return new AppPlatformBuildServiceAgentPoolResource(_client, data);
+            var data = ModelReaderWriter.Read<AppPlatformBuildServiceAgentPoolData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerAppPlatformContext.Default);
+            return await Task.FromResult(new AppPlatformBuildServiceAgentPoolResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

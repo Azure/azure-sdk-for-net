@@ -1,6 +1,6 @@
 # Release History
 
-## 1.14.0-beta.1 (Unreleased)
+## 1.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,11 +8,69 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.14.0 (2025-05-13)
+
+### Other Changes
+
+- Removed references to `Username`, `Password`, `AZURE_USERNAME`, and `AZURE_PASSWORD` in XML comments from `EnvironmentCredentialOptions` and `EnvironmentCredential` due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+- Marked `AZURE_USERNAME` and `AZURE_PASSWORD` as obsolete due to lack of MFA support. See [MFA enforcement details](https://aka.ms/azsdk/identity/mfa).
+- Added support for the `AZURE_TOKEN_CREDENTIALS` environment variable to `DefaultAzureCredential`, which allows for choosing between 'deployed service' and 'developer tools' credentials. Valid values are 'dev' for developer tools and 'prod' for deployed service.
+
+## 1.14.0-beta.4 (2025-05-01)
+
+### Bugs Fixed
+- Fixed an issue where Azure CLI credential could hang or delay due to I/O contention when standard input/output was shared with the host process ([#49582](https://github.com/Azure/azure-sdk-for-net/pull/49582)).
+
+### Other Changes
+
+- Updated `Microsoft.Identity.Client` dependency to version 4.71.1
+
+## 1.14.0-beta.3 (2025-04-08)
+
+### Features Added
+
+- `DefaultAzureCredential` now includes silent authentication via the authentication broker on Windows if the `Azure.Identity.Broker` NuGet package is referenced. This allows for a more seamless authentication experience when using the `DefaultAzureCredential` in Windows environments. Setting the `ExcludeBrokerCredential` property on `DefaultAzureCredentialOptions` disables this feature.
+
+### Bugs Fixed
+- `DefaultAzureCredential` no longer sends a probe request on each call to `GetToken`. It now only happens on the first call.
+
+### Other Changes
+
+- Marked `VisualStudioCodeCredential` as obsolete because the VS Code Azure Account extension on which this credential relies has been deprecated. See the Azure Account extension deprecation notice [here](https://github.com/microsoft/vscode-azure-account/issues/964).
+
+## 1.14.0-beta.2 (2025-03-11)
+
+### Bugs Fixed
+
+- `VisualStudioCredential` will now correctly fall through to the next credential in the chain when no account is found by Visual Studio. ([#48464](https://github.com/Azure/azure-sdk-for-net/issues/48464))
+
+### Other Changes
+- Updated Microsoft.Identity.Client dependency to version 4.69.1.
+- ManagedIdentityCredential now properly supports CAE.
+- An event is now logged when the `ManagedIdentityCredential` is used directly or indirectly via a credential chain indicating which managed identity source was selected and which `ManagedIdentityId` was specified.
+- Marked `UsernamePasswordCredential` as obsolete because Resource Owner Password Credentials (ROPC) token grant flow is incompatible with multifactor authentication (MFA), which Microsoft Entra ID requires for all tenants. See https://aka.ms/azsdk/identity/mfa for details about MFA enforcement and migration guidance.
+
+## 1.14.0-beta.1 (2025-02-11)
+
+### Features Added
+- Added a `Subscription` property to `AzureCliCredentialOptions` to allow specifying the Azure subscription ID or name to use when authenticating with the Azure CLI.
+
+### Bugs Fixed
+- Null or empty responses from IMDS probe attempts will now fall through to the next credential in the chain ([#47844](https://github.com/Azure/azure-sdk-for-net/issues/47844))
+
+### Other Changes
+- `AzurePowerShellCredential` no longer relies on APIs that are not available in Constrained Language Mode.
+
+## 1.13.2 (2025-01-14)
+
+### Bugs Fixed
+
 - Fixed an issue where setting `DefaultAzureCredentialOptions.TenantId` twice throws an `InvalidOperationException` ([#47035](https://github.com/Azure/azure-sdk-for-net/issues/47035))
 - Fixed an issue where `ManagedIdentityCredential` does not honor the `CancellationToken` passed to `GetToken` and `GetTokenAsync`. ([#47156](https://github.com/Azure/azure-sdk-for-net/issues/47156))
 - Fixed an issue where some credentials in `DefaultAzureCredential` would not fall through to the next credential in the chain under certain exception conditions.
-
-### Other Changes
+- Fixed a regression in `ManagedIdentityCredential` when used in a `ChainedTokenCredential` where the invalid json responses do not fall through to the next credential in the chain. ([#47470](https://github.com/Azure/azure-sdk-for-net/issues/47470))
 
 ## 1.13.1 (2024-10-24)
 

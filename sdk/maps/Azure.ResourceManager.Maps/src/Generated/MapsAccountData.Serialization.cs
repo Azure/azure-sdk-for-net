@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Maps
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMapsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MapsAccountData)} does not support writing '{options.Format}' format.");
             }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Maps
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMapsAccountData(document.RootElement, options);
                     }
                 default:

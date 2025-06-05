@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 201:
                     {
                         GuestConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 201:
                     {
                         GuestConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentData.DeserializeGuestConfigurationAssignmentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentList.DeserializeGuestConfigurationAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentList.DeserializeGuestConfigurationAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentList.DeserializeGuestConfigurationAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentList.DeserializeGuestConfigurationAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GuestConfigurationAssignmentList.DeserializeGuestConfigurationAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.GuestConfiguration
                 case 200:
                     {
                         GuestConfigurationAssignmentList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GuestConfigurationAssignmentList.DeserializeGuestConfigurationAssignmentList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

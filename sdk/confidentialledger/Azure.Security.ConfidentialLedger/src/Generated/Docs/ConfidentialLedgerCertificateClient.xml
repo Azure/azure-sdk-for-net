@@ -5,7 +5,7 @@
       <example>
 This sample shows how to call GetLedgerIdentityAsync and parse the result.
 <code><![CDATA[
-ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
 Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
@@ -14,7 +14,7 @@ Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
 ]]></code>
 This sample shows how to call GetLedgerIdentityAsync with all parameters and parse the result.
 <code><![CDATA[
-ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
 Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
 
@@ -27,7 +27,7 @@ Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
       <example>
 This sample shows how to call GetLedgerIdentity and parse the result.
 <code><![CDATA[
-ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
 Response response = client.GetLedgerIdentity("<ledgerId>");
 
@@ -36,7 +36,7 @@ Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
 ]]></code>
 This sample shows how to call GetLedgerIdentity with all parameters and parse the result.
 <code><![CDATA[
-ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(new Uri("http://localhost:3000"));
+ConfidentialLedgerCertificateClient client = new ConfidentialLedgerCertificateClient(null);
 
 Response response = client.GetLedgerIdentity("<ledgerId>");
 

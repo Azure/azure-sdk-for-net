@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(KeyVaultKeyNewVersionCreatedEventDataConverter))]
     public partial class KeyVaultKeyNewVersionCreatedEventData : IUtf8JsonSerializable, IJsonModel<KeyVaultKeyNewVersionCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultKeyNewVersionCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,40 +36,25 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(KeyVaultKeyNewVersionCreatedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("Id"u8);
-                writer.WriteStringValue(Id);
-            }
-            if (Optional.IsDefined(VaultName))
-            {
-                writer.WritePropertyName("VaultName"u8);
-                writer.WriteStringValue(VaultName);
-            }
-            if (Optional.IsDefined(ObjectType))
-            {
-                writer.WritePropertyName("ObjectType"u8);
-                writer.WriteStringValue(ObjectType);
-            }
-            if (Optional.IsDefined(ObjectName))
-            {
-                writer.WritePropertyName("ObjectName"u8);
-                writer.WriteStringValue(ObjectName);
-            }
-            if (Optional.IsDefined(Version))
-            {
-                writer.WritePropertyName("Version"u8);
-                writer.WriteStringValue(Version);
-            }
-            if (Optional.IsDefined(NBF))
+            writer.WritePropertyName("Id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("VaultName"u8);
+            writer.WriteStringValue(VaultName);
+            writer.WritePropertyName("ObjectType"u8);
+            writer.WriteStringValue(ObjectType);
+            writer.WritePropertyName("ObjectName"u8);
+            writer.WriteStringValue(ObjectName);
+            writer.WritePropertyName("Version"u8);
+            writer.WriteStringValue(Version);
+            if (Optional.IsDefined(Nbf))
             {
                 writer.WritePropertyName("NBF"u8);
-                writer.WriteNumberValue(NBF.Value);
+                writer.WriteNumberValue(Nbf.Value);
             }
-            if (Optional.IsDefined(EXP))
+            if (Optional.IsDefined(Exp))
             {
                 writer.WritePropertyName("EXP"u8);
-                writer.WriteNumberValue(EXP.Value);
+                writer.WriteNumberValue(Exp.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -77,7 +64,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -184,7 +171,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(KeyVaultKeyNewVersionCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -198,7 +185,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeKeyVaultKeyNewVersionCreatedEventData(document.RootElement, options);
                     }
                 default:
@@ -212,7 +199,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static KeyVaultKeyNewVersionCreatedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeKeyVaultKeyNewVersionCreatedEventData(document.RootElement);
         }
 
@@ -222,6 +209,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class KeyVaultKeyNewVersionCreatedEventDataConverter : JsonConverter<KeyVaultKeyNewVersionCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, KeyVaultKeyNewVersionCreatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override KeyVaultKeyNewVersionCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeKeyVaultKeyNewVersionCreatedEventData(document.RootElement);
+            }
         }
     }
 }

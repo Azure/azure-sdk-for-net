@@ -70,10 +70,25 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SecurityPolicies))
+            {
+                writer.WritePropertyName("securityPolicies"u8);
+                writer.WriteStartArray();
+                foreach (var item in SecurityPolicies)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SecurityPolicyConfigurations))
+            {
+                writer.WritePropertyName("securityPolicyConfigurations"u8);
+                writer.WriteObjectValue(SecurityPolicyConfigurations, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TrafficControllerProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(TrafficControllerProvisioningState.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -107,7 +122,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             IReadOnlyList<string> configurationEndpoints = default;
             IReadOnlyList<SubResource> frontends = default;
             IReadOnlyList<SubResource> associations = default;
-            ProvisioningState? provisioningState = default;
+            IReadOnlyList<SubResource> securityPolicies = default;
+            SecurityPolicyConfigurations securityPolicyConfigurations = default;
+            ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -206,13 +223,36 @@ namespace Azure.ResourceManager.ServiceNetworking
                             associations = array;
                             continue;
                         }
+                        if (property0.NameEquals("securityPolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<SubResource> array = new List<SubResource>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                            }
+                            securityPolicies = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("securityPolicyConfigurations"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityPolicyConfigurations = SecurityPolicyConfigurations.DeserializeSecurityPolicyConfigurations(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("provisioningState"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            provisioningState = new ProvisioningState(property0.Value.GetString());
+                            provisioningState = new ServiceNetworkingProvisioningState(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -234,6 +274,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                 configurationEndpoints ?? new ChangeTrackingList<string>(),
                 frontends ?? new ChangeTrackingList<SubResource>(),
                 associations ?? new ChangeTrackingList<SubResource>(),
+                securityPolicies ?? new ChangeTrackingList<SubResource>(),
+                securityPolicyConfigurations,
                 provisioningState,
                 serializedAdditionalRawData);
         }
@@ -245,7 +287,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TrafficControllerData)} does not support writing '{options.Format}' format.");
             }
@@ -259,7 +301,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeTrafficControllerData(document.RootElement, options);
                     }
                 default:

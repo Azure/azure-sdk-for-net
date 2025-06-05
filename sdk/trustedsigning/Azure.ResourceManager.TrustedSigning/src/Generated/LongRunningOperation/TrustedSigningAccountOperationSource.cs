@@ -5,7 +5,7 @@
 
 #nullable disable
 
-using System.Text.Json;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -23,16 +23,14 @@ namespace Azure.ResourceManager.TrustedSigning
 
         TrustedSigningAccountResource IOperationSource<TrustedSigningAccountResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            using var document = JsonDocument.Parse(response.ContentStream);
-            var data = TrustedSigningAccountData.DeserializeTrustedSigningAccountData(document.RootElement);
+            var data = ModelReaderWriter.Read<TrustedSigningAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
             return new TrustedSigningAccountResource(_client, data);
         }
 
         async ValueTask<TrustedSigningAccountResource> IOperationSource<TrustedSigningAccountResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            var data = TrustedSigningAccountData.DeserializeTrustedSigningAccountData(document.RootElement);
-            return new TrustedSigningAccountResource(_client, data);
+            var data = ModelReaderWriter.Read<TrustedSigningAccountData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerTrustedSigningContext.Default);
+            return await Task.FromResult(new TrustedSigningAccountResource(_client, data)).ConfigureAwait(false);
         }
     }
 }

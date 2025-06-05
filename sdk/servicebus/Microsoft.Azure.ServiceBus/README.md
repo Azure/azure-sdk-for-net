@@ -79,5 +79,3 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 - [Azure Service Bus General Documentation](https://learn.microsoft.com/azure/service-bus-messaging/)
 - [Azure Service Bus REST API Reference](https://learn.microsoft.com/rest/api/servicebus/)
 - [Azure Service Bus SDK for .NET Documentation](https://learn.microsoft.com/dotnet/api/overview/azure/service-bus?view=azure-dotnet)
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fservicebus%2FMicrosoft.Azure.ServiceBus%2FREADME.png)

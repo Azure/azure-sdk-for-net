@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Chaos
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChaosCapabilityData)} does not support writing '{options.Format}' format.");
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Chaos
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeChaosCapabilityData(document.RootElement, options);
                     }
                 default:

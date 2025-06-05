@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmData.DeserializeSqlVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmData.DeserializeSqlVmData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -912,7 +912,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -961,7 +961,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -988,7 +988,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1039,7 +1039,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -1068,7 +1068,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine
                 case 200:
                     {
                         SqlVmListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SqlVmListResult.DeserializeSqlVmListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

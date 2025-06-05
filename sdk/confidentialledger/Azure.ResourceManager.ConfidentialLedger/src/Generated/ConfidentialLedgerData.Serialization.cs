@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerConfidentialLedgerContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ConfidentialLedgerData)} does not support writing '{options.Format}' format.");
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ConfidentialLedger
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeConfidentialLedgerData(document.RootElement, options);
                     }
                 default:

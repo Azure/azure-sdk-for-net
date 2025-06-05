@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.IotHub.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotHubContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(IotHubCertificateWithNonceDescription)} does not support writing '{options.Format}' format.");
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.IotHub.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeIotHubCertificateWithNonceDescription(document.RootElement, options);
                     }
                 default:

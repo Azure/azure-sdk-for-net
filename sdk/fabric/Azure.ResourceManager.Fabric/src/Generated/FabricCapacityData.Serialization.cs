@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Fabric
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerFabricContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(FabricCapacityData)} does not support writing '{options.Format}' format.");
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Fabric
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeFabricCapacityData(document.RootElement, options);
                     }
                 default:

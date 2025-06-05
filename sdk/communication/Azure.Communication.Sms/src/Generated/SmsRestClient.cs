@@ -32,7 +32,7 @@ namespace Azure.Communication.Sms
         /// <param name="endpoint"> The communication resource, for example https://my-resource.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-12-10-preview")
+        public SmsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-05-29-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -91,7 +91,7 @@ namespace Azure.Communication.Sms
                 case 202:
                     {
                         SmsSendResponse value = default;
-                        using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
                         return Response.FromValue(value, message0.Response);
                     }
@@ -129,7 +129,7 @@ namespace Azure.Communication.Sms
                 case 202:
                     {
                         SmsSendResponse value = default;
-                        using var document = JsonDocument.Parse(message0.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message0.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SmsSendResponse.DeserializeSmsSendResponse(document.RootElement);
                         return Response.FromValue(value, message0.Response);
                     }

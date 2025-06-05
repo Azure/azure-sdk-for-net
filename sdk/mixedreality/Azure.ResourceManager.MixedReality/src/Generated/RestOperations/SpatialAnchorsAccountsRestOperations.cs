@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 201:
                     {
                         SpatialAnchorsAccountData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 201:
                     {
                         SpatialAnchorsAccountData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountData.DeserializeSpatialAnchorsAccountData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         MixedRealityAccountKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -667,7 +667,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         MixedRealityAccountKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         MixedRealityAccountKeys value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         MixedRealityAccountKeys value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = MixedRealityAccountKeys.DeserializeMixedRealityAccountKeys(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -818,7 +818,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -925,7 +925,7 @@ namespace Azure.ResourceManager.MixedReality
                 case 200:
                     {
                         SpatialAnchorsAccountListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = SpatialAnchorsAccountListResult.DeserializeSpatialAnchorsAccountListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

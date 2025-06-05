@@ -18,14 +18,11 @@ namespace Azure
     public static partial class AzureCoreExtensions
     {
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static dynamic ToDynamicFromJson(this System.BinaryData utf8Json, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         public static System.Threading.Tasks.ValueTask<T?> ToObjectAsync<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
         public static object? ToObjectFromJson(this System.BinaryData data) { throw null; }
         public static T? ToObject<T>(this System.BinaryData data, Azure.Core.Serialization.ObjectSerializer serializer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
@@ -99,11 +96,9 @@ namespace Azure
     public partial class JsonPatchDocument
     {
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
         public JsonPatchDocument() { }
         public JsonPatchDocument(Azure.Core.Serialization.ObjectSerializer serializer) { }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("JsonObjectSerializer uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
         public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument) { }
         public JsonPatchDocument(System.ReadOnlyMemory<byte> rawDocument, Azure.Core.Serialization.ObjectSerializer serializer) { }
         public void AppendAddRaw(string path, string rawJsonValue) { }
@@ -271,11 +266,17 @@ namespace Azure
         protected internal abstract bool TryGetHeader(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out string? value);
         protected internal abstract bool TryGetHeaderValues(string name, [System.Diagnostics.CodeAnalysis.NotNullWhenAttribute(true)] out System.Collections.Generic.IEnumerable<string>? values);
     }
-    public sealed partial class ResponseError
+    public sealed partial class ResponseError : System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>, System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>
     {
+        public ResponseError() { }
         public ResponseError(string? code, string? message) { }
         public string? Code { get { throw null; } }
         public string? Message { get { throw null; } }
+        Azure.ResponseError System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResponseError>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResponseError System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResponseError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         public override string ToString() { throw null; }
     }
     public abstract partial class Response<T> : Azure.NullableResponse<T>
@@ -319,6 +320,12 @@ namespace Azure.Core
         public override bool Equals(object? obj) { throw null; }
         public override int GetHashCode() { throw null; }
     }
+    public partial class AzureCoreContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureCoreContext() { }
+        public static Azure.Core.AzureCoreContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AzureLocation : System.IEquatable<Azure.Core.AzureLocation>
     {
@@ -358,6 +365,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation MexicoCentral { get { throw null; } }
         public string Name { get { throw null; } }
         public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
@@ -370,6 +378,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SouthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation SpainCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenSouth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
@@ -588,13 +597,10 @@ namespace Azure.Core
         public static Azure.Core.RequestContent Create(byte[] bytes, int index, int length) { throw null; }
         public static Azure.Core.RequestContent Create(System.IO.Stream stream) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.JsonPropertyNames propertyNameFormat, string dateTimeFormat = "o") { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This method uses reflection-based serialization which is incompatible with trimming. Try using one of the 'Create' overloads that doesn't wrap a serialized version of an object.")]
         public static Azure.Core.RequestContent Create(object serializable, Azure.Core.Serialization.ObjectSerializer? serializer) { throw null; }
         public static Azure.Core.RequestContent Create(System.ReadOnlyMemory<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(string content) { throw null; }
@@ -781,11 +787,14 @@ namespace Azure.Core
         public void Apply(Azure.Core.HttpMessage message) { }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TokenCredential
+    public abstract partial class TokenCredential : System.ClientModel.AuthenticationTokenProvider
     {
         protected TokenCredential() { }
+        public override System.ClientModel.Primitives.GetTokenOptions? CreateTokenOptions(System.Collections.Generic.IReadOnlyDictionary<string, object> properties) { throw null; }
         public abstract Azure.Core.AccessToken GetToken(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
+        public override System.ClientModel.Primitives.AuthenticationToken GetToken(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public abstract System.Threading.Tasks.ValueTask<Azure.Core.AccessToken> GetTokenAsync(Azure.Core.TokenRequestContext requestContext, System.Threading.CancellationToken cancellationToken);
+        public override System.Threading.Tasks.ValueTask<System.ClientModel.Primitives.AuthenticationToken> GetTokenAsync(System.ClientModel.Primitives.GetTokenOptions properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TokenRequestContext
@@ -853,7 +862,6 @@ namespace Azure.Core.Extensions
     public partial interface IAzureClientFactoryBuilderWithConfiguration<in TConfiguration> : Azure.Core.Extensions.IAzureClientFactoryBuilder
     {
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Binding strongly typed objects to configuration values requires generating dynamic code at runtime, for example instantiating generic types. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
-        [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("Binding strongly typed objects to configuration values is not supported with trimming. Use the Configuration Binder Source Generator (EnableConfigurationBindingGenerator=true) instead.")]
         Azure.Core.Extensions.IAzureClientBuilder<TClient, TOptions> RegisterClientFactory<TClient, TOptions>(TConfiguration configuration) where TOptions : class;
     }
     public partial interface IAzureClientFactoryBuilderWithCredential
@@ -1137,7 +1145,6 @@ namespace Azure.Core.Pipeline
 namespace Azure.Core.Serialization
 {
     [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1173,7 +1180,6 @@ namespace Azure.Core.Serialization
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
     [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This class uses reflection-based JSON serialization and deserialization that is not compatible with trimming.")]
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
@@ -1206,7 +1212,6 @@ namespace Azure.Core.Serialization
 namespace Azure.Messaging
 {
     [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
-    [System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute("This utilizes reflection-based JSON serialization and deserialization which is not compatible with trimming.")]
     public partial class CloudEvent
     {
         public CloudEvent(string source, string type, System.BinaryData? data, string? dataContentType, Azure.Messaging.CloudEventDataFormat dataFormat = Azure.Messaging.CloudEventDataFormat.Binary) { }

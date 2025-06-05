@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Automanage
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerAutomanageContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AutomanageConfigurationProfileAssignmentData)} does not support writing '{options.Format}' format.");
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automanage
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeAutomanageConfigurationProfileAssignmentData(document.RootElement, options);
                     }
                 default:

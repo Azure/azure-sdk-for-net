@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.CostManagement
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ScheduledActionData)} does not support writing '{options.Format}' format.");
             }
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CostManagement
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeScheduledActionData(document.RootElement, options);
                     }
                 default:

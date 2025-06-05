@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryInVmAccessControlProfileData.DeserializeGalleryInVmAccessControlProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -486,7 +486,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileList value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
                         value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.Compute
                 case 200:
                     {
                         GalleryInVmAccessControlProfileList value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
                         value = GalleryInVmAccessControlProfileList.DeserializeGalleryInVmAccessControlProfileList(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }

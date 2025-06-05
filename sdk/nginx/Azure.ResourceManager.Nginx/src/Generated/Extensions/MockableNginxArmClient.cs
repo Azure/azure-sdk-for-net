@@ -35,6 +35,18 @@ namespace Azure.ResourceManager.Nginx.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NginxDeploymentApiKeyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NginxDeploymentApiKeyResource.CreateResourceIdentifier" /> to create a <see cref="NginxDeploymentApiKeyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NginxDeploymentApiKeyResource"/> object. </returns>
+        public virtual NginxDeploymentApiKeyResource GetNginxDeploymentApiKeyResource(ResourceIdentifier id)
+        {
+            NginxDeploymentApiKeyResource.ValidateResourceId(id);
+            return new NginxDeploymentApiKeyResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="NginxCertificateResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="NginxCertificateResource.CreateResourceIdentifier" /> to create a <see cref="NginxCertificateResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

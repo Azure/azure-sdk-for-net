@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(MachineLearningServicesRunCompletedEventDataConverter))]
     public partial class MachineLearningServicesRunCompletedEventData : IUtf8JsonSerializable, IJsonModel<MachineLearningServicesRunCompletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningServicesRunCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -34,66 +36,24 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 throw new FormatException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(ExperimentId))
+            writer.WritePropertyName("experimentId"u8);
+            writer.WriteStringValue(ExperimentId);
+            writer.WritePropertyName("experimentName"u8);
+            writer.WriteStringValue(ExperimentName);
+            writer.WritePropertyName("runId"u8);
+            writer.WriteStringValue(RunId);
+            writer.WritePropertyName("runType"u8);
+            writer.WriteStringValue(RunType);
+            if (Optional.IsDefined(RunTags))
             {
-                writer.WritePropertyName("experimentId"u8);
-                writer.WriteStringValue(ExperimentId);
+                writer.WritePropertyName("runTags"u8);
+                writer.WriteObjectValue<object>(RunTags, options);
             }
-            if (Optional.IsDefined(ExperimentName))
+            if (Optional.IsDefined(RunProperties))
             {
-                writer.WritePropertyName("experimentName"u8);
-                writer.WriteStringValue(ExperimentName);
+                writer.WritePropertyName("runProperties"u8);
+                writer.WriteObjectValue<object>(RunProperties, options);
             }
-            if (Optional.IsDefined(RunId))
-            {
-                writer.WritePropertyName("runId"u8);
-                writer.WriteStringValue(RunId);
-            }
-            if (Optional.IsDefined(RunType))
-            {
-                writer.WritePropertyName("runType"u8);
-                writer.WriteStringValue(RunType);
-            }
-            writer.WritePropertyName("runTags"u8);
-            writer.WriteStartObject();
-            foreach (var item in RunTags)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
-            writer.WritePropertyName("runProperties"u8);
-            writer.WriteStartObject();
-            foreach (var item in RunProperties)
-            {
-                writer.WritePropertyName(item.Key);
-                if (item.Value == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -102,7 +62,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -135,8 +95,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             string experimentName = default;
             string runId = default;
             string runType = default;
-            IReadOnlyDictionary<string, BinaryData> runTags = default;
-            IReadOnlyDictionary<string, BinaryData> runProperties = default;
+            object runTags = default;
+            object runProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -163,36 +123,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 }
                 if (property.NameEquals("runTags"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
+                        continue;
                     }
-                    runTags = dictionary;
+                    runTags = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("runProperties"u8))
                 {
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
+                        continue;
                     }
-                    runProperties = dictionary;
+                    runProperties = property.Value.GetObject();
                     continue;
                 }
                 if (options.Format != "W")
@@ -218,7 +162,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(MachineLearningServicesRunCompletedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -232,7 +176,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeMachineLearningServicesRunCompletedEventData(document.RootElement, options);
                     }
                 default:
@@ -246,7 +190,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static MachineLearningServicesRunCompletedEventData FromResponse(Response response)
         {
-            using var document = JsonDocument.Parse(response.Content);
+            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
             return DeserializeMachineLearningServicesRunCompletedEventData(document.RootElement);
         }
 
@@ -256,6 +200,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class MachineLearningServicesRunCompletedEventDataConverter : JsonConverter<MachineLearningServicesRunCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, MachineLearningServicesRunCompletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override MachineLearningServicesRunCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMachineLearningServicesRunCompletedEventData(document.RootElement);
+            }
         }
     }
 }

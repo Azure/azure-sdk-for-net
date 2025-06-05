@@ -338,5 +338,17 @@ namespace Azure.Identity.Tests
             Assert.ThrowsAsync<CredentialUnavailableException>(
                 async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
         }
+
+         [Test]
+         [TestCase("TS003: Error, TS005: No accounts found.  Please go to Tools->Options->Azure Services Authentication, and add an account to be authenticated to Azure services during development.")]
+        public void GeneralExceptions_With_CertainErrors_throws_CredentialUnavailableException(string exceptionMessage)
+        {
+            var testProcess = new TestProcess() { ExceptionOnStartHandler = p => throw new InvalidOperationException(exceptionMessage) };
+            var fileSystem = CredentialTestHelpers.CreateFileSystemForVisualStudio();
+            var credential = InstrumentClient(new VisualStudioCredential(default, default, fileSystem, new TestProcessService(testProcess), new VisualStudioCredentialOptions { IsChainedCredential = false }));
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await credential.GetTokenAsync(new TokenRequestContext(new[] { "https://vault.azure.net/" }), CancellationToken.None));
+        }
     }
 }

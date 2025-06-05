@@ -31,7 +31,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
             Assert.Null(azureMonitorOptions.StorageDirectory);
         }
 
-#if !NETFRAMEWORK
+#if NET
         [Fact]
         public void VerifyConfigure_ViaJson()
         {

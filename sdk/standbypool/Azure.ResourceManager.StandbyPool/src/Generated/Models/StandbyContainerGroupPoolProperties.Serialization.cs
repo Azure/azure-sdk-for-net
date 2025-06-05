@@ -38,6 +38,16 @@ namespace Azure.ResourceManager.StandbyPool.Models
             writer.WriteObjectValue(ElasticityProfile, options);
             writer.WritePropertyName("containerGroupProperties"u8);
             writer.WriteObjectValue(ContainerGroupProperties, options);
+            if (Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -51,7 +61,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,6 +92,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             }
             StandbyContainerGroupPoolElasticityProfile elasticityProfile = default;
             StandbyContainerGroupProperties containerGroupProperties = default;
+            IList<string> zones = default;
             StandbyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -95,6 +106,20 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 if (property.NameEquals("containerGroupProperties"u8))
                 {
                     containerGroupProperties = StandbyContainerGroupProperties.DeserializeStandbyContainerGroupProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("zones"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    zones = array;
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -112,7 +137,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, provisioningState, serializedAdditionalRawData);
+            return new StandbyContainerGroupPoolProperties(elasticityProfile, containerGroupProperties, zones ?? new ChangeTrackingList<string>(), provisioningState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StandbyContainerGroupPoolProperties>.Write(ModelReaderWriterOptions options)
@@ -122,7 +147,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerStandbyPoolContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StandbyContainerGroupPoolProperties)} does not support writing '{options.Format}' format.");
             }
@@ -136,7 +161,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeStandbyContainerGroupPoolProperties(document.RootElement, options);
                     }
                 default:

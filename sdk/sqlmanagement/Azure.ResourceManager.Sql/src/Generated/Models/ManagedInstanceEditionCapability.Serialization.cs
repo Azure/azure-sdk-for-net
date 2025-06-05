@@ -41,6 +41,11 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsGeneralPurposeV2))
+            {
+                writer.WritePropertyName("isGeneralPurposeV2"u8);
+                writer.WriteBooleanValue(IsGeneralPurposeV2.Value);
+            }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
             {
                 writer.WritePropertyName("supportedFamilies"u8);
@@ -61,11 +66,6 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
-            {
-                writer.WritePropertyName("zoneRedundant"u8);
-                writer.WriteBooleanValue(IsZoneRedundant.Value);
-            }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Sql.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -114,9 +114,9 @@ namespace Azure.ResourceManager.Sql.Models
                 return null;
             }
             string name = default;
+            bool? isGeneralPurposeV2 = default;
             IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies = default;
             IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
-            bool? zoneRedundant = default;
             SqlCapabilityStatus? status = default;
             string reason = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -126,6 +126,15 @@ namespace Azure.ResourceManager.Sql.Models
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("isGeneralPurposeV2"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isGeneralPurposeV2 = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("supportedFamilies"u8))
@@ -156,15 +165,6 @@ namespace Azure.ResourceManager.Sql.Models
                     supportedStorageCapabilities = array;
                     continue;
                 }
-                if (property.NameEquals("zoneRedundant"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    zoneRedundant = property.Value.GetBoolean();
-                    continue;
-                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -187,9 +187,9 @@ namespace Azure.ResourceManager.Sql.Models
             serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstanceEditionCapability(
                 name,
+                isGeneralPurposeV2,
                 supportedFamilies ?? new ChangeTrackingList<ManagedInstanceFamilyCapability>(),
                 supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
-                zoneRedundant,
                 status,
                 reason,
                 serializedAdditionalRawData);
@@ -226,6 +226,22 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         builder.AppendLine($"'{Name}'");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsGeneralPurposeV2), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  isGeneralPurposeV2: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(IsGeneralPurposeV2))
+                {
+                    builder.Append("  isGeneralPurposeV2: ");
+                    var boolValue = IsGeneralPurposeV2.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -272,22 +288,6 @@ namespace Azure.ResourceManager.Sql.Models
                         }
                         builder.AppendLine("  ]");
                     }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  zoneRedundant: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsZoneRedundant))
-                {
-                    builder.Append("  zoneRedundant: ");
-                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
                 }
             }
 
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Sql.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
                 case "bicep":
                     return SerializeBicep(options);
                 default:
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     {
-                        using JsonDocument document = JsonDocument.Parse(data);
+                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
                         return DeserializeManagedInstanceEditionCapability(document.RootElement, options);
                     }
                 default:
