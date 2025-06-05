@@ -83,7 +83,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                     _logger.LogWarning("Message decoding has failed! Check MessageEncoding settings. MessageId={messageId}.", receivedMessage.MessageId);
                     var poisonQueueClient = QueueListenerFactory.CreatePoisonQueueReference(nonEncodingQueueServiceClient, queueClient.Name);
                     var queueProcessor = QueueListenerFactory.CreateQueueProcessor(queueClient, poisonQueueClient, _loggerFactory, _queueProcessorFactory, _queuesOptions, _messageEnqueuedWatcher);
-                    await queueProcessor.HandlePoisonMessageAsync(receivedMessage, args.CancellationToken).ConfigureAwait(false);
+                    await queueProcessor.HandlePoisonMessageAsync(receivedMessage).ConfigureAwait(false);
                 }
             };
         }
