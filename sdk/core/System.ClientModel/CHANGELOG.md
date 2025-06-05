@@ -1,5 +1,11 @@
 # Release History
 
+## 1.4.2 (2025-06-05)
+
+### Bugs Fixed
+
+- First part of performance improvements for System.ClientModel.SourceGeneration to shorten lengthy builds.
+
 ## 1.4.1 (2025-05-09)
 
 ### Bugs Fixed
