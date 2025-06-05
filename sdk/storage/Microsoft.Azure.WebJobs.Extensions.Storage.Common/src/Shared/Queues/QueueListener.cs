@@ -126,7 +126,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             // if the function runs longer than this, the invisibility will be updated
             // on a timer periodically for the duration of the function execution
-            _visibilityTimeout = _queueOptions.VisibilityTimeout;
+            _visibilityTimeout = TimeSpan.FromMinutes(10);
 
             if (sharedWatcher != null)
             {
