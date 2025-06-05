@@ -11,8 +11,8 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Target resource. </summary>
-    public partial class TargetResource
+    /// <summary> The resource Id model. </summary>
+    public partial class ArmResourceReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,44 +46,37 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
-        internal TargetResource()
+        /// <summary> Initializes a new instance of <see cref="ArmResourceReference"/>. </summary>
+        internal ArmResourceReference()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
-        /// <param name="id"> The Azure resource ID of the resource. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmResourceReference"/>. </summary>
+        /// <param name="id"> The fully qualified Azure resource ID. </param>
         /// <param name="extension"> The extension the resource was deployed with. </param>
+        /// <param name="resourceType"> The resource type. </param>
         /// <param name="identifiers"> The extensible resource identifiers. </param>
         /// <param name="apiVersion"> The API version the resource was deployed with. </param>
-        /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmResourceReference(ResourceIdentifier id, ArmDeploymentExtensionDefinition extension, string resourceType, BinaryData identifiers, string apiVersion, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
-            ResourceName = resourceName;
-            ResourceType = resourceType;
             Extension = extension;
+            ResourceType = resourceType;
             Identifiers = identifiers;
             ApiVersion = apiVersion;
-            SymbolicName = symbolicName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource ID of the resource. </summary>
+        /// <summary> The fully qualified Azure resource ID. </summary>
         [WirePath("id")]
-        public string Id { get; }
-        /// <summary> The name of the resource. </summary>
-        [WirePath("resourceName")]
-        public string ResourceName { get; }
-        /// <summary> The type of the resource. </summary>
-        [WirePath("resourceType")]
-        public ResourceType? ResourceType { get; }
+        public ResourceIdentifier Id { get; }
         /// <summary> The extension the resource was deployed with. </summary>
         [WirePath("extension")]
         public ArmDeploymentExtensionDefinition Extension { get; }
+        /// <summary> The resource type. </summary>
+        [WirePath("resourceType")]
+        public string ResourceType { get; }
         /// <summary>
         /// The extensible resource identifiers.
         /// <para>
@@ -119,8 +112,5 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The API version the resource was deployed with. </summary>
         [WirePath("apiVersion")]
         public string ApiVersion { get; }
-        /// <summary> The symbolic name of the resource as defined in the deployment template. </summary>
-        [WirePath("symbolicName")]
-        public string SymbolicName { get; }
     }
 }

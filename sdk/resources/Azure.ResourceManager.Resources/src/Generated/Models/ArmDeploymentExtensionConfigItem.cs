@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    /// <summary> Target resource. </summary>
-    public partial class TargetResource
+    /// <summary> The ArmDeploymentExtensionConfigItem. </summary>
+    public partial class ArmDeploymentExtensionConfigItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,46 +45,29 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
-        internal TargetResource()
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
+        public ArmDeploymentExtensionConfigItem()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TargetResource"/>. </summary>
-        /// <param name="id"> The Azure resource ID of the resource. </param>
-        /// <param name="resourceName"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. </param>
-        /// <param name="extension"> The extension the resource was deployed with. </param>
-        /// <param name="identifiers"> The extensible resource identifiers. </param>
-        /// <param name="apiVersion"> The API version the resource was deployed with. </param>
-        /// <param name="symbolicName"> The symbolic name of the resource as defined in the deployment template. </param>
+        /// <summary> Initializes a new instance of <see cref="ArmDeploymentExtensionConfigItem"/>. </summary>
+        /// <param name="extensionConfigPropertyType"> The value type of the extension config property. </param>
+        /// <param name="value"> The value of the extension config property. </param>
+        /// <param name="keyVaultReference"> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetResource(string id, string resourceName, ResourceType? resourceType, ArmDeploymentExtensionDefinition extension, BinaryData identifiers, string apiVersion, string symbolicName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArmDeploymentExtensionConfigItem(ExtensionConfigPropertyType? extensionConfigPropertyType, BinaryData value, KeyVaultParameterReference keyVaultReference, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            ResourceName = resourceName;
-            ResourceType = resourceType;
-            Extension = extension;
-            Identifiers = identifiers;
-            ApiVersion = apiVersion;
-            SymbolicName = symbolicName;
+            ExtensionConfigPropertyType = extensionConfigPropertyType;
+            Value = value;
+            KeyVaultReference = keyVaultReference;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The Azure resource ID of the resource. </summary>
-        [WirePath("id")]
-        public string Id { get; }
-        /// <summary> The name of the resource. </summary>
-        [WirePath("resourceName")]
-        public string ResourceName { get; }
-        /// <summary> The type of the resource. </summary>
-        [WirePath("resourceType")]
-        public ResourceType? ResourceType { get; }
-        /// <summary> The extension the resource was deployed with. </summary>
-        [WirePath("extension")]
-        public ArmDeploymentExtensionDefinition Extension { get; }
+        /// <summary> The value type of the extension config property. </summary>
+        [WirePath("type")]
+        public ExtensionConfigPropertyType? ExtensionConfigPropertyType { get; }
         /// <summary>
-        /// The extensible resource identifiers.
+        /// The value of the extension config property.
         /// <para>
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
@@ -114,13 +96,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
-        [WirePath("identifiers")]
-        public BinaryData Identifiers { get; }
-        /// <summary> The API version the resource was deployed with. </summary>
-        [WirePath("apiVersion")]
-        public string ApiVersion { get; }
-        /// <summary> The symbolic name of the resource as defined in the deployment template. </summary>
-        [WirePath("symbolicName")]
-        public string SymbolicName { get; }
+        [WirePath("value")]
+        public BinaryData Value { get; set; }
+        /// <summary> The Azure Key Vault reference used to retrieve the secret value of the extension config property. </summary>
+        [WirePath("keyVaultReference")]
+        public KeyVaultParameterReference KeyVaultReference { get; set; }
     }
 }
