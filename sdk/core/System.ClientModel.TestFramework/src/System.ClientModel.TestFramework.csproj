@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
+    <LangVersion>12.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <AssemblyTitle>System.ClientModel.TestFramework</AssemblyTitle>
+    <AssemblyDescription>Test framework for System.ClientModel-based client libraries</AssemblyDescription>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Version>1.0.0-beta.1</Version>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
+</Project>
