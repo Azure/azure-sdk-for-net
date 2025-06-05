@@ -42,7 +42,7 @@ namespace Azure.Generator.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers() =>
             TypeSignatureModifiers.Public | TypeSignatureModifiers.Static | TypeSignatureModifiers.Partial;
 
-        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"IAzureClientBuilder{{TClient, TOptions}}\"/>.";
+        protected override FormattableString Description => $"Extension methods to add clients to <see cref=\"{typeof(IAzureClientBuilder<,>)}\"/>.";
 
         protected override MethodProvider[] BuildMethods()
         {
@@ -63,7 +63,7 @@ namespace Azure.Generator.Providers
                     tConfiguration);
                 var methodName = $"Add{client.Name}";
                 FormattableString methodDescription =
-                    $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"{Static(typeof(IAzureClientBuilder<,>))}\"/>.";
+                    $"Registers a <see cref=\"{client.Name}\"/> client with the specified <see cref=\"{typeof(IAzureClientBuilder<,>)}\"/>.";
                 var methodModifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Static |
                                       MethodSignatureModifiers.Extension;
                 var methodReturnType = new CSharpType(typeof(IAzureClientBuilder<,>), client.Type,

@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System.IO;
-using System.Linq;
 
 namespace Azure.Generator.Management
 {
@@ -19,6 +17,18 @@ namespace Azure.Generator.Management
                 TransformResource(model, type);
             }
             return type;
+        }
+
+        protected override MethodProvider? VisitMethod(MethodProvider method)
+        {
+            foreach (var parameter in method.Signature.Parameters)
+            {
+                if (ManagementClientGenerator.Instance.OutputLibrary.IsResourceModelType(parameter.Type))
+                {
+                    parameter.Update("data");
+                }
+            }
+            return base.VisitMethod(method);
         }
 
         private void TransformResource(InputModelType model, TypeProvider type)
