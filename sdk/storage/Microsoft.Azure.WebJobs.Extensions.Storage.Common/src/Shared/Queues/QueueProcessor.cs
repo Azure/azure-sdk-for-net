@@ -99,7 +99,7 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
                 }
                 else
                 {
-                    await ReleaseMessageAsync(message, result, QueuesOptions.VisibilityTimeout).ConfigureAwait(false);
+                    await ReleaseMessageAsync(message, result, QueuesOptions.VisibilityTimeout, CancellationToken.None).ConfigureAwait(false);
                 }
             }
             else
@@ -143,8 +143,9 @@ namespace Microsoft.Azure.WebJobs.Host.Queues
         /// <param name="message">The message to release</param>
         /// <param name="result">The <see cref="FunctionResult"/> from the job invocation.</param>
         /// <param name="visibilityTimeout">The visibility timeout to set for the message.</param>
+        /// <param name="cancellationToken">The <see cref="CancellationToken"/> to use.</param>
         /// <returns></returns>
-        protected virtual async Task ReleaseMessageAsync(QueueMessage message, FunctionResult result, TimeSpan visibilityTimeout)
+        protected virtual async Task ReleaseMessageAsync(QueueMessage message, FunctionResult result, TimeSpan visibilityTimeout, CancellationToken cancellationToken)
         {
             try
             {
