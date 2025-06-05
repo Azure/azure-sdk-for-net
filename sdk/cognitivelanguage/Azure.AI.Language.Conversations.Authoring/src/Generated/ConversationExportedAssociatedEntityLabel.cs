@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Represents an exported intent of a conversational project. </summary>
-    public partial class ConversationExportedIntent
+    /// <summary> Represents an associated entity label for an intent. </summary>
+    public partial class ConversationExportedAssociatedEntityLabel
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,40 +45,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedIntent"/>. </summary>
-        /// <param name="category"> The intent category. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationExportedAssociatedEntityLabel"/>. </summary>
+        /// <param name="category"> The category of the entity label. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="category"/> is null. </exception>
-        public ConversationExportedIntent(string category)
+        public ConversationExportedAssociatedEntityLabel(string category)
         {
             Argument.AssertNotNull(category, nameof(category));
 
             Category = category;
-            AssociatedEntities = new ChangeTrackingList<ConversationExportedAssociatedEntityLabel>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedIntent"/>. </summary>
-        /// <param name="category"> The intent category. </param>
-        /// <param name="description"> The intent description. </param>
-        /// <param name="associatedEntities"> The list of associated entities. </param>
+        /// <summary> Initializes a new instance of <see cref="ConversationExportedAssociatedEntityLabel"/>. </summary>
+        /// <param name="category"> The category of the entity label. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationExportedIntent(string category, string description, IList<ConversationExportedAssociatedEntityLabel> associatedEntities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationExportedAssociatedEntityLabel(string category, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Category = category;
-            Description = description;
-            AssociatedEntities = associatedEntities;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationExportedIntent"/> for deserialization. </summary>
-        internal ConversationExportedIntent()
+        /// <summary> Initializes a new instance of <see cref="ConversationExportedAssociatedEntityLabel"/> for deserialization. </summary>
+        internal ConversationExportedAssociatedEntityLabel()
         {
         }
 
-        /// <summary> The intent category. </summary>
+        /// <summary> The category of the entity label. </summary>
         public string Category { get; }
-        /// <summary> The intent description. </summary>
-        public string Description { get; set; }
-        /// <summary> The list of associated entities. </summary>
-        public IList<ConversationExportedAssociatedEntityLabel> AssociatedEntities { get; }
     }
 }
