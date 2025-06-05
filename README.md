@@ -60,7 +60,7 @@ The software may collect information about you and your use of the software and 
 
 Telemetry collection is on by default.
 
-To opt out, you can disable telemetry at client construction. Creating a [synchronous policy](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md#implementing-a-synchronous-policy)] in your application gives you access to the headers sent with each request, allowing you to remove the `User-Agent` header containing client telemetry.  To use the policy, you will add it to the options for your specific client as part of client creation.  This will disable Azure SDK telemetry for all methods in the client. You will need to register the policy with each client created.
+To opt out, you can disable telemetry at client construction. Creating a [synchronous policy](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md#implementing-a-synchronous-policy) in your application gives you access to the headers sent with each request, allowing you to remove the `User-Agent` header containing client telemetry.  To use the policy, you will add it to the options for your specific client as part of client creation.  This will disable Azure SDK telemetry for all methods in the client. You will need to register the policy with each client created.
 
 > NOTE: `HttpClient` may set default user agent headers as part of the .NET platform behavior.  This value does not contain any Azure SDK telemetry information.
 
