@@ -69,7 +69,7 @@ namespace Azure.Core
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
         }
 
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, object value, ModelReaderWriterOptions? options = null)
+        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions? options = null)
         {
             switch (value)
             {
@@ -133,7 +133,7 @@ namespace Azure.Core
                     foreach (KeyValuePair<string, object> pair in enumerable)
                     {
                         writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue<object>(pair.Value);
+                        writer.WriteObjectValue(pair.Value);
                     }
                     writer.WriteEndObject();
                     break;
@@ -141,7 +141,7 @@ namespace Azure.Core
                     writer.WriteStartArray();
                     foreach (object item in objectEnumerable)
                     {
-                        writer.WriteObjectValue<object>(item);
+                        writer.WriteObjectValue(item);
                     }
                     writer.WriteEndArray();
                     break;
