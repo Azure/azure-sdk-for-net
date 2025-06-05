@@ -75,8 +75,6 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("CheckKeyValuesAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("CheckKeyValue", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
     [CodeGenSuppress("CheckKeyValueAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(RequestContext))]
-    [CodeGenSuppress("GetSnapshots", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(RequestContext))]
-    [CodeGenSuppress("GetSnapshotsAsync", typeof(string), typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("CheckSnapshotsAsync", typeof(string), typeof(string), typeof(RequestContext))]
     [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(RequestContext))]
@@ -87,8 +85,6 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<LabelFields>), typeof(RequestContext))]
     [CodeGenSuppress("CheckLabels", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<LabelFields>), typeof(RequestContext))]
     [CodeGenSuppress("CheckLabelsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<LabelFields>), typeof(RequestContext))]
-    [CodeGenSuppress("GetRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<KeyValueFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
-    [CodeGenSuppress("GetRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<KeyValueFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("CheckRevisions", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<KeyValueFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
     [CodeGenSuppress("CheckRevisionsAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<KeyValueFields>), typeof(IEnumerable<string>), typeof(RequestContext))]
 
@@ -96,6 +92,7 @@ namespace Azure.Data.AppConfiguration
     {
         private const string OTelAttributeKey = "az.appconfiguration.key";
         private readonly SyncTokenPolicy _syncTokenPolicy;
+        private readonly string _syncToken;
 
         /// <summary>
         /// Protected constructor to allow mocking.
@@ -128,7 +125,7 @@ namespace Azure.Data.AppConfiguration
             ParseConnectionString(connectionString, out _endpoint, out var credential, out var secret);
             _apiVersion = options.Version;
             _syncTokenPolicy = new SyncTokenPolicy();
-            _pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, new AuthenticationPolicy(credential, secret), _syncTokenPolicy);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
         }
@@ -159,7 +156,7 @@ namespace Azure.Data.AppConfiguration
 
             _endpoint = endpoint;
             _syncTokenPolicy = new SyncTokenPolicy();
-            _pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
+            Pipeline = CreatePipeline(options, new BearerTokenAuthenticationPolicy(credential, options.GetDefaultScope(endpoint)), _syncTokenPolicy);
             _apiVersion = options.Version;
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -187,7 +184,7 @@ namespace Azure.Data.AppConfiguration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
             _syncToken = syncToken;
             _apiVersion = options.Version;
@@ -207,7 +204,7 @@ namespace Azure.Data.AppConfiguration
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            Pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
             _syncToken = syncToken;
             _apiVersion = options.Version;
@@ -762,7 +759,7 @@ namespace Azure.Data.AppConfiguration
                 return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, tags, conditions, context);
             }
 
-            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, Pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -779,7 +776,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -795,7 +792,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, null, snapshotName, null, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, null, snapshotName, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -814,7 +811,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -832,7 +829,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(null, null, null, null, fieldsString, snapshotName, null, null, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, null, null, null, null, fieldsString, snapshotName, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetConfigurationSettingsForSnapshot", "items", "@nextLink", context);
         }
 
         /// <summary> Gets a single configuration snapshot. </summary>
@@ -1261,7 +1258,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, null, snapshotFields, snapshotStatus, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, Pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary> Gets a list of configuration snapshots. </summary>
@@ -1290,7 +1287,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSnapshotsRequest(name, null, snapshotFields, snapshotStatus, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSnapshotsNextPageRequest(nextLink, name, null, snapshotFields, snapshotStatus, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, _pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationSnapshot.DeserializeSnapshot, ClientDiagnostics, Pipeline, "ConfigurationClient.GetSnapshots", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1334,7 +1331,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, tags, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, tags, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1354,7 +1351,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRevisionsRequest(key, label, null, dateTime, fieldsString, tags, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRevisionsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, tags, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, Pipeline, "ConfigurationClient.GetRevisions", "items", "@nextLink", context);
         }
 
         /// <summary>
@@ -1461,7 +1458,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
         /// <summary> Gets a list of labels. </summary>
@@ -1484,7 +1481,7 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetLabelsRequest(name, null, dateTime, labelFields, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetLabelsNextPageRequest(nextLink, name, null, dateTime, labelFields, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, _pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SettingLabel.DeserializeLabel, ClientDiagnostics, Pipeline, "ConfigurationClient.GetLabels", "items", "@nextLink", cancellationToken);
         }
 
         private async ValueTask<Response<ConfigurationSetting>> SetReadOnlyAsync(string key, string label, MatchConditions requestOptions, bool isReadOnly, bool async, CancellationToken cancellationToken)
