@@ -271,6 +271,13 @@ namespace Azure.ResourceManager
 
         [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
         [UnconditionalSuppressMessage("Trimming", "IL3050", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
+        public static T JsonDeserialize<T>(string json, JsonSerializerOptions options)
+        {
+            return JsonSerializer.Deserialize<T>(json, options);
+        }
+
+        [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
+        [UnconditionalSuppressMessage("Trimming", "IL3050", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
         public static T JsonDeserialize<T>(JsonElement element, JsonSerializerOptions options)
         {
             return JsonSerializer.Deserialize<T>(element.GetRawText(), options);
@@ -278,9 +285,9 @@ namespace Azure.ResourceManager
 
         [UnconditionalSuppressMessage("Trimming", "IL2026", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
         [UnconditionalSuppressMessage("Trimming", "IL3050", Justification = "By passing in the JsonSerializerOptions with a reference to AzureResourceManagerCosmosDBContext.Default we are certain there is no AOT compat issue.")]
-        public static string JsonSerialize<T>(T data, JsonSerializerOptions options)
+        public static void JsonSerialize<T>(Utf8JsonWriter writer, T data, JsonSerializerOptions options)
         {
-            return JsonSerializer.Serialize(data, options);
+            JsonSerializer.Serialize(writer, data, options);
         }
 
         internal static class TypeFormatters
