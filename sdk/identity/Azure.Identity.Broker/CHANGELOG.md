@@ -4,8 +4,7 @@
 
 ### Features Added
 
-- Support Microsoft Broker on Linux platforms. This library relies on the Microsoft Authentication Library (MSAL) to handle the broker, for more information about pre-requisites and how to utilize the Broker on Linux, visit [Enable SSO in native Linux apps using MSAL.NET
-](https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk?tabs=ubuntudep)
+- Support Microsoft Broker on Linux and WSL. This library relies on the Microsoft Authentication Library (MSAL) to handle the broker. For more information about prerequisites and how to utilize the broker, see [Enable SSO in native Linux apps using MSAL.NET](https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk)
 
 ### Other Changes
 
