@@ -9,10 +9,10 @@
   - `tenantId` : The tenant where the target resource was created
   - `clientId` : The client identifier for the application, which must be granted access on the target resource
   - `managedIdentityClientId` : The managed identity which you configured as a Federated Identity Credential (FIC)
-  - `federatedAudience`: One of the following token audiences, specific to the cloud that you're running in:
-    - `api://AzureADTokenExchange` for Entra ID Global cloud
-    - `api://AzureADTokenExchangeUSGov` for Entra ID US Government
-    - `api://AzureADTokenExchangeChina` for Entra ID China operated by 21Vianet
+  - `azureCloud`: One of the following Azure cloud environments:
+    - `public` for Entra ID Global cloud
+    - `usgov` for Entra ID US Government
+    - `china` for Entra ID China operated by 21Vianet
 
 ### Breaking Changes
 
