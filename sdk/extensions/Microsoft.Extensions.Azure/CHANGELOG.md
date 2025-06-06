@@ -8,7 +8,7 @@
 
   - `tenantId` : The tenant where the target resource was created
   - `clientId` : The client identifier for the application, which must be granted access on the target resource
-  - `managedIdentityClientId` : The user-assigned managed identity which you configured as a Federated Identity Credential (FIC)
+  - One of [`managedIdentityClientId`, `objectId`, `resourceId`] : The user-assigned managed identity which you configured as a Federated Identity Credential (FIC)
   - `azureCloud`: One of the following Azure cloud environments:
     - `public` for Entra ID Global cloud
     - `usgov` for Entra ID US Government

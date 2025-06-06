@@ -367,6 +367,7 @@ namespace Azure.Core.Extensions.Tests
         public void CreatesDefaultAzureCredential(
             [Values(true, false)] bool additionalTenants,
             [Values(true, false)] bool clientId,
+            [Values(true, false)] bool managedIdentityClientId,
             [Values(true, false)] bool tenantId,
             [Values(true, false)] bool objectId,
             [Values(true, false)] bool resourceId)
@@ -381,6 +382,10 @@ namespace Azure.Core.Extensions.Tests
             if (clientId)
             {
                 configEntries.Add(new KeyValuePair<string, string>("clientId", "clientId"));
+            }
+            if (managedIdentityClientId)
+            {
+                configEntries.Add(new KeyValuePair<string, string>("managedIdentityClientId", "managedIdentityClientId"));
             }
             if (tenantId)
             {
@@ -397,17 +402,18 @@ namespace Azure.Core.Extensions.Tests
 
             IConfiguration configuration = new ConfigurationBuilder().AddInMemoryCollection(configEntries).Build();
 
-            // if both clientId and resourceId set, we expect an ArgumentException
+            // if multiple parameters for the managed identity are set, we expect an ArgumentException
             // We also expect an exception if objectId is set for DefaultAzureCredential, as it is only supported for ManagedIdentityCredential
-            if ((clientId && resourceId) || objectId)
+            if ((clientId && resourceId) || (managedIdentityClientId && resourceId) || objectId)
             {
                 Assert.Throws<ArgumentException>(() => ClientFactory.CreateCredential(configuration));
                 return;
             }
+
             var credential = ClientFactory.CreateCredential(configuration);
 
             // if all parameters were false we expect null
-            if (!additionalTenants && !clientId && !tenantId && !resourceId)
+            if (!additionalTenants && !clientId && !managedIdentityClientId && !tenantId && !resourceId)
             {
                 Assert.IsNull(credential);
                 return;
@@ -436,16 +442,25 @@ namespace Azure.Core.Extensions.Tests
             string managedIdentityId;
             int idType;
             ReflectIdAndType(miCredential, out managedIdentityId, out idType);
-            if (clientId)
+
+            // managedIdentityClientId takes precedence over clientId when both are present
+            if (managedIdentityClientId)
+            {
+                Assert.AreEqual("managedIdentityClientId", managedIdentityId);
+                Assert.AreEqual(1, idType); // 1 is the value for ClientId
+            }
+            else if (clientId)
             {
                 Assert.AreEqual("clientId", managedIdentityId);
                 Assert.AreEqual(1, idType); // 1 is the value for ClientId
             }
+
             if (resourceId)
             {
                 Assert.AreEqual(resourceIdValue.ToString(), managedIdentityId);
                 Assert.AreEqual(2, idType); // 2 is the value for ResourceId
             }
+
             if (objectId)
             {
                 Assert.AreEqual("objectId", managedIdentityId);
