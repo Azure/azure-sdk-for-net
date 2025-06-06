@@ -38,99 +38,54 @@ namespace Azure.Core.Expressions.DataFactory
 
         public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            if (typeToConvert == typeof(DataFactoryElement<string?>))
+            switch (typeToConvert)
             {
-                var instance = new DataFactoryElement<string?>(default);
-                return ((IJsonModel<DataFactoryElement<string?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<int?>))
-            {
-                var instance = new DataFactoryElement<int?>(default);
-                return ((IJsonModel<DataFactoryElement<int?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<int>))
-            {
-                var instance = new DataFactoryElement<int>(default);
-                return ((IJsonModel<DataFactoryElement<int>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<double?>))
-            {
-                var instance = new DataFactoryElement<double?>(default);
-                return ((IJsonModel<DataFactoryElement<double?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<double>))
-            {
-                var instance = new DataFactoryElement<double>(default);
-                return ((IJsonModel<DataFactoryElement<double>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<bool?>))
-            {
-                var instance = new DataFactoryElement<bool?>(default);
-                return ((IJsonModel<DataFactoryElement<bool?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<bool>))
-            {
-                var instance = new DataFactoryElement<bool>(default);
-                return ((IJsonModel<DataFactoryElement<bool>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<DateTimeOffset?>))
-            {
-                var instance = new DataFactoryElement<DateTimeOffset?>(default);
-                return ((IJsonModel<DataFactoryElement<DateTimeOffset?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<DateTimeOffset>))
-            {
-                var instance = new DataFactoryElement<DateTimeOffset>(default);
-                return ((IJsonModel<DataFactoryElement<DateTimeOffset>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<TimeSpan?>))
-            {
-                var instance = new DataFactoryElement<TimeSpan?>(default);
-                return ((IJsonModel<DataFactoryElement<TimeSpan?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<TimeSpan>))
-            {
-                var instance = new DataFactoryElement<TimeSpan>(default);
-                return ((IJsonModel<DataFactoryElement<TimeSpan>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<Uri?>))
-            {
-                var instance = new DataFactoryElement<Uri?>(default);
-                return ((IJsonModel<DataFactoryElement<Uri?>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<Uri>))
-            {
-                var instance = new DataFactoryElement<Uri>(default);
-                return ((IJsonModel<DataFactoryElement<Uri>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<IList<string>>))
-            {
-                var instance = new DataFactoryElement<IList<string>>(default);
-                return ((IJsonModel<DataFactoryElement<IList<string>>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>))
-            {
-                var instance = new DataFactoryElement<IDictionary<string, string>>(default);
-                return ((IJsonModel<DataFactoryElement<IDictionary<string, string>>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, BinaryData>>))
-            {
-                var instance = new DataFactoryElement<IDictionary<string, BinaryData>>(default);
-                return ((IJsonModel<DataFactoryElement<IDictionary<string, BinaryData>>>)instance).Create(ref reader, s_options);
-            }
-            if (typeToConvert == typeof(DataFactoryElement<BinaryData>))
-            {
-                var instance = new DataFactoryElement<BinaryData>(default);
-                return ((IJsonModel<DataFactoryElement<BinaryData>>)instance).Create(ref reader, s_options);
-            }
-            using var document = JsonDocument.ParseValue(ref reader);
-            if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
-            {
-                var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(DeserializeGenericList));
-                return methodInfo!.Invoke(null, new object[] { document.RootElement })!;
-            }
+                case Type t when t == typeof(DataFactoryElement<string?>):
+                    return ((IJsonModel<DataFactoryElement<string?>>)new DataFactoryElement<string?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<int?>):
+                    return ((IJsonModel<DataFactoryElement<int?>>)new DataFactoryElement<int?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<int>):
+                    return ((IJsonModel<DataFactoryElement<int>>)new DataFactoryElement<int>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<double?>):
+                    return ((IJsonModel<DataFactoryElement<double?>>)new DataFactoryElement<double?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<double>):
+                    return ((IJsonModel<DataFactoryElement<double>>)new DataFactoryElement<double>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<bool?>):
+                    return ((IJsonModel<DataFactoryElement<bool?>>)new DataFactoryElement<bool?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<bool>):
+                    return ((IJsonModel<DataFactoryElement<bool>>)new DataFactoryElement<bool>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<DateTimeOffset?>):
+                    return ((IJsonModel<DataFactoryElement<DateTimeOffset?>>)new DataFactoryElement<DateTimeOffset?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<DateTimeOffset>):
+                    return ((IJsonModel<DataFactoryElement<DateTimeOffset>>)new DataFactoryElement<DateTimeOffset>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<TimeSpan?>):
+                    return ((IJsonModel<DataFactoryElement<TimeSpan?>>)new DataFactoryElement<TimeSpan?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<TimeSpan>):
+                    return ((IJsonModel<DataFactoryElement<TimeSpan>>)new DataFactoryElement<TimeSpan>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<Uri?>):
+                    return ((IJsonModel<DataFactoryElement<Uri?>>)new DataFactoryElement<Uri?>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<Uri>):
+                    return ((IJsonModel<DataFactoryElement<Uri>>)new DataFactoryElement<Uri>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<IList<string>>):
+                    return ((IJsonModel<DataFactoryElement<IList<string>>>)new DataFactoryElement<IList<string>>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<IDictionary<string, string>>):
+                    return ((IJsonModel<DataFactoryElement<IDictionary<string, string>>>)new DataFactoryElement<IDictionary<string, string>>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<IDictionary<string, BinaryData>>):
+                    return ((IJsonModel<DataFactoryElement<IDictionary<string, BinaryData>>>)new DataFactoryElement<IDictionary<string, BinaryData>>(default)).Create(ref reader, s_options);
+                case Type t when t == typeof(DataFactoryElement<BinaryData>):
+                    return ((IJsonModel<DataFactoryElement<BinaryData>>)new DataFactoryElement<BinaryData>(default)).Create(ref reader, s_options);
+                default:
+                    {
+                        using var document = JsonDocument.ParseValue(ref reader);
+                        if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
+                        {
+                            var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(DeserializeGenericList));
+                            return methodInfo!.Invoke(null, new object[] { document.RootElement })!;
+                        }
 
-            throw new InvalidOperationException($"Unable to convert {typeToConvert.Name} into a DataFactoryElement<T>");
+                        throw new InvalidOperationException($"Unable to convert {typeToConvert.Name} into a DataFactoryElement<T>");
+                    }
+            }
         }
 
         public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
@@ -189,19 +144,19 @@ namespace Azure.Core.Expressions.DataFactory
                     ((IJsonModel<DataFactoryElement<BinaryData?>>)value).Write(writer, s_options);
                     break;
                 default:
-                {
-                    if (TryGetGenericDataFactoryList(value.GetType(), out Type? genericListType))
                     {
-                        var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(SerializeGenericList));
-                        methodInfo!.Invoke(null, new object[] { writer, value });
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
-                    }
+                        if (TryGetGenericDataFactoryList(value.GetType(), out Type? genericListType))
+                        {
+                            var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(SerializeGenericList));
+                            methodInfo!.Invoke(null, new object[] { writer, value });
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException($"Unable to convert {value.GetType().Name} into a DataFactoryExpression<T>");
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
