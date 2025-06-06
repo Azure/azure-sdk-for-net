@@ -26,7 +26,7 @@ namespace Microsoft.Extensions.Azure.Internal
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityId">The managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
         /// <param name="azureCloud">
         ///     The name of the cloud where the managed identity is configured.  Valid values are:
         ///       <list type="bullet">
@@ -55,7 +55,7 @@ namespace Microsoft.Extensions.Azure.Internal
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityId">The managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
         /// <param name="azureCloud">
         ///     The name of the cloud where the managed identity is configured.  Valid values are:
         ///       <list type="bullet">
@@ -84,7 +84,7 @@ namespace Microsoft.Extensions.Azure.Internal
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityId">The managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
         /// <param name="azureCloud">
         ///     The name of the cloud where the managed identity is configured.  Valid values are:
         ///       <list type="bullet">
