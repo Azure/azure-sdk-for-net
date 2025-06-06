@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,36 +14,101 @@ namespace Microsoft.Extensions.Azure.Internal
     {
         private readonly ManagedIdentityCredential _managedIdentityCredential;
         private readonly ClientAssertionCredential _clientAssertionCredential;
+        private readonly TokenRequestContext _tokenContext;
 
         /// <summary>
-        ///   Gets the set of additionally allowed tenants.
+        /// Gets the set of additionally allowed tenants.
         /// </summary>
         public IList<string> AdditionallyAllowedTenants { get; }
+
         /// <summary>
         /// Creates an instance of the ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityClientId">The managed identity which has been configured as a Federated Identity Credential (FIC).</param>
-        /// <param name="federatedAudience">
-        ///     The audience for the federated credential, specific to the cloud.  Valid values are:
+        /// <param name="managedIdentityId">The managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="azureCloud">
+        ///     The name of the cloud where the managed identity is configured.  Valid values are:
         ///       <list type="bullet">
         ///         <item>
-        ///           <term>api://AzureADTokenExchange</term>
+        ///           <term>public</term>
         ///           <description>Entra ID Global cloud</description>
         ///         </item>
         ///         <item>
-        ///           <term>api://AzureADTokenExchangeUSGov</term>
+        ///           <term>usgov</term>
         ///           <description>Entra ID US Government</description>
         ///         </item>
         ///         <item>
-        ///           <term>api://AzureADTokenExchangeChina</term>
+        ///           <term>china</term>
         ///           <description>Entra ID China operated by 21Vianet</description>
         ///         </item>
         ///       </list>
         /// </param>
         /// <param name="additionallyAllowedTenants">The set of </param>
-        public ManagedFederatedIdentityCredential(string tenantId, string clientId, string managedIdentityClientId, string federatedAudience, IEnumerable<string> additionallyAllowedTenants = default)
+        public ManagedFederatedIdentityCredential(string tenantId, string clientId, string managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
+            : this(tenantId, clientId, (object)managedIdentityId, azureCloud, additionallyAllowedTenants)
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of the ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
+        /// </summary>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal.</param>
+        /// <param name="managedIdentityId">The managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="azureCloud">
+        ///     The name of the cloud where the managed identity is configured.  Valid values are:
+        ///       <list type="bullet">
+        ///         <item>
+        ///           <term>public</term>
+        ///           <description>Entra ID Global cloud</description>
+        ///         </item>
+        ///         <item>
+        ///           <term>usgov</term>
+        ///           <description>Entra ID US Government</description>
+        ///         </item>
+        ///         <item>
+        ///           <term>china</term>
+        ///           <description>Entra ID China operated by 21Vianet</description>
+        ///         </item>
+        ///       </list>
+        /// </param>
+        /// <param name="additionallyAllowedTenants">The set of </param>
+        public ManagedFederatedIdentityCredential(string tenantId, string clientId, ResourceIdentifier managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
+            : this(tenantId, clientId, (object)managedIdentityId, azureCloud, additionallyAllowedTenants)
+        {
+        }
+
+        /// <summary>
+        /// Creates an instance of the ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
+        /// </summary>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
+        /// <param name="clientId">The client (application) ID of the service principal.</param>
+        /// <param name="managedIdentityId">The managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="azureCloud">
+        ///     The name of the cloud where the managed identity is configured.  Valid values are:
+        ///       <list type="bullet">
+        ///         <item>
+        ///           <term>public</term>
+        ///           <description>Entra ID Global cloud</description>
+        ///         </item>
+        ///         <item>
+        ///           <term>usgov</term>
+        ///           <description>Entra ID US Government</description>
+        ///         </item>
+        ///         <item>
+        ///           <term>china</term>
+        ///           <description>Entra ID China operated by 21Vianet</description>
+        ///         </item>
+        ///       </list>
+        /// </param>
+        /// <param name="additionallyAllowedTenants">The set of </param>
+        public ManagedFederatedIdentityCredential(string tenantId, string clientId, ManagedIdentityId managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
+            : this(tenantId, clientId, (object)managedIdentityId, azureCloud, additionallyAllowedTenants)
+        {
+        }
+
+        internal ManagedFederatedIdentityCredential(string tenantId, string clientId, object managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
         {
             ClientAssertionCredentialOptions clientAssertionOptions = null;
 
@@ -62,13 +128,21 @@ namespace Microsoft.Extensions.Azure.Internal
                 AdditionallyAllowedTenants = new List<string>();
             }
 
-            _managedIdentityCredential = new ManagedIdentityCredential(managedIdentityClientId);
+            _managedIdentityCredential = managedIdentityId switch
+            {
+                ManagedIdentityId objectId => new ManagedIdentityCredential(objectId),
+                ResourceIdentifier resourceId => new ManagedIdentityCredential(resourceId),
+                string managedClientId => new ManagedIdentityCredential(managedClientId),
+                _ => throw new ArgumentException($"Invalid managed identity ID type: {managedIdentityId.GetType()}", nameof(managedIdentityId))
+            };
+
+            _tokenContext = new TokenRequestContext([TranslateCloudToTokenScope(azureCloud)]);
             _clientAssertionCredential = new ClientAssertionCredential(
                 tenantId,
                 clientId,
-                async token =>
+                async _ =>
                     (await _managedIdentityCredential
-                        .GetTokenAsync(new TokenRequestContext([$"{federatedAudience}/.default"]))
+                        .GetTokenAsync(_tokenContext)
                         .ConfigureAwait(false))
                     .Token,
                 clientAssertionOptions
@@ -82,30 +156,19 @@ namespace Microsoft.Extensions.Azure.Internal
         {
         }
 
-        /// <summary>
-        /// Gets an <see cref="T:Azure.Core.AccessToken" /> for the specified set of scopes.
-        /// </summary>
-        /// <param name="requestContext">The <see cref="T:Azure.Core.TokenRequestContext" /> with authentication information.</param>
-        /// <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to use.</param>
-        /// <returns>
-        /// A valid <see cref="T:Azure.Core.AccessToken" />.
-        /// </returns>
-        /// <remarks>
-        /// Caching and management of the lifespan for the <see cref="T:Azure.Core.AccessToken" /> is considered the responsibility of the caller: each call should request a fresh token being requested.
-        /// </remarks>
+        /// <inheritdoc />
         public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken) => _clientAssertionCredential.GetToken(requestContext, cancellationToken);
 
-        /// <summary>
-        /// Gets an <see cref="T:Azure.Core.AccessToken" /> for the specified set of scopes.
-        /// </summary>
-        /// <param name="requestContext">The <see cref="T:Azure.Core.TokenRequestContext" /> with authentication information.</param>
-        /// <param name="cancellationToken">The <see cref="T:System.Threading.CancellationToken" /> to use.</param>
-        /// <returns>
-        /// A valid <see cref="T:Azure.Core.AccessToken" />.
-        /// </returns>
-        /// <remarks>
-        /// Caching and management of the lifespan for the <see cref="T:Azure.Core.AccessToken" /> is considered the responsibility of the caller: each call should request a fresh token being requested.
-        /// </remarks>
+        /// <inheritdoc />
         public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken) => _clientAssertionCredential.GetTokenAsync(requestContext, cancellationToken);
-    }
+
+        private static string TranslateCloudToTokenScope(string azureCloud) =>
+            azureCloud switch
+            {
+                AzureCloud.Public => "api://AzureADTokenExchange/.default",
+                AzureCloud.USGov => "api://AzureADTokenExchangeUSGov/.default",
+                AzureCloud.China => "api://AzureADTokenExchangeChina/.default",
+                _ => throw new ArgumentException($"Unknown Azure cloud: {azureCloud}", nameof(azureCloud)),
+            };
+        }
 }

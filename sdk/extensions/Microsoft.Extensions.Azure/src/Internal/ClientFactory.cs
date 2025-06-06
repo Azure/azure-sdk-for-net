@@ -107,7 +107,7 @@ namespace Microsoft.Extensions.Azure
             var systemAccessToken = configuration["systemAccessToken"];
             var additionallyAllowedTenants = configuration["additionallyAllowedTenants"];
             var tokenFilePath = configuration["tokenFilePath"];
-            var federatedAudience = configuration["federatedAudience"];
+            var azureCloud = configuration["azureCloud"];
             var managedIdentityClientId = configuration["managedIdentityClientId"];
 
             IEnumerable<string> additionallyAllowedTenantsList = null;
@@ -122,16 +122,7 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentity", StringComparison.OrdinalIgnoreCase))
             {
-                int idCount = 0;
-                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
-                idCount += string.IsNullOrWhiteSpace(managedIdentityClientId) ? 0 : 1;
-                idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
-                idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
-
-                if (idCount > 1)
-                {
-                    throw new ArgumentException("Only one of either 'clientId', 'managedIdentityClientId', or 'managedIdentityResourceId', or 'managedIdentityObjectId' can be specified for managed identity.");
-                }
+                AssertSingleManagedIdentityIdentifier(clientId, managedIdentityClientId, resourceId, objectId, isFederated: false);
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
@@ -156,6 +147,7 @@ namespace Microsoft.Extensions.Azure
                 // The WorkloadIdentityCredentialOptions object initialization populates its instance members
                 // from the environment variables AZURE_TENANT_ID, AZURE_CLIENT_ID, and AZURE_FEDERATED_TOKEN_FILE
                 var workloadIdentityOptions = new WorkloadIdentityCredentialOptions();
+
                 if (!string.IsNullOrWhiteSpace(tenantId))
                 {
                     workloadIdentityOptions.TenantId = tenantId;
@@ -191,15 +183,29 @@ namespace Microsoft.Extensions.Azure
 
             if (string.Equals(credentialType, "managedidentityasfederatedidentity", StringComparison.OrdinalIgnoreCase))
             {
-                if (!string.IsNullOrWhiteSpace(tenantId) &&
-                    !string.IsNullOrWhiteSpace(clientId) &&
-                    !string.IsNullOrWhiteSpace(managedIdentityClientId) &&
-                    !string.IsNullOrWhiteSpace(federatedAudience))
+                AssertSingleManagedIdentityIdentifier(clientId, managedIdentityClientId, resourceId, objectId, isFederated: true);
+
+                if (string.IsNullOrWhiteSpace(tenantId) ||
+                    string.IsNullOrWhiteSpace(clientId) ||
+                    string.IsNullOrWhiteSpace(azureCloud))
                 {
-                    return new ManagedFederatedIdentityCredential(tenantId, clientId, managedIdentityClientId, federatedAudience, additionallyAllowedTenantsList);
+                    throw new ArgumentException("For managed federated identity, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'resourceId', 'objectId'] must be specified via environment variables or the configuration.");
                 }
 
-                throw new ArgumentException("For managed federated identity, 'tenantId', 'clientId', 'managedIdentityClientId', and 'federatedAudience' must be specified via environment variables or the configuration.");
+                if (!string.IsNullOrWhiteSpace(resourceId))
+                {
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, new ResourceIdentifier(resourceId), azureCloud, additionallyAllowedTenantsList);
+                }
+
+                if (!string.IsNullOrWhiteSpace(objectId))
+                {
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedObjectId(objectId), azureCloud, additionallyAllowedTenantsList);
+                }
+
+                if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
+                {
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, managedIdentityClientId, azureCloud, additionallyAllowedTenantsList);
+                }
             }
 
             if (string.Equals(credentialType, "azurepipelines", StringComparison.OrdinalIgnoreCase))
@@ -281,8 +287,6 @@ namespace Microsoft.Extensions.Azure
 
                 return credential;
             }
-
-            // TODO: More logging
 
             if (!string.IsNullOrWhiteSpace(objectId))
             {
@@ -393,6 +397,34 @@ namespace Microsoft.Extensions.Azure
             }
 
             return Activator.CreateInstance(optionsType, constructorArguments);
+        }
+
+        private static void AssertSingleManagedIdentityIdentifier(string clientId, string managedIdentityClientId, string resourceId, string objectId, bool isFederated = false)
+        {
+            var idCount = 0;
+
+            if (!isFederated)
+            {
+                idCount += string.IsNullOrWhiteSpace(clientId) ? 0 : 1;
+            }
+
+            idCount += string.IsNullOrWhiteSpace(managedIdentityClientId) ? 0 : 1;
+            idCount += string.IsNullOrWhiteSpace(resourceId) ? 0 : 1;
+            idCount += string.IsNullOrWhiteSpace(objectId) ? 0 : 1;
+
+            var validIdentifiers = isFederated
+                ? "'clientId', 'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'"
+                : "'managedIdentityClientId', 'managedIdentityResourceId', or 'managedIdentityObjectId'";
+
+            if (idCount > 1)
+            {
+                throw new ArgumentException($"Only one of [{validIdentifiers}] can be specified for managed identity.");
+            }
+
+            if (isFederated && idCount < 1)
+            {
+                throw new ArgumentException($"At least one of [{validIdentifiers}] must be specified for managed identity.");
+            }
         }
 
         private static bool IsServiceVersionParameter(ParameterInfo parameter) =>
