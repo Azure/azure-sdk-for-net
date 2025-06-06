@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -13,16 +12,15 @@ namespace Azure.Core.Expressions.DataFactory
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
-            var options = new ModelReaderWriterOptions("W");
             writer.WriteStartObject();
             writer.WritePropertyName("store"u8);
-            writer.WriteObjectValue<DataFactoryLinkedServiceReference>(Store);
+            writer.WriteObjectValue(Store);
             writer.WritePropertyName("secretName"u8);
-            ((IJsonModel<DataFactoryElement<string>>)SecretName).Write(writer, options);
+            writer.WriteObjectValue(SecretName);
             if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
-                ((IJsonModel<DataFactoryElement<string>>)SecretVersion).Write(writer, options);
+                writer.WriteObjectValue(SecretVersion);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SecretBaseType);

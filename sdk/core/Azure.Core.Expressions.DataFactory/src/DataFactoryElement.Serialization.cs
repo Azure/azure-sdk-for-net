@@ -31,7 +31,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                writer.WriteObjectValue<DataFactorySecret>(Secret!);
+                writer.WriteObjectValue(Secret!);
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Core.Expressions.DataFactory
                     }
                     break;
                 default:
-                    writer.WriteObjectValue<T>(Literal!);
+                    writer.WriteObjectValue(Literal!);
                     break;
             }
         }
