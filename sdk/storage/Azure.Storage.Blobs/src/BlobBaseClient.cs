@@ -6250,15 +6250,6 @@ namespace Azure.Storage.Blobs.Specialized
 
                 DiagnosticScope scope = ClientConfiguration.ClientDiagnostics.CreateScope($"{nameof(BlobBaseClient)}.{nameof(SetTags)}");
 
-                conditions.ValidateConditionsNotPresent(
-                    invalidConditions:
-                        BlobRequestConditionProperty.IfModifiedSince
-                        | BlobRequestConditionProperty.IfUnmodifiedSince
-                        | BlobRequestConditionProperty.IfMatch
-                        | BlobRequestConditionProperty.IfNoneMatch,
-                    operationName: nameof(BlobBaseClient.SetTags),
-                    parameterName: nameof(conditions));
-
                 try
                 {
                     scope.Start();
@@ -6269,6 +6260,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = await BlobRestClient.SetTagsAsync(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             tags: tags.ToBlobTags(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
@@ -6278,6 +6273,10 @@ namespace Azure.Storage.Blobs.Specialized
                         response = BlobRestClient.SetTags(
                             ifTags: conditions?.TagConditions,
                             leaseId: conditions?.LeaseId,
+                            ifModifiedSince: conditions?.IfModifiedSince,
+                            ifUnmodifiedSince: conditions?.IfUnmodifiedSince,
+                            ifMatch: conditions?.IfMatch?.ToString(),
+                            ifNoneMatch: conditions?.IfNoneMatch?.ToString(),
                             tags: tags.ToBlobTags(),
                             cancellationToken: cancellationToken);
                     }
