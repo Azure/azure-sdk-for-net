@@ -38,29 +38,92 @@ namespace Azure.Core.Expressions.DataFactory
 
         public override object? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
-            using var document = JsonDocument.ParseValue(ref reader);
             if (typeToConvert == typeof(DataFactoryElement<string?>))
-                return Deserialize<string>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryElement<int?>) || typeToConvert == typeof(DataFactoryElement<int>))
-                return Deserialize<int>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryElement<double?>) || typeToConvert == typeof(DataFactoryElement<double>))
-                return Deserialize<double>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryElement<bool?>) || typeToConvert == typeof(DataFactoryElement<bool>))
-                return Deserialize<bool>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryElement<DateTimeOffset?>) || typeToConvert == typeof(DataFactoryElement<DateTimeOffset>))
-                return Deserialize<DateTimeOffset>(document.RootElement);
-            if (typeToConvert == typeof(DataFactoryElement<TimeSpan?>) || typeToConvert == typeof(DataFactoryElement<TimeSpan>))
-                return Deserialize<TimeSpan>(document.RootElement);
+            {
+                var instance = new DataFactoryElement<string?>(default);
+                return ((IJsonModel<DataFactoryElement<string?>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<int?>))
+            {
+                var instance = new DataFactoryElement<int?>(default);
+                return ((IJsonModel<DataFactoryElement<int?>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<int>))
+            {
+                var instance = new DataFactoryElement<int>(default);
+                return ((IJsonModel<DataFactoryElement<int>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<double?>))
+            {
+                var instance = new DataFactoryElement<double?>(default);
+                return ((IJsonModel<DataFactoryElement<double?>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<double>))
+            {
+                var instance = new DataFactoryElement<double>(default);
+                return ((IJsonModel<DataFactoryElement<double>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<bool?>))
+            {
+                var instance = new DataFactoryElement<bool?>(default);
+                return ((IJsonModel<DataFactoryElement<bool?>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<bool>))
+            {
+                var instance = new DataFactoryElement<bool>(default);
+                return ((IJsonModel<DataFactoryElement<bool>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<DateTimeOffset?>))
+            {
+                var instance = new DataFactoryElement<DateTimeOffset?>(default);
+                return ((IJsonModel<DataFactoryElement<DateTimeOffset?>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<DateTimeOffset>))
+            {
+                var instance = new DataFactoryElement<DateTimeOffset>(default);
+                return ((IJsonModel<DataFactoryElement<DateTimeOffset>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<TimeSpan?>))
+            {
+                var instance = new DataFactoryElement<TimeSpan?>(default);
+                return ((IJsonModel<DataFactoryElement<TimeSpan?>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<TimeSpan>))
+            {
+                var instance = new DataFactoryElement<TimeSpan>(default);
+                return ((IJsonModel<DataFactoryElement<TimeSpan>>)instance).Create(ref reader, s_options);
+            }
+            if (typeToConvert == typeof(DataFactoryElement<Uri?>))
+            {
+                var instance = new DataFactoryElement<Uri?>(default);
+                return ((IJsonModel<DataFactoryElement<Uri?>>)instance).Create(ref reader, s_options);
+            }
             if (typeToConvert == typeof(DataFactoryElement<Uri>))
-                return Deserialize<Uri>(document.RootElement);
+            {
+                var instance = new DataFactoryElement<Uri>(default);
+                return ((IJsonModel<DataFactoryElement<Uri>>)instance).Create(ref reader, s_options);
+            }
             if (typeToConvert == typeof(DataFactoryElement<IList<string>>))
-                return Deserialize<IList<string>>(document.RootElement);
+            {
+                var instance = new DataFactoryElement<IList<string>>(default);
+                return ((IJsonModel<DataFactoryElement<IList<string>>>)instance).Create(ref reader, s_options);
+            }
             if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, string>>))
-                return Deserialize<IDictionary<string, string>>(document.RootElement);
+            {
+                var instance = new DataFactoryElement<IDictionary<string, string>>(default);
+                return ((IJsonModel<DataFactoryElement<IDictionary<string, string>>>)instance).Create(ref reader, s_options);
+            }
             if (typeToConvert == typeof(DataFactoryElement<IDictionary<string, BinaryData>>))
-                return Deserialize<IDictionary<string, BinaryData>>(document.RootElement);
+            {
+                var instance = new DataFactoryElement<IDictionary<string, BinaryData>>(default);
+                return ((IJsonModel<DataFactoryElement<IDictionary<string, BinaryData>>>)instance).Create(ref reader, s_options);
+            }
             if (typeToConvert == typeof(DataFactoryElement<BinaryData>))
-                return Deserialize<BinaryData>(document.RootElement);
+            {
+                var instance = new DataFactoryElement<BinaryData>(default);
+                return ((IJsonModel<DataFactoryElement<BinaryData>>)instance).Create(ref reader, s_options);
+            }
+            using var document = JsonDocument.ParseValue(ref reader);
             if (TryGetGenericDataFactoryList(typeToConvert, out Type? genericListType))
             {
                 var methodInfo = GetGenericSerializationMethod(genericListType!, nameof(DeserializeGenericList));
@@ -234,82 +297,6 @@ namespace Azure.Core.Expressions.DataFactory
             }
 
             throw new InvalidOperationException($"Cannot deserialize an {json.ValueKind} as a list.");
-        }
-
-        internal static DataFactoryElement<T?>? Deserialize<T>(JsonElement json)
-        {
-            T? value = default;
-
-            if (json.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-
-            // Expression, SecretString, and AzureKeyVaultReference handling
-            if (TryGetNonLiteral(json, out DataFactoryElement<T?>? element))
-            {
-                return element;
-            }
-
-            // Literal handling
-            if (json.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, string>))
-            {
-                var dictionary = new Dictionary<string, string>();
-                foreach (var item in json.EnumerateObject())
-                {
-                    dictionary.Add(item.Name, item.Value.GetString()!);
-                }
-
-                return new DataFactoryElement<T?>((T)(object)dictionary);
-            }
-
-            if (json.ValueKind == JsonValueKind.Object && typeof(T) == typeof(IDictionary<string, BinaryData>))
-            {
-                var dictionary = new Dictionary<string, BinaryData>();
-                foreach (var item in json.EnumerateObject())
-                {
-                    dictionary.Add(item.Name, BinaryData.FromString(item.Value.GetRawText()));
-                }
-
-                return new DataFactoryElement<T?>((T)(object)dictionary);
-            }
-
-            if (json.ValueKind == JsonValueKind.Array && typeof(T) == typeof(IList<string>))
-            {
-                var list = new List<string?>();
-                foreach (var item in json.EnumerateArray())
-                {
-                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<string?>(item.GetRawText()!));
-                }
-
-                return new DataFactoryElement<T?>((T)(object)list);
-            }
-
-            if (typeof(T) == typeof(DateTimeOffset))
-            {
-                return new DataFactoryElement<T?>((T)(object)json.GetDateTimeOffset("O"));
-            }
-
-            if (typeof(T) == typeof(TimeSpan) || typeof(T) == typeof(TimeSpan?))
-            {
-                return new DataFactoryElement<T?>((T)(object)json.GetTimeSpan("c"));
-            }
-
-            if (typeof(T) == typeof(Uri))
-            {
-                return new DataFactoryElement<T?>((T)(object)new Uri(json.GetString()!));
-            }
-
-            if (typeof(T) == typeof(BinaryData))
-            {
-                return new DataFactoryElement<T?>((T)(object)BinaryData.FromString(json.GetRawText()!));
-            }
-
-            var obj = json.GetObject();
-            if (obj is not null)
-                value = (T)obj;
-
-            return new DataFactoryElement<T?>(value);
         }
 
         private static bool TryGetNonLiteral<T>(JsonElement json, out DataFactoryElement<T?>? element)
