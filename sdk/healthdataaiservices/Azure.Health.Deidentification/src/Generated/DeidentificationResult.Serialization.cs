@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
@@ -153,18 +152,6 @@ namespace Azure.Health.Deidentification
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeidentificationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deidentificationResult"> The <see cref="DeidentificationResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DeidentificationResult deidentificationResult)
-        {
-            if (deidentificationResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(deidentificationResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationResult"/> from. </param>
         public static explicit operator DeidentificationResult(Response result)

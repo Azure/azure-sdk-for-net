@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
@@ -166,18 +165,6 @@ namespace Azure.Health.Deidentification
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<PagedDeidentificationDocumentDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="pagedDeidentificationDocumentDetails"> The <see cref="PagedDeidentificationDocumentDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PagedDeidentificationDocumentDetails pagedDeidentificationDocumentDetails)
-        {
-            if (pagedDeidentificationDocumentDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(pagedDeidentificationDocumentDetails, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PagedDeidentificationDocumentDetails"/> from. </param>
         public static explicit operator PagedDeidentificationDocumentDetails(Response result)

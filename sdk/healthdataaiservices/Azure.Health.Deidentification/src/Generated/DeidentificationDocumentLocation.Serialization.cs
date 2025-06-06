@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
@@ -151,25 +150,5 @@ namespace Azure.Health.Deidentification
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeidentificationDocumentLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deidentificationDocumentLocation"> The <see cref="DeidentificationDocumentLocation"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DeidentificationDocumentLocation deidentificationDocumentLocation)
-        {
-            if (deidentificationDocumentLocation == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(deidentificationDocumentLocation, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationDocumentLocation"/> from. </param>
-        public static explicit operator DeidentificationDocumentLocation(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeDeidentificationDocumentLocation(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

@@ -9,8 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
@@ -178,25 +176,5 @@ namespace Azure.Health.Deidentification
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<DeidentificationJobSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="deidentificationJobSummary"> The <see cref="DeidentificationJobSummary"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(DeidentificationJobSummary deidentificationJobSummary)
-        {
-            if (deidentificationJobSummary == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(deidentificationJobSummary, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationJobSummary"/> from. </param>
-        public static explicit operator DeidentificationJobSummary(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeDeidentificationJobSummary(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

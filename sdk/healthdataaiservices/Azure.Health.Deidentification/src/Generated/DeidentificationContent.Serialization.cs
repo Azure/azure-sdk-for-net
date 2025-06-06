@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Deidentification
@@ -181,14 +180,6 @@ namespace Azure.Health.Deidentification
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(deidentificationContent, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="DeidentificationContent"/> from. </param>
-        public static explicit operator DeidentificationContent(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeDeidentificationContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
