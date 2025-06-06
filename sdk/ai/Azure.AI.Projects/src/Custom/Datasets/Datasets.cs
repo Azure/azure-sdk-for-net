@@ -28,7 +28,7 @@ namespace Azure.AI.Projects
                 pendingUploadType: PendingUploadType.BlobReference,
                 serializedAdditionalRawData: null);
 
-            var pendingUploadResponse = PendingUpload(
+            PendingUploadResponse pendingUploadResponse = PendingUpload(
                 name: name,
                 version: inputVersion,
                 body: pendingUploadRequest
@@ -36,20 +36,20 @@ namespace Azure.AI.Projects
 
             string outputVersion = inputVersion;
 
-            if (pendingUploadResponse.Value.BlobReference == null)
+            if (pendingUploadResponse.BlobReference == null)
             {
                 throw new InvalidOperationException("Blob reference is not present.");
             }
-            if (pendingUploadResponse.Value.BlobReference.Credential == null)
+            if (pendingUploadResponse.BlobReference.Credential == null)
             {
-                throw new InvalidOperationException("SAS credential are not present.");
+                throw new InvalidOperationException("SAS credential is not present.");
             }
-            if (pendingUploadResponse.Value.BlobReference.Credential.SasUri == null)
+            if (string.IsNullOrEmpty(pendingUploadResponse.BlobReference.Credential.SasUri))
             {
                 throw new InvalidOperationException("SAS URI is missing or empty.");
             }
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.Credential.SasUri));
+            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.BlobReference.Credential.SasUri));
             return (containerClient, outputVersion);
         }
 
@@ -134,7 +134,7 @@ namespace Azure.AI.Projects
                 pendingUploadType: PendingUploadType.BlobReference,
                 serializedAdditionalRawData: null);
 
-            var pendingUploadResponse = await PendingUploadAsync(
+            PendingUploadResponse pendingUploadResponse = await PendingUploadAsync(
                 name: name,
                 version: inputVersion,
                 body: pendingUploadRequest
@@ -142,20 +142,20 @@ namespace Azure.AI.Projects
 
             string outputVersion = inputVersion;
 
-            if (pendingUploadResponse.Value.BlobReference == null)
+            if (pendingUploadResponse.BlobReference == null)
             {
                 throw new InvalidOperationException("Blob reference is not present.");
             }
-            if (pendingUploadResponse.Value.BlobReference.Credential == null)
+            if (pendingUploadResponse.BlobReference.Credential == null)
             {
-                throw new InvalidOperationException("SAS credential are not present.");
+                throw new InvalidOperationException("SAS credential is not present.");
             }
-            if (pendingUploadResponse.Value.BlobReference.Credential.SasUri == null)
+            if (string.IsNullOrEmpty(pendingUploadResponse.BlobReference.Credential.SasUri))
             {
                 throw new InvalidOperationException("SAS URI is missing or empty.");
             }
 
-            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.Value.BlobReference.Credential.SasUri));
+            var containerClient = new BlobContainerClient(new Uri(pendingUploadResponse.BlobReference.Credential.SasUri));
             return (containerClient, outputVersion);
         }
 
@@ -166,7 +166,6 @@ namespace Azure.AI.Projects
         {
             if (!File.Exists(filePath))
             {
-                Console.WriteLine($"File path: {filePath}");
                 throw new ArgumentException($"The provided file does not exist: {filePath}.");
             }
 
