@@ -265,7 +265,16 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return [BuildValidateResourceIdMethod(), .. operationMethods, new AddTagMethodProvider(this)];
+            return [
+                BuildValidateResourceIdMethod(),
+                .. operationMethods,
+                new AddTagMethodProvider(this, true),
+                new AddTagMethodProvider(this, false),
+                // new SetTagsMethodProvider(this, true),
+                // new SetTagsMethodProvider(this, false),
+                new RemoveTagMethodProvider(this, true),
+                new RemoveTagMethodProvider(this, false)
+            ];
         }
 
         protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)

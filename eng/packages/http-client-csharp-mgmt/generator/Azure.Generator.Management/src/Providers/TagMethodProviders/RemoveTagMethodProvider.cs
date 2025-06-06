@@ -11,9 +11,9 @@ using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers.TagMethodProviders
 {
-    internal class AddTagMethodProvider : BaseTagMethodProvider
+    internal class RemoveTagMethodProvider : BaseTagMethodProvider
     {
-        public AddTagMethodProvider(
+        public RemoveTagMethodProvider(
             ResourceClientProvider resourceClientProvider,
             bool isAsync)
             : base(resourceClientProvider, isAsync)
@@ -22,26 +22,24 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         protected override MethodSignature CreateMethodSignature()
         {
-            var methodName = _isAsync ? "AddTagAsync" : "AddTag";
-            return CreateMethodSignatureCore(methodName, $"Add a tag to a {_resourceClientProvider.SpecName}");
+            var methodName = _isAsync ? "RemoveTagAsync" : "RemoveTag";
+            return CreateMethodSignatureCore(methodName, "Removes a tag by key from the resource.");
         }
 
         protected override ParameterProvider[] BuildParameters()
         {
             var keyParameter = new ParameterProvider("key", $"The tag key.", typeof(string), validation: ParameterValidationType.AssertNotNull);
-            var valueParameter = new ParameterProvider("value", $"The tag value.", typeof(string), validation: ParameterValidationType.AssertNotNull);
             var cancellationTokenParameter = KnownAzureParameters.CancellationTokenWithDefault;
 
-            return [keyParameter, valueParameter, cancellationTokenParameter];
+            return [keyParameter, cancellationTokenParameter];
         }
 
         protected override MethodBodyStatement[] BuildBodyStatements()
         {
             var keyParam = _signature.Parameters[0];
-            var valueParam = _signature.Parameters[1];
-            var cancellationTokenParam = _signature.Parameters[2];
+            var cancellationTokenParam = _signature.Parameters[1];
 
-            var statements = CreateDiagnosticScopeStatements(_resourceClientProvider, "AddTag", out var scopeVariable);
+            var statements = CreateDiagnosticScopeStatements(_resourceClientProvider, "RemoveTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();
@@ -52,8 +50,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Create if-else statement with primary path in if block and secondary path in else block
             var ifElseStatement = new IfElseStatement(
                 canUseTagResourceCondition,
-                BuildIfStatement(keyParam, valueParam, cancellationTokenParam),
-                BuildElseStatement(keyParam, valueParam, cancellationTokenParam)
+                BuildIfStatement(keyParam, cancellationTokenParam),
+                BuildElseStatement(keyParam, cancellationTokenParam)
             );
 
             tryStatements.Add(ifElseStatement);
@@ -69,7 +67,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             return [.. statements];
         }
 
-        private List<MethodBodyStatement> BuildIfStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
+        private List<MethodBodyStatement> BuildIfStatement(ParameterProvider keyParam, ParameterProvider cancellationTokenParam)
         {
             var getMethod = _isAsync ? "GetAsync" : "Get";
             var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
@@ -83,16 +81,16 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, _isAsync),
                     out var originalTagsVar),
 
-                // originalTags.Value.Data.TagValues[key] = value;
-                new IndexerExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
-                    .Assign(valueParam).Terminate(),
+                // originalTags.Value.Data.TagValues.Remove(key);
+                originalTagsVar.Property("Value").Property("Data").Property("TagValues")
+                    .Invoke("Remove", [keyParam]).Terminate(),
 
                 // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 This.Invoke("GetTagResource").Invoke(createMethod, [
                     Static(typeof(Azure.WaitUntil)).Property("Completed"),
                     originalTagsVar.Property("Value").Property("Data"),
                     cancellationTokenParam
-                ], null, _isAsync).Terminate()
+                ], null, _isAsync).Terminate(),
             };
 
             // Add RequestContext/HttpMessage/Pipeline processing statements
@@ -104,15 +102,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 out var messageVar,
                 out var originalResultVar));
 
-            // Add primary path response creation statements
             statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, originalResultVar));
 
             return statements;
         }
 
-        private List<MethodBodyStatement> BuildElseStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
+        private List<MethodBodyStatement> BuildElseStatement(ParameterProvider keyParam, ParameterProvider cancellationTokenParam)
         {
-            var getMethod = _isAsync ? "GetAsync" : "Get";
             var updateMethod = _isAsync ? "UpdateAsync" : "Update";
 
             var statements = new List<MethodBodyStatement>();
@@ -122,9 +118,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             statements.AddRange(new[]
             {
-                // current.Tags[key] = value;
-                new IndexerExpression(currentVar.Property("Tags"), keyParam)
-                    .Assign(valueParam).Terminate(),
+                // current.Tags.Remove(key);
+                currentVar.Property("Tags").Invoke("Remove", [keyParam]).Terminate(),
 
                 // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                 Declare(
@@ -138,7 +133,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     out var resultVar),
 
                 // return Response.FromValue(result.Value, result.GetRawResponse());
-                CreateSecondaryPathResponseStatement(resultVar)
+                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
+                    resultVar.Property("Value"),
+                    resultVar.Invoke("GetRawResponse")
+                ]))
             });
 
             return statements;
