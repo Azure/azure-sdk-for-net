@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -223,13 +224,14 @@ namespace Azure.Core.Expressions.DataFactory
             return element != null;
         }
 
-        /// <summary>
-        /// Serialization is not supported for DataFactoryElementJsonConverter.
-        /// </summary>
-        /// <exception cref="NotSupportedException">Thrown when attempting to serialize an object.</exception>
         public override void Write(Utf8JsonWriter writer, object? value, JsonSerializerOptions options)
         {
-            throw new NotSupportedException("Serialization is not supported for DataFactoryElementJsonConverter.");
+            if (value is null || value is not DataFactoryElement<object>)
+            {
+                return;
+            }
+
+            ((IJsonModel<DataFactoryElement<object>>)value).Write(writer, new ModelReaderWriterOptions("W"));
         }
     }
 }
