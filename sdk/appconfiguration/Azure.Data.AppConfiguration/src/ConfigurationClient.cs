@@ -264,9 +264,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
+                string ifNoneMatch = ETag.All.ToString("H");
 
-                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingAsync(setting.Key, contentType.ToString(), "TO-DO", content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
@@ -302,9 +302,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = new MatchConditions { IfNoneMatch = ETag.All };
+                string ifNoneMatch = ETag.All.ToString("H");
 
-                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
+                using Response response = SetConfigurationSetting(setting.Key, contentType.ToString(), "TO-DO", content, setting.Label, _syncToken, ifNoneMatch: ifNoneMatch, context: context);
                 switch (response.Status)
                 {
                     case 200:
@@ -372,9 +372,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+                string ifMatch = onlyIfUnchanged ? setting.ETag.ToString("H") : null;
 
-                using Response response = await SetConfigurationSettingAsync(setting.Key, content, contentType, setting.Label, requestOptions, context).ConfigureAwait(false);
+                using Response response = await SetConfigurationSettingAsync(setting.Key, contentType.ToString(), "TO-DO", content, setting.Label, _syncToken, ifMatch: ifMatch, context: context).ConfigureAwait(false);
                 return response.Status switch
                 {
                     200 => await CreateResponseAsync(response, cancellationToken).ConfigureAwait(false),
@@ -413,9 +413,9 @@ namespace Azure.Data.AppConfiguration
 
                 using RequestContent content = ConfigurationSetting.ToRequestContent(setting);
                 ContentType contentType = new ContentType(HttpHeader.Common.JsonContentType.Value.ToString());
-                MatchConditions requestOptions = onlyIfUnchanged ? new MatchConditions { IfMatch = setting.ETag } : default;
+                string ifMatch = onlyIfUnchanged ? setting.ETag.ToString("H") : null;
 
-                using Response response = SetConfigurationSetting(setting.Key, content, contentType, setting.Label, requestOptions, context);
+                using Response response = SetConfigurationSetting(setting.Key, contentType.ToString(), "TEMP", content, setting.Label, _syncToken, ifMatch: ifMatch, context: context);
 
                 return response.Status switch
                 {
@@ -502,7 +502,8 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                using Response response = await DeleteConfigurationSettingAsync(key, label, requestOptions?.IfMatch, context).ConfigureAwait(false);
+                string ifMatch = requestOptions?.IfMatch?.ToString("H");
+                using Response response = await DeleteConfigurationSettingAsync(key, "TEMP", label, _syncToken, ifMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -529,8 +530,8 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-
-                using Response response = DeleteConfigurationSetting(key, label, requestOptions?.IfMatch, context);
+                string ifMatch = requestOptions?.IfMatch?.ToString("H");
+                using Response response = DeleteConfigurationSetting(key, "TEMP", label, _syncToken, ifMatch, context);
 
                 return response.Status switch
                 {
@@ -655,7 +656,10 @@ namespace Azure.Data.AppConfiguration
                 context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = await GetConfigurationSettingAsync(key, label, dateTime, null, conditions, context).ConfigureAwait(false);
+                string ifMatch = conditions?.IfMatch?.ToString("H");
+                string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
+
+                using Response response = await GetConfigurationSettingAsync(key, "TEMP", label, null, _syncToken, dateTime, ifMatch, ifNoneMatch, null, context).ConfigureAwait(false);
 
                 return response.Status switch
                 {
@@ -691,8 +695,10 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 context.AddClassifier(304, isError: false);
 
+                string ifMatch = conditions?.IfMatch?.ToString("H");
+                string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                using Response response = GetConfigurationSetting(key, label, dateTime, null, conditions, context);
+                using Response response = GetConfigurationSetting(key, "TEMP", label, null, _syncToken, dateTime, ifMatch, ifNoneMatch, null, context);
 
                 return response.Status switch
                 {
