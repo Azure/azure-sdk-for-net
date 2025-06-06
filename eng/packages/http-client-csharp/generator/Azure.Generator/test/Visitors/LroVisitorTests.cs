@@ -136,10 +136,11 @@ namespace Azure.Generator.Tests.Visitors
                     InputPrimitiveType.String,
                     kind: InputParameterKind.Method)
             ];
+            var responseModel = InputFactory.Model("foo");
             var lro = InputFactory.Operation(
                 "foo",
-                parameters: parameters);
-            var responseModel = InputFactory.Model("foo");
+                parameters: parameters,
+                responses: [InputFactory.OperationResponse(bodytype: responseModel)]);
             var lroServiceMethod = InputFactory.LongRunningServiceMethod(
                 "foo",
                 lro,

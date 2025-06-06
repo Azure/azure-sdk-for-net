@@ -9,8 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 using Azure.Messaging;
 
 namespace Azure.Messaging.EventGrid.Namespaces
@@ -149,25 +147,5 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ReceiveDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="receiveDetails"> The <see cref="ReceiveDetails"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ReceiveDetails receiveDetails)
-        {
-            if (receiveDetails == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(receiveDetails, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ReceiveDetails"/> from. </param>
-        public static explicit operator ReceiveDetails(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeReceiveDetails(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }
