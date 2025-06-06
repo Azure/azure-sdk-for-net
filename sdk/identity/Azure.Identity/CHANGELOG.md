@@ -9,6 +9,7 @@
 ### Bugs Fixed
 
 ### Other Changes
+- `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
 
 ## 1.14.0 (2025-05-13)
 
