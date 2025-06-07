@@ -631,7 +631,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         [Test]
         public void SerializationOfOtherType()
         {
-            var dfe = DataFactoryElement<DataFactoryElement<string>>.FromSecretBase(new UnknownSecret(OtherSecretType));
+            var dfe = DataFactoryElement<string>.FromSecretBase(new UnknownSecret(OtherSecretType));
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(OtherTypeJson, actual);
             Assert.IsNull(dfe.ToString());
@@ -647,7 +647,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             {
                 SecretVersion = "secretVersionValue"
             };
-            var dfe = DataFactoryElement<DataFactoryElement<string>>.FromKeyVaultSecret(keyVaultReference);
+            var dfe = DataFactoryElement<string>.FromKeyVaultSecret(keyVaultReference);
             var actual = GetSerializedString(dfe);
             Assert.AreEqual(KeyVaultSecretReferenceJson, actual);
         }
