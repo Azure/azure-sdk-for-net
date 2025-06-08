@@ -218,7 +218,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                writer.WriteObjectValue(element.Secret!);
+                ((IUtf8JsonSerializable)element.Secret!).Write(writer);
             }
         }
 

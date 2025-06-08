@@ -23,7 +23,7 @@ namespace Azure.Core.Expressions.DataFactory
 
             if (Kind == DataFactoryElementKind.Literal)
             {
-                SerializeLiteral(writer);
+                SerializeLiteral(writer, options);
             }
             else if (Kind == DataFactoryElementKind.Expression)
             {
@@ -31,7 +31,7 @@ namespace Azure.Core.Expressions.DataFactory
             }
             else
             {
-                writer.WriteObjectValue(Secret!);
+                ((IUtf8JsonSerializable)Secret!).Write(writer);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Azure.Core.Expressions.DataFactory
             return CreateLiteralElement(element);
         }
 
-        private void SerializeLiteral(Utf8JsonWriter writer)
+        private void SerializeLiteral(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             switch (Literal)
             {
@@ -140,8 +140,93 @@ namespace Azure.Core.Expressions.DataFactory
                     }
                     break;
                 default:
-                    writer.WriteObjectValue(Literal!);
+                    WriteObjectValue(writer, Literal!, options);
                     break;
+            }
+        }
+
+        private void WriteObjectValue<T1>(Utf8JsonWriter writer, T1 value, ModelReaderWriterOptions options)
+        {
+            switch (value)
+            {
+                case null:
+                    writer.WriteNullValue();
+                    break;
+                case IJsonModel<T1> jsonModel:
+                    jsonModel.Write(writer, options);
+                    break;
+                case IUtf8JsonSerializable serializable:
+                    serializable.Write(writer);
+                    break;
+                case byte[] bytes:
+                    writer.WriteBase64StringValue(bytes);
+                    break;
+                case BinaryData bytes:
+                    writer.WriteBase64StringValue(bytes);
+                    break;
+                case JsonElement json:
+                    json.WriteTo(writer);
+                    break;
+                case int i:
+                    writer.WriteNumberValue(i);
+                    break;
+                case decimal d:
+                    writer.WriteNumberValue(d);
+                    break;
+                case double d:
+                    if (double.IsNaN(d))
+                    {
+                        writer.WriteStringValue("NaN");
+                    }
+                    else
+                    {
+                        writer.WriteNumberValue(d);
+                    }
+                    break;
+                case float f:
+                    writer.WriteNumberValue(f);
+                    break;
+                case long l:
+                    writer.WriteNumberValue(l);
+                    break;
+                case string s:
+                    writer.WriteStringValue(s);
+                    break;
+                case bool b:
+                    writer.WriteBooleanValue(b);
+                    break;
+                case Guid g:
+                    writer.WriteStringValue(g);
+                    break;
+                case DateTimeOffset dateTimeOffset:
+                    writer.WriteStringValue(dateTimeOffset, "O");
+                    break;
+                case DateTime dateTime:
+                    writer.WriteStringValue(dateTime, "O");
+                    break;
+                case IEnumerable<KeyValuePair<string, object>> enumerable:
+                    writer.WriteStartObject();
+                    foreach (KeyValuePair<string, object> pair in enumerable)
+                    {
+                        writer.WritePropertyName(pair.Key);
+                        WriteObjectValue(writer, pair.Value, options);
+                    }
+                    writer.WriteEndObject();
+                    break;
+                case IEnumerable<object> objectEnumerable:
+                    writer.WriteStartArray();
+                    foreach (object item in objectEnumerable)
+                    {
+                        WriteObjectValue(writer, item, options);
+                    }
+                    writer.WriteEndArray();
+                    break;
+                case TimeSpan timeSpan:
+                    writer.WriteStringValue(timeSpan, "P");
+                    break;
+
+                default:
+                    throw new NotSupportedException("Not supported type " + value.GetType());
             }
         }
 

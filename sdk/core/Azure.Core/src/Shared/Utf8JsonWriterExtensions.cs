@@ -4,11 +4,9 @@
 #nullable enable
 
 using System;
-using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 
 namespace Azure.Core
@@ -67,91 +65,6 @@ namespace Azure.Core
             if (format != "U") throw new ArgumentOutOfRangeException(format, "Only 'U' format is supported when writing a DateTimeOffset as a Number.");
 
             writer.WriteNumberValue(value.ToUnixTimeSeconds());
-        }
-
-        public static void WriteObjectValue<T>(this Utf8JsonWriter writer, T value, ModelReaderWriterOptions? options = null)
-        {
-            switch (value)
-            {
-                case null:
-                    writer.WriteNullValue();
-                    break;
-                case IJsonModel<T> jsonModel:
-                    jsonModel.Write(writer, options ?? new ModelReaderWriterOptions("W"));
-                    break;
-                case IUtf8JsonSerializable serializable:
-                    serializable.Write(writer);
-                    break;
-                case byte[] bytes:
-                    writer.WriteBase64StringValue(bytes);
-                    break;
-                case BinaryData bytes:
-                    writer.WriteBase64StringValue(bytes);
-                    break;
-                case System.Text.Json.JsonElement json:
-                    json.WriteTo(writer);
-                    break;
-                case int i:
-                    writer.WriteNumberValue(i);
-                    break;
-                case decimal d:
-                    writer.WriteNumberValue(d);
-                    break;
-                case double d:
-                    if (double.IsNaN(d))
-                    {
-                        writer.WriteStringValue("NaN");
-                    }
-                    else
-                    {
-                        writer.WriteNumberValue(d);
-                    }
-                    break;
-                case float f:
-                    writer.WriteNumberValue(f);
-                    break;
-                case long l:
-                    writer.WriteNumberValue(l);
-                    break;
-                case string s:
-                    writer.WriteStringValue(s);
-                    break;
-                case bool b:
-                    writer.WriteBooleanValue(b);
-                    break;
-                case Guid g:
-                    writer.WriteStringValue(g);
-                    break;
-                case DateTimeOffset dateTimeOffset:
-                    writer.WriteStringValue(dateTimeOffset, "O");
-                    break;
-                case DateTime dateTime:
-                    writer.WriteStringValue(dateTime, "O");
-                    break;
-                case IEnumerable<KeyValuePair<string, object>> enumerable:
-                    writer.WriteStartObject();
-                    foreach (KeyValuePair<string, object> pair in enumerable)
-                    {
-                        writer.WritePropertyName(pair.Key);
-                        writer.WriteObjectValue(pair.Value);
-                    }
-                    writer.WriteEndObject();
-                    break;
-                case IEnumerable<object> objectEnumerable:
-                    writer.WriteStartArray();
-                    foreach (object item in objectEnumerable)
-                    {
-                        writer.WriteObjectValue(item);
-                    }
-                    writer.WriteEndArray();
-                    break;
-                case TimeSpan timeSpan:
-                    writer.WriteStringValue(timeSpan, "P");
-                    break;
-
-                default:
-                    throw new NotSupportedException("Not supported type " + value.GetType());
-            }
         }
     }
 }
