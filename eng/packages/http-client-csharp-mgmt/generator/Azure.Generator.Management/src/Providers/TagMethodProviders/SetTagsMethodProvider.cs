@@ -78,7 +78,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             {
                 // GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
                 This.Invoke("GetTagResource").Invoke(deleteMethod, [
-                    Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                    Static(typeof(WaitUntil)).Property("Completed"),
                     cancellationTokenParam
                 ], null, _isAsync).Terminate(),
 
@@ -95,7 +95,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
                 // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 This.Invoke("GetTagResource").Invoke(createMethod, [
-                    Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                    Static(typeof(WaitUntil)).Property("Completed"),
                     originalTagsVar.Property("Value").Property("Data"),
                     cancellationTokenParam
                 ], null, _isAsync).Terminate()
@@ -133,7 +133,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     "result",
                     new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
                     This.Invoke(updateMethod, [
-                        Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                        Static(typeof(WaitUntil)).Property("Completed"),
                         currentVar,
                         cancellationTokenParam
                     ], null, _isAsync),

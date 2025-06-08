@@ -160,8 +160,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             out VariableExpression currentVar)
         {
             var getMethod = isAsync ? "GetAsync" : "Get";
-
-            // var current = Get(cancellationToken: cancellationToken).Value.Data; // has compilation error
+            // TupleExpression wrapper is a workaround to ensure correct async syntax: (await GetAsync(...).ConfigureAwait(false)).Value.Data
+            // Without this workaround, async case would generate invalid syntax: await GetAsync(...).ConfigureAwait(false).Value.Data
             return Declare(
                 variableName,
                 resourceClientProvider.ResourceData.Type,

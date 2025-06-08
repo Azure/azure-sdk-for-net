@@ -118,14 +118,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             return new TryExpression(tryStatements);
         }
 
-        /// <summary>
-        /// Builds the pipeline processing statements that handle HTTP message execution and response processing.
-        /// This method generates different code patterns based on the expected return type.
-        /// </summary>
-        /// <param name="messageVariable">The HTTP message variable to process</param>
-        /// <param name="contextVariable">The request context variable</param>
-        /// <param name="responseVariable">Output variable containing the processed response</param>
-        /// <returns>List of statements for pipeline processing</returns>
         private IReadOnlyList<MethodBodyStatement> BuildClientPipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,

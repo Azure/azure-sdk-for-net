@@ -88,7 +88,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
                 // GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
                 This.Invoke("GetTagResource").Invoke(createMethod, [
-                    Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                    Static(typeof(WaitUntil)).Property("Completed"),
                     originalTagsVar.Property("Value").Property("Data"),
                     cancellationTokenParam
                 ], null, _isAsync).Terminate(),
