@@ -6,7 +6,6 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
 using Azure.Generator.Management.Extensions;
@@ -79,9 +78,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         {
             var canUseTagResourceMethod = isAsync ? "CanUseTagResourceAsync" : "CanUseTagResource";
 
-            // Generate method invocation expression:
-            // Sync: this.CanUseTagResource(cancellationToken)
-            // Async: await this.CanUseTagResourceAsync(cancellationToken)
             return This.Invoke(canUseTagResourceMethod, [cancellationTokenParam], null, isAsync);
         }
 
