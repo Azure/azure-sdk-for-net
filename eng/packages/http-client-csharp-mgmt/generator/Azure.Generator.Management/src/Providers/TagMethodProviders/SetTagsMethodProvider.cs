@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -39,7 +40,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var tagsParam = _signature.Parameters[0];
             var cancellationTokenParam = _signature.Parameters[1];
 
-            var statements = CreateDiagnosticScopeStatements(_resourceClientProvider, "SetTags", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "SetTags", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();
@@ -57,7 +58,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             tryStatements.Add(ifElseStatement);
 
             // Build catch block
-            var catchBlock = CreateDiagnosticCatchBlock(scopeVariable);
+            var catchBlock = ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable);
 
             // Add try-catch statement
             statements.Add(new TryCatchFinallyStatement(
@@ -105,19 +106,16 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 _resourceClientProvider,
                 _isAsync,
                 cancellationTokenParam,
-                out var contextVar,
-                out var messageVar,
-                out var originalResultVar));
+                out var responseVar));
 
             // Add primary path response creation statements
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, originalResultVar));
+            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
 
             return statements;
         }
 
         private List<MethodBodyStatement> BuildElseStatement(ParameterProvider tagsParam, ParameterProvider cancellationTokenParam)
         {
-            var getMethod = _isAsync ? "GetAsync" : "Get";
             var updateMethod = _isAsync ? "UpdateAsync" : "Update";
 
             var statements = new List<MethodBodyStatement>();

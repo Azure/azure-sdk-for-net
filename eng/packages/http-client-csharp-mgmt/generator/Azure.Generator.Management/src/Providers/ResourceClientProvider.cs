@@ -102,6 +102,7 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
+        internal IReadOnlyCollection<InputServiceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         public bool IsSingleton { get; }
 
@@ -195,6 +196,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal const string ValidateResourceIdMethodName = "ValidateResourceId";
+
         protected MethodProvider BuildValidateResourceIdMethod()
         {
             var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
@@ -297,6 +299,60 @@ namespace Azure.Generator.Management.Providers
             apiVersion = apiVersionDeclaration.As<string>();
             var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [ResourceTypeExpression, new DeclarationExpression(apiVersionDeclaration, true)]);
             return invocation.As<bool>();
+        }
+
+        public ValueExpression[] PopulateArguments(
+            IReadOnlyList<ParameterProvider> parameters,
+            VariableExpression contextVariable,
+            MethodProvider? convenienceMethod = null)
+        {
+            var arguments = new List<ValueExpression>();
+            foreach (var parameter in parameters)
+            {
+                if (parameter.Name.Equals("subscriptionId", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        Static(typeof(Guid)).Invoke(
+                            nameof(Guid.Parse),
+                            This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.SubscriptionId))));
+                }
+                else if (parameter.Name.Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
+                }
+                // TODO: handle parents
+                // Handle resource name - the last contextual parameter
+                else if (parameter.Name.Equals(ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
+                }
+                else if (parameter.Type.Equals(typeof(RequestContent)))
+                {
+                    // If convenience method is provided, find the resource parameter from it
+                    if (convenienceMethod != null)
+                    {
+                        var resource = convenienceMethod.Signature.Parameters
+                            .Single(p => p.Type.Equals(ResourceData.Type));
+                        arguments.Add(resource);
+                    }
+                    else
+                    {
+                        // Otherwise just add the parameter as-is
+                        arguments.Add(parameter);
+                    }
+                }
+                else if (parameter.Type.Equals(typeof(RequestContext)))
+                {
+                    arguments.Add(contextVariable);
+                }
+                else
+                {
+                    arguments.Add(parameter);
+                }
+            }
+            return [.. arguments];
         }
     }
 }

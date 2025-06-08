@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -23,13 +24,13 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected override MethodSignature CreateMethodSignature()
         {
             var methodName = _isAsync ? "AddTagAsync" : "AddTag";
-            return CreateMethodSignatureCore(methodName, $"Add a tag to a {_resourceClientProvider.SpecName}");
+            return CreateMethodSignatureCore(methodName, $"Add a tag to the current resource.");
         }
 
         protected override ParameterProvider[] BuildParameters()
         {
-            var keyParameter = new ParameterProvider("key", $"The tag key.", typeof(string), validation: ParameterValidationType.AssertNotNull);
-            var valueParameter = new ParameterProvider("value", $"The tag value.", typeof(string), validation: ParameterValidationType.AssertNotNull);
+            var keyParameter = CreateKeyParameter();
+            var valueParameter = CreateValueParameter();
             var cancellationTokenParameter = KnownAzureParameters.CancellationTokenWithDefault;
 
             return [keyParameter, valueParameter, cancellationTokenParameter];
@@ -41,7 +42,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var valueParam = _signature.Parameters[1];
             var cancellationTokenParam = _signature.Parameters[2];
 
-            var statements = CreateDiagnosticScopeStatements(_resourceClientProvider, "AddTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "AddTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();
@@ -59,7 +60,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             tryStatements.Add(ifElseStatement);
 
             // Build catch block
-            var catchBlock = CreateDiagnosticCatchBlock(scopeVariable);
+            var catchBlock = ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable);
 
             // Add try-catch statement
             statements.Add(new TryCatchFinallyStatement(
@@ -100,12 +101,10 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 _resourceClientProvider,
                 _isAsync,
                 cancellationTokenParam,
-                out var contextVar,
-                out var messageVar,
-                out var originalResultVar));
+                out var responseVar));
 
             // Add primary path response creation statements
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, originalResultVar));
+            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
 
             return statements;
         }
@@ -120,8 +119,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Get current resource data
             statements.AddRange(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var currentVar));
 
-            statements.AddRange(new[]
-            {
+            statements.AddRange(
+            [
                 // current.Tags[key] = value;
                 new IndexerExpression(currentVar.Property("Tags"), keyParam)
                     .Assign(valueParam).Terminate(),
@@ -139,7 +138,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
                 // return Response.FromValue(result.Value, result.GetRawResponse());
                 CreateSecondaryPathResponseStatement(resultVar)
-            });
+            ]);
 
             return statements;
         }

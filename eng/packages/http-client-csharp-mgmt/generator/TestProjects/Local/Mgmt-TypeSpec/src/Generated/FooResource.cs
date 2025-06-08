@@ -278,9 +278,9 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Add a tag to a Foo. </summary>
-        /// <param name="key"> The tag key. </param>
-        /// <param name="value"> The tag value. </param>
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<FooResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
@@ -322,9 +322,9 @@ namespace MgmtTypeSpec
             }
         }
 
-        /// <summary> Add a tag to a Foo. </summary>
-        /// <param name="key"> The tag key. </param>
-        /// <param name="value"> The tag value. </param>
+        /// <summary> Add a tag to the current resource. </summary>
+        /// <param name="key"> The key for the tag. </param>
+        /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<FooResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
@@ -367,7 +367,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The tag key. </param>
+        /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<FooResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
@@ -409,7 +409,7 @@ namespace MgmtTypeSpec
         }
 
         /// <summary> Removes a tag by key from the resource. </summary>
-        /// <param name="key"> The tag key. </param>
+        /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<FooResource> RemoveTag(string key, CancellationToken cancellationToken = default)

@@ -6,6 +6,7 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
@@ -28,7 +29,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         protected override ParameterProvider[] BuildParameters()
         {
-            var keyParameter = new ParameterProvider("key", $"The tag key.", typeof(string), validation: ParameterValidationType.AssertNotNull);
+            var keyParameter = CreateKeyParameter();
             var cancellationTokenParameter = KnownAzureParameters.CancellationTokenWithDefault;
 
             return [keyParameter, cancellationTokenParameter];
@@ -39,7 +40,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             var keyParam = _signature.Parameters[0];
             var cancellationTokenParam = _signature.Parameters[1];
 
-            var statements = CreateDiagnosticScopeStatements(_resourceClientProvider, "RemoveTag", out var scopeVariable);
+            var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "RemoveTag", out var scopeVariable);
 
             // Build try block
             var tryStatements = new List<MethodBodyStatement>();
@@ -57,7 +58,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             tryStatements.Add(ifElseStatement);
 
             // Build catch block
-            var catchBlock = CreateDiagnosticCatchBlock(scopeVariable);
+            var catchBlock = ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable);
 
             // Add try-catch statement
             statements.Add(new TryCatchFinallyStatement(
@@ -77,7 +78,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 // var originalTags = GetTagResource().Get(cancellationToken);
                 Declare(
                     "originalTags",
-                    new CSharpType(typeof(Azure.Response<>), typeof(Azure.ResourceManager.Resources.TagResource)),
+                    new CSharpType(typeof(Response<>), typeof(ResourceManager.Resources.TagResource)),
                     This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, _isAsync),
                     out var originalTagsVar),
 
@@ -98,11 +99,9 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 _resourceClientProvider,
                 _isAsync,
                 cancellationTokenParam,
-                out var contextVar,
-                out var messageVar,
-                out var originalResultVar));
+                out var responseVar));
 
-            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, originalResultVar));
+            statements.AddRange(CreatePrimaryPathResponseStatements(_resourceClientProvider, responseVar));
 
             return statements;
         }
@@ -116,8 +115,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Get current resource data
             statements.AddRange(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var currentVar));
 
-            statements.AddRange(new[]
-            {
+            statements.AddRange(
+            [
                 // current.Tags.Remove(key);
                 currentVar.Property("Tags").Invoke("Remove", [keyParam]).Terminate(),
 
@@ -126,18 +125,18 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     "result",
                     new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
                     This.Invoke(updateMethod, [
-                        Static(typeof(Azure.WaitUntil)).Property("Completed"),
+                        Static(typeof(WaitUntil)).Property("Completed"),
                         currentVar,
                         cancellationTokenParam
                     ], null, _isAsync),
                     out var resultVar),
 
                 // return Response.FromValue(result.Value, result.GetRawResponse());
-                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
+                Return(Static(typeof(Response)).Invoke("FromValue", [
                     resultVar.Property("Value"),
                     resultVar.Invoke("GetRawResponse")
                 ]))
-            });
+            ]);
 
             return statements;
         }
