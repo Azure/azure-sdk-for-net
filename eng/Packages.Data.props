@@ -125,7 +125,6 @@
     <PackageReference Update="Azure.MixedReality.Authentication" version= "1.2.0" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.4.0" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.7.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.7.0" />
@@ -175,6 +174,11 @@
     <PackageReference Update="Microsoft.IdentityModel.Protocols.OpenIdConnect" Version="6.35.0" />
     <PackageReference Update="Microsoft.IdentityModel.Tokens" Version="6.35.0" />
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+  </ItemGroup>
+
+  <!-- Azure.Identity is only allowed for non-Azure.* client libraries and test projects -->
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and !$(MSBuildProjectName.StartsWith('Azure.'))">
+    <PackageReference Update="Azure.Identity" Version="1.13.1" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
