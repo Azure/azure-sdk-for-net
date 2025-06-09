@@ -34,7 +34,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     }
 
     if ($projectOutput -match ' : error : ') {
-      Write-Host "##vso[task.logissue type=error]$projectOutput"
+      LogError $projectOutput
       continue
     }
 
