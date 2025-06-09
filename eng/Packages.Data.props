@@ -177,7 +177,7 @@
   </ItemGroup>
 
   <!-- Azure.Identity is only allowed for non-Azure.* client libraries and test projects -->
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and !$(MSBuildProjectName.StartsWith('Azure.'))">
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Azure.')) != 'true'">
     <PackageReference Update="Azure.Identity" Version="1.13.1" />
   </ItemGroup>
 
