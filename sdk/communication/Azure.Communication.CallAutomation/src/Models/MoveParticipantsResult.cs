@@ -101,14 +101,16 @@ namespace Azure.Communication.CallAutomation
                         true,
                         succeeded,
                         null,
-                        succeeded.Participant);
+                        succeeded.Participant,
+                        succeeded.FromCall);
                     break;
                 case MoveParticipantFailed failed:
                     result = new MoveParticipantEventResult(
                         false,
                         null,
                         (MoveParticipantFailed)returnedEvent,
-                        failed.Participant);
+                        failed.Participant,
+                        failed.FromCall);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent?.GetType().Name);

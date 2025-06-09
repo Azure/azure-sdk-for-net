@@ -29,12 +29,18 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         public CommunicationIdentifier TargetParticipant { get; }
 
-        internal MoveParticipantEventResult(bool isSuccess, MoveParticipantSucceeded successResult, MoveParticipantFailed failureResult, CommunicationIdentifier targetParticipant)
+        /// <summary>
+        /// The call connection ID from which the participant was moved.
+        /// </summary>
+        public string FromCall { get; }
+
+        internal MoveParticipantEventResult(bool isSuccess, MoveParticipantSucceeded successResult, MoveParticipantFailed failureResult, CommunicationIdentifier targetParticipant, string fromCall)
         {
             IsSuccess = isSuccess;
             SuccessResult = successResult;
             FailureResult = failureResult;
             TargetParticipant = targetParticipant;
+            FromCall = fromCall;
         }
     }
 }

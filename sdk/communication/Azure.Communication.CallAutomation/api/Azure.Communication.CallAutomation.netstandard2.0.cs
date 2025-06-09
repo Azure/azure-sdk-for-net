@@ -1313,6 +1313,7 @@ namespace Azure.Communication.CallAutomation
     {
         internal MoveParticipantEventResult() { }
         public Azure.Communication.CallAutomation.MoveParticipantFailed FailureResult { get { throw null; } }
+        public string FromCall { get { throw null; } }
         public bool IsSuccess { get { throw null; } }
         public Azure.Communication.CallAutomation.MoveParticipantSucceeded SuccessResult { get { throw null; } }
         public Azure.Communication.CommunicationIdentifier TargetParticipant { get { throw null; } }
