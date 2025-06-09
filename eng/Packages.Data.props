@@ -176,11 +176,6 @@
     <PackageReference Update="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
-  <!-- Azure.Identity is only allowed for non-Azure.* client libraries and test projects -->
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Azure.')) != 'true'">
-    <PackageReference Update="Azure.Identity" Version="1.13.1" />
-  </ItemGroup>
-
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Monitor.OpenTelemetry'))">
     <!-- OpenTelemetry dependency approved for Azure.Monitor.OpenTelemetry.Exporter package only -->
     <PackageReference Update="OpenTelemetry" Version="1.12.0" />
@@ -255,6 +250,7 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="8.0.2" />
+    <PackageReference Update="Azure.Identity" Version="1.13.1" />
   </ItemGroup>
 
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
