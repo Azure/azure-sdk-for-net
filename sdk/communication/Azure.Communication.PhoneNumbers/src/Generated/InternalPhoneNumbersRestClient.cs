@@ -31,7 +31,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <param name="endpoint"> The communication resource, for example https://resourcename.communication.azure.com. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2025-04-01")
+        public InternalPhoneNumbersRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2025-04-15-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -192,7 +192,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage, PhoneNumberType? phoneNumberType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -215,6 +215,10 @@ namespace Azure.Communication.PhoneNumbers
                 uri.AppendQuery("administrativeDivision", administrativeDivision, true);
             }
             uri.AppendQuery("api-version", _apiVersion, true);
+            if (phoneNumberType != null)
+            {
+                uri.AppendQuery("phoneNumberType", phoneNumberType.Value.ToString(), true);
+            }
             request.Uri = uri;
             if (acceptLanguage != null)
             {
@@ -222,6 +226,70 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        /// <summary> Gets the list of cities or towns with available phone numbers. </summary>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree, Mobile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public async Task<Response<PhoneNumberLocalities>> ListAvailableLocalitiesAsync(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, PhoneNumberType? phoneNumberType = null, CancellationToken cancellationToken = default)
+        {
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+
+            using var message = CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage, phoneNumberType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumberLocalities value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumberLocalities.DeserializePhoneNumberLocalities(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the list of cities or towns with available phone numbers. </summary>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree, Mobile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public Response<PhoneNumberLocalities> ListAvailableLocalities(string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, PhoneNumberType? phoneNumberType = null, CancellationToken cancellationToken = default)
+        {
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+
+            using var message = CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage, phoneNumberType);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumberLocalities value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PhoneNumberLocalities.DeserializePhoneNumberLocalities(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateListOfferingsRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
@@ -1069,7 +1137,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage, PhoneNumberType? phoneNumberType)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1084,6 +1152,80 @@ namespace Azure.Communication.PhoneNumbers
             }
             request.Headers.Add("Accept", "application/json");
             return message;
+        }
+
+        /// <summary> Gets the list of cities or towns with available phone numbers. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree, Mobile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public async Task<Response<PhoneNumberLocalities>> ListAvailableLocalitiesNextPageAsync(string nextLink, string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, PhoneNumberType? phoneNumberType = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+
+            using var message = CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage, phoneNumberType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumberLocalities value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
+                        value = PhoneNumberLocalities.DeserializePhoneNumberLocalities(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Gets the list of cities or towns with available phone numbers. </summary>
+        /// <param name="nextLink"> The URL to the next page of results. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="skip"> An optional parameter for how many entries to skip, for pagination purposes. The default value is 0. </param>
+        /// <param name="maxPageSize"> An optional parameter for how many entries to return, for pagination purposes. The default value is 100. </param>
+        /// <param name="administrativeDivision"> An optional parameter for the name of the state or province in which to search for the area code. </param>
+        /// <param name="acceptLanguage"> The locale to display in the localized fields in the response. e.g. 'en-US'. </param>
+        /// <param name="phoneNumberType"> Filter by numberType, e.g. Geographic, TollFree, Mobile. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="twoLetterIsoCountryName"/> is null. </exception>
+        public Response<PhoneNumberLocalities> ListAvailableLocalitiesNextPage(string nextLink, string twoLetterIsoCountryName, int? skip = null, int? maxPageSize = null, string administrativeDivision = null, string acceptLanguage = null, PhoneNumberType? phoneNumberType = null, CancellationToken cancellationToken = default)
+        {
+            if (nextLink == null)
+            {
+                throw new ArgumentNullException(nameof(nextLink));
+            }
+            if (twoLetterIsoCountryName == null)
+            {
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
+            }
+
+            using var message = CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, maxPageSize, administrativeDivision, acceptLanguage, phoneNumberType);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        PhoneNumberLocalities value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
+                        value = PhoneNumberLocalities.DeserializePhoneNumberLocalities(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
         }
 
         internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)

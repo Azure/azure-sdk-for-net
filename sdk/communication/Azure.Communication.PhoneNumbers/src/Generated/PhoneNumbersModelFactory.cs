@@ -149,7 +149,7 @@ namespace Azure.Communication.PhoneNumbers
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PhoneNumberSearchResult"/>. </summary>
         /// <param name="searchId"> The search id. </param>
         /// <param name="phoneNumbers"> The phone numbers that are available. Can be fewer than the desired search quantity. </param>
-        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, or tollFree. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree, mobile. </param>
         /// <param name="assignmentType"> Phone number's assignment type. </param>
         /// <param name="capabilities"> Capabilities of a phone number. </param>
         /// <param name="cost"> The incurred cost for a single phone number. </param>
