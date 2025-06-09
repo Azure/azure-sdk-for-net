@@ -189,12 +189,12 @@ namespace Microsoft.Extensions.Azure
                     string.IsNullOrWhiteSpace(clientId) ||
                     string.IsNullOrWhiteSpace(azureCloud))
                 {
-                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'resourceId', 'objectId'] must be specified via environment variables or the configuration.");
+                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'managedIdentityResourceId', 'managedIdentityObjectId'] must be specified via environment variables or the configuration.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
                 {
-                    return new ManagedFederatedIdentityCredential(tenantId, clientId, new ResourceIdentifier(resourceId), azureCloud, additionallyAllowedTenantsList);
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedResourceId(new ResourceIdentifier(resourceId)), azureCloud, additionallyAllowedTenantsList);
                 }
 
                 if (!string.IsNullOrWhiteSpace(objectId))
@@ -204,7 +204,7 @@ namespace Microsoft.Extensions.Azure
 
                 if (!string.IsNullOrWhiteSpace(managedIdentityClientId))
                 {
-                    return new ManagedFederatedIdentityCredential(tenantId, clientId, managedIdentityClientId, azureCloud, additionallyAllowedTenantsList);
+                    return new ManagedFederatedIdentityCredential(tenantId, clientId, ManagedIdentityId.FromUserAssignedClientId(managedIdentityClientId), azureCloud, additionallyAllowedTenantsList);
                 }
             }
 
