@@ -33,6 +33,11 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
+    if ($projectOutput -match ' : error : ') {
+      Write-Output "##vso[task.logissue type=error]$projectOutput"
+      continue
+    }
+
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
