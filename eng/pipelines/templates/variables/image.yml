@@ -2,14 +2,14 @@
 
 variables:
   - name: LINUXPOOL
-    value: azsdk-pool-mms-ubuntu-2004-general
+    value: azsdk-pool
   - name: WINDOWSPOOL
     value: azsdk-pool-mms-win-2022-general
   - name: MACPOOL
     value: Azure Pipelines
 
   - name: LINUXVMIMAGE
-    value: azsdk-pool-mms-ubuntu-2004-1espt
+    value: ubuntu-24.04
   - name: LINUXNEXTVMIMAGE
     value: ubuntu-22.04
   - name: WINDOWSVMIMAGE

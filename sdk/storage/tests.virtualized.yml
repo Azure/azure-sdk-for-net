@@ -7,7 +7,7 @@ extends:
     TimeoutInMinutes: 180
     MatrixReplace:
       # Use dedicated storage pool in canadacentral with higher memory capacity
-      - Pool=.*LINUXPOOL.*/azsdk-pool-mms-ubuntu-2004-storage
+      - Pool=.*LINUXPOOL.*/azsdk-pool
       - Pool=.*WINDOWSPOOL.*/azsdk-pool-mms-win-2022-general
     MatrixConfigs:
       - Name: Storage_virtualized
