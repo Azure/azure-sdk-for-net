@@ -31,147 +31,98 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"))
+            var properties = new AccessControlListProperties(NetworkFabricConfigurationType.File)
             {
                 Annotation = "annotation",
-                ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://ACL-Storage-URL"),
                 DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations =
+                {
+                    new AccessControlListMatchConfiguration
                     {
-                        new AccessControlListMatchConfiguration()
+                        MatchConfigurationName = "example-match",
+                        SequenceNumber = 123,
+                        IPAddressType = NetworkFabricIPAddressType.IPv4,
+                        MatchConditions =
                         {
-                            MatchConfigurationName = "example-match",
-                            SequenceNumber = 123,
-                            IPAddressType = NetworkFabricIPAddressType.IPv4,
-                            MatchConditions =
+                            new AccessControlListMatchCondition
                             {
-                                new AccessControlListMatchCondition()
+                                EtherTypes = { "0x1" },
+                                Fragments = { "0xff00-0xffff" },
+                                IPLengths = { "4094-9214" },
+                                TtlValues = { "23" },
+                                DscpMarkings = { "32" },
+                                PortCondition = new AccessControlListPortCondition(Layer4Protocol.Tcp)
                                 {
-                                    EtherTypes =
-                                        {
-                                        "0x1"
-                                        },
-                                    Fragments =
-                                        {
-                                        "0xff00-0xffff"
-                                        },
-                                    IPLengths =
-                                        {
-                                        "4094-9214"
-                                        },
-                                    TtlValues =
-                                        {
-                                        "23"
-                                        },
-                                    DscpMarkings =
-                                        {
-                                        "32"
-                                        },
-                                    PortCondition = new AccessControlListPortCondition(Layer4Protocol.Tcp)
-                                    {
-                                        Flags =
-                                            {
-                                            "established"
-                                            },
-                                        PortType = NetworkFabricPortType.SourcePort,
-                                        Ports =
-                                            {
-                                            "1-20"
-                                            },
-                                        PortGroupNames =
-                                            {
-                                            "example-portGroup"
-                                            },
-                                    },
-                                    ProtocolTypes =
-                                        {
-                                        "TCP"
-                                        },
-                                    VlanMatchCondition = new VlanMatchCondition()
-                                    {
-                                        Vlans =
-                                            {
-                                            "20-30"
-                                            },
-                                        InnerVlans =
-                                            {
-                                            "30"
-                                            },
-                                        VlanGroupNames =
-                                            {
-                                            "example-vlanGroup"
-                                            },
-                                    },
-                                    IPCondition = new IPMatchCondition()
-                                    {
-                                        SourceDestinationType = SourceDestinationType.SourceIP,
-                                        PrefixType = IPMatchConditionPrefixType.Prefix,
-                                        IPPrefixValues =
-                                            {
-                                            "10.20.20.20/12"
-                                            },
-                                        IPGroupNames =
-                                            {
-                                            "example-ipGroup"
-                                            },
-                                    },
-                                }
-                            },
-                            Actions =
+                                    Flags = { "established" },
+                                    PortType = NetworkFabricPortType.SourcePort,
+                                    Ports = { "1-20" },
+                                    PortGroupNames = { "example-portGroup" },
+                                },
+                                ProtocolTypes = { "TCP" },
+                                VlanMatchCondition = new VlanMatchCondition
+                                {
+                                    Vlans = { "20-30" },
+                                    InnerVlans = { "30" },
+                                    VlanGroupNames = { "example-vlanGroup" },
+                                },
+                                IPCondition = new IPMatchCondition
+                                {
+                                    SourceDestinationType = SourceDestinationType.SourceIP,
+                                    PrefixType = IPMatchConditionPrefixType.Prefix,
+                                    IPPrefixValues = { "10.20.20.20/12" },
+                                    IPGroupNames = { "example-ipGroup" },
+                                },
+                            }
+                        },
+                        Actions =
+                        {
+                            new AccessControlListAction
                             {
-                                new AccessControlListAction()
-                                {
-                                    AclActionType = AclActionType.Count,
-                                    CounterName = "example-counter",
-                                }
-                            },
+                                AclActionType = AclActionType.Count,
+                                CounterName = "example-counter",
+                            }
+                        },
                     }
-                    },
+                },
                 DynamicMatchConfigurations =
+                {
+                    new CommonDynamicMatchConfiguration
                     {
-                        new CommonDynamicMatchConfiguration()
+                        IPGroups =
                         {
-                            IPGroups =
+                            new MatchConfigurationIPGroupProperties
                             {
-                                new MatchConfigurationIPGroupProperties()
-                                {
-                                    Name = "example-ipGroup",
-                                    IPAddressType = NetworkFabricIPAddressType.IPv4,
-                                    IPPrefixes =
-                                        {
-                                        "10.20.3.1/20"
-                                        },
-                                }
-                            },
-                            VlanGroups =
+                                Name = "example-ipGroup",
+                                IPAddressType = NetworkFabricIPAddressType.IPv4,
+                                IPPrefixes = { "10.20.3.1/20" },
+                            }
+                        },
+                        VlanGroups =
+                        {
+                            new VlanGroupProperties
                             {
-                                new VlanGroupProperties()
-                                {
-                                    Name = "example-vlanGroup",
-                                    Vlans =
-                                        {
-                                        "20-30"
-                                        },
-                                }
-                            },
-                            PortGroups =
+                                Name = "example-vlanGroup",
+                                Vlans = { "20-30" },
+                            }
+                        },
+                        PortGroups =
+                        {
+                            new PortGroupProperties
                             {
-                                new PortGroupProperties()
-                                {
-                                    Name = "example-portGroup",
-                                    Ports =
-                                        {
-                                        "100-200"
-                                        },
-                                }
-                            },
-                        }
-                    },
+                                Name = "example-portGroup",
+                                Ports = { "100-200" },
+                            }
+                        },
+                    }
+                },
+            };
+            NetworkFabricAccessControlListData data = new NetworkFabricAccessControlListData(new AzureLocation("eastUs"), properties)
+            {
                 Tags =
-                    {
-                        ["keyID"] = "KeyValue",
-                    },
+                {
+                    ["keyID"] = "KeyValue"
+                }
             };
             ArmOperation<NetworkFabricAccessControlListResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.AccessControlListName, data);
             NetworkFabricAccessControlListResource createResult = lro.Value;
