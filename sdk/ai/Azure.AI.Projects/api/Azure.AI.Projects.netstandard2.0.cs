@@ -93,7 +93,6 @@ namespace Azure.AI.Projects
         public Azure.AI.Inference.ImageEmbeddingsClient GetImageEmbeddingsClient() { throw null; }
         public virtual Azure.AI.Projects.Indexes GetIndexesClient(string apiVersion = "2025-05-15-preview") { throw null; }
         public virtual Azure.AI.Projects.RedTeams GetRedTeamsClient(string apiVersion = "2025-05-15-preview") { throw null; }
-        public virtual Azure.AI.Projects.ServicePatterns GetServicePatternsClient() { throw null; }
     }
     public partial class AIProjectClientOptions : Azure.Core.ClientOptions
     {
@@ -356,7 +355,6 @@ namespace Azure.AI.Projects
         public virtual Azure.Pageable<Azure.AI.Projects.DatasetVersion> GetDatasetVersions(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetDatasetVersionsAsync(Azure.RequestContext context) { throw null; }
         public virtual Azure.AsyncPageable<Azure.AI.Projects.DatasetVersion> GetDatasetVersionsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public static string GetRelativePath(string folderPath, string filePath) { throw null; }
         public virtual Azure.Pageable<System.BinaryData> GetVersions(string name, Azure.RequestContext context) { throw null; }
         public virtual Azure.Pageable<Azure.AI.Projects.DatasetVersion> GetVersions(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<System.BinaryData> GetVersionsAsync(string name, Azure.RequestContext context) { throw null; }
@@ -365,8 +363,10 @@ namespace Azure.AI.Projects
         public virtual Azure.Response PendingUpload(string name, string version, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Projects.PendingUploadResponse>> PendingUploadAsync(string name, string version, Azure.AI.Projects.PendingUploadRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> PendingUploadAsync(string name, string version, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
-        public Azure.Response UploadFile(string name, string version, string filePath) { throw null; }
-        public Azure.Response UploadFolder(string name, string version, string folderPath) { throw null; }
+        public Azure.AI.Projects.DatasetVersion UploadFile(string name, string version, string filePath, string? connectionName = null) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFileAsync(string name, string version, string filePath, string? connectionName = null) { throw null; }
+        public Azure.AI.Projects.DatasetVersion UploadFolder(string name, string version, string folderPath, string? connectionName = null) { throw null; }
+        public System.Threading.Tasks.Task<Azure.AI.Projects.DatasetVersion> UploadFolderAsync(string name, string version, string folderPath, string? connectionName = null) { throw null; }
     }
     public abstract partial class DatasetVersion : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.DatasetVersion>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.DatasetVersion>
     {
@@ -806,11 +806,6 @@ namespace Azure.AI.Projects
         public static implicit operator Azure.AI.Projects.SasCredentialType (string value) { throw null; }
         public static bool operator !=(Azure.AI.Projects.SasCredentialType left, Azure.AI.Projects.SasCredentialType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class ServicePatterns
-    {
-        protected ServicePatterns() { }
-        public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
     }
     public partial class Sku : System.ClientModel.Primitives.IJsonModel<Azure.AI.Projects.Sku>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Projects.Sku>
     {

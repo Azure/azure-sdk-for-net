@@ -162,8 +162,9 @@ You can update the `connectionName` with one of the connections in your Foundry 
 ```C# Snippet:AI_Projects_AzureOpenAISync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
+ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
 Console.WriteLine(result.Content[0].Text);
@@ -268,34 +269,46 @@ The code below shows some Dataset operations. Full samples can be found under th
 
 ```C# Snippet:AI_Projects_DatasetsExampleSync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
+var connectionName = Environment.GetEnvironmentVariable("CONNECTION_NAME");
 var datasetName = System.Environment.GetEnvironmentVariable("DATASET_NAME");
+var datasetVersion1 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_1") ?? "1.0";
+var datasetVersion2 = System.Environment.GetEnvironmentVariable("DATASET_VERSION_2") ?? "2.0";
+var filePath = System.Environment.GetEnvironmentVariable("SAMPLE_FILE_PATH") ?? "sample_folder/sample_file1.txt";
+var folderPath = System.Environment.GetEnvironmentVariable("SAMPLE_FOLDER_PATH") ?? "sample_folder";
 AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
 Datasets datasets = projectClient.GetDatasetsClient();
 
-Console.WriteLine("Uploading a single file to create Dataset version '1'...");
-var datasetResponse = datasets.UploadFile(
+Console.WriteLine($"Uploading a single file to create Dataset version {datasetVersion1}:");
+DatasetVersion dataset = datasets.UploadFile(
     name: datasetName,
-    version: "1",
-    filePath: "sample_folder/sample_file1.txt"
+    version: datasetVersion1,
+    filePath: filePath,
+    connectionName: connectionName
     );
-Console.WriteLine(datasetResponse);
-
-Console.WriteLine("Uploading folder to create Dataset version '2'...");
-datasetResponse = datasets.UploadFolder(
-    name: datasetName,
-    version: "2",
-    folderPath: "sample_folder"
-);
-Console.WriteLine(datasetResponse);
-
-Console.WriteLine("Retrieving Dataset version '1'...");
-DatasetVersion dataset = datasets.GetDataset(datasetName, "1");
 Console.WriteLine(dataset);
+
+Console.WriteLine($"Uploading folder to create Dataset version {datasetVersion2}:");
+dataset = datasets.UploadFolder(
+    name: datasetName,
+    version: datasetVersion2,
+    folderPath: folderPath,
+    connectionName: connectionName
+);
+Console.WriteLine(dataset);
+
+Console.WriteLine($"Retrieving Dataset version {datasetVersion1}:");
+dataset = datasets.GetDataset(datasetName, datasetVersion1);
+Console.WriteLine(dataset);
+
+Console.WriteLine($"Retrieving credentials of Dataset {datasetName} version {datasetVersion1}:");
+AssetCredentialResponse credentials = datasets.GetCredentials(datasetName, datasetVersion1);
+Console.WriteLine(credentials);
 
 Console.WriteLine($"Listing all versions for Dataset '{datasetName}':");
 foreach (var ds in datasets.GetVersions(datasetName))
 {
     Console.WriteLine(ds);
+    Console.WriteLine(ds.Version);
 }
 
 Console.WriteLine($"Listing latest versions for all datasets:");
@@ -304,9 +317,9 @@ foreach (var ds in datasets.GetDatasetVersions())
     Console.WriteLine(ds);
 }
 
-Console.WriteLine("Deleting Dataset versions '1' and '2'...");
-datasets.Delete(datasetName, "1");
-datasets.Delete(datasetName, "2");
+Console.WriteLine($"Deleting Dataset versions {datasetVersion1} and {datasetVersion2}:");
+datasets.Delete(datasetName, datasetVersion1);
+datasets.Delete(datasetName, datasetVersion2);
 ```
 
 ### Indexes operations

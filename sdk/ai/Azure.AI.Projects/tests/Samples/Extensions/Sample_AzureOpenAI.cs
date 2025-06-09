@@ -24,12 +24,23 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
 #if SNIPPET
         var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+        var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 #else
         var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
+        var connectionName = "";
+        try
+        {
+            connectionName = TestEnvironment.CONNECTIONNAME;
+        }
+        catch
+        {
+            connectionName = null;
+        }
+
 #endif
         AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
+        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);

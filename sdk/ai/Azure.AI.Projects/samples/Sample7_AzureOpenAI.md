@@ -14,8 +14,9 @@ This sample demonstrates how to use the synchronous and asynchronous `Azure Open
 ```C# Snippet:AI_Projects_AzureOpenAISync
 var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
+var connectionName = System.Environment.GetEnvironmentVariable("CONNECTION_NAME");
 AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
-ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
+ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: connectionName, apiVersion: null);
 
 ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
 Console.WriteLine(result.Content[0].Text);
