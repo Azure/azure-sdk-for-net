@@ -17,7 +17,6 @@ namespace Azure.Data.AppConfiguration
     {
         private readonly ConfigurationClient _client;
         private readonly Uri _nextPage;
-        private readonly string _accept;
         private readonly string _key;
         private readonly string _label;
         private readonly string _syncToken;
@@ -30,7 +29,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of ConfigurationClientGetRevisionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
-        /// <param name="accept"></param>
         /// <param name="key">
         /// A filter used to match keys. Syntax reference:
         /// https://aka.ms/azconfig/docs/restapirevisions
@@ -54,14 +52,10 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/restapirevisions
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetRevisionsCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetRevisionsCollectionResult(ConfigurationClient client, Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNull(accept, nameof(accept));
-
             _client = client;
             _nextPage = nextPage;
-            _accept = accept;
             _key = key;
             _label = label;
             _syncToken = syncToken;
@@ -103,7 +97,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetRevisionsRequest(nextLink, _accept, _key, _label, _syncToken, _after, _acceptDatetime, _select, _tags, _context);
+            HttpMessage message = _client.CreateGetRevisionsRequest(nextLink, _key, _label, _syncToken, _after, _acceptDatetime, _select, _tags, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetRevisions");
             scope.Start();
             try

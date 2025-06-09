@@ -18,7 +18,6 @@ namespace Azure.Data.AppConfiguration
     {
         private readonly ConfigurationClient _client;
         private readonly Uri _nextPage;
-        private readonly string _accept;
         private readonly string _name;
         private readonly string _after;
         private readonly IEnumerable<SnapshotFields> _select;
@@ -29,7 +28,6 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of ConfigurationClientGetSnapshotsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
-        /// <param name="accept"></param>
         /// <param name="name"> A filter for the name of the returned snapshots. </param>
         /// <param name="after">
         /// Instructs the server to return elements that appear after the element referred
@@ -39,14 +37,10 @@ namespace Azure.Data.AppConfiguration
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetSnapshotsAsyncCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetSnapshotsAsyncCollectionResult(ConfigurationClient client, Uri nextPage, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNull(accept, nameof(accept));
-
             _client = client;
             _nextPage = nextPage;
-            _accept = accept;
             _name = name;
             _after = after;
             _select = @select;
@@ -86,7 +80,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetSnapshotsRequest(nextLink, _accept, _name, _after, _select, _status, _syncToken, _context);
+            HttpMessage message = _client.CreateGetSnapshotsRequest(nextLink, _name, _after, _select, _status, _syncToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshots");
             scope.Start();
             try

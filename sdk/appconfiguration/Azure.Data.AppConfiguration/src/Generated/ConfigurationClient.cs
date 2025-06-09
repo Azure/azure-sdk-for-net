@@ -41,7 +41,6 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"></param>
         /// <param name="key">
         /// A filter used to match keys. Syntax reference:
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
@@ -79,7 +78,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> GetConfigurationSettings(string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal virtual Pageable<BinaryData> GetConfigurationSettings(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettings");
             scope.Start();
@@ -88,7 +87,6 @@ namespace Azure.Data.AppConfiguration
                 return new ConfigurationClientGetConfigurationSettingsCollectionResult(
                     this,
                     null,
-                    accept,
                     key,
                     label,
                     syncToken,
@@ -116,7 +114,6 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"></param>
         /// <param name="key">
         /// A filter used to match keys. Syntax reference:
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
@@ -154,7 +151,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
+        internal virtual AsyncPageable<BinaryData> GetConfigurationSettingsAsync(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettings");
             scope.Start();
@@ -163,7 +160,6 @@ namespace Azure.Data.AppConfiguration
                 return new ConfigurationClientGetConfigurationSettingsAsyncCollectionResult(
                     this,
                     null,
-                    accept,
                     key,
                     label,
                     syncToken,
@@ -183,63 +179,6 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        /// <summary> Gets a list of key-values. </summary>
-        /// <param name="accept"></param>
-        /// <param name="key">
-        /// A filter used to match keys. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="label">
-        /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="after">
-        /// Instructs the server to return elements that appear after the element referred
-        /// to by the specified token.
-        /// </param>
-        /// <param name="acceptDatetime">
-        /// Requests the server to respond with the state of the resource at the specified
-        /// time.
-        /// </param>
-        /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
-        /// <param name="snapshot">
-        /// A filter used get key-values for a snapshot. The value should be the name of
-        /// the snapshot. Not valid when used with 'key' and 'label' filters.
-        /// </param>
-        /// <param name="ifMatch">
-        /// Used to perform an operation only if the targeted resource's etag matches the
-        /// value provided.
-        /// </param>
-        /// <param name="ifNoneMatch">
-        /// Used to perform an operation only if the targeted resource's etag does not
-        /// match the value provided.
-        /// </param>
-        /// <param name="tags">
-        /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/keyvaluefiltering
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(string accept, string key = default, string label = default, string syncToken = default, string after = default, string acceptDatetime = default, IEnumerable<string> @select = default, string snapshot = default, string ifMatch = default, string ifNoneMatch = default, IEnumerable<string> tags = default, CancellationToken cancellationToken = default)
-        {
-            return new ConfigurationClientGetConfigurationSettingsAsyncCollectionResultOfT(
-                this,
-                null,
-                accept,
-                key,
-                label,
-                syncToken,
-                after,
-                acceptDatetime,
-                @select,
-                snapshot,
-                ifMatch,
-                ifNoneMatch,
-                tags,
-                cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets a single key-value.
         /// <list type="bullet">
@@ -249,7 +188,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
@@ -272,13 +210,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetConfigurationSetting(string key, string accept, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, accept, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -297,7 +235,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label of the key-value to retrieve. </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
@@ -320,13 +257,13 @@ namespace Azure.Data.AppConfiguration
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string accept, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
+        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateGetConfigurationSettingRequest(key, accept, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
+                using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -346,7 +283,6 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
@@ -359,19 +295,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response SetConfigurationSetting(string key, string contentType, string accept, RequestContent content, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        public virtual Response SetConfigurationSetting(string key, string contentType, RequestContent content, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, accept, content, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -391,7 +326,6 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="key"> The key of the key-value to create. </param>
         /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="label"> The label of the key-value to create. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
@@ -404,19 +338,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> SetConfigurationSettingAsync(string key, string contentType, string accept, RequestContent content, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        public virtual async Task<Response> SetConfigurationSettingAsync(string key, string contentType, RequestContent content, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.SetConfigurationSetting");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, accept, content, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -435,7 +368,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label of the key-value to delete. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -443,19 +375,18 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteConfigurationSetting(string key, string accept, string label, string syncToken, string ifMatch, RequestContext context)
+        public virtual Response DeleteConfigurationSetting(string key, string label, string syncToken, string ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, accept, label, syncToken, ifMatch, context);
+                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -474,7 +405,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to delete. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label of the key-value to delete. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -482,19 +412,18 @@ namespace Azure.Data.AppConfiguration
         /// value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string accept, string label, string syncToken, string ifMatch, RequestContext context)
+        public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, string ifMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteConfigurationSetting");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, accept, label, syncToken, ifMatch, context);
+                using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -512,7 +441,6 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"></param>
         /// <param name="name"> A filter for the name of the returned snapshots. </param>
         /// <param name="after">
         /// Instructs the server to return elements that appear after the element referred
@@ -522,21 +450,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetSnapshots(string accept, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
+        public virtual Pageable<BinaryData> GetSnapshots(string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshots");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(accept, nameof(accept));
-
                 return new ConfigurationClientGetSnapshotsCollectionResult(
                     this,
                     null,
-                    accept,
                     name,
                     after,
                     @select,
@@ -559,7 +483,6 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"></param>
         /// <param name="name"> A filter for the name of the returned snapshots. </param>
         /// <param name="after">
         /// Instructs the server to return elements that appear after the element referred
@@ -569,21 +492,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="status"> Used to filter returned snapshots by their status property. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string accept, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetSnapshotsAsync(string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshots");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(accept, nameof(accept));
-
                 return new ConfigurationClientGetSnapshotsAsyncCollectionResult(
                     this,
                     null,
-                    accept,
                     name,
                     after,
                     @select,
@@ -607,7 +526,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="accept"></param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -619,19 +537,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetSnapshot(string name, string accept, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        public virtual Response GetSnapshot(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateGetSnapshotRequest(name, accept, @select, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -650,7 +567,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="name"> The name of the snapshot. </param>
-        /// <param name="accept"></param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -662,19 +578,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetSnapshotAsync(string name, string accept, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context = null)
+        public virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetSnapshot");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateGetSnapshotRequest(name, accept, @select, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -688,23 +603,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, string accept, RequestContent content, string syncToken = default, RequestContext context = null)
+        internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(accept, nameof(accept));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, accept, content, syncToken, context);
+                using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
                 return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
             catch (Exception e)
@@ -718,23 +627,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="name"> The name of the key-value snapshot to create. </param>
         /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, string accept, RequestContent content, string syncToken = default, RequestContext context = null)
+        internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(accept, nameof(accept));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, accept, content, syncToken, context);
+                using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -744,6 +647,32 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="contentType"> Content-Type header. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual Operation<Snapshot> CreateSnapshot(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = CreateSnapshot(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return ProtocolOperationHelpers.Convert(result, response => (Snapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
+        }
+
+        /// <summary> Creates a key-value snapshot. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="name"> The name of the key-value snapshot to create. </param>
+        /// <param name="contentType"> Content-Type header. </param>
+        /// <param name="entity"> The key-value snapshot to create. </param>
+        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        internal virtual async Task<Operation<Snapshot>> CreateSnapshotAsync(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
+        {
+            Operation<BinaryData> result = await CreateSnapshotAsync(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(result, response => (Snapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync");
+        }
+
         /// <summary>
         /// [Protocol Method] Updates the state of a key-value snapshot.
         /// <list type="bullet">
@@ -754,7 +683,6 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
         /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -766,20 +694,19 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response UpdateSnapshotStatus(string name, string contentType, string accept, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        public virtual Response UpdateSnapshotStatus(string name, string contentType, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(accept, nameof(accept));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, accept, content, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -799,7 +726,6 @@ namespace Azure.Data.AppConfiguration
         /// </summary>
         /// <param name="name"> The name of the key-value snapshot to update. </param>
         /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="accept"></param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -811,20 +737,19 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="accept"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> UpdateSnapshotStatusAsync(string name, string contentType, string accept, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
+        public virtual async Task<Response> UpdateSnapshotStatusAsync(string name, string contentType, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.UpdateSnapshotStatus");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(name, nameof(name));
-                Argument.AssertNotNull(accept, nameof(accept));
                 Argument.AssertNotNull(content, nameof(content));
 
-                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, accept, content, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -843,7 +768,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to lock. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label, if any, of the key-value to lock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -855,19 +779,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateReadOnlyLock(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        public virtual Response CreateReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, accept, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -886,7 +809,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to lock. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label, if any, of the key-value to lock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -898,19 +820,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateReadOnlyLockAsync(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateReadOnlyLock");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, accept, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -929,7 +850,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to unlock. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label, if any, of the key-value to unlock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -941,19 +861,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response DeleteReadOnlyLock(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        public virtual Response DeleteReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, accept, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -972,7 +891,6 @@ namespace Azure.Data.AppConfiguration
         /// </list>
         /// </summary>
         /// <param name="key"> The key of the key-value to unlock. </param>
-        /// <param name="accept"></param>
         /// <param name="label"> The label, if any, of the key-value to unlock. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="ifMatch">
@@ -984,19 +902,18 @@ namespace Azure.Data.AppConfiguration
         /// match the value provided.
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="accept"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        public virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.DeleteReadOnlyLock");
             scope.Start();
             try
             {
                 Argument.AssertNotNull(key, nameof(key));
-                Argument.AssertNotNull(accept, nameof(accept));
 
-                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, accept, label, syncToken, ifMatch, ifNoneMatch, context);
+                using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -1014,7 +931,6 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"></param>
         /// <param name="key">
         /// A filter used to match keys. Syntax reference:
         /// https://aka.ms/azconfig/docs/restapirevisions
@@ -1038,21 +954,17 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/restapirevisions
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetRevisions(string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        public virtual Pageable<BinaryData> GetRevisions(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetRevisions");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(accept, nameof(accept));
-
                 return new ConfigurationClientGetRevisionsCollectionResult(
                     this,
                     null,
-                    accept,
                     key,
                     label,
                     syncToken,
@@ -1077,7 +989,6 @@ namespace Azure.Data.AppConfiguration
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="accept"></param>
         /// <param name="key">
         /// A filter used to match keys. Syntax reference:
         /// https://aka.ms/azconfig/docs/restapirevisions
@@ -1101,21 +1012,17 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/restapirevisions
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetRevisionsAsync(string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetRevisionsAsync(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetRevisions");
             scope.Start();
             try
             {
-                Argument.AssertNotNull(accept, nameof(accept));
-
                 return new ConfigurationClientGetRevisionsAsyncCollectionResult(
                     this,
                     null,
-                    accept,
                     key,
                     label,
                     syncToken,
