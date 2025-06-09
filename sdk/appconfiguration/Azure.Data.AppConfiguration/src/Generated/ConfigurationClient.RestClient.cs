@@ -25,7 +25,7 @@ namespace Azure.Data.AppConfiguration
 
         private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
-        internal HttpMessage CreateGetKeysRequest(Uri nextPage, string accept, string name, string after, string syncToken, string acceptDatetime, RequestContext context)
+        internal HttpMessage CreateGetKeysRequest(Uri nextPage, string name, string after, string syncToken, string acceptDatetime, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -35,7 +35,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.keyset+json");
             }
             else
             {
@@ -59,7 +59,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     request.Headers.SetValue("Accept-Datetime", acceptDatetime);
                 }
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.keyset+json");
             }
             return message;
         }
@@ -94,7 +94,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingsRequest(Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingsRequest(Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -104,7 +104,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
             }
             else
             {
@@ -155,7 +155,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     request.Headers.SetValue("If-None-Match", ifNoneMatch);
                 }
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
             }
             return message;
         }
@@ -217,7 +217,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string accept, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetConfigurationSettingRequest(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -259,11 +259,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-None-Match", ifNoneMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kv+json");
             return message;
         }
 
-        internal HttpMessage CreateSetConfigurationSettingRequest(string key, string contentType, string accept, RequestContent content, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateSetConfigurationSettingRequest(string key, string contentType, RequestContent content, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -291,12 +291,12 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-None-Match", ifNoneMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kv+json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string accept, string label, string syncToken, string ifMatch, RequestContext context)
+        internal HttpMessage CreateDeleteConfigurationSettingRequest(string key, string label, string syncToken, string ifMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200204);
             Request request = message.Request;
@@ -319,7 +319,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-Match", ifMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kv+json");
             return message;
         }
 
@@ -369,7 +369,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsRequest(Uri nextPage, string accept, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
+        internal HttpMessage CreateGetSnapshotsRequest(Uri nextPage, string name, string after, IEnumerable<SnapshotFields> @select, IEnumerable<ConfigurationSnapshotStatus> status, string syncToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -379,7 +379,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshotset+json");
             }
             else
             {
@@ -407,7 +407,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     request.Headers.SetValue("Sync-Token", syncToken);
                 }
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshotset+json");
             }
             return message;
         }
@@ -434,7 +434,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotRequest(string name, string accept, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateGetSnapshotRequest(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -461,7 +461,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-None-Match", ifNoneMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshot+json");
             return message;
         }
 
@@ -480,7 +480,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCreateSnapshotRequest(string name, string contentType, string accept, RequestContent content, string syncToken, RequestContext context)
+        internal HttpMessage CreateCreateSnapshotRequest(string name, string contentType, RequestContent content, string syncToken, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier201);
             Request request = message.Request;
@@ -496,12 +496,12 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("Sync-Token", syncToken);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshot+json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, string contentType, string accept, RequestContent content, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateUpdateSnapshotStatusRequest(string name, string contentType, RequestContent content, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -525,7 +525,7 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-None-Match", ifNoneMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.snapshot+json");
             request.Content = content;
             return message;
         }
@@ -557,7 +557,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetLabelsRequest(Uri nextPage, string accept, string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> @select, RequestContext context)
+        internal HttpMessage CreateGetLabelsRequest(Uri nextPage, string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -567,7 +567,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.labelset+json");
             }
             else
             {
@@ -595,7 +595,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     request.Headers.SetValue("Accept-Datetime", acceptDatetime);
                 }
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.labelset+json");
             }
             return message;
         }
@@ -634,7 +634,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateCreateReadOnlyLockRequest(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -661,11 +661,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-None-Match", ifNoneMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kv+json");
             return message;
         }
 
-        internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string accept, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
+        internal HttpMessage CreateDeleteReadOnlyLockRequest(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -692,11 +692,11 @@ namespace Azure.Data.AppConfiguration
             {
                 request.Headers.SetValue("If-None-Match", ifNoneMatch);
             }
-            request.Headers.SetValue("Accept", accept);
+            request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kv+json");
             return message;
         }
 
-        internal HttpMessage CreateGetRevisionsRequest(Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetRevisionsRequest(Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -706,7 +706,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.Reset(nextPage);
                 request.Uri = uri;
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
             }
             else
             {
@@ -745,7 +745,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     request.Headers.SetValue("Accept-Datetime", acceptDatetime);
                 }
-                request.Headers.SetValue("Accept", accept);
+                request.Headers.SetValue("Accept", "application/problem+json, application/vnd.microsoft.appconfig.kvset+json");
             }
             return message;
         }
