@@ -33,7 +33,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       continue
     }
 
-    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
+    $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder, $isAotCompatible = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
@@ -51,10 +51,11 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     if ($ciProps) {
       # CheckAOTCompat is opt _in_, so we should default to false if not specified
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
+      $aotFromYaml = $false
       if ($null -ne $shouldAot) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
+          $aotFromYaml = $parsedBool
         }
 
         # when AOTCompat is true, there is an additional parameter we need to retrieve
@@ -64,8 +65,15 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
         }
       }
-      else {
-        $pkgProp.CIParameters["CheckAOTCompat"] = $false
+
+      # Check if the project has IsAotCompatible property set to true
+      $aotFromProject = ($isAotCompatible -eq 'true')
+      
+      # AOT should run if EITHER the CI YAML parameter is true OR the project has IsAotCompatible set to true
+      $pkgProp.CIParameters["CheckAOTCompat"] = ($aotFromYaml -or $aotFromProject)
+      
+      if (-not $aotFromYaml -and $aotFromProject) {
+        # If AOT is enabled from project but not from YAML, ensure we have an empty AOTTestInputs array
         $pkgProp.CIParameters["AOTTestInputs"] = @()
       }
 
@@ -84,7 +92,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
     # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
     else {
-      $pkgProp.CIParameters["CheckAOTCompat"] = $false
+      # Check if the project has IsAotCompatible property set to true even if there's no CI.yml
+      $shouldAotFromProject = ($isAotCompatible -eq 'true')
+      $pkgProp.CIParameters["CheckAOTCompat"] = $shouldAotFromProject
       $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }

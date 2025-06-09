@@ -380,9 +380,13 @@
 
       <!-- Parse out the service directory based on the relative path to the sdk folder -->
       <ServiceDirectory><![CDATA[$([System.Text.RegularExpressions.Regex]::Replace($(PackageRootDirectory), '^.*[\\/]+sdk[\\/]+([^\\/]+).*$', '$1'))]]></ServiceDirectory>
+      
+      <!-- Check if the project has IsAotCompatible set to true -->
+      <PackageIsAotCompatible>false</PackageIsAotCompatible>
+      <PackageIsAotCompatible Condition="'$(IsAotCompatible)' == 'true'">true</PackageIsAotCompatible>
     </PropertyGroup>
 
-    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)'" Importance="High" />
+    <Message Condition="'$(IsShippingLibrary)' == 'true'" Text="'$(PackageRootDirectory)' '$(ServiceDirectory)' '$(PackageId)' '$(VersionForProperties)' '$(PackageSdkType)' '$(PackageIsNewSdk)' '$(BaseOutputPath)' '$(PackageIsAotCompatible)'" Importance="High" />
   </Target>
 
   <Target Name="GetCodeGenProjects" Returns="@(ProjectsToInclude)">
