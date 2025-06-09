@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -39,7 +38,7 @@ namespace Azure.Data.AppConfiguration
             {
                 writer.WritePropertyName("items"u8);
                 writer.WriteStartArray();
-                foreach (KeyValue item in Items)
+                foreach (ConfigurationSetting item in Items)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -97,7 +96,7 @@ namespace Azure.Data.AppConfiguration
             {
                 return null;
             }
-            IList<KeyValue> items = default;
+            IList<ConfigurationSetting> items = default;
             string etag = default;
             string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -109,10 +108,10 @@ namespace Azure.Data.AppConfiguration
                     {
                         continue;
                     }
-                    List<KeyValue> array = new List<KeyValue>();
+                    List<ConfigurationSetting> array = new List<ConfigurationSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(KeyValue.DeserializeKeyValue(item, options));
+                        array.Add(ConfigurationSetting.DeserializeConfigurationSetting(item, options));
                     }
                     items = array;
                     continue;
@@ -132,7 +131,7 @@ namespace Azure.Data.AppConfiguration
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KeyValueListResult(items ?? new ChangeTrackingList<KeyValue>(), etag, nextLink, additionalBinaryDataProperties);
+            return new KeyValueListResult(items ?? new ChangeTrackingList<ConfigurationSetting>(), etag, nextLink, additionalBinaryDataProperties);
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -174,18 +173,6 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<KeyValueListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="keyValueListResult"> The <see cref="KeyValueListResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(KeyValueListResult keyValueListResult)
-        {
-            if (keyValueListResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(keyValueListResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="KeyValueListResult"/> from. </param>
         public static explicit operator KeyValueListResult(Response result)
