@@ -809,7 +809,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2025_05_15_Preview)]
         public async Task AnalyzeText_RecognizePii_WithSynonyms()
         {
-            var actionContent = new PiiActionContent();
+            PiiActionContent actionContent = new PiiActionContent();
             actionContent.ExcludePiiCategories.Add(PiiCategoriesExclude.PhoneNumber);
             actionContent.EntitySynonyms.Add(
                 new EntitySynonyms(
@@ -840,14 +840,14 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(response);
             Assert.IsNotNull(response.Value);
 
-            var piiResult = (AnalyzeTextPiiResult)response.Value;
+            AnalyzeTextPiiResult piiResult = (AnalyzeTextPiiResult)response.Value;
             Assert.AreEqual(3, piiResult.Results.Documents.Count);
 
-            var doc1 = piiResult.Results.Documents.First(d => d.Id == "1");
+            PiiActionResult doc1 = piiResult.Results.Documents.First(d => d.Id == "1");
             Assert.AreEqual("My FAN is ************", doc1.RedactedText);
             // Print all entity details
             Console.WriteLine("Entities for document 1:");
-            foreach (var entity in doc1.Entities)
+            foreach (PiiEntity entity in doc1.Entities)
             {
                 Console.WriteLine($"Text: {entity.Text}");
                 Console.WriteLine($"Category: {entity.Category}");
@@ -859,7 +859,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                 if (entity.Tags != null)
                 {
                     Console.WriteLine("Tags:");
-                    foreach (var tag in entity.Tags)
+                    foreach (EntityTag tag in entity.Tags)
                     {
                         Console.WriteLine($"  - Name: {tag.Name}, ConfidenceScore: {tag.ConfidenceScore}");
                     }
@@ -869,11 +869,11 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
             Assert.IsTrue(doc1.Entities.Any(e => e.Text == "281314478878" && e.Category == "USBankAccountNumber"));
 
-            var doc2 = piiResult.Results.Documents.First(d => d.Id == "2");
+            PiiActionResult doc2 = piiResult.Results.Documents.First(d => d.Id == "2");
             Assert.AreEqual("My bank account number is ************.", doc2.RedactedText);
             Assert.IsTrue(doc2.Entities.Any(e => e.Text == "281314478873" && e.Category == "USBankAccountNumber"));
 
-            var doc3 = piiResult.Results.Documents.First(d => d.Id == "3");
+            PiiActionResult doc3 = piiResult.Results.Documents.First(d => d.Id == "3");
             Assert.AreEqual("My FAN is ************ and ***'s RAN is ************.", doc3.RedactedText);
             Assert.IsTrue(doc3.Entities.Any(e => e.Text == "281314478878" && e.Category == "USBankAccountNumber"));
             Assert.IsTrue(doc3.Entities.Any(e => e.Text == "281314478879" && e.Category == "USBankAccountNumber"));
@@ -907,14 +907,14 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.AreEqual("2025-05-15-preview", result.Results.ModelVersion);
             Assert.AreEqual(2, result.Results.Documents.Count);
 
-            var doc1 = result.Results.Documents.First(d => d.Id == "1");
+            PiiActionResult doc1 = result.Results.Documents.First(d => d.Id == "1");
             Assert.AreEqual("The date of birth is **************", doc1.RedactedText);
             Assert.IsTrue(doc1.Entities.Any(e =>
                 e.Text == "May 15th, 2015" &&
                 e.Category == "DateTime" &&
                 e.Type == "DateOfBirth"));
 
-            var doc2 = result.Results.Documents.First(d => d.Id == "2");
+            PiiActionResult doc2 = result.Results.Documents.First(d => d.Id == "2");
             Assert.AreEqual("The phone number is **************", doc2.RedactedText);
             Assert.IsTrue(doc2.Entities.Any(e =>
                 e.Text == "(555) 123-4567" &&
