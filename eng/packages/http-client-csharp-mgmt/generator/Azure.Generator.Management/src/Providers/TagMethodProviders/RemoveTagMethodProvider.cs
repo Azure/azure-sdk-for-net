@@ -75,12 +75,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var statements = new List<MethodBodyStatement>
             {
-                // var originalTags = GetTagResource().Get(cancellationToken);
-                Declare(
-                    "originalTags",
-                    new CSharpType(typeof(Response<>), typeof(ResourceManager.Resources.TagResource)),
-                    This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, _isAsync),
-                    out var originalTagsVar),
+                GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar),
 
                 // originalTags.Value.Data.TagValues.Remove(key);
                 originalTagsVar.Property("Value").Property("Data").Property("TagValues")

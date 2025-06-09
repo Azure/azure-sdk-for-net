@@ -82,12 +82,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     cancellationTokenParam
                 ], null, _isAsync).Terminate(),
 
-                // var originalTags = GetTagResource().Get(cancellationToken);
-                Declare(
-                    "originalTags",
-                    new CSharpType(typeof(Azure.Response<>), typeof(Azure.ResourceManager.Resources.TagResource)),
-                    This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, _isAsync),
-                    out var originalTagsVar),
+                GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar),
 
                 // originalTags.Value.Data.TagValues.ReplaceWith(tags);
                 originalTagsVar.Property("Value").Property("Data").Property("TagValues")

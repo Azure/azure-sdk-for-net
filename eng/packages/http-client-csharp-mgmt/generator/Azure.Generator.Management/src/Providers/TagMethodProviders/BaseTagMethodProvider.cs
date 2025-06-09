@@ -111,7 +111,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));
 
-            var responseType = new CSharpType(typeof(Azure.Response<>), resourceClientProvider.ResourceData.Type);
+            var responseType = new CSharpType(typeof(Response<>), resourceClientProvider.ResourceData.Type);
             statements.AddRange(ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                 messageVariable,
                 contextVariable,
@@ -129,7 +129,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             return
             [
                 // return Response.FromValue(new ResourceType(Client, response.Value), response.GetRawResponse());
-                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
+                Return(Static(typeof(Response)).Invoke("FromValue", [
                     New.Instance(resourceClientProvider.ResourceClientCSharpType, [
                         This.Property("Client"),
                         responseVar.Property("Value")
@@ -142,7 +142,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected static MethodBodyStatement CreateSecondaryPathResponseStatement(VariableExpression resultVariable)
         {
             // return Response.FromValue(result.Value, result.GetRawResponse());
-            return Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
+            return Return(Static(typeof(Response)).Invoke("FromValue", [
                 resultVariable.Property("Value"),
                 resultVariable.Invoke("GetRawResponse")
             ]));
@@ -164,6 +164,20 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 new TupleExpression(This.Invoke(getMethod, [cancellationTokenParam], null, isAsync))
                     .Property("Value").Property("Data"),
                 out currentVar);
+        }
+
+        protected static MethodBodyStatement GetOriginalTagsStatement(
+            bool isAsync,
+            ParameterProvider cancellationTokenParam,
+            out VariableExpression originalTagsVar)
+        {
+            var getMethod = isAsync ? "GetAsync" : "Get";
+            // var originalTags = GetTagResource().Get(cancellationToken);
+            return Declare(
+                "originalTags",
+                new CSharpType(typeof(Response<>), typeof(ResourceManager.Resources.TagResource)),
+                This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, isAsync),
+                out originalTagsVar);
         }
 
         public static implicit operator MethodProvider(BaseTagMethodProvider tagMethodProvider)

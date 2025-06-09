@@ -77,12 +77,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var statements = new List<MethodBodyStatement>
             {
-                // var originalTags = GetTagResource().Get(cancellationToken);
-                Declare(
-                    "originalTags",
-                    new CSharpType(typeof(Azure.Response<>), typeof(Azure.ResourceManager.Resources.TagResource)),
-                    This.Invoke("GetTagResource").Invoke(getMethod, [cancellationTokenParam], null, _isAsync),
-                    out var originalTagsVar),
+                GetOriginalTagsStatement(_isAsync, cancellationTokenParam, out var originalTagsVar),
 
                 // originalTags.Value.Data.TagValues[key] = value;
                 new IndexerExpression(originalTagsVar.Property("Value").Property("Data").Property("TagValues"), keyParam)
@@ -111,7 +106,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         private List<MethodBodyStatement> BuildElseStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
         {
-            var getMethod = _isAsync ? "GetAsync" : "Get";
             var updateMethod = _isAsync ? "UpdateAsync" : "Update";
 
             var statements = new List<MethodBodyStatement>();
