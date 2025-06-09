@@ -219,7 +219,6 @@
   -->
   <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
     <PackageReference Update="Apache.Avro" Version="1.12.0" />
-    <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="CloudNative.CloudEvents" Version="2.0.0" />
     <PackageReference Update="CloudNative.CloudEvents.SystemTextJson" Version="2.0.0" />
     <PackageReference Update="Google.Protobuf" Version="3.24.3" />
