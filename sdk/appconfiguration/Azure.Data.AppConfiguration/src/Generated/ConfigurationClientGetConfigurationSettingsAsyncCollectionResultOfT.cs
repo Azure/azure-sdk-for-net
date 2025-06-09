@@ -7,13 +7,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace Azure.Data.AppConfiguration
 {
-    internal partial class ConfigurationClientGetRevisionsCollectionResult : Pageable<BinaryData>
+    internal partial class ConfigurationClientGetConfigurationSettingsAsyncCollectionResultOfT : AsyncPageable<ConfigurationSetting>
     {
         private readonly ConfigurationClient _client;
         private readonly Uri _nextPage;
@@ -23,21 +24,24 @@ namespace Azure.Data.AppConfiguration
         private readonly string _syncToken;
         private readonly string _after;
         private readonly string _acceptDatetime;
-        private readonly IEnumerable<SettingFields> _select;
+        private readonly IEnumerable<string> _select;
+        private readonly string _snapshot;
+        private readonly string _ifMatch;
+        private readonly string _ifNoneMatch;
         private readonly IEnumerable<string> _tags;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of ConfigurationClientGetRevisionsCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of ConfigurationClientGetConfigurationSettingsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The ConfigurationClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="accept"></param>
         /// <param name="key">
         /// A filter used to match keys. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="label">
         /// A filter used to match labels. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="after">
@@ -49,13 +53,25 @@ namespace Azure.Data.AppConfiguration
         /// time.
         /// </param>
         /// <param name="select"> Used to select what fields are present in the returned resource(s). </param>
+        /// <param name="snapshot">
+        /// A filter used get key-values for a snapshot. The value should be the name of
+        /// the snapshot. Not valid when used with 'key' and 'label' filters.
+        /// </param>
+        /// <param name="ifMatch">
+        /// Used to perform an operation only if the targeted resource's etag matches the
+        /// value provided.
+        /// </param>
+        /// <param name="ifNoneMatch">
+        /// Used to perform an operation only if the targeted resource's etag does not
+        /// match the value provided.
+        /// </param>
         /// <param name="tags">
         /// A filter used to query by tags. Syntax reference:
-        /// https://aka.ms/azconfig/docs/restapirevisions
+        /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetRevisionsCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetConfigurationSettingsAsyncCollectionResultOfT(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 
@@ -68,32 +84,30 @@ namespace Azure.Data.AppConfiguration
             _after = after;
             _acceptDatetime = acceptDatetime;
             _select = @select;
+            _snapshot = snapshot;
+            _ifMatch = ifMatch;
+            _ifNoneMatch = ifNoneMatch;
             _tags = tags;
             _context = context;
         }
 
-        /// <summary> Gets the pages of ConfigurationClientGetRevisionsCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of ConfigurationClientGetConfigurationSettingsAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of ConfigurationClientGetRevisionsCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of ConfigurationClientGetConfigurationSettingsAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
             do
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
                 KeyValueListResult responseWithType = (KeyValueListResult)response;
-                List<BinaryData> items = new List<BinaryData>();
-                foreach (var item in responseWithType.Items)
-                {
-                    items.Add(BinaryData.FromObjectAsJson(item));
-                }
                 nextPage = responseWithType.NextLink;
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                yield return Page<ConfigurationSetting>.FromValues((IReadOnlyList<ConfigurationSetting>)responseWithType.Items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
@@ -101,14 +115,14 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateGetRevisionsRequest(nextLink, _accept, _key, _label, _syncToken, _after, _acceptDatetime, _select, _tags, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetRevisions");
+            HttpMessage message = _client.CreateGetConfigurationSettingsRequest(nextLink, _accept, _key, _label, _syncToken, _after, _acceptDatetime, _select, _snapshot, _ifMatch, _ifNoneMatch, _tags, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSettings");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

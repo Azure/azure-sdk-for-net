@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -163,18 +162,6 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SnapshotListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="snapshotListResult"> The <see cref="SnapshotListResult"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SnapshotListResult snapshotListResult)
-        {
-            if (snapshotListResult == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(snapshotListResult, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
 
         /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SnapshotListResult"/> from. </param>
         public static explicit operator SnapshotListResult(Response result)

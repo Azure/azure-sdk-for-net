@@ -19,7 +19,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary> Initializes a new instance of <see cref="KeyValueListResult"/>. </summary>
         internal KeyValueListResult()
         {
-            Items = new ChangeTrackingList<KeyValue>();
+            Items = new ChangeTrackingList<ConfigurationSetting>();
         }
 
         /// <summary> Initializes a new instance of <see cref="KeyValueListResult"/>. </summary>
@@ -27,7 +27,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="etag"> An identifier representing the returned state of the resource. </param>
         /// <param name="nextLink"> The URI that can be used to request the next set of paged results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KeyValueListResult(IList<KeyValue> items, string etag, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KeyValueListResult(IList<ConfigurationSetting> items, string etag, string nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Items = items;
             Etag = etag;
@@ -36,7 +36,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         /// <summary> The collection value. </summary>
-        public IList<KeyValue> Items { get; }
+        public IList<ConfigurationSetting> Items { get; }
 
         /// <summary> An identifier representing the returned state of the resource. </summary>
         public string Etag { get; }

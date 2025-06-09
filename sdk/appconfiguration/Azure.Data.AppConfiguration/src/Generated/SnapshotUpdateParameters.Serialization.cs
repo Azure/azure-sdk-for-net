@@ -9,8 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -141,25 +139,5 @@ namespace Azure.Data.AppConfiguration
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<SnapshotUpdateParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="snapshotUpdateParameters"> The <see cref="SnapshotUpdateParameters"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SnapshotUpdateParameters snapshotUpdateParameters)
-        {
-            if (snapshotUpdateParameters == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(snapshotUpdateParameters, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="SnapshotUpdateParameters"/> from. </param>
-        public static explicit operator SnapshotUpdateParameters(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeSnapshotUpdateParameters(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

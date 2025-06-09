@@ -5,10 +5,13 @@ using System;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Rename and convert to enum.
     /// <summary>
     /// Fields to retrieve from a configuration setting.
     /// </summary>
     [Flags]
+    [CodeGenType("KeyValueFields")]
     public enum SettingFields : uint
     {
         /// <summary>
