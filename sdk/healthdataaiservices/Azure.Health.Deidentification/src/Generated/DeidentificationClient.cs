@@ -244,9 +244,9 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> ListJobsInternal(int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual Pageable<BinaryData> GetJobsInternal(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.ListJobsInternal");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
             scope.Start();
             try
             {
@@ -272,9 +272,9 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> ListJobsInternalAsync(int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetJobsInternalAsync(int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.ListJobsInternal");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
             scope.Start();
             try
             {
@@ -292,7 +292,7 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<DeidentificationJob> ListJobsInternal(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<DeidentificationJob> GetJobsInternal(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientListJobsInternalCollectionResultOfT(this, null, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -302,7 +302,7 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<DeidentificationJob> ListJobsInternalAsync(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<DeidentificationJob> GetJobsInternalAsync(int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientListJobsInternalAsyncCollectionResultOfT(this, null, maxpagesize, continuationToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
@@ -321,9 +321,9 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Pageable<BinaryData> ListJobDocumentsInternal(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual Pageable<BinaryData> GetJobDocumentsInternal(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.ListJobDocumentsInternal");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
             scope.Start();
             try
             {
@@ -356,9 +356,9 @@ namespace Azure.Health.Deidentification
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual AsyncPageable<BinaryData> ListJobDocumentsInternalAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize, string continuationToken, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.ListJobDocumentsInternal");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DeidentificationClient.GetJobDocumentsInternal");
             scope.Start();
             try
             {
@@ -383,7 +383,7 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual Pageable<DeidentificationDocumentDetails> ListJobDocumentsInternal(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        internal virtual Pageable<DeidentificationDocumentDetails> GetJobDocumentsInternal(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientListJobDocumentsInternalCollectionResultOfT(
                 this,
@@ -400,7 +400,7 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        internal virtual AsyncPageable<DeidentificationDocumentDetails> ListJobDocumentsInternalAsync(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<DeidentificationDocumentDetails> GetJobDocumentsInternalAsync(string jobName, int? maxpagesize = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             return new DeidentificationClientListJobDocumentsInternalAsyncCollectionResultOfT(
                 this,

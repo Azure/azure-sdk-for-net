@@ -3,7 +3,7 @@
 
 namespace Azure.Health.Deidentification
 {
-    [CodeGenType("AzureHealthDeidentificationModelFactory")]
+    [CodeGenType("DeidentificationModelFactory")]
     public partial class HealthDeidentificationModelFactory
     {
     }
