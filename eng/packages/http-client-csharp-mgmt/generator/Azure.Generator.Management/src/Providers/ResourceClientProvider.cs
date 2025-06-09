@@ -253,14 +253,14 @@ namespace Azure.Generator.Management.Providers
                     var updateMethodProvider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false));
-                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true));
                 }
             }
@@ -277,10 +277,6 @@ namespace Azure.Generator.Management.Providers
         {
             return new ResourceOperationMethodProvider(this, method, convenienceMethod, isAsync);
         }
-
-        // TODO: get clean name of operation Name
-        protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-            => _restClientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
         {

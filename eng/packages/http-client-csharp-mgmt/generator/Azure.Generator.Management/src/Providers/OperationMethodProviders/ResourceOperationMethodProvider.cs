@@ -99,11 +99,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
+            var contextParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)) || p.Type.Equals(typeof(RequestContext)));
 
             var tryStatements = new List<MethodBodyStatement>
             {
-                BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable),
+                BuildRequestContextInitialization(contextParameter, out var contextVariable),
                 BuildHttpMessageInitialization(contextVariable, out var messageVariable)
             };
 
@@ -115,7 +115,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 BuildLroHandling(
                     messageVariable,
                     responseVariable,
-                    cancellationTokenParameter));
+                    contextParameter));
             }
             else
             {
@@ -137,9 +137,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private MethodBodyStatement BuildRequestContextInitialization(ParameterProvider cancellationTokenParameter, out VariableExpression contextVariable)
         {
             var requestContextParams = new Dictionary<ValueExpression, ValueExpression>
-            {
-                { Identifier(nameof(RequestContext.CancellationToken)), cancellationTokenParameter }
-            };
+                {
+                    { This.Property(nameof(RequestContext.CancellationToken)), cancellationTokenParameter }
+                };
             return Declare(
                 "context",
                 typeof(RequestContext),
@@ -214,7 +214,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
             VariableExpression responseVariable,
-            ParameterProvider cancellationTokenParameter)
+            ParameterProvider contextParameter)
         {
             var statements = new List<MethodBodyStatement>();
 
@@ -253,8 +253,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
             var waitInvocation = _isAsync
-                ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
-                : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
+                ? operationVariable.Invoke(waitMethod, [contextParameter], null, _isAsync).Terminate()
+                : operationVariable.Invoke(waitMethod, contextParameter).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
                 KnownAzureParameters.WaitUntil.Equal(
@@ -326,13 +326,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 else if (parameter.Type.Equals(typeof(RequestContent)))
                 {
                     var resource = _convenienceMethod.Signature.Parameters
-                        .Single(p => p.Type.Equals(_resourceClientProvider.ResourceData.Type));
+                        .Single(p => p.Type.Equals(_resourceClientProvider.ResourceData.Type) || p.Type.Equals(typeof(RequestContent)));
                     arguments.Add(resource);
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))
                 {
                     var cancellationToken = _convenienceMethod.Signature.Parameters
-                        .Single(p => p.Type.Equals(typeof(CancellationToken)));
+                        .Single(p => p.Type.Equals(typeof(CancellationToken)) || p.Type.Equals(typeof(RequestContext)));
                     arguments.Add(contextVariable);
                 }
                 else
