@@ -99,15 +99,30 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var contextParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)) || p.Type.Equals(typeof(RequestContext)));
-
-            var tryStatements = new List<MethodBodyStatement>
+            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken)));
+            List<MethodBodyStatement> tryStatements;
+            VariableExpression messageVariable;
+            VariableExpression responseVariable;
+            if (cancellationTokenParameter is null)
             {
-                BuildRequestContextInitialization(contextParameter, out var contextVariable),
-                BuildHttpMessageInitialization(contextVariable, out var messageVariable)
-            };
+                var contextParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(RequestContext)));
 
-            tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
+                tryStatements = new List<MethodBodyStatement>
+                {
+                    BuildHttpMessageInitialization(contextParameter!.AsExpression(), out messageVariable)
+                };
+                tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextParameter, out responseVariable));
+            }
+            else
+            {
+                tryStatements = new List<MethodBodyStatement>
+                {
+                    BuildRequestContextInitialization(cancellationTokenParameter, out var contextVariable),
+                    BuildHttpMessageInitialization(contextVariable, out messageVariable)
+                };
+
+                tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out responseVariable));
+            }
 
             if (_serviceMethod.IsLongRunningOperation())
             {
@@ -115,7 +130,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 BuildLroHandling(
                     messageVariable,
                     responseVariable,
-                    contextParameter));
+                    cancellationTokenParameter));
             }
             else
             {
@@ -137,9 +152,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private MethodBodyStatement BuildRequestContextInitialization(ParameterProvider cancellationTokenParameter, out VariableExpression contextVariable)
         {
             var requestContextParams = new Dictionary<ValueExpression, ValueExpression>
-                {
-                    { This.Property(nameof(RequestContext.CancellationToken)), cancellationTokenParameter }
-                };
+            {
+                { Identifier(nameof(RequestContext.CancellationToken)), cancellationTokenParameter }
+            };
             return Declare(
                 "context",
                 typeof(RequestContext),
@@ -147,7 +162,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out contextVariable);
         }
 
-        private MethodBodyStatement BuildHttpMessageInitialization(VariableExpression contextVariable, out VariableExpression messageVariable)
+        private MethodBodyStatement BuildHttpMessageInitialization(ValueExpression contextVariable, out VariableExpression messageVariable)
         {
             var requestMethod = _serviceMethod.GetCorrespondingRequestMethod(_resourceClientProvider);
 
@@ -214,7 +229,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
             VariableExpression responseVariable,
-            ParameterProvider contextParameter)
+            ParameterProvider? cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
 
@@ -253,8 +268,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
             var waitInvocation = _isAsync
-                ? operationVariable.Invoke(waitMethod, [contextParameter], null, _isAsync).Terminate()
-                : operationVariable.Invoke(waitMethod, contextParameter).Terminate();
+                ? operationVariable.Invoke(waitMethod, cancellationTokenParameter != null ? [cancellationTokenParameter] : [], null, _isAsync).Terminate()
+                : (cancellationTokenParameter is null ? operationVariable.Invoke(waitMethod) : operationVariable.Invoke(waitMethod, cancellationTokenParameter)).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
                 KnownAzureParameters.WaitUntil.Equal(
@@ -299,7 +314,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private ValueExpression[] PopulateArguments(
             IReadOnlyList<ParameterProvider> parameters,
-            VariableExpression contextVariable)
+            ValueExpression contextVariable)
         {
             var arguments = new List<ValueExpression>();
             foreach (var parameter in parameters)
@@ -331,8 +346,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 }
                 else if (parameter.Type.Equals(typeof(RequestContext)))
                 {
-                    var cancellationToken = _convenienceMethod.Signature.Parameters
-                        .Single(p => p.Type.Equals(typeof(CancellationToken)) || p.Type.Equals(typeof(RequestContext)));
                     arguments.Add(contextVariable);
                 }
                 else
