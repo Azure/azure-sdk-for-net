@@ -70,7 +70,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         private List<MethodBodyStatement> BuildIfStatement(ParameterProvider tagsParam, ParameterProvider cancellationTokenParam)
         {
-            var getMethod = _isAsync ? "GetAsync" : "Get";
             var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
             var deleteMethod = _isAsync ? "DeleteAsync" : "Delete";
 
@@ -118,8 +117,8 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
             // Get current resource data
             statements.AddRange(GetResourceDataStatements("current", _resourceClientProvider, _isAsync, cancellationTokenParam, out var currentVar));
 
-            statements.AddRange(new[]
-            {
+            statements.AddRange(
+            [
                 // current.Tags.ReplaceWith(tags);
                 currentVar.Property("Tags").Invoke("ReplaceWith", [tagsParam]).Terminate(),
 
@@ -139,7 +138,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     resultVar.Property("Value"),
                     resultVar.Invoke("GetRawResponse")
                 ]))
-            });
+            ]);
 
             return statements;
         }

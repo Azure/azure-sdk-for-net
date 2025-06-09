@@ -72,7 +72,6 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
         private List<MethodBodyStatement> BuildIfStatement(ParameterProvider keyParam, ParameterProvider valueParam, ParameterProvider cancellationTokenParam)
         {
-            var getMethod = _isAsync ? "GetAsync" : "Get";
             var createMethod = _isAsync ? "CreateOrUpdateAsync" : "CreateOrUpdate";
 
             var statements = new List<MethodBodyStatement>
