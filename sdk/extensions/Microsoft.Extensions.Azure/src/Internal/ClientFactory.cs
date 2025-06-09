@@ -189,7 +189,7 @@ namespace Microsoft.Extensions.Azure
                     string.IsNullOrWhiteSpace(clientId) ||
                     string.IsNullOrWhiteSpace(azureCloud))
                 {
-                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'managedIdentityResourceId', 'managedIdentityObjectId'] must be specified via environment variables or the configuration.");
+                    throw new ArgumentException("For managed identity as a federated identity credential, 'tenantId', 'clientId', 'azureCloud', and one of ['managedIdentityClientId', 'resourceId', 'objectId'] must be specified via environment variables or the configuration.");
                 }
 
                 if (!string.IsNullOrWhiteSpace(resourceId))
