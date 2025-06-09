@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         private readonly string _syncToken;
         private readonly string _after;
         private readonly string _acceptDatetime;
-        private readonly IEnumerable<KeyValueFields> _select;
+        private readonly IEnumerable<string> _select;
         private readonly string _snapshot;
         private readonly string _ifMatch;
         private readonly string _ifNoneMatch;
@@ -70,7 +70,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetConfigurationSettingsCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetConfigurationSettingsCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, string snapshot, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 

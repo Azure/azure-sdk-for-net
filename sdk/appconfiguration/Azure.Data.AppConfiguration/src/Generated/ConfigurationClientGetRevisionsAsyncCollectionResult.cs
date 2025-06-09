@@ -24,7 +24,7 @@ namespace Azure.Data.AppConfiguration
         private readonly string _syncToken;
         private readonly string _after;
         private readonly string _acceptDatetime;
-        private readonly IEnumerable<KeyValueFields> _select;
+        private readonly IEnumerable<SettingFields> _select;
         private readonly IEnumerable<string> _tags;
         private readonly RequestContext _context;
 
@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="accept"/> is null. </exception>
-        public ConfigurationClientGetRevisionsAsyncCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<KeyValueFields> @select, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
+        public ConfigurationClientGetRevisionsAsyncCollectionResult(ConfigurationClient client, Uri nextPage, string accept, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             Argument.AssertNotNull(accept, nameof(accept));
 

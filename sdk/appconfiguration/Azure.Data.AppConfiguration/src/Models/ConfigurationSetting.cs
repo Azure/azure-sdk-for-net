@@ -9,11 +9,14 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Renamed.
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
     [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
-    public class ConfigurationSetting
+    [CodeGenType("KeyValue")]
+    public partial class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
         private string _value;
