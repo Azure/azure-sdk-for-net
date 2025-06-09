@@ -14,34 +14,29 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithPagingAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT : AsyncPageable<ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithPagingAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithPagingAsyncCollectionResult(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithPagingAsyncCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithPagingAsyncCollectionResult as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Response response = await GetNextResponse(pageSizeHint, null).ConfigureAwait(false);
             PageThingModel responseWithType = (PageThingModel)response;
-            List<BinaryData> items = new List<BinaryData>();
-            foreach (var item in responseWithType.Items)
-            {
-                items.Add(BinaryData.FromObjectAsJson(item));
-            }
-            yield return Page<BinaryData>.FromValues(items, null, response);
+            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Items, null, response);
         }
 
         /// <summary> Get next page. </summary>
@@ -50,7 +45,7 @@ namespace BasicTypeSpec
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateListWithPagingRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
             scope.Start();
             try
             {

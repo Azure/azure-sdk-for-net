@@ -14,27 +14,27 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithNextLinkAsyncCollectionResult : AsyncPageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly Uri _nextPage;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithNextLinkAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithNextLinkAsyncCollectionResult(BasicTypeSpecClient client, Uri nextPage, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(BasicTypeSpecClient client, Uri nextPage, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _nextPage = nextPage;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithNextLinkAsyncCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithNextLinkAsyncCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
@@ -63,7 +63,7 @@ namespace BasicTypeSpec
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
             HttpMessage message = _client.CreateListWithNextLinkRequest(nextLink, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithNextLink");
             scope.Start();
             try
             {

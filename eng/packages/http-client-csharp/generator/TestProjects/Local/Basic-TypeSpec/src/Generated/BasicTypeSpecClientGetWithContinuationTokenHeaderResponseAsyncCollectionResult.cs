@@ -7,50 +7,51 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithContinuationTokenCollectionResult : Pageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly string _token;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithContinuationTokenCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithContinuationTokenCollectionResult(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _token = token;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithContinuationTokenCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenCollectionResult as an enumerable collection. </returns>
-        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextPage = continuationToken ?? _token;
             do
             {
-                Response response = GetNextResponse(pageSizeHint, nextPage);
+                Response response = await GetNextResponse(pageSizeHint, nextPage).ConfigureAwait(false);
                 if (response is null)
                 {
                     yield break;
                 }
-                ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
+                ListWithContinuationTokenHeaderResponseResponse responseWithType = (ListWithContinuationTokenHeaderResponseResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextToken;
+                nextPage = response.Headers.TryGetValue("next-token", out string value) ? value : null;
                 yield return Page<BinaryData>.FromValues(items, nextPage, response);
             }
             while (!string.IsNullOrEmpty(nextPage));
@@ -59,14 +60,14 @@ namespace BasicTypeSpec
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithContinuationTokenRequest(continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            HttpMessage message = _client.CreateListWithContinuationTokenHeaderResponseRequest(continuationToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

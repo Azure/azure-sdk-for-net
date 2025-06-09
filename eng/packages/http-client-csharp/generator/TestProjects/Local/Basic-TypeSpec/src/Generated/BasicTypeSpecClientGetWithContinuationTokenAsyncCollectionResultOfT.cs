@@ -14,27 +14,27 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT : AsyncPageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT : AsyncPageable<ThingModel>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly string _token;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _token = token;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT as an enumerable collection. </returns>
+        /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT as an enumerable collection. </returns>
         public override async IAsyncEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextPage = continuationToken ?? _token;
@@ -58,7 +58,7 @@ namespace BasicTypeSpec
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateListWithContinuationTokenRequest(continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
             scope.Start();
             try
             {
