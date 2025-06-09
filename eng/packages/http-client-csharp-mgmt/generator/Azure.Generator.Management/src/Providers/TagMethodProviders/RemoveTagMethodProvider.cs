@@ -5,7 +5,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -17,28 +16,23 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public RemoveTagMethodProvider(
             ResourceClientProvider resourceClientProvider,
             bool isAsync)
-            : base(resourceClientProvider, isAsync)
+            : base(resourceClientProvider, isAsync,
+                   isAsync ? "RemoveTagAsync" : "RemoveTag",
+                   "Removes a tag by key from the resource.")
         {
-        }
-
-        protected override MethodSignature CreateMethodSignature()
-        {
-            var methodName = _isAsync ? "RemoveTagAsync" : "RemoveTag";
-            return CreateMethodSignatureCore(methodName, "Removes a tag by key from the resource.");
         }
 
         protected override ParameterProvider[] BuildParameters()
         {
-            var keyParameter = CreateKeyParameter();
-            var cancellationTokenParameter = KnownAzureParameters.CancellationTokenWithDefault;
+            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
-            return [keyParameter, cancellationTokenParameter];
+            return [_keyParameter, cancellationTokenParameter];
         }
 
         protected override MethodBodyStatement[] BuildBodyStatements()
         {
-            var keyParam = _signature.Parameters[0];
-            var cancellationTokenParam = _signature.Parameters[1];
+            var keyParam = _keyParameter;
+            var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
             var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "RemoveTag", out var scopeVariable);
 
@@ -126,10 +120,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     out var resultVar),
 
                 // return Response.FromValue(result.Value, result.GetRawResponse());
-                Return(Static(typeof(Response)).Invoke("FromValue", [
-                    resultVar.Property("Value"),
-                    resultVar.Invoke("GetRawResponse")
-                ]))
+                CreateSecondaryPathResponseStatement(resultVar)
             ]);
 
             return statements;

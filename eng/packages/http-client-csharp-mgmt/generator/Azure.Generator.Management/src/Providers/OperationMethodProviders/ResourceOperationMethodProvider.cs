@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using Azure.Generator.Management.Utilities;
@@ -59,14 +60,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected virtual MethodBodyStatement[] BuildBodyStatements()
         {
             var scopeStatements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, _signature.Name, out var scopeVariable);
-            var bodyStatements = new List<MethodBodyStatement>(scopeStatements)
-            {
+            return [
+                .. scopeStatements,
                 new TryCatchFinallyStatement(
-                BuildTryExpression(),
-                ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable)
-            )
-            };
-            return [.. bodyStatements];
+                    BuildTryExpression(),
+                    ResourceMethodSnippets.CreateDiagnosticCatchBlock(scopeVariable)
+                )
+            ];
         }
 
         protected virtual MethodSignature CreateSignature()
@@ -89,7 +89,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         {
             var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
 
-            var requestMethod = _serviceMethod.GetCorrespondingRequestMethod(_resourceClientProvider);
+            var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
 
             var tryStatements = new List<MethodBodyStatement>
             {

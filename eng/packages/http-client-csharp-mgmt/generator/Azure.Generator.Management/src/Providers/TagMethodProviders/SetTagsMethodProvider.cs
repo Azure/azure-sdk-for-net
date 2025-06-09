@@ -5,7 +5,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -17,20 +16,16 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public SetTagsMethodProvider(
             ResourceClientProvider resourceClientProvider,
             bool isAsync)
-            : base(resourceClientProvider, isAsync)
+            : base(resourceClientProvider, isAsync,
+                   isAsync ? "SetTagsAsync" : "SetTags",
+                   "Replace the tags on the resource with the given set.")
         {
-        }
-
-        protected override MethodSignature CreateMethodSignature()
-        {
-            var methodName = _isAsync ? "SetTagsAsync" : "SetTags";
-            return CreateMethodSignatureCore(methodName, "Replace the tags on the resource with the given set.");
         }
 
         protected override ParameterProvider[] BuildParameters()
         {
             var tagsParameter = new ParameterProvider("tags", $"The tags to set on the resource.", typeof(IDictionary<string, string>), validation: ParameterValidationType.AssertNotNull);
-            var cancellationTokenParameter = KnownAzureParameters.CancellationTokenWithDefault;
+            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
             return [tagsParameter, cancellationTokenParameter];
         }
@@ -125,7 +120,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                 // var result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                 Declare(
                     "result",
-                    new CSharpType(typeof(Azure.ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
+                    new CSharpType(typeof(ResourceManager.ArmOperation<>), _resourceClientProvider.ResourceClientCSharpType),
                     This.Invoke(updateMethod, [
                         Static(typeof(WaitUntil)).Property("Completed"),
                         currentVar,
@@ -134,10 +129,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
                     out var resultVar),
 
                 // return Response.FromValue(result.Value, result.GetRawResponse());
-                Return(Static(typeof(Azure.Response)).Invoke("FromValue", [
-                    resultVar.Property("Value"),
-                    resultVar.Invoke("GetRawResponse")
-                ]))
+                CreateSecondaryPathResponseStatement(resultVar)
             ]);
 
             return statements;

@@ -5,7 +5,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Snippets;
 using System.Collections.Generic;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -17,30 +16,24 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         public AddTagMethodProvider(
             ResourceClientProvider resourceClientProvider,
             bool isAsync)
-            : base(resourceClientProvider, isAsync)
+            : base(resourceClientProvider, isAsync,
+                   isAsync ? "AddTagAsync" : "AddTag",
+                   "Add a tag to the current resource.")
         {
-        }
-
-        protected override MethodSignature CreateMethodSignature()
-        {
-            var methodName = _isAsync ? "AddTagAsync" : "AddTag";
-            return CreateMethodSignatureCore(methodName, $"Add a tag to the current resource.");
         }
 
         protected override ParameterProvider[] BuildParameters()
         {
-            var keyParameter = CreateKeyParameter();
-            var valueParameter = CreateValueParameter();
-            var cancellationTokenParameter = KnownAzureParameters.CancellationTokenWithDefault;
+            var cancellationTokenParameter = KnownParameters.CancellationTokenParameter;
 
-            return [keyParameter, valueParameter, cancellationTokenParameter];
+            return [_keyParameter, _valueParameter, cancellationTokenParameter];
         }
 
         protected override MethodBodyStatement[] BuildBodyStatements()
         {
-            var keyParam = _signature.Parameters[0];
-            var valueParam = _signature.Parameters[1];
-            var cancellationTokenParam = _signature.Parameters[2];
+            var keyParam = _keyParameter;
+            var valueParam = _valueParameter;
+            var cancellationTokenParam = KnownParameters.CancellationTokenParameter;
 
             var statements = ResourceMethodSnippets.CreateDiagnosticScopeStatements(_resourceClientProvider, "AddTag", out var scopeVariable);
 

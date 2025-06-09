@@ -22,34 +22,27 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
         protected readonly TypeProvider _enclosingType;
         protected readonly ResourceClientProvider _resourceClientProvider;
         protected readonly bool _isAsync;
+        protected static readonly ParameterProvider _keyParameter = new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
+        protected static readonly ParameterProvider _valueParameter = new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
 
         protected BaseTagMethodProvider(
             ResourceClientProvider resourceClientProvider,
-            bool isAsync)
+            bool isAsync,
+            string methodName,
+            string methodDescription)
         {
             _resourceClientProvider = resourceClientProvider;
             _enclosingType = resourceClientProvider;
             _isAsync = isAsync;
 
-            _signature = CreateMethodSignature();
+            _signature = CreateMethodSignature(methodName, methodDescription);
             _bodyStatements = BuildBodyStatements();
         }
 
-        protected abstract MethodSignature CreateMethodSignature();
         protected abstract ParameterProvider[] BuildParameters();
         protected abstract MethodBodyStatement[] BuildBodyStatements();
 
-        protected static ParameterProvider CreateKeyParameter()
-        {
-            return new ParameterProvider("key", $"The key for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
-        }
-
-        protected static ParameterProvider CreateValueParameter()
-        {
-            return new ParameterProvider("value", $"The value for the tag.", typeof(string), validation: ParameterValidationType.AssertNotNull);
-        }
-
-        protected MethodSignature CreateMethodSignatureCore(string methodName, string description)
+        protected MethodSignature CreateMethodSignature(string methodName, string description)
         {
             var returnType = new CSharpType(typeof(Azure.Response<>), _resourceClientProvider.ResourceClientCSharpType).WrapAsync(_isAsync);
             var modifiers = MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual;
@@ -106,7 +99,7 @@ namespace Azure.Generator.Management.Providers.TagMethodProviders
 
             var clientProvider = resourceClientProvider.GetClientProvider();
             var convenienceMethod = clientProvider.GetConvenienceMethodByOperation(getServiceMethod!.Operation, isAsync);
-            var requestMethod = getServiceMethod!.GetCorrespondingRequestMethod(resourceClientProvider);
+            var requestMethod = clientProvider.GetRequestMethodByOperation(getServiceMethod.Operation);
             var arguments = resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, convenienceMethod);
 
             statements.Add(ResourceMethodSnippets.CreateHttpMessage(resourceClientProvider, "CreateGetRequest", arguments, out var messageVariable));

@@ -54,6 +54,7 @@ namespace Azure.Generator.Management.Snippets
             return statements;
         }
 
+        // TODO: The generated code has format issue https://github.com/microsoft/typespec/issues/7283
         public static MethodBodyStatement CreateRequestContext(
             ProviderParameterProvider cancellationTokenParam,
             out VariableExpression contextVariable)
@@ -99,9 +100,7 @@ namespace Azure.Generator.Management.Snippets
             var resultDeclaration = Declare(
                 "result",
                 typeof(Response),
-                Identifier("this")
-                    .Property("Pipeline")
-                    .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
+                This.Property("Pipeline").Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
                 out var resultVariable);
             statements.Add(resultDeclaration);
 
@@ -131,9 +130,7 @@ namespace Azure.Generator.Management.Snippets
             var responseDeclaration = Declare(
                 "response",
                 typeof(Response),
-                Identifier("this")
-                    .Property("Pipeline")
-                    .Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
+                This.Property("Pipeline").Invoke(pipelineInvoke, [messageVariable, contextVariable], null, isAsync),
                 out responseVariable);
             statements.Add(responseDeclaration);
 
