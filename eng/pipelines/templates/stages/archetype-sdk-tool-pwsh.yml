@@ -30,11 +30,14 @@ stages:
               ImageDemand: '$(LinuxImageDemand)'
             Mac:
               Pool: '$(MACPOOL)'
-              ImageDemand: '$(MacImageDemand)'
+              ImageVm: '$(MACVMIMAGE)'
 
         pool:
           name: $(Pool)
-          demands: $(ImageDemand)
+          ${{ if eq(variables['Pool'], variables['MACPOOL']) }}:
+            vmImage: $(ImageVm)
+          ${{ else }}:
+            demands: $(ImageDemand)
 
         steps:
           - template: /eng/pipelines/templates/steps/run-pester-tests.yml
