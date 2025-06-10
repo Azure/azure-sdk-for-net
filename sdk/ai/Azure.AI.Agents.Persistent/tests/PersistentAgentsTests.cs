@@ -1014,8 +1014,7 @@ namespace Azure.AI.Agents.Persistent.Tests
         }
 
         [RecordedTest]
-        // TODO: Implement include in streaming scenario, see task 3801146.
-        // [TestCase(true, true)]
+        [TestCase(true, true)]
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(false, false)]
@@ -1060,8 +1059,7 @@ namespace Azure.AI.Agents.Persistent.Tests
             ThreadRun fileSearchRun = null;
             if (useStream)
             {
-                // TODO: Implement include in streaming scenario, see task 3801146.
-                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id))
+                await foreach (StreamingUpdate streamingUpdate in client.Runs.CreateRunStreamingAsync(thread.Id, agent.Id, include: include))
                 {
                     if (streamingUpdate is RunUpdate runUpdate)
                         fileSearchRun = runUpdate.Value;
@@ -1077,11 +1075,10 @@ namespace Azure.AI.Agents.Persistent.Tests
                 List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id).ToListAsync();
                 Assert.GreaterOrEqual(messages.Count, 1);
             }
-            // TODO: Implement include in streaming scenario, see task 3801146.
             List<RunStep> steps = await client.Runs.GetRunStepsAsync(
                 threadId: fileSearchRun.ThreadId,
-                runId: fileSearchRun.Id
-            //    include: include
+                runId: fileSearchRun.Id,
+                include: include
             ).ToListAsync();
             Assert.GreaterOrEqual(steps.Count, 2);
             RunStep step = await client.Runs.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps[1].Id, include: include);

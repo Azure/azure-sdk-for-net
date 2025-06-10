@@ -6,7 +6,7 @@ In this example we will create the local file, upload it to the newly created `V
 ```C# Snippet:AgentsFilesSearchExample_CreateClient
 var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-PersistentAgentsClient client = new(projectEndpoint, new AzureCliCredential());
+PersistentAgentsClient client = new(projectEndpoint, new DefaultAzureCredential());
 ```
 
 2. Create a file and upload it to the data store.
