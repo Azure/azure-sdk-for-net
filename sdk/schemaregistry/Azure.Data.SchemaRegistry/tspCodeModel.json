@@ -1,0 +1,2670 @@
+{
+ "$id": "1",
+ "name": "SchemaRegistry",
+ "apiVersions": [
+  "2021-10",
+  "2022-10",
+  "2023-07-01"
+ ],
+ "enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "SchemaContentTypeValues",
+   "crossLanguageDefinitionId": "SchemaRegistry.SchemaContentTypeValues",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "avro",
+     "value": "application/json; serialization=Avro",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "Avro encoding.",
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "json",
+     "value": "application/json; serialization=Json",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "JSON encoding",
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "custom",
+     "value": "text/plain; charset=utf-8",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "Plain text custom encoding.",
+     "decorators": []
+    },
+    {
+     "$id": "10",
+     "kind": "enumvalue",
+     "name": "protobuf",
+     "value": "text/vnd.ms.protobuf",
+     "valueType": {
+      "$id": "11",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "Protobuf encoding.",
+     "decorators": []
+    }
+   ],
+   "namespace": "SchemaRegistry",
+   "doc": "Describes closed list of schema content type values.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "Input,Output",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "enum",
+   "name": "ServiceVersion",
+   "crossLanguageDefinitionId": "SchemaRegistry.ServiceVersion",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "14",
+     "kind": "enumvalue",
+     "name": "V2021_10",
+     "value": "2021-10",
+     "valueType": {
+      "$id": "15",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "12"
+     },
+     "doc": "Azure Schema Registry 2021-10 Version",
+     "decorators": []
+    },
+    {
+     "$id": "16",
+     "kind": "enumvalue",
+     "name": "V2022_10",
+     "value": "2022-10",
+     "valueType": {
+      "$id": "17",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "12"
+     },
+     "doc": "Azure Schema Registry 2022-10 Version",
+     "decorators": []
+    },
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "V2023_07_01",
+     "value": "2023-07-01",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "12"
+     },
+     "doc": "Azure Schema Registry 2023-07-01 Version. This is the default version.",
+     "decorators": []
+    }
+   ],
+   "namespace": "SchemaRegistry",
+   "doc": "Represents the Schema Registry API version to use for requests.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "constants": [
+  {
+   "$id": "20",
+   "kind": "constant",
+   "name": "listSchemaGroupsContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "constant",
+   "name": "listSchemaVersionsContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "24",
+   "kind": "constant",
+   "name": "getSchemaPropertiesByContentContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "25",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "26",
+   "kind": "constant",
+   "name": "registerSchemaContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "27",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "28",
+   "kind": "model",
+   "name": "SchemaGroups",
+   "namespace": "SchemaRegistry",
+   "crossLanguageDefinitionId": "SchemaRegistry.SchemaGroups",
+   "usage": "Output,Json",
+   "doc": "The list of schema group names with server paging support.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "29",
+     "kind": "property",
+     "name": "Value",
+     "serializedName": "Value",
+     "doc": "The collection of pageable schema group name items.",
+     "type": {
+      "$id": "30",
+      "kind": "array",
+      "name": "Array",
+      "valueType": {
+       "$id": "31",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "SchemaRegistry.SchemaGroups.Value",
+     "serializationOptions": {
+      "$id": "32",
+      "json": {
+       "$id": "33",
+       "name": "Value"
+      }
+     }
+    },
+    {
+     "$id": "34",
+     "kind": "property",
+     "name": "NextLink",
+     "serializedName": "NextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "SchemaRegistry.SchemaGroups.NextLink",
+     "serializationOptions": {
+      "$id": "36",
+      "json": {
+       "$id": "37",
+       "name": "NextLink"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "38",
+   "kind": "model",
+   "name": "SchemaVersions",
+   "namespace": "SchemaRegistry",
+   "crossLanguageDefinitionId": "SchemaRegistry.SchemaVersions",
+   "usage": "Output,Json",
+   "doc": "The list of schema versions with server paging support.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "39",
+     "kind": "property",
+     "name": "Value",
+     "serializedName": "Value",
+     "doc": "The collection of schema version pageable items.",
+     "type": {
+      "$id": "40",
+      "kind": "array",
+      "name": "Array1",
+      "valueType": {
+       "$id": "41",
+       "kind": "int32",
+       "name": "int32",
+       "crossLanguageDefinitionId": "TypeSpec.int32",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "SchemaRegistry.SchemaVersions.Value",
+     "serializationOptions": {
+      "$id": "42",
+      "json": {
+       "$id": "43",
+       "name": "Value"
+      }
+     }
+    },
+    {
+     "$id": "44",
+     "kind": "property",
+     "name": "NextLink",
+     "serializedName": "NextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "45",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "SchemaRegistry.SchemaVersions.NextLink",
+     "serializationOptions": {
+      "$id": "46",
+      "json": {
+       "$id": "47",
+       "name": "NextLink"
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "clients": [
+  {
+   "$id": "48",
+   "kind": "client",
+   "name": "SchemaRegistryClient",
+   "namespace": "SchemaRegistry",
+   "doc": "SchemaRegistryClient is a client for registering and retrieving schemas from the Azure Schema Registry service.",
+   "methods": [
+    {
+     "$id": "49",
+     "kind": "paging",
+     "name": "listSchemaGroups",
+     "accessibility": "internal",
+     "apiVersions": [
+      "2021-10",
+      "2022-10",
+      "2023-07-01"
+     ],
+     "doc": "Gets the list of schema groups user is authorized to access.",
+     "summary": "Get list of schema groups.",
+     "operation": {
+      "$id": "50",
+      "name": "listSchemaGroups",
+      "resourceName": "SchemaRegistry",
+      "summary": "Get list of schema groups.",
+      "doc": "Gets the list of schema groups user is authorized to access.",
+      "accessibility": "internal",
+      "parameters": [
+       {
+        "$id": "51",
+        "name": "apiVersion",
+        "nameInRequest": "api-version",
+        "doc": "The API version to use for this operation.",
+        "type": {
+         "$id": "52",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": true,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Client",
+        "defaultValue": {
+         "$id": "53",
+         "type": {
+          "$id": "54",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string"
+         },
+         "value": "2023-07-01"
+        },
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "55",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$ref": "20"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "56",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "28"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "https://{fullyQualifiedNamespace}",
+      "path": "/$schemaGroups",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SchemaRegistry.listSchemaGroups",
+      "decorators": [],
+      "examples": [
+       {
+        "$id": "57",
+        "kind": "http",
+        "name": "List Schema Groups",
+        "description": "List Schema Groups",
+        "filePath": "2023-07-01/ListSchemaGroups.json",
+        "parameters": [
+         {
+          "$id": "58",
+          "parameter": {
+           "$ref": "51"
+          },
+          "value": {
+           "$id": "59",
+           "kind": "string",
+           "type": {
+            "$ref": "52"
+           },
+           "value": "2023-07-01"
+          }
+         }
+        ],
+        "responses": [
+         {
+          "$id": "60",
+          "response": {
+           "$ref": "56"
+          },
+          "statusCode": 200,
+          "bodyValue": {
+           "$id": "61",
+           "kind": "model",
+           "type": {
+            "$ref": "28"
+           },
+           "value": {
+            "$id": "62",
+            "Value": {
+             "$id": "63",
+             "kind": "array",
+             "type": {
+              "$ref": "30"
+             },
+             "value": [
+              {
+               "$id": "64",
+               "kind": "string",
+               "type": {
+                "$ref": "31"
+               },
+               "value": "group1"
+              },
+              {
+               "$id": "65",
+               "kind": "string",
+               "type": {
+                "$ref": "31"
+               },
+               "value": "group2"
+              },
+              {
+               "$id": "66",
+               "kind": "string",
+               "type": {
+                "$ref": "31"
+               },
+               "value": "group3"
+              }
+             ]
+            },
+            "NextLink": {
+             "$id": "67",
+             "kind": "string",
+             "type": {
+              "$ref": "35"
+             },
+             "value": "https://mynamespace.servicebus.windows.net/$schemagroups/?api-version=2023-07&skip=3"
+            }
+           }
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "parameters": [
+      {
+       "$id": "68",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "20"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "69",
+      "type": {
+       "$ref": "30"
+      },
+      "resultSegments": [
+       "Value"
+      ]
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SchemaRegistry.listSchemaGroups",
+     "pagingMetadata": {
+      "$id": "70",
+      "itemPropertySegments": [
+       "Value"
+      ],
+      "nextLink": {
+       "$id": "71",
+       "responseSegments": [
+        "NextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
+    },
+    {
+     "$id": "72",
+     "kind": "paging",
+     "name": "listSchemaVersions",
+     "accessibility": "internal",
+     "apiVersions": [
+      "2021-10",
+      "2022-10",
+      "2023-07-01"
+     ],
+     "doc": "Gets the list of all versions of one schema.",
+     "summary": "List schema versions.",
+     "operation": {
+      "$id": "73",
+      "name": "listSchemaVersions",
+      "resourceName": "SchemaRegistry",
+      "summary": "List schema versions.",
+      "doc": "Gets the list of all versions of one schema.",
+      "accessibility": "internal",
+      "parameters": [
+       {
+        "$id": "74",
+        "name": "apiVersion",
+        "nameInRequest": "api-version",
+        "doc": "The API version to use for this operation.",
+        "type": {
+         "$id": "75",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": true,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Client",
+        "defaultValue": {
+         "$id": "76",
+         "type": {
+          "$id": "77",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string"
+         },
+         "value": "2023-07-01"
+        },
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "78",
+        "name": "groupName",
+        "nameInRequest": "groupName",
+        "doc": "Name of schema group.",
+        "type": {
+         "$id": "79",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "80",
+        "name": "schemaName",
+        "nameInRequest": "schemaName",
+        "doc": "Name of schema.",
+        "type": {
+         "$id": "81",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "82",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$ref": "22"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "83",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$ref": "38"
+        },
+        "headers": [],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "https://{fullyQualifiedNamespace}",
+      "path": "/$schemaGroups/{groupName}/schemas/{schemaName}/versions",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SchemaRegistry.listSchemaVersions",
+      "decorators": [],
+      "examples": [
+       {
+        "$id": "84",
+        "kind": "http",
+        "name": "List Schema Versions",
+        "description": "List Schema Versions",
+        "filePath": "2023-07-01/ListSchemaVersions.json",
+        "parameters": [
+         {
+          "$id": "85",
+          "parameter": {
+           "$ref": "78"
+          },
+          "value": {
+           "$id": "86",
+           "kind": "string",
+           "type": {
+            "$ref": "79"
+           },
+           "value": "sample-sr-group"
+          }
+         },
+         {
+          "$id": "87",
+          "parameter": {
+           "$ref": "80"
+          },
+          "value": {
+           "$id": "88",
+           "kind": "string",
+           "type": {
+            "$ref": "81"
+           },
+           "value": "sample-schema-name"
+          }
+         },
+         {
+          "$id": "89",
+          "parameter": {
+           "$ref": "74"
+          },
+          "value": {
+           "$id": "90",
+           "kind": "string",
+           "type": {
+            "$ref": "75"
+           },
+           "value": "2023-07-01"
+          }
+         }
+        ],
+        "responses": [
+         {
+          "$id": "91",
+          "response": {
+           "$ref": "83"
+          },
+          "statusCode": 200,
+          "bodyValue": {
+           "$id": "92",
+           "kind": "model",
+           "type": {
+            "$ref": "38"
+           },
+           "value": {
+            "$id": "93",
+            "Value": {
+             "$id": "94",
+             "kind": "array",
+             "type": {
+              "$ref": "40"
+             },
+             "value": [
+              {
+               "$id": "95",
+               "kind": "number",
+               "type": {
+                "$ref": "41"
+               },
+               "value": 0
+              },
+              {
+               "$id": "96",
+               "kind": "number",
+               "type": {
+                "$ref": "41"
+               },
+               "value": 1
+              },
+              {
+               "$id": "97",
+               "kind": "number",
+               "type": {
+                "$ref": "41"
+               },
+               "value": 2
+              }
+             ]
+            },
+            "NextLink": {
+             "$id": "98",
+             "kind": "string",
+             "type": {
+              "$ref": "45"
+             },
+             "value": "https://mynamespace.servicebus.windows.net/$schemagroups/sample-sr-group/schemas/sample-schema-name/versions?api-version=2023-07&skip=3"
+            }
+           }
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "parameters": [
+      {
+       "$id": "99",
+       "name": "groupName",
+       "nameInRequest": "groupName",
+       "doc": "Name of schema group.",
+       "type": {
+        "$id": "100",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "101",
+       "name": "schemaName",
+       "nameInRequest": "schemaName",
+       "doc": "Name of schema.",
+       "type": {
+        "$id": "102",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "103",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "22"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "104",
+      "type": {
+       "$ref": "40"
+      },
+      "resultSegments": [
+       "Value"
+      ]
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SchemaRegistry.listSchemaVersions",
+     "pagingMetadata": {
+      "$id": "105",
+      "itemPropertySegments": [
+       "Value"
+      ],
+      "nextLink": {
+       "$id": "106",
+       "responseSegments": [
+        "NextLink"
+       ],
+       "responseLocation": "Body"
+      }
+     }
+    },
+    {
+     "$id": "107",
+     "kind": "basic",
+     "name": "getSchemaById",
+     "accessibility": "internal",
+     "apiVersions": [
+      "2021-10",
+      "2022-10",
+      "2023-07-01"
+     ],
+     "doc": "Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested.",
+     "summary": "Get a registered schema by its unique ID reference.",
+     "operation": {
+      "$id": "108",
+      "name": "getSchemaById",
+      "resourceName": "SchemaRegistry",
+      "summary": "Get a registered schema by its unique ID reference.",
+      "doc": "Gets a registered schema by its unique ID.  Azure Schema Registry guarantees that ID is unique within a namespace. Operation response type is based on serialization of schema requested.",
+      "accessibility": "internal",
+      "parameters": [
+       {
+        "$id": "109",
+        "name": "apiVersion",
+        "nameInRequest": "api-version",
+        "doc": "The API version to use for this operation.",
+        "type": {
+         "$id": "110",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": true,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Client",
+        "defaultValue": {
+         "$id": "111",
+         "type": {
+          "$id": "112",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string"
+         },
+         "value": "2023-07-01"
+        },
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "113",
+        "name": "id",
+        "nameInRequest": "id",
+        "doc": "Schema ID that uniquely identifies a schema in the registry namespace.",
+        "type": {
+         "$id": "114",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "115",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "116",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "117",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$id": "118",
+         "kind": "bytes",
+         "name": "bytes",
+         "encode": "base64",
+         "crossLanguageDefinitionId": "TypeSpec.bytes",
+         "decorators": []
+        },
+        "headers": [
+         {
+          "$id": "119",
+          "name": "location",
+          "nameInResponse": "Location",
+          "doc": "URL location of schema, identified by schema group, schema name, and version.",
+          "type": {
+           "$id": "120",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "121",
+          "name": "schemaId",
+          "nameInResponse": "Schema-Id",
+          "doc": "References specific schema in registry namespace.",
+          "type": {
+           "$id": "122",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "123",
+          "name": "schemaIdLocation",
+          "nameInResponse": "Schema-Id-Location",
+          "doc": "URL location of schema, identified by schema ID.",
+          "type": {
+           "$id": "124",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "125",
+          "name": "schemaGroupName",
+          "nameInResponse": "Schema-Group-Name",
+          "doc": "References schema group.",
+          "type": {
+           "$id": "126",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "127",
+          "name": "schemaName",
+          "nameInResponse": "Schema-Name",
+          "doc": "References schema name.",
+          "type": {
+           "$id": "128",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "129",
+          "name": "schemaVersion",
+          "nameInResponse": "Schema-Version",
+          "doc": "Version of the returned schema.",
+          "type": {
+           "$id": "130",
+           "kind": "int32",
+           "name": "int32",
+           "crossLanguageDefinitionId": "TypeSpec.int32",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "131",
+          "name": "contentType",
+          "nameInResponse": "Content-Type",
+          "doc": "The content type for given schema.",
+          "type": {
+           "$ref": "2"
+          }
+         }
+        ],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json; serialization=Avro",
+         "application/json; serialization=Json",
+         "text/plain; charset=utf-8",
+         "text/vnd.ms.protobuf"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "https://{fullyQualifiedNamespace}",
+      "path": "/$schemaGroups/$schemas/{id}",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SchemaRegistry.getSchemaById",
+      "decorators": [],
+      "examples": [
+       {
+        "$id": "132",
+        "kind": "http",
+        "name": "Get Schema by ID",
+        "description": "Get Schema by ID",
+        "filePath": "2023-07-01/GetSchemaById.json",
+        "parameters": [
+         {
+          "$id": "133",
+          "parameter": {
+           "$ref": "113"
+          },
+          "value": {
+           "$id": "134",
+           "kind": "string",
+           "type": {
+            "$ref": "114"
+           },
+           "value": "b489dc4916744e3db72dda8f9693f342"
+          }
+         },
+         {
+          "$id": "135",
+          "parameter": {
+           "$ref": "109"
+          },
+          "value": {
+           "$id": "136",
+           "kind": "string",
+           "type": {
+            "$ref": "110"
+           },
+           "value": "2023-07-01"
+          }
+         }
+        ],
+        "responses": [
+         {
+          "$id": "137",
+          "response": {
+           "$ref": "117"
+          },
+          "statusCode": 200,
+          "bodyValue": {
+           "$id": "138",
+           "kind": "string",
+           "type": {
+            "$ref": "118"
+           },
+           "value": "syntax=\"proto3\"; message SearchRequest{string query=1; int32 page_number=2; int32 results_per_page=3;}"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "parameters": [
+      {
+       "$id": "139",
+       "name": "id",
+       "nameInRequest": "id",
+       "doc": "Schema ID that uniquely identifies a schema in the registry namespace.",
+       "type": {
+        "$id": "140",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "141",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "116"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "142",
+      "type": {
+       "$ref": "118"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SchemaRegistry.getSchemaById"
+    },
+    {
+     "$id": "143",
+     "kind": "basic",
+     "name": "getSchemaByVersion",
+     "accessibility": "internal",
+     "apiVersions": [
+      "2021-10",
+      "2022-10",
+      "2023-07-01"
+     ],
+     "doc": "Gets one specific version of one schema.",
+     "summary": "Get specific schema versions.",
+     "operation": {
+      "$id": "144",
+      "name": "getSchemaByVersion",
+      "resourceName": "SchemaRegistry",
+      "summary": "Get specific schema versions.",
+      "doc": "Gets one specific version of one schema.",
+      "accessibility": "internal",
+      "parameters": [
+       {
+        "$id": "145",
+        "name": "apiVersion",
+        "nameInRequest": "api-version",
+        "doc": "The API version to use for this operation.",
+        "type": {
+         "$id": "146",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": true,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Client",
+        "defaultValue": {
+         "$id": "147",
+         "type": {
+          "$id": "148",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string"
+         },
+         "value": "2023-07-01"
+        },
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "149",
+        "name": "groupName",
+        "nameInRequest": "groupName",
+        "doc": "Name of schema group.",
+        "type": {
+         "$id": "150",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "151",
+        "name": "schemaName",
+        "nameInRequest": "schemaName",
+        "doc": "Name of schema.",
+        "type": {
+         "$id": "152",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "153",
+        "name": "schemaVersion",
+        "nameInRequest": "schemaVersion",
+        "doc": "Version number of specific schema.",
+        "type": {
+         "$id": "154",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "155",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$id": "156",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "157",
+        "statusCodes": [
+         200
+        ],
+        "bodyType": {
+         "$id": "158",
+         "kind": "bytes",
+         "name": "bytes",
+         "encode": "base64",
+         "crossLanguageDefinitionId": "TypeSpec.bytes",
+         "decorators": []
+        },
+        "headers": [
+         {
+          "$id": "159",
+          "name": "location",
+          "nameInResponse": "Location",
+          "doc": "URL location of schema, identified by schema group, schema name, and version.",
+          "type": {
+           "$id": "160",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "161",
+          "name": "schemaId",
+          "nameInResponse": "Schema-Id",
+          "doc": "References specific schema in registry namespace.",
+          "type": {
+           "$id": "162",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "163",
+          "name": "schemaIdLocation",
+          "nameInResponse": "Schema-Id-Location",
+          "doc": "URL location of schema, identified by schema ID.",
+          "type": {
+           "$id": "164",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "165",
+          "name": "schemaGroupName",
+          "nameInResponse": "Schema-Group-Name",
+          "doc": "References schema group.",
+          "type": {
+           "$id": "166",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "167",
+          "name": "schemaName",
+          "nameInResponse": "Schema-Name",
+          "doc": "References schema name.",
+          "type": {
+           "$id": "168",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "169",
+          "name": "schemaVersion",
+          "nameInResponse": "Schema-Version",
+          "doc": "Version of the returned schema.",
+          "type": {
+           "$id": "170",
+           "kind": "int32",
+           "name": "int32",
+           "crossLanguageDefinitionId": "TypeSpec.int32",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "171",
+          "name": "contentType",
+          "nameInResponse": "Content-Type",
+          "doc": "The content type for given schema.",
+          "type": {
+           "$ref": "2"
+          }
+         }
+        ],
+        "isErrorResponse": false,
+        "contentTypes": [
+         "application/json; serialization=Avro",
+         "application/json; serialization=Json",
+         "text/plain; charset=utf-8",
+         "text/vnd.ms.protobuf"
+        ]
+       }
+      ],
+      "httpMethod": "GET",
+      "uri": "https://{fullyQualifiedNamespace}",
+      "path": "/$schemaGroups/{groupName}/schemas/{schemaName}/versions/{schemaVersion}",
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SchemaRegistry.getSchemaByVersion",
+      "decorators": [],
+      "examples": [
+       {
+        "$id": "172",
+        "kind": "http",
+        "name": "Get Schema by Version",
+        "description": "Get Schema by Version",
+        "filePath": "2023-07-01/GetSchemaByVersion.json",
+        "parameters": [
+         {
+          "$id": "173",
+          "parameter": {
+           "$ref": "149"
+          },
+          "value": {
+           "$id": "174",
+           "kind": "string",
+           "type": {
+            "$ref": "150"
+           },
+           "value": "sample-sr-group"
+          }
+         },
+         {
+          "$id": "175",
+          "parameter": {
+           "$ref": "151"
+          },
+          "value": {
+           "$id": "176",
+           "kind": "string",
+           "type": {
+            "$ref": "152"
+           },
+           "value": "sample-protobuf-schema"
+          }
+         },
+         {
+          "$id": "177",
+          "parameter": {
+           "$ref": "153"
+          },
+          "value": {
+           "$id": "178",
+           "kind": "number",
+           "type": {
+            "$ref": "154"
+           },
+           "value": 25
+          }
+         },
+         {
+          "$id": "179",
+          "parameter": {
+           "$ref": "145"
+          },
+          "value": {
+           "$id": "180",
+           "kind": "string",
+           "type": {
+            "$ref": "146"
+           },
+           "value": "2023-07-01"
+          }
+         }
+        ],
+        "responses": [
+         {
+          "$id": "181",
+          "response": {
+           "$ref": "157"
+          },
+          "statusCode": 200,
+          "bodyValue": {
+           "$id": "182",
+           "kind": "string",
+           "type": {
+            "$ref": "158"
+           },
+           "value": "syntax=\"proto3\"; message SearchRequest{string query=1; int32 page_number=2; int32 results_per_page=3;}"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "parameters": [
+      {
+       "$id": "183",
+       "name": "groupName",
+       "nameInRequest": "groupName",
+       "doc": "Name of schema group.",
+       "type": {
+        "$id": "184",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "185",
+       "name": "schemaName",
+       "nameInRequest": "schemaName",
+       "doc": "Name of schema.",
+       "type": {
+        "$id": "186",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "187",
+       "name": "schemaVersion",
+       "nameInRequest": "schemaVersion",
+       "doc": "Version number of specific schema.",
+       "type": {
+        "$id": "188",
+        "kind": "int32",
+        "name": "int32",
+        "crossLanguageDefinitionId": "TypeSpec.int32",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "189",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "156"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "190",
+      "type": {
+       "$ref": "158"
+      }
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SchemaRegistry.getSchemaByVersion"
+    },
+    {
+     "$id": "191",
+     "kind": "basic",
+     "name": "getSchemaPropertiesByContent",
+     "accessibility": "internal",
+     "apiVersions": [
+      "2021-10",
+      "2022-10",
+      "2023-07-01"
+     ],
+     "doc": "Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison.",
+     "summary": "Get properties for existing schema.",
+     "operation": {
+      "$id": "192",
+      "name": "getSchemaPropertiesByContent",
+      "resourceName": "SchemaRegistry",
+      "summary": "Get properties for existing schema.",
+      "doc": "Gets the properties referencing an existing schema within the specified schema group, as matched by schema content comparison.",
+      "accessibility": "internal",
+      "parameters": [
+       {
+        "$id": "193",
+        "name": "apiVersion",
+        "nameInRequest": "api-version",
+        "doc": "The API version to use for this operation.",
+        "type": {
+         "$id": "194",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": true,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Client",
+        "defaultValue": {
+         "$id": "195",
+         "type": {
+          "$id": "196",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string"
+         },
+         "value": "2023-07-01"
+        },
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "197",
+        "name": "groupName",
+        "nameInRequest": "groupName",
+        "doc": "Name of schema group.",
+        "type": {
+         "$id": "198",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "199",
+        "name": "schemaName",
+        "nameInRequest": "schemaName",
+        "doc": "Name of schema.",
+        "type": {
+         "$id": "200",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "201",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "The content type for given schema.",
+        "type": {
+         "$ref": "2"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "202",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$ref": "24"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "203",
+        "name": "schemaContent",
+        "nameInRequest": "schemaContent",
+        "doc": "String representation (UTF-8) of the schema.",
+        "type": {
+         "$id": "204",
+         "kind": "bytes",
+         "name": "bytes",
+         "encode": "base64",
+         "crossLanguageDefinitionId": "TypeSpec.bytes",
+         "decorators": []
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "205",
+        "statusCodes": [
+         204
+        ],
+        "headers": [
+         {
+          "$id": "206",
+          "name": "location",
+          "nameInResponse": "Location",
+          "doc": "URL location of schema, identified by schema group, schema name, and version.",
+          "type": {
+           "$id": "207",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "208",
+          "name": "schemaId",
+          "nameInResponse": "Schema-Id",
+          "doc": "References specific schema in registry namespace.",
+          "type": {
+           "$id": "209",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "210",
+          "name": "schemaIdLocation",
+          "nameInResponse": "Schema-Id-Location",
+          "doc": "URL location of schema, identified by schema ID.",
+          "type": {
+           "$id": "211",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "212",
+          "name": "schemaGroupName",
+          "nameInResponse": "Schema-Group-Name",
+          "doc": "References schema group.",
+          "type": {
+           "$id": "213",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "214",
+          "name": "schemaName",
+          "nameInResponse": "Schema-Name",
+          "doc": "References schema name.",
+          "type": {
+           "$id": "215",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "216",
+          "name": "schemaVersion",
+          "nameInResponse": "Schema-Version",
+          "doc": "Version of the returned schema.",
+          "type": {
+           "$id": "217",
+           "kind": "int32",
+           "name": "int32",
+           "crossLanguageDefinitionId": "TypeSpec.int32",
+           "decorators": []
+          }
+         }
+        ],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "POST",
+      "uri": "https://{fullyQualifiedNamespace}",
+      "path": "/$schemaGroups/{groupName}/schemas/{schemaName}:get-id",
+      "requestMediaTypes": [
+       "application/json; serialization=Avro",
+       "application/json; serialization=Json",
+       "text/plain; charset=utf-8",
+       "text/vnd.ms.protobuf"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SchemaRegistry.getSchemaPropertiesByContent",
+      "decorators": [],
+      "examples": [
+       {
+        "$id": "218",
+        "kind": "http",
+        "name": "Get Schema Properties By Content",
+        "description": "Get Schema Properties By Content",
+        "filePath": "2023-07-01/GetSchemaPropertiesByContent.json",
+        "parameters": [
+         {
+          "$id": "219",
+          "parameter": {
+           "$ref": "197"
+          },
+          "value": {
+           "$id": "220",
+           "kind": "string",
+           "type": {
+            "$ref": "198"
+           },
+           "value": "sample-sr-group"
+          }
+         },
+         {
+          "$id": "221",
+          "parameter": {
+           "$ref": "199"
+          },
+          "value": {
+           "$id": "222",
+           "kind": "string",
+           "type": {
+            "$ref": "200"
+           },
+           "value": "sample-protobuf-schema"
+          }
+         },
+         {
+          "$id": "223",
+          "parameter": {
+           "$ref": "203"
+          },
+          "value": {
+           "$id": "224",
+           "kind": "string",
+           "type": {
+            "$ref": "204"
+           },
+           "value": "syntax=\"proto3\"; message SearchRequest{string query=1; int32 page_number=2; int32 results_per_page=3;}"
+          }
+         },
+         {
+          "$id": "225",
+          "parameter": {
+           "$ref": "193"
+          },
+          "value": {
+           "$id": "226",
+           "kind": "string",
+           "type": {
+            "$ref": "194"
+           },
+           "value": "2023-07-01"
+          }
+         }
+        ],
+        "responses": [
+         {
+          "$id": "227",
+          "response": {
+           "$ref": "205"
+          },
+          "statusCode": 204
+         }
+        ]
+       }
+      ]
+     },
+     "parameters": [
+      {
+       "$id": "228",
+       "name": "groupName",
+       "nameInRequest": "groupName",
+       "doc": "Name of schema group.",
+       "type": {
+        "$id": "229",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "230",
+       "name": "schemaName",
+       "nameInRequest": "schemaName",
+       "doc": "Name of schema.",
+       "type": {
+        "$id": "231",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "232",
+       "name": "contentType",
+       "nameInRequest": "Content-Type",
+       "doc": "The content type for given schema.",
+       "type": {
+        "$ref": "2"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "233",
+       "name": "schemaContent",
+       "nameInRequest": "schemaContent",
+       "doc": "String representation (UTF-8) of the schema.",
+       "type": {
+        "$id": "234",
+        "kind": "bytes",
+        "name": "bytes",
+        "encode": "base64",
+        "crossLanguageDefinitionId": "TypeSpec.bytes",
+        "decorators": []
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "235",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "24"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "236"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SchemaRegistry.getSchemaPropertiesByContent"
+    },
+    {
+     "$id": "237",
+     "kind": "basic",
+     "name": "registerSchema",
+     "accessibility": "internal",
+     "apiVersions": [
+      "2021-10",
+      "2022-10",
+      "2023-07-01"
+     ],
+     "doc": "Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.",
+     "summary": "Register new schema",
+     "operation": {
+      "$id": "238",
+      "name": "registerSchema",
+      "resourceName": "SchemaRegistry",
+      "summary": "Register new schema",
+      "doc": "Register new schema. If schema of specified name does not exist in specified group, schema is created at version 1. If schema of specified name exists already in specified group, schema is created at latest version + 1.",
+      "accessibility": "internal",
+      "parameters": [
+       {
+        "$id": "239",
+        "name": "apiVersion",
+        "nameInRequest": "api-version",
+        "doc": "The API version to use for this operation.",
+        "type": {
+         "$id": "240",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Query",
+        "isApiVersion": true,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Client",
+        "defaultValue": {
+         "$id": "241",
+         "type": {
+          "$id": "242",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string"
+         },
+         "value": "2023-07-01"
+        },
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "243",
+        "name": "groupName",
+        "nameInRequest": "groupName",
+        "doc": "Name of schema group.",
+        "type": {
+         "$id": "244",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "245",
+        "name": "schemaName",
+        "nameInRequest": "schemaName",
+        "doc": "Name of schema.",
+        "type": {
+         "$id": "246",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "location": "Path",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "247",
+        "name": "contentType",
+        "nameInRequest": "Content-Type",
+        "doc": "The content type for given schema.",
+        "type": {
+         "$ref": "2"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": true,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "248",
+        "name": "accept",
+        "nameInRequest": "Accept",
+        "type": {
+         "$ref": "26"
+        },
+        "location": "Header",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Constant",
+        "decorators": [],
+        "skipUrlEncoding": false
+       },
+       {
+        "$id": "249",
+        "name": "schemaContent",
+        "nameInRequest": "schemaContent",
+        "doc": "String representation (UTF-8) of the schema.",
+        "type": {
+         "$id": "250",
+         "kind": "bytes",
+         "name": "bytes",
+         "encode": "base64",
+         "crossLanguageDefinitionId": "TypeSpec.bytes",
+         "decorators": []
+        },
+        "location": "Body",
+        "isApiVersion": false,
+        "isContentType": false,
+        "isEndpoint": false,
+        "explode": false,
+        "isRequired": true,
+        "kind": "Method",
+        "decorators": [],
+        "skipUrlEncoding": false
+       }
+      ],
+      "responses": [
+       {
+        "$id": "251",
+        "statusCodes": [
+         204
+        ],
+        "headers": [
+         {
+          "$id": "252",
+          "name": "location",
+          "nameInResponse": "Location",
+          "doc": "URL location of schema, identified by schema group, schema name, and version.",
+          "type": {
+           "$id": "253",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "254",
+          "name": "schemaId",
+          "nameInResponse": "Schema-Id",
+          "doc": "References specific schema in registry namespace.",
+          "type": {
+           "$id": "255",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "256",
+          "name": "schemaIdLocation",
+          "nameInResponse": "Schema-Id-Location",
+          "doc": "URL location of schema, identified by schema ID.",
+          "type": {
+           "$id": "257",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "258",
+          "name": "schemaGroupName",
+          "nameInResponse": "Schema-Group-Name",
+          "doc": "References schema group.",
+          "type": {
+           "$id": "259",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "260",
+          "name": "schemaName",
+          "nameInResponse": "Schema-Name",
+          "doc": "References schema name.",
+          "type": {
+           "$id": "261",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          }
+         },
+         {
+          "$id": "262",
+          "name": "schemaVersion",
+          "nameInResponse": "Schema-Version",
+          "doc": "Version of the returned schema.",
+          "type": {
+           "$id": "263",
+           "kind": "int32",
+           "name": "int32",
+           "crossLanguageDefinitionId": "TypeSpec.int32",
+           "decorators": []
+          }
+         }
+        ],
+        "isErrorResponse": false
+       }
+      ],
+      "httpMethod": "PUT",
+      "uri": "https://{fullyQualifiedNamespace}",
+      "path": "/$schemaGroups/{groupName}/schemas/{schemaName}",
+      "requestMediaTypes": [
+       "application/json; serialization=Avro",
+       "application/json; serialization=Json",
+       "text/plain; charset=utf-8",
+       "text/vnd.ms.protobuf"
+      ],
+      "bufferResponse": true,
+      "generateProtocolMethod": true,
+      "generateConvenienceMethod": true,
+      "crossLanguageDefinitionId": "SchemaRegistry.registerSchema",
+      "decorators": [],
+      "examples": [
+       {
+        "$id": "264",
+        "kind": "http",
+        "name": "Register Schema",
+        "description": "Register Schema",
+        "filePath": "2023-07-01/RegisterSchema.json",
+        "parameters": [
+         {
+          "$id": "265",
+          "parameter": {
+           "$ref": "243"
+          },
+          "value": {
+           "$id": "266",
+           "kind": "string",
+           "type": {
+            "$ref": "244"
+           },
+           "value": "sample-sr-group"
+          }
+         },
+         {
+          "$id": "267",
+          "parameter": {
+           "$ref": "245"
+          },
+          "value": {
+           "$id": "268",
+           "kind": "string",
+           "type": {
+            "$ref": "246"
+           },
+           "value": "sample-json-schema"
+          }
+         },
+         {
+          "$id": "269",
+          "parameter": {
+           "$ref": "249"
+          },
+          "value": {
+           "$id": "270",
+           "kind": "string",
+           "type": {
+            "$ref": "250"
+           },
+           "value": "syntax=\"proto3\"; message SearchRequest{string query=1; int32 page_number=2; int32 results_per_page=3;}"
+          }
+         },
+         {
+          "$id": "271",
+          "parameter": {
+           "$ref": "239"
+          },
+          "value": {
+           "$id": "272",
+           "kind": "string",
+           "type": {
+            "$ref": "240"
+           },
+           "value": "2023-07-01"
+          }
+         }
+        ],
+        "responses": [
+         {
+          "$id": "273",
+          "response": {
+           "$ref": "251"
+          },
+          "statusCode": 204
+         }
+        ]
+       }
+      ]
+     },
+     "parameters": [
+      {
+       "$id": "274",
+       "name": "groupName",
+       "nameInRequest": "groupName",
+       "doc": "Name of schema group.",
+       "type": {
+        "$id": "275",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "276",
+       "name": "schemaName",
+       "nameInRequest": "schemaName",
+       "doc": "Name of schema.",
+       "type": {
+        "$id": "277",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "location": "Path",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "278",
+       "name": "schemaContent",
+       "nameInRequest": "schemaContent",
+       "doc": "String representation (UTF-8) of the schema.",
+       "type": {
+        "$id": "279",
+        "kind": "bytes",
+        "name": "bytes",
+        "encode": "base64",
+        "crossLanguageDefinitionId": "TypeSpec.bytes",
+        "decorators": []
+       },
+       "location": "Body",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "280",
+       "name": "contentType",
+       "nameInRequest": "Content-Type",
+       "doc": "The content type for given schema.",
+       "type": {
+        "$ref": "2"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Method",
+       "decorators": [],
+       "skipUrlEncoding": false
+      },
+      {
+       "$id": "281",
+       "name": "accept",
+       "nameInRequest": "accept",
+       "type": {
+        "$ref": "26"
+       },
+       "location": "Header",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isEndpoint": false,
+       "explode": false,
+       "isRequired": true,
+       "kind": "Constant",
+       "decorators": [],
+       "skipUrlEncoding": false
+      }
+     ],
+     "response": {
+      "$id": "282"
+     },
+     "isOverride": false,
+     "generateConvenient": true,
+     "generateProtocol": true,
+     "crossLanguageDefinitionId": "SchemaRegistry.registerSchema"
+    }
+   ],
+   "parameters": [
+    {
+     "$id": "283",
+     "name": "fullyQualifiedNamespace",
+     "nameInRequest": "fullyQualifiedNamespace",
+     "doc": "The Schema Registry service endpoint, for example 'my-namespace.servicebus.windows.net'.",
+     "type": {
+      "$id": "284",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client"
+    }
+   ],
+   "decorators": [],
+   "crossLanguageDefinitionId": "SchemaRegistry",
+   "apiVersions": [
+    "2021-10",
+    "2022-10",
+    "2023-07-01"
+   ]
+  }
+ ],
+ "auth": {
+  "$id": "285",
+  "oAuth2": {
+   "$id": "286",
+   "scopes": [
+    "https://eventhubs.azure.net/.default"
+   ]
+  }
+ }
+}
