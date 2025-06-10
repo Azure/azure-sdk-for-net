@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -11,8 +14,17 @@ using Integration.Identity.Common;
 
 namespace Integration.Identity.Func
 {
+    /// <summary>
+    /// Function1 is an Azure Function that demonstrates Managed Identity authentication.
+    /// </summary>
     public static class Function1
     {
+        /// <summary>
+        /// HTTP trigger function that processes GET requests.
+        /// </summary>
+        /// <param name="req">The request</param>
+        /// <param name="log">The logger</param>
+        /// <returns></returns>
         [FunctionName("Function1")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
