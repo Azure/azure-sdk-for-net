@@ -6,7 +6,8 @@ using System;
 namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
-    // - Rename and convert to enum.
+    // - Rename and convert to an enum.
+    // - Renamed enum members.
     /// <summary>
     /// Fields to retrieve from a configuration setting.
     /// </summary>
@@ -37,6 +38,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// An ETag indicating the version of a configuration setting within a configuration store.
         /// </summary>
+        [CodeGenMember("Etag")]
         ETag = 0x0010,
 
         /// <summary>
@@ -47,6 +49,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// A value indicating whether the configuration setting is read-only.
         /// </summary>
+        [CodeGenMember("Locked")]
         IsReadOnly = 0x0040,
 
         /// <summary>

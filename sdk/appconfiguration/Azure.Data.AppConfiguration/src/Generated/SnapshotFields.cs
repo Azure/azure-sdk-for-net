@@ -24,37 +24,5 @@ namespace Azure.Data.AppConfiguration
         private const string ItemsCountValue = "items_count";
         /// <summary> Etag field. </summary>
         private const string EtagValue = "etag";
-
-        /// <summary> Composition type field. </summary>
-        public static SnapshotFields CompositionType { get; } = new SnapshotFields(CompositionTypeValue);
-
-        /// <summary> Created field. </summary>
-        public static SnapshotFields Created { get; } = new SnapshotFields(CreatedValue);
-
-        /// <summary> Expires field. </summary>
-        public static SnapshotFields Expires { get; } = new SnapshotFields(ExpiresValue);
-
-        /// <summary> Size field. </summary>
-        public static SnapshotFields Size { get; } = new SnapshotFields(SizeValue);
-
-        /// <summary> Items count field. </summary>
-        public static SnapshotFields ItemsCount { get; } = new SnapshotFields(ItemsCountValue);
-
-        /// <summary> Etag field. </summary>
-        public static SnapshotFields Etag { get; } = new SnapshotFields(EtagValue);
-
-        /// <summary> Determines if two <see cref="SnapshotFields"/> values are the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(SnapshotFields left, SnapshotFields right) => left.Equals(right);
-
-        /// <summary> Determines if two <see cref="SnapshotFields"/> values are not the same. </summary>
-        /// <param name="left"> The left value to compare. </param>
-        /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(SnapshotFields left, SnapshotFields right) => !left.Equals(right);
-
-        /// <summary> Converts a string to a <see cref="SnapshotFields"/>. </summary>
-        /// <param name="value"> The value. </param>
-        public static implicit operator SnapshotFields(string value) => new SnapshotFields(value);
     }
 }

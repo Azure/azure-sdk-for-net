@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
 
@@ -11,11 +13,14 @@ namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
     // - Renamed.
+    // - Renamed properties.
+    // - Apply custom serialization for ETag property.
     /// <summary>
     /// A setting, defined by a unique combination of a key and label.
     /// </summary>
     [JsonConverter(typeof(ConfigurationSettingJsonConverter))]
     [CodeGenType("KeyValue")]
+    [CodeGenSerialization(nameof(ETag), SerializationValueHook = nameof(SerializationEtag), DeserializationValueHook = nameof(DeserializeEtag))]
     public partial class ConfigurationSetting
     {
         private IDictionary<string, string> _tags;
@@ -96,6 +101,7 @@ namespace Azure.Data.AppConfiguration
         /// <summary>
         /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
+        [CodeGenMember("Etag")]
         public ETag ETag { get; internal set; }
 
         /// <summary>
@@ -107,6 +113,7 @@ namespace Azure.Data.AppConfiguration
         /// A value indicating whether the configuration setting is read only.
         /// A read only configuration setting may not be modified until it is made writable.
         /// </summary>
+        [CodeGenMember("Locked")]
         public bool? IsReadOnly { get; internal set; }
 
         /// <summary>
@@ -138,5 +145,11 @@ namespace Azure.Data.AppConfiguration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString()
             => $"({Key},{Value})";
+
+        private void SerializationEtag(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => writer.WriteString("etag", ETag.ToString());
+
+        private static void DeserializeEtag(JsonProperty property, ref ETag val)
+            => val = new ETag(property.Value.GetString());
     }
 }

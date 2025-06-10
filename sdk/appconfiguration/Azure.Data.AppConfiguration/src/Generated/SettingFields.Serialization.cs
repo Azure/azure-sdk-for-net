@@ -20,8 +20,8 @@ namespace Azure.Data.AppConfiguration
             SettingFields.Value => "value",
             SettingFields.LastModified => "last_modified",
             SettingFields.Tags => "tags",
-            SettingFields.Locked => "locked",
-            SettingFields.Etag => "etag",
+            SettingFields.IsReadOnly => "locked",
+            SettingFields.ETag => "etag",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingFields value.")
         };
 
@@ -54,11 +54,11 @@ namespace Azure.Data.AppConfiguration
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "locked"))
             {
-                return SettingFields.Locked;
+                return SettingFields.IsReadOnly;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "etag"))
             {
-                return SettingFields.Etag;
+                return SettingFields.ETag;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown SettingFields value.");
         }

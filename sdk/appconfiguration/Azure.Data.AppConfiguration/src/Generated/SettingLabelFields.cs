@@ -9,8 +9,8 @@ using System;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> Snapshot status. </summary>
-    public readonly partial struct ConfigurationSnapshotStatus : IEquatable<ConfigurationSnapshotStatus>
+    /// <summary> Label fields. </summary>
+    public readonly partial struct SettingLabelFields : IEquatable<SettingLabelFields>
     {
     }
 }

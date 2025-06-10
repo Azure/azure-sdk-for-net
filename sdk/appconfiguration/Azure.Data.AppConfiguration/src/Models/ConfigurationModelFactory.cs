@@ -2,16 +2,21 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Renamed.
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
-    public static class ConfigurationModelFactory
+    [CodeGenType("AppConfigurationModelFactory")]
+    [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(ETag), typeof(DateTimeOffset?), typeof(bool?), typeof(IDictionary<string, string>))]
+    public static partial class ConfigurationModelFactory
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="ConfigurationSetting"/> for mocking purposes.
+        /// Initializes a new instance of the <see cref="AppConfiguration.ConfigurationSetting"/> for mocking purposes.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="value">The configuration setting's value.</param>

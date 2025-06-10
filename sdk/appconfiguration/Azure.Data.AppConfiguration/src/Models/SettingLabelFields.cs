@@ -8,7 +8,14 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Rename.
+    // - Remove operators.
     /// <summary> Fields to retrieve from a label. </summary>
+    [CodeGenType("LabelFields")]
+    [CodeGenSuppress("==", typeof(SettingLabelFields), typeof(SettingLabelFields))]
+    [CodeGenSuppress("!=", typeof(SettingLabelFields), typeof(SettingLabelFields))]
+    [CodeGenSuppress("", typeof(string))]
     public readonly partial struct SettingLabelFields : IEquatable<SettingLabelFields>
     {
         private readonly string _value;

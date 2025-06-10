@@ -557,7 +557,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetLabelsRequest(Uri nextPage, string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> @select, RequestContext context)
+        internal HttpMessage CreateGetLabelsRequest(Uri nextPage, string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -582,7 +582,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     uri.AppendQuery("After", after, true);
                 }
-                if (@select != null && !(@select is ChangeTrackingList<LabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+                if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
                 {
                     uri.AppendQueryDelimited("$Select", @select, ",", null, true);
                 }
@@ -600,7 +600,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<LabelFields> @select, RequestContext context)
+        internal HttpMessage CreateCheckLabelsRequest(string name, string syncToken, string after, string acceptDatetime, IEnumerable<SettingLabelFields> @select, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -617,7 +617,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<LabelFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<SettingLabelFields> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
@@ -696,7 +696,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateGetRevisionsRequest(Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateGetRevisionsRequest(Uri nextPage, string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -725,7 +725,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     uri.AppendQuery("After", after, true);
                 }
-                if (@select != null && !(@select is ChangeTrackingList<SettingFields> changeTrackingList && changeTrackingList.IsUndefined))
+                if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
                 {
                     uri.AppendQueryDelimited("$Select", @select, ",", null, true);
                 }
@@ -750,7 +750,7 @@ namespace Azure.Data.AppConfiguration
             return message;
         }
 
-        internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<SettingFields> @select, IEnumerable<string> tags, RequestContext context)
+        internal HttpMessage CreateCheckRevisionsRequest(string key, string label, string syncToken, string after, string acceptDatetime, IEnumerable<string> @select, IEnumerable<string> tags, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -771,7 +771,7 @@ namespace Azure.Data.AppConfiguration
             {
                 uri.AppendQuery("After", after, true);
             }
-            if (@select != null && !(@select is ChangeTrackingList<SettingFields> changeTrackingList && changeTrackingList.IsUndefined))
+            if (@select != null && !(@select is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("$Select", @select, ",", null, true);
             }
