@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- The default service version is now "7.6".
+
 ## 4.8.0-beta.1 (2025-04-08)
 
 ### Other Changes
