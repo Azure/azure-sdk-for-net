@@ -17,7 +17,7 @@ namespace Azure.Core
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                JsonSerializer.Serialize(content.JsonWriter, item);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -55,7 +55,7 @@ namespace Azure.Core
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                JsonSerializer.Serialize(content.JsonWriter, item.Value);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -91,7 +91,7 @@ namespace Azure.Core
         public static RequestContent FromObject(object value)
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(value);
+            JsonSerializer.Serialize(content.JsonWriter, value);
             return content;
         }
         public static RequestContent FromObject(BinaryData value)

@@ -42,7 +42,8 @@ namespace Azure.Core.Tests
         {
             using MemoryStream stream = new MemoryStream ();
             using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
-            writer.WriteObjectValue (value);
+            //writer.WriteObjectValue (value);
+            JsonSerializer.Serialize(writer, value);
 
             writer.Flush ();
             Assert.AreEqual (expectedJson, System.Text.Encoding.UTF8.GetString(stream.ToArray()));
@@ -57,7 +58,7 @@ namespace Azure.Core.Tests
             string json = @"{""TablesToMove"": [{""TableName"":""TestTable""}]}";
             Dictionary<string, object> content = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
             JsonElement element = (JsonElement)content["TablesToMove"];
-            writer.WriteObjectValue (element);
+            element.WriteTo(writer);
             writer.Flush ();
 
             Assert.AreEqual (@"[{""TableName"":""TestTable""}]", System.Text.Encoding.UTF8.GetString(stream.ToArray()));
