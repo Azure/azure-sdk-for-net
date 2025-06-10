@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 
 namespace Azure.Data.AppConfiguration
 {
@@ -17,8 +18,6 @@ namespace Azure.Data.AppConfiguration
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConfigurationSetting"/>. </summary>
-        /// <param name="locked"> Indicates whether the key-value is locked. </param>
-        /// <param name="etag"> A value representing the current state of the resource. </param>
         /// <param name="key">
         /// The primary identifier of the configuration setting.
         ///     A  is used together with a  to uniquely identify a configuration setting.
@@ -32,29 +31,28 @@ namespace Azure.Data.AppConfiguration
         /// The content type of the configuration setting's value.
         ///     Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
+        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
         /// <param name="lastModified"> The last time a modifying operation was performed on the given configuration setting. </param>
+        /// <param name="isReadOnly">
+        /// A value indicating whether the configuration setting is read only.
+        ///     A read only configuration setting may not be modified until it is made writable.
+        /// </param>
         /// <param name="tags">
         /// A dictionary of tags used to assign additional properties to a configuration setting.
         ///     These can be used to indicate how a configuration setting may be applied.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigurationSetting(bool? locked, string etag, string key, string label, string value, string contentType, DateTimeOffset? lastModified, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfigurationSetting(string key, string label, string value, string contentType, ETag eTag, DateTimeOffset? lastModified, bool? isReadOnly, IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Locked = locked;
-            Etag = etag;
             Key = key;
             Label = label;
             Value = value;
             ContentType = contentType;
+            ETag = eTag;
             LastModified = lastModified;
+            IsReadOnly = isReadOnly;
             Tags = tags;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Indicates whether the key-value is locked. </summary>
-        public bool? Locked { get; set; }
-
-        /// <summary> A value representing the current state of the resource. </summary>
-        public string Etag { get; set; }
     }
 }

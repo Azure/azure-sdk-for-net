@@ -8,16 +8,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 
 namespace Azure.Data.AppConfiguration
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class AppConfigurationModelFactory
+    public static partial class ConfigurationModelFactory
     {
 
         /// <summary> A key-value pair representing application settings. </summary>
-        /// <param name="locked"> Indicates whether the key-value is locked. </param>
-        /// <param name="etag"> A value representing the current state of the resource. </param>
         /// <param name="key">
         /// The primary identifier of the configuration setting.
         ///     A  is used together with a  to uniquely identify a configuration setting.
@@ -31,24 +30,29 @@ namespace Azure.Data.AppConfiguration
         /// The content type of the configuration setting's value.
         ///     Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </param>
+        /// <param name="eTag"> An ETag indicating the state of a configuration setting within a configuration store. </param>
         /// <param name="lastModified"> The last time a modifying operation was performed on the given configuration setting. </param>
+        /// <param name="isReadOnly">
+        /// A value indicating whether the configuration setting is read only.
+        ///     A read only configuration setting may not be modified until it is made writable.
+        /// </param>
         /// <param name="tags">
         /// A dictionary of tags used to assign additional properties to a configuration setting.
         ///     These can be used to indicate how a configuration setting may be applied.
         /// </param>
         /// <returns> A new <see cref="AppConfiguration.ConfigurationSetting"/> instance for mocking. </returns>
-        public static ConfigurationSetting ConfigurationSetting(bool? locked = default, string etag = default, string key = default, string label = default, string value = default, string contentType = default, DateTimeOffset? lastModified = default, IDictionary<string, string> tags = default)
+        public static ConfigurationSetting ConfigurationSetting(string key = default, string label = default, string value = default, string contentType = default, ETag eTag = default, DateTimeOffset? lastModified = default, bool? isReadOnly = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new ConfigurationSetting(
-                locked,
-                etag,
                 key,
                 label,
                 value,
                 contentType,
+                eTag,
                 lastModified,
+                isReadOnly,
                 tags,
                 additionalBinaryDataProperties: null);
         }

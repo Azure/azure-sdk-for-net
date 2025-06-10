@@ -6,7 +6,12 @@ using System.ComponentModel;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Suppressed operators.
     /// <summary> The current status of the snapshot. </summary>
+    [CodeGenSuppress("==", typeof(ConfigurationSnapshotStatus),  typeof(ConfigurationSnapshotStatus))]
+    [CodeGenSuppress("!=", typeof(ConfigurationSnapshotStatus), typeof(ConfigurationSnapshotStatus))]
+    [CodeGenSuppress("", typeof(string))]
     public readonly partial struct ConfigurationSnapshotStatus : IEquatable<ConfigurationSnapshotStatus>
     {
         private readonly string _value;
