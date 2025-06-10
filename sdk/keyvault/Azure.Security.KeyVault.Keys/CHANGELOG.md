@@ -12,11 +12,18 @@ Thank you to our developer community members who helped to make the Key Vault cl
 
 ### Breaking Changes
 
+> [!NOTE]  
+> These changes will not cause issues when upgrading from the last stable version 4.7.0; they only affect the preview version 4.8.0-beta.1.
+
+- CkmAesKeyWrap algorithm moved from `EncryptionAlgorithm` to `KeyWrapAlgorithm`
+
 ### Bugs Fixed
 
 - Removed additional forward slash in `RestoreKeyBackup` and `RestoreKeyBackupAsync`.
 
 ### Other Changes
+
+- The default service version is now "7.6".
 
 ## 4.8.0-beta.1 (2025-04-08)
 
