@@ -66,7 +66,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CommunicationIdentifierModel(CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Kind = kind;
             RawId = rawId;
@@ -83,7 +83,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         }
 
         /// <summary> The identifier kind. Only required in responses. </summary>
-        public CommunicationIdentifierModelKind? Kind { get; }
+        public AcsCommunicationIdentifierKind? Kind { get; }
         /// <summary> Raw Id of the identifier. Optional in requests, required in responses. </summary>
         public string RawId { get; }
         /// <summary> The communication user. </summary>
@@ -93,6 +93,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Microsoft Teams user. </summary>
         public MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUser { get; }
         /// <summary> The Microsoft Teams application. </summary>
-        public MicrosoftTeamsAppIdentifierModel MicrosoftTeamsApp { get; }
+        public AcsMicrosoftTeamsAppIdentifier MicrosoftTeamsApp { get; }
     }
 }

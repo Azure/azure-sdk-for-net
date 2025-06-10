@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             string fabricName = "wPR";
             DataReplicationFabricData data = new DataReplicationFabricData(new AzureLocation("tqygutlpob"))
             {
-                Properties = new DataReplicationFabricProperties(null),
+                Properties = new DataReplicationFabricProperties(default),
             };
             ArmOperation<DataReplicationFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, fabricName, data);
             DataReplicationFabricResource result = lro.Value;

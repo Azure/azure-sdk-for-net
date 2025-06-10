@@ -167,7 +167,6 @@ namespace Azure.Search.Documents.Tests.Samples
 
         [Test]
         [AsyncOnly]
-        [LiveOnly(Reason = "https://github.com/Azure/azure-sdk-for-net/issues/48588")]
         public async Task CreateIndexerAsync()
         {
             await using SearchResources resources = await SearchResources.CreateWithBlobStorageAsync(this, populate: true, true);

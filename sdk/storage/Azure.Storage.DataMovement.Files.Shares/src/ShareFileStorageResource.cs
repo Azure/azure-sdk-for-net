@@ -283,8 +283,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 ShareFileStorageResource sourceShareFile = (ShareFileStorageResource)sourceResource;
                 // both source and destination must be SMB and destination FilePermission option must be set.
-                if (((sourceShareFile._options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
-                    && ((_options?.ShareProtocol ?? ShareProtocols.Smb) == ShareProtocols.Smb)
+                ShareProtocol sourceShareProtocol = sourceShareFile._options?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationShareProtocol = _options?.ShareProtocol ?? ShareProtocol.Smb;
+                if (sourceShareProtocol == ShareProtocol.Smb && destinationShareProtocol == ShareProtocol.Smb
                     && (_options?.FilePermissions ?? false))
                 {
                     string permissionsValue = sourceProperties?.RawProperties?.GetPermission();
@@ -325,7 +326,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointDetails();
+            return new ShareFileSourceCheckpointDetails(shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
@@ -353,7 +354,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 isFileMetadataSet: _options?._isFileMetadataSet ?? false,
                 fileMetadata: _options?.FileMetadata,
                 isDirectoryMetadataSet: _options?._isDirectoryMetadataSet ?? false,
-                directoryMetadata: _options?.DirectoryMetadata);
+                directoryMetadata: _options?.DirectoryMetadata,
+                shareProtocol: _options?.ShareProtocol ?? ShareProtocol.Smb);
         }
 
         protected override async Task<bool> ShouldItemTransferAsync(CancellationToken cancellationToken = default)
@@ -393,9 +395,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // ShareFile to ShareFile Copy transfer
             if (sourceResource is ShareFileStorageResource sourceShareFileResource)
             {
+                ShareProtocol sourceProtocol = sourceShareFileResource._options?.ShareProtocol ?? ShareProtocol.Smb;
+                ShareProtocol destinationProtocol = _options?.ShareProtocol ?? ShareProtocol.Smb;
                 // Ensure the transfer is supported (NFS -> NFS and SMB -> SMB)
-                if ((_options?.ShareProtocol ?? ShareProtocols.Smb)
-                    != (sourceShareFileResource._options?.ShareProtocol ?? ShareProtocols.Smb))
+                if (destinationProtocol != sourceProtocol)
                 {
                     throw Errors.ShareTransferNotSupported();
                 }
@@ -428,7 +431,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public static InvalidOperationException ShareFileAlreadyExists(string pathName)
             => new InvalidOperationException($"Share File `{pathName}` already exists. Cannot overwrite file.");
 
-        public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocols setProtocol, ShareProtocols actualProtocol)
+        public static ArgumentException ProtocolSetMismatch(string endpoint, ShareProtocol setProtocol, ShareProtocol actualProtocol)
             => new ArgumentException($"The Protocol set on the {endpoint} '{setProtocol}' does not match the actual Protocol of the share '{actualProtocol}'.");
 
         public static UnauthorizedAccessException ProtocolValidationAuthorizationFailure(RequestFailedException ex, string endpoint)

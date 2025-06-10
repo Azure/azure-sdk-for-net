@@ -35,15 +35,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <param name="queueId"> Router Job events Queue Id. </param>
         /// <param name="labels"> Router Job events Labels. </param>
         /// <param name="tags"> Router Jobs events Tags. </param>
-        /// <param name="jobStatus"> Router Job Received Job Status. </param>
+        /// <param name="status"> Router Job Received Job Status. </param>
         /// <param name="classificationPolicyId"> Router Job Classification Policy Id. </param>
         /// <param name="priority"> Router Job Priority. </param>
         /// <param name="requestedWorkerSelectors"> Router Job Received Requested Worker Selectors. </param>
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
-        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? jobStatus, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
+        internal AcsRouterJobReceivedEventData(string jobId, string channelReference, string channelId, IDictionary<string, BinaryData> serializedAdditionalRawData, string queueId, IReadOnlyDictionary<string, string> labels, IReadOnlyDictionary<string, string> tags, AcsRouterJobStatus? status, string classificationPolicyId, int? priority, IReadOnlyList<AcsRouterWorkerSelector> requestedWorkerSelectors, DateTimeOffset? scheduledOn, bool unavailableForMatching) : base(jobId, channelReference, channelId, serializedAdditionalRawData, queueId, labels, tags)
         {
-            JobStatus = jobStatus;
+            Status = status;
             ClassificationPolicyId = classificationPolicyId;
             Priority = priority;
             RequestedWorkerSelectors = requestedWorkerSelectors;
@@ -55,9 +55,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         internal AcsRouterJobReceivedEventData()
         {
         }
-
-        /// <summary> Router Job Received Job Status. </summary>
-        public AcsRouterJobStatus? JobStatus { get; }
         /// <summary> Router Job Classification Policy Id. </summary>
         public string ClassificationPolicyId { get; }
         /// <summary> Router Job Priority. </summary>
