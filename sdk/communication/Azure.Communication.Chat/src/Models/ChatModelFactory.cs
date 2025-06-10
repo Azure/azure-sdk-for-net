@@ -109,7 +109,7 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Initializes a new instance of the <see cref="Chat.ChatThreadProperties"/> class.
         /// </summary>
-        /// <param name="id"> Chat message. </param>
+        /// <param name="id"> Chat message ID. </param>
         /// <param name="topic"> Topic of the message content. </param>
         /// <param name="createdOn"> Created on date time </param>
         /// <param name="createdBy"> Created by </param>

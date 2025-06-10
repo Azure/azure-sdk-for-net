@@ -63,7 +63,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Creates a chat thread. </summary>
-        /// <param name="options"> Participants to be added to the chat thread. </param>
+        /// <param name="options">The options to use for creating the chat thread.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options.Topic"/> is null. </exception>
         public async Task<Response<CreateChatThreadResultInternal>> CreateChatThreadAsync(CreateChatThreadOptions options, CancellationToken cancellationToken = default)
@@ -90,7 +90,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Creates a chat thread. </summary>
-        /// <param name="options"> Participants to be added to the chat thread. </param>
+        /// <param name="options">The options to use for creating the chat thread.</param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="options.Topic"/> is null. </exception>
         public Response<CreateChatThreadResultInternal> CreateChatThread(CreateChatThreadOptions options, CancellationToken cancellationToken = default)

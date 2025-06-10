@@ -73,7 +73,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Updates the thread's properties. </summary>
-        /// <param name="options"> Chat thread options. </param>
+        /// <param name="options"> Update chat thread options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response UpdateProperties(UpdateChatThreadPropertiesOptions options, CancellationToken cancellationToken = default)
@@ -92,7 +92,7 @@ namespace Azure.Communication.Chat
         }
 
         /// <summary> Updates the thread's properties asynchronously. </summary>
-        /// <param name="options"> Chat thread options. </param>
+        /// <param name="options"> Update chat thread options. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response> UpdatePropertiesAsync(UpdateChatThreadPropertiesOptions options, CancellationToken cancellationToken = default)
