@@ -13,40 +13,34 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Health.Deidentification
 {
-    internal partial class DeidentificationClientListJobDocumentsInternalCollectionResultOfT : Pageable<DeidentificationDocumentDetails>
+    internal partial class DeidentificationClientGetJobsInternalCollectionResult : Pageable<BinaryData>
     {
         private readonly DeidentificationClient _client;
         private readonly Uri _nextPage;
-        private readonly string _jobName;
         private readonly int? _maxpagesize;
         private readonly string _continuationToken;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of DeidentificationClientListJobDocumentsInternalCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of DeidentificationClientGetJobsInternalCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The DeidentificationClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
-        /// <param name="jobName"> The name of a job. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
-        public DeidentificationClientListJobDocumentsInternalCollectionResultOfT(DeidentificationClient client, Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
+        public DeidentificationClientGetJobsInternalCollectionResult(DeidentificationClient client, Uri nextPage, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNull(jobName, nameof(jobName));
-
             _client = client;
             _nextPage = nextPage;
-            _jobName = jobName;
             _maxpagesize = maxpagesize;
             _continuationToken = continuationToken;
             _context = context;
         }
 
-        /// <summary> Gets the pages of DeidentificationClientListJobDocumentsInternalCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of DeidentificationClientGetJobsInternalCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of DeidentificationClientListJobDocumentsInternalCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<DeidentificationDocumentDetails>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of DeidentificationClientGetJobsInternalCollectionResult as an enumerable collection. </returns>
+        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
             do
@@ -56,9 +50,14 @@ namespace Azure.Health.Deidentification
                 {
                     yield break;
                 }
-                PagedDeidentificationDocumentDetails responseWithType = (PagedDeidentificationDocumentDetails)response;
+                PagedDeidentificationJob responseWithType = (PagedDeidentificationJob)response;
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in responseWithType.Value)
+                {
+                    items.Add(BinaryData.FromObjectAsJson(item));
+                }
                 nextPage = responseWithType.NextLink;
-                yield return Page<DeidentificationDocumentDetails>.FromValues((IReadOnlyList<DeidentificationDocumentDetails>)responseWithType.Value, nextPage?.AbsoluteUri, response);
+                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);
         }
@@ -68,8 +67,8 @@ namespace Azure.Health.Deidentification
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListJobDocumentsInternalRequest(nextLink, _jobName, _maxpagesize, _continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.ListJobDocumentsInternal");
+            HttpMessage message = _client.CreateListJobsInternalRequest(nextLink, _maxpagesize, _continuationToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("DeidentificationClient.GetJobsInternal");
             scope.Start();
             try
             {
