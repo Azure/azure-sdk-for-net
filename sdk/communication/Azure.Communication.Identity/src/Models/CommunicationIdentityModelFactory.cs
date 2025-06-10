@@ -7,7 +7,7 @@ using Azure.Core;
 namespace Azure.Communication.Identity.Models
 {
     /// <summary>
-    /// Model factory that enables mocking for the Identity library.
+    /// Model factory that enables mocking for the Communication Identity library.
     /// </summary>
     public static partial class CommunicationIdentityModelFactory
     {
