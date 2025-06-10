@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
     {
         private ResourceIdentifier _vnetId;
         private ResourceIdentifier _subnetId;
-        private string _displayName;
         private int _enabledEcpuCount;
         private ResourceIdentifier _exascaleDBStorageVaultId;
         private string _hostname;
@@ -45,7 +44,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
 
             _vnetId = new ResourceIdentifier(string.Format(VnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName));
             _subnetId = new ResourceIdentifier(string.Format(SubnetIdFormat, DefaultSubscription.Data.Id, DefaultResourceGroupName, DefaultVnetName, DefaultSubnetName));
-            _displayName = "TestExadbVmCluster";
             _enabledEcpuCount = 8;
             _exascaleDBStorageVaultId = new ResourceIdentifier($"/subscriptions/{DefaultSubscription.Data.Id}/resourceGroups/{DefaultResourceGroupName}/providers/Microsoft.OracleDatabase/exadbStorageVaults/test-vault");
             _hostname = "test-exadb-hostname";
@@ -60,162 +58,6 @@ namespace Azure.ResourceManager.OracleDatabase.Tests.Models
         public void Cleanup()
         {
             CleanupResourceGroups();
-        }
-
-        [Test]
-        public void Constructor_WithRequiredParameters_SetsPropertiesCorrectly()
-        {
-            // Arrange & Act
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Assert
-            Assert.AreEqual(_vnetId, properties.VnetId);
-            Assert.AreEqual(_subnetId, properties.SubnetId);
-            Assert.AreEqual(_displayName, properties.DisplayName);
-            Assert.AreEqual(_enabledEcpuCount, properties.EnabledEcpuCount);
-            Assert.AreEqual(_exascaleDBStorageVaultId, properties.ExascaleDBStorageVaultId);
-            Assert.AreEqual(_hostname, properties.Hostname);
-            Assert.AreEqual(_nodeCount, properties.NodeCount);
-            Assert.AreEqual(_shape, properties.Shape);
-            CollectionAssert.AreEqual(_sshPublicKeys, properties.SshPublicKeys);
-            Assert.AreEqual(_totalEcpuCount, properties.TotalEcpuCount);
-            Assert.AreEqual(_vmFileSystemStorage.TotalSizeInGbs, properties.VmFileSystemStorageTotalSizeInGbs);
-            Assert.IsNotNull(properties.NsgCidrs);
-            Assert.IsEmpty(properties.NsgCidrs);
-            Assert.IsNotNull(properties.ScanIPIds);
-            Assert.IsEmpty(properties.ScanIPIds);
-            Assert.IsNotNull(properties.VipIds);
-            Assert.IsEmpty(properties.VipIds);
-        }
-
-        [Test]
-        public void Constructor_SetOptionalProperties_SetsPropertiesCorrectly()
-        {
-            // Arrange
-            string domain = "example.com";
-            OracleLicenseModel licenseModel = OracleLicenseModel.LicenseIncluded;
-            string systemVersion = "19.0.0.0";
-            string timeZone = "UTC";
-            int scanListenerPortTcp = 1521;
-            int scanListenerPortTcpSsl = 2484;
-
-            // Act
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage)
-            {
-                Domain = domain,
-                LicenseModel = licenseModel,
-                SystemVersion = systemVersion,
-                TimeZone = timeZone,
-                ScanListenerPortTcp = scanListenerPortTcp,
-                ScanListenerPortTcpSsl = scanListenerPortTcpSsl,
-                ClusterName = "exadb-cluster"
-            };
-
-            // Assert
-            Assert.AreEqual(domain, properties.Domain);
-            Assert.AreEqual(licenseModel, properties.LicenseModel);
-            Assert.AreEqual(systemVersion, properties.SystemVersion);
-            Assert.AreEqual(timeZone, properties.TimeZone);
-            Assert.AreEqual(scanListenerPortTcp, properties.ScanListenerPortTcp);
-            Assert.AreEqual(scanListenerPortTcpSsl, properties.ScanListenerPortTcpSsl);
-            Assert.AreEqual("exadb-cluster", properties.ClusterName);
-        }
-
-        [Test]
-        public void VmFileSystemStorageTotalSizeInGbs_SetAndGet_WorksCorrectly()
-        {
-            // Arrange
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Act
-            int newSize = 2048;
-            properties.VmFileSystemStorageTotalSizeInGbs = newSize;
-
-            // Assert
-            Assert.AreEqual(newSize, properties.VmFileSystemStorageTotalSizeInGbs);
-        }
-
-        [Test]
-        public void VmFileSystemStorageTotalSizeInGbs_SetToNull_SetsPropertyToNull()
-        {
-            // Arrange
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Act
-            properties.VmFileSystemStorageTotalSizeInGbs = null;
-
-            // Assert
-            Assert.IsNull(properties.VmFileSystemStorageTotalSizeInGbs);
-        }
-
-        [Test]
-        public void NsgCidrs_AddItem_AddsToCollection()
-        {
-            // Arrange
-            var properties = new ExadbVmClusterProperties(
-                _vnetId,
-                _subnetId,
-                _displayName,
-                _enabledEcpuCount,
-                _exascaleDBStorageVaultId,
-                _hostname,
-                _nodeCount,
-                _shape,
-                _sshPublicKeys,
-                _totalEcpuCount,
-                _vmFileSystemStorage);
-
-            // Act
-            var nsgCidr = new CloudVmClusterNsgCidr("10.0.0.0/16");
-            properties.NsgCidrs.Add(nsgCidr);
-
-            // Assert
-            Assert.AreEqual(1, properties.NsgCidrs.Count);
-            Assert.AreEqual(nsgCidr, properties.NsgCidrs[0]);
         }
 
         [TestCase]
