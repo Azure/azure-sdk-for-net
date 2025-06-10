@@ -7,48 +7,54 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithPagingCollectionResultOfT : Pageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithPagingAsyncCollectionResult : AsyncPageable<BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithPagingCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithPagingAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithPagingCollectionResultOfT(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithPagingAsyncCollectionResult(BasicTypeSpecClient client, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithPagingCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithPagingCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BasicTypeSpecClientGetWithPagingAsyncCollectionResult as an enumerable collection. </returns>
+        public override async IAsyncEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Response response = GetNextResponse(pageSizeHint, null);
+            Response response = await GetNextResponse(pageSizeHint, null).ConfigureAwait(false);
             PageThingModel responseWithType = (PageThingModel)response;
-            yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Items, null, response);
+            List<BinaryData> items = new List<BinaryData>();
+            foreach (var item in responseWithType.Items)
+            {
+                items.Add(BinaryData.FromObjectAsJson(item));
+            }
+            yield return Page<BinaryData>.FromValues(items, null, response);
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
-        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
+        private async ValueTask<Response> GetNextResponse(int? pageSizeHint, string continuationToken)
         {
             HttpMessage message = _client.CreateListWithPagingRequest(_context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithPaging");
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithPaging");
             scope.Start();
             try
             {
-                _client.Pipeline.Send(message, CancellationToken);
+                await _client.Pipeline.SendAsync(message, CancellationToken).ConfigureAwait(false);
                 if (message.Response.IsError && _context.ErrorOptions != ErrorOptions.NoThrow)
                 {
                     throw new RequestFailedException(message.Response);

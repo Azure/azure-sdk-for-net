@@ -13,28 +13,28 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT : Pageable<ThingModel>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult : Pageable<BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
         private readonly string _token;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
         /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _token = token;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<ThingModel>> AsPages(string continuationToken, int? pageSizeHint)
+        /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult as an enumerable collection. </returns>
+        public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             string nextPage = continuationToken ?? _token;
             do
@@ -44,9 +44,14 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
-                nextPage = responseWithType.NextToken;
-                yield return Page<ThingModel>.FromValues((IReadOnlyList<ThingModel>)responseWithType.Things, nextPage, response);
+                ListWithContinuationTokenHeaderResponseResponse responseWithType = (ListWithContinuationTokenHeaderResponseResponse)response;
+                List<BinaryData> items = new List<BinaryData>();
+                foreach (var item in responseWithType.Things)
+                {
+                    items.Add(BinaryData.FromObjectAsJson(item));
+                }
+                nextPage = response.Headers.TryGetValue("next-token", out string value) ? value : null;
+                yield return Page<BinaryData>.FromValues(items, nextPage, response);
             }
             while (!string.IsNullOrEmpty(nextPage));
         }
@@ -56,8 +61,8 @@ namespace BasicTypeSpec
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithContinuationTokenRequest(continuationToken, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithContinuationToken");
+            HttpMessage message = _client.CreateListWithContinuationTokenHeaderResponseRequest(continuationToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationTokenHeaderResponse");
             scope.Start();
             try
             {
