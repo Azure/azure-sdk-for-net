@@ -238,6 +238,7 @@
 
   <!-- Packages intended for Extensions libraries only -->
   <ItemGroup Condition="'$(IsExtensionClientLibrary)' == 'true'">
+    <PackageReference Update="Azure.Identity" Version="1.13.1" />
     <PackageReference Update="Microsoft.AspNetCore.DataProtection" Version="8.0.16" />
     <PackageReference Update="Microsoft.AspNetCore.Http" Version="2.3.0" />
     <PackageReference Update="Microsoft.AspNetCore.Http.Connections" Version="1.2.0" />
@@ -250,7 +251,6 @@
     <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.3" />
     <PackageReference Update="Microsoft.Extensions.Logging" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Options" Version="8.0.2" />
-    <PackageReference Update="Azure.Identity" Version="1.13.1" />
   </ItemGroup>
 
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
