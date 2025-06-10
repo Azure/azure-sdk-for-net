@@ -31,6 +31,14 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $stderr = $proc.StandardError.ReadToEnd() -split "\r?\n"
   $proc.WaitForExit()
 
+  $allErrorLines = $stdout  |
+           Where-Object { $_ -and $_ -match "^\s*##vso\[task.logissue" } | # filter out vso log issues
+           ForEach-Object { Write-Host $_.Trim().Replace("##vso", "vso") } # trim whitespace
+
+  $stdout = $stdout |
+           Where-Object { $_ -and $_ -notmatch "^\s*##vso\[task.logissue" } | # filter out vso log issues
+           ForEach-Object { $_.Trim() } # trim whitespace
+
   if ($stderr) {
     Write-Host "dotnet msbuild failed with the following error(s):"
     foreach ($line in $stderr) {
