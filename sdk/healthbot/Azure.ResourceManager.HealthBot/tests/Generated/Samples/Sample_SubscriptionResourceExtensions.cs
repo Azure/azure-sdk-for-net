@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HealthBot.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetHealthBots_ListBotsBySubscription()
         {
-            // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2021-08-24/examples/ListBotsBySubscription.json
+            // Generated from example definition: specification/healthbot/resource-manager/Microsoft.HealthBot/stable/2025-05-25/examples/ListBotsBySubscription.json
             // this example is just showing the usage of "Bots_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
