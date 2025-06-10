@@ -1027,7 +1027,7 @@ namespace BasicTypeSpec
         }
 
         /// <summary>
-        /// [Protocol Method] addTimeHeader
+        /// [Protocol Method] AddTimeHeader
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1054,7 +1054,7 @@ namespace BasicTypeSpec
         }
 
         /// <summary>
-        /// [Protocol Method] addTimeHeader
+        /// [Protocol Method] AddTimeHeader
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -1080,7 +1080,7 @@ namespace BasicTypeSpec
             }
         }
 
-        /// <summary> addTimeHeader. </summary>
+        /// <summary> AddTimeHeader. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response AddTimeHeader(CancellationToken cancellationToken = default)
@@ -1088,7 +1088,7 @@ namespace BasicTypeSpec
             return AddTimeHeader(cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
-        /// <summary> addTimeHeader. </summary>
+        /// <summary> AddTimeHeader. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response> AddTimeHeaderAsync(CancellationToken cancellationToken = default)
@@ -1607,7 +1607,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithNextLinkCollectionResult(this, null, context);
+                return new BasicTypeSpecClientGetWithNextLinkCollectionResult(this, null, context);
             }
             catch (Exception e)
             {
@@ -1633,7 +1633,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithNextLinkAsyncCollectionResult(this, null, context);
+                return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResult(this, null, context);
             }
             catch (Exception e)
             {
@@ -1647,7 +1647,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithNextLink(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithNextLinkCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithNextLinkCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List things with nextlink. </summary>
@@ -1655,7 +1655,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithNextLinkAsync(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithNextLinkAsyncCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithNextLinkAsyncCollectionResultOfT(this, null, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -1676,7 +1676,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithContinuationTokenCollectionResult(this, token, context);
+                return new BasicTypeSpecClientGetWithContinuationTokenCollectionResult(this, token, context);
             }
             catch (Exception e)
             {
@@ -1703,7 +1703,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResult(this, token, context);
+                return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResult(this, token, context);
             }
             catch (Exception e)
             {
@@ -1718,7 +1718,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithContinuationToken(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List things with continuation token. </summary>
@@ -1727,7 +1727,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithContinuationTokenAsync(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -1748,7 +1748,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
+                return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResult(this, token, context);
             }
             catch (Exception e)
             {
@@ -1775,7 +1775,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
+                return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResult(this, token, context);
             }
             catch (Exception e)
             {
@@ -1790,7 +1790,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithContinuationTokenHeaderResponse(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List things with continuation token header response. </summary>
@@ -1799,7 +1799,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithContinuationTokenHeaderResponseAsync(string token = default, CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithContinuationTokenHeaderResponseAsyncCollectionResultOfT(this, token, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>
@@ -1819,7 +1819,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithPagingCollectionResult(this, context);
+                return new BasicTypeSpecClientGetWithPagingCollectionResult(this, context);
             }
             catch (Exception e)
             {
@@ -1845,7 +1845,7 @@ namespace BasicTypeSpec
             scope.Start();
             try
             {
-                return new BasicTypeSpecClientListWithPagingAsyncCollectionResult(this, context);
+                return new BasicTypeSpecClientGetWithPagingAsyncCollectionResult(this, context);
             }
             catch (Exception e)
             {
@@ -1859,7 +1859,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Pageable<ThingModel> GetWithPaging(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithPagingCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithPagingCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List things with paging. </summary>
@@ -1867,7 +1867,7 @@ namespace BasicTypeSpec
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual AsyncPageable<ThingModel> GetWithPagingAsync(CancellationToken cancellationToken = default)
         {
-            return new BasicTypeSpecClientListWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
+            return new BasicTypeSpecClientGetWithPagingAsyncCollectionResultOfT(this, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
     }
 }

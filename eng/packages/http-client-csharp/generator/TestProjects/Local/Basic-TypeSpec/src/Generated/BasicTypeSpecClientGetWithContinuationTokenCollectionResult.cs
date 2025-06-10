@@ -13,30 +13,30 @@ using Azure.Core.Pipeline;
 
 namespace BasicTypeSpec
 {
-    internal partial class BasicTypeSpecClientListWithNextLinkCollectionResult : Pageable<BinaryData>
+    internal partial class BasicTypeSpecClientGetWithContinuationTokenCollectionResult : Pageable<BinaryData>
     {
         private readonly BasicTypeSpecClient _client;
-        private readonly Uri _nextPage;
+        private readonly string _token;
         private readonly RequestContext _context;
 
-        /// <summary> Initializes a new instance of BasicTypeSpecClientListWithNextLinkCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of BasicTypeSpecClientGetWithContinuationTokenCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The BasicTypeSpecClient client used to send requests. </param>
-        /// <param name="nextPage"> The url of the next page of responses. </param>
+        /// <param name="token"></param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public BasicTypeSpecClientListWithNextLinkCollectionResult(BasicTypeSpecClient client, Uri nextPage, RequestContext context) : base(context?.CancellationToken ?? default)
+        public BasicTypeSpecClientGetWithContinuationTokenCollectionResult(BasicTypeSpecClient client, string token, RequestContext context) : base(context?.CancellationToken ?? default)
         {
             _client = client;
-            _nextPage = nextPage;
+            _token = token;
             _context = context;
         }
 
-        /// <summary> Gets the pages of BasicTypeSpecClientListWithNextLinkCollectionResult as an enumerable collection. </summary>
+        /// <summary> Gets the pages of BasicTypeSpecClientGetWithContinuationTokenCollectionResult as an enumerable collection. </summary>
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <returns> The pages of BasicTypeSpecClientListWithNextLinkCollectionResult as an enumerable collection. </returns>
+        /// <returns> The pages of BasicTypeSpecClientGetWithContinuationTokenCollectionResult as an enumerable collection. </returns>
         public override IEnumerable<Page<BinaryData>> AsPages(string continuationToken, int? pageSizeHint)
         {
-            Uri nextPage = continuationToken != null ? new Uri(continuationToken) : _nextPage;
+            string nextPage = continuationToken ?? _token;
             do
             {
                 Response response = GetNextResponse(pageSizeHint, nextPage);
@@ -44,25 +44,25 @@ namespace BasicTypeSpec
                 {
                     yield break;
                 }
-                ListWithNextLinkResponse responseWithType = (ListWithNextLinkResponse)response;
+                ListWithContinuationTokenResponse responseWithType = (ListWithContinuationTokenResponse)response;
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in responseWithType.Things)
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.Next;
-                yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
+                nextPage = responseWithType.NextToken;
+                yield return Page<BinaryData>.FromValues(items, nextPage, response);
             }
-            while (nextPage != null);
+            while (!string.IsNullOrEmpty(nextPage));
         }
 
         /// <summary> Get next page. </summary>
         /// <param name="pageSizeHint"> The number of items per page. </param>
-        /// <param name="nextLink"> The next link to use for the next page of results. </param>
-        private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
+        /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
+        private Response GetNextResponse(int? pageSizeHint, string continuationToken)
         {
-            HttpMessage message = _client.CreateListWithNextLinkRequest(nextLink, _context);
-            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.ListWithNextLink");
+            HttpMessage message = _client.CreateListWithContinuationTokenRequest(continuationToken, _context);
+            using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetWithContinuationToken");
             scope.Start();
             try
             {

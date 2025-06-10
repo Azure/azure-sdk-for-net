@@ -22,13 +22,13 @@ namespace Microsoft.Extensions.Azure.Internal
         public IList<string> AdditionallyAllowedTenants { get; }
 
         /// <summary>
-        /// Creates an instance of the ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
+        /// Creates an instance of ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
         /// </summary>
         /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
+        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC). May be a client ID, resource ID, or object ID.</param>
         /// <param name="azureCloud">
-        ///     The name of the cloud where the managed identity is configured.  Valid values are:
+        ///     The name of the cloud where the managed identity is configured. Valid values are:
         ///       <list type="bullet">
         ///         <item>
         ///           <term>public</term>
@@ -44,71 +44,8 @@ namespace Microsoft.Extensions.Azure.Internal
         ///         </item>
         ///       </list>
         /// </param>
-        /// <param name="additionallyAllowedTenants">The set of </param>
-        public ManagedFederatedIdentityCredential(string tenantId, string clientId, string managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
-            : this(tenantId, clientId, (object)managedIdentityId, azureCloud, additionallyAllowedTenants)
-        {
-        }
-
-        /// <summary>
-        /// Creates an instance of the ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
-        /// </summary>
-        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
-        /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
-        /// <param name="azureCloud">
-        ///     The name of the cloud where the managed identity is configured.  Valid values are:
-        ///       <list type="bullet">
-        ///         <item>
-        ///           <term>public</term>
-        ///           <description>Entra ID Global cloud</description>
-        ///         </item>
-        ///         <item>
-        ///           <term>usgov</term>
-        ///           <description>Entra ID US Government</description>
-        ///         </item>
-        ///         <item>
-        ///           <term>china</term>
-        ///           <description>Entra ID China operated by 21Vianet</description>
-        ///         </item>
-        ///       </list>
-        /// </param>
-        /// <param name="additionallyAllowedTenants">The set of </param>
-        public ManagedFederatedIdentityCredential(string tenantId, string clientId, ResourceIdentifier managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
-            : this(tenantId, clientId, (object)managedIdentityId, azureCloud, additionallyAllowedTenants)
-        {
-        }
-
-        /// <summary>
-        /// Creates an instance of the ManagedFederatedIdentityCredential with a synchronous callback that provides a signed client assertion to authenticate against Microsoft Entra ID.
-        /// </summary>
-        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
-        /// <param name="clientId">The client (application) ID of the service principal.</param>
-        /// <param name="managedIdentityId">The user-assigned managed identity which has been configured as a Federated Identity Credential (FIC).  May be a client id, resource id, or object id.</param>
-        /// <param name="azureCloud">
-        ///     The name of the cloud where the managed identity is configured.  Valid values are:
-        ///       <list type="bullet">
-        ///         <item>
-        ///           <term>public</term>
-        ///           <description>Entra ID Global cloud</description>
-        ///         </item>
-        ///         <item>
-        ///           <term>usgov</term>
-        ///           <description>Entra ID US Government</description>
-        ///         </item>
-        ///         <item>
-        ///           <term>china</term>
-        ///           <description>Entra ID China operated by 21Vianet</description>
-        ///         </item>
-        ///       </list>
-        /// </param>
-        /// <param name="additionallyAllowedTenants">The set of </param>
+        /// <param name="additionallyAllowedTenants">The set of additionally allowed tenants.</param>
         public ManagedFederatedIdentityCredential(string tenantId, string clientId, ManagedIdentityId managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
-            : this(tenantId, clientId, (object)managedIdentityId, azureCloud, additionallyAllowedTenants)
-        {
-        }
-
-        internal ManagedFederatedIdentityCredential(string tenantId, string clientId, object managedIdentityId, string azureCloud, IEnumerable<string> additionallyAllowedTenants = default)
         {
             ClientAssertionCredentialOptions clientAssertionOptions = null;
 
@@ -128,14 +65,7 @@ namespace Microsoft.Extensions.Azure.Internal
                 AdditionallyAllowedTenants = new List<string>();
             }
 
-            _managedIdentityCredential = managedIdentityId switch
-            {
-                ManagedIdentityId objectId => new ManagedIdentityCredential(objectId),
-                ResourceIdentifier resourceId => new ManagedIdentityCredential(resourceId),
-                string managedClientId => new ManagedIdentityCredential(managedClientId),
-                _ => throw new ArgumentException($"Invalid managed identity ID type: {managedIdentityId.GetType()}", nameof(managedIdentityId))
-            };
-
+            _managedIdentityCredential = new ManagedIdentityCredential(managedIdentityId);
             _tokenContext = new TokenRequestContext([TranslateCloudToTokenScope(azureCloud)]);
             _clientAssertionCredential = new ClientAssertionCredential(
                 tenantId,
