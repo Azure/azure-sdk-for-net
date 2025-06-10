@@ -49,31 +49,28 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $ciProps = $pkgProp.GetCIYmlForArtifact()
 
     if ($ciProps) {
-      # CheckAOTCompat is opt _in_, so we should default to false if not specified
+      # see if the check is enabled/disabled in the CI.yml
       $shouldAot = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "CheckAOTCompat")
-      $aotFromYaml = $false
       if ($null -ne $shouldAot) {
         $parsedBool = $null
         if ([bool]::TryParse($shouldAot, [ref]$parsedBool)) {
-          $aotFromYaml = $parsedBool
-        }
-
-        # when AOTCompat is true, there is an additional parameter we need to retrieve
-        $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
-        if ($aotArtifacts) {
-          $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
-          $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
+          $pkgProp.CIParameters["CheckAOTCompat"] = $parsedBool
         }
       }
+      else
+      {
+        # respect the ci file first, but if it is not specified, then we should check the project file
+        $pkgProp.CIParameters["CheckAOTCompat"] = ($isAotCompatible -eq 'true')
+      }
 
-      # Check if the project has IsAotCompatible property set to true
-      $aotFromProject = ($isAotCompatible -eq 'true')
-      
-      # AOT should run if EITHER the CI YAML parameter is true OR the project has IsAotCompatible set to true
-      $pkgProp.CIParameters["CheckAOTCompat"] = ($aotFromYaml -or $aotFromProject)
-      
-      if (-not $aotFromYaml -and $aotFromProject) {
-        # If AOT is enabled from project but not from YAML, ensure we have an empty AOTTestInputs array
+      # see if the AOT artifacts are specified in the CI.yml
+      $aotArtifacts = GetValueSafelyFrom-Yaml $ciProps.ParsedYml @("extends", "parameters", "AOTTestInputs")
+      if ($aotArtifacts) {
+        $aotArtifacts = $aotArtifacts | Where-Object { $_.ArtifactName -eq $pkgProp.ArtifactName }
+        $pkgProp.CIParameters["AOTTestInputs"] = $aotArtifacts
+      }
+      else
+      {
         $pkgProp.CIParameters["AOTTestInputs"] = @()
       }
 
@@ -92,9 +89,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     # if the package isn't associated with a CI.yml, we still want to set the defaults values for these parameters
     # so that when we are checking the package set for which need to "Build Snippets" or "Check AOT" we won't crash due to the property being null
     else {
-      # Check if the project has IsAotCompatible property set to true even if there's no CI.yml
-      $shouldAotFromProject = ($isAotCompatible -eq 'true')
-      $pkgProp.CIParameters["CheckAOTCompat"] = $shouldAotFromProject
+      $pkgProp.CIParameters["CheckAOTCompat"] = ($isAotCompatible -eq 'true')
       $pkgProp.CIParameters["AOTTestInputs"] = @()
       $pkgProp.CIParameters["BuildSnippets"] = $true
     }
