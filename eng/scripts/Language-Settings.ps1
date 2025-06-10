@@ -18,15 +18,42 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
 
-  $msbuildOutput = dotnet msbuild `
-    /nologo `
-    /t:GetPackageInfo `
-    "$ServiceProj" `
-    /p:ServiceDirectory=$serviceDirectory `
-    /p:AddDevVersion=$shouldAddDevVersion `
-    -tl:off
 
-  foreach ($projectOutput in $msbuildOutput)
+  $psi = [System.Diagnostics.ProcessStartInfo]::new()
+  $psi.FileName               = "dotnet"
+  $psi.Arguments              = "msbuild /nologo /t:GetPackageInfo `"$ServiceProj`" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
+  $psi.RedirectStandardOutput = $true
+  $psi.RedirectStandardError  = $true
+  $psi.UseShellExecute        = $false
+
+  $proc = [System.Diagnostics.Process]::Start($psi)
+  $stdout = $proc.StandardOutput.ReadToEnd() -split "\r?\n"
+  $stderr = $proc.StandardError.ReadToEnd() -split "\r?\n"
+  $proc.WaitForExit()
+
+  if ($stderr) {
+    Write-Host "dotnet msbuild failed with the following error(s):"
+    foreach ($line in $stderr) {
+      if ($line) {
+        # the issue is that the stderr output from the msbuild task
+        # has a vso prefix which is breaking output of the log
+        # so we replace it with a vso[task.logissue] prefix so it's still visible
+        # in the logs but doesn't break the output
+        Write-Host $line.Replace("##vso[task.logissue", "vso[task.logissue")
+      }
+    }
+  }
+
+  # $msbuildOutput = dotnet msbuild `
+  #   /nologo `
+  #   /t:GetPackageInfo `
+  #   "$ServiceProj" `
+  #   /p:ServiceDirectory=$serviceDirectory `
+  #   /p:AddDevVersion=$shouldAddDevVersion `
+  #   /p:EnableCentralPackageVersions=False `
+  #   -tl:off
+
+  foreach ($projectOutput in $stdout)
   {
     if (!$projectOutput) {
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
