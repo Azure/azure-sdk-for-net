@@ -24,17 +24,20 @@ stages:
           matrix:
             Windows:
               Pool: '$(WINDOWSPOOL)'
-              Image: '$(WINDOWSVMIMAGE)'
+              ImageDemand: '$(WindowsImageDemand)'
             Linux:
               Pool: '$(LINUXPOOL)'
-              Image: '$(LINUXVMIMAGE)'
+              ImageDemand: '$(LinuxImageDemand)'
             Mac:
               Pool: '$(MACPOOL)'
-              Image: '$(MACVMIMAGE)'
+              ImageVm: '$(MACVMIMAGE)'
 
         pool:
           name: $(Pool)
-          vmImage: $(Image)
+          ${{ if eq(variables['Pool'], variables['MACPOOL']) }}:
+            vmImage: $(ImageVm)
+          ${{ else }}:
+            demands: $(ImageDemand)
 
         steps:
           - template: /eng/pipelines/templates/steps/run-pester-tests.yml

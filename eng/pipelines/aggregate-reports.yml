@@ -11,7 +11,7 @@ pr:
 
 pool:
   name: $(WINDOWSPOOL)
-  vmImage: $(WINDOWSVMIMAGE)
+  demands: $(WindowsImageDemand)
 
 variables:
   - template: templates/variables/globals.yml

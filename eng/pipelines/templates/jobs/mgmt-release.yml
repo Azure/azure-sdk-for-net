@@ -15,15 +15,13 @@ parameters:
   type: boolean
   default: false
 
-variables:
-  - template: /eng/pipelines/templates/variables/image.yml
 
 jobs:
   - job: Release
     dependsOn: ${{ parameters.DependsOn }}
     pool:
       name: $(WINDOWSPOOL)
-      vmImage: $(WINDOWSVMIMAGE)
+      demands: $(WindowsImageDemand)
 
     steps:
       - checkout: self
