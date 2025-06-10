@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Security.Cryptography;
 
 namespace Azure.Security.KeyVault.Keys.Cryptography
@@ -11,12 +12,14 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     internal class AesKw
     {
-        private const int BlockSizeInBits = 64;
+    private const int BlockSizeInBits = 64;
         private const int BlockSizeInBytes = BlockSizeInBits >> 3;
 
         public static readonly AesKw Aes128Kw = new AesKw("A128KW", 128);
         public static readonly AesKw Aes192Kw = new AesKw("A192KW", 192);
         public static readonly AesKw Aes256Kw = new AesKw("A256KW", 256);
+        public static readonly AesKw CkmAesKeyWrap = new AesKw("CKM_AES_KEY_WRAP", 192);
+        public static readonly AesKw CkmAesKeyWrapPad = new AesKw("CKM_AES_KEY_WRAP_PAD", 256, PaddingMode.PKCS7);
 
         private static readonly byte[] s_defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
 
@@ -24,11 +27,21 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         {
             Name = name;
             KeySizeInBytes = keySize >> 3;
+            Padding = PaddingMode.None; // Default for standard AES Key Wrap
+        }
+
+        private AesKw(string name, int keySize, PaddingMode padding)
+        {
+            Name = name;
+            KeySizeInBytes = keySize >> 3;
+            Padding = padding;
         }
 
         public string Name { get; }
 
         public int KeySizeInBytes { get; }
+
+        public PaddingMode Padding { get; }
 
         private static Aes Create(byte[] key)
         {
@@ -42,7 +55,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return aes;
         }
 
-        public ICryptoTransform CreateEncryptor(byte[] key)
+        private static Aes Create(byte[] key, PaddingMode padding)
+        {
+            var aes = Aes.Create();
+
+            // For padded variants, use CBC mode instead of ECB
+            aes.Mode = padding == PaddingMode.None ? CipherMode.ECB : CipherMode.CBC;
+            aes.Padding = padding;
+            aes.KeySize = key.Length * 8;
+            aes.Key = key;
+
+            return aes;
+        }        public ICryptoTransform CreateEncryptor(byte[] key)
         {
             return CreateEncryptor(key, null);
         }
@@ -55,13 +79,23 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             if (key.Length < KeySizeInBytes)
                 throw new ArgumentOutOfRangeException(nameof(key), $"key must be at least {KeySizeInBytes << 3} bits");
 
+            // For padded variants, delegate to AES-CBC
+            if (Padding != PaddingMode.None)
+            {
+                if (iv != null && iv.Length != 16)
+                    throw new ArgumentException("iv length must be 128 bits for padded mode");
+
+                using var aes = Create(key.Take(KeySizeInBytes), Padding);
+                aes.IV = iv ?? new byte[16]; // Use zero IV if none provided
+                return aes.CreateEncryptor();
+            }
+
+            // Standard AES Key Wrap (RFC 3394)
             if (iv != null && iv.Length != 8)
                 throw new ArgumentException("iv length must be 64 bits");
 
             return new AesKwEncryptor(key.Take(KeySizeInBytes), iv ?? DefaultIv);
-        }
-
-        public ICryptoTransform CreateDecryptor(byte[] key)
+        }        public ICryptoTransform CreateDecryptor(byte[] key)
         {
             return CreateDecryptor(key, null);
         }
@@ -74,6 +108,18 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             if (key.Length < KeySizeInBytes)
                 throw new ArgumentOutOfRangeException(nameof(key), $"key must be at least {KeySizeInBytes << 3} bits");
 
+            // For padded variants, delegate to AES-CBC
+            if (Padding != PaddingMode.None)
+            {
+                if (iv != null && iv.Length != 16)
+                    throw new ArgumentException("iv length must be 128 bits for padded mode");
+
+                using var aes = Create(key.Take(KeySizeInBytes), Padding);
+                aes.IV = iv ?? new byte[16]; // Use zero IV if none provided
+                return aes.CreateDecryptor();
+            }
+
+            // Standard AES Key Wrap (RFC 3394)
             if (iv != null && iv.Length != 8)
                 throw new ArgumentException("iv length must be 64 bits");
 
