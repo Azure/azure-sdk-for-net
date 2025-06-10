@@ -28,7 +28,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual("key", signature.Parameters[0].Name);
             Assert.AreEqual("value", signature.Parameters[1].Name);
             Assert.AreEqual("cancellationToken", signature.Parameters[2].Name);
-            Assert.AreEqual("AddTag", signature.Name);            // verify the method body
+            Assert.AreEqual("AddTag", signature.Name);
+            // verify the method body
             var bodyStatements = addTagMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
