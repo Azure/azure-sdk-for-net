@@ -35,16 +35,6 @@ namespace Azure.Data.AppConfiguration
             {
                 throw new FormatException($"The model {nameof(ConfigurationSetting)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Locked))
-            {
-                writer.WritePropertyName("locked"u8);
-                writer.WriteBooleanValue(Locked.Value);
-            }
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag);
-            }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("key"u8);
@@ -65,10 +55,17 @@ namespace Azure.Data.AppConfiguration
                 writer.WritePropertyName("content_type"u8);
                 writer.WriteStringValue(ContentType);
             }
+            writer.WritePropertyName("etag"u8);
+            SerializationEtag(writer, options);
             if (Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("last_modified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
+            }
+            if (Optional.IsDefined(IsReadOnly))
+            {
+                writer.WritePropertyName("locked"u8);
+                writer.WriteBooleanValue(IsReadOnly.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -128,31 +125,17 @@ namespace Azure.Data.AppConfiguration
             {
                 return null;
             }
-            bool? locked = default;
-            string etag = default;
             string key = default;
             string label = default;
             string value = default;
             string contentType = default;
+            ETag eTag = default;
             DateTimeOffset? lastModified = default;
+            bool? isReadOnly = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("locked"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    locked = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("etag"u8))
-                {
-                    etag = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("key"u8))
                 {
                     key = prop.Value.GetString();
@@ -173,6 +156,11 @@ namespace Azure.Data.AppConfiguration
                     contentType = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("etag"u8))
+                {
+                    DeserializeEtag(prop, ref eTag);
+                    continue;
+                }
                 if (prop.NameEquals("last_modified"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -180,6 +168,15 @@ namespace Azure.Data.AppConfiguration
                         continue;
                     }
                     lastModified = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("locked"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isReadOnly = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("tags"u8))
@@ -209,13 +206,13 @@ namespace Azure.Data.AppConfiguration
                 }
             }
             return new ConfigurationSetting(
-                locked,
-                etag,
                 key,
                 label,
                 value,
                 contentType,
+                eTag,
                 lastModified,
+                isReadOnly,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
         }
