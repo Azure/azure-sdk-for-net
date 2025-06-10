@@ -6,15 +6,15 @@
     "matrix": {
         "Agent": {
             "Ubuntu-24.04_NET8.0": {
-                "OSVmImage": "ubuntu-24.04",
-                "Pool": "azsdk-pool",
+                "OSVmImage": "env:LINUXVMIMAGE",
+                "Pool": "env:LINUXPOOL",
                 "TestTargetFramework": "net8.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
             "Ubuntu-24.04_NET6.0": {
-                "OSVmImage": "ubuntu-24.04",
-                "Pool": "azsdk-pool",
+                "OSVmImage": "env:LINUXVMIMAGE",
+                "Pool": "env:LINUXPOOL",
                 "TestTargetFramework": "net6.0",
                 "AZURE_TEST_AGENT": "UBUNTU_2404_NET60",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
@@ -22,15 +22,15 @@
             },
 
             "windows2022_NET6.0": {
-                "OSVmImage": "windows-2022",
-                "Pool": "azsdk-pool",
+                "OSVmImage": "env:WINDOWSVMIMAGE",
+                "Pool": "env:WINDOWSPOOL",
                 "TestTargetFramework": "net6.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
             "windows2022_NET462": {
-                "OSVmImage": "windows-2022",
-                "Pool": "azsdk-pool",
+                "OSVmImage": "env:WINDOWSVMIMAGE",
+                "Pool": "env:WINDOWSPOOL",
                 "TestTargetFramework": "net462",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
@@ -62,8 +62,8 @@
         {
             "Agent": {
                 "Windows2022": {
-                    "OSVmImage": "windows-2022",
-                    "Pool": "azsdk-pool",
+                    "OSVmImage": "env:WINDOWSVMIMAGE",
+                    "Pool": "env:WINDOWSPOOL",
                     "TestTargetFramework": "net8.0"
                 }
             },
