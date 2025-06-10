@@ -1,0 +1,12 @@
+parameters:
+  CorePerfTestInputs: ''
+
+steps:
+
+- ${{ if eq(parameters.CorePerfTestInputs, 'true') }}:
+  - task: Powershell@2
+    displayName: Run Azure.Core Perf Benchmarks and compare Nuget and Local builds.
+    inputs:
+      targetType: filepath
+      filePath: $(Build.SourcesDirectory)/eng/sdk/core/Azure.Core/perf/Run-Compare-Benchmarks.ps1
+      workingDirectory: $(Build.SourcesDirectory)/eng/sdk/core/Azure.Core/perf

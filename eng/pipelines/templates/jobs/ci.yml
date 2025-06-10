@@ -48,6 +48,9 @@ parameters:
   - name: ExcludePaths
     type: object
     default: []
+  - name: CorePerfTestInputs
+    type: boolean
+    default: false
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
