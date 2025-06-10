@@ -110,7 +110,7 @@
     <PackageReference Update="Azure.AI.OpenAI" Version="2.0.0" />
     <PackageReference Update="Azure.AI.Projects" Version="1.0.0-beta.2" />
     <PackageReference Update="Azure.Communication.Identity" Version="1.3.1" />
-    <PackageReference Update="Azure.Communication.Common" Version="1.3.0" />
+    <PackageReference Update="Azure.Communication.Common" Version="1.4.0" />
     <PackageReference Update="Azure.Core" Version="1.46.2" />
     <PackageReference Update="Azure.Core.Amqp" Version="1.3.1" />
     <PackageReference Update="Azure.Core.Experimental" Version="0.1.0-preview.36" />
@@ -442,7 +442,7 @@
 
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20250501.1</TestProxyVersion>
-    <UnbrandedGeneratorVersion>1.0.0-alpha.20250609.3</UnbrandedGeneratorVersion>
+    <UnbrandedGeneratorVersion>1.0.0-alpha.20250610.1</UnbrandedGeneratorVersion>
     <AzureGeneratorVersion>1.0.0-alpha.20250527.2</AzureGeneratorVersion>
   </PropertyGroup>
 </Project>

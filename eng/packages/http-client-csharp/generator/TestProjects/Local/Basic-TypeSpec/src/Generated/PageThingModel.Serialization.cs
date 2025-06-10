@@ -13,7 +13,7 @@ using Azure;
 
 namespace BasicTypeSpec
 {
-    /// <summary></summary>
+    /// <summary> The PageThingModel. </summary>
     internal partial class PageThingModel : IJsonModel<PageThingModel>
     {
         /// <summary> Initializes a new instance of <see cref="PageThingModel"/> for deserialization. </summary>
