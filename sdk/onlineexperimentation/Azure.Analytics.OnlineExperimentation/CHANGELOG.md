@@ -1,11 +1,7 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0-beta.1 (2025-06-10)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Initial release of Azure Online Experimentation client library for .NET, supports service version `2025-05-31-preview`.
