@@ -88,6 +88,30 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
+        #endregion
+        #region Snippet:AgentsFilesSearchExample_RunSteps_Reference
+        await foreach (RunStep runStep in client.Runs.GetRunStepsAsync(
+            runId: run.Id,
+            threadId: thread.Id,
+            include: [RunAdditionalFieldList.FileSearchContents]
+            ))
+        {
+            if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+            {
+                foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                {
+                    if (toolCall is RunStepFileSearchToolCall fileSearh)
+                    {
+                        Console.WriteLine($"The search tool have found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                        Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
+                        Console.WriteLine("===============================================================");
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Snippet:AgentsFilesSearchExample_ShowMessages
         List<PersistentThreadMessage> messages = await client.Messages.GetMessagesAsync(
             threadId: thread.Id,
             order: ListSortOrder.Ascending
@@ -173,6 +197,29 @@ public partial class Sample_PersistentAgents_FileSearch : SamplesBase<AIAgentsTe
             RunStatus.Completed,
             run.Status,
             run.LastError?.Message);
+        #endregion
+        #region Snippet:AgentsFilesSearchExample_RunSteps_Reference_Sync
+        foreach (RunStep runStep in client.Runs.GetRunSteps(
+            runId: run.Id,
+            threadId: thread.Id,
+            include: [RunAdditionalFieldList.FileSearchContents]
+            ))
+        {
+            if (runStep.StepDetails is RunStepToolCallDetails toolCallDetails)
+            {
+                foreach (RunStepToolCall toolCall in toolCallDetails.ToolCalls)
+                {
+                    if (toolCall is RunStepFileSearchToolCall fileSearh)
+                    {
+                        Console.WriteLine($"The search tool have found the next relevant content in the file {fileSearh.FileSearch.Results[0].FileName}:");
+                        Console.WriteLine(fileSearh.FileSearch.Results[0].Content[0].Text);
+                        Console.WriteLine("===============================================================");
+                    }
+                }
+            }
+        }
+        #endregion
+        #region Snippet:AgentsFilesSearchExample_ShowMessages_Sync
         Pageable<PersistentThreadMessage> messages = client.Messages.GetMessages(
             threadId: thread.Id,
             order: ListSortOrder.Ascending

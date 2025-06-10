@@ -921,8 +921,6 @@ namespace Azure.AI.Agents.Persistent.Tests
             Assert.GreaterOrEqual(messages.Count, 1);
         }
 
-        // TODO: Check the service and enable this test.
-        [Ignore("There is a regression on the service side and test will fail. 2025-04-03")]
         [RecordedTest]
         [TestCase(true, true)]
         [TestCase(true, false)]
