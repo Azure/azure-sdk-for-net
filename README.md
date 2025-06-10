@@ -60,8 +60,6 @@ The software may collect information about you and your use of the software and 
 
 Telemetry collection is on by default.
 
-To opt out, you can disable telemetry by setting the `IsTelemetryEnabled` property to `false` in the client's `DiagnosticsOptions`. This will prevent the Azure SDK from adding telemetry information to the `User-Agent` header for all requests made by the client.
-
 > NOTE: `HttpClient` may set default user agent headers as part of the .NET platform behavior.  This value does not contain any Azure SDK telemetry information.
 
 You can disable telemetry when creating a client by setting the `IsTelemetryEnabled` property in the diagnostics options:
