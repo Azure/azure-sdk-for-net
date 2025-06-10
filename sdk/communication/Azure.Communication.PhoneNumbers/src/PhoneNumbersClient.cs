@@ -557,11 +557,16 @@ namespace Azure.Communication.PhoneNumbers
             return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberCountry.DeserializePhoneNumberCountry, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableCountries", "countries", "nextLink", cancellationToken);
         }
 
-        /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
-        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="administrativeDivision"> The administrative division within the country within which to list localities. This is also known as the state or province. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers.
+        /// </summary>
+        /// <param name="twoLetterIsoCountryName">The ISO 3166-2 country code, e.g. US.</param>
+        /// <param name="administrativeDivision">The administrative division within the country within which to list localities. This is also known as the state or province.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(
+            string twoLetterIsoCountryName,
+            string administrativeDivision = null,
+            CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint)
             {
@@ -569,7 +574,13 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Start();
                 try
                 {
-                    return RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, null, pageSizeHint, administrativeDivision, null);
+                    return RestClient.CreateListAvailableLocalitiesRequest(
+                        twoLetterIsoCountryName,
+                        null,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        null);
                 }
                 catch (Exception ex)
                 {
@@ -585,7 +596,14 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
 
-                    return RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, pageSizeHint, administrativeDivision, null);
+                    return RestClient.CreateListAvailableLocalitiesNextPageRequest(
+                        nextLink,
+                        twoLetterIsoCountryName,
+                        skip,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        null);
                 }
                 catch (Exception ex)
                 {
@@ -593,14 +611,28 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PhoneNumberLocality.DeserializePhoneNumberLocality, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
+            return PageableHelpers.CreateAsyncPageable(
+                FirstPageRequest,
+                NextPageRequest,
+                PhoneNumberLocality.DeserializePhoneNumberLocality,
+                _clientDiagnostics,
+                _pipeline,
+                "InternalPhoneNumbersClient.ListAvailableLocalities",
+                "phoneNumberLocalities",
+                "nextLink",
+                cancellationToken);
         }
 
-        /// <summary> Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers. </summary>
-        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
-        /// <param name="administrativeDivision"> The administrative division within the country within which to list localities. This is also known as the state or province. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(string twoLetterIsoCountryName, string administrativeDivision = null, CancellationToken cancellationToken = default)
+        /// <summary>
+        /// Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers.
+        /// </summary>
+        /// <param name="twoLetterIsoCountryName">The ISO 3166-2 country code, e.g. US.</param>
+        /// <param name="administrativeDivision">The administrative division within the country within which to list localities. This is also known as the state or province.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(
+            string twoLetterIsoCountryName,
+            string administrativeDivision = null,
+            CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint)
             {
@@ -608,7 +640,13 @@ namespace Azure.Communication.PhoneNumbers
                 scope.Start();
                 try
                 {
-                    return RestClient.CreateListAvailableLocalitiesRequest(twoLetterIsoCountryName, null, pageSizeHint, administrativeDivision, null);
+                    return RestClient.CreateListAvailableLocalitiesRequest(
+                        twoLetterIsoCountryName,
+                        null,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        null);
                 }
                 catch (Exception ex)
                 {
@@ -624,7 +662,14 @@ namespace Azure.Communication.PhoneNumbers
                 {
                     int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
 
-                    return RestClient.CreateListAvailableLocalitiesNextPageRequest(nextLink, twoLetterIsoCountryName, skip, pageSizeHint, administrativeDivision, null);
+                    return RestClient.CreateListAvailableLocalitiesNextPageRequest(
+                        nextLink,
+                        twoLetterIsoCountryName,
+                        skip,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        null);
                 }
                 catch (Exception ex)
                 {
@@ -632,7 +677,152 @@ namespace Azure.Communication.PhoneNumbers
                     throw;
                 }
             }
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PhoneNumberLocality.DeserializePhoneNumberLocality, _clientDiagnostics, _pipeline, "InternalPhoneNumbersClient.ListAvailableLocalities", "phoneNumberLocalities", "nextLink", cancellationToken);
+            return PageableHelpers.CreatePageable(
+                FirstPageRequest,
+                NextPageRequest,
+                PhoneNumberLocality.DeserializePhoneNumberLocality,
+                _clientDiagnostics,
+                _pipeline,
+                "InternalPhoneNumbersClient.ListAvailableLocalities",
+                "phoneNumberLocalities",
+                "nextLink",
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers.
+        /// </summary>
+        /// <param name="twoLetterIsoCountryName">The ISO 3166-2 country code, e.g. US.</param>
+        /// <param name="phoneNumberType">Filter by numberType, e.g. Geographic, TollFree, Mobile.</param>
+        /// <param name="administrativeDivision">The administrative division within the country within which to list localities. This is also known as the state or province.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual AsyncPageable<PhoneNumberLocality> GetAvailableLocalitiesAsync(
+            string twoLetterIsoCountryName,
+            PhoneNumberType phoneNumberType,
+            string administrativeDivision = null,
+            CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
+                scope.Start();
+                try
+                {
+                    return RestClient.CreateListAvailableLocalitiesRequest(
+                        twoLetterIsoCountryName,
+                        null,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        phoneNumberType);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
+                scope.Start();
+                try
+                {
+                    int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
+
+                    return RestClient.CreateListAvailableLocalitiesNextPageRequest(
+                        nextLink,
+                        twoLetterIsoCountryName,
+                        skip,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        phoneNumberType);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreateAsyncPageable(
+                FirstPageRequest,
+                NextPageRequest,
+                PhoneNumberLocality.DeserializePhoneNumberLocality,
+                _clientDiagnostics,
+                _pipeline,
+                "InternalPhoneNumbersClient.ListAvailableLocalities",
+                "phoneNumberLocalities",
+                "nextLink",
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Lists the available localities (e.g. city or town) in the given country from which to purchase phone numbers.
+        /// </summary>
+        /// <param name="twoLetterIsoCountryName">The ISO 3166-2 country code, e.g. US.</param>
+        /// <param name="phoneNumberType">Filter by numberType, e.g. Geographic, TollFree, Mobile.</param>
+        /// <param name="administrativeDivision">The administrative division within the country within which to list localities. This is also known as the state or province.</param>
+        /// <param name="cancellationToken">The cancellation token to use.</param>
+        public virtual Pageable<PhoneNumberLocality> GetAvailableLocalities(
+            string twoLetterIsoCountryName,
+            PhoneNumberType phoneNumberType,
+            string administrativeDivision = null,
+            CancellationToken cancellationToken = default)
+        {
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
+                scope.Start();
+                try
+                {
+                    return RestClient.CreateListAvailableLocalitiesRequest(
+                        twoLetterIsoCountryName,
+                        null,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        phoneNumberType);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                using var scope = _clientDiagnostics.CreateScope($"{nameof(PhoneNumbersClient)}.{nameof(GetAvailableLocalities)}");
+                scope.Start();
+                try
+                {
+                    int skip = int.Parse(HttpUtility.ParseQueryString(nextLink).Get("skip"));
+
+                    return RestClient.CreateListAvailableLocalitiesNextPageRequest(
+                        nextLink,
+                        twoLetterIsoCountryName,
+                        skip,
+                        pageSizeHint,
+                        administrativeDivision,
+                        null,
+                        phoneNumberType);
+                }
+                catch (Exception ex)
+                {
+                    scope.Failed(ex);
+                    throw;
+                }
+            }
+            return PageableHelpers.CreatePageable(
+                FirstPageRequest,
+                NextPageRequest,
+                PhoneNumberLocality.DeserializePhoneNumberLocality,
+                _clientDiagnostics,
+                _pipeline,
+                "InternalPhoneNumbersClient.ListAvailableLocalities",
+                "phoneNumberLocalities",
+                "nextLink",
+                cancellationToken);
         }
 
         /// <summary> Lists the available area codes within a given country and locality. </summary>
