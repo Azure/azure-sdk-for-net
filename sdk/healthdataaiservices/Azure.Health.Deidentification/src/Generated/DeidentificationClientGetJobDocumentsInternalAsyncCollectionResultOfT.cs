@@ -31,9 +31,10 @@ namespace Azure.Health.Deidentification
         /// <param name="continuationToken"> Token to continue a previous query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="jobName"/> is an empty string, and was expected to be non-empty. </exception>
         public DeidentificationClientGetJobDocumentsInternalAsyncCollectionResultOfT(DeidentificationClient client, Uri nextPage, string jobName, int? maxpagesize, string continuationToken, RequestContext context) : base(context?.CancellationToken ?? default)
         {
-            Argument.AssertNotNull(jobName, nameof(jobName));
+            Argument.AssertNotNullOrEmpty(jobName, nameof(jobName));
 
             _client = client;
             _nextPage = nextPage;

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Summary metrics of a job. </summary>
     public partial class DeidentificationJobSummary : IJsonModel<DeidentificationJobSummary>
     {
         /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/> for deserialization. </summary>

@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Customizations options to override default service behaviors for synchronous usage. </summary>
     public partial class DeidentificationCustomizationOptions : IJsonModel<DeidentificationCustomizationOptions>
     {
         /// <param name="writer"> The JSON writer. </param>

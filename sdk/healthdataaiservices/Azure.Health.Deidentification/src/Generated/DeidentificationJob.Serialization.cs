@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> A job containing a batch of documents to de-identify. </summary>
     public partial class DeidentificationJob : IJsonModel<DeidentificationJob>
     {
         /// <summary> Initializes a new instance of <see cref="DeidentificationJob"/> for deserialization. </summary>
@@ -287,7 +287,7 @@ namespace Azure.Health.Deidentification
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(deidentificationJob, ModelSerializationExtensions.WireOptions);
             return content;
         }

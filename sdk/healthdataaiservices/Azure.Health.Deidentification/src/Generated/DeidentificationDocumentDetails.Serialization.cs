@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Details of a single document in a job. </summary>
     public partial class DeidentificationDocumentDetails : IJsonModel<DeidentificationDocumentDetails>
     {
         /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentDetails"/> for deserialization. </summary>

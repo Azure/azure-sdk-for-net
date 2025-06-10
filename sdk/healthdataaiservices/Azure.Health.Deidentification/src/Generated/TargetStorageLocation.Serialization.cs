@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Storage location. </summary>
     public partial class TargetStorageLocation : IJsonModel<TargetStorageLocation>
     {
         /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/> for deserialization. </summary>

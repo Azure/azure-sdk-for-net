@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> String index encoding model. </summary>
     public partial class StringIndex : IJsonModel<StringIndex>
     {
         /// <summary> Initializes a new instance of <see cref="StringIndex"/> for deserialization. </summary>

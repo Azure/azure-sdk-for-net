@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Response body for de-identification operation. </summary>
     public partial class DeidentificationResult : IJsonModel<DeidentificationResult>
     {
         /// <param name="writer"> The JSON writer. </param>

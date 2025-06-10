@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Result of the "Tag" operation. </summary>
     public partial class PhiTaggerResult : IJsonModel<PhiTaggerResult>
     {
         /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/> for deserialization. </summary>

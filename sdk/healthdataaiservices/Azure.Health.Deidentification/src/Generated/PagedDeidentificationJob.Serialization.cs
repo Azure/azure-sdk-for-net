@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary></summary>
+    /// <summary> Paged collection of DeidentificationJob items. </summary>
     internal partial class PagedDeidentificationJob : IJsonModel<PagedDeidentificationJob>
     {
         /// <summary> Initializes a new instance of <see cref="PagedDeidentificationJob"/> for deserialization. </summary>
