@@ -34,7 +34,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     }
 
     if ($projectOutput -match ' : error : ') {
-      LogError $projectOutput
+      Write-Host $projectOutput
       continue
     }
 
