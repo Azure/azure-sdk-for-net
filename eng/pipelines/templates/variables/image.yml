@@ -10,8 +10,6 @@ variables:
 
   - name: LINUXVMIMAGE
     value: ubuntu-24.04
-  - name: LINUXNEXTVMIMAGE
-    value: ubuntu-22.04
   - name: WINDOWSVMIMAGE
     value: windows-2022
   - name: MACVMIMAGE
