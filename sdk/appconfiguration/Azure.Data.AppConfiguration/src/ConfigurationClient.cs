@@ -45,6 +45,8 @@ namespace Azure.Data.AppConfiguration
     [CodeGenSuppress("GetSnapshotsAsync", typeof(string), typeof(string), typeof(IEnumerable<>), typeof(IEnumerable<>), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CheckSnapshots", typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CheckSnapshotsAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSnapshot", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(ConfigurationSnapshot), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("CreateSnapshotAsync", typeof(string), typeof(CreateSnapshotRequestContentType), typeof(ConfigurationSnapshot), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationDetails", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetOperationDetailsAsync", typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CreateReadOnlyLock", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]

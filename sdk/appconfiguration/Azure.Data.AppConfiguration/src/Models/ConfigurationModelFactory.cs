@@ -3,15 +3,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
     // - Renamed.
+    // - Suppress ConfigurationSetting in favor of custom method.
     /// <summary>
     /// Configuration Setting model factory that enables mocking for the AppConfiguration client library.
     /// </summary>
-    [CodeGenType("AppConfigurationModelFactory")]
+    [CodeGenType("AzureDataAppConfigurationModelFactory")]
     [CodeGenSuppress("ConfigurationSetting", typeof(string), typeof(string), typeof(string), typeof(string), typeof(ETag), typeof(DateTimeOffset?), typeof(bool?), typeof(IDictionary<string, string>))]
     public static partial class ConfigurationModelFactory
     {

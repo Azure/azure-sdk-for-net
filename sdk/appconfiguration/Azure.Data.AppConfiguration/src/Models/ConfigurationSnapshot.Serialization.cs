@@ -2,12 +2,18 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
+    // CUSTOM:
+    // - Add custom serialization hooks for ETag & RetentionPeriod.
+    // - Add custom deserialization method for MRW.
+    [CodeGenSerialization(nameof(ETag), SerializationValueHook = nameof(SerializeEtag))]
+    [CodeGenSerialization(nameof(RetentionPeriod), SerializationValueHook = nameof(SerializeRetentionPeriod))]
     public partial class ConfigurationSnapshot : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -192,6 +198,22 @@ namespace Azure.Data.AppConfiguration
             var content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(snapshot);
             return content;
+        }
+
+        private void SerializeEtag(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+           => writer.WriteString("etag", ETag.ToString());
+
+        private void SerializeRetentionPeriod(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+          => writer.WriteNumberValue(RetentionPeriod.Value.TotalSeconds);
+
+        internal static ConfigurationSnapshot DeserializeConfigurationSnapshot(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+
+            return DeserializeSnapshot(element);
         }
     }
 }
