@@ -36,7 +36,7 @@
       "Agent": {
         "windows2022": {
           "OSVmImage": "windows-2022",
-          "Pool": "azsdk-pool-mms-win-2022-general",
+          "Pool": "azsdk-pool",
           "TestTargetFramework": "netcoreapp3.1"
         }
       },

@@ -22,7 +22,7 @@ stages:
         strategy:
           matrix:
             Windows:
-              Pool: 'azsdk-pool-mms-win-2022-general'
+              Pool: 'azsdk-pool'
               Image: 'windows-2022'
             Linux:
               Pool: 'azsdk-pool'

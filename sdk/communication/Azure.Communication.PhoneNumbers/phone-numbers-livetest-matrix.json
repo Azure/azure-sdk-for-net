@@ -23,14 +23,14 @@
 
             "windows2022_NET6.0": {
                 "OSVmImage": "windows-2022",
-                "Pool": "azsdk-pool-mms-win-2022-general",
+                "Pool": "azsdk-pool",
                 "TestTargetFramework": "net6.0",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
             "windows2022_NET462": {
                 "OSVmImage": "windows-2022",
-                "Pool": "azsdk-pool-mms-win-2022-general",
+                "Pool": "azsdk-pool",
                 "TestTargetFramework": "net462",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "TRUE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
@@ -63,7 +63,7 @@
             "Agent": {
                 "Windows2022": {
                     "OSVmImage": "windows-2022",
-                    "Pool": "azsdk-pool-mms-win-2022-general",
+                    "Pool": "azsdk-pool",
                     "TestTargetFramework": "net8.0"
                 }
             },
