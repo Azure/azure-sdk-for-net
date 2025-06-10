@@ -66,7 +66,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             aes.Key = key;
 
             return aes;
-        }        public ICryptoTransform CreateEncryptor(byte[] key)
+        }
+
+        public ICryptoTransform CreateEncryptor(byte[] key)
         {
             return CreateEncryptor(key, null);
         }
