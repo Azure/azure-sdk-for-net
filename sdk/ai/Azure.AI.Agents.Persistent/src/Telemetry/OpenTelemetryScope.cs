@@ -70,14 +70,12 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         private readonly Activity _activity;
         private readonly Stopwatch _duration;
         private readonly TagList _commonTags;
-        private static bool s_traceContent = true;
-        private static bool s_enableTelemetry = true;
-        //private static bool s_traceContent = AppContextSwitchHelper.GetConfigValue(
-        //    TraceContentsSwitch,
-        //    TraceContentsEnvironmentVariable);
-        //private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
-        //    EnableOpenTelemetrySwitch,
-        //    EnableOpenTelemetryEnvironmentVariable);
+        private static bool s_traceContent = AppContextSwitchHelper.GetConfigValue(
+            TraceContentsSwitch,
+            TraceContentsEnvironmentVariable);
+        private static bool s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
+            EnableOpenTelemetrySwitch,
+            EnableOpenTelemetryEnvironmentVariable);
         private RecordedResponse _response;
         private string _errorType;
         private Exception _exception;
@@ -94,14 +92,21 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateAgent(RequestContent content, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
-            // Deserialize the RequestContent into a CreateAgentRequest object
+
+            // We have to deserialize CreateAgent reques before creating the scope since
+            // agent name is part of that span name.
             var createAgentRequest = DeserializeCreateAgentRequest(content);
 
-            var scope = new OpenTelemetryScope(OperationNameValueCreateAgent, endpoint);
+            string operationName = OperationNameValueCreateAgent + " " + createAgentRequest.Name;
+            var scope = new OpenTelemetryScope(operationName, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
 
             scope.SetTagMaybe(GenAiRequestModelKey, createAgentRequest.Model);
             scope.SetTagMaybe(GenAiAgentNameKey, createAgentRequest.Name);
@@ -128,13 +133,16 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateThread(RequestContent content, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
-            // Deserialize the RequestContent into a CreateThreadRequest object
-            var createThreadRequest = DeserializeCreateThreadRequest(content);
+
             var scope = new OpenTelemetryScope(OperationNameValueCreateThread, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
 
             return scope;
         }
@@ -148,7 +156,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateMessage(string threadId, RequestContent content, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
+            {
+                return null;
+            }
+
+            var scope = new OpenTelemetryScope(OperationNameValueCreateMessage, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
             {
                 return null;
             }
@@ -157,25 +171,18 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             object evnt = null;
             if (s_traceContent)
             {
-                try
-                {
-                    // Attempt to deserialize as a string
-                    string message = createMessageRequest.Content.ToString().Trim('"');
-                    evnt = new { content = message, role = createMessageRequest.Role.ToString() };
-                }
-                catch
-                {
-                }
+                string message = createMessageRequest.Content.ToString().Trim('"');
+                evnt = new { content = message, role = createMessageRequest.Role.ToString() };
             }
             else
             {
                 evnt = new { role = createMessageRequest.Role.ToString() };
             }
 
-            var scope = new OpenTelemetryScope(OperationNameValueCreateMessage, endpoint);
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             ActivityTagsCollection messageTags = new() {
                    { GenAiSystemKey, GenAiSystemValue},
+                   { GenAiThreadIdKey, threadId},
                    { GenAiEventContent, evnt != null ? JsonSerializer.Serialize(evnt) : null  }
             };
             scope._activity?.AddEvent(
@@ -193,7 +200,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateRun(string threadId, RequestContent content, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
@@ -201,6 +208,11 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             var createRunRequest = DeserializeCreateRunRequest(content);
 
             var scope = new OpenTelemetryScope(OperationNameValueStartThreadRun, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             var agentId = createRunRequest.AssistantId;
             scope.SetTagMaybe(GenAiAgentIdKey, agentId);
@@ -217,12 +229,17 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateRunStreaming(string threadId, string agentId, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
 
             var scope = new OpenTelemetryScope(OperationNameValueProcessThreadRun, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             scope.SetTagMaybe(GenAiAgentIdKey, agentId);
 
@@ -230,14 +247,14 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         }
 
         /// <summary>
-        /// Create the instance of OpenTelemetryScope for message creation.
+        /// Create the instance of OpenTelemetryScope for run creation.
         /// This constructor logs request and starts the execution timer.
         /// </summary>
         /// <param name="content">The request options used in the call.</param>
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartCreateRun(RequestContent content, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
@@ -245,8 +262,39 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             var createThreadAndRunRequest = DeserializeCreateThreadAndRunRequest(content);
 
             var scope = new OpenTelemetryScope(OperationNameValueStartThreadRun, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
             var agentId = createThreadAndRunRequest.AssistantId;
             scope.SetTagMaybe(GenAiAgentIdKey, agentId);
+
+            return scope;
+        }
+
+        /// <summary>
+        /// Create the instance of OpenTelemetryScope for getting a rung.
+        /// This constructor logs request and starts the execution timer.
+        /// </summary>
+        /// <param name="runId">The id of the run that is retrieved.</param>
+        /// <param name="threadId">The id of the thread that is processed by the run.</param>
+        /// <param name="endpoint">The endpoint being called.</param>
+        public static OpenTelemetryScope StartGetRun(string runId, string threadId, Uri endpoint)
+        {
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
+            {
+                return null;
+            }
+
+            var scope = new OpenTelemetryScope(OperationNameValueGetThreadRun, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
+            scope.SetTagMaybe(GenAiRunIdKey, runId);
+            scope.SetTagMaybe(GenAiThreadIdKey, threadId);
 
             return scope;
         }
@@ -260,12 +308,17 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartListMessages(string threadId, string runId, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
 
             var scope = new OpenTelemetryScope(OperationNameValueListMessage, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             scope.SetTagMaybe(GenAiRunIdKey, runId);
 
@@ -282,7 +335,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartSubmitToolOutputs(string threadId, string runId, RequestContent content, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
@@ -290,6 +343,11 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             var submitToolOutputsRequest = DeserializeSubmitToolOutputsToRunRequest(content);
 
             var scope = new OpenTelemetryScope(OperationNameValueSubmitToolOutputs, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             scope.SetTagMaybe(GenAiRunIdKey, runId);
 
@@ -314,11 +372,17 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// <param name="endpoint">The endpoint being called.</param>
         public static OpenTelemetryScope StartListRunSteps(string threadId, string runId, Uri endpoint)
         {
-            if (!s_enableTelemetry)
+            if (!s_enableTelemetry || !(s_agentSource.HasListeners() || s_duration.Enabled))
             {
                 return null;
             }
+
             var scope = new OpenTelemetryScope(OperationNameValueListRunSteps, endpoint);
+            if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
+            {
+                return null;
+            }
+
             scope.SetTagMaybe(GenAiThreadIdKey, threadId);
             scope.SetTagMaybe(GenAiRunIdKey, runId);
 
@@ -335,18 +399,6 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             // Parse the JSON into a CreateAgentRequest object
             using var document = JsonDocument.Parse(stream);
             return CreateAgentRequest.DeserializeCreateAgentRequest(document.RootElement);
-        }
-
-        private static CreateThreadRequest DeserializeCreateThreadRequest(RequestContent content)
-        {
-            // Convert RequestContent to a JSON string
-            using var stream = new MemoryStream();
-            content.WriteTo(stream, CancellationToken.None);
-            stream.Position = 0;
-
-            // Parse the JSON into a CreateThreadRequest object
-            using var document = JsonDocument.Parse(stream);
-            return CreateThreadRequest.DeserializeCreateThreadRequest(document.RootElement);
         }
 
         private static CreateMessageRequest DeserializeCreateMessageRequest(RequestContent content)
@@ -465,6 +517,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 _response = new RecordedResponse(s_traceContent);
                 var messageResponse = Response.FromValue(PersistentThreadMessage.FromResponse(response), response);
                 _response.MessageId = messageResponse.Value.Id;
+                _response.ThreadId = messageResponse.Value.ThreadId;
             }
         }
 
@@ -481,24 +534,38 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             }
         }
 
+        public void RecordGetRunResponse(Response response)
+        {
+            if (s_enableTelemetry)
+            {
+                _response = new RecordedResponse(s_traceContent);
+                var runResponse = Response.FromValue(ThreadRun.FromResponse(response), response);
+                _response.RunId = runResponse.Value.Id;
+                _response.AgentId = runResponse.Value.AssistantId;
+                _response.Model = runResponse.Value.Model;
+                _response.RunStatus = runResponse.Value.Status.ToString();
+            }
+        }
+
         public void RecordListMessagesResponse(Response response)
         {
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                //Response<InternalOpenAIPageableListOfThreadMessage> r1 = Response.FromValue(InternalOpenAIPageableListOfThreadMessage.FromResponse(response), response);
-                //Response<PageableList<ThreadMessage>> r2 = Response.FromValue(PageableList<ThreadMessage>.Create(r1.Value), r1.GetRawResponse());
-                //_response.Messages = r2;
             }
         }
 
-        public void RecordSubmitToolOutputsResponse(Response response)
+        public void RecordSubmitToolOutputsResponse(Response response, bool stream = false)
         {
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                ThreadRun run = Response.FromValue(ThreadRun.FromResponse(response), response);
-                _response.Model = run.Model;
+                if (!stream)
+                {
+                    ThreadRun run = Response.FromValue(ThreadRun.FromResponse(response), response);
+                    _response.Model = run.Model;
+                    _response.Stream = stream;
+                }
             }
         }
 
@@ -507,9 +574,6 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             if (s_enableTelemetry)
             {
                 _response = new RecordedResponse(s_traceContent);
-                //Response<Pageable> r1 = Response.FromValue(Pageable.FromResponse(response), response);
-                //Response<PageableList<RunStep>> r2 = Response.FromValue(PageableList<RunStep>.Create(r1.Value), r1.GetRawResponse());
-                //_response.RunSteps = r2;
             }
         }
 
@@ -636,23 +700,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 return;
 
             if (_response == null)
+            {
                 _response = new RecordedResponse(s_traceContent);
+                _response.Stream = true;
+            }
 
             switch (update)
             {
-                //case MessageContentUpdate contentUpdate:
-                //    if (_currentStreamingMessage == null)
-                //        _currentStreamingMessage = new StreamingMessage();
-
-                //    if (!string.IsNullOrEmpty(contentUpdate.Text))
-                //        _currentStreamingMessage.MessageText.Append(contentUpdate.Text);
-
-                //    // Optionally set role/messageId if not already set
-                //    if (string.IsNullOrEmpty(_currentStreamingMessage.Role) && contentUpdate.Role.HasValue)
-                //        _currentStreamingMessage.Role = contentUpdate.Role.Value.ToString();
-                //    if (string.IsNullOrEmpty(_currentStreamingMessage.MessageId))
-                //        _currentStreamingMessage.MessageId = contentUpdate.MessageId;
-                //    break;
                 case RunUpdate runUpdate:
                     var threadRun = runUpdate.Value;
                     _response.LastRun = threadRun;
@@ -805,41 +859,16 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             {
                 foreach (StreamingMessage streamingMessage in _response.StreamingMessages)
                 {
+                    SetTagMaybe(GenAiMessageIdKey, streamingMessage.Message.Id);
                     RecordThreadMessageEventAttributes(streamingMessage.Message, streamingMessage.RunStep);
                 }
             }
-
-            //if (_response.StreamingMessages != null)
-            //{
-            //    foreach (StreamingMessage streamingMessage in _response.StreamingMessages)
-            //    {
-            //        var jsonDocument = JsonDocument.Parse($@"
-            //            {{
-            //                ""id"": ""{streamingMessage.MessageId}"",
-            //                ""thread_id"": ""{streamingMessage.ThreadId}"",
-            //                ""assistant_id"": ""{streamingMessage.AgentId}"",
-            //                ""run_id"": ""{streamingMessage.RunId}"",
-            //                ""role"": ""{streamingMessage.Role}"",
-            //                ""contentItems"": [
-            //                    {{
-            //                        ""type"": ""text"",
-            //                        ""text"": {{
-            //                            ""value"": {JsonSerializer.Serialize(streamingMessage.MessageText.ToString())}
-            //                        }}
-            //                    }}
-            //                ]
-            //            }}").RootElement;
-            //        // With the following code:
-            //        var threadMessage = PersistentThreadMessage.DeserializePersistentThreadMessage(jsonDocument);
-            //        RecordThreadMessageEventAttributes(threadMessage);
-            //    }
-            //}
 
             if (_response.RunSteps != null)
             {
                 foreach (RunStep runStep in _response.RunSteps)
                 {
-                    RecordRunStepEventAttributes(runStep);
+                    RecordRunStepEventAttributes(runStep, _response.Stream);
                 }
             }
         }
@@ -934,7 +963,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 attributes[GenAiRunIdKey] = threadMessage.RunId;
             }
 
-            attributes[GenAiMessageStatusKey] = threadMessage.Status;
+            attributes[GenAiMessageStatusKey] = threadMessage.Status.ToString();
 
             if (!string.IsNullOrEmpty(threadMessage.Id))
             {
@@ -963,20 +992,25 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         /// Records a run step event in the OpenTelemetry span.
         /// </summary>
         /// <param name="runStep">The run step containing details about the event to be recorded.</param>
-        private void RecordRunStepEventAttributes(RunStep runStep)
+        /// <param name="stream">Is this run step recorded as part of streaming operation.</param>
+        private void RecordRunStepEventAttributes(RunStep runStep, bool stream)
         {
             if (runStep == null)
             {
                 return;
             }
 
-            // Determine the event name based on the run step type
-            string eventName = runStep.Type.ToString().ToLower() switch
-            {
-                "message_creation" => "gen_ai.run_step.message_creation",
-                "tool_calls" => "gen_ai.run_step.tool_calls",
-                _ => $"gen_ai.run_step.{runStep.Type.ToString().ToLower()}"
-            };
+            // Determine the event name based on the run step type and stream flag
+            string runStepType = runStep.Type.ToString().ToLower();
+            string eventName =
+                (stream && runStepType == "tool_calls")
+                ? "gen_ai.tool.message"
+                : runStepType switch
+                {
+                    "message_creation" => "gen_ai.run_step.message_creation",
+                    "tool_calls" => "gen_ai.run_step.tool_calls",
+                    _ => $"gen_ai.run_step.{runStepType}"
+                };
 
             // Build the attributes for the event
             var attributes = new Dictionary<string, object>

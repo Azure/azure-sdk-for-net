@@ -65,10 +65,10 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateRunAsync(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include = null, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateRun(threadId, content, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateRun(threadId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateRunRequest(threadId, content, include, context);
@@ -112,10 +112,10 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateRun(string threadId, RequestContent content, IEnumerable<RunAdditionalFieldList> include = null, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateRun(threadId, content, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateRun(threadId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateRunRequest(threadId, content, include, context);
@@ -154,6 +154,90 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Task<Response<ThreadRun>> CreateRunAsync(PersistentAgentThread thread, PersistentAgent agent, CancellationToken cancellationToken = default)
              => CreateRunAsync(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+
+        /// <summary>
+        /// [Protocol Method] Gets an existing run from an existing thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRunAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetRunAsync(string threadId, string runId, RequestContext context)
+        {
+            using var scope = OpenTelemetryScope.StartCreateRun(threadId, runId, _endpoint);
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            try
+            {
+                using HttpMessage message = CreateGetRunRequest(threadId, runId, context);
+                var response = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                scope?.RecordGetRunResponse(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope?.RecordError(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets an existing run from an existing thread.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRun(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="threadId"> Identifier of the thread. </param>
+        /// <param name="runId"> Identifier of the run. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/> or <paramref name="runId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetRun(string threadId, string runId, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+
+            using var scope = OpenTelemetryScope.StartGetRun(threadId, runId, _endpoint);
+            try
+            {
+                using HttpMessage message = CreateGetRunRequest(threadId, runId, context);
+                var response = _pipeline.ProcessMessage(message, context);
+                scope?.RecordGetRunResponse(response);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope?.RecordError(e);
+                throw;
+            }
+        }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
         /// <param name="threadId"> Identifier of the thread. </param>
@@ -247,19 +331,21 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="stream">If true, the run should return stream</param>
         /// <param name="content"> Serialized json contents. </param>
         /// <param name="context"> Options that can be used to control the request. </param>
-        internal virtual Response SubmitToolOutputsInternal(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null)
+        /// <param name="scope"> OpenTelemetry scope to be used. </param>
+        internal virtual Response SubmitToolOutputsInternal(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null, OpenTelemetryScope scope = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.SubmitToolOutputsInternal");
-            scope.Start();
+            using OpenTelemetryScope otelScope = OpenTelemetryScope.StartSubmitToolOutputs(threadId, runId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
                 message.BufferResponse = !stream;
-                return _pipeline.ProcessMessage(message, context, CancellationToken.None);
+                var response = _pipeline.ProcessMessage(message, context, CancellationToken.None);
+                otelScope?.RecordSubmitToolOutputsResponse(response, stream);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                otelScope?.RecordError(e);
                 throw;
             }
         }
@@ -272,17 +358,18 @@ namespace Azure.AI.Agents.Persistent
         /// <param name="context"> Options that can be used to control the request. </param>
         internal virtual async Task<Response> SubmitToolOutputsInternalAsync(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("PersistentAgentsClient.SubmitToolOutputsInternalAsync");
-            scope.Start();
+            using OpenTelemetryScope otelScope = OpenTelemetryScope.StartSubmitToolOutputs(threadId, runId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
                 message.BufferResponse = !stream;
-                return await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+                var response = await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+                otelScope?.RecordSubmitToolOutputsResponse(response, stream);
+                return response;
             }
             catch (Exception e)
             {
-                scope.Failed(e);
+                otelScope?.RecordError(e);
                 throw;
             }
         }

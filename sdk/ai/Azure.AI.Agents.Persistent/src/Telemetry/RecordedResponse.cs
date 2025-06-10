@@ -12,6 +12,8 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         public string? ThreadId { get; set; }
         public string? MessageId { get; set; }
         public string? RunId { get; set; }
+
+        public bool Stream { get; set; }
         public string? Model { get; set; }
         public string? RunStatus { get; set; }
         public string? Id { get; set; }
@@ -32,6 +34,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         public RecordedResponse(bool recordContent)
         {
             _recordContent = recordContent;
+            Stream = false;
         }
 
         internal void AddStreamingMessage(StreamingMessage message)

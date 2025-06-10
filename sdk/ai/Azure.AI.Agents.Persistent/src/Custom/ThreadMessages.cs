@@ -50,10 +50,10 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateMessageAsync(string threadId, RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
@@ -92,10 +92,10 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateMessage(string threadId, RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateMessage(threadId, content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateMessageRequest(threadId, content, context);
@@ -337,7 +337,6 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            var otelScope = OpenTelemetryScope.StartListMessages(threadId, runId, _endpoint);
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
             var asyncPageable = new ContinuationTokenPageableAsync<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
@@ -346,18 +345,13 @@ namespace Azure.AI.Agents.Persistent
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
-                scope: otelScope
+                itemType: ContinuationItemType.ThreadMessage,
+                threadId: threadId,
+                runId: runId,
+                endpoint: _endpoint
             );
 
-            // If the OpenTelemetry scope is null, we don't need to wrap the pageable.
-            if (otelScope == null)
-            {
-                return asyncPageable;
-            }
-            else
-            {
-                return new ScopeDisposingAsyncPageable<PersistentThreadMessage>(asyncPageable, otelScope);
-            }
+            return asyncPageable;
         }
 
         /// <summary> Gets a list of messages that exist on a thread. </summary>
@@ -375,7 +369,6 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            var otelScope = OpenTelemetryScope.StartListMessages(threadId, runId, _endpoint);
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetMessagesRequest(threadId, runId, limit, order?.ToString(), continuationToken, before, context);
             var pageable = new ContinuationTokenPageable<PersistentThreadMessage>(
                 createPageRequest: PageRequest,
@@ -384,18 +377,13 @@ namespace Azure.AI.Agents.Persistent
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
-                scope: otelScope
+                itemType: ContinuationItemType.ThreadMessage,
+                threadId: threadId,
+                runId: runId,
+                endpoint: _endpoint
             );
 
-            // If the OpenTelemetry scope is null, we don't need to wrap the pageable.
-            if (otelScope == null)
-            {
-                return pageable;
-            }
-            else
-            {
-                return new ScopeDisposingPageable<PersistentThreadMessage>(pageable, otelScope);
-            }
+            return pageable;
         }
 
         /// <summary>

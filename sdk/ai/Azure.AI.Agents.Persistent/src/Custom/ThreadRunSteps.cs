@@ -88,8 +88,6 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            var otelScope = OpenTelemetryScope.StartListRunSteps(threadId, runId, _endpoint);
-
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), continuationToken, before, context);
             var asyncPageable = new ContinuationTokenPageableAsync<RunStep>(
@@ -99,12 +97,13 @@ namespace Azure.AI.Agents.Persistent
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
-                scope: otelScope
+                itemType: ContinuationItemType.RunStep,
+                threadId: threadId,
+                runId: runId,
+                endpoint: _endpoint
             );
 
-            return otelScope != null
-            ? new ScopeDisposingAsyncPageable<RunStep>(asyncPageable, otelScope)
-            : asyncPageable;
+            return asyncPageable;
         }
 
         /// <summary> Gets a list of run steps from a thread run. </summary>
@@ -126,8 +125,6 @@ namespace Azure.AI.Agents.Persistent
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            var otelScope = OpenTelemetryScope.StartListRunSteps(threadId, runId, _endpoint);
-
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage PageRequest(int? pageSizeHint, string continuationToken) => CreateGetRunStepsRequest(threadId, runId, include, limit, order?.ToString(), continuationToken, before, context);
             var pageable = new ContinuationTokenPageable<RunStep>(
@@ -137,12 +134,13 @@ namespace Azure.AI.Agents.Persistent
                 clientDiagnostics: ClientDiagnostics,
                 scopeName: "ThreadMessagesClient.GetMessages",
                 requestContext: context,
-                scope: otelScope
+                itemType: ContinuationItemType.RunStep,
+                threadId: threadId,
+                runId: runId,
+                endpoint: _endpoint
             );
 
-            return otelScope != null
-                ? new ScopeDisposingPageable<RunStep>(pageable, otelScope)
-                : pageable;
+            return pageable;
         }
 
         /// <summary>

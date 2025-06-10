@@ -36,9 +36,9 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateThreadAsync(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateThread(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateThread(content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateThreadRequest(content, context);
@@ -75,9 +75,9 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateThread(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateThread(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateThread(content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateThreadRequest(content, context);

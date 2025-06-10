@@ -363,9 +363,9 @@ namespace Azure.AI.Agents.Persistent
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<Response> CreateAgentAsync(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateAgent(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateAgent(content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateAgentRequest(content, context);
@@ -403,9 +403,9 @@ namespace Azure.AI.Agents.Persistent
         [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Response CreateAgent(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateAgent(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateAgent(content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateAgentRequest(content, context);
@@ -526,9 +526,9 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> CreateThreadAndRunAsync(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);
@@ -565,9 +565,9 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         internal virtual Response CreateThreadAndRun(RequestContent content, RequestContext context = null)
         {
+            using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);
             Argument.AssertNotNull(content, nameof(content));
 
-            using var otelScope = OpenTelemetryScope.StartCreateRun(content, _endpoint);
             try
             {
                 using HttpMessage message = CreateCreateThreadAndRunRequest(content, context);

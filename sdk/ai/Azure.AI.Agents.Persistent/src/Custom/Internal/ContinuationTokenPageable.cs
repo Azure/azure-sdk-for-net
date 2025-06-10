@@ -15,9 +15,19 @@ using Azure.AI.Agents.Persistent.Telemetry;
 
 namespace Azure.AI.Agents.Persistent
 {
+    // Enum to specify the type of items in the pageable
+    internal enum ContinuationItemType
+    {
+        Undefined,
+        ThreadMessage,
+        RunStep
+    }
+
     internal class ContinuationTokenPageable<T>: Pageable<T>
     {
         private readonly ContinuationTokenPageableImpl<T> _impl;
+        private readonly ContinuationItemType _itemType;
+
         public ContinuationTokenPageable(
             Func<int?, string, HttpMessage> createPageRequest,
             Func<JsonElement, T> valueFactory,
@@ -28,20 +38,27 @@ namespace Azure.AI.Agents.Persistent
             string itemPropertyName = "data",
             string hasMoreField = "has_more",
             string continuationTokenName = "last_id",
-            OpenTelemetryScope scope = null
+            ContinuationItemType itemType = ContinuationItemType.Undefined,
+            string threadId = null,
+            string runId = null,
+            Uri endpoint = null
         )
         {
+            _itemType = itemType;
             _impl = new(
                 createPageRequest: createPageRequest,
                 valueFactory: valueFactory,
                 pipeline: pipeline,
                 clientDiagnostics: clientDiagnostics,
                 scopeName: scopeName,
-                scope: scope,
                 requestContext: requestContext,
                 itemPropertyName: itemPropertyName,
                 hasMoreField: hasMoreField,
-                continuationTokenName: continuationTokenName
+                continuationTokenName: continuationTokenName,
+                itemType: itemType,
+                threadId: threadId,
+                runId: runId,
+                endpoint: endpoint
             );
         }
 
@@ -51,6 +68,8 @@ namespace Azure.AI.Agents.Persistent
     internal class ContinuationTokenPageableAsync<T> : AsyncPageable<T>
     {
         private readonly ContinuationTokenPageableImpl<T> _impl;
+        private readonly ContinuationItemType _itemType;
+
         public ContinuationTokenPageableAsync(
             Func<int?, string, HttpMessage> createPageRequest,
             Func<JsonElement, T> valueFactory,
@@ -61,20 +80,27 @@ namespace Azure.AI.Agents.Persistent
             string itemPropertyName = "data",
             string hasMoreField = "has_more",
             string continuationTokenName = "last_id",
-            OpenTelemetryScope scope = null
+            ContinuationItemType itemType = ContinuationItemType.Undefined,
+            string threadId = null,
+            string runId = null,
+            Uri endpoint = null
         )
         {
+            _itemType = itemType;
             _impl = new(
                 createPageRequest: createPageRequest,
                 valueFactory: valueFactory,
                 pipeline: pipeline,
                 clientDiagnostics: clientDiagnostics,
                 scopeName: scopeName,
-                scope: scope,
                 requestContext: requestContext,
                 itemPropertyName: itemPropertyName,
                 hasMoreField: hasMoreField,
-                continuationTokenName: continuationTokenName
+                continuationTokenName: continuationTokenName,
+                itemType: itemType,
+                threadId: threadId,
+                runId: runId,
+                endpoint: endpoint
             );
         }
 
@@ -89,7 +115,6 @@ namespace Azure.AI.Agents.Persistent
         private readonly Func<int?, string, HttpMessage> _createPageRequest;
         private readonly HttpPipeline _pipeline;
         private readonly ClientDiagnostics _clientDiagnostics;
-        private readonly OpenTelemetryScope _scope;
         private readonly Func<JsonElement, T> _valueFactory;
         private readonly string _scopeName;
         private readonly CancellationToken _cancellationToken;
@@ -97,6 +122,10 @@ namespace Azure.AI.Agents.Persistent
         private readonly string _itemPropertyName;
         private readonly string _hasMoreField;
         private readonly string _continuationTokenName;
+        private readonly ContinuationItemType _itemType;
+        private readonly string _threadId;
+        private readonly string _runId;
+        private readonly Uri _endpoint;
 
         public ContinuationTokenPageableImpl(
             Func<int?, string, HttpMessage> createPageRequest,
@@ -108,7 +137,10 @@ namespace Azure.AI.Agents.Persistent
             string itemPropertyName,
             string hasMoreField,
             string continuationTokenName,
-            OpenTelemetryScope scope = null
+            ContinuationItemType itemType = ContinuationItemType.Undefined,
+            string threadId = null,
+            string runId = null,
+            Uri endpoint = null
         )
         {
             _createPageRequest = createPageRequest;
@@ -116,12 +148,15 @@ namespace Azure.AI.Agents.Persistent
             _pipeline = pipeline;
             _clientDiagnostics = clientDiagnostics;
             _scopeName = scopeName;
-            _scope = scope;
             _cancellationToken = requestContext?.CancellationToken ?? default;
             _errorOptions = requestContext?.ErrorOptions ?? ErrorOptions.Default;
             _itemPropertyName = itemPropertyName;
             _hasMoreField = hasMoreField;
             _continuationTokenName = continuationTokenName;
+            _itemType = itemType;
+            _threadId = threadId;
+            _runId = runId;
+            _endpoint = endpoint;
         }
 
         public async IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = default)
@@ -169,7 +204,6 @@ namespace Azure.AI.Agents.Persistent
                 {
                     yield break;
                 }
-                _scope?.RecordPagedResponse(response);
                 yield return CreatePage(response, out continuationToken);
             } while (!string.IsNullOrEmpty(continuationToken));
         }
@@ -183,7 +217,6 @@ namespace Azure.AI.Agents.Persistent
                 {
                     yield break;
                 }
-                _scope?.RecordPagedResponse(response);
                 yield return CreatePage(response, out continuationToken);
             } while (!string.IsNullOrEmpty(continuationToken));
         }
@@ -196,17 +229,41 @@ namespace Azure.AI.Agents.Persistent
                 return null;
             }
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(_scopeName);
-            scope.Start();
-            try
+            // Use GenAI scope for paging if item type is specified
+            OpenTelemetryScope genAIScope = null;
+            DiagnosticScope? diagnosticsScope = null;
+            if (_itemType == ContinuationItemType.ThreadMessage)
             {
-                _pipeline.Send(message, _cancellationToken);
-                return GetResponse(message);
+                genAIScope = OpenTelemetryScope.StartListMessages(_threadId, _runId, _endpoint);
             }
-            catch (Exception e)
+            else if (_itemType == ContinuationItemType.RunStep)
             {
-                scope.Failed(e);
-                throw;
+                genAIScope = OpenTelemetryScope.StartListRunSteps(_threadId, _runId, _endpoint);
+            }
+            else
+            {
+                diagnosticsScope = _clientDiagnostics.CreateScope(_scopeName);
+            }
+
+            using (genAIScope)
+            {
+                using (diagnosticsScope)
+                {
+                    diagnosticsScope?.Start();
+                    try
+                    {
+                        _pipeline.Send(message, _cancellationToken);
+                        var response = GetResponse(message);
+                        genAIScope?.RecordPagedResponse(response);
+                        return response;
+                    }
+                    catch (Exception e)
+                    {
+                        diagnosticsScope?.Failed(e);
+                        genAIScope?.RecordError(e);
+                        throw;
+                    }
+                }
             }
         }
 
@@ -214,27 +271,51 @@ namespace Azure.AI.Agents.Persistent
         {
             var message = CreateMessage(pageSizeHint, continuationToken);
 
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope(_scopeName);
-            scope.Start();
-            try
+            // Use GenAI scope for paging if item type is specified
+            OpenTelemetryScope genAIScope = null;
+            DiagnosticScope? diagnosticsScope = null;
+            if (_itemType == ContinuationItemType.ThreadMessage)
             {
-                if (cancellationToken.CanBeCanceled && _cancellationToken.CanBeCanceled)
-                {
-                    using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken);
-                    await _pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
-                }
-                else
-                {
-                    var ct = cancellationToken.CanBeCanceled ? cancellationToken : _cancellationToken;
-                    await _pipeline.SendAsync(message, ct).ConfigureAwait(false);
-                }
-
-                return GetResponse(message);
+                genAIScope = OpenTelemetryScope.StartListMessages(_threadId, _runId, _endpoint);
             }
-            catch (Exception e)
+            else if (_itemType == ContinuationItemType.RunStep)
             {
-                scope.Failed(e);
-                throw;
+                genAIScope = OpenTelemetryScope.StartListRunSteps(_threadId, _runId, _endpoint);
+            }
+            else
+            {
+                diagnosticsScope = _clientDiagnostics.CreateScope(_scopeName);
+            }
+
+            using (genAIScope)
+            {
+                using (diagnosticsScope)
+                {
+                    diagnosticsScope?.Start();
+                    try
+                    {
+                        if (cancellationToken.CanBeCanceled && _cancellationToken.CanBeCanceled)
+                        {
+                            using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _cancellationToken);
+                            await _pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            var ct = cancellationToken.CanBeCanceled ? cancellationToken : _cancellationToken;
+                            await _pipeline.SendAsync(message, ct).ConfigureAwait(false);
+                        }
+
+                        var response = GetResponse(message);
+                        genAIScope?.RecordPagedResponse(response);
+                        return response;
+                    }
+                    catch (Exception e)
+                    {
+                        diagnosticsScope?.Failed(e);
+                        genAIScope?.RecordError(e);
+                        throw;
+                    }
+                }
             }
         }
 
