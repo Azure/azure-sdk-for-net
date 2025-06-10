@@ -16,7 +16,7 @@
                 "OSVmImage": "ubuntu-24.04",
                 "Pool": "azsdk-pool",
                 "TestTargetFramework": "net6.0",
-                "AZURE_TEST_AGENT": "UBUNTU_2004_NET60",
+                "AZURE_TEST_AGENT": "UBUNTU_2404_NET60",
                 "SKIP_UPDATE_CAPABILITIES_LIVE_TESTS": "FALSE",
                 "SKIP_SIPROUTING_LIVE_TESTS": "TRUE"
             },
