@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.Agents.Persistent.Telemetry;
 using Azure.Core;
 
 namespace Azure.AI.Agents.Persistent
@@ -136,6 +137,7 @@ namespace Azure.AI.Agents.Persistent
         public virtual CollectionResult<StreamingUpdate> CreateRunStreaming(string threadId, string agentId, string overrideModelName = null, string overrideInstructions = null, string additionalInstructions = null, IEnumerable<ThreadMessageOptions> additionalMessages = null, IEnumerable<ToolDefinition> overrideTools = null, float? temperature = null, float? topP = null, int? maxPromptTokens = null, int? maxCompletionTokens = null, Truncation truncationStrategy = null, BinaryData toolChoice = null, BinaryData responseFormat = null, bool? parallelToolCalls = null, IReadOnlyDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(threadId, agentId, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNull(agentId, nameof(agentId));
 
@@ -160,7 +162,7 @@ namespace Azure.AI.Agents.Persistent
             RequestContext context = FromCancellationToken(cancellationToken);
 
             Response sendRequest() => CreateRunStreaming(threadId, createRunRequest.ToRequestContent(), context);
-            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+            return new StreamingUpdateCollection(sendRequest, cancellationToken, scope: scope);
         }
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
         /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
@@ -171,13 +173,14 @@ namespace Azure.AI.Agents.Persistent
         public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
         {
+            var scope = OpenTelemetryScope.StartCreateRunStreaming(run.Id, run.AssistantId, _endpoint);
             Argument.AssertNotNull(run, nameof(run));
             Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
-            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+            Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context, scope:scope);
+            return new StreamingUpdateCollection(sendRequest, cancellationToken, scope);
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
