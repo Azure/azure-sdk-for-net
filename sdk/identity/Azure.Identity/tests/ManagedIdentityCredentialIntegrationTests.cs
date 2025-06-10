@@ -51,7 +51,7 @@ namespace Azure.Identity.Tests
             request.Uri.Reset(testEndpoint);
             Response response = await _pipeline.SendRequestAsync(request, default);
 
-            Assert.AreEqual((int)HttpStatusCode.OK, response.Status);
+            Assert.AreEqual((int)HttpStatusCode.OK, response.Status, $"Expected status code 200, got {response.Content}");
             Assert.AreEqual("Successfully acquired a token from ManagedIdentityCredential", response.Content.ToString(), response.Content.ToString());
         }
     }

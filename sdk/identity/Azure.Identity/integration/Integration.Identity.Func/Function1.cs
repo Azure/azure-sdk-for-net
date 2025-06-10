@@ -2,14 +2,12 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Integration.Identity.Common;
 
 namespace Integration.Identity.Func
@@ -17,30 +15,44 @@ namespace Integration.Identity.Func
     /// <summary>
     /// Function1 is an Azure Function that demonstrates Managed Identity authentication.
     /// </summary>
-    public static class Function1
+    public class Function1
     {
+        private readonly ILogger _logger;
+
+        /// <summary>
+        /// Initializes a new instance of the Function1 class.
+        /// </summary>
+        /// <param name="loggerFactory">The logger factory.</param>
+        public Function1(ILoggerFactory loggerFactory)
+        {
+            _logger = loggerFactory.CreateLogger<Function1>();
+        }
+
         /// <summary>
         /// HTTP trigger function that processes GET requests.
         /// </summary>
         /// <param name="req">The request</param>
-        /// <param name="log">The logger</param>
         /// <returns></returns>
-        [FunctionName("Function1")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
-            ILogger log)
+        [Function("Function1")]
+        public async Task<HttpResponseData> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequestData req)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            _logger.LogInformation("C# HTTP trigger function processed a request.");
 
             try
             {
                 ManagedIdentityTests.AuthToStorage();
                 await Task.Yield();
-                return new OkObjectResult("Successfully acquired a token from ManagedIdentityCredential");
+
+                var response = req.CreateResponse(HttpStatusCode.OK);
+                await response.WriteStringAsync("Successfully acquired a token from ManagedIdentityCredential").ConfigureAwait(false);
+                return response;
             }
             catch (Exception ex)
             {
-                return new BadRequestObjectResult(ex.ToString());
+                var response = req.CreateResponse(HttpStatusCode.BadRequest);
+                await response.WriteStringAsync(ex.ToString()).ConfigureAwait(false);
+                return response;
             }
         }
     }
