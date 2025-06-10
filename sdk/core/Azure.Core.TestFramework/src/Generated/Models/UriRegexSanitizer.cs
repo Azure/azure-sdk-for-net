@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> Sanitizer for a request URI. </summary>
     public partial class UriRegexSanitizer
     {
-        /// <summary> Initializes a new instance of UriRegexSanitizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/>. </summary>
         /// <param name="regex"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="regex"/> is null. </exception>
         public UriRegexSanitizer(string regex)
@@ -21,6 +20,17 @@ namespace Azure.Core.TestFramework.Models
             Argument.AssertNotNull(regex, nameof(regex));
 
             Regex = regex;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UriRegexSanitizer"/>. </summary>
+        /// <param name="regex"></param>
+        /// <param name="value"></param>
+        /// <param name="groupForReplace"></param>
+        internal UriRegexSanitizer(string regex, string value, string groupForReplace)
+        {
+            Regex = regex;
+            Value = value;
+            GroupForReplace = groupForReplace;
         }
 
         /// <summary> Gets the regex. </summary>

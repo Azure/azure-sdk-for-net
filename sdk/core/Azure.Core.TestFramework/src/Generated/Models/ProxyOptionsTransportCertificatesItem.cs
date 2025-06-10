@@ -10,9 +10,18 @@ namespace Azure.Core.TestFramework.Models
     /// <summary> The ProxyOptionsTransportCertificatesItem. </summary>
     public partial class ProxyOptionsTransportCertificatesItem
     {
-        /// <summary> Initializes a new instance of ProxyOptionsTransportCertificatesItem. </summary>
+        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransportCertificatesItem"/>. </summary>
         public ProxyOptionsTransportCertificatesItem()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProxyOptionsTransportCertificatesItem"/>. </summary>
+        /// <param name="pemValue"></param>
+        /// <param name="pemKey"></param>
+        internal ProxyOptionsTransportCertificatesItem(string pemValue, string pemKey)
+        {
+            PemValue = pemValue;
+            PemKey = pemKey;
         }
 
         /// <summary> Gets or sets the pem value. </summary>

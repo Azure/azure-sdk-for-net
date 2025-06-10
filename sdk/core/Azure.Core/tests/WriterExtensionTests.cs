@@ -70,7 +70,7 @@ namespace Azure.Core.Tests
             using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
 
             var content = new TestSerialize ();
-            writer.WriteObjectValue (content);
+            ((IUtf8JsonSerializable)content).Write(writer);
             Assert.True (content.didWrite);
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Core.Tests
             using Utf8JsonWriter writer = new Utf8JsonWriter (stream);
 
             TestSerialize content = null;
-            writer.WriteObjectValue(content);
+            ((IUtf8JsonSerializable)content).Write(writer);
 
             writer.Flush();
             Assert.AreEqual("null", System.Text.Encoding.UTF8.GetString(stream.ToArray()));

@@ -166,7 +166,7 @@ namespace Azure.Core.Tests.Models.ResourceManager
         {
             public override void Write(Utf8JsonWriter writer, SystemData model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                ((IJsonModel<SystemData>)model).Write(writer, new ModelReaderWriterOptions("W"));
             }
             public override SystemData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

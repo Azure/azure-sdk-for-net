@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> Sanitizer for a request body. </summary>
     public partial class BodyKeySanitizer
     {
-        /// <summary> Initializes a new instance of BodyKeySanitizer. </summary>
+        /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
         /// <param name="jsonPath"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="jsonPath"/> is null. </exception>
         public BodyKeySanitizer(string jsonPath)
@@ -21,6 +20,19 @@ namespace Azure.Core.TestFramework.Models
             Argument.AssertNotNull(jsonPath, nameof(jsonPath));
 
             JsonPath = jsonPath;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BodyKeySanitizer"/>. </summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <param name="regex"></param>
+        /// <param name="groupForReplace"></param>
+        internal BodyKeySanitizer(string jsonPath, string value, string regex, string groupForReplace)
+        {
+            JsonPath = jsonPath;
+            Value = value;
+            Regex = regex;
+            GroupForReplace = groupForReplace;
         }
 
         /// <summary> Gets the json path. </summary>

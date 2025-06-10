@@ -80,7 +80,7 @@ namespace Azure.Core.Tests.ModelReaderWriterTests.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
             }

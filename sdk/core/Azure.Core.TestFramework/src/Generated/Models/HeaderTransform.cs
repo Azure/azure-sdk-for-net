@@ -6,14 +6,13 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Core.TestFramework.Models
 {
     /// <summary> The HeaderTransform. </summary>
     public partial class HeaderTransform
     {
-        /// <summary> Initializes a new instance of HeaderTransform. </summary>
+        /// <summary> Initializes a new instance of <see cref="HeaderTransform"/>. </summary>
         /// <param name="key"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public HeaderTransform(string key)
@@ -21,6 +20,17 @@ namespace Azure.Core.TestFramework.Models
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HeaderTransform"/>. </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <param name="condition"> Condition to apply for the sanitization or transform. If the condition is not met, sanitization/transform is not performed. </param>
+        internal HeaderTransform(string key, string value, Condition condition)
+        {
+            Key = key;
+            Value = value;
+            Condition = condition;
         }
 
         /// <summary> Gets the key. </summary>
