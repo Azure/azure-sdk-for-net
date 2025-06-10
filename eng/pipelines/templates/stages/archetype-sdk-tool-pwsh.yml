@@ -13,6 +13,7 @@ parameters:
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
 
 stages:
   - stage: 'Test'
@@ -22,18 +23,18 @@ stages:
         strategy:
           matrix:
             Windows:
-              Pool: 'azsdk-pool'
-              Image: 'windows-2022'
+              Pool: '$(WINDOWSPOOL)'
+              ImageDemand: '$(WindowsImageDemand)'
             Linux:
-              Pool: 'azsdk-pool'
-              Image: 'ubuntu-24.04'
+              Pool: '$(LINUXPOOL)'
+              ImageDemand: '$(LinuxImageDemand)'
             Mac:
-              Pool: 'Azure Pipelines'
-              Image: 'macos-latest'
+              Pool: '$(MACPOOL)'
+              ImageDemand: '$(MacImageDemand)'
 
         pool:
           name: $(Pool)
-          vmImage: $(Image)
+          demands: $(ImageDemand)
 
         steps:
           - template: /eng/pipelines/templates/steps/run-pester-tests.yml

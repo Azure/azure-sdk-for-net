@@ -10,11 +10,12 @@ pr:
       - eng/CredScanSuppression.json
 
 pool:
-  name: azsdk-pool
-  vmImage: windows-2022
+  name: $(WINDOWSPOOL)
+  demands: $(WindowsImageDemand)
 
 variables:
   - template: templates/variables/globals.yml
+  - template: templates/variables/image.yml
 
 stages:
   - stage: AggregateReports

@@ -20,8 +20,8 @@ jobs:
   - job: Release
     dependsOn: ${{ parameters.DependsOn }}
     pool:
-      name: azsdk-pool
-      vmImage: windows-2022
+      name: $(WINDOWSPOOL)
+      demands: $(WindowsImageDemand)
 
     steps:
       - checkout: self

@@ -43,7 +43,7 @@ jobs:
       matrix: $[ ${{ parameters.Matrix }} ]
     pool:
       ${{ if eq(parameters.OSName, 'macOS') }}:
-        vmImage: $(OSVmImage)
+        demands: ImageOverride -equals $(OSVmImage)
       ${{ else }}:
         image: $(OSVmImage)
       name: $(Pool)

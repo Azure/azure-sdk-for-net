@@ -40,7 +40,7 @@ jobs:
       # 1es pipeline templates converts `image` to demands: ImageOverride under the hood
       # which is incompatible with image selection in the default non-1es hosted pools
       ${{ if eq(parameters.OSName, 'macOS') }}:
-        vmImage: $(OSVmImage)
+        demands: ImageOverride -equals $(OSVmImage)
       ${{ else }}:
         image: $(OSVmImage)
       name: $(Pool)
