@@ -12,7 +12,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// </summary>
     internal class AesKw
     {
-    private const int BlockSizeInBits = 64;
+        private const int BlockSizeInBits = 64;
         private const int BlockSizeInBytes = BlockSizeInBits >> 3;
 
         public static readonly AesKw Aes128Kw = new AesKw("A128KW", 128);
@@ -95,7 +95,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException("iv length must be 64 bits");
 
             return new AesKwEncryptor(key.Take(KeySizeInBytes), iv ?? DefaultIv);
-        }        public ICryptoTransform CreateDecryptor(byte[] key)
+        }
+
+        public ICryptoTransform CreateDecryptor(byte[] key)
         {
             return CreateDecryptor(key, null);
         }
