@@ -13,7 +13,7 @@ using Azure.Messaging;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> Receive operation details per Cloud Event. </summary>
     public partial class ReceiveDetails : IJsonModel<ReceiveDetails>
     {
         /// <summary> Initializes a new instance of <see cref="ReceiveDetails"/> for deserialization. </summary>

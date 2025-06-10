@@ -13,12 +13,12 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    internal partial class Utf8JsonBinaryContent : RequestContent
+    internal partial class Utf8JsonRequestContent : RequestContent
     {
         private readonly MemoryStream _stream;
         private readonly RequestContent _content;
 
-        public Utf8JsonBinaryContent()
+        public Utf8JsonRequestContent()
         {
             _stream = new MemoryStream();
             _content = Create(_stream);
@@ -28,7 +28,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <summary> Gets the JsonWriter. </summary>
         public Utf8JsonWriter JsonWriter { get; }
 
-        /// <param name="stream"></param>
+        /// <param name="stream"> The stream containing the data to be written. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
         {
@@ -36,7 +36,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <param name="stream"></param>
+        /// <param name="stream"> The stream containing the data to be written. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public override void WriteTo(Stream stream, CancellationToken cancellationToken = default)
         {
