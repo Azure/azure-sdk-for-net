@@ -883,6 +883,99 @@ namespace Azure.Communication.Chat.Tests.ChatClients
         }
 
         [Test]
+        public async Task UpdateProperties_TopicOnly_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                Topic = "Updated Topic"
+            };
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_MetadataOnly_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var updateOptionsWithNewMetadata = new UpdateChatThreadPropertiesOptions();
+            updateOptionsWithNewMetadata.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            updateOptionsWithNewMetadata.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(updateOptionsWithNewMetadata);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_RetentionPolicyToNull_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                RetentionPolicy = null
+            };
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_RetentionPolicyToValue_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions();
+            options.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_TopicAndMetadata_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                Topic = "Topic + Metadata"
+            };
+            options.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            options.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
+        public async Task UpdateProperties_AllFields_Succeeds()
+        {
+            ChatThreadClient chatThreadClient = CreateMockChatThreadClient(204);
+
+            var options = new UpdateChatThreadPropertiesOptions
+            {
+                Topic = "Full Update"
+            };
+
+            options.Metadata.Add("MetaKeyNew1", "MetaValueNew1");
+            options.Metadata.Add("MetaKeyNew2", "MetaValueNew2");
+            options.RetentionPolicy = new ThreadCreationDateRetentionPolicy(40);
+
+            var response = await chatThreadClient.UpdatePropertiesAsync(options);
+
+            Assert.AreEqual(204, response.Status);
+        }
+
+        [Test]
         public async Task GetThreadsAsyncWithDateTimeShouldSucceed()
         {
             //arrange
