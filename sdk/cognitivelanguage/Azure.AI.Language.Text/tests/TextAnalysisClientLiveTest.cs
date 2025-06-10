@@ -207,7 +207,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_RecognizePii()
         {
             string textA =
@@ -250,7 +250,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_RecognizeLinkedEntities()
         {
             string textA =
@@ -305,7 +305,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_HealthcareLROTask()
         {
             string textA = "Prescribed 100mg ibuprofen, taken twice daily.";
@@ -383,7 +383,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_CustomEntitiesLROTask()
         {
             string textA =
@@ -450,7 +450,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_CustomSingleLabelClassificationLROTask()
         {
             string textA =
@@ -511,7 +511,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         public async Task AnalyzeText_CustomMultiLabelClassificationLROTask()
         {
             string textA =
@@ -572,7 +572,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeText_ExtractiveSummarizationLROTaskAsync()
         {
@@ -665,7 +665,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             }
         }
 
-        [Test]
+        [RecordedTest]
         [ServiceVersion(Min = TextAnalysisClientOptions.ServiceVersion.V2023_04_01)]
         public async Task AnalyzeText_AbstractiveSummarizationLROTaskAsync()
         {
