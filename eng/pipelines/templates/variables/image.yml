@@ -25,5 +25,3 @@ variables:
 
   - name: LinuxImageDemand
     value: ImageOverride -equals $(LINUXVMIMAGE)
-  - name: WindowsImageDemand
-    value: ImageOverride -equals $(WINDOWSVMIMAGE)
