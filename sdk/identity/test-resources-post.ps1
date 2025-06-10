@@ -4,35 +4,6 @@ param (
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $true
 
-# Function to get the preferred target framework from a project file
-function Get-PreferredTargetFramework {
-  param([string]$ProjectPath)
-  
-  [xml]$projectXml = Get-Content $ProjectPath
-  $targetFrameworks = $projectXml.Project.PropertyGroup.TargetFrameworks
-  
-  if ($targetFrameworks) {
-    # Split the frameworks and get the first LTS one (net8.0 comes before net9.0)
-    $frameworks = $targetFrameworks -split ';'
-    # Prefer LTS versions - look for net8.0 first, then fall back to first available
-    $ltsFramework = $frameworks | Where-Object { $_ -eq 'net8.0' } | Select-Object -First 1
-    if ($ltsFramework) {
-      return $ltsFramework
-    }
-    # If no LTS found, return the first framework
-    return $frameworks[0]
-  }
-  
-  # Fallback to single TargetFramework property
-  $targetFramework = $projectXml.Project.PropertyGroup.TargetFramework
-  if ($targetFramework) {
-    return $targetFramework
-  }
-  
-  # Default fallback
-  return 'net8.0'
-}
-
 $webappRoot = "$PSScriptRoot/Azure.Identity/integration" | Resolve-Path
 $workingFolder = $webappRoot;
 if ($null -ne $Env:AGENT_WORKFOLDER) {
@@ -42,8 +13,7 @@ if ($null -ne $Env:AGENT_WORKFOLDER) {
 az account set --subscription $DeploymentOutputs['IDENTITY_SUBSCRIPTION_ID']
 
 # Deploy the webapp
-$webappFramework = Get-PreferredTargetFramework "$webappRoot/WebApp/Integration.Identity.WebApp.csproj"
-dotnet publish "$webappRoot/WebApp/Integration.Identity.WebApp.csproj" --framework $webappFramework -o "$workingFolder/Pub" /p:EnableSourceLink=false
+dotnet publish "$webappRoot/WebApp/Integration.Identity.WebApp.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false
 Compress-Archive -Path "$workingFolder/Pub/*" -DestinationPath "$workingFolder/Pub/package.zip" -Force
 az webapp deploy --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] --name $DeploymentOutputs['IDENTITY_WEBAPP_NAME'] --src-path "$workingFolder/Pub/package.zip"
 
@@ -51,8 +21,7 @@ az webapp deploy --resource-group $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] 
 Remove-Item -Force -Recurse "$workingFolder/Pub"
 
 # Deploy the function app
-$funcFramework = Get-PreferredTargetFramework "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj"
-dotnet publish "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj" --framework $funcFramework -o "$workingFolder/Pub" /p:EnableSourceLink=false
+dotnet publish "$webappRoot/Integration.Identity.Func/Integration.Identity.Func.csproj" -o "$workingFolder/Pub" /p:EnableSourceLink=false
 Compress-Archive -Path "$workingFolder/Pub/*" -DestinationPath "$workingFolder/Pub/package.zip" -Force
 az functionapp deployment source config-zip -g $DeploymentOutputs['IDENTITY_RESOURCE_GROUP'] -n $DeploymentOutputs['IDENTITY_FUNCTION_NAME'] --src "$workingFolder/Pub/package.zip"
 
