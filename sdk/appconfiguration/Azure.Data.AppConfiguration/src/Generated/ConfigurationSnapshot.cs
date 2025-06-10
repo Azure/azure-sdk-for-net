@@ -7,16 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
-    public static partial class ConfigurationModelFactory
+    /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
+    public partial class ConfigurationSnapshot
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> A snapshot is a named, immutable subset of an App Configuration store's key-values. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfigurationSnapshot"/>. </summary>
         /// <param name="name"> The name of the snapshot. </param>
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
@@ -28,25 +29,21 @@ namespace Azure.Data.AppConfiguration
         /// <param name="itemCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        /// <returns> A new <see cref="AppConfiguration.ConfigurationSnapshot"/> instance for mocking. </returns>
-        public static ConfigurationSnapshot ConfigurationSnapshot(string name = default, ConfigurationSnapshotStatus? status = default, IEnumerable<ConfigurationSettingsFilter> filters = default, SnapshotComposition? snapshotComposition = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, TimeSpan? retentionPeriod = default, long? sizeInBytes = default, long? itemCount = default, IDictionary<string, string> tags = default, ETag eTag = default)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ConfigurationSnapshot(string name, ConfigurationSnapshotStatus? status, IList<ConfigurationSettingsFilter> filters, SnapshotComposition? snapshotComposition, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, TimeSpan? retentionPeriod, long? sizeInBytes, long? itemCount, IDictionary<string, string> tags, ETag eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            filters ??= new ChangeTrackingList<ConfigurationSettingsFilter>();
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new ConfigurationSnapshot(
-                name,
-                status,
-                filters?.ToList(),
-                snapshotComposition,
-                createdOn,
-                expiresOn,
-                retentionPeriod,
-                sizeInBytes,
-                itemCount,
-                tags,
-                eTag,
-                additionalBinaryDataProperties: null);
+            Name = name;
+            Status = status;
+            Filters = filters;
+            SnapshotComposition = snapshotComposition;
+            CreatedOn = createdOn;
+            ExpiresOn = expiresOn;
+            RetentionPeriod = retentionPeriod;
+            SizeInBytes = sizeInBytes;
+            ItemCount = itemCount;
+            Tags = tags;
+            ETag = eTag;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
@@ -62,14 +61,17 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
+        public virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(key, nameof(key));
+
                 using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
                 return Pipeline.ProcessMessage(message, context);
             }
@@ -109,14 +111,17 @@ namespace Azure.Data.AppConfiguration
         /// https://aka.ms/azconfig/docs/keyvaluefiltering
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
+        public virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.GetConfigurationSetting");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(key, nameof(key));
+
                 using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
@@ -376,13 +381,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
+        public virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
                 return ProtocolOperationHelpers.ProcessMessage(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshot", OperationFinalStateVia.OriginalUri, context, waitUntil);
             }
@@ -400,13 +409,17 @@ namespace Azure.Data.AppConfiguration
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
+        public virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("ConfigurationClient.CreateSnapshot");
             scope.Start();
             try
             {
+                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNull(content, nameof(content));
+
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
                 return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync", OperationFinalStateVia.OriginalUri, context, waitUntil).ConfigureAwait(false);
             }
@@ -415,32 +428,6 @@ namespace Azure.Data.AppConfiguration
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Creates a key-value snapshot. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the key-value snapshot to create. </param>
-        /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="entity"> The key-value snapshot to create. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual Operation<Snapshot> CreateSnapshot(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
-        {
-            Operation<BinaryData> result = CreateSnapshot(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return ProtocolOperationHelpers.Convert(result, response => (Snapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshot");
-        }
-
-        /// <summary> Creates a key-value snapshot. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="name"> The name of the key-value snapshot to create. </param>
-        /// <param name="contentType"> Content-Type header. </param>
-        /// <param name="entity"> The key-value snapshot to create. </param>
-        /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        internal virtual async Task<Operation<Snapshot>> CreateSnapshotAsync(WaitUntil waitUntil, string name, CreateSnapshotRequestContentType contentType, Snapshot entity, string syncToken = default, CancellationToken cancellationToken = default)
-        {
-            Operation<BinaryData> result = await CreateSnapshotAsync(waitUntil, name, contentType.ToSerialString(), entity, syncToken, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(result, response => (Snapshot)response, ClientDiagnostics, "ConfigurationClient.CreateSnapshotAsync");
         }
 
         /// <summary>
