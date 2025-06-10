@@ -49,7 +49,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual("key", signature.Parameters[0].Name);
             Assert.AreEqual("value", signature.Parameters[1].Name);
             Assert.AreEqual("cancellationToken", signature.Parameters[2].Name);
-            Assert.AreEqual("AddTagAsync", signature.Name);            // verify the method body
+            Assert.AreEqual("AddTagAsync", signature.Name);
+            // verify the method body
             var bodyStatements = addTagAsyncMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
@@ -69,7 +70,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(2, signature.Parameters.Count);
             Assert.AreEqual("key", signature.Parameters[0].Name);
             Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("RemoveTag", signature.Name);            // verify the method body
+            Assert.AreEqual("RemoveTag", signature.Name);
+            // verify the method body
             var bodyStatements = removeTagMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
@@ -89,7 +91,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(2, signature.Parameters.Count);
             Assert.AreEqual("key", signature.Parameters[0].Name);
             Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("RemoveTagAsync", signature.Name);            // verify the method body
+            Assert.AreEqual("RemoveTagAsync", signature.Name);
+            // verify the method body
             var bodyStatements = removeTagAsyncMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
@@ -109,7 +112,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(2, signature.Parameters.Count);
             Assert.AreEqual("tags", signature.Parameters[0].Name);
             Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("SetTags", signature.Name);            // verify the method body
+            Assert.AreEqual("SetTags", signature.Name);
+            // verify the method body
             var bodyStatements = setTagsMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
@@ -129,7 +133,8 @@ namespace Azure.Generator.Management.Tests.Providers
             Assert.AreEqual(2, signature.Parameters.Count);
             Assert.AreEqual("tags", signature.Parameters[0].Name);
             Assert.AreEqual("cancellationToken", signature.Parameters[1].Name);
-            Assert.AreEqual("SetTagsAsync", signature.Name);            // verify the method body
+            Assert.AreEqual("SetTagsAsync", signature.Name);
+            // verify the method body
             var bodyStatements = setTagsAsyncMethod.BodyStatements?.ToDisplayString();
             Assert.NotNull(bodyStatements);
             var expected = Helpers.GetExpectedFromFile();
