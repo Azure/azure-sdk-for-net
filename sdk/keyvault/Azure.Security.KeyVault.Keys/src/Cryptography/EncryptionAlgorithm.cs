@@ -102,7 +102,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <summary>
         /// Gets a 192-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
         /// </summary>
-        public static EncryptionAlgorithm A192CbcPad { get; } = new EncryptionAlgorithm(A192CbcPadValue);        /// <summary>
+        public static EncryptionAlgorithm A192CbcPad { get; } = new EncryptionAlgorithm(A192CbcPadValue);
+
+        /// <summary>
         /// Gets a 256-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
         /// </summary>
         public static EncryptionAlgorithm A256CbcPad { get; } = new EncryptionAlgorithm(A256CbcPadValue);
