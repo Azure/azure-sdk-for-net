@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.EnumDiscriminator
 {
@@ -34,10 +32,5 @@ namespace _Type.Model.Inheritance.EnumDiscriminator
         protected override Snake PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Cobra>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="cobra"> The <see cref="Cobra"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Cobra cobra) => throw null;
-
-        public static explicit operator Cobra(Response result) => throw null;
     }
 }

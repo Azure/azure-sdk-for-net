@@ -52,6 +52,40 @@ Documentation and code samples for these libraries can be found [here](https://a
 * File an issue via [Github Issues](https://github.com/Azure/azure-sdk-for-net/issues/new/choose).
 * Check [previous questions](https://stackoverflow.com/questions/tagged/azure+.net) or ask new ones on StackOverflow using `azure` and `.net` tags.
 
+## Data Collection
+
+The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described below. You can learn more about data collection and use in the help documentation and Microsoft’s [privacy statement](https://go.microsoft.com/fwlink/?LinkID=824704). For more information on the data collected by the Azure SDK, please visit the [Telemetry Guidelines](https://azure.github.io/azure-sdk/general_azurecore.html#telemetry-policy) page.
+
+### Telemetry Configuration
+
+Telemetry collection is on by default.
+
+To opt out, you can disable telemetry at client construction. Creating a [synchronous policy](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Pipeline.md#implementing-a-synchronous-policy) in your application gives you access to the headers sent with each request, allowing you to remove the `User-Agent` header containing client telemetry.  To use the policy, you will add it to the options for your specific client as part of client creation.  This will disable Azure SDK telemetry for all methods in the client. You will need to register the policy with each client created.
+
+> NOTE: `HttpClient` may set default user agent headers as part of the .NET platform behavior.  This value does not contain any Azure SDK telemetry information.
+
+An example policy implementation looks like:
+```C# Snippet:RemoveUserAgentPolicy
+public class RemoveUserAgentPolicy : HttpPipelineSynchronousPolicy
+{
+    public override void OnSendingRequest(HttpMessage message)
+    {
+        message.Request.Headers.Remove(HttpHeader.Names.UserAgent);
+    }
+}
+```
+
+To use it with a client, you would register it to run for every retry attempt as part of your client options:
+```C#  Snippet:RemoveUserAgentPolicyUse
+Uri serviceEndpoint = new Uri("https://example.contoso.com");
+TokenCredential credential = new DefaultAzureCredential();
+           
+SampleClientOptions clientOptions = new SampleClientOptions();
+clientOptions.AddPolicy(new RemoveUserAgentPolicy(), HttpPipelinePosition.PerRetry);
+
+SampleClient client = new SampleClient(serviceEndpoint, credential, clientOptions);
+```
+
 ### Community
 
 * Chat with other community members [![Join the chat at https://gitter.im/azure/azure-sdk-for-net](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/azure/azure-sdk-for-net?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)

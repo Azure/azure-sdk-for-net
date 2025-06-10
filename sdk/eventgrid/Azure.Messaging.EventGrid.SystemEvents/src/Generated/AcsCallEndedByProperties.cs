@@ -47,28 +47,26 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Initializes a new instance of <see cref="AcsCallEndedByProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
-        /// <param name="type"> The type of call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="communicationIdentifier"/> or <paramref name="name"/> is null. </exception>
-        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind type, string name)
+        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, string name)
         {
             Argument.AssertNotNull(communicationIdentifier, nameof(communicationIdentifier));
             Argument.AssertNotNull(name, nameof(name));
 
             CommunicationIdentifier = communicationIdentifier;
-            Type = type;
             Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="AcsCallEndedByProperties"/>. </summary>
         /// <param name="communicationIdentifier"> The communication identifier of the call ended by. </param>
-        /// <param name="type"> The type of call ended by. </param>
+        /// <param name="kind"> The type of call ended by. </param>
         /// <param name="name"> The name of the call ended by. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind type, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AcsCallEndedByProperties(CommunicationIdentifierModel communicationIdentifier, AcsCallEndedByKind? kind, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CommunicationIdentifier = communicationIdentifier;
-            Type = type;
+            Kind = kind;
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -81,7 +79,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The communication identifier of the call ended by. </summary>
         public CommunicationIdentifierModel CommunicationIdentifier { get; }
         /// <summary> The type of call ended by. </summary>
-        public AcsCallEndedByKind Type { get; }
+        public AcsCallEndedByKind? Kind { get; }
         /// <summary> The name of the call ended by. </summary>
         public string Name { get; }
     }
