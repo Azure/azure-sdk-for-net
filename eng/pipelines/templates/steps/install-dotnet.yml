@@ -4,10 +4,6 @@ parameters:
   Container: false
 
 steps:
-  - pwsh: |
-      dotnet msbuild eng/InstallDevopsLogger.proj /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"
-    displayName: Install DevOps Logger
-    condition: and(succeeded(), eq(${{ parameters.Container }}, false))
   # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
     displayName: 'Use .NET SDK'
