@@ -368,6 +368,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
     # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
+        if (!$pkg) { continue }
         Write-Host $pkg.GetType()
         Write-Host $pkg
         Write-Verbose "Processing changed files against $($pkg.Name). $pkgCounter of $($allPackageProperties.Count)."
