@@ -50,7 +50,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
       continue
     }
-    Write-Host $projectOutput
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
@@ -59,7 +58,6 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     }
 
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
-    Write-Host "PackageName: $pkgName == $($pkgProp.Name)"
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
