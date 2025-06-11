@@ -1,5 +1,10 @@
 # Release History
 
+## 1.14.1 (Unreleased)
+
+### Other Changes
+* Update `MessagePack` to 2.5.192
+
 ## 1.14.0 (2024-05-24)
 
 ### Other Changes
