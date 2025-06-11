@@ -253,6 +253,11 @@
     <PackageReference Update="Microsoft.Extensions.Options" Version="8.0.2" />
   </ItemGroup>
 
+  <!-- Packages intended for Microsoft.* client libraries only -->
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' and $(MSBuildProjectName.StartsWith('Microsoft.'))">
+    <PackageReference Update="Azure.Identity" Version="1.13.1" />
+  </ItemGroup>
+
   <!-- Packages intended for WCF/CoreWCF Extensions libraries only -->
   <ItemGroup Condition="'$(IsWcfLibrary)' == 'true'">
     <PackageReference Update="CoreWCF.Primitives" Version="1.7.0" />
