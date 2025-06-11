@@ -9,8 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace BasicTypeSpec
 {
@@ -192,25 +190,5 @@ namespace BasicTypeSpec
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<ModelWithRequiredNullableProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="modelWithRequiredNullableProperties"> The <see cref="ModelWithRequiredNullableProperties"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ModelWithRequiredNullableProperties modelWithRequiredNullableProperties)
-        {
-            if (modelWithRequiredNullableProperties == null)
-            {
-                return null;
-            }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(modelWithRequiredNullableProperties, ModelSerializationExtensions.WireOptions);
-            return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="ModelWithRequiredNullableProperties"/> from. </param>
-        public static explicit operator ModelWithRequiredNullableProperties(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeModelWithRequiredNullableProperties(document.RootElement, ModelSerializationExtensions.WireOptions);
-        }
     }
 }

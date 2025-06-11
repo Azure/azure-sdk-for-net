@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
@@ -173,14 +172,6 @@ namespace Azure.Messaging.EventGrid.Namespaces
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
             content.JsonWriter.WriteObjectValue(rejectRequest, ModelSerializationExtensions.WireOptions);
             return content;
-        }
-
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="RejectRequest"/> from. </param>
-        public static explicit operator RejectRequest(Response result)
-        {
-            using Response response = result;
-            using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeRejectRequest(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
