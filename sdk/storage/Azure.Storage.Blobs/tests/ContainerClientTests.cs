@@ -27,7 +27,6 @@ using Azure.Storage.Tests.Shared;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Azure.Storage.Blobs.Test
 {
