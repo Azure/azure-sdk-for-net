@@ -505,6 +505,10 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
+    $packagesWithChanges | ForEach-Object {
+        Write-Host "Package: $($_.Name) Version: $($_.Version) Directory: $($_.DirectoryPath)"
+    }
+
     return $packagesWithChanges
 }
 
