@@ -142,14 +142,14 @@
       <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
     </RemoveDuplicates>
     
-    <!-- Write aggregated package info to file if OutputProjectFilePath is specified, otherwise output to console -->
-    <WriteLinesToFile Condition="'$(OutputProjectFilePath)' != ''" 
-                      File="$(OutputProjectFilePath)" 
+    <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified, otherwise output to console -->
+    <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
+                      File="$(OutputProjectInfoListFilePath)" 
                       Lines="@(PackageInfoLinesFiltered)" 
                       Overwrite="true" />
     
-    <!-- For compatibility with existing usage, also output to console when OutputProjectFilePath is not specified -->
-    <Message Condition="'$(OutputProjectFilePath)' == ''" 
+    <!-- For compatibility with existing usage, also output to console when OutputProjectInfoListFilePath is not specified -->
+    <Message Condition="'$(OutputProjectInfoListFilePath)' == ''" 
              Text="%(PackageInfoLinesFiltered.Identity)" 
              Importance="High" />
   </Target>

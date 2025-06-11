@@ -16,7 +16,9 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
+  $outputFilePath = Join-Path ([System.IO.Path]::GetTempPath()) "package-info-$([System.Guid]::NewGuid()).txt"
+  
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
   $msbuildOutput = dotnet msbuild `
     /nologo `
@@ -24,9 +26,17 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     "$ServiceProj" `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion `
+    /p:OutputProjectInfoListFilePath="$outputFilePath" `
     -tl:off
 
-  foreach ($projectOutput in $msbuildOutput)
+  # Read package info from file instead of console output
+  $packageInfoLines = @()
+  if (Test-Path $outputFilePath) {
+    $packageInfoLines = Get-Content $outputFilePath
+    Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+  }
+
+  foreach ($projectOutput in $packageInfoLines)
   {
     if (!$projectOutput) {
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
