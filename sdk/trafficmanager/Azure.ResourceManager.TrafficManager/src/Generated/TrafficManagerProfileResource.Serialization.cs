@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.TrafficManager
 {
     public partial class TrafficManagerProfileResource : IJsonModel<TrafficManagerProfileData>
     {
+        private static TrafficManagerProfileData s_dataDeserializationInstance;
+        private static TrafficManagerProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrafficManagerProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerProfileData>)Data).Write(writer, options);
 
-        TrafficManagerProfileData IJsonModel<TrafficManagerProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerProfileData>)Data).Create(ref reader, options);
+        TrafficManagerProfileData IJsonModel<TrafficManagerProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrafficManagerProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TrafficManagerProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrafficManagerProfileData>(Data, options, AzureResourceManagerTrafficManagerContext.Default);
 
         TrafficManagerProfileData IPersistableModel<TrafficManagerProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrafficManagerProfileData>(data, options, AzureResourceManagerTrafficManagerContext.Default);
 
-        string IPersistableModel<TrafficManagerProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrafficManagerProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrafficManagerProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

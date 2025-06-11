@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseClusterPrincipalAssignmentResource : IJsonModel<SynapseClusterPrincipalAssignmentData>
     {
+        private static SynapseClusterPrincipalAssignmentData s_dataDeserializationInstance;
+        private static SynapseClusterPrincipalAssignmentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseClusterPrincipalAssignmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseClusterPrincipalAssignmentData>)Data).Write(writer, options);
 
-        SynapseClusterPrincipalAssignmentData IJsonModel<SynapseClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseClusterPrincipalAssignmentData>)Data).Create(ref reader, options);
+        SynapseClusterPrincipalAssignmentData IJsonModel<SynapseClusterPrincipalAssignmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseClusterPrincipalAssignmentData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseClusterPrincipalAssignmentData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseClusterPrincipalAssignmentData IPersistableModel<SynapseClusterPrincipalAssignmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseClusterPrincipalAssignmentData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseClusterPrincipalAssignmentData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseClusterPrincipalAssignmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseClusterPrincipalAssignmentData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteSlotHybridConnectionResource : IJsonModel<RelayServiceConnectionEntityData>
     {
+        private static RelayServiceConnectionEntityData s_dataDeserializationInstance;
+        private static RelayServiceConnectionEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<RelayServiceConnectionEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RelayServiceConnectionEntityData>)Data).Write(writer, options);
 
-        RelayServiceConnectionEntityData IJsonModel<RelayServiceConnectionEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayServiceConnectionEntityData>)Data).Create(ref reader, options);
+        RelayServiceConnectionEntityData IJsonModel<RelayServiceConnectionEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RelayServiceConnectionEntityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<RelayServiceConnectionEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RelayServiceConnectionEntityData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         RelayServiceConnectionEntityData IPersistableModel<RelayServiceConnectionEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RelayServiceConnectionEntityData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<RelayServiceConnectionEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayServiceConnectionEntityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<RelayServiceConnectionEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RelayServiceConnectionEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

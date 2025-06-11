@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.WorkloadsSapVirtualInstance
 {
     public partial class SapVirtualInstanceResource : IJsonModel<SapVirtualInstanceData>
     {
+        private static SapVirtualInstanceData s_dataDeserializationInstance;
+        private static SapVirtualInstanceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SapVirtualInstanceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SapVirtualInstanceData>)Data).Write(writer, options);
 
-        SapVirtualInstanceData IJsonModel<SapVirtualInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapVirtualInstanceData>)Data).Create(ref reader, options);
+        SapVirtualInstanceData IJsonModel<SapVirtualInstanceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SapVirtualInstanceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SapVirtualInstanceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SapVirtualInstanceData>(Data, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
 
         SapVirtualInstanceData IPersistableModel<SapVirtualInstanceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SapVirtualInstanceData>(data, options, AzureResourceManagerWorkloadsSapVirtualInstanceContext.Default);
 
-        string IPersistableModel<SapVirtualInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapVirtualInstanceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SapVirtualInstanceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SapVirtualInstanceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.StreamAnalytics
 {
     public partial class StreamingJobTransformationResource : IJsonModel<StreamingJobTransformationData>
     {
+        private static StreamingJobTransformationData s_dataDeserializationInstance;
+        private static StreamingJobTransformationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<StreamingJobTransformationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobTransformationData>)Data).Write(writer, options);
 
-        StreamingJobTransformationData IJsonModel<StreamingJobTransformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobTransformationData>)Data).Create(ref reader, options);
+        StreamingJobTransformationData IJsonModel<StreamingJobTransformationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<StreamingJobTransformationData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<StreamingJobTransformationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<StreamingJobTransformationData>(Data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
         StreamingJobTransformationData IPersistableModel<StreamingJobTransformationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<StreamingJobTransformationData>(data, options, AzureResourceManagerStreamAnalyticsContext.Default);
 
-        string IPersistableModel<StreamingJobTransformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobTransformationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<StreamingJobTransformationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<StreamingJobTransformationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

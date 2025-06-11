@@ -784,6 +784,18 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteNull("http20Enabled");
                 }
             }
+            if (Optional.IsDefined(Http20ProxyFlag))
+            {
+                if (Http20ProxyFlag != null)
+                {
+                    writer.WritePropertyName("http20ProxyFlag"u8);
+                    writer.WriteNumberValue(Http20ProxyFlag.Value);
+                }
+                else
+                {
+                    writer.WriteNull("http20ProxyFlag");
+                }
+            }
             if (Optional.IsDefined(MinTlsVersion))
             {
                 if (MinTlsVersion != null)
@@ -1042,6 +1054,7 @@ namespace Azure.ResourceManager.AppService.Models
             SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default;
             bool? scmIPSecurityRestrictionsUseMain = default;
             bool? http20Enabled = default;
+            int? http20ProxyFlag = default;
             AppServiceSupportedTlsVersion? minTlsVersion = default;
             AppServiceTlsCipherSuite? minTlsCipherSuite = default;
             AppServiceSupportedTlsVersion? scmMinTlsVersion = default;
@@ -1689,6 +1702,16 @@ namespace Azure.ResourceManager.AppService.Models
                     http20Enabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (property.NameEquals("http20ProxyFlag"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        http20ProxyFlag = null;
+                        continue;
+                    }
+                    http20ProxyFlag = property.Value.GetInt32();
+                    continue;
+                }
                 if (property.NameEquals("minTlsVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -1890,6 +1913,7 @@ namespace Azure.ResourceManager.AppService.Models
                 scmIPSecurityRestrictionsDefaultAction,
                 scmIPSecurityRestrictionsUseMain,
                 http20Enabled,
+                http20ProxyFlag,
                 minTlsVersion,
                 minTlsCipherSuite,
                 scmMinTlsVersion,
@@ -3051,6 +3075,21 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  http20Enabled: ");
                     var boolValue = IsHttp20Enabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Http20ProxyFlag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  http20ProxyFlag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(Http20ProxyFlag))
+                {
+                    builder.Append("  http20ProxyFlag: ");
+                    builder.AppendLine($"{Http20ProxyFlag.Value}");
                 }
             }
 

@@ -133,7 +133,7 @@
             "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('primaryAccountName'))]"
           ],
           "type": "Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions",
-          "apiVersion": "2024-05-15",
+          "apiVersion": "2024-08-15",
           "name": "[concat(variables('primaryAccountName'), '/', guid(variables('customCosmosRoleName')))]",
           "properties": {
             "roleName": "[variables('customCosmosRoleName')]",
@@ -153,7 +153,7 @@
             "[resourceId('Microsoft.DocumentDB/databaseAccounts/tableRoleDefinitions', variables('primaryAccountName'), guid(variables('customCosmosRoleName')))]"
           ],
           "type": "Microsoft.DocumentDB/databaseAccounts/tableRoleAssignments",
-          "apiVersion": "2024-05-15",
+          "apiVersion": "2024-08-15",
           "name": "[concat(variables('primaryAccountName'), '/', guid(variables('customCosmosRoleName')))]",
           "properties": {
             "scope": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', resourceGroup().name, '/providers/Microsoft.DocumentDB/databaseAccounts/', variables('primaryAccountName'))]",

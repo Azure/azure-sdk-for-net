@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class LogsSiteConfigResource : IJsonModel<SiteLogsConfigData>
     {
+        private static SiteLogsConfigData s_dataDeserializationInstance;
+        private static SiteLogsConfigData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SiteLogsConfigData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SiteLogsConfigData>)Data).Write(writer, options);
 
-        SiteLogsConfigData IJsonModel<SiteLogsConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteLogsConfigData>)Data).Create(ref reader, options);
+        SiteLogsConfigData IJsonModel<SiteLogsConfigData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SiteLogsConfigData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SiteLogsConfigData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SiteLogsConfigData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         SiteLogsConfigData IPersistableModel<SiteLogsConfigData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SiteLogsConfigData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<SiteLogsConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteLogsConfigData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SiteLogsConfigData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SiteLogsConfigData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

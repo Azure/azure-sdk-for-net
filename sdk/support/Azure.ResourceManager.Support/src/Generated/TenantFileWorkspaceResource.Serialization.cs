@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Support
 {
     public partial class TenantFileWorkspaceResource : IJsonModel<FileWorkspaceDetailData>
     {
+        private static FileWorkspaceDetailData s_dataDeserializationInstance;
+        private static FileWorkspaceDetailData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<FileWorkspaceDetailData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FileWorkspaceDetailData>)Data).Write(writer, options);
 
-        FileWorkspaceDetailData IJsonModel<FileWorkspaceDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FileWorkspaceDetailData>)Data).Create(ref reader, options);
+        FileWorkspaceDetailData IJsonModel<FileWorkspaceDetailData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FileWorkspaceDetailData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<FileWorkspaceDetailData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FileWorkspaceDetailData>(Data, options, AzureResourceManagerSupportContext.Default);
 
         FileWorkspaceDetailData IPersistableModel<FileWorkspaceDetailData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FileWorkspaceDetailData>(data, options, AzureResourceManagerSupportContext.Default);
 
-        string IPersistableModel<FileWorkspaceDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FileWorkspaceDetailData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<FileWorkspaceDetailData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FileWorkspaceDetailData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

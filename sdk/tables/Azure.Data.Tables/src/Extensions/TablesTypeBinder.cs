@@ -139,32 +139,46 @@ namespace Azure.Data.Tables
             {
                 value = (T)(object) DateTime.Parse(propertyValue as string, CultureInfo.InvariantCulture, DateTimeStyles.RoundtripKind);
             }
+            else if (typeof(T) == typeof(TimeSpan))
+            {
+                value = (T)(object)TypeFormatters.ParseTimeSpan(propertyValue as string, "P");
+            }
+            else if (typeof(T) == typeof(TimeSpan?))
+            {
+                value = (T)(object)TypeFormatters.ParseTimeSpan(propertyValue as string, "P");
+            }
             else if (typeof(T) == typeof(string))
             {
-                value = (T)(object) (propertyValue as string);
+                value = (T)(object)(propertyValue as string);
             }
             else if (typeof(T) == typeof(int))
             {
-                value = (T)(object) (int)propertyValue;
+                value = (T)(object)(int)propertyValue;
             }
             else if (typeof(T) == typeof(int?))
             {
-                value = (T)(object) (int?)propertyValue;
+                value = (T)(object)(int?)propertyValue;
             }
             else if (typeof(T).IsEnum)
             {
-                value = (T)Enum.Parse(memberInfo.Type, propertyValue as string );
+                if (!Enum.IsDefined(memberInfo.Type, propertyValue as string))
+                    return false;
+
+                value = (T)Enum.Parse(memberInfo.Type, propertyValue as string);
             }
             else if (typeof(T).IsGenericType &&
                      typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>) &&
                      typeof(T).GetGenericArguments() is { Length: 1 } arguments &&
                      arguments[0].IsEnum)
             {
-                value = (T)Enum.Parse(arguments[0], propertyValue as string );
+                if (!Enum.IsDefined(arguments[0], propertyValue as string))
+                    return false;
+
+                value = (T)Enum.Parse(arguments[0], propertyValue as string);
             }
             else if (typeof(T) == typeof(ETag))
             {
-                value = (T)(object) new ETag(propertyValue as string);
+                value = (T)(object)new ETag(propertyValue as string);
             }
 
             return true;

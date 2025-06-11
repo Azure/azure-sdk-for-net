@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotDiagnosticAnalysisResource : IJsonModel<WebSiteAnalysisDefinitionData>
     {
+        private static WebSiteAnalysisDefinitionData s_dataDeserializationInstance;
+        private static WebSiteAnalysisDefinitionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WebSiteAnalysisDefinitionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WebSiteAnalysisDefinitionData>)Data).Write(writer, options);
 
-        WebSiteAnalysisDefinitionData IJsonModel<WebSiteAnalysisDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebSiteAnalysisDefinitionData>)Data).Create(ref reader, options);
+        WebSiteAnalysisDefinitionData IJsonModel<WebSiteAnalysisDefinitionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WebSiteAnalysisDefinitionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WebSiteAnalysisDefinitionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WebSiteAnalysisDefinitionData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         WebSiteAnalysisDefinitionData IPersistableModel<WebSiteAnalysisDefinitionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WebSiteAnalysisDefinitionData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<WebSiteAnalysisDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebSiteAnalysisDefinitionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WebSiteAnalysisDefinitionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WebSiteAnalysisDefinitionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

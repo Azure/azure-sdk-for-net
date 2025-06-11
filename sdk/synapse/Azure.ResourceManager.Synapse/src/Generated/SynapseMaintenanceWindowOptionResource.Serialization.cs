@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseMaintenanceWindowOptionResource : IJsonModel<SynapseMaintenanceWindowOptionData>
     {
+        private static SynapseMaintenanceWindowOptionData s_dataDeserializationInstance;
+        private static SynapseMaintenanceWindowOptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseMaintenanceWindowOptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMaintenanceWindowOptionData>)Data).Write(writer, options);
 
-        SynapseMaintenanceWindowOptionData IJsonModel<SynapseMaintenanceWindowOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMaintenanceWindowOptionData>)Data).Create(ref reader, options);
+        SynapseMaintenanceWindowOptionData IJsonModel<SynapseMaintenanceWindowOptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseMaintenanceWindowOptionData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseMaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseMaintenanceWindowOptionData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseMaintenanceWindowOptionData IPersistableModel<SynapseMaintenanceWindowOptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseMaintenanceWindowOptionData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseMaintenanceWindowOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseMaintenanceWindowOptionData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseMaintenanceWindowOptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseMaintenanceWindowOptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

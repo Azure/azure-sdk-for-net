@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -102,6 +103,74 @@ namespace Azure.ResourceManager.AppService.Mocking
                 }
             }
             return PageableHelpers.CreateEnumerable(FirstPageFunc, NextPageFunc);
+        }
+
+        /// <summary>
+        /// Description for Check if a resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual async Task<Response<ResourceNameAvailability>> CheckAppServiceNameAvailabilityAsync(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            AppServiceNameAvailabilityContent nameAvailabilityContent = new AppServiceNameAvailabilityContent(content.Name, content.ResourceType)
+            {
+                IsFqdn = content.IsFqdn,
+                EnvironmentId = content.EnvironmentId
+            };
+
+            var response = await CheckAppServiceNameAvailabilityAsync(nameAvailabilityContent, cancellationToken).ConfigureAwait(false);
+
+            return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason.ToString(), response.Value.Message, null), response.GetRawResponse());
+        }
+
+        /// <summary>
+        /// Description for Check if a resource name is available.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Web/checknameavailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-04-01</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> Name availability request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Response<ResourceNameAvailability> CheckAppServiceNameAvailability(ResourceNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        {
+            AppServiceNameAvailabilityContent nameAvailabilityContent = new AppServiceNameAvailabilityContent(content.Name, content.ResourceType)
+            {
+                IsFqdn = content.IsFqdn,
+                EnvironmentId = content.EnvironmentId
+            };
+
+            var response = CheckAppServiceNameAvailability(nameAvailabilityContent, cancellationToken);
+
+            return Response.FromValue(new ResourceNameAvailability(response.Value.IsNameAvailable, response.Value.Reason.ToString(), response.Value.Message, null), response.GetRawResponse());
         }
     }
 }

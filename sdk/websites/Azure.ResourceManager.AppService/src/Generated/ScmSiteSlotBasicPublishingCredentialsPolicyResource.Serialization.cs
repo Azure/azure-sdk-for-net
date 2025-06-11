@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class ScmSiteSlotBasicPublishingCredentialsPolicyResource : IJsonModel<CsmPublishingCredentialsPoliciesEntityData>
     {
+        private static CsmPublishingCredentialsPoliciesEntityData s_dataDeserializationInstance;
+        private static CsmPublishingCredentialsPoliciesEntityData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<CsmPublishingCredentialsPoliciesEntityData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<CsmPublishingCredentialsPoliciesEntityData>)Data).Write(writer, options);
 
-        CsmPublishingCredentialsPoliciesEntityData IJsonModel<CsmPublishingCredentialsPoliciesEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CsmPublishingCredentialsPoliciesEntityData>)Data).Create(ref reader, options);
+        CsmPublishingCredentialsPoliciesEntityData IJsonModel<CsmPublishingCredentialsPoliciesEntityData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<CsmPublishingCredentialsPoliciesEntityData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<CsmPublishingCredentialsPoliciesEntityData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         CsmPublishingCredentialsPoliciesEntityData IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<CsmPublishingCredentialsPoliciesEntityData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<CsmPublishingCredentialsPoliciesEntityData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

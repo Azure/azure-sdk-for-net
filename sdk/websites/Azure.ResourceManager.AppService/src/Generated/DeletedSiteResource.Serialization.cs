@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class DeletedSiteResource : IJsonModel<DeletedSiteData>
     {
+        private static DeletedSiteData s_dataDeserializationInstance;
+        private static DeletedSiteData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DeletedSiteData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DeletedSiteData>)Data).Write(writer, options);
 
-        DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedSiteData>)Data).Create(ref reader, options);
+        DeletedSiteData IJsonModel<DeletedSiteData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DeletedSiteData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DeletedSiteData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DeletedSiteData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         DeletedSiteData IPersistableModel<DeletedSiteData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DeletedSiteData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedSiteData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DeletedSiteData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DeletedSiteData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

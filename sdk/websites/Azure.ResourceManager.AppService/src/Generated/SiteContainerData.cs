@@ -74,10 +74,11 @@ namespace Azure.ResourceManager.AppService
         /// <param name="createdOn"> Created Time. </param>
         /// <param name="lastModifiedOn"> Last Modified Time. </param>
         /// <param name="volumeMounts"> List of volume mounts. </param>
+        /// <param name="inheritAppSettingsAndConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="environmentVariables"> List of environment variables. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, IList<WebAppEnvironmentVariable> environmentVariables, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal SiteContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string image, string targetPort, bool? isMain, string startUpCommand, SiteContainerAuthType? authType, string userName, string passwordSecret, string userManagedIdentityClientId, DateTimeOffset? createdOn, DateTimeOffset? lastModifiedOn, IList<SiteContainerVolumeMount> volumeMounts, bool? inheritAppSettingsAndConnectionStrings, IList<WebAppEnvironmentVariable> environmentVariables, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Image = image;
             TargetPort = targetPort;
@@ -90,6 +91,7 @@ namespace Azure.ResourceManager.AppService
             CreatedOn = createdOn;
             LastModifiedOn = lastModifiedOn;
             VolumeMounts = volumeMounts;
+            InheritAppSettingsAndConnectionStrings = inheritAppSettingsAndConnectionStrings;
             EnvironmentVariables = environmentVariables;
             Kind = kind;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -128,6 +130,9 @@ namespace Azure.ResourceManager.AppService
         /// <summary> List of volume mounts. </summary>
         [WirePath("properties.volumeMounts")]
         public IList<SiteContainerVolumeMount> VolumeMounts { get; }
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.inheritAppSettingsAndConnectionStrings")]
+        public bool? InheritAppSettingsAndConnectionStrings { get; set; }
         /// <summary> List of environment variables. </summary>
         [WirePath("properties.environmentVariables")]
         public IList<WebAppEnvironmentVariable> EnvironmentVariables { get; }

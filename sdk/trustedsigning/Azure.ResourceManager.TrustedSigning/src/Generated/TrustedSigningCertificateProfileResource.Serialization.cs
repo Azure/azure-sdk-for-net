@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.TrustedSigning
 {
     public partial class TrustedSigningCertificateProfileResource : IJsonModel<TrustedSigningCertificateProfileData>
     {
+        private static TrustedSigningCertificateProfileData s_dataDeserializationInstance;
+        private static TrustedSigningCertificateProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<TrustedSigningCertificateProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningCertificateProfileData>)Data).Write(writer, options);
 
-        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningCertificateProfileData>)Data).Create(ref reader, options);
+        TrustedSigningCertificateProfileData IJsonModel<TrustedSigningCertificateProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<TrustedSigningCertificateProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<TrustedSigningCertificateProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<TrustedSigningCertificateProfileData>(Data, options, AzureResourceManagerTrustedSigningContext.Default);
 
         TrustedSigningCertificateProfileData IPersistableModel<TrustedSigningCertificateProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<TrustedSigningCertificateProfileData>(data, options, AzureResourceManagerTrustedSigningContext.Default);
 
-        string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningCertificateProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<TrustedSigningCertificateProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<TrustedSigningCertificateProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

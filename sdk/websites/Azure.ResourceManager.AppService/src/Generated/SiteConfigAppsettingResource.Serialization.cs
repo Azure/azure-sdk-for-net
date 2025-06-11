@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteConfigAppsettingResource : IJsonModel<ApiKeyVaultReferenceData>
     {
+        private static ApiKeyVaultReferenceData s_dataDeserializationInstance;
+        private static ApiKeyVaultReferenceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ApiKeyVaultReferenceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiKeyVaultReferenceData>)Data).Write(writer, options);
 
-        ApiKeyVaultReferenceData IJsonModel<ApiKeyVaultReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiKeyVaultReferenceData>)Data).Create(ref reader, options);
+        ApiKeyVaultReferenceData IJsonModel<ApiKeyVaultReferenceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiKeyVaultReferenceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ApiKeyVaultReferenceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiKeyVaultReferenceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         ApiKeyVaultReferenceData IPersistableModel<ApiKeyVaultReferenceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiKeyVaultReferenceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<ApiKeyVaultReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiKeyVaultReferenceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ApiKeyVaultReferenceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiKeyVaultReferenceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

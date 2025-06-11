@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class WebSiteSlotContinuousWebJobResource : IJsonModel<ContinuousWebJobData>
     {
+        private static ContinuousWebJobData s_dataDeserializationInstance;
+        private static ContinuousWebJobData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContinuousWebJobData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContinuousWebJobData>)Data).Write(writer, options);
 
-        ContinuousWebJobData IJsonModel<ContinuousWebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContinuousWebJobData>)Data).Create(ref reader, options);
+        ContinuousWebJobData IJsonModel<ContinuousWebJobData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContinuousWebJobData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContinuousWebJobData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContinuousWebJobData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         ContinuousWebJobData IPersistableModel<ContinuousWebJobData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContinuousWebJobData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<ContinuousWebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContinuousWebJobData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContinuousWebJobData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContinuousWebJobData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

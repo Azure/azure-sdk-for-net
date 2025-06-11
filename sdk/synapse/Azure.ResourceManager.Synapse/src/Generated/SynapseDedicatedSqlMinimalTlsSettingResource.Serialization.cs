@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Synapse
 {
     public partial class SynapseDedicatedSqlMinimalTlsSettingResource : IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>
     {
+        private static SynapseDedicatedSqlMinimalTlsSettingData s_dataDeserializationInstance;
+        private static SynapseDedicatedSqlMinimalTlsSettingData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>)Data).Write(writer, options);
 
-        SynapseDedicatedSqlMinimalTlsSettingData IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>)Data).Create(ref reader, options);
+        SynapseDedicatedSqlMinimalTlsSettingData IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SynapseDedicatedSqlMinimalTlsSettingData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SynapseDedicatedSqlMinimalTlsSettingData>(Data, options, AzureResourceManagerSynapseContext.Default);
 
         SynapseDedicatedSqlMinimalTlsSettingData IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SynapseDedicatedSqlMinimalTlsSettingData>(data, options, AzureResourceManagerSynapseContext.Default);
 
-        string IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SynapseDedicatedSqlMinimalTlsSettingData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

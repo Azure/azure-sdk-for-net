@@ -1,0 +1,77 @@
+parameters:
+  Tag: 'latest'
+  ArtifactName: 'packages'
+  DependsOn: []
+  Environment: 'package-publish'
+  Registry: 'https://registry.npmjs.org/'
+
+jobs:
+- deployment: PublishPackage_${{ parameters.ArtifactName }}
+  displayName: 'Publish ${{ parameters.ArtifactName }} to ${{ parameters.Registry }}'  
+  environment: ${{ parameters.Environment }}
+  dependsOn: ${{ parameters.DependsOn }}
+  variables:
+    - name: ArtifactPath
+      value: $(Pipeline.Workspace)/${{ parameters.ArtifactName }}
+
+  templateContext:
+    type: releaseJob
+    isProduction: ${{ eq(parameters.Registry, 'https://registry.npmjs.org/') }}
+    inputs:
+    - input: pipelineArtifact
+      artifactName: ${{ parameters.ArtifactName }}
+      itemPattern: '**/*.tgz'
+      targetPath: $(ArtifactPath)
+
+  pool:
+    name: azsdk-pool
+    image: ubuntu-24.04
+    os: linux
+  
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - pwsh: |
+            foreach ($package in (dir $(ArtifactPath) *.tgz -Recurse)) {
+              Write-Host "Publishing $package to ${{ parameters.Registry }} with tag ${{ parameters.Tag }}"
+            }
+          displayName: 'Display packages to be published'
+
+        - ${{ if eq(parameters.Registry, 'https://registry.npmjs.org/') }}:
+          - task: EsrpRelease@9
+            displayName: 'Publish ${{ parameters.ArtifactName }} via ESRP'
+            inputs:
+              ConnectedServiceName: 'Azure SDK PME Managed Identity'
+              ClientId: '5f81938c-2544-4f1f-9251-dd9de5b8a81b'
+              DomainTenantId: '975f013f-7f24-47e8-a7d3-abc4752bf346'
+              Usemanagedidentity: true
+              KeyVaultName: 'kv-azuresdk-codesign'
+              SignCertName: 'azure-sdk-esrp-release-certificate'
+              Intent: 'PackageDistribution'
+              ContentType: 'npm'
+              FolderLocation: $(ArtifactPath)
+              Owners: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+              Approvers: ${{ coalesce(variables['Build.RequestedForEmail'], 'azuresdk@microsoft.com') }}
+              ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
+              MainPublisher: 'ESRPRELPACMANTEST'
+              productstate: ${{ parameters.Tag }}
+
+        - ${{ else }}:
+          - template: /eng/common/pipelines/templates/steps/create-authenticated-npmrc.yml
+            parameters:
+              npmrcPath: $(ArtifactPath)/.npmrc
+              registryUrl: ${{ parameters.Registry }}
+
+          - pwsh: |
+              foreach ($package in (dir $(ArtifactPath) *.tgz -Recurse)) {
+                Write-Host "npm publish $package --verbose --access public --tag ${{ parameters.Tag }} --registry ${{ parameters.Registry }}"
+                npm publish $package --verbose --access public --tag ${{ parameters.Tag }} --registry ${{ parameters.Registry }}
+                if ($LASTEXITCODE -ne 0) {
+                  Write-Error "Failed to publish $package to ${{ parameters.Registry }}"
+                  exit $LASTEXITCODE
+                }
+              }
+            displayName: 'Publish ${{ parameters.ArtifactName }}'
+            workingDirectory: $(ArtifactPath)
+            

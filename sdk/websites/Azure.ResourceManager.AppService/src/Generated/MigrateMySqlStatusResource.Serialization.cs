@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class MigrateMySqlStatusResource : IJsonModel<MigrateMySqlStatusData>
     {
+        private static MigrateMySqlStatusData s_dataDeserializationInstance;
+        private static MigrateMySqlStatusData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<MigrateMySqlStatusData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<MigrateMySqlStatusData>)Data).Write(writer, options);
 
-        MigrateMySqlStatusData IJsonModel<MigrateMySqlStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrateMySqlStatusData>)Data).Create(ref reader, options);
+        MigrateMySqlStatusData IJsonModel<MigrateMySqlStatusData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<MigrateMySqlStatusData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<MigrateMySqlStatusData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<MigrateMySqlStatusData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         MigrateMySqlStatusData IPersistableModel<MigrateMySqlStatusData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<MigrateMySqlStatusData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<MigrateMySqlStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrateMySqlStatusData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<MigrateMySqlStatusData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<MigrateMySqlStatusData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppService
 {
     public partial class SiteSlotDiagnosticDetectorResource : IJsonModel<DetectorDefinitionResourceData>
     {
+        private static DetectorDefinitionResourceData s_dataDeserializationInstance;
+        private static DetectorDefinitionResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DetectorDefinitionResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DetectorDefinitionResourceData>)Data).Write(writer, options);
 
-        DetectorDefinitionResourceData IJsonModel<DetectorDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DetectorDefinitionResourceData>)Data).Create(ref reader, options);
+        DetectorDefinitionResourceData IJsonModel<DetectorDefinitionResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DetectorDefinitionResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DetectorDefinitionResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DetectorDefinitionResourceData>(Data, options, AzureResourceManagerAppServiceContext.Default);
 
         DetectorDefinitionResourceData IPersistableModel<DetectorDefinitionResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DetectorDefinitionResourceData>(data, options, AzureResourceManagerAppServiceContext.Default);
 
-        string IPersistableModel<DetectorDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DetectorDefinitionResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DetectorDefinitionResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DetectorDefinitionResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
