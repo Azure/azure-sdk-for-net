@@ -28,7 +28,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   foreach ($projectOutput in $msbuildOutput)
   {
-    $projectOutput = $projectOutput.Trim().Replace("##vso[task.logissue"), "vso[task.logissue"
+    $projectOutput = $projectOutput.Trim().Replace("##vso[task.logissue", "vso[task.logissue")
 
     if (!$projectOutput) {
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
@@ -37,8 +37,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
-      $pkgPathSafeOutput = $projectOutput.Replace("##", "")
-      Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$pkgPathSafeOutput'."
+      Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
     }
 
