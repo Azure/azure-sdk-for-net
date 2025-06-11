@@ -10,7 +10,7 @@
 
 ### Other Changes
 
-## 1.0.0-beta.1 (2025-06-10)
+## 1.0.0-beta.1 (2025-05-23)
 
 ### Features Added
 
