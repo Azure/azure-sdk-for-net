@@ -2807,7 +2807,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2026_02_06)]
         public async Task ListBlobsFlatSegmentAsync_StartFrom()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
@@ -3323,13 +3323,13 @@ namespace Azure.Storage.Blobs.Test
             // Arrange
             await SetUpContainerForListing(test.Container);
 
-            GetBlobsOptions options = new GetBlobsOptions
+            GetBlobsByHierarchyOptions options = new GetBlobsByHierarchyOptions
             {
                 StartFrom = "foo"
             };
 
             // Act
-            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(getBlobsByHierarchyOptions).ToListAsync();
+            IList<BlobHierarchyItem> blobHierachyItems = await test.Container.GetBlobsByHierarchyAsync(options).ToListAsync();
 
             // Assert
             Assert.AreEqual(3, blobHierachyItems.Count);
