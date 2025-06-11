@@ -42,6 +42,7 @@ namespace Azure.ResourceManager.DependencyMap.Samples
             string sourceName = "sourceTest1";
             DependencyMapDiscoverySourceData data = new DependencyMapDiscoverySourceData(new AzureLocation("y"))
             {
+                Properties = default,
                 Tags = { },
             };
             ArmOperation<DependencyMapDiscoverySourceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sourceName, data);

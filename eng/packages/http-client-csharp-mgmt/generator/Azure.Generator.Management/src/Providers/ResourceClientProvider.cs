@@ -5,9 +5,9 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Generator.Management.Extensions;
 using Azure.Generator.Management.Models;
-using Azure.Generator.Management.Primitives;
 using Azure.Generator.Management.Providers.OperationMethodProviders;
 using Azure.Generator.Management.Snippets;
+using Azure.Generator.Management.Providers.TagMethodProviders;
 using Azure.Generator.Management.Utilities;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
@@ -102,6 +102,7 @@ namespace Azure.Generator.Management.Providers
 
         internal ModelProvider ResourceData { get; }
         internal string SpecName { get; }
+        internal IReadOnlyCollection<InputServiceMethod> ResourceServiceMethods => _resourceServiceMethods;
 
         public bool IsSingleton { get; }
 
@@ -195,6 +196,7 @@ namespace Azure.Generator.Management.Providers
         }
 
         internal const string ValidateResourceIdMethodName = "ValidateResourceId";
+
         protected MethodProvider BuildValidateResourceIdMethod()
         {
             var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
@@ -265,7 +267,17 @@ namespace Azure.Generator.Management.Providers
                 }
             }
 
-            return [BuildValidateResourceIdMethod(), .. operationMethods];
+            return [
+                BuildValidateResourceIdMethod(),
+                .. operationMethods,
+                new AddTagMethodProvider(this, true),
+                new AddTagMethodProvider(this, false),
+                // Disabled SetTag methods generation temporarily: The extension method ReplaceWith for IDictionary<string, string> is defined in SharedExtensions.cs, which is not included in the project yet.
+                // new SetTagsMethodProvider(this, true),
+                // new SetTagsMethodProvider(this, false),
+                new RemoveTagMethodProvider(this, true),
+                new RemoveTagMethodProvider(this, false)
+            ];
         }
 
         protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
@@ -288,6 +300,60 @@ namespace Azure.Generator.Management.Providers
             apiVersion = apiVersionDeclaration.As<string>();
             var invocation = new InvokeMethodExpression(This, "TryGetApiVersion", [ResourceTypeExpression, new DeclarationExpression(apiVersionDeclaration, true)]);
             return invocation.As<bool>();
+        }
+
+        public ValueExpression[] PopulateArguments(
+            IReadOnlyList<ParameterProvider> parameters,
+            VariableExpression contextVariable,
+            MethodProvider? convenienceMethod = null)
+        {
+            var arguments = new List<ValueExpression>();
+            foreach (var parameter in parameters)
+            {
+                if (parameter.Name.Equals("subscriptionId", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        Static(typeof(Guid)).Invoke(
+                            nameof(Guid.Parse),
+                            This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.SubscriptionId))));
+                }
+                else if (parameter.Name.Equals("resourceGroupName", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
+                }
+                // TODO: handle parents
+                // Handle resource name - the last contextual parameter
+                else if (parameter.Name.Equals(ContextualParameters.Last(), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    arguments.Add(
+                        This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.Name)));
+                }
+                else if (parameter.Type.Equals(typeof(RequestContent)))
+                {
+                    // If convenience method is provided, find the resource parameter from it
+                    if (convenienceMethod != null)
+                    {
+                        var resource = convenienceMethod.Signature.Parameters
+                            .Single(p => p.Type.Equals(ResourceData.Type));
+                        arguments.Add(resource);
+                    }
+                    else
+                    {
+                        // Otherwise just add the parameter as-is
+                        arguments.Add(parameter);
+                    }
+                }
+                else if (parameter.Type.Equals(typeof(RequestContext)))
+                {
+                    arguments.Add(contextVariable);
+                }
+                else
+                {
+                    arguments.Add(parameter);
+                }
+            }
+            return [.. arguments];
         }
     }
 }
