@@ -12,12 +12,16 @@ namespace Azure.Storage.Files.Shares.Models
     {
         /// <summary> Initializes a new instance of <see cref="ShareProtocolSettings"/>. </summary>
         /// <param name="smb"> Settings for SMB protocol. </param>
-        internal ShareProtocolSettings(ShareSmbSettings smb)
+        /// <param name="nfs"> Settings for NFS protocol. </param>
+        internal ShareProtocolSettings(ShareSmbSettings smb, ShareNfsSettings nfs)
         {
             Smb = smb;
+            Nfs = nfs;
         }
 
         /// <summary> Settings for SMB protocol. </summary>
         public ShareSmbSettings Smb { get; set; }
+        /// <summary> Settings for NFS protocol. </summary>
+        public ShareNfsSettings Nfs { get; set; }
     }
 }

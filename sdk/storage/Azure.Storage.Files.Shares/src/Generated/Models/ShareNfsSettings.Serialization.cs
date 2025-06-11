@@ -12,15 +12,11 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    public partial class ShareSmbSettings : IXmlSerializable
+    public partial class ShareNfsSettings : IXmlSerializable
     {
         void IXmlSerializable.Write(XmlWriter writer, string nameHint)
         {
             writer.WriteStartElement(nameHint ?? "SMB");
-            if (Common.Optional.IsDefined(Multichannel))
-            {
-                writer.WriteObjectValue(Multichannel, "Multichannel");
-            }
             if (Common.Optional.IsDefined(EncryptionInTransit))
             {
                 writer.WriteStartElement("EncryptionInTransit");
@@ -30,19 +26,14 @@ namespace Azure.Storage.Files.Shares.Models
             writer.WriteEndElement();
         }
 
-        internal static ShareSmbSettings DeserializeShareSmbSettings(XElement element)
+        internal static ShareNfsSettings DeserializeShareNfsSettings(XElement element)
         {
-            SmbMultichannel multichannel = default;
             bool? encryptionInTransit = default;
-            if (element.Element("Multichannel") is XElement multichannelElement)
-            {
-                multichannel = SmbMultichannel.DeserializeSmbMultichannel(multichannelElement);
-            }
             if (element.Element("EncryptionInTransit") is XElement encryptionInTransitElement)
             {
                 encryptionInTransit = (bool?)encryptionInTransitElement;
             }
-            return new ShareSmbSettings(multichannel, encryptionInTransit);
+            return new ShareNfsSettings(encryptionInTransit);
         }
     }
 }

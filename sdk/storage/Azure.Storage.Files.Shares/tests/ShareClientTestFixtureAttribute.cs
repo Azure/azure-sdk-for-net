@@ -48,7 +48,7 @@ namespace Azure.Storage.Files.Shares.Tests
                 additionalParameters: additionalParameters)
         {
             RecordingServiceVersion = StorageVersionExtensions.MaxVersion;
-            LiveServiceVersions = new object[] { StorageVersionExtensions.LatestVersion, };
+            LiveServiceVersions = new object[] { ShareClientOptions.ServiceVersion.V2025_11_05, };
         }
     }
 }
