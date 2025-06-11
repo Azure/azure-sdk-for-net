@@ -142,16 +142,11 @@
       <Output TaskParameter="Filtered" ItemName="PackageInfoLinesFiltered"/>
     </RemoveDuplicates>
     
-    <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified, otherwise output to console -->
+    <!-- Write aggregated package info to file if OutputProjectInfoListFilePath is specified -->
     <WriteLinesToFile Condition="'$(OutputProjectInfoListFilePath)' != ''" 
                       File="$(OutputProjectInfoListFilePath)" 
                       Lines="@(PackageInfoLinesFiltered)" 
                       Overwrite="true" />
-    
-    <!-- For compatibility with existing usage, also output to console when OutputProjectInfoListFilePath is not specified -->
-    <Message Condition="'$(OutputProjectInfoListFilePath)' == ''" 
-             Text="%(PackageInfoLinesFiltered.Identity)" 
-             Importance="High" />
   </Target>
 
   <Target Name="GetCodeGenProjects">
