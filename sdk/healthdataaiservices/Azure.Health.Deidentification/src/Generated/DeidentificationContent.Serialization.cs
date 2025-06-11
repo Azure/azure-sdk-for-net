@@ -36,10 +36,10 @@ namespace Azure.Health.Deidentification
 
             writer.WritePropertyName("inputText"u8);
             writer.WriteStringValue(InputText);
-            if (Optional.IsDefined(Operation))
+            if (Optional.IsDefined(OperationType))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteStringValue(Operation.Value.ToString());
+                writer.WriteStringValue(OperationType.Value.ToString());
             }
             if (Optional.IsDefined(Customizations))
             {
@@ -129,7 +129,7 @@ namespace Azure.Health.Deidentification
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureHealthDeidentificationContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DeidentificationContent)} does not support writing '{options.Format}' format.");
             }

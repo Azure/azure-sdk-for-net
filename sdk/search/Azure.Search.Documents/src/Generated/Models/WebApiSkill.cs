@@ -11,7 +11,11 @@ using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code. </summary>
+    /// <summary>
+    /// A skill that can call a Web API endpoint, allowing you to extend a skillset by having it call your custom code.
+    /// Please note <see cref="WebApiSkill"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ChatCompletionSkill"/>.
+    /// </summary>
     public partial class WebApiSkill : SearchIndexerSkill
     {
         /// <summary> Initializes a new instance of <see cref="WebApiSkill"/>. </summary>

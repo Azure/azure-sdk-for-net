@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ScVmm
 {
     public partial class ScVmmAvailabilitySetResource : IJsonModel<ScVmmAvailabilitySetData>
     {
+        private static ScVmmAvailabilitySetData s_dataDeserializationInstance;
+        private static ScVmmAvailabilitySetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ScVmmAvailabilitySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmAvailabilitySetData>)Data).Write(writer, options);
 
-        ScVmmAvailabilitySetData IJsonModel<ScVmmAvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmAvailabilitySetData>)Data).Create(ref reader, options);
+        ScVmmAvailabilitySetData IJsonModel<ScVmmAvailabilitySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ScVmmAvailabilitySetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<ScVmmAvailabilitySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<ScVmmAvailabilitySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ScVmmAvailabilitySetData>(Data, options, AzureResourceManagerScVmmContext.Default);
 
-        ScVmmAvailabilitySetData IPersistableModel<ScVmmAvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmAvailabilitySetData>(data, options);
+        ScVmmAvailabilitySetData IPersistableModel<ScVmmAvailabilitySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ScVmmAvailabilitySetData>(data, options, AzureResourceManagerScVmmContext.Default);
 
-        string IPersistableModel<ScVmmAvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmAvailabilitySetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ScVmmAvailabilitySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ScVmmAvailabilitySetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

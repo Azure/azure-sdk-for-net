@@ -46,6 +46,12 @@ extends:
       safeName: AzureCore
       triggeringPaths:
       - /sdk/resourcemanager/
+      - /eng/Versioning.targets
+      - /eng/Packages.Data.props
+      - /eng/Directory.Build.Common.props
+      - /eng/Directory.Build.Common.targets
+      - /eng/service.proj
+
     - name: Azure.Core.Experimental
       safeName: AzureCoreExperimental
     - name: Azure.Core.Expressions.DataFactory

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(StorageTaskAssignmentCompletedEventDataConverter))]
     public partial class StorageTaskAssignmentCompletedEventData : IUtf8JsonSerializable, IJsonModel<StorageTaskAssignmentCompletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageTaskAssignmentCompletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -157,7 +159,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(StorageTaskAssignmentCompletedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -195,6 +197,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class StorageTaskAssignmentCompletedEventDataConverter : JsonConverter<StorageTaskAssignmentCompletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, StorageTaskAssignmentCompletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override StorageTaskAssignmentCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeStorageTaskAssignmentCompletedEventData(document.RootElement);
+            }
         }
     }
 }

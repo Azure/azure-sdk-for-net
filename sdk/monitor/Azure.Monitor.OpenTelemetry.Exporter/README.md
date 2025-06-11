@@ -11,7 +11,7 @@ The [OpenTelemetry .NET](https://github.com/open-telemetry/opentelemetry-dotnet)
 
 ### Migrating from Application Insights SDK
 
-If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=console). 
+If you are currently using the Application Insights SDK and want to migrate to OpenTelemetry, please follow our [migration guide](https://learn.microsoft.com/azure/azure-monitor/app/opentelemetry-dotnet-migrate?tabs=console).
 
 ### Already using OpenTelemetry?
 
@@ -19,7 +19,7 @@ If you are currently using OpenTelemetry and want to send telemetry data to Azur
 
 ### Install the package
 
-#### Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)  
+#### Latest Version: [![Nuget](https://img.shields.io/nuget/vpre/Azure.Monitor.OpenTelemetry.Exporter.svg)](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/)
 
 Install the Azure Monitor Exporter for OpenTelemetry .NET with [NuGet](https://www.nuget.org/):
 ```dotnetcli
@@ -31,7 +31,7 @@ dotnet add package Azure.Monitor.OpenTelemetry.Exporter
 Nightly builds are available from this repo's [dev feed](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md#nuget-package-dev-feed).
 These are provided without support and are not intended for production workloads.
 
-### Add the Exporter
+### Add the Exporter (per signal)
 
 The following examples demonstrate how to add the `AzureMonitorExporter` to your OpenTelemetry configuration.
 
@@ -68,6 +68,26 @@ It's important to keep the `TracerProvider`, `MeterProvider`, and `LoggerFactory
 
   For a complete example see [LogDemo.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter/tests/Azure.Monitor.OpenTelemetry.Exporter.Demo/Logs/LogDemo.cs).
 
+### Add the Exporter for all signals
+
+Starting with the `1.4.0-beta.3` version you can use the cross-cutting `UseAzureMonitorExporter` extension to simplify registration of the OTLP exporter for all signals (traces, metrics, and logs).
+
+> [!NOTE]
+> The cross cutting extension is currently only available when using the `AddOpenTelemetry` extension in the
+  [OpenTelemetry.Extensions.Hosting](https://www.nuget.org/packages/OpenTelemetry.Extensions.Hosting) package.
+
+The following example demonstrates how to add the `AzureMonitorExporter` to your OpenTelemetry configuration by using a single API.
+To use this API, you need to add OpenTelemetry to a `ServiceCollection`.
+This approach will also enable LiveMetrics.
+LiveMetrics can be disabled by setting `options.EnableLiveMetrics = false`.
+
+```csharp
+appBuilder.Services.AddOpenTelemetry()
+    .UseAzureMonitorExporter(options => {
+        options.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    });
+```
+
 ### Authenticate the client
 
 Azure Active Directory (AAD) authentication is an optional feature that can be used with the Azure Monitor Exporter.
@@ -103,10 +123,10 @@ There are two options to enable AAD authentication. Note that if both have been 
 
 Some key concepts for .NET include:
 
-- [Overview of .NET distributed tracing](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing): 
-  Distributed tracing is a diagnostic technique that helps engineers localize failures and performance issues within applications, especially those that may be distributed across multiple machines or processes. 
+- [Overview of .NET distributed tracing](https://learn.microsoft.com/dotnet/core/diagnostics/distributed-tracing):
+  Distributed tracing is a diagnostic technique that helps engineers localize failures and performance issues within applications, especially those that may be distributed across multiple machines or processes.
 
-- [Overview of Logging in .NET](https://learn.microsoft.com/dotnet/core/extensions/logging): 
+- [Overview of Logging in .NET](https://learn.microsoft.com/dotnet/core/extensions/logging):
   .NET supports a logging API that works with a variety of built-in and third-party logging providers.
 
 Some key concepts for Azure Monitor include:
@@ -125,10 +145,10 @@ Some key concepts for OpenTelemetry include:
   The ability to call the OpenTelemetry API directly by any application is
   facilitated by instrumentation. A library that enables OpenTelemetry observability for another library is called an Instrumentation Library.
 
-- [Tracing Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#tracing-signal): 
+- [Tracing Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#tracing-signal):
   Trace refers to distributed tracing. It can be thought of as a directed acyclic graph (DAG) of Spans, where the edges between Spans are defined as parent/child relationship.
 
-- [Sampling](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/sdk.md#sampling): 
+- [Sampling](https://github.com/open-telemetry/opentelemetry-specification/blob/master/specification/trace/sdk.md#sampling):
   Sampling is a mechanism to control the noise and overhead introduced by OpenTelemetry by reducing the number of samples of traces collected and sent to the backend.
 
 - [Metric Signal](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/overview.md#metric-signal):
@@ -180,6 +200,51 @@ In scenarios involving multiple scopes or a single scope with multiple key-value
 only the first occurrence of the key-value pair from the outermost scope will be recorded.
 However, when the same key is utilized both within a logging scope and directly in the log statement, the value specified in the log message template will take precedence.
 
+### CustomEvents
+
+Azure Monitor relies on OpenTelemetry's Log Signal to create CustomEvents.
+For .NET, users will use ILogger and place an attribute named `"microsoft.custom_event.name"` in the message template.
+Severity and CategoryName are not recorded in the CustomEvent.
+
+#### via ILogger.Log methods
+
+To send a CustomEvent via ILogger, include the `"microsoft.custom_event.name"` attribute in the message template.
+
+Note: This example shows `LogInformation`, but any Log method can be used.
+Severity is not recorded, but depending on your configuration it may be filtered out.
+Users should take care to select a severity for CustomEvents that is not filtered out by their configuration.
+
+```csharp
+var loggerFactory = LoggerFactory.Create(builder =>
+{
+    builder.AddOpenTelemetry(logging =>
+    {
+        logging.AddAzureMonitorLogExporter();
+    });
+});
+
+var logger = loggerFactory.CreateLogger(logCategoryName);
+logger.LogInformation("{microsoft.custom_event.name} {key1} {key2}", "MyCustomEventName", "value1", "value2");
+```
+
+This example generates a CustomEvent structured like this:
+
+```json
+{
+    "name": "Event",
+    "data": {
+        "baseType": "EventData",
+        "baseData": {
+            "name": "MyCustomEventName",
+            "properties": {
+                "key1": "value1",
+                "key2": "value2"
+            }
+        }
+    }
+}
+```
+
 ## Troubleshooting
 
 The Azure Monitor exporter uses EventSource for its own internal logging. The exporter logs are available to any EventListener by opting into the source named "OpenTelemetry-AzureMonitor-Exporter".
@@ -194,3 +259,27 @@ For more information on Azure SDK, please refer to [this website](https://azure.
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md) for details on contribution process.
+
+## AOT (Ahead-of-Time) Support
+
+This library supports usage in .NET applications compiled with [AOT (Ahead-of-Time) compilation](https://learn.microsoft.com/dotnet/core/deploying/native-aot/).
+All core features of the Azure Monitor Exporter are compatible with AOT, including telemetry export for traces, metrics, and logs.
+
+**Important:**  
+While AOT is supported, automatic configuration binding from `appsettings.json` or other `IConfiguration` sources is **not** supported in AOT-compiled applications.
+This is due to .NET limitations on reflection-based binding APIs (such as `ConfigurationBinder.Bind` and `Get<T>()`) in AOT scenarios.  
+  
+**Workaround:**  
+In AOT scenarios, you can configure the Azure Monitor Exporter using one of the following approaches:
+
+- **Environment Variable:** Set the `APPLICATIONINSIGHTS_CONNECTION_STRING` environment variable to configure the connection string.
+
+- **Programmatic Configuration:** Set the `AzureMonitorExporterOptions` directly in your application code:
+    ```csharp
+    builder.Services.AddOpenTelemetry()
+        .UseAzureMonitorExporter(options =>
+        {
+            options.ConnectionString = "<your-connection-string>";
+            // Set other options as needed
+        });
+    ```

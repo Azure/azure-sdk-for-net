@@ -636,5 +636,35 @@ namespace Azure.Communication.CallAutomation
             var createdCallFailedInternal = new CreateCallFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
             return new CreateCallFailed(createdCallFailedInternal);
         }
+
+        /// <summary> Initializes a new instance of IncomingCall. </summary>
+        /// <param name="to"> The recipient of the call. </param>
+        /// <param name="from"> The caller initiating the call.</param>
+        /// <param name="callerDisplayName"> The display name of the caller. </param>
+        /// <param name="serverCallId"> Server call ID. </param>
+        /// <param name="customContext"> Custom Sip and Voip Headers of call.</param>
+        /// <param name="incomingCallContext"> The context of the incoming call. </param>
+        /// <param name="onBehalfOfCallee"> The identifier of the user on whose behalf the call is received.</param>
+        /// <param name="correlationId"> The correlation ID for tracking the event. </param>
+        /// <returns>A new <see cref="CallAutomation.IncomingCall"/> instance for mocking. </returns>
+        public static IncomingCall IncomingCall(CommunicationIdentifier to = null, CommunicationIdentifier @from = null, string callerDisplayName = null, string serverCallId = null,
+            CustomCallingContext customContext = null, string incomingCallContext = null, CommunicationIdentifier onBehalfOfCallee = null, string correlationId = null)
+        {
+            var internalObject = new IncomingCallInternal(
+                to == null ? null : CommunicationIdentifierSerializer.Serialize(to),
+                @from == null ? null : CommunicationIdentifierSerializer.Serialize(@from),
+                callerDisplayName,
+                serverCallId,
+                customContext == null ? null : new CustomCallingContextInternal(
+                    customContext.VoipHeaders,
+                    customContext.SipHeaders,
+                    CustomCallContextHelpers.CreateTeamsPhoneCallDetailsInternal(customContext.TeamsPhoneCallDetails)),
+                incomingCallContext,
+                onBehalfOfCallee == null ? null : CommunicationIdentifierSerializer.Serialize(onBehalfOfCallee),
+                correlationId
+                );
+
+            return new IncomingCall(internalObject);
+        }
     }
 }

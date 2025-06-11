@@ -11,7 +11,7 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    /// <summary> Microsoft Fabric LakeHouse Files read settings. </summary>
+    /// <summary> Microsoft Fabric Lakehouse Files read settings. </summary>
     public partial class LakeHouseReadSettings : StoreReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="LakeHouseReadSettings"/>. </summary>
@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="recursive"> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="wildcardFolderPath"> Microsoft Fabric LakeHouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </param>
-        /// <param name="wildcardFileName"> Microsoft Fabric LakeHouse Files wildcardFileName. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFolderPath"> Microsoft Fabric Lakehouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </param>
+        /// <param name="wildcardFileName"> Microsoft Fabric Lakehouse Files wildcardFileName. Type: string (or Expression with resultType string). </param>
         /// <param name="fileListPath"> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </param>
         /// <param name="enablePartitionDiscovery"> Indicates whether to enable partition discovery. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="partitionRootPath"> Specify the root path where partition discovery starts from. Type: string (or Expression with resultType string). </param>
@@ -50,9 +50,9 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> If true, files under the folder path will be read recursively. Default is true. Type: boolean (or Expression with resultType boolean). </summary>
         public DataFactoryElement<bool> Recursive { get; set; }
-        /// <summary> Microsoft Fabric LakeHouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Microsoft Fabric Lakehouse Files wildcardFolderPath. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> WildcardFolderPath { get; set; }
-        /// <summary> Microsoft Fabric LakeHouse Files wildcardFileName. Type: string (or Expression with resultType string). </summary>
+        /// <summary> Microsoft Fabric Lakehouse Files wildcardFileName. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> WildcardFileName { get; set; }
         /// <summary> Point to a text file that lists each file (relative path to the path configured in the dataset) that you want to copy. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> FileListPath { get; set; }

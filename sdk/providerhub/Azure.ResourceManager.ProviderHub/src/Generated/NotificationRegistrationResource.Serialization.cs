@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ProviderHub
 {
     public partial class NotificationRegistrationResource : IJsonModel<NotificationRegistrationData>
     {
+        private static NotificationRegistrationData s_dataDeserializationInstance;
+        private static NotificationRegistrationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NotificationRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NotificationRegistrationData>)Data).Write(writer, options);
 
-        NotificationRegistrationData IJsonModel<NotificationRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationRegistrationData>)Data).Create(ref reader, options);
+        NotificationRegistrationData IJsonModel<NotificationRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NotificationRegistrationData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NotificationRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NotificationRegistrationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NotificationRegistrationData>(Data, options, AzureResourceManagerProviderHubContext.Default);
 
-        NotificationRegistrationData IPersistableModel<NotificationRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationRegistrationData>(data, options);
+        NotificationRegistrationData IPersistableModel<NotificationRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NotificationRegistrationData>(data, options, AzureResourceManagerProviderHubContext.Default);
 
-        string IPersistableModel<NotificationRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationRegistrationData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NotificationRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NotificationRegistrationData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "noEmit": true,
+    "composite": true,
+    "alwaysStrict": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "Node16",
+    "moduleResolution": "Node16",
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "sourceMap": true,
+    "declarationMap": true,
+    "strict": true,
+    "declaration": true,
+    "stripInternal": true,
+    "noEmitHelpers": false,
+    "target": "ES2022",
+    "types": ["node"],
+    "lib": ["es2022", "DOM"],
+    "experimentalDecorators": true,
+    "newLine": "LF"
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "vitest.config.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/.storybook/**/*.ts",
+    "**/.storybook/**/*.tsx"
+  ],
+  "exclude": ["**/node_modules/", "**/dist/", "**/build/", "**/coverage/"]
+}

@@ -1,27 +1,701 @@
 {
  "$id": "1",
- "Name": "Type.Property.Nullable",
- "ApiVersions": [],
- "Enums": [],
- "Models": [
+ "name": "Type.Property.Nullable",
+ "apiVersions": [],
+ "enums": [],
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "getNonNullContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "getNullContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "12",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "13",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "14",
+   "kind": "constant",
+   "name": "getNonNullContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "15",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "16",
+   "kind": "constant",
+   "name": "getNullContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "17",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "18",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType4",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "19",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType5",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType6",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "24",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType7",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "25",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "26",
+   "kind": "constant",
+   "name": "getNonNullContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "27",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "28",
+   "kind": "constant",
+   "name": "getNullContentType2",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "29",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "30",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType8",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "31",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "32",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType9",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "33",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "34",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType10",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "35",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "36",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType11",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "37",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "38",
+   "kind": "constant",
+   "name": "getNonNullContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "39",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "40",
+   "kind": "constant",
+   "name": "getNullContentType3",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "41",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "42",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType12",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "43",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "44",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType13",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "45",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "46",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType14",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "47",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "48",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType15",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "49",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "50",
+   "kind": "constant",
+   "name": "getNonNullContentType4",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "51",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "52",
+   "kind": "constant",
+   "name": "getNullContentType4",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "53",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "54",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType16",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "55",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "56",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType17",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "57",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "58",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType18",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "59",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "60",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType19",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "61",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "62",
+   "kind": "constant",
+   "name": "getNonNullContentType5",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "63",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "64",
+   "kind": "constant",
+   "name": "getNullContentType5",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "65",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "66",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType20",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "67",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "68",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType21",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "69",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "70",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType22",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "71",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "72",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType23",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "73",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "74",
+   "kind": "constant",
+   "name": "getNonNullContentType6",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "75",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "76",
+   "kind": "constant",
+   "name": "getNullContentType6",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "77",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "78",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType24",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "79",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "80",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType25",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "81",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "82",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType26",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "83",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  },
+  {
+   "$id": "84",
+   "kind": "constant",
+   "name": "PatchNonNullRequestContentType27",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "85",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/merge-patch+json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "86",
    "kind": "model",
-   "name": "CollectionsStringProperty",
+   "name": "StringProperty",
    "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with collection string properties",
+   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
    "decorators": [],
    "properties": [
     {
-     "$id": "3",
+     "$id": "87",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "4",
+      "$id": "88",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -32,36 +706,180 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.requiredProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.requiredProperty",
      "serializationOptions": {
-      "$id": "5",
+      "$id": "89",
       "json": {
-       "$id": "6",
+       "$id": "90",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "7",
+     "$id": "91",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "8",
+      "$id": "92",
       "kind": "nullable",
       "type": {
-       "$id": "9",
-       "kind": "array",
-       "name": "Array",
-       "valueType": {
-        "$id": "10",
+       "$id": "93",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "namespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "94",
+      "json": {
+       "$id": "95",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "96",
+   "kind": "model",
+   "name": "BytesProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "97",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "98",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "99",
+      "json": {
+       "$id": "100",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "101",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "102",
+      "kind": "nullable",
+      "type": {
+       "$id": "103",
+       "kind": "bytes",
+       "name": "bytes",
+       "encode": "base64",
+       "crossLanguageDefinitionId": "TypeSpec.bytes",
+       "decorators": []
+      },
+      "namespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "104",
+      "json": {
+       "$id": "105",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$id": "106",
+   "kind": "model",
+   "name": "DatetimeProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Model with a datetime property",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "107",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "108",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "109",
+      "json": {
+       "$id": "110",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "111",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "112",
+      "kind": "nullable",
+      "type": {
+       "$id": "113",
+       "kind": "utcDateTime",
+       "name": "utcDateTime",
+       "encode": "rfc3339",
+       "wireType": {
+        "$id": "114",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
        },
-       "crossLanguageDefinitionId": "TypeSpec.Array",
+       "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
        "decorators": []
       },
       "namespace": ""
@@ -71,11 +889,11 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.nullableProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "11",
+      "$id": "115",
       "json": {
-       "$id": "12",
+       "$id": "116",
        "name": "nullableProperty"
       }
      }
@@ -83,23 +901,23 @@
    ]
   },
   {
-   "$id": "13",
+   "$id": "117",
    "kind": "model",
-   "name": "CollectionsModelProperty",
+   "name": "DurationProperty",
    "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with collection models properties",
+   "doc": "Model with a duration property",
    "decorators": [],
    "properties": [
     {
-     "$id": "14",
+     "$id": "118",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "15",
+      "$id": "119",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -110,68 +928,37 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.requiredProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.requiredProperty",
      "serializationOptions": {
-      "$id": "16",
+      "$id": "120",
       "json": {
-       "$id": "17",
+       "$id": "121",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "18",
+     "$id": "122",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "19",
+      "$id": "123",
       "kind": "nullable",
       "type": {
-       "$id": "20",
-       "kind": "array",
-       "name": "ArrayInnerModel",
-       "valueType": {
-        "$id": "21",
-        "kind": "model",
-        "name": "InnerModel",
-        "namespace": "Type.Property.Nullable",
-        "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
-        "usage": "Input,Output,JsonMergePatch,Json",
-        "doc": "Inner model used in collections model property",
-        "decorators": [],
-        "properties": [
-         {
-          "$id": "22",
-          "kind": "property",
-          "name": "property",
-          "serializedName": "property",
-          "doc": "Inner model property",
-          "type": {
-           "$id": "23",
-           "kind": "string",
-           "name": "string",
-           "crossLanguageDefinitionId": "TypeSpec.string",
-           "decorators": []
-          },
-          "optional": false,
-          "readOnly": false,
-          "discriminator": false,
-          "flatten": false,
-          "decorators": [],
-          "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel.property",
-          "serializationOptions": {
-           "$id": "24",
-           "json": {
-            "$id": "25",
-            "name": "property"
-           }
-          }
-         }
-        ]
+       "$id": "124",
+       "kind": "duration",
+       "name": "duration",
+       "encode": "ISO8601",
+       "wireType": {
+        "$id": "125",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
        },
-       "crossLanguageDefinitionId": "TypeSpec.Array",
+       "crossLanguageDefinitionId": "TypeSpec.duration",
        "decorators": []
       },
       "namespace": ""
@@ -181,11 +968,11 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.nullableProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "26",
+      "$id": "126",
       "json": {
-       "$id": "27",
+       "$id": "127",
        "name": "nullableProperty"
       }
      }
@@ -193,10 +980,7 @@
    ]
   },
   {
-   "$ref": "21"
-  },
-  {
-   "$id": "28",
+   "$id": "128",
    "kind": "model",
    "name": "CollectionsByteProperty",
    "namespace": "Type.Property.Nullable",
@@ -206,13 +990,13 @@
    "decorators": [],
    "properties": [
     {
-     "$id": "29",
+     "$id": "129",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "30",
+      "$id": "130",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -225,28 +1009,28 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.requiredProperty",
      "serializationOptions": {
-      "$id": "31",
+      "$id": "131",
       "json": {
-       "$id": "32",
+       "$id": "132",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "33",
+     "$id": "133",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "34",
+      "$id": "134",
       "kind": "nullable",
       "type": {
-       "$id": "35",
+       "$id": "135",
        "kind": "array",
        "name": "Array",
        "valueType": {
-        "$id": "36",
+        "$id": "136",
         "kind": "bytes",
         "name": "bytes",
         "encode": "base64",
@@ -265,9 +1049,9 @@
      "decorators": [],
      "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByteProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "37",
+      "$id": "137",
       "json": {
-       "$id": "38",
+       "$id": "138",
        "name": "nullableProperty"
       }
      }
@@ -275,23 +1059,23 @@
    ]
   },
   {
-   "$id": "39",
+   "$id": "139",
    "kind": "model",
-   "name": "DurationProperty",
+   "name": "CollectionsModelProperty",
    "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty",
    "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with a duration property",
+   "doc": "Model with collection models properties",
    "decorators": [],
    "properties": [
     {
-     "$id": "40",
+     "$id": "140",
      "kind": "property",
      "name": "requiredProperty",
      "serializedName": "requiredProperty",
      "doc": "Required property",
      "type": {
-      "$id": "41",
+      "$id": "141",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -302,37 +1086,149 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.requiredProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.requiredProperty",
      "serializationOptions": {
-      "$id": "42",
+      "$id": "142",
       "json": {
-       "$id": "43",
+       "$id": "143",
        "name": "requiredProperty"
       }
      }
     },
     {
-     "$id": "44",
+     "$id": "144",
      "kind": "property",
      "name": "nullableProperty",
      "serializedName": "nullableProperty",
      "doc": "Property",
      "type": {
-      "$id": "45",
+      "$id": "145",
       "kind": "nullable",
       "type": {
-       "$id": "46",
-       "kind": "duration",
-       "name": "duration",
-       "encode": "ISO8601",
-       "wireType": {
-        "$id": "47",
+       "$id": "146",
+       "kind": "array",
+       "name": "ArrayInnerModel",
+       "valueType": {
+        "$id": "147",
+        "kind": "model",
+        "name": "InnerModel",
+        "namespace": "Type.Property.Nullable",
+        "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel",
+        "usage": "Input,Output,JsonMergePatch,Json",
+        "doc": "Inner model used in collections model property",
+        "decorators": [],
+        "properties": [
+         {
+          "$id": "148",
+          "kind": "property",
+          "name": "property",
+          "serializedName": "property",
+          "doc": "Inner model property",
+          "type": {
+           "$id": "149",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Type.Property.Nullable.InnerModel.property",
+          "serializationOptions": {
+           "$id": "150",
+           "json": {
+            "$id": "151",
+            "name": "property"
+           }
+          }
+         }
+        ]
+       },
+       "crossLanguageDefinitionId": "TypeSpec.Array",
+       "decorators": []
+      },
+      "namespace": ""
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModelProperty.nullableProperty",
+     "serializationOptions": {
+      "$id": "152",
+      "json": {
+       "$id": "153",
+       "name": "nullableProperty"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "$ref": "147"
+  },
+  {
+   "$id": "154",
+   "kind": "model",
+   "name": "CollectionsStringProperty",
+   "namespace": "Type.Property.Nullable",
+   "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty",
+   "usage": "Input,Output,JsonMergePatch,Json",
+   "doc": "Model with collection string properties",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "155",
+     "kind": "property",
+     "name": "requiredProperty",
+     "serializedName": "requiredProperty",
+     "doc": "Required property",
+     "type": {
+      "$id": "156",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.requiredProperty",
+     "serializationOptions": {
+      "$id": "157",
+      "json": {
+       "$id": "158",
+       "name": "requiredProperty"
+      }
+     }
+    },
+    {
+     "$id": "159",
+     "kind": "property",
+     "name": "nullableProperty",
+     "serializedName": "nullableProperty",
+     "doc": "Property",
+     "type": {
+      "$id": "160",
+      "kind": "nullable",
+      "type": {
+       "$id": "161",
+       "kind": "array",
+       "name": "Array1",
+       "valueType": {
+        "$id": "162",
         "kind": "string",
         "name": "string",
         "crossLanguageDefinitionId": "TypeSpec.string",
         "decorators": []
        },
-       "crossLanguageDefinitionId": "TypeSpec.duration",
+       "crossLanguageDefinitionId": "TypeSpec.Array",
        "decorators": []
       },
       "namespace": ""
@@ -342,233 +1238,11 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DurationProperty.nullableProperty",
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsStringProperty.nullableProperty",
      "serializationOptions": {
-      "$id": "48",
+      "$id": "163",
       "json": {
-       "$id": "49",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "50",
-   "kind": "model",
-   "name": "DatetimeProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Model with a datetime property",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "51",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "52",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.requiredProperty",
-     "serializationOptions": {
-      "$id": "53",
-      "json": {
-       "$id": "54",
-       "name": "requiredProperty"
-      }
-     }
-    },
-    {
-     "$id": "55",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "56",
-      "kind": "nullable",
-      "type": {
-       "$id": "57",
-       "kind": "utcDateTime",
-       "name": "utcDateTime",
-       "encode": "rfc3339",
-       "wireType": {
-        "$id": "58",
-        "kind": "string",
-        "name": "string",
-        "crossLanguageDefinitionId": "TypeSpec.string",
-        "decorators": []
-       },
-       "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
-       "decorators": []
-      },
-      "namespace": ""
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.DatetimeProperty.nullableProperty",
-     "serializationOptions": {
-      "$id": "59",
-      "json": {
-       "$id": "60",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "61",
-   "kind": "model",
-   "name": "BytesProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "62",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "63",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.requiredProperty",
-     "serializationOptions": {
-      "$id": "64",
-      "json": {
-       "$id": "65",
-       "name": "requiredProperty"
-      }
-     }
-    },
-    {
-     "$id": "66",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "67",
-      "kind": "nullable",
-      "type": {
-       "$id": "68",
-       "kind": "bytes",
-       "name": "bytes",
-       "encode": "base64",
-       "crossLanguageDefinitionId": "TypeSpec.bytes",
-       "decorators": []
-      },
-      "namespace": ""
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.BytesProperty.nullableProperty",
-     "serializationOptions": {
-      "$id": "69",
-      "json": {
-       "$id": "70",
-       "name": "nullableProperty"
-      }
-     }
-    }
-   ]
-  },
-  {
-   "$id": "71",
-   "kind": "model",
-   "name": "StringProperty",
-   "namespace": "Type.Property.Nullable",
-   "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty",
-   "usage": "Input,Output,JsonMergePatch,Json",
-   "doc": "Template type for testing models with nullable property. Pass in the type of the property you are looking for",
-   "decorators": [],
-   "properties": [
-    {
-     "$id": "72",
-     "kind": "property",
-     "name": "requiredProperty",
-     "serializedName": "requiredProperty",
-     "doc": "Required property",
-     "type": {
-      "$id": "73",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.requiredProperty",
-     "serializationOptions": {
-      "$id": "74",
-      "json": {
-       "$id": "75",
-       "name": "requiredProperty"
-      }
-     }
-    },
-    {
-     "$id": "76",
-     "kind": "property",
-     "name": "nullableProperty",
-     "serializedName": "nullableProperty",
-     "doc": "Property",
-     "type": {
-      "$id": "77",
-      "kind": "nullable",
-      "type": {
-       "$id": "78",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string",
-       "decorators": []
-      },
-      "namespace": ""
-     },
-     "optional": false,
-     "readOnly": false,
-     "discriminator": false,
-     "flatten": false,
-     "decorators": [],
-     "crossLanguageDefinitionId": "Type.Property.Nullable.StringProperty.nullableProperty",
-     "serializationOptions": {
-      "$id": "79",
-      "json": {
-       "$id": "80",
+       "$id": "164",
        "name": "nullableProperty"
       }
      }
@@ -576,2263 +1250,3229 @@
    ]
   }
  ],
- "Clients": [
+ "clients": [
   {
-   "$id": "81",
-   "Name": "NullableClient",
-   "Namespace": "Type.Property.Nullable",
-   "Doc": "Illustrates models with nullable properties.",
-   "Operations": [],
-   "Protocol": {
-    "$id": "82"
-   },
-   "Parameters": [
+   "$id": "165",
+   "kind": "client",
+   "name": "NullableClient",
+   "namespace": "Type.Property.Nullable",
+   "doc": "Illustrates models with nullable properties.",
+   "methods": [],
+   "parameters": [
     {
-     "$id": "83",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "84",
+     "$id": "166",
+     "name": "endpoint",
+     "nameInRequest": "endpoint",
+     "doc": "Service host",
+     "type": {
+      "$id": "167",
       "kind": "url",
       "name": "url",
       "crossLanguageDefinitionId": "TypeSpec.url"
      },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "85",
-      "Type": {
-       "$id": "86",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable"
-  },
-  {
-   "$id": "87",
-   "Name": "String",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
-    {
-     "$id": "88",
-     "Name": "getNonNull",
-     "ResourceName": "String",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "89",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "90",
-        "kind": "constant",
-        "valueType": {
-         "$id": "91",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "92",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "71"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/string/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "93",
-     "Name": "getNull",
-     "ResourceName": "String",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "94",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "95",
-        "kind": "constant",
-        "valueType": {
-         "$id": "96",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "97",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "71"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/string/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.String.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "98",
-     "Name": "patchNonNull",
-     "ResourceName": "String",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "99",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "100",
-        "kind": "constant",
-        "valueType": {
-         "$id": "101",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "102",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "71"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "103",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/string/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "104",
-     "Name": "patchNull",
-     "ResourceName": "String",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "105",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "106",
-        "kind": "constant",
-        "valueType": {
-         "$id": "107",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "108",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "71"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "109",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/string/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "110"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
-    {
-     "$id": "111",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "112",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "113",
-      "Type": {
-       "$id": "114",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.String"
-  },
-  {
-   "$id": "115",
-   "Name": "Bytes",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
-    {
-     "$id": "116",
-     "Name": "getNonNull",
-     "ResourceName": "Bytes",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "117",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "118",
-        "kind": "constant",
-        "valueType": {
-         "$id": "119",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "120",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "61"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/bytes/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "121",
-     "Name": "getNull",
-     "ResourceName": "Bytes",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "122",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "123",
-        "kind": "constant",
-        "valueType": {
-         "$id": "124",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "125",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "61"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/bytes/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "126",
-     "Name": "patchNonNull",
-     "ResourceName": "Bytes",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "127",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "128",
-        "kind": "constant",
-        "valueType": {
-         "$id": "129",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "130",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "61"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "131",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/bytes/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "132",
-     "Name": "patchNull",
-     "ResourceName": "Bytes",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "133",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "134",
-        "kind": "constant",
-        "valueType": {
-         "$id": "135",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "136",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "61"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "137",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/bytes/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "138"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
-    {
-     "$id": "139",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "140",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "141",
-      "Type": {
-       "$id": "142",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.Bytes"
-  },
-  {
-   "$id": "143",
-   "Name": "Datetime",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
-    {
-     "$id": "144",
-     "Name": "getNonNull",
-     "ResourceName": "Datetime",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "145",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "146",
-        "kind": "constant",
-        "valueType": {
-         "$id": "147",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "148",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "50"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/datetime/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "149",
-     "Name": "getNull",
-     "ResourceName": "Datetime",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "150",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "151",
-        "kind": "constant",
-        "valueType": {
-         "$id": "152",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "153",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "50"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/datetime/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "154",
-     "Name": "patchNonNull",
-     "ResourceName": "Datetime",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "155",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "156",
-        "kind": "constant",
-        "valueType": {
-         "$id": "157",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "158",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "50"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "159",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/datetime/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "160",
-     "Name": "patchNull",
-     "ResourceName": "Datetime",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "161",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "162",
-        "kind": "constant",
-        "valueType": {
-         "$id": "163",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "164",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "50"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "165",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/datetime/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "166"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
-    {
-     "$id": "167",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
+     "location": "Uri",
+     "isApiVersion": false,
+     "isContentType": false,
+     "isRequired": true,
+     "isEndpoint": true,
+     "skipUrlEncoding": false,
+     "explode": false,
+     "kind": "Client",
+     "defaultValue": {
       "$id": "168",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "169",
-      "Type": {
-       "$id": "170",
+      "type": {
+       "$id": "169",
        "kind": "string",
        "name": "string",
        "crossLanguageDefinitionId": "TypeSpec.string"
       },
-      "Value": "http://localhost:3000"
+      "value": "http://localhost:3000"
      }
     }
    ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.Datetime"
-  },
-  {
-   "$id": "171",
-   "Name": "Duration",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
+   "decorators": [],
+   "crossLanguageDefinitionId": "Type.Property.Nullable",
+   "apiVersions": [],
+   "children": [
     {
-     "$id": "172",
-     "Name": "getNonNull",
-     "ResourceName": "Duration",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
+     "$id": "170",
+     "kind": "client",
+     "name": "String",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
       {
-       "$id": "173",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "174",
-        "kind": "constant",
-        "valueType": {
+       "$id": "171",
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "172",
+        "name": "getNonNull",
+        "resourceName": "String",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "173",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "2"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "174",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "86"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/string/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
          "$id": "175",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "2"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "176",
+        "type": {
+         "$ref": "86"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNonNull"
+      },
+      {
+       "$id": "177",
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "178",
+        "name": "getNull",
+        "resourceName": "String",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "179",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "4"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "180",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "86"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/string/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "176",
-       "StatusCodes": [
-        200
+       "parameters": [
+        {
+         "$id": "181",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "4"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "BodyType": {
-        "$ref": "39"
+       "response": {
+        "$id": "182",
+        "type": {
+         "$ref": "86"
+        }
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/duration/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "177",
-     "Name": "getNull",
-     "ResourceName": "Duration",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "178",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "179",
-        "kind": "constant",
-        "valueType": {
-         "$id": "180",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "181",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "39"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/duration/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "182",
-     "Name": "patchNonNull",
-     "ResourceName": "Duration",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.String.getNull"
+      },
       {
        "$id": "183",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
         "$id": "184",
-        "kind": "constant",
-        "valueType": {
-         "$id": "185",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
+        "name": "patchNonNull",
+        "resourceName": "String",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "185",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "6"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "186",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "86"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "187",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/string/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
+       "parameters": [
+        {
+         "$id": "188",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "8"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "189",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "86"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "190"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNonNull"
       },
       {
-       "$id": "186",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "39"
+       "$id": "191",
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
+        "$id": "192",
+        "name": "patchNull",
+        "resourceName": "String",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "193",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "10"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "194",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "86"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "195",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/string/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull",
+        "decorators": []
        },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "187",
-       "StatusCodes": [
-        204
+       "parameters": [
+        {
+         "$id": "196",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "12"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "197",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "86"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "Headers": [],
-       "IsErrorResponse": false
+       "response": {
+        "$id": "198"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.String.patchNull"
       }
      ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/duration/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
+     "parameters": [
+      {
+       "$id": "199",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "200",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "201",
+        "type": {
+         "$id": "202",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
+      }
      ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull",
-     "Decorators": []
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.String",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
+     }
     },
     {
-     "$id": "188",
-     "Name": "patchNull",
-     "ResourceName": "Duration",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "189",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "190",
-        "kind": "constant",
-        "valueType": {
-         "$id": "191",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "192",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "39"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "193",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/duration/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "194"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
-    {
-     "$id": "195",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "196",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "197",
-      "Type": {
-       "$id": "198",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
-      },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.Duration"
-  },
-  {
-   "$id": "199",
-   "Name": "CollectionsByte",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
-    {
-     "$id": "200",
-     "Name": "getNonNull",
-     "ResourceName": "CollectionsByte",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "201",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "202",
-        "kind": "constant",
-        "valueType": {
-         "$id": "203",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
+     "$id": "203",
+     "kind": "client",
+     "name": "Bytes",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
       {
        "$id": "204",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "28"
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "205",
+        "name": "getNonNull",
+        "resourceName": "Bytes",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "206",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "14"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "207",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "96"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/bytes/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull",
+        "decorators": []
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/bytes/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "205",
-     "Name": "getNull",
-     "ResourceName": "CollectionsByte",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "206",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "207",
-        "kind": "constant",
-        "valueType": {
+       "parameters": [
+        {
          "$id": "208",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "209",
-       "StatusCodes": [
-        200
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "14"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "BodyType": {
-        "$ref": "28"
+       "response": {
+        "$id": "209",
+        "type": {
+         "$ref": "96"
+        }
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/bytes/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "210",
-     "Name": "patchNonNull",
-     "ResourceName": "CollectionsByte",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "211",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "212",
-        "kind": "constant",
-        "valueType": {
-         "$id": "213",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNonNull"
       },
       {
-       "$id": "214",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "28"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "215",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/bytes/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "216",
-     "Name": "patchNull",
-     "ResourceName": "CollectionsByte",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "217",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "218",
-        "kind": "constant",
-        "valueType": {
-         "$id": "219",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
+       "$id": "210",
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "211",
+        "name": "getNull",
+        "resourceName": "Bytes",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "212",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "16"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "213",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "96"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/bytes/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "220",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "28"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "221",
-       "StatusCodes": [
-        204
+       "parameters": [
+        {
+         "$id": "214",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "16"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/bytes/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "222"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
-    {
-     "$id": "223",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "224",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "225",
-      "Type": {
-       "$id": "226",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
+       "response": {
+        "$id": "215",
+        "type": {
+         "$ref": "96"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.getNull"
       },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte"
-  },
-  {
-   "$id": "227",
-   "Name": "CollectionsModel",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
-    {
-     "$id": "228",
-     "Name": "getNonNull",
-     "ResourceName": "CollectionsModel",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
       {
-       "$id": "229",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "230",
-        "kind": "constant",
-        "valueType": {
-         "$id": "231",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
+       "$id": "216",
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
+        "$id": "217",
+        "name": "patchNonNull",
+        "resourceName": "Bytes",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "218",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "18"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "219",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "96"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "220",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/bytes/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
+       "parameters": [
+        {
+         "$id": "221",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "20"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "222",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "96"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "223"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNonNull"
+      },
+      {
+       "$id": "224",
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
+        "$id": "225",
+        "name": "patchNull",
+        "resourceName": "Bytes",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "226",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "22"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "227",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "96"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "228",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/bytes/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "229",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "24"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "230",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "96"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "231"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes.patchNull"
       }
      ],
-     "Responses": [
+     "parameters": [
       {
        "$id": "232",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "13"
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "233",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/model/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "233",
-     "Name": "getNull",
-     "ResourceName": "CollectionsModel",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "234",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "235",
-        "kind": "constant",
-        "valueType": {
-         "$id": "236",
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "234",
+        "type": {
+         "$id": "235",
          "kind": "string",
          "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+         "crossLanguageDefinitionId": "TypeSpec.string"
         },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
+        "value": "http://localhost:3000"
+       }
       }
      ],
-     "Responses": [
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.Bytes",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
+     }
+    },
+    {
+     "$id": "236",
+     "kind": "client",
+     "name": "Datetime",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
       {
        "$id": "237",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "13"
-       },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/model/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "238",
-     "Name": "patchNonNull",
-     "ResourceName": "CollectionsModel",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "239",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "240",
-        "kind": "constant",
-        "valueType": {
-         "$id": "241",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "238",
+        "name": "getNonNull",
+        "resourceName": "Datetime",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "239",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "26"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "240",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "106"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/datetime/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "242",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "13"
+       "parameters": [
+        {
+         "$id": "241",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "26"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "242",
+        "type": {
+         "$ref": "106"
+        }
        },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNonNull"
+      },
       {
        "$id": "243",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/model/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "244",
-     "Name": "patchNull",
-     "ResourceName": "CollectionsModel",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "245",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "246",
-        "kind": "constant",
-        "valueType": {
-         "$id": "247",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "244",
+        "name": "getNull",
+        "resourceName": "Datetime",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "245",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "28"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "246",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "106"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/datetime/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
-      {
-       "$id": "248",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "13"
+       "parameters": [
+        {
+         "$id": "247",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "28"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "248",
+        "type": {
+         "$ref": "106"
+        }
        },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.getNull"
+      },
       {
        "$id": "249",
-       "StatusCodes": [
-        204
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
+        "$id": "250",
+        "name": "patchNonNull",
+        "resourceName": "Datetime",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "251",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "30"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "252",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "106"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "253",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/datetime/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "254",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "32"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "255",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "106"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/model/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "250"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
-    {
-     "$id": "251",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "252",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "253",
-      "Type": {
-       "$id": "254",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
+       "response": {
+        "$id": "256"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNonNull"
       },
-      "Value": "http://localhost:3000"
-     }
-    }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel"
-  },
-  {
-   "$id": "255",
-   "Name": "CollectionsString",
-   "Namespace": "Type.Property.Nullable",
-   "Operations": [
-    {
-     "$id": "256",
-     "Name": "getNonNull",
-     "ResourceName": "CollectionsString",
-     "Doc": "Get models that will return all properties in the model",
-     "Accessibility": "public",
-     "Parameters": [
       {
        "$id": "257",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
         "$id": "258",
-        "kind": "constant",
-        "valueType": {
-         "$id": "259",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
+        "name": "patchNull",
+        "resourceName": "Datetime",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "259",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "34"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "260",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "106"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "261",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/datetime/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "260",
-       "StatusCodes": [
-        200
+       "parameters": [
+        {
+         "$id": "262",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "36"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "263",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "106"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "BodyType": {
-        "$ref": "2"
+       "response": {
+        "$id": "264"
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime.patchNull"
       }
      ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/string/non-null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "261",
-     "Name": "getNull",
-     "ResourceName": "CollectionsString",
-     "Doc": "Get models that will return the default object",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "262",
-       "Name": "accept",
-       "NameInRequest": "Accept",
-       "Type": {
-        "$id": "263",
-        "kind": "constant",
-        "valueType": {
-         "$id": "264",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
+     "parameters": [
       {
        "$id": "265",
-       "StatusCodes": [
-        200
-       ],
-       "BodyType": {
-        "$ref": "2"
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "266",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
        },
-       "Headers": [],
-       "IsErrorResponse": false,
-       "ContentTypes": [
-        "application/json"
-       ]
-      }
-     ],
-     "HttpMethod": "GET",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/string/null",
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull",
-     "Decorators": []
-    },
-    {
-     "$id": "266",
-     "Name": "patchNonNull",
-     "ResourceName": "CollectionsString",
-     "Doc": "Put a body with all properties present.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "267",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "268",
-        "kind": "constant",
-        "valueType": {
-         "$id": "269",
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "267",
+        "type": {
+         "$id": "268",
          "kind": "string",
          "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
+         "crossLanguageDefinitionId": "TypeSpec.string"
         },
-        "value": "application/merge-patch+json",
-        "decorators": []
-       },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      },
+        "value": "http://localhost:3000"
+       }
+      }
+     ],
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.Datetime",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
+     }
+    },
+    {
+     "$id": "269",
+     "kind": "client",
+     "name": "Duration",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
       {
        "$id": "270",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "2"
-       },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "271",
-       "StatusCodes": [
-        204
-       ],
-       "Headers": [],
-       "IsErrorResponse": false
-      }
-     ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/string/non-null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
-     ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull",
-     "Decorators": []
-    },
-    {
-     "$id": "272",
-     "Name": "patchNull",
-     "ResourceName": "CollectionsString",
-     "Doc": "Put a body with default properties.",
-     "Accessibility": "public",
-     "Parameters": [
-      {
-       "$id": "273",
-       "Name": "contentType",
-       "NameInRequest": "Content-Type",
-       "Doc": "content-type is application/merge-patch+json",
-       "Type": {
-        "$id": "274",
-        "kind": "constant",
-        "valueType": {
-         "$id": "275",
-         "kind": "string",
-         "name": "string",
-         "crossLanguageDefinitionId": "TypeSpec.string",
-         "decorators": []
-        },
-        "value": "application/merge-patch+json",
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "271",
+        "name": "getNonNull",
+        "resourceName": "Duration",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "272",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "38"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "273",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "117"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/duration/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull",
         "decorators": []
        },
-       "Location": "Header",
-       "IsApiVersion": false,
-       "IsContentType": true,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Constant",
-       "Decorators": [],
-       "SkipUrlEncoding": false
+       "parameters": [
+        {
+         "$id": "274",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "38"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "275",
+        "type": {
+         "$ref": "117"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNonNull"
       },
       {
        "$id": "276",
-       "Name": "body",
-       "NameInRequest": "body",
-       "Type": {
-        "$ref": "2"
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "277",
+        "name": "getNull",
+        "resourceName": "Duration",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "278",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "40"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "279",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "117"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/duration/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull",
+        "decorators": []
        },
-       "Location": "Body",
-       "IsApiVersion": false,
-       "IsContentType": false,
-       "IsEndpoint": false,
-       "Explode": false,
-       "IsRequired": true,
-       "Kind": "Method",
-       "Decorators": [],
-       "SkipUrlEncoding": false
-      }
-     ],
-     "Responses": [
-      {
-       "$id": "277",
-       "StatusCodes": [
-        204
+       "parameters": [
+        {
+         "$id": "280",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "40"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
        ],
-       "Headers": [],
-       "IsErrorResponse": false
+       "response": {
+        "$id": "281",
+        "type": {
+         "$ref": "117"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.getNull"
+      },
+      {
+       "$id": "282",
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
+        "$id": "283",
+        "name": "patchNonNull",
+        "resourceName": "Duration",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "284",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "42"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "285",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "117"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "286",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/duration/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "287",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "44"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "288",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "117"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "289"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNonNull"
+      },
+      {
+       "$id": "290",
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
+        "$id": "291",
+        "name": "patchNull",
+        "resourceName": "Duration",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "292",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "46"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "293",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "117"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "294",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/duration/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "295",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "48"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "296",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "117"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "297"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.Duration.patchNull"
       }
      ],
-     "HttpMethod": "PATCH",
-     "Uri": "{endpoint}",
-     "Path": "/type/property/nullable/collections/string/null",
-     "RequestMediaTypes": [
-      "application/merge-patch+json"
+     "parameters": [
+      {
+       "$id": "298",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "299",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "300",
+        "type": {
+         "$id": "301",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
+      }
      ],
-     "BufferResponse": true,
-     "GenerateProtocolMethod": true,
-     "GenerateConvenienceMethod": false,
-     "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull",
-     "Decorators": []
-    }
-   ],
-   "Protocol": {
-    "$id": "278"
-   },
-   "Parent": "NullableClient",
-   "Parameters": [
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.Duration",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
+     }
+    },
     {
-     "$id": "279",
-     "Name": "endpoint",
-     "NameInRequest": "endpoint",
-     "Doc": "Service host",
-     "Type": {
-      "$id": "280",
-      "kind": "url",
-      "name": "url",
-      "crossLanguageDefinitionId": "TypeSpec.url"
-     },
-     "Location": "Uri",
-     "IsApiVersion": false,
-     "IsResourceParameter": false,
-     "IsContentType": false,
-     "IsRequired": true,
-     "IsEndpoint": true,
-     "SkipUrlEncoding": false,
-     "Explode": false,
-     "Kind": "Client",
-     "DefaultValue": {
-      "$id": "281",
-      "Type": {
-       "$id": "282",
-       "kind": "string",
-       "name": "string",
-       "crossLanguageDefinitionId": "TypeSpec.string"
+     "$id": "302",
+     "kind": "client",
+     "name": "CollectionsByte",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
+      {
+       "$id": "303",
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "304",
+        "name": "getNonNull",
+        "resourceName": "CollectionsByte",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "305",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "50"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "306",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "128"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/bytes/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "307",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "50"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "308",
+        "type": {
+         "$ref": "128"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNonNull"
       },
-      "Value": "http://localhost:3000"
+      {
+       "$id": "309",
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "310",
+        "name": "getNull",
+        "resourceName": "CollectionsByte",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "311",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "52"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "312",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "128"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/bytes/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "313",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "52"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "314",
+        "type": {
+         "$ref": "128"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.getNull"
+      },
+      {
+       "$id": "315",
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
+        "$id": "316",
+        "name": "patchNonNull",
+        "resourceName": "CollectionsByte",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "317",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "54"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "318",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "128"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "319",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/bytes/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "320",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "56"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "321",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "128"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "322"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNonNull"
+      },
+      {
+       "$id": "323",
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
+        "$id": "324",
+        "name": "patchNull",
+        "resourceName": "CollectionsByte",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "325",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "58"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "326",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "128"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "327",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/bytes/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "328",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "60"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "329",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "128"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "330"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte.patchNull"
+      }
+     ],
+     "parameters": [
+      {
+       "$id": "331",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "332",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "333",
+        "type": {
+         "$id": "334",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
+      }
+     ],
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsByte",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
+     }
+    },
+    {
+     "$id": "335",
+     "kind": "client",
+     "name": "CollectionsModel",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
+      {
+       "$id": "336",
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "337",
+        "name": "getNonNull",
+        "resourceName": "CollectionsModel",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "338",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "62"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "339",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "139"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/model/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "340",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "62"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "341",
+        "type": {
+         "$ref": "139"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNonNull"
+      },
+      {
+       "$id": "342",
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "343",
+        "name": "getNull",
+        "resourceName": "CollectionsModel",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "344",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "64"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "345",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "139"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/model/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "346",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "64"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "347",
+        "type": {
+         "$ref": "139"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.getNull"
+      },
+      {
+       "$id": "348",
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
+        "$id": "349",
+        "name": "patchNonNull",
+        "resourceName": "CollectionsModel",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "350",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "66"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "351",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "139"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "352",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/model/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "353",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "68"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "354",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "139"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "355"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNonNull"
+      },
+      {
+       "$id": "356",
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
+        "$id": "357",
+        "name": "patchNull",
+        "resourceName": "CollectionsModel",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "358",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "70"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "359",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "139"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "360",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/model/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "361",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "72"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "362",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "139"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "363"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel.patchNull"
+      }
+     ],
+     "parameters": [
+      {
+       "$id": "364",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "365",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "366",
+        "type": {
+         "$id": "367",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
+      }
+     ],
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsModel",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
+     }
+    },
+    {
+     "$id": "368",
+     "kind": "client",
+     "name": "CollectionsString",
+     "namespace": "Type.Property.Nullable",
+     "methods": [
+      {
+       "$id": "369",
+       "kind": "basic",
+       "name": "getNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return all properties in the model",
+       "operation": {
+        "$id": "370",
+        "name": "getNonNull",
+        "resourceName": "CollectionsString",
+        "doc": "Get models that will return all properties in the model",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "371",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "74"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "372",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "154"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/string/non-null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "373",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "74"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "374",
+        "type": {
+         "$ref": "154"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNonNull"
+      },
+      {
+       "$id": "375",
+       "kind": "basic",
+       "name": "getNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Get models that will return the default object",
+       "operation": {
+        "$id": "376",
+        "name": "getNull",
+        "resourceName": "CollectionsString",
+        "doc": "Get models that will return the default object",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "377",
+          "name": "accept",
+          "nameInRequest": "Accept",
+          "type": {
+           "$ref": "76"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "378",
+          "statusCodes": [
+           200
+          ],
+          "bodyType": {
+           "$ref": "154"
+          },
+          "headers": [],
+          "isErrorResponse": false,
+          "contentTypes": [
+           "application/json"
+          ]
+         }
+        ],
+        "httpMethod": "GET",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/string/null",
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": true,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "379",
+         "name": "accept",
+         "nameInRequest": "accept",
+         "type": {
+          "$ref": "76"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "380",
+        "type": {
+         "$ref": "154"
+        }
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.getNull"
+      },
+      {
+       "$id": "381",
+       "kind": "basic",
+       "name": "patchNonNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with all properties present.",
+       "operation": {
+        "$id": "382",
+        "name": "patchNonNull",
+        "resourceName": "CollectionsString",
+        "doc": "Put a body with all properties present.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "383",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "78"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "384",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "154"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "385",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/string/non-null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "386",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "80"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "387",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "154"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "388"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNonNull"
+      },
+      {
+       "$id": "389",
+       "kind": "basic",
+       "name": "patchNull",
+       "accessibility": "public",
+       "apiVersions": [],
+       "doc": "Put a body with default properties.",
+       "operation": {
+        "$id": "390",
+        "name": "patchNull",
+        "resourceName": "CollectionsString",
+        "doc": "Put a body with default properties.",
+        "accessibility": "public",
+        "parameters": [
+         {
+          "$id": "391",
+          "name": "contentType",
+          "nameInRequest": "Content-Type",
+          "doc": "content-type is application/merge-patch+json",
+          "type": {
+           "$ref": "82"
+          },
+          "location": "Header",
+          "isApiVersion": false,
+          "isContentType": true,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Constant",
+          "decorators": [],
+          "skipUrlEncoding": false
+         },
+         {
+          "$id": "392",
+          "name": "body",
+          "nameInRequest": "body",
+          "type": {
+           "$ref": "154"
+          },
+          "location": "Body",
+          "isApiVersion": false,
+          "isContentType": false,
+          "isEndpoint": false,
+          "explode": false,
+          "isRequired": true,
+          "kind": "Method",
+          "decorators": [],
+          "skipUrlEncoding": false
+         }
+        ],
+        "responses": [
+         {
+          "$id": "393",
+          "statusCodes": [
+           204
+          ],
+          "headers": [],
+          "isErrorResponse": false
+         }
+        ],
+        "httpMethod": "PATCH",
+        "uri": "{endpoint}",
+        "path": "/type/property/nullable/collections/string/null",
+        "requestMediaTypes": [
+         "application/merge-patch+json"
+        ],
+        "bufferResponse": true,
+        "generateProtocolMethod": true,
+        "generateConvenienceMethod": false,
+        "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull",
+        "decorators": []
+       },
+       "parameters": [
+        {
+         "$id": "394",
+         "name": "contentType",
+         "nameInRequest": "Content-Type",
+         "doc": "content-type is application/merge-patch+json",
+         "type": {
+          "$ref": "84"
+         },
+         "location": "Header",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Constant",
+         "decorators": [],
+         "skipUrlEncoding": false
+        },
+        {
+         "$id": "395",
+         "name": "body",
+         "nameInRequest": "body",
+         "type": {
+          "$ref": "154"
+         },
+         "location": "Body",
+         "isApiVersion": false,
+         "isContentType": false,
+         "isEndpoint": false,
+         "explode": false,
+         "isRequired": true,
+         "kind": "Method",
+         "decorators": [],
+         "skipUrlEncoding": false
+        }
+       ],
+       "response": {
+        "$id": "396"
+       },
+       "isOverride": false,
+       "generateConvenient": true,
+       "generateProtocol": true,
+       "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString.patchNull"
+      }
+     ],
+     "parameters": [
+      {
+       "$id": "397",
+       "name": "endpoint",
+       "nameInRequest": "endpoint",
+       "doc": "Service host",
+       "type": {
+        "$id": "398",
+        "kind": "url",
+        "name": "url",
+        "crossLanguageDefinitionId": "TypeSpec.url"
+       },
+       "location": "Uri",
+       "isApiVersion": false,
+       "isContentType": false,
+       "isRequired": true,
+       "isEndpoint": true,
+       "skipUrlEncoding": false,
+       "explode": false,
+       "kind": "Client",
+       "defaultValue": {
+        "$id": "399",
+        "type": {
+         "$id": "400",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "value": "http://localhost:3000"
+       }
+      }
+     ],
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString",
+     "apiVersions": [],
+     "parent": {
+      "$ref": "165"
      }
     }
-   ],
-   "Decorators": [],
-   "CrossLanguageDefinitionId": "Type.Property.Nullable.CollectionsString"
+   ]
   }
  ]
 }

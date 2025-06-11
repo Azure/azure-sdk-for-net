@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ProtectedItemCreate()
+        public async Task CreateOrUpdate_PutsTheProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Create.json
-            // this example is just showing the usage of "ProtectedItem_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Create.json
+            // this example is just showing the usage of "ProtectedItemModel_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,7 +41,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             string protectedItemName = "d";
-            DataReplicationProtectedItemData data = new DataReplicationProtectedItemData(new DataReplicationProtectedItemProperties("tjoeiynplt", "jwxdo", new GeneralProtectedItemModelCustomProperties()));
+            DataReplicationProtectedItemData data = new DataReplicationProtectedItemData
+            {
+                Properties = new DataReplicationProtectedItemProperties("tjoeiynplt", "jwxdo", default),
+            };
             ArmOperation<DataReplicationProtectedItemResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, protectedItemName, data);
             DataReplicationProtectedItemResource result = lro.Value;
 
@@ -54,10 +57,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ProtectedItemGet()
+        public async Task Get_GetsTheProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Get.json
-            // this example is just showing the usage of "ProtectedItem_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Get.json
+            // this example is just showing the usage of "ProtectedItemModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -88,10 +91,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ProtectedItemList()
+        public async Task GetAll_ListsTheProtectedItems()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_List.json
-            // this example is just showing the usage of "ProtectedItem_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_List.json
+            // this example is just showing the usage of "ProtectedItemModel_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -124,10 +127,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ProtectedItemGet()
+        public async Task Exists_GetsTheProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Get.json
-            // this example is just showing the usage of "ProtectedItem_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Get.json
+            // this example is just showing the usage of "ProtectedItemModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -154,10 +157,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ProtectedItemGet()
+        public async Task GetIfExists_GetsTheProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Get.json
-            // this example is just showing the usage of "ProtectedItem_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Get.json
+            // this example is just showing the usage of "ProtectedItemModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

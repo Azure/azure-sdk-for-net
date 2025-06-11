@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Azure.AI.OpenAI.Chat;
 
 [Experimental("AOAI001")]
-[CodeGenModel("AzureChatDataSourceEndpointVectorizationSource")]
+[CodeGenType("AzureChatDataSourceEndpointVectorizationSource")]
 internal partial class InternalAzureChatDataSourceEndpointVectorizationSource
 {
     internal DataSourceAuthentication Authentication { get; set; }

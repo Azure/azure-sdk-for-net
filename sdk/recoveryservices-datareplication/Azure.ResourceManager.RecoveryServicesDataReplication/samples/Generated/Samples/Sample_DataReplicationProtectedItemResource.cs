@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ProtectedItemGet()
+        public async Task Get_GetsTheProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Get.json
-            // this example is just showing the usage of "ProtectedItem_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Get.json
+            // this example is just showing the usage of "ProtectedItemModel_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ProtectedItemDelete()
+        public async Task Delete_DeletesTheProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Delete.json
-            // this example is just showing the usage of "ProtectedItem_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Delete.json
+            // this example is just showing the usage of "ProtectedItemModel_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ProtectedItemCreate()
+        public async Task Update_UpdateProtectedItem()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_Create.json
-            // this example is just showing the usage of "ProtectedItem_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-09-01/ProtectedItem_Update.json
+            // this example is just showing the usage of "ProtectedItemModel_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -90,15 +90,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // this example assumes you already have this DataReplicationProtectedItemResource created on azure
             // for more information of creating DataReplicationProtectedItemResource, please refer to the document of DataReplicationProtectedItemResource
             string subscriptionId = "930CEC23-4430-4513-B855-DBA237E2F3BF";
-            string resourceGroupName = "rgrecoveryservicesdatareplication";
+            string resourceGroupName = "rgswagger_2024-09-01";
             string vaultName = "4";
             string protectedItemName = "d";
             ResourceIdentifier dataReplicationProtectedItemResourceId = DataReplicationProtectedItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, protectedItemName);
             DataReplicationProtectedItemResource dataReplicationProtectedItem = client.GetDataReplicationProtectedItemResource(dataReplicationProtectedItemResourceId);
 
             // invoke the operation
-            DataReplicationProtectedItemData data = new DataReplicationProtectedItemData(new DataReplicationProtectedItemProperties("tjoeiynplt", "jwxdo", new GeneralProtectedItemModelCustomProperties()));
-            ArmOperation<DataReplicationProtectedItemResource> lro = await dataReplicationProtectedItem.UpdateAsync(WaitUntil.Completed, data);
+            DataReplicationProtectedItemPatch patch = new DataReplicationProtectedItemPatch
+            {
+                CustomProperties = default,
+            };
+            ArmOperation<DataReplicationProtectedItemResource> lro = await dataReplicationProtectedItem.UpdateAsync(WaitUntil.Completed, patch);
             DataReplicationProtectedItemResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -110,9 +113,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task PlannedFailover_ProtectedItemPlannedFailover()
+        public async Task PlannedFailover_PerformsPlannedFailover()
         {
-            // Generated from example definition: specification/recoveryservicesdatareplication/resource-manager/Microsoft.DataReplication/preview/2021-02-16-preview/examples/ProtectedItem_PlannedFailover.json
+            // Generated from example definition: 2024-09-01/ProtectedItem_PlannedFailover.json
             // this example is just showing the usage of "ProtectedItem_PlannedFailover" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -130,9 +133,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationProtectedItemResource dataReplicationProtectedItem = client.GetDataReplicationProtectedItemResource(dataReplicationProtectedItemResourceId);
 
             // invoke the operation
-            PlannedFailoverModel body = new PlannedFailoverModel(new PlannedFailoverModelProperties(new GeneralPlannedFailoverModelCustomProperties()));
-            ArmOperation<PlannedFailoverModel> lro = await dataReplicationProtectedItem.PlannedFailoverAsync(WaitUntil.Completed, body: body);
-            PlannedFailoverModel result = lro.Value;
+            PlannedFailover body = new PlannedFailover(new PlannedFailoverProperties(default));
+            ArmOperation<PlannedFailover> lro = await dataReplicationProtectedItem.PlannedFailoverAsync(WaitUntil.Completed, body);
+            PlannedFailover result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

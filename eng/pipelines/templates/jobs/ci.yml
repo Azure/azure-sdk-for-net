@@ -45,6 +45,9 @@ parameters:
   - name: LimitForPullRequest
     type: boolean
     default: false
+  - name: ExcludePaths
+    type: object
+    default: []
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -62,7 +65,7 @@ jobs:
           - "!SessionRecords"
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
-        PRJobBatchSize: 20
+        PRJobBatchSize: 10
         AdditionalParameters:
           Artifacts: ${{ parameters.Artifacts }}
           TestPipeline: ${{ parameters.TestPipeline }}
@@ -70,12 +73,14 @@ jobs:
           SDKType: ${{ parameters.SDKType }}
           CheckAOTCompat: ${{ parameters.CheckAOTCompat }}
           AOTTestInputs: ${{ parameters.AOTTestInputs }}
+          BuildSnippets: ${{ parameters.BuildSnippets }}
         PreGenerationSteps:
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
               PublishingArtifactName: BuildPackagesArtifact
               ForceDirect: true
+              ExcludePaths: ${{ parameters.ExcludePaths }}
 
   - ${{ else }}:
     - job: Build
@@ -185,6 +190,7 @@ jobs:
               parameters:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
                 PublishingArtifactName: TestPackagesArtifact
+                ExcludePaths: ${{ parameters.ExcludePaths }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}

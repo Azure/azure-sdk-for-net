@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.NetworkCloud
 {
     public partial class NetworkCloudBareMetalMachineKeySetResource : IJsonModel<NetworkCloudBareMetalMachineKeySetData>
     {
+        private static NetworkCloudBareMetalMachineKeySetData s_dataDeserializationInstance;
+        private static NetworkCloudBareMetalMachineKeySetData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBareMetalMachineKeySetData>)Data).Write(writer, options);
 
-        NetworkCloudBareMetalMachineKeySetData IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBareMetalMachineKeySetData>)Data).Create(ref reader, options);
+        NetworkCloudBareMetalMachineKeySetData IJsonModel<NetworkCloudBareMetalMachineKeySetData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<NetworkCloudBareMetalMachineKeySetData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetworkCloudBareMetalMachineKeySetData>(Data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        NetworkCloudBareMetalMachineKeySetData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(data, options);
+        NetworkCloudBareMetalMachineKeySetData IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetworkCloudBareMetalMachineKeySetData>(data, options, AzureResourceManagerNetworkCloudContext.Default);
 
-        string IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<NetworkCloudBareMetalMachineKeySetData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<NetworkCloudBareMetalMachineKeySetData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

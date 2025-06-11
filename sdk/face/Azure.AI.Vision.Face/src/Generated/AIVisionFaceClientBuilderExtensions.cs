@@ -6,40 +6,16 @@
 #nullable disable
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using Azure;
 using Azure.AI.Vision.Face;
 using Azure.Core.Extensions;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="FaceAdministrationClient"/>, <see cref="FaceClient"/>, <see cref="FaceSessionClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="FaceClient"/>, <see cref="FaceSessionClient"/>, <see cref="FaceAdministrationClient"/> to client builder. </summary>
     public static partial class AIVisionFaceClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://{resource-name}.cognitiveservices.azure.com).
-        /// </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
-        where TBuilder : IAzureClientFactoryBuilder
-        {
-            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>((options) => new FaceAdministrationClient(endpoint, credential, options));
-        }
-
-        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint">
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://{resource-name}.cognitiveservices.azure.com).
-        /// </param>
-        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceAdministrationClient(endpoint, cred, options));
-        }
-
         /// <summary> Registers a <see cref="FaceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint">
@@ -92,15 +68,34 @@ namespace Microsoft.Extensions.Azure
 
         /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>(configuration);
+            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>((options) => new FaceAdministrationClient(endpoint, credential, options));
         }
+
+        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="endpoint">
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://{resource-name}.cognitiveservices.azure.com).
+        /// </param>
+        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        where TBuilder : IAzureClientFactoryBuilderWithCredential
+        {
+            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>((options, cred) => new FaceAdministrationClient(endpoint, cred, options));
+        }
+
         /// <summary> Registers a <see cref="FaceClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<FaceClient, AzureAIVisionFaceClientOptions> AddFaceClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
@@ -109,10 +104,22 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="FaceSessionClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static IAzureClientBuilder<FaceSessionClient, AzureAIVisionFaceClientOptions> AddFaceSessionClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<FaceSessionClient, AzureAIVisionFaceClientOptions>(configuration);
+        }
+        /// <summary> Registers a <see cref="FaceAdministrationClient"/> instance. </summary>
+        /// <param name="builder"> The builder to register with. </param>
+        /// <param name="configuration"> The configuration values. </param>
+        [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
+        public static IAzureClientBuilder<FaceAdministrationClient, AzureAIVisionFaceClientOptions> AddFaceAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
+        {
+            return builder.RegisterClientFactory<FaceAdministrationClient, AzureAIVisionFaceClientOptions>(configuration);
         }
     }
 }

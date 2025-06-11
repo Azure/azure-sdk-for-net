@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.AppPlatform
 {
     public partial class AppPlatformGatewayCustomDomainResource : IJsonModel<AppPlatformGatewayCustomDomainData>
     {
+        private static AppPlatformGatewayCustomDomainData s_dataDeserializationInstance;
+        private static AppPlatformGatewayCustomDomainData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<AppPlatformGatewayCustomDomainData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayCustomDomainData>)Data).Write(writer, options);
 
-        AppPlatformGatewayCustomDomainData IJsonModel<AppPlatformGatewayCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayCustomDomainData>)Data).Create(ref reader, options);
+        AppPlatformGatewayCustomDomainData IJsonModel<AppPlatformGatewayCustomDomainData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<AppPlatformGatewayCustomDomainData>)DataDeserializationInstance).Create(ref reader, options);
 
-        BinaryData IPersistableModel<AppPlatformGatewayCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write(Data, options);
+        BinaryData IPersistableModel<AppPlatformGatewayCustomDomainData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<AppPlatformGatewayCustomDomainData>(Data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        AppPlatformGatewayCustomDomainData IPersistableModel<AppPlatformGatewayCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(data, options);
+        AppPlatformGatewayCustomDomainData IPersistableModel<AppPlatformGatewayCustomDomainData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<AppPlatformGatewayCustomDomainData>(data, options, AzureResourceManagerAppPlatformContext.Default);
 
-        string IPersistableModel<AppPlatformGatewayCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayCustomDomainData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<AppPlatformGatewayCustomDomainData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<AppPlatformGatewayCustomDomainData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

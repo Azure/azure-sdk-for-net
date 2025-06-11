@@ -6,6 +6,7 @@
 using System.Diagnostics.CodeAnalysis;
 
 using Azure.Core;
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter
 {
@@ -86,8 +87,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
         public bool DisableOfflineStorage { get; set; }
 
         /// <summary>
+        /// Enables or disables the Live Metrics feature. This property is enabled by default.
+        /// Note: Enabling Live Metrics incurs no additional billing or costs. However, it does introduce
+        /// a performance overhead due to extra data collection, processing, and networking calls. This overhead
+        /// is only significant when the LiveMetrics portal is actively used in the UI. Once the portal is closed,
+        /// </summary>
+        /// LiveMetrics reverts to a 'silent' mode with minimal to no overhead.
+        /// <remarks>
+        /// This setting is applicable only when `UseAzureMonitorExporter` API is used.
+        /// <see href="https://learn.microsoft.com/azure/azure-monitor/app/live-stream"/>.
+        /// </remarks>
+        public bool EnableLiveMetrics { get; set; } = true;
+
+        /// <summary>
         /// Internal flag to control if Statsbeat is enabled.
         /// </summary>
         internal bool EnableStatsbeat { get; set; } = true;
+
+        internal void SetValueToLiveMetricsOptions(AzureMonitorLiveMetricsOptions liveMetricsOptions)
+        {
+            liveMetricsOptions.ConnectionString = ConnectionString;
+            liveMetricsOptions.Credential = Credential;
+            liveMetricsOptions.EnableLiveMetrics = EnableLiveMetrics;
+
+            if (Transport != null)
+            {
+                liveMetricsOptions.Transport = Transport;
+            }
+
+            liveMetricsOptions.Diagnostics.IsDistributedTracingEnabled = Diagnostics.IsDistributedTracingEnabled;
+            liveMetricsOptions.Diagnostics.IsLoggingEnabled = Diagnostics.IsLoggingEnabled;
+        }
     }
 }

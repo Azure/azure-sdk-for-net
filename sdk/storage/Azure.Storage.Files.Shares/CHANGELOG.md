@@ -1,5 +1,18 @@
 # Release History
 
+## 12.24.0-beta.1 (Unreleased)
+
+### Features Added
+- Added support for service version 2025-11-05.
+- Added `ShareErrorCode.ShareSnapshotNotFound`.
+- Added more useful error message when the SDK encounters an x-ms-version mis-match issue.
+
+## 12.23.0-beta.1 (2025-05-06)
+
+### Features Added
+- Added support for service version 2025-07-05.
+- Added the `ShareFileClient.CreateSymbolicLink()`, `.CreateSymbolicLinkAsync()`, `.GetSymbolicLink()`, and `.GetSymbolicLinkAsync()` APIs.
+
 ## 12.22.0 (2025-03-11)
 
 ### Features Added

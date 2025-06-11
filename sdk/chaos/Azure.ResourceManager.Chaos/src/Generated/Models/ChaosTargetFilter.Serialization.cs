@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Chaos.Models
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(FilterType.ToString());
+            writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Chaos.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerChaosContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ChaosTargetFilter)} does not support writing '{options.Format}' format.");
             }

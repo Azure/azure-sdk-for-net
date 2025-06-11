@@ -58,8 +58,11 @@ namespace Azure.ResourceManager.DataBox.Models
             }
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
-            writer.WritePropertyName("postalCode"u8);
-            writer.WriteStringValue(PostalCode);
+            if (Optional.IsDefined(PostalCode))
+            {
+                writer.WritePropertyName("postalCode"u8);
+                writer.WriteStringValue(PostalCode);
+            }
             if (Optional.IsDefined(ZipExtendedCode))
             {
                 writer.WritePropertyName("zipExtendedCode"u8);
@@ -235,7 +238,7 @@ namespace Azure.ResourceManager.DataBox.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataBoxContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(DataBoxShippingAddress)} does not support writing '{options.Format}' format.");
             }

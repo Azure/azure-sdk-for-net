@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/lambdatesthyperexecute/ci.mgmt.yml
+    - sdk/lambdatesthyperexecute/Azure.ResourceManager.LambdaTestHyperExecute/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: lambdatesthyperexecute
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.LambdaTestHyperExecute
+      safeName: AzureResourceManagerLambdaTestHyperExecute

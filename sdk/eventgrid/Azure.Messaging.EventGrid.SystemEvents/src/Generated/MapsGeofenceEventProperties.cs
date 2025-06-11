@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -47,19 +46,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceEventProperties"/>. </summary>
-        /// <param name="expiredGeofenceGeometryId"> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </param>
-        /// <param name="geometries"> Lists the fence geometries that either fully contain the coordinate position or have an overlap with the searchBuffer around the fence. </param>
-        /// <param name="invalidPeriodGeofenceGeometryId"> Lists of the geometry ID of the geofence which is in invalid period relative to the user time in the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expiredGeofenceGeometryId"/>, <paramref name="geometries"/> or <paramref name="invalidPeriodGeofenceGeometryId"/> is null. </exception>
-        internal MapsGeofenceEventProperties(IEnumerable<string> expiredGeofenceGeometryId, IEnumerable<MapsGeofenceGeometry> geometries, IEnumerable<string> invalidPeriodGeofenceGeometryId)
+        internal MapsGeofenceEventProperties()
         {
-            Argument.AssertNotNull(expiredGeofenceGeometryId, nameof(expiredGeofenceGeometryId));
-            Argument.AssertNotNull(geometries, nameof(geometries));
-            Argument.AssertNotNull(invalidPeriodGeofenceGeometryId, nameof(invalidPeriodGeofenceGeometryId));
-
-            ExpiredGeofenceGeometryId = expiredGeofenceGeometryId.ToList();
-            Geometries = geometries.ToList();
-            InvalidPeriodGeofenceGeometryId = invalidPeriodGeofenceGeometryId.ToList();
+            ExpiredGeofenceGeometryId = new ChangeTrackingList<string>();
+            Geometries = new ChangeTrackingList<MapsGeofenceGeometry>();
+            InvalidPeriodGeofenceGeometryId = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MapsGeofenceEventProperties"/>. </summary>
@@ -75,11 +66,6 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             InvalidPeriodGeofenceGeometryId = invalidPeriodGeofenceGeometryId;
             IsEventPublished = isEventPublished;
             _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MapsGeofenceEventProperties"/> for deserialization. </summary>
-        internal MapsGeofenceEventProperties()
-        {
         }
 
         /// <summary> Lists of the geometry ID of the geofence which is expired relative to the user time in the request. </summary>

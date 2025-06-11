@@ -63,6 +63,36 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("password"u8);
                 JsonSerializer.Serialize(writer, Password);
             }
+            if (Optional.IsDefined(SslMode))
+            {
+                writer.WritePropertyName("sslMode"u8);
+                JsonSerializer.Serialize(writer, SslMode);
+            }
+            if (Optional.IsDefined(PortNumber))
+            {
+                writer.WritePropertyName("portNumber"u8);
+                JsonSerializer.Serialize(writer, PortNumber);
+            }
+            if (Optional.IsDefined(HttpsPortNumber))
+            {
+                writer.WritePropertyName("httpsPortNumber"u8);
+                JsonSerializer.Serialize(writer, HttpsPortNumber);
+            }
+            if (Optional.IsDefined(UseDataEncryption))
+            {
+                writer.WritePropertyName("useDataEncryption"u8);
+                JsonSerializer.Serialize(writer, UseDataEncryption);
+            }
+            if (Optional.IsDefined(CharacterSet))
+            {
+                writer.WritePropertyName("characterSet"u8);
+                JsonSerializer.Serialize(writer, CharacterSet);
+            }
+            if (Optional.IsDefined(MaxRespSize))
+            {
+                writer.WritePropertyName("maxRespSize"u8);
+                JsonSerializer.Serialize(writer, MaxRespSize);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -114,6 +144,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             TeradataAuthenticationType? authenticationType = default;
             DataFactoryElement<string> username = default;
             DataFactorySecret password = default;
+            DataFactoryElement<string> sslMode = default;
+            DataFactoryElement<int> portNumber = default;
+            DataFactoryElement<int> httpsPortNumber = default;
+            DataFactoryElement<int> useDataEncryption = default;
+            DataFactoryElement<string> characterSet = default;
+            DataFactoryElement<int> maxRespSize = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -232,6 +268,60 @@ namespace Azure.ResourceManager.DataFactory.Models
                             password = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("sslMode"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            sslMode = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("portNumber"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            portNumber = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("httpsPortNumber"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            httpsPortNumber = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("useDataEncryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            useDataEncryption = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("characterSet"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            characterSet = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("maxRespSize"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxRespSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("encryptedCredential"u8))
                         {
                             encryptedCredential = property0.Value.GetString();
@@ -256,6 +346,12 @@ namespace Azure.ResourceManager.DataFactory.Models
                 authenticationType,
                 username,
                 password,
+                sslMode,
+                portNumber,
+                httpsPortNumber,
+                useDataEncryption,
+                characterSet,
+                maxRespSize,
                 encryptedCredential);
         }
 
@@ -266,7 +362,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(TeradataLinkedService)} does not support writing '{options.Format}' format.");
             }

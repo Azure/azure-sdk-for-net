@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// PDU session type (IPv4/IPv6).
-    /// Serialized Name: PduSessionType
-    /// </summary>
+    /// <summary> PDU session type (IPv4/IPv6). </summary>
     public readonly partial struct MobileNetworkPduSessionType : IEquatable<MobileNetworkPduSessionType>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         private const string IPv4Value = "IPv4";
         private const string IPv6Value = "IPv6";
 
-        /// <summary>
-        /// IPv4
-        /// Serialized Name: PduSessionType.IPv4
-        /// </summary>
+        /// <summary> IPv4. </summary>
         public static MobileNetworkPduSessionType IPv4 { get; } = new MobileNetworkPduSessionType(IPv4Value);
-        /// <summary>
-        /// IPv6
-        /// Serialized Name: PduSessionType.IPv6
-        /// </summary>
+        /// <summary> IPv6. </summary>
         public static MobileNetworkPduSessionType IPv6 { get; } = new MobileNetworkPduSessionType(IPv6Value);
         /// <summary> Determines if two <see cref="MobileNetworkPduSessionType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkPduSessionType left, MobileNetworkPduSessionType right) => left.Equals(right);

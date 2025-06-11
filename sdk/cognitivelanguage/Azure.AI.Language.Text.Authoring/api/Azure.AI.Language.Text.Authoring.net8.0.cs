@@ -1,5 +1,11 @@
 namespace Azure.AI.Language.Text.Authoring
 {
+    public partial class AzureAILanguageTextAuthoringContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureAILanguageTextAuthoringContext() { }
+        public static Azure.AI.Language.Text.Authoring.AzureAILanguageTextAuthoringContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class CustomEntityRecognitionDocumentEvalResult : Azure.AI.Language.Text.Authoring.TextAuthoringDocumentEvalResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.Authoring.CustomEntityRecognitionDocumentEvalResult>
     {
         internal CustomEntityRecognitionDocumentEvalResult() : base (default(string), default(string)) { }
@@ -1801,6 +1807,7 @@ namespace Microsoft.Extensions.Azure
     {
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClient, Azure.AI.Language.Text.Authoring.TextAnalysisAuthoringClientOptions> AddTextAnalysisAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
 }
