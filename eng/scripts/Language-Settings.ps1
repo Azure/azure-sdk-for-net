@@ -20,7 +20,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion /p:OutputProjectInfoListFilePath=""$outputFilePath"" -tl:off"
 
-  dotnet msbuild `
+  $null = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
     "$ServiceProj" `
@@ -33,7 +33,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   if ($LASTEXITCODE -ne 0) {
     # Clean up temp file before failing
     if (Test-Path $outputFilePath) {
-      Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+      $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
     }
     throw "MSBuild failed with exit code $LASTEXITCODE"
   }
@@ -41,7 +41,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $packageInfoLines = @()
   if (Test-Path $outputFilePath) {
     $packageInfoLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
-    Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
+    $null = Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
   }
 
   foreach ($projectOutput in $packageInfoLines)
