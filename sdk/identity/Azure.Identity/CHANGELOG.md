@@ -11,6 +11,7 @@
 - `ManagedIdentityCredential` throws `CredentialUnavailableException` when the IMDS endpoint is unavailable. This addresses a regression in how it behaves in the `ChainedTokenCredential` ([47057](https://github.com/Azure/azure-sdk-for-net/issues/47057)).
 
 ### Other Changes
+- `VisualStudioCredential` throws `CredentialUnavailableException` for all failures except for OperationCancelledException due to cancellation being requested for a `CancellationToken`. This ensures that it falls through for most failures when part of a chained credential.
 
 ## 1.14.0 (2025-05-13)
 
