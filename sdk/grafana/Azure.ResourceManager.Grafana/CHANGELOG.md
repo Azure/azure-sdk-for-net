@@ -16,7 +16,7 @@
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-- Customization for TSP Generation: changed `public IList<string> RequiredZoneNames { get; }` to `public IReadOnlyList<string> RequiredZoneNames { get; }`.
+- Customization for TSP Generation to keep `public IList<string> RequiredZoneNames { get; }`.
 
 ## 1.1.0 (2023-11-29)
 
