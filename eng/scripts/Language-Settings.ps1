@@ -40,7 +40,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   $packageInfoLines = @()
   if (Test-Path $outputFilePath) {
-    $packageInfoLines = Get-Content $outputFilePath
+    $packageInfoLines = Get-Content $outputFilePath | Where-Object { $_ -and $_.Trim() }
     Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
   }
 
