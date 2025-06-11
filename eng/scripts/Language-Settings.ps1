@@ -28,10 +28,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   foreach ($projectOutput in $msbuildOutput)
   {
-    if ($projectOutput -match "^\s*##vso\[task.logissue") {
-      # we cannot print the error message directly, as it will be interpreted as a log issue and crash the build
-      Write-Host $projectOutput.Replace("##vso[task.logissue", "vso[task.logissue")
-    }
+    $projectOutput = $projectOutput.Trim().Replace("##vso[task.logissue"), "vso[task.logissue"
 
     if (!$projectOutput) {
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
