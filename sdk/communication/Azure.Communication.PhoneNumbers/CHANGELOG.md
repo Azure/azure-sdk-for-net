@@ -1,10 +1,10 @@
 # Release History
 
-## 1.4.1-beta.1 (Unreleased)
+## 1.4.1-beta.1 (2025-06-30)
 
 ### Features Added
 - Adds mobile phone number type.
-- API version `2025-04-15-preview` is the default.
+- API version `2025-06-01` is the default.
 
 ## 1.4.0 (2025-06-20)
 
