@@ -48,6 +48,7 @@ steps:
           arguments: >
             -PrDiff '${{ parameters.DiffDirectory }}/diff.json'
             -OutDirectory '${{ parameters.PackageInfoDirectory }}'
+            -Verbose
           pwsh: true
           workingDirectory: '${{ parameters.WorkingDirectory }}'
 
