@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCloudHsmClusters_CloudHsmClusterListBySubscriptionMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2025-03-31/examples/CloudHsmCluster_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "CloudHsmClusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDedicatedHsms_ListDedicatedHSMDevicesInASubscription()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/DedicatedHsm_ListBySubscription.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2025-03-31/examples/DedicatedHsm_ListBySubscription.json
             // this example is just showing the usage of "DedicatedHsm_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetDedicatedHsms_ListDedicatedHSMDevicesInASubscriptionIncludingPaymentHSM()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/PaymentHsm_ListBySubscription.json
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/stable/2025-03-31/examples/PaymentHsm_ListBySubscription.json
             // this example is just showing the usage of "DedicatedHsm_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
