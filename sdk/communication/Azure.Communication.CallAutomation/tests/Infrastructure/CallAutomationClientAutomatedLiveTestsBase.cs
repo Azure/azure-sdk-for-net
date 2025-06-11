@@ -115,7 +115,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         {
             var connectionString = TestEnvironment.LiveTestStaticConnectionString;
 
-            CallAutomationClient callAutomationClient = new CallAutomationClient(connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
+            CallAutomationClient callAutomationClient = new CallAutomationClient(pmaEndpoint: new Uri("https://uswc-02.sdf.pma.teams.microsoft.com:6448"), connectionString, CreateServerCallingClientOptionsWithCorrelationVectorLogs(source));
 
             return InstrumentClient(callAutomationClient);
         }
