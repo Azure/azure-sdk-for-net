@@ -863,6 +863,26 @@ namespace Azure.Communication.PhoneNumbers
             return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.Geographic, phoneNumberAssignmentType, locality, administrativeDivision, cancellationToken);
         }
 
+        /// <summary> Lists the available area codes within a given country and locality. </summary>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
+        /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual AsyncPageable<PhoneNumberAreaCode> GetAvailableAreaCodesMobileAsync (string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, CancellationToken cancellationToken = default)
+        {
+            return GetAvailableAreaCodesAsync(twoLetterIsoCountryName, PhoneNumberType.Mobile, phoneNumberAssignmentType, locality, null, cancellationToken);
+        }
+
+        /// <summary> Lists the available area codes within a given country and locality. </summary>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="phoneNumberAssignmentType"> The assignment type of the phone numbers to search for. </param>
+        /// <param name="locality"> The locality in which to list area codes. This is also known as the state or province. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Pageable<PhoneNumberAreaCode> GetAvailableAreaCodesMobile(string twoLetterIsoCountryName, PhoneNumberAssignmentType phoneNumberAssignmentType, string locality, CancellationToken cancellationToken = default)
+        {
+            return GetAvailableAreaCodes(twoLetterIsoCountryName, PhoneNumberType.Mobile, phoneNumberAssignmentType, locality, null, cancellationToken);
+        }
+
         /// <summary> Lists the available offerings in the given country. </summary>
         /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumberType"> The type of phone numbers to search for. </param>
@@ -1367,6 +1387,10 @@ namespace Azure.Communication.PhoneNumbers
             {
                 operationName = "GetAvailableAreaCodesTollFree";
             }
+            else if (phoneNumberType == "mobile")
+            {
+                operationName = "GetAvailableAreaCodesMobile";
+            }
 
             HttpMessage FirstPageRequest(int? pageSizeHint)
             {
@@ -1420,6 +1444,10 @@ namespace Azure.Communication.PhoneNumbers
             else if (phoneNumberType == "tollFree")
             {
                 operationName = "GetAvailableAreaCodesTollFree";
+            }
+            else if (phoneNumberType == "mobile")
+            {
+                operationName = "GetAvailableAreaCodesMobile";
             }
             HttpMessage FirstPageRequest(int? pageSizeHint)
             {
