@@ -1,6 +1,6 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,17 +8,9 @@
 
 ### Bugs Fixed
 
+- fix the issue of data type mismatch in the AsyncPageable return values. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/47267
+
 ### Other Changes
-
-## 1.4.0 (2025-05-23)
-
-### Features Added
-
-- Upgraded api-version tag from 'package-2024-04' to 'package-2024-11'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/c9c3e8b9ec547d82c487f36f1126228f9eef0e79/specification/web/resource-manager/readme.md.
-
-### Bugs Fixed
-
-- Fixed the issue of data type mismatch in the AsyncPageable return values. Issue at 'https://github.com/Azure/azure-sdk-for-net/issues/47267.
 
 ## 1.3.0 (2024-11-19)
 

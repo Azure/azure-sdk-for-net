@@ -170,11 +170,6 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("clientAffinityEnabled"u8);
                 writer.WriteBooleanValue(IsClientAffinityEnabled.Value);
             }
-            if (Optional.IsDefined(IsClientAffinityProxyEnabled))
-            {
-                writer.WritePropertyName("clientAffinityProxyEnabled"u8);
-                writer.WriteBooleanValue(IsClientAffinityProxyEnabled.Value);
-            }
             if (Optional.IsDefined(IsClientCertEnabled))
             {
                 writer.WritePropertyName("clientCertEnabled"u8);
@@ -334,7 +329,6 @@ namespace Azure.ResourceManager.AppService.Models
             string targetSwapSlot = default;
             HostingEnvironmentProfile hostingEnvironmentProfile = default;
             bool? clientAffinityEnabled = default;
-            bool? clientAffinityProxyEnabled = default;
             bool? clientCertEnabled = default;
             ClientCertMode? clientCertMode = default;
             string clientCertExclusionPaths = default;
@@ -596,15 +590,6 @@ namespace Azure.ResourceManager.AppService.Models
                             clientAffinityEnabled = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("clientAffinityProxyEnabled"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientAffinityProxyEnabled = property0.Value.GetBoolean();
-                            continue;
-                        }
                         if (property0.NameEquals("clientCertEnabled"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -810,7 +795,6 @@ namespace Azure.ResourceManager.AppService.Models
                 targetSwapSlot,
                 hostingEnvironmentProfile,
                 clientAffinityEnabled,
-                clientAffinityProxyEnabled,
                 clientCertEnabled,
                 clientCertMode,
                 clientCertExclusionPaths,
@@ -1339,22 +1323,6 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     builder.Append("    clientAffinityEnabled: ");
                     var boolValue = IsClientAffinityEnabled.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsClientAffinityProxyEnabled), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    clientAffinityProxyEnabled: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IsClientAffinityProxyEnabled))
-                {
-                    builder.Append("    clientAffinityProxyEnabled: ");
-                    var boolValue = IsClientAffinityProxyEnabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
