@@ -22,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="Azure.Storage.Blobs" />
-    <!-- This PackageReference is commented out because Azure.Storage.Blob is included as a PackageReference above. -->
+    <!-- The ProjectReference is commented out because Azure.Storage.Blobs is now included via PackageReference above. -->
     <!-- It is retained here for reference in case the dependency needs to be switched back to a ProjectReference in the future. -->
     <!-- <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj" /> -->
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.DataMovement\src\Azure.Storage.DataMovement.csproj" />
