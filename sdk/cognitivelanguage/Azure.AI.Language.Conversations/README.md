@@ -54,6 +54,7 @@ Start by importing the namespace for the [`ConversationAnalysisClient`][conversa
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 ```
 
 #### Create a ConversationAnalysisClient
