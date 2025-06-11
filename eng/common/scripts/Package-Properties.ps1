@@ -369,7 +369,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
         if (!$pkg) { 
-            Write-Host "Get-PrPkgProperties: Found a package that so skipping."
+            Write-Host "Get-PrPkgProperties: Found a package that null so skipping."
             continue 
         }
         Write-Verbose "Processing changed files against $($pkg.Name). $pkgCounter of $($allPackageProperties.Count)."
