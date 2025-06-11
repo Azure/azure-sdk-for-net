@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2024-09-01-preview")
+        public CallRecordingRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint, string apiVersion = "2025-06-15")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -356,76 +356,6 @@ namespace Azure.Communication.CallAutomation
             {
                 case 202:
                     return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetRecordingResultRequest(string recordingId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/calling/recordings/", false);
-            uri.AppendPath(recordingId, true);
-            uri.AppendPath("/result", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
-        }
-
-        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
-        /// <param name="recordingId"> The recording id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public async Task<Response<RecordingResult>> GetRecordingResultAsync(string recordingId, CancellationToken cancellationToken = default)
-        {
-            if (recordingId == null)
-            {
-                throw new ArgumentNullException(nameof(recordingId));
-            }
-
-            using var message = CreateGetRecordingResultRequest(recordingId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecordingResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = RecordingResult.DeserializeRecordingResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get recording result. This includes the download URLs for the recording chunks. </summary>
-        /// <param name="recordingId"> The recording id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recordingId"/> is null. </exception>
-        public Response<RecordingResult> GetRecordingResult(string recordingId, CancellationToken cancellationToken = default)
-        {
-            if (recordingId == null)
-            {
-                throw new ArgumentNullException(nameof(recordingId));
-            }
-
-            using var message = CreateGetRecordingResultRequest(recordingId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RecordingResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = RecordingResult.DeserializeRecordingResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
                 default:
                     throw new RequestFailedException(message.Response);
             }
