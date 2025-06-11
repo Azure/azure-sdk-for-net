@@ -1039,11 +1039,15 @@ namespace Azure.Storage.Files.Shares
                     Errors.VerifyStreamPosition(content, nameof(content));
 
                     // compute hash BEFORE attaching progress handler
-                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                        content,
-                        validationOptions,
-                        async,
-                        cancellationToken).ConfigureAwait(false);
+                    ContentHasher.GetHashResult hashResult = null;
+                    if (content != null)
+                    {
+                        hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                            content,
+                            validationOptions,
+                            async,
+                            cancellationToken).ConfigureAwait(false);
+                    }
 
                     content = content?.WithNoDispose().WithProgress(progressHandler);
 
