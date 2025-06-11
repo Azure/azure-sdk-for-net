@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
@@ -51,7 +50,7 @@ namespace Azure.Compute.Batch
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteStringValue(item.ToString());
+                    writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.Compute.Batch
                 return null;
             }
             IpAddressProvisioningType? provision = default;
-            IList<IPAddress> ipAddressIds = default;
+            IList<ResourceIdentifier> ipAddressIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +112,7 @@ namespace Azure.Compute.Batch
                     {
                         continue;
                     }
-                    List<IPAddress> array = new List<IPAddress>();
+                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         if (item.ValueKind == JsonValueKind.Null)
@@ -122,7 +121,7 @@ namespace Azure.Compute.Batch
                         }
                         else
                         {
-                            array.Add(IPAddress.Parse(item.GetString()));
+                            array.Add(new ResourceIdentifier(item.GetString()));
                         }
                     }
                     ipAddressIds = array;
@@ -134,7 +133,7 @@ namespace Azure.Compute.Batch
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new BatchPublicIpAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<IPAddress>(), serializedAdditionalRawData);
+            return new BatchPublicIpAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPublicIpAddressConfiguration>.Write(ModelReaderWriterOptions options)

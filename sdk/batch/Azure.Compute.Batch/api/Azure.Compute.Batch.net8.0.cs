@@ -1016,8 +1016,8 @@ namespace Azure.Compute.Batch
     }
     public partial class BatchJobNetworkConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>
     {
-        public BatchJobNetworkConfiguration(string subnetId, bool skipWithdrawFromVnet) { }
-        public bool SkipWithdrawFromVnet { get { throw null; } set { } }
+        public BatchJobNetworkConfiguration(string subnetId) { }
+        public bool? SkipWithdrawFromVnet { get { throw null; } set { } }
         public string SubnetId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchJobNetworkConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchJobNetworkConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2227,7 +2227,7 @@ namespace Azure.Compute.Batch
     public partial class BatchPublicIpAddressConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPublicIpAddressConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.BatchPublicIpAddressConfiguration>
     {
         public BatchPublicIpAddressConfiguration() { }
-        public System.Collections.Generic.IList<System.Net.IPAddress> IpAddressIds { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> IpAddressIds { get { throw null; } }
         public Azure.Compute.Batch.IpAddressProvisioningType? IpAddressProvisioningType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.BatchPublicIpAddressConfiguration System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.BatchPublicIpAddressConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3757,9 +3757,9 @@ namespace Azure.Compute.Batch
     }
     public partial class SecurityProfile : System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.SecurityProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.Compute.Batch.SecurityProfile>
     {
-        public SecurityProfile(bool encryptionAtHost, Azure.Compute.Batch.SecurityTypes securityType, Azure.Compute.Batch.BatchUefiSettings uefiSettings) { }
-        public bool EncryptionAtHost { get { throw null; } set { } }
-        public Azure.Compute.Batch.SecurityTypes SecurityType { get { throw null; } set { } }
+        public SecurityProfile() { }
+        public bool? EncryptionAtHost { get { throw null; } set { } }
+        public Azure.Compute.Batch.SecurityTypes? SecurityType { get { throw null; } set { } }
         public Azure.Compute.Batch.BatchUefiSettings UefiSettings { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.Compute.Batch.SecurityProfile System.ClientModel.Primitives.IJsonModel<Azure.Compute.Batch.SecurityProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

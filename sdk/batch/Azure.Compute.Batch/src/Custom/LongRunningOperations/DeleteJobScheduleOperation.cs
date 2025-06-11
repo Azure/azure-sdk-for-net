@@ -163,6 +163,10 @@ namespace Azure.Compute.Batch
                     _hasCompleted = true;
                     _rawResponse = e.GetRawResponse();
                 }
+                else
+                {
+                    throw; // throw if not 404
+                }
             }
 
             if (deleteResponse != null)

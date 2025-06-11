@@ -848,10 +848,15 @@ MountOptions = "mount options ver=1.0",
                     Version = "latest",
                 }, "batch.node.ubuntu 18.04")
                 {
-                    SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new BatchUefiSettings
+                    SecurityProfile = new SecurityProfile
                     {
-                        SecureBootEnabled = false,
-                    }),
+                        EncryptionAtHost = true,
+                        SecurityType = SecurityTypes.TrustedLaunch,
+                        UefiSettings = new BatchUefiSettings
+                        {
+                            SecureBootEnabled = false,
+                        },
+                    },
                 },
                 TargetDedicatedNodes = 1,
             };
@@ -876,10 +881,15 @@ MountOptions = "mount options ver=1.0",
                     Version = "latest",
                 }, "batch.node.ubuntu 18.04")
                 {
-                    SecurityProfile = new SecurityProfile(true, SecurityTypes.TrustedLaunch, new BatchUefiSettings
+                    SecurityProfile = new SecurityProfile
                     {
-                        SecureBootEnabled = false,
-                    }),
+                        EncryptionAtHost = true,
+                        SecurityType = SecurityTypes.TrustedLaunch,
+                        UefiSettings = new BatchUefiSettings
+                        {
+                            SecureBootEnabled = false,
+                        },
+                    },
                 },
                 TargetDedicatedNodes = 1,
             };
