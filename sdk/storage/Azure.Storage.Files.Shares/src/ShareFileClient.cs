@@ -587,6 +587,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -640,6 +641,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission: options?.FilePermission?.Permission,
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
+                filePropertySemantics: options?.PropertySemantics,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -708,6 +710,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
+                filePropertySemantics: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -771,6 +774,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
+                filePropertySemantics: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -839,6 +843,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
+                filePropertySemantics: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -902,6 +907,7 @@ namespace Azure.Storage.Files.Shares
                 filePermission,
                 filePermissionFormat: default,
                 posixProperties: default,
+                filePropertySemantics: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -939,6 +945,10 @@ namespace Azure.Storage.Files.Shares
         /// <param name="posixProperties">
         /// Optional NFS properties.
         /// </param>
+        /// <param name="filePropertySemantics">
+        /// Optional, only applicable to SMB files.
+        /// How attributes and permissions should be set on the file.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -971,6 +981,7 @@ namespace Azure.Storage.Files.Shares
             string filePermission,
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
+            FilePropertySemantics? filePropertySemantics,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
@@ -1001,6 +1012,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await FileRestClient.CreateAsync(
                             fileContentLength: maxSize,
+                            contentLength: default,
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1009,6 +1021,9 @@ namespace Azure.Storage.Files.Shares
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
+                            contentMD5: default,
+                            filePropertySemantics: filePropertySemantics,
+                            optionalbody: default,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1022,6 +1037,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.Create(
                             fileContentLength: maxSize,
+                            contentLength: default,
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1030,6 +1046,9 @@ namespace Azure.Storage.Files.Shares
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
+                            contentMD5: default,
+                            filePropertySemantics: filePropertySemantics,
+                            optionalbody: default,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
