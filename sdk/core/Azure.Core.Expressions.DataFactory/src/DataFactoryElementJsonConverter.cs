@@ -232,7 +232,7 @@ namespace Azure.Core.Expressions.DataFactory
             writer.WriteEndObject();
         }
 
-        private static DataFactoryElement<IList<T?>?> DeserializeGenericList<T>(JsonElement json)
+        internal static DataFactoryElement<IList<T?>?> DeserializeGenericList<T>(JsonElement json)
         {
             if (json.ValueKind == JsonValueKind.Array)
             {

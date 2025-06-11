@@ -253,16 +253,6 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T>((T)(object)dictionary);
             }
 
-            if (typeof(T) == typeof(IList<string>) && json.ValueKind == JsonValueKind.Array)
-            {
-                var list = new List<string?>();
-                foreach (var item in json.EnumerateArray())
-                {
-                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<string?>(item.GetRawText()!));
-                }
-                return new DataFactoryElement<T>((T)(object)list);
-            }
-
             if (typeof(T) == typeof(DateTimeOffset) || typeof(T) == typeof(DateTimeOffset?))
             {
                 return new DataFactoryElement<T>((T)(object)json.GetDateTimeOffset("O"));
@@ -285,7 +275,7 @@ namespace Azure.Core.Expressions.DataFactory
 
             if (typeof(T).IsGenericType)
             {
-                var methodInfo = GetGenericSerializationMethod(typeof(T).GenericTypeArguments[0]!, nameof(DeserializeGenericList));
+                var methodInfo = GetGenericSerializationMethod(typeof(T).GenericTypeArguments[0]!, nameof(DataFactoryElementJsonConverter.DeserializeGenericList));
                 return (DataFactoryElement<T>)methodInfo!.Invoke(null, new object[] { json })!;
             }
 
@@ -304,52 +294,6 @@ namespace Azure.Core.Expressions.DataFactory
                     methodName,
                     BindingFlags.Static | BindingFlags.NonPublic)!
                 .MakeGenericMethod(typeToConvert);
-        }
-
-        private static DataFactoryElement<IList<T1?>?> DeserializeGenericList<T1>(JsonElement json)
-        {
-            if (json.ValueKind == JsonValueKind.Array)
-            {
-                var list = new List<T1?>();
-                foreach (var item in json.EnumerateArray())
-                {
-                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T1>(item.GetRawText()!));
-                }
-
-                return new DataFactoryElement<IList<T1?>?>(list);
-            }
-
-            // Expression, SecretString, and AzureKeyVaultReference handling
-            if (TryGetNonLiteral(json, out DataFactoryElement<IList<T1?>?>? element))
-            {
-                return element!;
-            }
-
-            throw new InvalidOperationException($"Cannot deserialize an {json.ValueKind} as a list.");
-        }
-
-        private static bool TryGetNonLiteral<T1>(JsonElement json, out DataFactoryElement<T1?>? element)
-        {
-            element = null;
-            if (json.ValueKind == JsonValueKind.Object && json.TryGetProperty("type", out JsonElement typeValue))
-            {
-                if (typeValue.ValueEquals("Expression"))
-                {
-                    if (json.EnumerateObject().Count() != 2)
-                    {
-                        // Expression should only have two properties: type and value
-                        return false;
-                    }
-                    var expressionValue = json.GetProperty("value").GetString();
-                    element = new DataFactoryElement<T1?>(expressionValue, DataFactoryElementKind.Expression);
-                }
-                else
-                {
-                    element = DataFactoryElement<T1?>.FromSecretBase(DataFactorySecret.DeserializeDataFactorySecretBaseDefinition(json)!);
-                }
-            }
-
-            return element != null;
         }
     }
 }
