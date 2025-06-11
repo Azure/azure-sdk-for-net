@@ -18,6 +18,8 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private const string AddParticipantPayload = "{\"participant\":{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false},\"operationContext\":\"someOperationContext\"}";
 
+        private const string MoveParticipantsPayload = "{\"participants\":[{\"identifier\":{\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}},\"isMuted\":false}],\"operationContext\":\"someOperationContext\"}";
+
         private const string GetParticipantPayload = "{" +
             "\"identifier\":{" +
             "\"rawId\":\"participantId1\",\"kind\":\"communicationUser\",\"communicationUser\":{\"id\":\"participantId1\"}" +
@@ -573,6 +575,170 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             Assert.AreEqual(invitationId, response.Value.InvitationId);
         }
 
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public async Task MoveParticipantsAsync_202Accepted(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
+
+            var response = await targetCallConnection.MoveParticipantsAsync(fromCallId, new[] { participantToMove }).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyMoveParticipantsResult(response);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public void MoveParticipants_202Accepted(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
+
+            var response = targetCallConnection.MoveParticipants(fromCallId, new[] { participantToMove });
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyMoveParticipantsResult(response);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public async Task MoveParticipantsWithOptionsAsync_202Accepted(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
+
+            var options = new MoveParticipantsOptions(new[] { participantToMove }, fromCallId);
+
+            var response = await targetCallConnection.MoveParticipantsAsync(options).ConfigureAwait(false);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyMoveParticipantsResult(response);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public void MoveParticipantsWithOptions_202Accepted(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
+
+            var options = new MoveParticipantsOptions(new[] { participantToMove }, fromCallId);
+
+            var response = targetCallConnection.MoveParticipants(options);
+            Assert.AreEqual((int)HttpStatusCode.Accepted, response.GetRawResponse().Status);
+            verifyMoveParticipantsResult(response);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public void MoveParticipantsAsync_404NotFound(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection that returns 404
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(404, null, targetCallId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await targetCallConnection.MoveParticipantsAsync(fromCallId, new[] { participantToMove }).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public void MoveParticipants_404NotFound(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection that returns 404
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(404, null, targetCallId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() =>
+                targetCallConnection.MoveParticipants(fromCallId, new[] { participantToMove }));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public void MoveParticipantsWithOptionsAsync_404NotFound(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection that returns 404
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(404, null, targetCallId);
+
+            var options = new MoveParticipantsOptions(new[] { participantToMove }, fromCallId);
+
+            RequestFailedException? ex = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                await targetCallConnection.MoveParticipantsAsync(options).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [TestCaseSource(nameof(TestData_MoveParticipants))]
+        public void MoveParticipantsWithOptions_404NotFound(CommunicationIdentifier participantToMove, string fromCallId)
+        {
+            // Create source call connection
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection that returns 404
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(404, null, targetCallId);
+
+            var options = new MoveParticipantsOptions(new[] { participantToMove }, fromCallId);
+
+            RequestFailedException? ex = Assert.Throws<RequestFailedException>(() =>
+                targetCallConnection.MoveParticipants(options));
+            Assert.NotNull(ex);
+            Assert.AreEqual(ex?.Status, 404);
+        }
+
+        [Test]
+        public void MoveParticipantsAsync_NullParticipantToMove()
+        {
+            // Create source call connection
+            string fromCallId = "source-call-id";
+            var sourceCallConnection = CreateMockCallConnection(200, null, fromCallId);
+
+            // Create target call connection
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                await targetCallConnection.MoveParticipantsAsync(fromCallId, null).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be null."));
+        }
+
+        [Test]
+        public void MoveParticipantsAsync_NullFromCallId()
+        {
+            // Create target call connection
+            string targetCallId = "8db6ca25-49f2-5b83-b932-196afc4bffa7";
+            var targetCallConnection = CreateMockCallConnection(202, MoveParticipantsPayload, targetCallId);
+
+            var participant = new CommunicationUserIdentifier("userId");
+
+            ArgumentNullException? ex = Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                await targetCallConnection.MoveParticipantsAsync(null, new[] { participant }).ConfigureAwait(false));
+            Assert.NotNull(ex);
+            Assert.True(ex?.Message.Contains("Value cannot be null."));
+        }
+
         private CallConnection CreateMockCallConnection(int responseCode, string? responseContent = null, string callConnectionId = "9ec7da16-30be-4e74-a941-285cfc4bffc5")
         {
             return CreateMockCallAutomationClient(responseCode, responseContent).GetCallConnection(callConnectionId);
@@ -700,6 +866,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             };
         }
 
+        private static IEnumerable<object?[]> TestData_MoveParticipants()
+        {
+            return new[]
+            {
+                new object?[]
+                {
+                    new CommunicationUserIdentifier("userId"),
+                    "fromCallId"
+                },
+            };
+        }
+
         private void verifyOperationContext(TransferCallToParticipantResult result)
         {
             Assert.AreEqual(OperationContext, result.OperationContext);
@@ -729,6 +907,18 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var identifier2 = (PhoneNumberIdentifier)participants[1].Identifier;
             Assert.AreEqual(PhoneNumber, identifier2.PhoneNumber);
             Assert.IsTrue(participants[1].IsMuted);
+        }
+
+        private void verifyMoveParticipantsResult(MoveParticipantsResult result)
+        {
+            Assert.IsNotNull(result);
+            Assert.IsNotNull(result.TargetParticipants);
+            Assert.AreEqual(1, result.TargetParticipants.Count);
+            var participant = result.TargetParticipants[0];
+            var identifier = (CommunicationUserIdentifier)participant.Identifier;
+            Assert.AreEqual(ParticipantUserId, identifier.Id);
+            Assert.IsFalse(participant.IsMuted);
+            Assert.AreEqual(OperationContext, result.OperationContext);
         }
     }
 }

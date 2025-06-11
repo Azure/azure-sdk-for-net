@@ -146,7 +146,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
       Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
       Write-Host "Dumping erroring build output."
       Write-Host (Get-Content -Raw $buildOutputPath)
-      continue
+
+      return @()
   }
 
   if (Test-Path $outputFilePath) {
