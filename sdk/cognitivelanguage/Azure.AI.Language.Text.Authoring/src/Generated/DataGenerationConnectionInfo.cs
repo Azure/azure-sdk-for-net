@@ -80,8 +80,8 @@ namespace Azure.AI.Language.Text.Authoring
         public DataGenerationConnectionInfoKind Kind { get; } = DataGenerationConnectionInfoKind.AzureOpenAI;
 
         /// <summary> Resource ID for the data generation resource. Looks something like "/subscriptions/&lt;SUBSCRIPTION-ID-GUID&gt;/resourceGroups/&lt;RG-NAME&gt;/providers/Microsoft.CognitiveServices/accounts/&lt;AOAI-ACCOUNT-NAME&gt;". </summary>
-        public string ResourceId { get; }
+        public string ResourceId { get; set; }
         /// <summary> Deployment name of model to be used for synthetic data generation. </summary>
-        public string DeploymentName { get; }
+        public string DeploymentName { get; set; }
     }
 }
