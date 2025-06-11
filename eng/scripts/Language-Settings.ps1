@@ -160,6 +160,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
     }
   }
 
+  Write-Host "Right before exiting Get-dotnet-AdditionalValidationPackagesFromPackageSet, additionalValidationPackages count is $($additionalValidationPackages.Count)"
+
   return $additionalValidationPackages
 }
 
