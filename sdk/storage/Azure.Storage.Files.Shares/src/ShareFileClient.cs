@@ -588,6 +588,9 @@ namespace Azure.Storage.Files.Shares
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
                 filePropertySemantics: options?.PropertySemantics,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -642,6 +645,9 @@ namespace Azure.Storage.Files.Shares
                 filePermissionFormat: options?.FilePermission?.PermissionFormat,
                 posixProperties: options?.PosixProperties,
                 filePropertySemantics: options?.PropertySemantics,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -711,6 +717,9 @@ namespace Azure.Storage.Files.Shares
                 filePermissionFormat: default,
                 posixProperties: default,
                 filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions,
                 async: false,
                 cancellationToken)
@@ -775,6 +784,9 @@ namespace Azure.Storage.Files.Shares
                 filePermissionFormat: default,
                 posixProperties: default,
                 filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions: default,
                 async: false,
                 cancellationToken)
@@ -844,6 +856,9 @@ namespace Azure.Storage.Files.Shares
                 filePermissionFormat: default,
                 posixProperties: default,
                 filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions,
                 async: true,
                 cancellationToken)
@@ -908,6 +923,9 @@ namespace Azure.Storage.Files.Shares
                 filePermissionFormat: default,
                 posixProperties: default,
                 filePropertySemantics: default,
+                content: default,
+                transferValidationOverride: default,
+                progressHandler: default,
                 conditions: default,
                 async: true,
                 cancellationToken)
@@ -949,6 +967,15 @@ namespace Azure.Storage.Files.Shares
         /// Optional, only applicable to SMB files.
         /// How attributes and permissions should be set on the file.
         /// </param>
+        /// <param name="content">
+        /// A <see cref="Stream"/> containing the content of the range to upload.
+        /// </param>
+        /// <param name="transferValidationOverride">
+        /// Optional override for transfer validation on upload.
+        /// </param>
+        /// <param name="progressHandler">
+        /// Progress handler for upload operation.
+        /// </param>
         /// <param name="conditions">
         /// Optional <see cref="ShareFileRequestConditions"/> to add conditions
         /// on creating the file.
@@ -982,11 +1009,17 @@ namespace Azure.Storage.Files.Shares
             FilePermissionFormat? filePermissionFormat,
             FilePosixProperties posixProperties,
             FilePropertySemantics? filePropertySemantics,
+            Stream content,
+            UploadTransferValidationOptions transferValidationOverride,
+            IProgress<long> progressHandler,
             ShareFileRequestConditions conditions,
             bool async,
             CancellationToken cancellationToken,
             string operationName = default)
         {
+            UploadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Upload;
+            ShareErrors.AssertAlgorithmSupport(validationOptions?.ChecksumAlgorithm);
+
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(ShareFileClient)))
             {
                 ClientConfiguration.Pipeline.LogMethodEnter(
@@ -1002,6 +1035,18 @@ namespace Azure.Storage.Files.Shares
                 try
                 {
                     scope.Start();
+
+                    Errors.VerifyStreamPosition(content, nameof(content));
+
+                    // compute hash BEFORE attaching progress handler
+                    ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
+
                     FileSmbProperties smbProps = smbProperties ?? new FileSmbProperties();
 
                     ShareExtensions.AssertValidFilePermissionAndKey(filePermission, smbProps.FilePermissionKey);
@@ -1012,7 +1057,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = await FileRestClient.CreateAsync(
                             fileContentLength: maxSize,
-                            contentLength: default,
+                            contentLength: (content?.Length - content?.Position),
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1021,9 +1066,9 @@ namespace Azure.Storage.Files.Shares
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
-                            contentMD5: default,
+                            contentMD5: hashResult?.MD5AsArray,
                             filePropertySemantics: filePropertySemantics,
-                            optionalbody: default,
+                            optionalbody: content,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -1037,7 +1082,7 @@ namespace Azure.Storage.Files.Shares
                     {
                         response = FileRestClient.Create(
                             fileContentLength: maxSize,
-                            contentLength: default,
+                            contentLength: (content?.Length - content?.Position),
                             fileAttributes: smbProps.FileAttributes.ToAttributesString(),
                             fileCreationTime: smbProps.FileCreatedOn.ToFileDateTimeString(),
                             fileLastWriteTime: smbProps.FileLastWrittenOn.ToFileDateTimeString(),
@@ -1046,9 +1091,9 @@ namespace Azure.Storage.Files.Shares
                             group: posixProperties?.Group,
                             fileMode: posixProperties?.FileMode?.ToOctalFileMode(),
                             nfsFileType: posixProperties?.FileType,
-                            contentMD5: default,
+                            contentMD5: hashResult?.MD5AsArray,
                             filePropertySemantics: filePropertySemantics,
-                            optionalbody: default,
+                            optionalbody: content,
                             metadata: metadata,
                             filePermission: filePermission,
                             filePermissionFormat: filePermissionFormat,
@@ -7521,6 +7566,10 @@ namespace Azure.Storage.Files.Shares
                         filePermission: default,
                         filePermissionFormat: default,
                         posixProperties: default,
+                        filePropertySemantics: default,
+                        content: default,
+                        transferValidationOverride: default,
+                        progressHandler: default,
                         conditions: options?.OpenConditions,
                         async: async,
                         cancellationToken: cancellationToken)
@@ -7552,6 +7601,10 @@ namespace Azure.Storage.Files.Shares
                             filePermission: default,
                             filePermissionFormat: default,
                             posixProperties: default,
+                            filePropertySemantics: default,
+                            content: default,
+                            transferValidationOverride: default,
+                            progressHandler: default,
                             conditions: options?.OpenConditions,
                             async: async,
                             cancellationToken: cancellationToken)

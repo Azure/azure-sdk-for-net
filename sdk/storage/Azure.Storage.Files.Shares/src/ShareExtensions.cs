@@ -322,7 +322,8 @@ namespace Azure.Storage.Files.Shares
                     Owner = response.Headers.Owner,
                     Group = response.Headers.Group,
                     FileType = response.Headers.NfsFileType,
-                }
+                },
+                ContentHash = response.Headers.ContentMD5,
             };
 
             return shareFileInfo;
