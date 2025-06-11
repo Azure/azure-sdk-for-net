@@ -1997,7 +1997,6 @@ namespace Azure.Storage.Files.Shares.Tests
             {
                 Assert.IsFalse(shareItem.Properties.EnableDirectoryLease);
             }
-
         }
 
         [RecordedTest]
