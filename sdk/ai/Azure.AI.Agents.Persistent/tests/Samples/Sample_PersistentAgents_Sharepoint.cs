@@ -174,7 +174,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
                 }
                 else if (contentItem is MessageImageFileContent imageFileItem)
                 {
-                    Console.Write($"<image from ID: {imageFileItem.FileId}");
+                    Console.Write($"<image from ID: {imageFileItem.FileId}>");
                 }
                 Console.WriteLine();
             }
