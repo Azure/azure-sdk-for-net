@@ -33,8 +33,8 @@ namespace Azure.ResourceManager.OracleDatabase
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _oracleDBSystemShapeDBSystemShapesClientDiagnostics;
-        private readonly DbSystemShapesRestOperations _oracleDBSystemShapeDBSystemShapesRestClient;
+        private readonly ClientDiagnostics _oracleDBSystemShapeDbSystemShapesClientDiagnostics;
+        private readonly DbSystemShapesRestOperations _oracleDBSystemShapeDbSystemShapesRestClient;
         private readonly OracleDBSystemShapeData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -59,9 +59,9 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal OracleDBSystemShapeResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _oracleDBSystemShapeDBSystemShapesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string oracleDBSystemShapeDBSystemShapesApiVersion);
-            _oracleDBSystemShapeDBSystemShapesRestClient = new DbSystemShapesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeDBSystemShapesApiVersion);
+            _oracleDBSystemShapeDbSystemShapesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string oracleDBSystemShapeDbSystemShapesApiVersion);
+            _oracleDBSystemShapeDbSystemShapesRestClient = new DbSystemShapesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBSystemShapeDbSystemShapesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShapes_Get</description>
+        /// <description>DbSystemShape_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -112,11 +112,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<OracleDBSystemShapeResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeResource.Get");
+            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeResource.Get");
             scope.Start();
             try
             {
-                var response = await _oracleDBSystemShapeDBSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _oracleDBSystemShapeDbSystemShapesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBSystemShapeResource(Client, response.Value), response.GetRawResponse());
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DbSystemShapes_Get</description>
+        /// <description>DbSystemShape_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2025-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -152,11 +152,11 @@ namespace Azure.ResourceManager.OracleDatabase
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<OracleDBSystemShapeResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _oracleDBSystemShapeDBSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeResource.Get");
+            using var scope = _oracleDBSystemShapeDbSystemShapesClientDiagnostics.CreateScope("OracleDBSystemShapeResource.Get");
             scope.Start();
             try
             {
-                var response = _oracleDBSystemShapeDBSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
+                var response = _oracleDBSystemShapeDbSystemShapesRestClient.Get(Id.SubscriptionId, new AzureLocation(Id.Parent.Name), Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
                 return Response.FromValue(new OracleDBSystemShapeResource(Client, response.Value), response.GetRawResponse());

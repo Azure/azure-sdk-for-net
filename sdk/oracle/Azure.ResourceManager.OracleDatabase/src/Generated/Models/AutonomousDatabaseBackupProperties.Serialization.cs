@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 throw new FormatException($"The model {nameof(AutonomousDatabaseBackupProperties)} does not support writing '{format}' format.");
             }
 
-            if (options.Format != "W" && Optional.IsDefined(AutonomousDatabaseOcid))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseOcid))
             {
                 writer.WritePropertyName("autonomousDatabaseOcid"u8);
-                writer.WriteStringValue(AutonomousDatabaseOcid);
+                writer.WriteStringValue(DatabaseOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(DatabaseSizeInTbs))
             {
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(Ocid))
+            if (options.Format != "W" && Optional.IsDefined(DatabaseBackupOcid))
             {
                 writer.WritePropertyName("ocid"u8);
-                writer.WriteStringValue(Ocid);
+                writer.WriteStringValue(DatabaseBackupOcid);
             }
             if (options.Format != "W" && Optional.IsDefined(IsAutomatic))
             {
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 return null;
             }
-            ResourceIdentifier autonomousDatabaseOcid = default;
+            string autonomousDatabaseOcid = default;
             double? databaseSizeInTbs = default;
             string dbVersion = default;
             string displayName = default;
-            ResourceIdentifier ocid = default;
+            string ocid = default;
             bool? isAutomatic = default;
             bool? isRestorable = default;
             string lifecycleDetails = default;
@@ -173,11 +173,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             {
                 if (property.NameEquals("autonomousDatabaseOcid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    autonomousDatabaseOcid = new ResourceIdentifier(property.Value.GetString());
+                    autonomousDatabaseOcid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("databaseSizeInTbs"u8))
@@ -201,11 +197,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 }
                 if (property.NameEquals("ocid"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ocid = new ResourceIdentifier(property.Value.GetString());
+                    ocid = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("isAutomatic"u8))

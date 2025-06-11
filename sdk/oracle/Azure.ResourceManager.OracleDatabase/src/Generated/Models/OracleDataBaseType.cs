@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.OracleDatabase.Models
 
         private const string RegularValue = "Regular";
         private const string CloneValue = "Clone";
+        private const string CloneFromBackupTimestampValue = "CloneFromBackupTimestamp";
+        private const string CrossRegionDisasterRecoveryValue = "CrossRegionDisasterRecovery";
 
         /// <summary> Regular DB. </summary>
         public static OracleDataBaseType Regular { get; } = new OracleDataBaseType(RegularValue);
         /// <summary> Clone DB. </summary>
         public static OracleDataBaseType Clone { get; } = new OracleDataBaseType(CloneValue);
+        /// <summary> Clone DB from backup timestamp. </summary>
+        public static OracleDataBaseType CloneFromBackupTimestamp { get; } = new OracleDataBaseType(CloneFromBackupTimestampValue);
+        /// <summary> Cross Region Disaster Recovery. </summary>
+        public static OracleDataBaseType CrossRegionDisasterRecovery { get; } = new OracleDataBaseType(CrossRegionDisasterRecoveryValue);
         /// <summary> Determines if two <see cref="OracleDataBaseType"/> values are the same. </summary>
         public static bool operator ==(OracleDataBaseType left, OracleDataBaseType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="OracleDataBaseType"/> values are not the same. </summary>
