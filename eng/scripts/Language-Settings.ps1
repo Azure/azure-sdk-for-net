@@ -94,6 +94,11 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $allPackageProps += $pkgProp
   }
 
+  Write-Host "Found $($allPackageProps.Count) packages in $serviceDirectory and returning them."
+  $allPackageProps | ForEach-Object {
+    Write-Host "Package: $($_.Name) Version: $($_.Version) Directory: $($_.DirectoryPath)"
+  }
+
   return $allPackageProps
 }
 
