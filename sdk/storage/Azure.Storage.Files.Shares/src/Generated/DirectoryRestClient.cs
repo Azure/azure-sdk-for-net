@@ -33,7 +33,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2025-11-05". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2026-02-06". </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
         /// <param name="allowSourceTrailingDot"> If true, the trailing dot will not be trimmed from the source URI. </param>
@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares
             _allowSourceTrailingDot = allowSourceTrailingDot;
         }
 
-        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode)
+        internal HttpMessage CreateCreateRequest(int? timeout, IDictionary<string, string> metadata, string filePermission, FilePermissionFormat? filePermissionFormat, string filePermissionKey, string fileAttributes, string fileCreationTime, string fileLastWriteTime, string fileChangeTime, string owner, string group, string fileMode, FilePropertySemantics? filePropertySemantics)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -115,6 +115,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-mode", fileMode);
             }
+            if (filePropertySemantics != null)
+            {
+                request.Headers.Add("x-ms-file-property-semantics", filePropertySemantics.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -132,10 +136,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<DirectoryCreateHeaders>> CreateAsync(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FilePropertySemantics? filePropertySemantics = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
+            using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, filePropertySemantics);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new DirectoryCreateHeaders(message.Response);
             switch (message.Response.Status)
@@ -160,10 +165,11 @@ namespace Azure.Storage.Files.Shares
         /// <param name="owner"> Optional, NFS only. The owner of the file or directory. </param>
         /// <param name="group"> Optional, NFS only. The owning group of the file or directory. </param>
         /// <param name="fileMode"> Optional, NFS only. The file mode of the file or directory. </param>
+        /// <param name="filePropertySemantics"> SMB only, default value is New.  New will forcefully add the ARCHIVE attribute flag and alter the permissions specified in x-ms-file-permission to inherit missing permissions from the parent.  Restore will apply changes without further modification. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<DirectoryCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<DirectoryCreateHeaders> Create(int? timeout = null, IDictionary<string, string> metadata = null, string filePermission = null, FilePermissionFormat? filePermissionFormat = null, string filePermissionKey = null, string fileAttributes = null, string fileCreationTime = null, string fileLastWriteTime = null, string fileChangeTime = null, string owner = null, string group = null, string fileMode = null, FilePropertySemantics? filePropertySemantics = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode);
+            using var message = CreateCreateRequest(timeout, metadata, filePermission, filePermissionFormat, filePermissionKey, fileAttributes, fileCreationTime, fileLastWriteTime, fileChangeTime, owner, group, fileMode, filePropertySemantics);
             _pipeline.Send(message, cancellationToken);
             var headers = new DirectoryCreateHeaders(message.Response);
             switch (message.Response.Status)
