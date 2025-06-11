@@ -7,15 +7,15 @@
 
 namespace Azure.Communication.CallAutomation
 {
-    /// <summary> Moving the participant failed event. </summary>
-    internal partial class MoveParticipantFailed
+    /// <summary> Moving the participant successfully event. </summary>
+    internal partial class MoveParticipantSucceededInternal
     {
-        /// <summary> Initializes a new instance of <see cref="MoveParticipantFailed"/>. </summary>
-        internal MoveParticipantFailed()
+        /// <summary> Initializes a new instance of <see cref="MoveParticipantSucceededInternal"/>. </summary>
+        internal MoveParticipantSucceededInternal()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MoveParticipantFailed"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MoveParticipantSucceededInternal"/>. </summary>
         /// <param name="fromCall"> The CallConnectionId for the call you want to move the participant from. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
@@ -23,7 +23,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
         /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <param name="participant"> Participant. </param>
-        internal MoveParticipantFailed(string fromCall, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
+        internal MoveParticipantSucceededInternal(string fromCall, string callConnectionId, string serverCallId, string correlationId, string operationContext, ResultInformation resultInformation, CommunicationIdentifierModel participant)
         {
             FromCall = fromCall;
             CallConnectionId = callConnectionId;

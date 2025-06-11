@@ -7,7 +7,8 @@ using System;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class MoveParticipantsRequest
+    [CodeGenModel("MoveParticipantsResponse")]
+    internal partial class MoveParticipantsResponseInternal
     {
     }
 }
