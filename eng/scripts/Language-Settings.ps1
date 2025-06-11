@@ -28,6 +28,8 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   foreach ($projectOutput in $msbuildOutput)
   {
+    $projectOutput = $projectOutput.Trim().Replace("##vso[task.logissue", "vso[task.logissue")
+
     if (!$projectOutput) {
       Write-Verbose "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
       continue
@@ -92,6 +94,11 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     $allPackageProps += $pkgProp
   }
 
+  Write-Host "Found $($allPackageProps.Count) packages in $serviceDirectory and returning them."
+  $allPackageProps | ForEach-Object {
+    Write-Host "Package: $($_.Name) Version: $($_.Version) Directory: $($_.DirectoryPath)"
+  }
+
   return $allPackageProps
 }
 
@@ -128,7 +135,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
       Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
       Write-Host "Dumping erroring build output."
       Write-Host (Get-Content -Raw $buildOutputPath)
-      continue
+      return @()
   }
 
   if (Test-Path $outputFilePath) {
@@ -152,6 +159,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
       }
     }
   }
+
+  Write-Host "Right before exiting Get-dotnet-AdditionalValidationPackagesFromPackageSet, additionalValidationPackages count is $($additionalValidationPackages.Count)"
 
   return $additionalValidationPackages
 }
