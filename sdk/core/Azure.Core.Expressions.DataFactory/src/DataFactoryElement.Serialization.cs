@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 
 namespace Azure.Core.Expressions.DataFactory
@@ -282,12 +283,73 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T>((T)(object)BinaryData.FromString(json.GetRawText()!));
             }
 
+            if (typeof(T).IsGenericType)
+            {
+                var methodInfo = GetGenericSerializationMethod(typeof(T).GenericTypeArguments[0]!, nameof(DeserializeGenericList));
+                return (DataFactoryElement<T>)methodInfo!.Invoke(null, new object[] { json })!;
+            }
+
             // Handle primitive and other types
             var obj = json.GetObject();
             if (obj is not null)
                 value = (T)obj;
 
             return new DataFactoryElement<T>(value);
+        }
+
+        private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
+        {
+            return typeof(DataFactoryElementJsonConverter)
+                .GetMethod(
+                    methodName,
+                    BindingFlags.Static | BindingFlags.NonPublic)!
+                .MakeGenericMethod(typeToConvert);
+        }
+
+        private static DataFactoryElement<IList<T1?>?> DeserializeGenericList<T1>(JsonElement json)
+        {
+            if (json.ValueKind == JsonValueKind.Array)
+            {
+                var list = new List<T1?>();
+                foreach (var item in json.EnumerateArray())
+                {
+                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<T1>(item.GetRawText()!));
+                }
+
+                return new DataFactoryElement<IList<T1?>?>(list);
+            }
+
+            // Expression, SecretString, and AzureKeyVaultReference handling
+            if (TryGetNonLiteral(json, out DataFactoryElement<IList<T1?>?>? element))
+            {
+                return element!;
+            }
+
+            throw new InvalidOperationException($"Cannot deserialize an {json.ValueKind} as a list.");
+        }
+
+        private static bool TryGetNonLiteral<T1>(JsonElement json, out DataFactoryElement<T1?>? element)
+        {
+            element = null;
+            if (json.ValueKind == JsonValueKind.Object && json.TryGetProperty("type", out JsonElement typeValue))
+            {
+                if (typeValue.ValueEquals("Expression"))
+                {
+                    if (json.EnumerateObject().Count() != 2)
+                    {
+                        // Expression should only have two properties: type and value
+                        return false;
+                    }
+                    var expressionValue = json.GetProperty("value").GetString();
+                    element = new DataFactoryElement<T1?>(expressionValue, DataFactoryElementKind.Expression);
+                }
+                else
+                {
+                    element = DataFactoryElement<T1?>.FromSecretBase(DataFactorySecret.DeserializeDataFactorySecretBaseDefinition(json)!);
+                }
+            }
+
+            return element != null;
         }
     }
 }
