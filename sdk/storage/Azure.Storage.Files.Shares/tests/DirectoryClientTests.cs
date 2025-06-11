@@ -669,6 +669,47 @@ namespace Azure.Storage.Files.Shares.Tests
             Assert.IsNull(response.Value.SmbProperties.FilePermissionKey);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task CreateAsync_FilePropertySemantics(bool ifNotExists)
+        {
+            // Arrange
+            List<FilePropertySemantics?> filePropertySemanticsList = new List<FilePropertySemantics?>
+            {
+                null,
+                FilePropertySemantics.New,
+                FilePropertySemantics.Restore
+            };
+
+            foreach (FilePropertySemantics? filePropertySemantics in filePropertySemanticsList)
+            {
+                await using DisposingShare test = await GetTestShareAsync();
+                ShareDirectoryClient directoryClient = InstrumentClient(test.Share.GetDirectoryClient(GetNewDirectoryName()));
+
+                ShareDirectoryCreateOptions options = new ShareDirectoryCreateOptions
+                {
+                    PropertySemantics = filePropertySemantics
+                };
+
+                Response<ShareDirectoryInfo> response;
+
+                // Act
+                if (ifNotExists)
+                {
+                    response = await directoryClient.CreateIfNotExistsAsync(options);
+                }
+                else
+                {
+                    response = await directoryClient.CreateAsync(options);
+                }
+
+                // Assert
+                // TODO
+            }
+        }
+
         [RecordedTest]
         public async Task CreateIfNotExists_NotExists()
         {
