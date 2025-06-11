@@ -59,6 +59,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     }
 
     $pkgProp = [PackageProps]::new($pkgName, $pkgVersion, $pkgPath, $serviceDirectory)
+    Write-Host "PackageName: $pkgName == $($pkgProp.Name)"
     $pkgProp.SdkType = $sdkType
     $pkgProp.IsNewSdk = ($isNewSdk -eq 'true')
     $pkgProp.ArtifactName = $pkgName
