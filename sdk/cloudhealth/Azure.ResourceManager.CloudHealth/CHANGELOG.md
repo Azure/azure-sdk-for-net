@@ -2,7 +2,14 @@
 
 ## 1.0.0-beta.1 (Unreleased)
 
+### Features Added
 
+-   Initial SDK release for 'Microsoft.CloudHealth' resource provider/namespace
+
+
+### Package Name
+
+The package name has been changed from `Microsoft.Azure.Management.CloudHealth` to `Azure.ResourceManager.CloudHealth`.
 
 ### Features Added
 
