@@ -105,7 +105,7 @@ public partial class Sample_PersistentAgents_Sharepoint : SamplesBase<AIAgentsTe
 #if SNIPPET
         var projectEndpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
-        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_SHAREPOINT_CONECTION_ID");
+        var connectionId = System.Environment.GetEnvironmentVariable("AZURE_SHAREPOINT_CONNECTION_ID");
 #else
         var projectEndpoint = TestEnvironment.PROJECT_ENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
