@@ -368,9 +368,10 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
 
     # this is the primary loop that identifies the packages that have changes
     foreach ($pkg in $allPackageProperties) {
-        if (!$pkg) { continue }
-        Write-Host $pkg.GetType()
-        Write-Host $pkg
+        if (!$pkg) { 
+            Write-Host "Get-PrPkgProperties: Found a package that so skipping."
+            continue 
+        }
         Write-Verbose "Processing changed files against $($pkg.Name). $pkgCounter of $($allPackageProperties.Count)."
         $pkgDirectory = (Resolve-Path "$($pkg.DirectoryPath)").Path.Replace("`\", "/")
         $lookupKey = $pkgDirectory.Replace($RepoRoot, "").TrimStart('\/')
