@@ -505,6 +505,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
+    Write-Host "Found $($packagesWithChanges.Count) packages with changes in the repo at the end of Get-PrPkgProperties"
     $packagesWithChanges | ForEach-Object {
         Write-Host "Package: $($_.Name) Version: $($_.Version) Directory: $($_.DirectoryPath)"
     }
