@@ -38,10 +38,10 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     throw "MSBuild failed with exit code $LASTEXITCODE"
   }
 
-  # Read package info from file instead of console output
   $packageInfoLines = @()
   if (Test-Path $outputFilePath) {
     $packageInfoLines = Get-Content $outputFilePath
+    Write-Host $packageInfoLines
     Remove-Item $outputFilePath -Force -ErrorAction SilentlyContinue
   }
 
