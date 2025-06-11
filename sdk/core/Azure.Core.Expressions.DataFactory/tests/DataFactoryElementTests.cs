@@ -685,7 +685,7 @@ namespace Azure.Core.Expressions.DataFactory.Tests
         {
             var dfe = new DataFactoryElement<bool?>(null);
             var actual = GetSerializedString(dfe);
-            dfe = Deserialize< bool?>(actual);
+            dfe = Deserialize<bool?>(actual);
             Assert.IsNull(dfe);
         }
 
@@ -1060,16 +1060,13 @@ namespace Azure.Core.Expressions.DataFactory.Tests
             Assert.AreEqual(KeyVaultSecretName, dfe.ToString());
         }
 
-        private string GetSerializedString<T>(DataFactoryElement<T> payload)
-        {
-            return ((IPersistableModel<DataFactoryElement<T>>)payload).Write(ModelReaderWriterOptions.Json).ToString();
-        }
+        private string GetSerializedString<T>(DataFactoryElement<T> payload) => ModelReaderWriter.Write(payload).ToString();
 
         private ModelReaderWriterOptions s_options = new ModelReaderWriterOptions("W");
         private DataFactoryElement<T> Deserialize<T>(string json)
         {
             var instance = new DataFactoryElement<T>(default);
-            return ((IPersistableModel<DataFactoryElement<T>>)instance).Create(BinaryData.FromString($"{json}"), s_options);
+            return ((IJsonModel<DataFactoryElement<T>>)instance).Create(BinaryData.FromString($"{json}"), s_options);
         }
 
         [Test]
