@@ -40,6 +40,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
     $pkgPath, $serviceDirectory, $pkgName, $pkgVersion, $sdkType, $isNewSdk, $dllFolder = $projectOutput.Split("' '", [System.StringSplitOptions]::RemoveEmptyEntries).Trim("' ")
     if(!(Test-Path $pkgPath)) {
+      $pkgPathSafeOutput = $projectOutput.Replace("##", "")
       Write-Host "Parsed package path `$pkgPath` does not exist so skipping the package line '$projectOutput'."
       continue
     }
