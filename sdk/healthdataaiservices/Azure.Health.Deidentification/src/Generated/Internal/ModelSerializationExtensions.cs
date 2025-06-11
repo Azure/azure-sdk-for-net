@@ -17,7 +17,7 @@ using Azure.Core;
 
 namespace Azure.Health.Deidentification
 {
-    internal static class ModelSerializationExtensions
+    internal static partial class ModelSerializationExtensions
     {
         internal static readonly JsonDocumentOptions JsonDocumentOptions = new JsonDocumentOptions { MaxDepth = 256 };
         internal static readonly ModelReaderWriterOptions WireOptions = new ModelReaderWriterOptions("W");
@@ -48,14 +48,14 @@ namespace Azure.Health.Deidentification
                 case JsonValueKind.Null:
                     return null;
                 case JsonValueKind.Object:
-                    var dictionary = new Dictionary<string, object>();
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
                     foreach (var jsonProperty in element.EnumerateObject())
                     {
                         dictionary.Add(jsonProperty.Name, jsonProperty.Value.GetObject());
                     }
                     return dictionary;
                 case JsonValueKind.Array:
-                    var list = new List<object>();
+                    List<object> list = new List<object>();
                     foreach (var item in element.EnumerateArray())
                     {
                         list.Add(item.GetObject());
@@ -93,7 +93,7 @@ namespace Azure.Health.Deidentification
         {
             if (element.ValueKind == JsonValueKind.String)
             {
-                var text = element.GetString();
+                string text = element.GetString();
                 if (text == null || text.Length != 1)
                 {
                     throw new NotSupportedException($"Cannot convert \"{text}\" to a char");
@@ -107,14 +107,14 @@ namespace Azure.Health.Deidentification
         }
 
         [Conditional("DEBUG")]
-        public static void ThrowNonNullablePropertyIsNull(this JsonProperty property)
+        public static void ThrowNonNullablePropertyIsNull(this JsonProperty @property)
         {
-            throw new JsonException($"A property '{property.Name}' defined as non-nullable but received as null from the service. This exception only happens in DEBUG builds of the library and would be ignored in the release build");
+            throw new JsonException($"A property '{@property.Name}' defined as non-nullable but received as null from the service. This exception only happens in DEBUG builds of the library and would be ignored in the release build");
         }
 
         public static string GetRequiredString(this JsonElement element)
         {
-            var value = element.GetString();
+            string value = element.GetString();
             if (value == null)
             {
                 throw new InvalidOperationException($"The requested operation requires an element of type 'String', but the target element has type '{element.ValueKind}'.");
@@ -180,9 +180,6 @@ namespace Azure.Health.Deidentification
                     break;
                 case IJsonModel<T> jsonModel:
                     jsonModel.Write(writer, options ?? WireOptions);
-                    break;
-                case IUtf8JsonSerializable serializable:
-                    serializable.Write(writer);
                     break;
                 case byte[] bytes:
                     writer.WriteBase64StringValue(bytes);

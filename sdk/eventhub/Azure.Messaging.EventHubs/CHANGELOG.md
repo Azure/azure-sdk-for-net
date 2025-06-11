@@ -1,16 +1,12 @@
 # Release History
 
-## 5.13.0-beta.1 (Unreleased)
+## 5.12.2 (2025-06-12)
 
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make the Event Hubs client libraries better with their contributions to this release:
 
 - Daniel Marbach _([GitHub](https://github.com/danielmarbach))_
-
-### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 

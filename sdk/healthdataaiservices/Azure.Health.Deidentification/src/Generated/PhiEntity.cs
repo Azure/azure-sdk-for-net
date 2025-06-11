@@ -13,48 +13,15 @@ namespace Azure.Health.Deidentification
     /// <summary> PHI Entity tag in the input. </summary>
     public partial class PhiEntity
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PhiEntity"/>. </summary>
         /// <param name="category"> PHI Category of the entity. </param>
         /// <param name="offset"> Starting index of the location from within the input text. </param>
         /// <param name="length"> Length of the input text. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offset"/> or <paramref name="length"/> is null. </exception>
         internal PhiEntity(PhiCategory category, StringIndex offset, StringIndex length)
         {
-            Argument.AssertNotNull(offset, nameof(offset));
-            Argument.AssertNotNull(length, nameof(length));
-
             Category = category;
             Offset = offset;
             Length = length;
@@ -66,30 +33,29 @@ namespace Azure.Health.Deidentification
         /// <param name="length"> Length of the input text. </param>
         /// <param name="text"> Text of the entity. </param>
         /// <param name="confidenceScore"> Confidence score of the category match. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhiEntity(PhiCategory category, StringIndex offset, StringIndex length, string text, double? confidenceScore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal PhiEntity(PhiCategory category, StringIndex offset, StringIndex length, string text, double? confidenceScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Category = category;
             Offset = offset;
             Length = length;
             Text = text;
             ConfidenceScore = confidenceScore;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="PhiEntity"/> for deserialization. </summary>
-        internal PhiEntity()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> PHI Category of the entity. </summary>
         public PhiCategory Category { get; }
+
         /// <summary> Starting index of the location from within the input text. </summary>
         public StringIndex Offset { get; }
+
         /// <summary> Length of the input text. </summary>
         public StringIndex Length { get; }
+
         /// <summary> Text of the entity. </summary>
         public string Text { get; }
+
         /// <summary> Confidence score of the category match. </summary>
         public double? ConfidenceScore { get; }
     }
