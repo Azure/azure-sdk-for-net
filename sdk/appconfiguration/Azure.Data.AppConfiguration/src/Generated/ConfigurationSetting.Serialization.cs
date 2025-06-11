@@ -14,7 +14,7 @@ using Azure.Core;
 
 namespace Azure.Data.AppConfiguration
 {
-    /// <summary></summary>
+    /// <summary> A key-value pair representing application settings. </summary>
     public partial class ConfigurationSetting : IJsonModel<ConfigurationSetting>
     {
         /// <param name="writer"> The JSON writer. </param>
@@ -264,7 +264,7 @@ namespace Azure.Data.AppConfiguration
             {
                 return null;
             }
-            Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
+            Utf8JsonRequestContent content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(configurationSetting, ModelSerializationExtensions.WireOptions);
             return content;
         }
