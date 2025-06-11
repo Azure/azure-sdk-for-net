@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Models
             }
 
             writer.WriteStartObject();
-            JsonSerializer.Serialize(writer, ManagedServiceIdentityType, jOptions);
+            ModelSerializationExtensions.JsonSerialize(writer, ManagedServiceIdentityType, jOptions);
             if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
@@ -202,7 +202,8 @@ namespace Azure.ResourceManager.Models
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = JsonSerializer.Deserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions);
+                    type = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentityType>($"{{{property}}}", jOptions);
+
                     continue;
                 }
                 if (property.NameEquals("userAssignedIdentities"u8))
