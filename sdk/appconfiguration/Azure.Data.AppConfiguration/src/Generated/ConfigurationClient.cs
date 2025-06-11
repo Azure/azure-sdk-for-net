@@ -62,6 +62,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetConfigurationSetting(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context)
@@ -70,7 +71,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -112,6 +113,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetConfigurationSettingAsync(string key, string label, IEnumerable<SettingFields> @select, string syncToken, string acceptDatetime, string ifMatch, string ifNoneMatch, IEnumerable<string> tags, RequestContext context = null)
@@ -120,7 +122,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateGetConfigurationSettingRequest(key, label, @select, syncToken, acceptDatetime, ifMatch, ifNoneMatch, tags, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -155,6 +157,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response SetConfigurationSetting(string key, string contentType, RequestContent content, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
@@ -163,7 +166,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -198,6 +201,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> SetConfigurationSettingAsync(string key, string contentType, RequestContent content, string label = default, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
@@ -206,7 +210,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateSetConfigurationSettingRequest(key, contentType, content, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -235,6 +239,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteConfigurationSetting(string key, string label, string syncToken, string ifMatch, RequestContext context)
@@ -243,7 +248,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -272,6 +277,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteConfigurationSettingAsync(string key, string label, string syncToken, string ifMatch, RequestContext context)
@@ -280,7 +286,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateDeleteConfigurationSettingRequest(key, label, syncToken, ifMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -313,6 +319,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetSnapshot(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
@@ -321,7 +328,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
                 using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -354,6 +361,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetSnapshotAsync(string name, IEnumerable<SnapshotFields> @select, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context = null)
@@ -362,7 +370,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
 
                 using HttpMessage message = CreateGetSnapshotRequest(name, @select, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -382,6 +390,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Operation<BinaryData> CreateSnapshot(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
@@ -389,7 +398,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
@@ -410,6 +419,7 @@ namespace Azure.Data.AppConfiguration
         /// <param name="syncToken"> Used to guarantee real-time consistency between requests. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Operation<BinaryData>> CreateSnapshotAsync(WaitUntil waitUntil, string name, string contentType, RequestContent content, string syncToken = default, RequestContext context = null)
         {
@@ -417,7 +427,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateSnapshotRequest(name, contentType, content, syncToken, context);
@@ -452,6 +462,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response UpdateSnapshotStatus(string name, string contentType, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
@@ -460,7 +471,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, ifMatch, ifNoneMatch, context);
@@ -495,6 +506,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> UpdateSnapshotStatusAsync(string name, string contentType, RequestContent content, string syncToken = default, string ifMatch = default, string ifNoneMatch = default, RequestContext context = null)
@@ -503,7 +515,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(name, nameof(name));
+                Argument.AssertNotNullOrEmpty(name, nameof(name));
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUpdateSnapshotStatusRequest(name, contentType, content, syncToken, ifMatch, ifNoneMatch, context);
@@ -537,6 +549,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response CreateReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
@@ -545,7 +558,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -578,6 +591,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> CreateReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
@@ -586,7 +600,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateCreateReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
@@ -619,6 +633,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual Response DeleteReadOnlyLock(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
@@ -627,7 +642,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return Pipeline.ProcessMessage(message, context);
@@ -660,6 +675,7 @@ namespace Azure.Data.AppConfiguration
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="key"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> DeleteReadOnlyLockAsync(string key, string label, string syncToken, string ifMatch, string ifNoneMatch, RequestContext context)
@@ -668,7 +684,7 @@ namespace Azure.Data.AppConfiguration
             scope.Start();
             try
             {
-                Argument.AssertNotNull(key, nameof(key));
+                Argument.AssertNotNullOrEmpty(key, nameof(key));
 
                 using HttpMessage message = CreateDeleteReadOnlyLockRequest(key, label, syncToken, ifMatch, ifNoneMatch, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
