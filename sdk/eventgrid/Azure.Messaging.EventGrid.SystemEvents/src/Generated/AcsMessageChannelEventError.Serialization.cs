@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsMessageChannelEventError : IUtf8JsonSerializable, IJsonModel<AcsMessageChannelEventError>
+    internal partial class AcsMessageChannelEventError : IUtf8JsonSerializable, IJsonModel<AcsMessageChannelEventError>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsMessageChannelEventError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -113,7 +113,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsMessageChannelEventError)} does not support writing '{options.Format}' format.");
             }

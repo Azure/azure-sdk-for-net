@@ -23,7 +23,8 @@ namespace Azure.Communication.CallAutomation
             From = CommunicationIdentifierSerializer.Deserialize(internalEvent.From);
             ServerCallId = internalEvent.ServerCallId;
             CallerDisplayName = internalEvent.CallerDisplayName;
-            CustomContext = new CustomCallingContext(internalEvent.CustomContext.SipHeaders, internalEvent.CustomContext.VoipHeaders);
+            CustomContext = new CustomCallingContext(internalEvent.CustomContext?.VoipHeaders, internalEvent.CustomContext?.SipHeaders, CustomCallContextHelpers.CreateTeamsPhoneCallDetails(internalEvent.CustomContext?.TeamsPhoneCallDetails));
+
             IncomingCallContext = internalEvent.IncomingCallContext;
 
             if (internalEvent.OnBehalfOfCallee != null)

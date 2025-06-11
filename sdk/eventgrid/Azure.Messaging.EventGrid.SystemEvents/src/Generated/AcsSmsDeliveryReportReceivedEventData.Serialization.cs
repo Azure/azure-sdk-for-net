@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(AcsSmsDeliveryReportReceivedEventDataConverter))]
     public partial class AcsSmsDeliveryReportReceivedEventData : IUtf8JsonSerializable, IJsonModel<AcsSmsDeliveryReportReceivedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AcsSmsDeliveryReportReceivedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -35,23 +37,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(DeliveryStatus))
+            writer.WritePropertyName("deliveryStatus"u8);
+            writer.WriteStringValue(DeliveryStatus);
+            writer.WritePropertyName("deliveryStatusDetails"u8);
+            writer.WriteStringValue(DeliveryStatusDetails);
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("deliveryStatus"u8);
-                writer.WriteStringValue(DeliveryStatus);
+                writer.WritePropertyName("deliveryAttempts"u8);
+                writer.WriteStartArray();
+                foreach (var item in DeliveryAttempts)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeliveryStatusDetails))
-            {
-                writer.WritePropertyName("deliveryStatusDetails"u8);
-                writer.WriteStringValue(DeliveryStatusDetails);
-            }
-            writer.WritePropertyName("deliveryAttempts"u8);
-            writer.WriteStartArray();
-            foreach (var item in DeliveryAttempts)
-            {
-                writer.WriteObjectValue(item, options);
-            }
-            writer.WriteEndArray();
             if (Optional.IsDefined(ReceivedTimestamp))
             {
                 writer.WritePropertyName("receivedTimestamp"u8);
@@ -170,7 +169,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(AcsSmsDeliveryReportReceivedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -208,6 +207,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, AcsSmsDeliveryReportReceivedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override AcsSmsDeliveryReportReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeAcsSmsDeliveryReportReceivedEventData(document.RootElement);
+            }
         }
     }
 }

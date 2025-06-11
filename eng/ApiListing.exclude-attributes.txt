@@ -1,3 +1,4 @@
+T:System.Diagnostics.CodeAnalysis.RequiresUnreferencedCodeAttribute
 T:System.Runtime.CompilerServices.AsyncIteratorStateMachineAttribute
 T:System.Runtime.CompilerServices.AsyncStateMachineAttribute
 T:System.Runtime.CompilerServices.CompilerGeneratedAttribute

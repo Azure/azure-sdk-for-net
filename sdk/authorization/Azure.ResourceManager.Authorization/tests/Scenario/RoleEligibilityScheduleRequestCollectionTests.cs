@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             return resourceGroup.GetRoleEligibilityScheduleRequests();
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Get()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
         }
 
         [Ignore("Role assignment is not supported")]
-        [Test]
+        [RecordedTest]
         public async Task Create()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.AreEqual(roleEligibilityScheduleRequest.Value.Data.Name, roleName);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task GetAll()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Authorization.Tests.Scenario
             Assert.GreaterOrEqual(roleEligibilityScheduleRequests.Count, 0);
         }
 
-        [Test]
+        [RecordedTest]
         public async Task Exists()
         {
             var collection = await GetRoleEligibilityScheduleRequestCollectionAsync();

@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ResourceNotificationsResourceDeletedEventDataConverter))]
     public partial class ResourceNotificationsResourceDeletedEventData : IUtf8JsonSerializable, IJsonModel<ResourceNotificationsResourceDeletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceNotificationsResourceDeletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -107,7 +109,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ResourceNotificationsResourceDeletedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -145,6 +147,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ResourceNotificationsResourceDeletedEventDataConverter : JsonConverter<ResourceNotificationsResourceDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ResourceNotificationsResourceDeletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ResourceNotificationsResourceDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeResourceNotificationsResourceDeletedEventData(document.RootElement);
+            }
         }
     }
 }

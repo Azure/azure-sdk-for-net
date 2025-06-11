@@ -209,6 +209,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
 #endif
     [TestCase(null)]
+    [Ignore("Disable pending model upgrade and/or FT area revamp")]
     public async Task CreateAndCancelFineTuning(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         FineTuningClient client = GetTestClient(GetTestClientOptions(version));
@@ -279,6 +280,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
 #endif
     [TestCase(null)]
+    [Ignore("Disable pending model upgrade and/or FT area revamp")]
     public async Task CreateAndDeleteFineTuning(AzureOpenAIClientOptions.ServiceVersion? version)
     {
         FineTuningClient client = GetTestClient(GetTestClientOptions(version));
@@ -324,6 +326,7 @@ public class FineTuningTests : AoaiTestBase<FineTuningClient>
     [TestCase(AzureOpenAIClientOptions.ServiceVersion.V2024_10_21)]
 #endif
     [TestCase(null)]
+    [Ignore("Disable pending model upgrade and/or FT area revamp")]
     [Category("LongRunning")] // CAUTION: This test can take around 10 to 15 *minutes* in live mode to run
     public async Task DeployAndChatWithModel(AzureOpenAIClientOptions.ServiceVersion? version)
     {

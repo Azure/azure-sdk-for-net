@@ -10,7 +10,12 @@
 
 ### Other Changes
 
-## 2.0.0 (2025-03-11)
+## 2.0.1 (2025-03-12)
+
+### Bugs Fixed
+* Fix SignalR trigger completion message serialization for dotnet-isolated worker.
+
+## 2.0.0 (2025-03-04)
 
 ### Breaking Changes
 * Modify `AddDefaultAuth` method in `SignalRFunctionsHostBuilderExtensions.cs` to use `IServiceCollection` instead of `IFunctionsHostBuilder` to remove the dependency for legacy package `Microsoft.Azure.Functions.Extensions`.

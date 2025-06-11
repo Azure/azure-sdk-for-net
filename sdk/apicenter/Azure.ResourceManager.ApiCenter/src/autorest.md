@@ -7,12 +7,12 @@ azure-arm: true
 csharp: true
 library-name: ApiCenter
 namespace: Azure.ResourceManager.ApiCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/a29126ca8200a6c981a4e908e41fe55730df4cad/specification/apicenter/resource-manager/readme.md
-#tag: package-2023-07-01-preview
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d701c73fb5ee44f95b97b6c3eaf8c4aeb051e73/specification/apicenter/resource-manager/readme.md
+#tag: package-2024-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
@@ -23,11 +23,38 @@ use-model-reader-writer: true
 #  show-serialized-names: true
 
 rename-mapping:
-  ServiceCollection: ApiCenterServiceListResult
+  Contact: ApiContactInformation
+  License: ApiLicenseInformation
+  Onboarding: EnvironmentOnboardingInformation
+  ApiDefinitionPropertiesSpecification: ApiSpecificationDetails
+  ExternalDocumentation: ApiExternalDocumentation
+  LifecycleStage: ApiLifecycleStage
+  DeploymentProperties.environmentId: -|arm-id
+  DeploymentProperties.definitionId: -|arm-id
 
 prepend-rp-prefix:
   - ProvisioningState
   - Service
+  - ServiceProperties
+  - Workspace
+  - WorkspaceProperties
+  - Environment
+  - EnvironmentProperties
+  - EnvironmentKind
+  - EnvironmentServer
+  - Deployment
+  - DeploymentProperties
+  - DeploymentServer
+  - DeploymentState
+  - Api
+  - ApiProperties
+  - ApiDefinition
+  - ApiDefinitionProperties
+  - ApiVersion
+  - ApiVersionProperties
+  - MetadataSchema
+  - MetadataSchemaProperties
+  - MetadataAssignment
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -58,5 +85,7 @@ acronym-mapping:
   SSO: Sso
   URI: Uri
   Etag: ETag|etag
+  API: Api|api
+  AWSAPI: AwsApi
 
 ```

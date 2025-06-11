@@ -23,31 +23,6 @@ namespace Azure.Storage.DataMovement
         private CommitChunkHandler _commitBlockHandler;
 
         /// <summary>
-        /// Creating job part based on a single transfer job
-        /// </summary>
-        private ServiceToServiceJobPart(TransferJobInternal job, int partNumber)
-            : base(transferOperation: job._transferOperation,
-                  partNumber: partNumber,
-                  sourceResource: job._sourceResource,
-                  destinationResource: job._destinationResource,
-                  transferChunkSize: job._maximumTransferChunkSize,
-                  initialTransferSize: job._initialTransferSize,
-                  errorHandling: job._errorMode,
-                  createMode: job._creationPreference,
-                  checkpointer: job._checkpointer,
-                  progressTracker: job._progressTracker,
-                  arrayPool: job.UploadArrayPool,
-                  jobPartEventHandler: job.GetJobPartStatusEventHandler(),
-                  statusEventHandler: job.TransferStatusEventHandler,
-                  failedEventHandler: job.TransferFailedEventHandler,
-                  skippedEventHandler: job.TransferSkippedEventHandler,
-                  singleTransferEventHandler: job.TransferItemCompletedEventHandler,
-                  clientDiagnostics: job.ClientDiagnostics,
-                  cancellationToken: job._cancellationToken)
-        {
-        }
-
-        /// <summary>
         /// Creating transfer job based on a storage resource created from listing.
         /// </summary>
         private ServiceToServiceJobPart(
@@ -120,19 +95,6 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Called when creating a job part from a single transfer.
-        /// </summary>
-        public static async Task<JobPartInternal> CreateJobPartAsync(
-            TransferJobInternal job,
-            int partNumber)
-        {
-            // Create Job Part file as we're initializing the job part
-            ServiceToServiceJobPart part = new ServiceToServiceJobPart(job, partNumber);
-            await part.AddJobPartToCheckpointerAsync().ConfigureAwait(false);
-            return part;
-        }
-
-        /// <summary>
         /// Called when creating a job part from a container transfer.
         /// </summary>
         public static async Task<JobPartInternal> CreateJobPartAsync(
@@ -192,6 +154,12 @@ namespace Azure.Storage.DataMovement
                     return;
                 }
                 await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
+
+                if (!await _sourceResource.ShouldItemTransferAsync(_cancellationToken).ConfigureAwait(false))
+                {
+                    await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
+                    return;
+                }
 
                 StorageResourceItemProperties sourceProperties =
                     await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);

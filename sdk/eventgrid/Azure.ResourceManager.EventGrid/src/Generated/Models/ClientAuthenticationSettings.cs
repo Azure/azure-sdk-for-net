@@ -54,11 +54,13 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Initializes a new instance of <see cref="ClientAuthenticationSettings"/>. </summary>
         /// <param name="alternativeAuthenticationNameSources"> Alternative authentication name sources related to client authentication settings for namespace resource. </param>
         /// <param name="customJwtAuthentication"> Custom JWT authentication settings for namespace resource. </param>
+        /// <param name="webhookAuthentication"> Authentication settings for a webhook endpoint within a Namespace resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources, CustomJwtAuthenticationSettings customJwtAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClientAuthenticationSettings(IList<AlternativeAuthenticationNameSource> alternativeAuthenticationNameSources, CustomJwtAuthenticationSettings customJwtAuthentication, WebhookAuthenticationSettings webhookAuthentication, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlternativeAuthenticationNameSources = alternativeAuthenticationNameSources;
             CustomJwtAuthentication = customJwtAuthentication;
+            WebhookAuthentication = webhookAuthentication;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -68,5 +70,8 @@ namespace Azure.ResourceManager.EventGrid.Models
         /// <summary> Custom JWT authentication settings for namespace resource. </summary>
         [WirePath("customJwtAuthentication")]
         public CustomJwtAuthenticationSettings CustomJwtAuthentication { get; set; }
+        /// <summary> Authentication settings for a webhook endpoint within a Namespace resource. </summary>
+        [WirePath("webhookAuthentication")]
+        public WebhookAuthenticationSettings WebhookAuthentication { get; set; }
     }
 }

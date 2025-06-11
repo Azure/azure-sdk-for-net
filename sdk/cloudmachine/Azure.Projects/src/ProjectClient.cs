@@ -3,9 +3,9 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
-using Azure.Data.AppConfiguration;
 using Azure.Identity;
 
 namespace Azure.Projects;
@@ -13,10 +13,10 @@ namespace Azure.Projects;
 /// <summary>
 /// The project client.
 /// </summary>
-public partial class ProjectClient : ConnectionProvider
+public partial class ProjectClient : ClientConnectionProvider
 {
-    private readonly ConfigurationClient _config;
     private readonly TokenCredential _credential = BuildCredential(default);
+    private readonly ClientConnectionProvider _connections;
 
     /// <summary>
     /// The project ID.
@@ -27,26 +27,45 @@ public partial class ProjectClient : ConnectionProvider
     /// <summary>
     /// Initializes a new instance of the <see cref="ProjectClient"/>.
     /// </summary>
-    public ProjectClient()
+    public ProjectClient() : base(maxCacheSize: 100)
     {
         // TODO: should it ever create?
         ProjectId = ReadOrCreateProjectId();
-
-        _config = new(new Uri($"https://{ProjectId}.azconfig.io"), _credential);
-
-        Messaging = new MessagingServices(this);
-        Storage = new StorageServices(this);
+        _connections = new AppConfigConnectionProvider(new Uri($"https://{ProjectId}.azconfig.io"), _credential);
     }
 
     /// <summary>
-    /// Gets the messaging services.
+    /// Initializes a new instance of the <see cref="ProjectClient"/> with the specified connection provider.
     /// </summary>
-    public MessagingServices Messaging { get; }
+    /// <param name="projectId"></param>
+    /// <param name="connections"></param>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public ProjectClient(string projectId, ClientConnectionProvider connections) : base(maxCacheSize: 100)
+    {
+        if (connections == null)
+        {
+            connections = new AppConfigConnectionProvider(new Uri($"https://{projectId}.azconfig.io"), _credential);
+        }
+        ProjectId = projectId;
+        _connections = connections;
+    }
 
     /// <summary>
-    /// Gets the storage services.
+    /// Retrieves the connection options for a specified client type and instance ID.
     /// </summary>
-    public StorageServices Storage { get; }
+    /// <param name="connectionId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ClientConnection GetConnection(string connectionId)
+        => _connections.GetConnection(connectionId);
+
+    /// <summary>
+    /// Rerurns all connections.
+    /// </summary>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override IEnumerable<ClientConnection> GetAllConnections() => _connections.GetAllConnections();
 
     private static TokenCredential BuildCredential(TokenCredential credential)
     {

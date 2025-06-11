@@ -142,10 +142,11 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.SpeechResult"/>. </summary>
         /// <param name="speech"> The recognized speech in string. </param>
+        /// <param name="confidence"> The confidence of the recognized speech. </param>
         /// <returns> A new <see cref="CallAutomation.SpeechResult"/> instance for mocking. </returns>
-        public static SpeechResult SpeechResult(string speech = null)
+        public static SpeechResult SpeechResult(string speech = null, double? confidence = null)
         {
-            return new SpeechResult(speech);
+            return new SpeechResult(speech, confidence);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.UserConsent"/>. </summary>

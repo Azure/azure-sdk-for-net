@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// The platform type where packet core is deployed. The contents of this enum can change.
-    /// Serialized Name: PlatformType
-    /// </summary>
+    /// <summary> The platform type where packet core is deployed. The contents of this enum can change. </summary>
     public readonly partial struct MobileNetworkPlatformType : IEquatable<MobileNetworkPlatformType>
     {
         private readonly string _value;
@@ -25,19 +22,13 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AKSHCIValue = "AKS-HCI";
-        private const string ThreePAzureStackHCIValue = "3P-AZURE-STACK-HCI";
+        private const string AksHciValue = "AKS-HCI";
+        private const string ThreePAzureStackHciValue = "3P-AZURE-STACK-HCI";
 
-        /// <summary>
-        /// If this option is chosen, you must set one of "azureStackEdgeDevice", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other.
-        /// Serialized Name: PlatformType.AKS-HCI
-        /// </summary>
-        public static MobileNetworkPlatformType AKSHCI { get; } = new MobileNetworkPlatformType(AKSHCIValue);
-        /// <summary>
-        /// If this option is chosen, you must set one of "azureStackHciCluster", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other.
-        /// Serialized Name: PlatformType.3P-AZURE-STACK-HCI
-        /// </summary>
-        public static MobileNetworkPlatformType ThreePAzureStackHCI { get; } = new MobileNetworkPlatformType(ThreePAzureStackHCIValue);
+        /// <summary> If this option is chosen, you must set one of "azureStackEdgeDevice", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other. </summary>
+        public static MobileNetworkPlatformType AksHci { get; } = new MobileNetworkPlatformType(AksHciValue);
+        /// <summary> If this option is chosen, you must set one of "azureStackHciCluster", "connectedCluster" or "customLocation". If multiple are set, they must be consistent with each other. </summary>
+        public static MobileNetworkPlatformType ThreePAzureStackHci { get; } = new MobileNetworkPlatformType(ThreePAzureStackHciValue);
         /// <summary> Determines if two <see cref="MobileNetworkPlatformType"/> values are the same. </summary>
         public static bool operator ==(MobileNetworkPlatformType left, MobileNetworkPlatformType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="MobileNetworkPlatformType"/> values are not the same. </summary>

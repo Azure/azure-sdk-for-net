@@ -7,10 +7,13 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
+using Azure.Storage.Tests.Shared;
 using Iced.Intel;
+using Moq;
 using NUnit;
 using NUnit.Framework;
 
@@ -420,6 +423,29 @@ namespace Azure.Storage.Test
 
             // Assert
             Assert.AreEqual(expectedOutputLength, totalRead);
+        }
+
+        [Test]
+        public void AvoidFlushInnerStreamEveryBlock()
+        {
+            byte[] key = new byte[Constants.ClientSideEncryption.EncryptionKeySizeBits / 8];
+            new Random().NextBytes(key);
+            Mock<MemoryStream> ms = new()
+            {
+                CallBase = true,
+            };
+            using AuthenticatedRegionCryptoStream cryptoStream = new(
+                ms.Object,
+                new GcmAuthenticatedCryptographicTransform(key, TransformMode.Encrypt),
+                Constants.ClientSideEncryption.V2.EncryptionRegionDataSize,
+                CryptoStreamMode.Write);
+
+            using Stream sourceStream = new PredictableStream(4 * Constants.ClientSideEncryption.V2.EncryptionRegionDataSize);
+
+            sourceStream.CopyTo(cryptoStream);
+
+            ms.Verify(s => s.Flush(), Times.Never);
+            ms.Verify(s => s.FlushAsync(It.IsAny<CancellationToken>()), Times.Never);
         }
     }
 }

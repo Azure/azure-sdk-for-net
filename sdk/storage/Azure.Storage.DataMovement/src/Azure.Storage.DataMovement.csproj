@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks);net6.0</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
   </PropertyGroup>
   <PropertyGroup>
@@ -21,7 +21,10 @@
   <ItemGroup>
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Storage.Common" />
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+    <!-- <PackageReference Include="Azure.Storage.Common" /> -->
+    <!-- This PackageReference is commented out because Azure.Storage.Common is included as a ProjectReference above. -->
+    <!-- It is retained here for reference in case the dependency needs to be switched back to a PackageReference in the future. -->
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AzureEventSource.cs" LinkBase="Shared\Core" />

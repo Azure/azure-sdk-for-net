@@ -8,17 +8,20 @@ azure-arm: true
 csharp: true
 library-name: StorageSync
 namespace: Azure.ResourceManager.StorageSync
-require: https://github.com/Azure/azure-rest-api-specs/blob/d1eee5499dbf9281debdc90c4f4cbc7470fb8d6d/specification/storagesync/resource-manager/readme.md
-tag: package-2022-06-01
+require: https://github.com/Azure/azure-rest-api-specs/blob/88735540206d3393d194f4e1cc1aa2daac65af8a/specification/storagesync/resource-manager/readme.md
+#tag: package-2022-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
-  output-folder: $(this-folder)/../samples/Generated
+  output-folder: $(this-folder)/../tests/Generated
   clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+
+# mgmt-debug: 
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -95,7 +98,17 @@ rename-mapping:
   Workflow.properties.createdTimestamp: CreatedOn
   Workflow.properties.lastStatusTimestamp: LastStatusUpdatedOn
   ServerEndpointCloudTieringStatus.healthLastUpdatedTimestamp: HealthLastUpdatedOn
-
+  RegisteredServer.properties.identity: UseIdentity
+  RegisteredServer.properties.applicationId: -|uuid
+  RegisteredServer.properties.latestApplicationId: -|uuid
+  RegisteredServerCreateParameters.properties.identity: UseIdentity
+  RegisteredServerCreateParameters.properties.applicationId: -|uuid
+  RegisteredServerUpdateParameters.properties.identity: UseIdentity
+  RegisteredServerUpdateParameters.properties.applicationId: -|uuid
+  ServerAuthType: StorageSyncServerAuthType 
+  ServerProvisioningStatus: StorageSyncServerProvisioningStatus
+  ServerEndpointProvisioningStatus: StorageSyncServerEndpointProvisioningStatus
+  
 override-operation-name:
   CloudEndpoints_Restoreheartbeat: RestoreHeartbeat
   StorageSyncServices_CheckNameAvailability: CheckStorageSyncNameAvailability

@@ -64,10 +64,12 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal FirmwareAnalysisWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IotFirmwareDefenseSku sku, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Sku = sku;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -77,6 +79,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense
         {
         }
 
+        /// <summary> The SKU (Stock Keeping Unit) assigned to this resource. </summary>
+        public IotFirmwareDefenseSku Sku { get; set; }
         /// <summary> Provisioning state of the resource. </summary>
         public FirmwareProvisioningState? ProvisioningState { get; }
     }

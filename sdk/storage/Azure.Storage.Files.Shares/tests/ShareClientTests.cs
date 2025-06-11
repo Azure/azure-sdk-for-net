@@ -303,6 +303,13 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual("InvalidAuthenticationInfo", e.ErrorCode));
         }
 
+        [Test]
+        public void Ctor_DevelopmentThrows()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => new ShareClient("UseDevelopmentStorage=true", "share"));
+            Assert.AreEqual("connectionString", ex.ParamName);
+        }
+
         [RecordedTest]
         public void WithSnapshot()
         {
@@ -933,6 +940,23 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Act
             Response<bool> response = await share.DeleteIfExistsAsync();
+
+            // Assert
+            Assert.IsFalse(response.Value);
+        }
+
+        [RecordedTest]
+        public async Task DeleteIfExistsAsync_SnapshotNotFound()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateIfNotExistsAsync();
+            ShareClient shareWithSnapshot = share.WithSnapshot("2025-02-04T10:17:47.0000000Z");
+
+            // Act
+            Response<bool> response = await shareWithSnapshot.DeleteIfExistsAsync();
 
             // Assert
             Assert.IsFalse(response.Value);

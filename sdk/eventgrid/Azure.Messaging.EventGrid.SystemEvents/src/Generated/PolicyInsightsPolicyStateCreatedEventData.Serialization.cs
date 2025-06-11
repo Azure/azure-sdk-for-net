@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(PolicyInsightsPolicyStateCreatedEventDataConverter))]
     public partial class PolicyInsightsPolicyStateCreatedEventData : IUtf8JsonSerializable, IJsonModel<PolicyInsightsPolicyStateCreatedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyInsightsPolicyStateCreatedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -162,7 +164,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options);
+                    return ModelReaderWriter.Write(this, options, AzureMessagingEventGridSystemEventsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(PolicyInsightsPolicyStateCreatedEventData)} does not support writing '{options.Format}' format.");
             }
@@ -200,6 +202,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class PolicyInsightsPolicyStateCreatedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateCreatedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, PolicyInsightsPolicyStateCreatedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override PolicyInsightsPolicyStateCreatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializePolicyInsightsPolicyStateCreatedEventData(document.RootElement);
+            }
         }
     }
 }

@@ -10,41 +10,17 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    /// <summary>
-    /// UE Information for 5G.
-    /// Serialized Name: UeInfo5G
-    /// </summary>
+    /// <summary> UE Information for 5G. </summary>
     public partial class UEInfo5G : ExtendedUEInfoProperties
     {
         /// <summary> Initializes a new instance of <see cref="UEInfo5G"/>. </summary>
-        /// <param name="supi">
-        /// Subscription Permanent Identifier
-        /// Serialized Name: UeInfo5G.info.supi
-        /// </param>
-        /// <param name="fivegTmsi">
-        /// 5G Temporary Mobile Subscriber Identity
-        /// Serialized Name: UeInfo5G.info.fivegGuti.fivegTmsi
-        /// </param>
-        /// <param name="regionId">
-        /// AMF region identifier
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.regionId
-        /// </param>
-        /// <param name="setId">
-        /// AMF set identifier
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.setId
-        /// </param>
-        /// <param name="pointer">
-        /// AMF pointer
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.pointer
-        /// </param>
-        /// <param name="mccInfoFivegGutiPlmnMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.fivegGuti.plmn.mcc
-        /// </param>
-        /// <param name="mncInfoFivegGutiPlmnMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.fivegGuti.plmn.mnc
-        /// </param>
+        /// <param name="supi"> Subscription Permanent Identifier. </param>
+        /// <param name="fivegTmsi"> 5G Temporary Mobile Subscriber Identity. </param>
+        /// <param name="regionId"> AMF region identifier. </param>
+        /// <param name="setId"> AMF set identifier. </param>
+        /// <param name="pointer"> AMF pointer. </param>
+        /// <param name="mccInfoFivegGutiPlmnMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoFivegGutiPlmnMnc"> Mobile network code (MNC). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="supi"/>, <paramref name="mccInfoFivegGutiPlmnMcc"/> or <paramref name="mncInfoFivegGutiPlmnMnc"/> is null. </exception>
         public UEInfo5G(string supi, int fivegTmsi, int regionId, int setId, int pointer, string mccInfoFivegGutiPlmnMcc, string mncInfoFivegGutiPlmnMnc)
         {
@@ -65,134 +41,41 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UEInfo5G"/>. </summary>
-        /// <param name="ratType">
-        /// RAT Type
-        /// Serialized Name: ExtendedUeInfoProperties.ratType
-        /// </param>
-        /// <param name="lastReadOn">
-        /// The timestamp of last UE info read from the packet core (UTC).
-        /// Serialized Name: ExtendedUeInfoProperties.lastReadAt
-        /// </param>
+        /// <param name="ratType"> RAT Type. </param>
+        /// <param name="lastReadOn"> The timestamp of last UE info read from the packet core (UTC). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="supi">
-        /// Subscription Permanent Identifier
-        /// Serialized Name: UeInfo5G.info.supi
-        /// </param>
-        /// <param name="pei">
-        /// Permanent Equipment Identifier
-        /// Serialized Name: UeInfo5G.info.pei
-        /// </param>
-        /// <param name="sessionInfo"> Serialized Name: UeInfo5G.info.sessionInfo. </param>
-        /// <param name="perUETnla">
-        /// Per-UE transport network layer association
-        /// Serialized Name: UeInfo5G.info.connectionInfo.perUeTnla
-        /// </param>
-        /// <param name="amfUENgapId">
-        /// The AMF UE NGAP ID
-        /// Serialized Name: UeInfo5G.info.connectionInfo.amfUeNgapId
-        /// </param>
-        /// <param name="ranUENgapId">
-        /// The RAN UE NGAP ID
-        /// Serialized Name: UeInfo5G.info.connectionInfo.ranUeNgapId
-        /// </param>
-        /// <param name="lastVisitedTai">
-        /// Last Visited TAI
-        /// Serialized Name: UeInfo5G.info.connectionInfo.lastVisitedTai
-        /// </param>
-        /// <param name="allowedNssai">
-        /// Allowed Network Slice Selection Assistance Information
-        /// Serialized Name: UeInfo5G.info.connectionInfo.allowedNssai
-        /// </param>
-        /// <param name="ueState">
-        /// State of the UE.
-        /// Serialized Name: UeInfo5G.info.connectionInfo.ueState
-        /// </param>
-        /// <param name="rrcEstablishmentCause">
-        /// Radio connection establishment cause
-        /// Serialized Name: UeInfo5G.info.connectionInfo.rrcEstablishmentCause
-        /// </param>
-        /// <param name="ueUsageSetting">
-        /// The UE's usage setting
-        /// Serialized Name: UeInfo5G.info.connectionInfo.ueUsageSetting
-        /// </param>
-        /// <param name="lastActivityOn">
-        /// The timestamp of last activity of UE (UTC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.lastActivityTime
-        /// </param>
-        /// <param name="ngeNbId">
-        /// NG-eNodeB identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.ngeNbId
-        /// </param>
-        /// <param name="eNbId">
-        /// eNodeB identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.eNbId
-        /// </param>
-        /// <param name="n3IwfId">
-        /// N3 IWF identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.n3IwfId
-        /// </param>
-        /// <param name="wagfId">
-        /// W-AGF identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.wagfId
-        /// </param>
-        /// <param name="tngfId">
-        /// TNGF identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.tngfId
-        /// </param>
-        /// <param name="nid">
-        /// Network identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.nid
-        /// </param>
-        /// <param name="bitLength"> Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.gNbId.bitLength. </param>
-        /// <param name="gnbValue"> Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.gNbId.gNBValue. </param>
-        /// <param name="mccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.plmnId.mcc
-        /// </param>
-        /// <param name="mncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.plmnId.mnc
-        /// </param>
-        /// <param name="locationType">
-        /// Location Type
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.locationType
-        /// </param>
-        /// <param name="tac">
-        /// Type Allocation Code of UE
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.tac
-        /// </param>
-        /// <param name="mccInfoConnectionInfoLocationInfoPlmnMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.plmn.mcc
-        /// </param>
-        /// <param name="mncInfoConnectionInfoLocationInfoPlmnMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.plmn.mnc
-        /// </param>
-        /// <param name="fivegTmsi">
-        /// 5G Temporary Mobile Subscriber Identity
-        /// Serialized Name: UeInfo5G.info.fivegGuti.fivegTmsi
-        /// </param>
-        /// <param name="regionId">
-        /// AMF region identifier
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.regionId
-        /// </param>
-        /// <param name="setId">
-        /// AMF set identifier
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.setId
-        /// </param>
-        /// <param name="pointer">
-        /// AMF pointer
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.pointer
-        /// </param>
-        /// <param name="mccInfoFivegGutiPlmnMcc">
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.fivegGuti.plmn.mcc
-        /// </param>
-        /// <param name="mncInfoFivegGutiPlmnMnc">
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.fivegGuti.plmn.mnc
-        /// </param>
+        /// <param name="supi"> Subscription Permanent Identifier. </param>
+        /// <param name="pei"> Permanent Equipment Identifier. </param>
+        /// <param name="sessionInfo"></param>
+        /// <param name="perUETnla"> Per-UE transport network layer association. </param>
+        /// <param name="amfUENgapId"> The AMF UE NGAP ID. </param>
+        /// <param name="ranUENgapId"> The RAN UE NGAP ID. </param>
+        /// <param name="lastVisitedTai"> Last Visited TAI. </param>
+        /// <param name="allowedNssai"> Allowed Network Slice Selection Assistance Information. </param>
+        /// <param name="ueState"> State of the UE. </param>
+        /// <param name="rrcEstablishmentCause"> Radio connection establishment cause. </param>
+        /// <param name="ueUsageSetting"> The UE's usage setting. </param>
+        /// <param name="lastActivityOn"> The timestamp of last activity of UE (UTC). </param>
+        /// <param name="ngeNbId"> NG-eNodeB identifier. </param>
+        /// <param name="eNbId"> eNodeB identifier. </param>
+        /// <param name="n3IwfId"> N3 IWF identifier. </param>
+        /// <param name="wagfId"> W-AGF identifier. </param>
+        /// <param name="tngfId"> TNGF identifier. </param>
+        /// <param name="nid"> Network identifier. </param>
+        /// <param name="bitLength"></param>
+        /// <param name="gnbValue"></param>
+        /// <param name="mccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc"> Mobile network code (MNC). </param>
+        /// <param name="locationType"> Location Type. </param>
+        /// <param name="tac"> Type Allocation Code of UE. </param>
+        /// <param name="mccInfoConnectionInfoLocationInfoPlmnMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoConnectionInfoLocationInfoPlmnMnc"> Mobile network code (MNC). </param>
+        /// <param name="fivegTmsi"> 5G Temporary Mobile Subscriber Identity. </param>
+        /// <param name="regionId"> AMF region identifier. </param>
+        /// <param name="setId"> AMF set identifier. </param>
+        /// <param name="pointer"> AMF pointer. </param>
+        /// <param name="mccInfoFivegGutiPlmnMcc"> Mobile country code (MCC). </param>
+        /// <param name="mncInfoFivegGutiPlmnMnc"> Mobile network code (MNC). </param>
         internal UEInfo5G(RatType ratType, DateTimeOffset? lastReadOn, IDictionary<string, BinaryData> serializedAdditionalRawData, string supi, string pei, IList<UESessionInfo5G> sessionInfo, string perUETnla, long? amfUENgapId, int? ranUENgapId, string lastVisitedTai, IList<Snssai> allowedNssai, UEState? ueState, RrcEstablishmentCause? rrcEstablishmentCause, UEUsageSetting? ueUsageSetting, DateTimeOffset? lastActivityOn, string ngeNbId, string eNbId, string n3IwfId, string wagfId, string tngfId, string nid, int? bitLength, string gnbValue, string mccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc, string mncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc, string locationType, string tac, string mccInfoConnectionInfoLocationInfoPlmnMcc, string mncInfoConnectionInfoLocationInfoPlmnMnc, int fivegTmsi, int regionId, int setId, int pointer, string mccInfoFivegGutiPlmnMcc, string mncInfoFivegGutiPlmnMnc) : base(ratType, lastReadOn, serializedAdditionalRawData)
         {
             Supi = supi;
@@ -235,187 +118,100 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         {
         }
 
-        /// <summary>
-        /// Subscription Permanent Identifier
-        /// Serialized Name: UeInfo5G.info.supi
-        /// </summary>
+        /// <summary> Subscription Permanent Identifier. </summary>
         [WirePath("info.supi")]
         public string Supi { get; set; }
-        /// <summary>
-        /// Permanent Equipment Identifier
-        /// Serialized Name: UeInfo5G.info.pei
-        /// </summary>
+        /// <summary> Permanent Equipment Identifier. </summary>
         [WirePath("info.pei")]
         public string Pei { get; set; }
-        /// <summary> Serialized Name: UeInfo5G.info.sessionInfo. </summary>
+        /// <summary> Gets the session info. </summary>
         [WirePath("info.sessionInfo")]
         public IList<UESessionInfo5G> SessionInfo { get; }
-        /// <summary>
-        /// Per-UE transport network layer association
-        /// Serialized Name: UeInfo5G.info.connectionInfo.perUeTnla
-        /// </summary>
+        /// <summary> Per-UE transport network layer association. </summary>
         [WirePath("info.perUeTnla")]
         public string PerUETnla { get; set; }
-        /// <summary>
-        /// The AMF UE NGAP ID
-        /// Serialized Name: UeInfo5G.info.connectionInfo.amfUeNgapId
-        /// </summary>
+        /// <summary> The AMF UE NGAP ID. </summary>
         [WirePath("info.amfUeNgapId")]
         public long? AmfUENgapId { get; set; }
-        /// <summary>
-        /// The RAN UE NGAP ID
-        /// Serialized Name: UeInfo5G.info.connectionInfo.ranUeNgapId
-        /// </summary>
+        /// <summary> The RAN UE NGAP ID. </summary>
         [WirePath("info.ranUeNgapId")]
         public int? RanUENgapId { get; set; }
-        /// <summary>
-        /// Last Visited TAI
-        /// Serialized Name: UeInfo5G.info.connectionInfo.lastVisitedTai
-        /// </summary>
+        /// <summary> Last Visited TAI. </summary>
         [WirePath("info.lastVisitedTai")]
         public string LastVisitedTai { get; set; }
-        /// <summary>
-        /// Allowed Network Slice Selection Assistance Information
-        /// Serialized Name: UeInfo5G.info.connectionInfo.allowedNssai
-        /// </summary>
+        /// <summary> Allowed Network Slice Selection Assistance Information. </summary>
         [WirePath("info.allowedNssai")]
         public IList<Snssai> AllowedNssai { get; }
-        /// <summary>
-        /// State of the UE.
-        /// Serialized Name: UeInfo5G.info.connectionInfo.ueState
-        /// </summary>
+        /// <summary> State of the UE. </summary>
         [WirePath("info.ueState")]
         public UEState? UEState { get; set; }
-        /// <summary>
-        /// Radio connection establishment cause
-        /// Serialized Name: UeInfo5G.info.connectionInfo.rrcEstablishmentCause
-        /// </summary>
+        /// <summary> Radio connection establishment cause. </summary>
         [WirePath("info.rrcEstablishmentCause")]
         public RrcEstablishmentCause? RrcEstablishmentCause { get; set; }
-        /// <summary>
-        /// The UE's usage setting
-        /// Serialized Name: UeInfo5G.info.connectionInfo.ueUsageSetting
-        /// </summary>
+        /// <summary> The UE's usage setting. </summary>
         [WirePath("info.ueUsageSetting")]
         public UEUsageSetting? UEUsageSetting { get; set; }
-        /// <summary>
-        /// The timestamp of last activity of UE (UTC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.lastActivityTime
-        /// </summary>
+        /// <summary> The timestamp of last activity of UE (UTC). </summary>
         [WirePath("info.lastActivityTime")]
         public DateTimeOffset? LastActivityOn { get; set; }
-        /// <summary>
-        /// NG-eNodeB identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.ngeNbId
-        /// </summary>
+        /// <summary> NG-eNodeB identifier. </summary>
         [WirePath("info.ngeNbId")]
         public string NgeNbId { get; set; }
-        /// <summary>
-        /// eNodeB identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.eNbId
-        /// </summary>
+        /// <summary> eNodeB identifier. </summary>
         [WirePath("info.eNbId")]
         public string ENbId { get; set; }
-        /// <summary>
-        /// N3 IWF identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.n3IwfId
-        /// </summary>
+        /// <summary> N3 IWF identifier. </summary>
         [WirePath("info.n3IwfId")]
         public string N3IwfId { get; set; }
-        /// <summary>
-        /// W-AGF identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.wagfId
-        /// </summary>
+        /// <summary> W-AGF identifier. </summary>
         [WirePath("info.wagfId")]
         public string WagfId { get; set; }
-        /// <summary>
-        /// TNGF identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.tngfId
-        /// </summary>
+        /// <summary> TNGF identifier. </summary>
         [WirePath("info.tngfId")]
         public string TngfId { get; set; }
-        /// <summary>
-        /// Network identifier
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.nid
-        /// </summary>
+        /// <summary> Network identifier. </summary>
         [WirePath("info.nid")]
         public string Nid { get; set; }
-        /// <summary> Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.gNbId.bitLength. </summary>
+        /// <summary> Gets or sets the bit length. </summary>
         [WirePath("info.bitLength")]
         public int? BitLength { get; set; }
-        /// <summary> Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.gNbId.gNBValue. </summary>
+        /// <summary> Gets or sets the gnb value. </summary>
         [WirePath("info.gNBValue")]
         public string GNBValue { get; set; }
-        /// <summary>
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.plmnId.mcc
-        /// </summary>
+        /// <summary> Mobile country code (MCC). </summary>
         [WirePath("info.mcc")]
         public string MccInfoConnectionInfoGlobalRanNodeIdPlmnIdMcc { get; set; }
-        /// <summary>
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.globalRanNodeId.plmnId.mnc
-        /// </summary>
+        /// <summary> Mobile network code (MNC). </summary>
         [WirePath("info.mnc")]
         public string MncInfoConnectionInfoGlobalRanNodeIdPlmnIdMnc { get; set; }
-        /// <summary>
-        /// Location Type
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.locationType
-        /// </summary>
+        /// <summary> Location Type. </summary>
         [WirePath("info.locationType")]
         public string LocationType { get; set; }
-        /// <summary>
-        /// Type Allocation Code of UE
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.tac
-        /// </summary>
+        /// <summary> Type Allocation Code of UE. </summary>
         [WirePath("info.tac")]
         public string Tac { get; set; }
-        /// <summary>
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.plmn.mcc
-        /// </summary>
+        /// <summary> Mobile country code (MCC). </summary>
         [WirePath("info.mcc")]
         public string MccInfoConnectionInfoLocationInfoPlmnMcc { get; set; }
-        /// <summary>
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.connectionInfo.locationInfo.plmn.mnc
-        /// </summary>
+        /// <summary> Mobile network code (MNC). </summary>
         [WirePath("info.mnc")]
         public string MncInfoConnectionInfoLocationInfoPlmnMnc { get; set; }
-        /// <summary>
-        /// 5G Temporary Mobile Subscriber Identity
-        /// Serialized Name: UeInfo5G.info.fivegGuti.fivegTmsi
-        /// </summary>
+        /// <summary> 5G Temporary Mobile Subscriber Identity. </summary>
         [WirePath("info.fivegTmsi")]
         public int FivegTmsi { get; set; }
-        /// <summary>
-        /// AMF region identifier
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.regionId
-        /// </summary>
+        /// <summary> AMF region identifier. </summary>
         [WirePath("info.regionId")]
         public int RegionId { get; set; }
-        /// <summary>
-        /// AMF set identifier
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.setId
-        /// </summary>
+        /// <summary> AMF set identifier. </summary>
         [WirePath("info.setId")]
         public int SetId { get; set; }
-        /// <summary>
-        /// AMF pointer
-        /// Serialized Name: UeInfo5G.info.fivegGuti.amfId.pointer
-        /// </summary>
+        /// <summary> AMF pointer. </summary>
         [WirePath("info.pointer")]
         public int Pointer { get; set; }
-        /// <summary>
-        /// Mobile country code (MCC).
-        /// Serialized Name: UeInfo5G.info.fivegGuti.plmn.mcc
-        /// </summary>
+        /// <summary> Mobile country code (MCC). </summary>
         [WirePath("info.mcc")]
         public string MccInfoFivegGutiPlmnMcc { get; set; }
-        /// <summary>
-        /// Mobile network code (MNC).
-        /// Serialized Name: UeInfo5G.info.fivegGuti.plmn.mnc
-        /// </summary>
+        /// <summary> Mobile network code (MNC). </summary>
         [WirePath("info.mnc")]
         public string MncInfoFivegGutiPlmnMnc { get; set; }
     }

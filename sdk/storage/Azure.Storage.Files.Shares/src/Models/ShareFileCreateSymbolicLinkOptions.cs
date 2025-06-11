@@ -9,8 +9,7 @@ namespace Azure.Storage.Files.Shares.Models
     /// <summary>
     /// NFS only.  Options for creating a symbolic link.
     /// </summary>
-    /// https://github.com/Azure/azure-sdk-for-net/issues/46907
-    internal class ShareFileCreateSymbolicLinkOptions
+    public class ShareFileCreateSymbolicLinkOptions
     {
         /// <summary>
         /// Optional custom metadata to set for the symbolic link.
