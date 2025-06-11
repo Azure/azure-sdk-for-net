@@ -7,8 +7,10 @@ using System.ComponentModel;
 namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
+    // - Renamed.
     // - Suppressed operators.
     /// <summary> The current status of the snapshot. </summary>
+    [CodeGenType("SnapshotStatus")]
     [CodeGenSuppress("==", typeof(ConfigurationSnapshotStatus),  typeof(ConfigurationSnapshotStatus))]
     [CodeGenSuppress("!=", typeof(ConfigurationSnapshotStatus), typeof(ConfigurationSnapshotStatus))]
     [CodeGenSuppress("", typeof(string))]

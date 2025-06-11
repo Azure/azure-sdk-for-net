@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
@@ -17,11 +18,13 @@ using static Azure.Core.Pipeline.TaskExtensions;
 namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
+    // - Renamed.
     // - Suppressed convenience methods. These are implemented through custom code.
     // - Suppressed unused internal protocol methods.
     /// <summary>
     /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
+    [CodeGenType("AzureAppConfigurationClient")]
     [CodeGenSuppress("ConfigurationClient", typeof(Uri), typeof(AzureKeyCredential), typeof(ConfigurationClientOptions))]
     [CodeGenSuppress("GetKeys", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("GetKeysAsync", typeof(string), typeof(string), typeof(string), typeof(string), typeof(CancellationToken))]
@@ -504,7 +507,7 @@ namespace Azure.Data.AppConfiguration
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
 
-                string ifMatch = requestOptions?.IfMatch?.ToString("H");
+                (string ifMatch, _) = GetMatchConditionHeaders(requestOptions);
                 using Response response = await DeleteConfigurationSettingAsync(key, label, _syncToken, ifMatch, context).ConfigureAwait(false);
 
                 return response.Status switch
@@ -532,7 +535,7 @@ namespace Azure.Data.AppConfiguration
             try
             {
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
-                string ifMatch = requestOptions?.IfMatch?.ToString("H");
+                (string ifMatch, _) = GetMatchConditionHeaders(requestOptions);
                 using Response response = DeleteConfigurationSetting(key, label, _syncToken, ifMatch, context);
 
                 return response.Status switch
@@ -658,8 +661,7 @@ namespace Azure.Data.AppConfiguration
                 context.AddClassifier(304, isError: false);
 
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
-                string ifMatch = conditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
 
                 using Response response = await GetConfigurationSettingAsync(key, label, null, _syncToken, dateTime, ifMatch, ifNoneMatch, null, context).ConfigureAwait(false);
 
@@ -697,8 +699,7 @@ namespace Azure.Data.AppConfiguration
                 RequestContext context = CreateRequestContext(ErrorOptions.NoThrow, cancellationToken);
                 context.AddClassifier(304, isError: false);
 
-                string ifMatch = conditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
                 var dateTime = acceptDateTime.HasValue ? acceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture) : null;
                 using Response response = GetConfigurationSetting(key, label, null, _syncToken, dateTime, ifMatch, ifNoneMatch, null, context);
 
@@ -759,15 +760,13 @@ namespace Azure.Data.AppConfiguration
 
             HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
             {
-                string ifMatch = conditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
                 return CreateGetConfigurationSettingsRequest(null, key, label, _syncToken, null, dateTime, fieldsString, null, ifMatch, ifNoneMatch, tags, context);
             };
 
             HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
             {
-                string ifMatch = conditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(conditions);
                 return CreateGetConfigurationSettingsRequest(new Uri(nextLink), key, label, _syncToken, null, dateTime, fieldsString, null, ifMatch, ifNoneMatch, tags, context);
             }
 
@@ -1054,8 +1053,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Archived
                 };
-                string ifMatch = matchConditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = matchConditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false);
@@ -1088,8 +1086,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Archived
                 };
-                string ifMatch = matchConditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = matchConditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context);
@@ -1184,8 +1181,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Ready
                 };
-                string ifMatch = matchConditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = matchConditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = await UpdateSnapshotStatusAsync(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false);
@@ -1218,8 +1214,7 @@ namespace Azure.Data.AppConfiguration
                 {
                     Status = ConfigurationSnapshotStatus.Ready
                 };
-                string ifMatch = matchConditions?.IfMatch?.ToString("H");
-                string ifNoneMatch = matchConditions?.IfNoneMatch?.ToString("H");
+                (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(matchConditions);
                 using RequestContent content = SnapshotUpdateParameters.ToRequestContent(snapshotUpdateParameters);
 
                 Response response = UpdateSnapshotStatus(snapshotName, contentType.ToString(), content, _syncToken, ifMatch, ifNoneMatch, context);
@@ -1477,8 +1472,7 @@ namespace Azure.Data.AppConfiguration
 
         private async Task<Response> ToCreateAsyncResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            string ifMatch = requestOptions.IfMatch?.ToString("H");
-            string ifNoneMatch = requestOptions.IfNoneMatch?.ToString("H");
+            (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(requestOptions);
             Response response = isReadOnly
                 ? await CreateReadOnlyLockAsync(key, label, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false)
                 : await DeleteReadOnlyLockAsync(key, label, _syncToken, ifMatch, ifNoneMatch, context).ConfigureAwait(false);
@@ -1487,8 +1481,7 @@ namespace Azure.Data.AppConfiguration
 
         private Response ToCreateResponse(string key, string label, MatchConditions requestOptions, bool isReadOnly, RequestContext context)
         {
-            string ifMatch = requestOptions.IfMatch?.ToString("H");
-            string ifNoneMatch = requestOptions.IfNoneMatch?.ToString("H");
+            (string ifMatch, string ifNoneMatch) = GetMatchConditionHeaders(requestOptions);
             Response response = isReadOnly
                 ? CreateReadOnlyLock(key, label, _syncToken, ifMatch, ifNoneMatch, context)
                 : DeleteReadOnlyLock(key, label, _syncToken, ifMatch, ifNoneMatch, context);
@@ -1576,6 +1569,14 @@ namespace Azure.Data.AppConfiguration
                         return true;
                 }
             }
+        }
+
+        // Helper method to extract IfMatch and IfNoneMatch as nullable strings from MatchConditions
+        private static (string IfMatch, string IfNoneMatch) GetMatchConditionHeaders(MatchConditions conditions)
+        {
+            string ifMatch = conditions?.IfMatch?.ToString("H");
+            string ifNoneMatch = conditions?.IfNoneMatch?.ToString("H");
+            return (ifMatch, ifNoneMatch);
         }
     }
 }

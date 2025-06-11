@@ -22,7 +22,7 @@ namespace Azure.Data.AppConfiguration
         // Mapping model to raw request
         internal static RequestContent ToRequestContent(SnapshotUpdateParameters snapshotUpdateParameters)
         {
-            var content = new Utf8JsonBinaryContent();
+            var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(snapshotUpdateParameters);
             return content;
         }
