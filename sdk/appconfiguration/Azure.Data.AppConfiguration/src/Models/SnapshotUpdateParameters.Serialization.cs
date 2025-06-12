@@ -23,7 +23,7 @@ namespace Azure.Data.AppConfiguration
         internal static RequestContent ToRequestContent(SnapshotUpdateParameters snapshotUpdateParameters)
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(snapshotUpdateParameters);
+            Utf8JsonWriterExtensions.WriteObjectValue(content.JsonWriter, snapshotUpdateParameters);
             return content;
         }
     }
