@@ -1,0 +1,14 @@
+# GitHub Copilot setup steps for Azure SDK for .NET
+# This file configures firewall allowlist for Azure DevOps blob storage domains
+# needed for dotnet restore and build operations
+
+steps:
+  - name: Set up .NET SDK
+    uses: actions/setup-dotnet@v4
+    with:
+      dotnet-version: '9.0.102'
+      
+  - name: Configure firewall allowlist for Azure DevOps feeds
+    run: |
+      export COPILOT_AGENT_FIREWALL_ALLOWLIST="4myvsblobprodcus32.vsblob.vsassets.io,7tjvsblobprodcus341.vsblob.vsassets.io,nn8vsblobprodcus340.vsblob.vsassets.io,pe3vsblobprodcus354.vsblob.vsassets.io,pe4vsblobprodcus351.vsblob.vsassets.io,frdvsblobprodcus327.vsblob.vsassets.io,gbsvsblobprodcus365.vsblob.vsassets.io,k4kvsblobprodcus344.vsblob.vsassets.io,37cvsblobprodcus359.vsblob.vsassets.io,jd4vsblobprodcus366.vsblob.vsassets.io,*.vsblob.vsassets.io"
+      echo "Configured firewall allowlist: $COPILOT_AGENT_FIREWALL_ALLOWLIST"
