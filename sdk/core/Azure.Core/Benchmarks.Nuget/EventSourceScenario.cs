@@ -14,7 +14,7 @@ namespace Benchmarks.Nuget
     public class EventSourceScenario
     {
         private AzureEventSourceListener _sourceListener;
-        private EventSource _eventSource; // Use the custom EventSource below
+        private EventSource _eventSource; 
         private string _sanitizedUri;
         private byte[] _headersBytes;
         private int _iteration;
@@ -51,7 +51,6 @@ namespace Benchmarks.Nuget
         }
     }
 
-    // Move this outside and make it internal
     internal class EventSource : System.Diagnostics.Tracing.EventSource
     {
         public EventSource() : base("Azure-Core") { }
