@@ -832,7 +832,7 @@ namespace Azure.Storage.Files.Shares.Tests
             foreach (FilePropertySemantics? filePropertySemantics in filePropertySemanticsList)
             {
                 await using DisposingShare test = await GetTestShareAsync();
-                ShareFileClient fileClientClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+                ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
 
                 ShareFileCreateOptions options = new ShareFileCreateOptions
                 {
@@ -842,11 +842,69 @@ namespace Azure.Storage.Files.Shares.Tests
                 Response<ShareFileInfo> response;
 
                 // Act
-                response = await fileClientClient.CreateAsync(Constants.KB, options);
+                response = await fileClient.CreateAsync(Constants.KB, options);
 
                 // Assert
                 // TODO
             }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task CreateFile_Data()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareFileClient fileClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                Content = stream,
+            };
+
+            // Act
+            await fileClient.CreateAsync(
+                maxSize: Constants.KB,
+                options: options);
+
+            Response<ShareFileDownloadInfo> downloadResponse = await fileClient.DownloadAsync();
+            using MemoryStream resultStream = new MemoryStream();
+            await downloadResponse.Value.Content.CopyToAsync(resultStream);
+
+            // Assert
+            Assert.AreEqual(data.Length, resultStream.Length);
+            TestHelper.AssertSequenceEqual(data, resultStream.ToArray());
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task CreateFile_Data_ProgressReporting()
+        {
+            // Arrange
+            await using DisposingShare test = await GetTestShareAsync();
+            ShareFileClient fileClientClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+            using Stream stream = new MemoryStream(data);
+            TestProgress progress = new TestProgress();
+
+            ShareFileCreateOptions options = new ShareFileCreateOptions
+            {
+                Content = stream,
+                ProgressHandler = progress
+            };
+
+            // Act
+            await fileClientClient.CreateAsync(
+                maxSize: Constants.KB,
+                options: options);
+
+            // Assert
+            Assert.IsFalse(progress.List.Count == 0);
+            Assert.AreEqual(data.Length, progress.List[progress.List.Count - 1]);
         }
 
         [RecordedTest]
