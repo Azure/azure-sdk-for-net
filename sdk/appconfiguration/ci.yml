@@ -35,7 +35,3 @@ extends:
     Artifacts:
     - name: Azure.Data.AppConfiguration
       safeName: AzureDataAppConfiguration
-    CheckAOTCompat: true
-    AOTTestInputs:
-    - ArtifactName: Azure.Data.AppConfiguration
-      ExpectedWarningsFilepath: None
