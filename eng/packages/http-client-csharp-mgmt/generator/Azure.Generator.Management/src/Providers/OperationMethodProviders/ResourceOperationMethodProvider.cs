@@ -36,6 +36,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private readonly CSharpType? _responseGenericType;
         private readonly bool _isGeneric;
+        private readonly bool _isLongRunningOperation;
 
         public ResourceOperationMethodProvider(
             ResourceClientProvider resourceClientProvider,
@@ -49,6 +50,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _isAsync = isAsync;
             _responseGenericType = _serviceMethod.GetResponseBodyType();
             _isGeneric = _responseGenericType != null;
+            _isLongRunningOperation = _serviceMethod.IsLongRunningOperation();
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
@@ -107,7 +109,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
-            if (_serviceMethod.IsLongRunningOperation())
+            if (_isLongRunningOperation)
             {
                 tryStatements.AddRange(
                 BuildLroHandling(
@@ -127,9 +129,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out VariableExpression responseVariable)
         {
-            if (_isGeneric)
+            if (_isGeneric && !_isLongRunningOperation)
             {
-                // For methods returning Response<T> (e.g., Response<MyResource>), use generic response processing
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
@@ -139,7 +140,6 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             }
             else
             {
-                // For methods returning just Response (no generic type), use non-generic response processing
                 return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
@@ -166,7 +166,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _clientDiagnosticsField,
                 This.Property("Pipeline"),
                 messageVariable.Property("Request"),
-                _isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable,
+                responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
