@@ -930,12 +930,12 @@ namespace Azure.Storage.Files.Shares.Tests
             };
 
             // Act
-            await fileClient.CreateAsync(
+            Response<ShareFileInfo> response = await fileClient.CreateAsync(
                 maxSize: Constants.KB,
                 options: options);
 
             // Assert
-            // TODO
+            Assert.AreEqual(md5, response.Value.ContentHash);
         }
 
         [RecordedTest]
