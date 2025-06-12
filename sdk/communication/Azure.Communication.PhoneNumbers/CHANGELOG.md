@@ -1,6 +1,6 @@
 # Release History
 
-## 1.4.1-beta.1 (2025-06-30)
+## 1.4.1-beta.1 (Unreleased)
 
 ### Features Added
 - Adds mobile phone number type.
