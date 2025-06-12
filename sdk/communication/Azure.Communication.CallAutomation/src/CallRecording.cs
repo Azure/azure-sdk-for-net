@@ -55,7 +55,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var callLocator = CallLocatorSerializer.Serialize(options.CallLocator);
                 StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
@@ -127,7 +126,6 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var callLocator = CallLocatorSerializer.Serialize(options.CallLocator);
                 StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,

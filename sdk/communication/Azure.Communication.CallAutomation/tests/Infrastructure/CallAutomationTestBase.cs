@@ -119,7 +119,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 Transport = new MockTransport(mockResponse)
             };
 
-            return new CallAutomationClient(ConnectionString, callAutomationClientOptions);
+            return new CallAutomationClient(pmaEndpoint: new Uri("https://uswc-02.sdf.pma.teams.microsoft.com:6448"), ConnectionString, callAutomationClientOptions);
         }
 
         internal CallAutomationClient CreateMockCallAutomationClient(params MockResponse[] mockResponses)
@@ -129,7 +129,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                 Transport = new MockTransport(mockResponses)
             };
 
-            return new CallAutomationClient(ConnectionString, callAutomationClientOptions);
+            return new CallAutomationClient(pmaEndpoint: new Uri("https://uswc-02.sdf.pma.teams.microsoft.com:6448"), ConnectionString, callAutomationClientOptions);
         }
 
         protected void verifyCallConnectionProperties(CallConnectionProperties callConnectionProperties, bool isConnectApi = false)
