@@ -1,14 +1,10 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0-beta.3 (2025-06-10)
 
 ### Features Added
 
-- Support broker on Linux.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Support Microsoft Broker on Linux and WSL. This library relies on the Microsoft Authentication Library (MSAL) to handle the broker. For more information about prerequisites and how to utilize the broker, see [Enable SSO in native Linux apps using MSAL.NET](https://learn.microsoft.com/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk)
 
 ### Other Changes
 

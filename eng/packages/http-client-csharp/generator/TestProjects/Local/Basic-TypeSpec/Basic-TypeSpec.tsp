@@ -12,7 +12,7 @@ import "@azure-tools/typespec-azure-core";
   "{basicTypeSpecUrl}",
   "Endpoint Service",
   {
-    basicTypeSpecUrl: string,
+    basicTypeSpecUrl: url,
   }
 )
 @useAuth(ApiKeyAuth<ApiKeyLocation.header, "my-api-key"> | AadToken)

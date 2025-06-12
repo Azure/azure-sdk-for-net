@@ -119,7 +119,10 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             HybridConnectivityEndpointResource hybridConnectivityEndpoint = client.GetHybridConnectivityEndpointResource(hybridConnectivityEndpointResourceId);
 
             // invoke the operation
-            HybridConnectivityEndpointData data = new HybridConnectivityEndpointData();
+            HybridConnectivityEndpointData data = new HybridConnectivityEndpointData
+            {
+                Properties = new HybridConnectivityEndpointProperties(HybridConnectivityEndpointType.Default),
+            };
             HybridConnectivityEndpointResource result = await hybridConnectivityEndpoint.UpdateAsync(data);
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -205,7 +208,11 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
             HybridConnectivityEndpointResource hybridConnectivityEndpoint = client.GetHybridConnectivityEndpointResource(hybridConnectivityEndpointResourceId);
 
             // invoke the operation
-            ManagedProxyContent content = new ManagedProxyContent(null);
+            ManagedProxyContent content = new ManagedProxyContent("127.0.0.1:65035")
+            {
+                Hostname = "r.proxy.arc.com",
+                ServiceName = HybridConnectivityServiceName.WAC,
+            };
             ManagedProxyAsset result = await hybridConnectivityEndpoint.GetManagedProxyDetailsAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");

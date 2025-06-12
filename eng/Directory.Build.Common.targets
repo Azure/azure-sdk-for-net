@@ -329,17 +329,6 @@
     <Error Condition="'@(PreviewPackageReferences)' != ''" Text="When the project has a release version it shouldn't reference any pre-release libraries. Found the following pre-release references: @(PreviewPackageReferences, ', ')" />
   </Target>
 
-  <!-- Validates that all the mgmt libraries have a trigger path in the core resourcemanager pipeline -->
-  <Target Name="ValidateResourceManagerPipelineTriggers" AfterTargets="Build" Condition="'$(IsMgmtSubLibrary)' == 'true' and '$(IsShippingLibrary)' == 'true'" >
-    <PropertyGroup>
-      <_ResourceManagerCIFile>$(RepoRoot)/sdk/resourcemanager/ci.mgmt.yml</_ResourceManagerCIFile>
-      <_ResourceManagerCIFileContents>$([System.IO.File]::ReadAllText($(_ResourceManagerCIFile)))</_ResourceManagerCIFileContents>
-      <_ContainsTrigger>$([System.Text.RegularExpressions.Regex]::IsMatch($(_ResourceManagerCIFileContents), `- sdk/.*/$(MSBuildProjectName)\W+`))</_ContainsTrigger>
-    </PropertyGroup>
-
-    <Error Condition="'$(_ContainsTrigger)' != 'true'" Text="The core resourcemanager pipeline ['$(_ResourceManagerCIFile)'] does not contain a trigger path for your library please run 'eng/scripts/Update-Mgmt-CI.ps1' to add the correct trigger paths." />
-  </Target>
-
   <!-- InheritDoc-->
   <ItemGroup Condition="'$(InheritDocEnabled)' != 'false'">
     <PackageReference Include="SauceControl.InheritDoc" PrivateAssets="all" />

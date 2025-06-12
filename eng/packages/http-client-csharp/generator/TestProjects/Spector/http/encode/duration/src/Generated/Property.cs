@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Encode.Duration._Property;
 
-namespace Encode.Duration
+namespace Encode.Duration._Property
 {
     public partial class Property
     {

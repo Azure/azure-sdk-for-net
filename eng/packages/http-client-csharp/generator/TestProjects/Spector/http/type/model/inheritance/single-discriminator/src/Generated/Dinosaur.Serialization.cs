@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
@@ -35,9 +34,6 @@ namespace _Type.Model.Inheritance.SingleDiscriminator
         protected virtual Dinosaur PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Dinosaur>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="dinosaur"> The <see cref="Dinosaur"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Dinosaur dinosaur) => throw null;
 
         public static explicit operator Dinosaur(Response result) => throw null;
     }

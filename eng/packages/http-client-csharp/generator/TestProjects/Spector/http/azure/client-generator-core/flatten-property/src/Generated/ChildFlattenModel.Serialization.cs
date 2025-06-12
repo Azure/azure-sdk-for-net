@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
 {
@@ -34,10 +32,5 @@ namespace _Specs_.Azure.ClientGenerator.Core.FlattenProperty
         protected virtual ChildFlattenModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<ChildFlattenModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="childFlattenModel"> The <see cref="ChildFlattenModel"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(ChildFlattenModel childFlattenModel) => throw null;
-
-        public static explicit operator ChildFlattenModel(Response result) => throw null;
     }
 }
