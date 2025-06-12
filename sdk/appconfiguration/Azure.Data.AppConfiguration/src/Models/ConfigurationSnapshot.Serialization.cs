@@ -10,10 +10,9 @@ using Azure.Core;
 namespace Azure.Data.AppConfiguration
 {
     // CUSTOM:
-    // - Add custom serialization hooks for ETag & RetentionPeriod.
-    // - Add custom deserialization method for MRW.
-    [CodeGenSerialization(nameof(ETag), SerializationValueHook = nameof(SerializeEtag))]
-    [CodeGenSerialization(nameof(RetentionPeriod), SerializationValueHook = nameof(SerializeRetentionPeriod))]
+    // - Suppress serialization methods for MRW. These are implemented manually.
+    [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
+    [CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.ConfigurationSnapshot>.Create", typeof(Utf8JsonReader), typeof(ModelReaderWriterOptions))]
     public partial class ConfigurationSnapshot : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
@@ -23,7 +22,7 @@ namespace Azure.Data.AppConfiguration
             writer.WriteStartArray();
             foreach (var item in Filters)
             {
-                writer.WriteObjectValue(item);
+                Utf8JsonWriterExtensions.WriteObjectValue(writer, item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SnapshotComposition))
@@ -196,15 +195,21 @@ namespace Azure.Data.AppConfiguration
         internal static RequestContent ToRequestContent(ConfigurationSnapshot snapshot)
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(snapshot);
+            Utf8JsonWriterExtensions.WriteObjectValue(content.JsonWriter, snapshot);
             return content;
         }
 
-        private void SerializeEtag(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-           => writer.WriteString("etag", ETag.ToString());
-
-        private void SerializeRetentionPeriod(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-          => writer.WriteNumberValue(RetentionPeriod.Value.TotalSeconds);
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationSnapshot>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfigurationSnapshot)} does not support writing '{format}' format.");
+            }
+            ((IUtf8JsonSerializable)this).Write(writer);
+        }
 
         internal static ConfigurationSnapshot DeserializeConfigurationSnapshot(JsonElement element, ModelReaderWriterOptions options)
         {
