@@ -1229,10 +1229,13 @@
             "doc": "The additional info.",
             "type": {
              "$id": "152",
-             "kind": "unknown",
-             "name": "unknown",
-             "crossLanguageDefinitionId": "",
-             "decorators": []
+             "kind": "model",
+             "name": "ErrorAdditionalInfoInfo",
+             "namespace": "Azure.ResourceManager.CommonTypes",
+             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info.anonymous",
+             "usage": "Output,Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
+             "decorators": [],
+             "properties": []
             },
             "optional": true,
             "readOnly": true,
@@ -1290,6 +1293,9 @@
   },
   {
    "$ref": "146"
+  },
+  {
+   "$ref": "152"
   },
   {
    "$id": "159",

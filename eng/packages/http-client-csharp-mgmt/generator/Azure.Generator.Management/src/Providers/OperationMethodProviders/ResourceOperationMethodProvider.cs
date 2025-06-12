@@ -87,14 +87,22 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(CancellationToken)));
-
+            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken)));
             var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
 
-            var tryStatements = new List<MethodBodyStatement>
+            var tryStatements = new List<MethodBodyStatement>();
+            VariableExpression contextVariable;
+
+            // If the cancellation token parameter is not provided, we create a default one otherwise we use the provided one.
+            // This is to ensure that the RequestContext is always created with a cancellation token.
+            if (cancellationTokenParameter != null)
             {
-                ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
-            };
+                tryStatements.Add(ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out contextVariable));
+            }
+            else
+            {
+                contextVariable = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(RequestContext))).AsExpression();
+            }
 
             // Populate arguments for the REST client method call
             var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _convenienceMethod);
@@ -123,22 +131,25 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out VariableExpression responseVariable)
         {
-            var responseType = _convenienceMethod.Signature.ReturnType!.UnWrapAsync();
+            var responseBodyType = _serviceMethod.GetResponseBodyType();
 
-            // Check if the return type is a generic Response<T> or just Response
-            if (!responseType.Equals(typeof(Response)))
+            if (responseBodyType != null)
             {
-                // For methods returning Response<T> (e.g., Response<MyResource>), use generic response processing
+                // Will Generate:
+                // Response result = this.Pipeline.ProcessMessage(message, context);
+                // Response<T> response = Response.FromValue((T)result, result)
+                // responseType should be response body type from service medhod)
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
-                    responseType,
+                    responseBodyType,
                     _isAsync,
                     out responseVariable);
             }
             else
             {
-                // For methods returning just Response (no generic type), use non-generic response processing
+                // Will Generate:
+                // Response result = this.Pipeline.ProcessMessage(message, context);
                 return ResourceMethodSnippets.CreateNonGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
@@ -150,7 +161,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
             VariableExpression responseVariable,
-            ParameterProvider cancellationTokenParameter)
+            ParameterProvider? cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
 
@@ -189,8 +200,10 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
             var waitInvocation = _isAsync
-                ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
-                : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
+                ? operationVariable.Invoke(waitMethod, cancellationTokenParameter != null ? [cancellationTokenParameter] : [], null, _isAsync).Terminate()
+                : (cancellationTokenParameter != null ?
+                   operationVariable.Invoke(waitMethod, cancellationTokenParameter) :
+                   operationVariable.Invoke(waitMethod)).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
                 KnownAzureParameters.WaitUntil.Equal(

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Primitives;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Azure.Generator.Management.Utilities
@@ -13,7 +11,7 @@ namespace Azure.Generator.Management.Utilities
         public static CSharpType WrapAsync(this CSharpType type, bool isAsync)
         {
             return isAsync
-                ? new CSharpType(typeof(System.Threading.Tasks.Task<>), type)
+                ? new CSharpType(typeof(Task<>), type)
                 : type;
         }
 

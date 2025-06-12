@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using ProviderParameterProvider = Microsoft.TypeSpec.Generator.Providers.ParameterProvider;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
+using Azure.Generator.Management.Utilities;
 
 namespace Azure.Generator.Management.Snippets
 {
@@ -89,12 +90,13 @@ namespace Azure.Generator.Management.Snippets
         public static IReadOnlyList<MethodBodyStatement> CreateGenericResponsePipelineProcessing(
             VariableExpression messageVariable,
             VariableExpression contextVariable,
-            CSharpType responseType,
+            CSharpType responseBodyType,
             bool isAsync,
             out VariableExpression responseVariable)
         {
             var statements = new List<MethodBodyStatement>();
             var pipelineInvoke = isAsync ? "ProcessMessageAsync" : "ProcessMessage";
+            var responseType = new CSharpType(typeof(Azure.Response<>), responseBodyType);
 
             // Response result = this.Pipeline.ProcessMessage(message, context);
             var resultDeclaration = Declare(
@@ -110,7 +112,7 @@ namespace Azure.Generator.Management.Snippets
                 responseType,
                 Static(typeof(Response)).Invoke(
                     nameof(Response.FromValue),
-                    [resultVariable.CastTo(responseType.Arguments[0]), resultVariable]),
+                    [resultVariable.CastTo(responseBodyType), resultVariable]),
                 out responseVariable);
             statements.Add(responseDeclaration);
 

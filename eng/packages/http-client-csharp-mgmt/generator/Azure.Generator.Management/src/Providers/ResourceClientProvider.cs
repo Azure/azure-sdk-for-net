@@ -24,7 +24,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Providers
@@ -255,14 +254,14 @@ namespace Azure.Generator.Management.Providers
                     var updateMethodProvider = new UpdateOperationMethodProvider(this, method, convenienceMethod, false);
                     operationMethods.Add(updateMethodProvider);
 
-                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     var updateAsyncMethodProvider = new UpdateOperationMethodProvider(this, method, asyncConvenienceMethod, true);
                     operationMethods.Add(updateAsyncMethodProvider);
                 }
                 else
                 {
                     operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false));
-                    var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(method.Operation, true);
+                    var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
                     operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true));
                 }
             }
@@ -290,10 +289,6 @@ namespace Azure.Generator.Management.Providers
             return new ResourceOperationMethodProvider(this, method, convenienceMethod, isAsync);
         }
 
-        // TODO: get clean name of operation Name
-        protected MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-            => _restClientProvider.CanonicalView.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
-
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
         {
             var apiVersionDeclaration = new VariableExpression(typeof(string), $"{SpecName.ToLower()}ApiVersion");
@@ -304,7 +299,7 @@ namespace Azure.Generator.Management.Providers
 
         public ValueExpression[] PopulateArguments(
             IReadOnlyList<ParameterProvider> parameters,
-            VariableExpression contextVariable,
+            ValueExpression contextVariable,
             MethodProvider? convenienceMethod = null)
         {
             var arguments = new List<ValueExpression>();
@@ -335,7 +330,7 @@ namespace Azure.Generator.Management.Providers
                     if (convenienceMethod != null)
                     {
                         var resource = convenienceMethod.Signature.Parameters
-                            .Single(p => p.Type.Equals(ResourceData.Type));
+                            .Single(p => p.Type.Equals(ResourceData.Type) || p.Type.Equals(typeof(RequestContent)));
                         arguments.Add(resource);
                     }
                     else
