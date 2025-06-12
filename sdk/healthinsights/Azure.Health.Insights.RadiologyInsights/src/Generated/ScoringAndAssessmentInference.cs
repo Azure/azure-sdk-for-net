@@ -32,7 +32,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="category"> Category, e.g. BIRADS. </param>
         /// <param name="categoryDescription"> The expansion of the category (which is an abbreviation.). </param>
-        /// <param name="singleValue"> The value. If the value is a range, use field valueRange. </param>
+        /// <param name="singleValue"> The value. If the value is a range, use field rangeValue. </param>
         /// <param name="rangeValue"> The range. </param>
         internal ScoringAndAssessmentInference(RadiologyInsightsInferenceType kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, ScoringAndAssessmentCategoryType category, string categoryDescription, string singleValue, AssessmentValueRange rangeValue) : base(kind, extension, serializedAdditionalRawData)
         {
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         public ScoringAndAssessmentCategoryType Category { get; }
         /// <summary> The expansion of the category (which is an abbreviation.). </summary>
         public string CategoryDescription { get; }
-        /// <summary> The value. If the value is a range, use field valueRange. </summary>
+        /// <summary> The value. If the value is a range, use field rangeValue. </summary>
         public string SingleValue { get; }
         /// <summary> The range. </summary>
         public AssessmentValueRange RangeValue { get; }

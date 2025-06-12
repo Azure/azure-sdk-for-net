@@ -803,7 +803,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="extension"> Additional Content defined by implementations. </param>
         /// <param name="category"> Category, e.g. BIRADS. </param>
         /// <param name="categoryDescription"> The expansion of the category (which is an abbreviation.). </param>
-        /// <param name="singleValue"> The value. If the value is a range, use field valueRange. </param>
+        /// <param name="singleValue"> The value. If the value is a range, use field rangeValue. </param>
         /// <param name="rangeValue"> The range. </param>
         /// <returns> A new <see cref="RadiologyInsights.ScoringAndAssessmentInference"/> instance for mocking. </returns>
         public static ScoringAndAssessmentInference ScoringAndAssessmentInference(IEnumerable<FhirR4Extension> extension = null, ScoringAndAssessmentCategoryType category = default, string categoryDescription = null, string singleValue = null, AssessmentValueRange rangeValue = null)

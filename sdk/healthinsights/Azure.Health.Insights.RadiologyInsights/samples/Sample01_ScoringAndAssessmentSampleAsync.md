@@ -1,4 +1,4 @@
-# How to extract the description of a Clinical Guidance inference using an asynchronous call
+# How to extract a Scoring and Assessment inference using an asynchronous call
 
 In this sample it is shown how you can construct a request, add a configuration, create a client, send a synchronous request and use the result returned to extract extract scoring and assessment information from radiology reports.
 
