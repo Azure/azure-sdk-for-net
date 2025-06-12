@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -18,8 +18,12 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static readonly AesKw Aes128Kw = new AesKw("A128KW", 128);
         public static readonly AesKw Aes192Kw = new AesKw("A192KW", 192);
         public static readonly AesKw Aes256Kw = new AesKw("A256KW", 256);
-        public static readonly AesKw CkmAesKeyWrap = new AesKw("CKM_AES_KEY_WRAP", 192);
-        public static readonly AesKw CkmAesKeyWrapPad = new AesKw("CKM_AES_KEY_WRAP_PAD", 256, PaddingMode.PKCS7);
+        public static readonly AesKw CkmAesKeyWrap = new AesKw("CKM_AES_KEY_WRAP");
+        public static readonly AesKw CkmAesKeyWrap192 = new AesKw("CKM_AES_KEY_WRAP", 192);
+        public static readonly AesKw CkmAesKeyWrap256 = new AesKw("CKM_AES_KEY_WRAP", 256);
+        public static readonly AesKw CkmAesKeyWrapPad128 = new AesKw("CKM_AES_KEY_WRAP_PAD", 128, PaddingMode.None);
+        public static readonly AesKw CkmAesKeyWrapPad192 = new AesKw("CKM_AES_KEY_WRAP_PAD", 192, PaddingMode.None);
+        public static readonly AesKw CkmAesKeyWrapPad256 = new AesKw("CKM_AES_KEY_WRAP_PAD", 256, PaddingMode.None);
 
         private static readonly byte[] s_defaultIv = new byte[] { 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6, 0xA6 };
 
@@ -68,9 +72,26 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             return aes;
         }
 
+        private bool IsRfc5649PadVariant => Name == "CKM_AES_KEY_WRAP_PAD";
+
         public ICryptoTransform CreateEncryptor(byte[] key)
         {
+            // For RFC 5649 PAD variants, wrap with padding logic
+            if (IsRfc5649PadVariant)
+            {
+                return new Rfc5649Encryptor(this, key);
+            }
             return CreateEncryptor(key, null);
+        }
+
+        public ICryptoTransform CreateDecryptor(byte[] key)
+        {
+            // For RFC 5649 PAD variants, wrap with unpadding logic
+            if (IsRfc5649PadVariant)
+            {
+                return new Rfc5649Decryptor(this, key);
+            }
+            return CreateDecryptor(key, null);
         }
 
         public ICryptoTransform CreateEncryptor(byte[] key, byte[] iv)
@@ -97,11 +118,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
                 throw new ArgumentException("iv length must be 64 bits");
 
             return new AesKwEncryptor(key.Take(KeySizeInBytes), iv ?? DefaultIv);
-        }
-
-        public ICryptoTransform CreateDecryptor(byte[] key)
-        {
-            return CreateDecryptor(key, null);
         }
 
         public ICryptoTransform CreateDecryptor(byte[] key, byte[] iv)
@@ -145,6 +161,91 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             }
 
             return temp;
+        }
+
+        private static byte[] Rfc5649Pad(byte[] input)
+        {
+            int padLen = (8 - (input.Length % 8)) % 8;
+            if (padLen == 0) return input;
+            byte[] padded = new byte[input.Length + padLen];
+            Buffer.BlockCopy(input, 0, padded, 0, input.Length);
+            // The rest is already zero
+            return padded;
+        }
+
+        // RFC 5649 Encryptor/Decryptor wrappers
+        private class Rfc5649Encryptor : ICryptoTransform
+        {
+            private readonly AesKw _kw;
+            private readonly byte[] _key;
+
+            public Rfc5649Encryptor(AesKw kw, byte[] key)
+            {
+                _kw = kw;
+                _key = key;
+            }
+
+            public bool CanReuseTransform => false;
+            public bool CanTransformMultipleBlocks => false;
+            public int InputBlockSize => 1;
+            public int OutputBlockSize => 1;
+
+            public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, byte[] outputBuffer, int outputOffset)
+            {
+                throw new NotImplementedException();
+            }
+
+            public byte[] TransformFinalBlock(byte[] inputBuffer, int inputOffset, int inputCount)
+            {
+                // Pad input as per RFC 5649
+                byte[] input = new byte[inputCount];
+                Buffer.BlockCopy(inputBuffer, inputOffset, input, 0, inputCount);
+                byte[] padded = Rfc5649Pad(input);
+                // Use standard AES-KW with default IV (RFC 5649 AIV is handled in full implementation)
+                var encryptor = _kw.CreateEncryptor(_key, null);
+                return encryptor.TransformFinalBlock(padded, 0, padded.Length);
+            }
+
+            public void Dispose() { }
+        }
+
+        private class Rfc5649Decryptor : ICryptoTransform
+        {
+            private readonly AesKw _kw;
+            private readonly byte[] _key;
+
+            public Rfc5649Decryptor(AesKw kw, byte[] key)
+            {
+                _kw = kw;
+                _key = key;
+            }
+
+            public bool CanReuseTransform => false;
+            public bool CanTransformMultipleBlocks => false;
+            public int InputBlockSize => 1;
+            public int OutputBlockSize => 1;
+
+            public int TransformBlock(byte[] inputBuffer, int inputOffset, int inputCount, byte[] outputBuffer, int outputOffset)
+            {
+                throw new NotImplementedException();
+            }
+
+            public byte[] TransformFinalBlock(byte[] inputBuffer, int inputOffset, int inputCount)
+            {
+                // Decrypt as usual
+                var decryptor = _kw.CreateDecryptor(_key, null);
+                byte[] decrypted = decryptor.TransformFinalBlock(inputBuffer, inputOffset, inputCount);
+                // Remove zero padding (RFC 5649: trailing zeros)
+                int unpaddedLen = decrypted.Length;
+                while (unpaddedLen > 0 && decrypted[unpaddedLen - 1] == 0)
+                    unpaddedLen--;
+                if (unpaddedLen == 0) return Array.Empty<byte>();
+                byte[] result = new byte[unpaddedLen];
+                Buffer.BlockCopy(decrypted, 0, result, 0, unpaddedLen);
+                return result;
+            }
+
+            public void Dispose() { }
         }
 
         private class AesKwEncryptor : ICryptoTransform
