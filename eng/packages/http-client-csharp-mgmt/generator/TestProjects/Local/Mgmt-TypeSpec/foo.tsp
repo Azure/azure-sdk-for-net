@@ -40,7 +40,7 @@ interface Foos {
 
     delete is ArmResourceDeleteWithoutOkAsync<Foo>;
 
-   // update is ArmCustomPatchAsync<Foo>;
+    update is ArmCustomPatchAsync<Foo>;
 
     list is ArmResourceListByParent<Foo>;
 }
