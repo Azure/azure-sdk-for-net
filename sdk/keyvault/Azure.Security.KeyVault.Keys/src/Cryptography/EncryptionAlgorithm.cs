@@ -21,12 +21,9 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         internal const string A128CbcValue = "A128CBC";
         internal const string A192CbcValue = "A192CBC";
         internal const string A256CbcValue = "A256CBC";
-        internal const string CkmAesKeyWrapValue = "CKM_AES_KEY_WRAP";
         internal const string A128CbcPadValue = "A128CBCPAD";
         internal const string A192CbcPadValue = "A192CBCPAD";
         internal const string A256CbcPadValue = "A256CBCPAD";
-        internal const string CkmAesKeyWrapPadValue = "CKM_AES_KEY_WRAP_PAD";
-
         private readonly string _value;
 
         /// <summary>
@@ -98,11 +95,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public static EncryptionAlgorithm A256Cbc { get; } = new EncryptionAlgorithm(A256CbcValue);
 
         /// <summary>
-        /// Gets a 256-bit CKM AES Key Wrap <see cref="EncryptionAlgorithm"/>.
-        /// </summary>
-        public static EncryptionAlgorithm CkmAesKeyWrap { get; } = new EncryptionAlgorithm(CkmAesKeyWrapValue);
-
-        /// <summary>
         /// Gets a 128-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
         /// </summary>
         public static EncryptionAlgorithm A128CbcPad { get; } = new EncryptionAlgorithm(A128CbcPadValue);
@@ -116,11 +108,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets a 256-bit AES-CBC <see cref="EncryptionAlgorithm"/> with PKCS padding.
         /// </summary>
         public static EncryptionAlgorithm A256CbcPad { get; } = new EncryptionAlgorithm(A256CbcPadValue);
-
-        /// <summary>
-        /// Gets a 256-bit CKM AES Key Wrap <see cref="EncryptionAlgorithm"/> with PKCS padding.
-        /// </summary>
-        public static EncryptionAlgorithm CkmAesKeyWrapPad { get; } = new EncryptionAlgorithm(CkmAesKeyWrapPadValue);
 
         /// <summary>
         /// Determines if two <see cref="EncryptionAlgorithm"/> values are the same.
@@ -179,12 +166,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
             A128CbcValue => AesCbc.Aes128Cbc,
             A192CbcValue => AesCbc.Aes192Cbc,
             A256CbcValue => AesCbc.Aes256Cbc,
-            CkmAesKeyWrapValue => AesCbc.CkmAesKeyWrap,
 
             A128CbcPadValue => AesCbc.Aes128CbcPad,
             A192CbcPadValue => AesCbc.Aes192CbcPad,
             A256CbcPadValue => AesCbc.Aes256CbcPad,
-            CkmAesKeyWrapPadValue => AesCbc.CkmAesKeyWrapPad,
 
             _ => null,
         };
