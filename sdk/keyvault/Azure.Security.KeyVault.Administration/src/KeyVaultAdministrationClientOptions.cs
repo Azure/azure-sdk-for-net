@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    [CodeGenModel("AzureSecurityKeyVaultAdministrationClientOptions")]
+    
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
@@ -65,6 +65,8 @@ namespace Azure.Security.KeyVault.Administration
             V7_6_Preview_2 = 5,
 #pragma warning restore CA1707 // Identifiers should not contain underscores
         }
+
+        internal const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_2;
 
         /// <summary>
         /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.

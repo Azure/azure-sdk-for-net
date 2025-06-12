@@ -42,7 +42,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public static IAzureClientBuilder<KeyVaultRestClient, KeyVaultRestClientOptions> AddKeyVaultRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        internal static IAzureClientBuilder<KeyVaultRestClient, KeyVaultRestClientOptions> AddKeyVaultRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
             where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
@@ -55,7 +55,7 @@ namespace Microsoft.Extensions.Azure
         /// <param name="configuration"> The configuration to use for the client. </param>
         [RequiresUnreferencedCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
         [RequiresDynamicCode("Requires unreferenced code until we opt into EnableConfigurationBindingGenerator.")]
-        public static IAzureClientBuilder<KeyVaultRestClient, KeyVaultRestClientOptions> AddKeyVaultRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        internal static IAzureClientBuilder<KeyVaultRestClient, KeyVaultRestClientOptions> AddKeyVaultRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
             where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
             return builder.RegisterClientFactory<KeyVaultRestClient, KeyVaultRestClientOptions>(configuration);

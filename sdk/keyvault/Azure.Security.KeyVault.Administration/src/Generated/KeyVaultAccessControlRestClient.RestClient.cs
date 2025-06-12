@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Administration
                 uri.AppendQuery("api-version", _apiVersion, true);
                 if (filter != null)
                 {
-                    uri.AppendQuery("$filter", filter, true);
+                    uri.AppendQuery("filter", filter, true);
                 }
                 request.Uri = uri;
                 request.Headers.SetValue("Accept", "application/json");
@@ -177,7 +177,7 @@ namespace Azure.Security.KeyVault.Administration
                 uri.AppendQuery("api-version", _apiVersion, true);
                 if (filter != null)
                 {
-                    uri.AppendQuery("$filter", filter, true);
+                    uri.AppendQuery("filter", filter, true);
                 }
                 request.Uri = uri;
                 request.Headers.SetValue("Accept", "application/json");

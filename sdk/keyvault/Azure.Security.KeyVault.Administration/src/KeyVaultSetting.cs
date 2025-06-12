@@ -10,7 +10,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// An account setting.
     /// </summary>
-    [CodeGenModel("Setting")]
+    
     [CodeGenSuppress(nameof(KeyVaultSetting), typeof(string), typeof(string))]
     [CodeGenSuppress("Content")]
     [CodeGenSuppress("Type")]

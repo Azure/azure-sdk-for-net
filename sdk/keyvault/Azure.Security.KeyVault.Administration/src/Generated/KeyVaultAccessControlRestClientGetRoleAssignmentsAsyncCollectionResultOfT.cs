@@ -19,14 +19,14 @@ namespace Azure.Security.KeyVault.Administration
         private readonly KeyVaultAccessControlRestClient _client;
         private readonly Uri _nextPage;
         private readonly string _scope;
-        private readonly string _$filter;
+        private readonly string _filter;
         private readonly RequestContext _context;
 
         /// <summary> Initializes a new instance of KeyVaultAccessControlRestClientGetRoleAssignmentsAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The KeyVaultAccessControlRestClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use filter=atScope() to return all role assignments at or above the scope. Use filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
@@ -37,7 +37,7 @@ namespace Azure.Security.KeyVault.Administration
             _client = client;
             _nextPage = nextPage;
             _scope = scope;
-            _$filter = filter;
+            _filter = filter;
             _context = context;
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = _client.CreateListRoleAssignmentsRequest(nextLink, _scope, _$filter, _context);
+            HttpMessage message = _client.CreateListRoleAssignmentsRequest(nextLink, _scope, _filter, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope("KeyVaultAccessControlRestClient.GetRoleAssignments");
             scope.Start();
             try
