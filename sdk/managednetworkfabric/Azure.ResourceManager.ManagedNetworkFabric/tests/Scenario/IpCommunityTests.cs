@@ -27,7 +27,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Get the collection
             TestContext.Out.WriteLine($"Getting IP Community collection....");
-            NetworkFabricIPCommunityCollection collection = ResourceGroupResource.GetNetworkFabricIPCommunities();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricIPCommunityCollection collection = resourceGroup.GetNetworkFabricIPCommunities();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");

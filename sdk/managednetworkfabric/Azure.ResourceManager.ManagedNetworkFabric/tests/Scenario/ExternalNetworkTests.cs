@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     PeerAsn = 65047,
                     BfdConfiguration = new BfdConfiguration
                     {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 15,
+                        IntervalInMilliSeconds = 350,
+                        Multiplier = 3,
                     },
                     PrimaryIPv4Prefix = "10.1.1.0/30",
                     PrimaryIPv6Prefix = "3FFE:FFFF:0:CD30::a0/127",
