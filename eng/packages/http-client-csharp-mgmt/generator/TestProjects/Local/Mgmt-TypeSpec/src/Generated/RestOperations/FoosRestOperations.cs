@@ -100,6 +100,27 @@ namespace MgmtTypeSpec
             return message;
         }
 
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context)
+        {
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Method = RequestMethod.Patch;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
+            uri.AppendPath(fooName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
         internal HttpMessage CreateListRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage();

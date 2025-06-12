@@ -1,6 +1,6 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0 (2025-06-12)
 
 ### Features Added
 
@@ -14,11 +14,6 @@
     - `usgov` for Entra ID US Government
     - `china` for Entra ID China operated by 21Vianet
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.11.0 (2025-03-15)
 

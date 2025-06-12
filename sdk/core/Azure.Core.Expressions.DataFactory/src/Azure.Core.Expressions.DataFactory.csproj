@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Core" VersionOverride="1.36.0" />
+    <PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
