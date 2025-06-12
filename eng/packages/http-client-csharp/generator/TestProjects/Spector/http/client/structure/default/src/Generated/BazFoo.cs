@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core.Pipeline;
 
-namespace Client.Structure.Service
+namespace Client.Structure.Service._Baz
 {
     public partial class BazFoo
     {

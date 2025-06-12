@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(ApiManagementApiReleaseDeletedEventDataConverter))]
     public partial class ApiManagementApiReleaseDeletedEventData : IUtf8JsonSerializable, IJsonModel<ApiManagementApiReleaseDeletedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApiManagementApiReleaseDeletedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -140,6 +142,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class ApiManagementApiReleaseDeletedEventDataConverter : JsonConverter<ApiManagementApiReleaseDeletedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, ApiManagementApiReleaseDeletedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override ApiManagementApiReleaseDeletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeApiManagementApiReleaseDeletedEventData(document.RootElement);
+            }
         }
     }
 }
