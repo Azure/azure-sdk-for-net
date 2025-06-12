@@ -17,7 +17,6 @@ There are a few exceptions where package-name is replaced with a shorter directo
         - Find the .sln file that applies to the files you are working on.
             - This will typically be within the package directory. For example, if you update a file in `azure-sdk-for-net/sdk/batch/Azure.ResourceManager.Batch/src/`, you would need `azure-sdk-for-net/sdk/batch/Azure.ResourceManager.Batch/Azure.ResourceManager.Batch.sln`. From the directory of the sln file, run `dotnet build {solution-file}`. So in this example, you would run `dotnet build Azure.ResourceManager.Batch.sln` in the `azure-sdk-for-net/sdk/batch/Azure.ResourceManager.Batch/` directory.
         - If you see build errors, try to fix them, if you can't fix them within 5 iterations, give up and report this to the user. Do not report success if the build fails!
-    4. When you're done working, navigate to the root of the repository and run `./eng/scripts/Export-API.ps1 {service-directory}`, for all impacted service directories. To get the impacted service directories, look at the paths of all files that have been edited. All projects follow this pattern: `azure-sdk-for-net/sdk/{service-directory}/{package-name}`. For example, if you have edited a file in `azure-sdk-for-net/sdk/storage/Azure.Storage.Blobs`, you would run `./eng/scripts/Export-API.ps1 storage`.
 ---
 
 ## Coding guidelines
