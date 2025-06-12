@@ -160,11 +160,66 @@ The following section provides several synchronous code snippets covering some o
 
 ### Pool Operations
 
-### Create a Pool
-
 In an Azure Batch workflow, a compute node (or node) is a virtual machine that processes a portion of your application's workload. A pool is a collection of these nodes for your application to runs on. For more information see [Nodes and pools in Azure Batch](https://learn.microsoft.com/azure/batch/nodes-and-pools).
 
-Use the `CreatePool` method with a `BatchPoolCreateOptions` instance to create a `BatchPool`. 
+### Create a Pool
+
+Azure batch has two sdk, [`Azure.Compute.Batch`](https://learn.microsoft.com/dotnet/api/azure.compute.batch?view=azure-dotnet-preview&viewFallbackFrom=azure-dotnet) which interacts directly the azure batch service, and [`Azure.ResourceManager.Batch`](https://learn.microsoft.com/dotnet/api/overview/azure/resourcemanager.batch-readme?view=azure-dotnet) which interacts with the Azure Resource Manager.  Both of these SDK's support batch pool operations such as create/get/update/list etc but only the `Azure.ResourceManager.Batch` sdk can create a pool with managed identities and for that reason its the recommend way to create a pool.  
+
+`Azure.ResourceManager.Batch` [pool create](https://learn.microsoft.com/dotnet/api/azure.resourcemanager.batch.batchaccountpoolcollection.createorupdate?view=azure-dotnet) with managed identity.  You create a pool by getting a reference to the batch account then issuing a `CreateOrUpdate` call from the GetBatchAccountPools() collection.
+``` C#
+using Azure.Identity;
+using Azure.ResourceManager;
+using Azure.ResourceManager.Batch;
+using Azure.ResourceManager.Batch.Models;
+```
+
+
+```C# Snippet:Batch_Migration_PoolCreateManagementPlane
+    var credential = new DefaultAzureCredential();
+    ArmClient _armClient = new ArmClient(credential);
+
+    var batchAccountIdentifier = ResourceIdentifier.Parse("your-batch-account-resource-id");
+    BatchAccountResource batchAccount = _armClient.GetBatchAccountResource(batchAccountIdentifier);
+
+    var poolName = "HelloWorldPool";
+    var imageReference = new Azure.ResourceManager.Batch.Models.BatchImageReference()
+    {
+        Publisher = "canonical",
+        Offer = "0001-com-ubuntu-server-jammy",
+        Sku = "22_04-lts",
+        Version = "latest"
+    };
+    string nodeAgentSku = "batch.node.ubuntu 22.04";
+
+    var batchAccountPoolData = new BatchAccountPoolData()
+    {
+        VmSize = "Standard_DS1_v2",
+        DeploymentConfiguration = new BatchDeploymentConfiguration()
+        {
+            VmConfiguration = new BatchVmConfiguration(imageReference, nodeAgentSku)
+        },
+        ScaleSettings = new BatchAccountPoolScaleSettings()
+        {
+            FixedScale = new BatchAccountFixedScaleSettings()
+            {
+                TargetDedicatedNodes = 1
+            }
+        },
+        Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.UserAssigned)
+        {
+            UserAssignedIdentities = {
+    [new ResourceIdentifier("Your Identity Azure Resource Manager ResourceId")] = new Azure.ResourceManager.Models.UserAssignedIdentity(),
+},
+        }
+    };
+
+    ArmOperation<BatchAccountPoolResource> armOperation = batchAccount.GetBatchAccountPools().CreateOrUpdate(
+        WaitUntil.Completed, poolName, batchAccountPoolData);
+    BatchAccountPoolResource pool = armOperation.Value;
+```
+
+As mentioned you can create a pool using `Azure.Compute.Batch` [pool create](https://learn.microsoft.com/dotnet/api/azure.compute.batch.batchclient.createpool) just without support for managed identities.  First you create a batch client with your credentials then you issue a `CreatePool` call directly from the batch client.
 
 ```C# Snippet:Batch_Readme_PoolCreation
 BatchClient batchClient = new BatchClient(
