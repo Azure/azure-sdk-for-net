@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -35,10 +36,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         }
 
         /// <summary> Telemetry type. Types not defined in enum will get replaced with a 'Unknown' type. </summary>
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
         internal DocumentType DocumentType { get; set; }
         /// <summary> An array of document streaming ids. Each id identifies a flow of documents customized by UX customers. </summary>
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
         public IList<string> DocumentStreamIds { get; }
         /// <summary> Collection of custom properties. </summary>
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicProperties)]
         public IList<KeyValuePairString> Properties { get; }
     }
 }
