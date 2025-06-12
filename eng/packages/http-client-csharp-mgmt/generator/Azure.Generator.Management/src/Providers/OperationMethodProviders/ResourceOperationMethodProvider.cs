@@ -34,6 +34,9 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         protected readonly MethodSignature _signature;
         protected readonly MethodBodyStatement[] _bodyStatements;
 
+        private readonly CSharpType? _responseGenericType;
+        private readonly bool _isGeneric;
+
         public ResourceOperationMethodProvider(
             ResourceClientProvider resourceClientProvider,
             InputServiceMethod method,
@@ -44,6 +47,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             _serviceMethod = method;
             _convenienceMethod = convenienceMethod;
             _isAsync = isAsync;
+            _responseGenericType = _serviceMethod.GetResponseBodyType();
+            _isGeneric = _responseGenericType != null;
             _clientDiagnosticsField = resourceClientProvider.GetClientDiagnosticsField();
             _signature = CreateSignature();
             _bodyStatements = BuildBodyStatements();
@@ -122,16 +127,13 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             VariableExpression contextVariable,
             out VariableExpression responseVariable)
         {
-            var responseType = _convenienceMethod.Signature.ReturnType!.UnWrapAsync();
-
-            // Check if the return type is a generic Response<T> or just Response
-            if (!responseType.Equals(typeof(Response)))
+            if (_isGeneric)
             {
                 // For methods returning Response<T> (e.g., Response<MyResource>), use generic response processing
                 return ResourceMethodSnippets.CreateGenericResponsePipelineProcessing(
                     messageVariable,
                     contextVariable,
-                    responseType,
+                    _responseGenericType!,
                     _isAsync,
                     out responseVariable);
             }
@@ -154,9 +156,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
             var statements = new List<MethodBodyStatement>();
 
             var finalStateVia = _serviceMethod.GetOperationFinalStateVia();
-            bool isGeneric = _serviceMethod.GetResponseBodyType() != null;
 
-            var armOperationType = isGeneric
+            var armOperationType = _isGeneric
                 ? ManagementClientGenerator.Instance.OutputLibrary.GenericArmOperation.Type
                     .MakeGenericType([_resourceClientProvider.ResourceClientCSharpType])
                 : ManagementClientGenerator.Instance.OutputLibrary.ArmOperation.Type;
@@ -165,11 +166,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 _clientDiagnosticsField,
                 This.Property("Pipeline"),
                 messageVariable.Property("Request"),
-                isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable,
+                _isGeneric ? responseVariable.Invoke("GetRawResponse") : responseVariable,
                 Static(typeof(OperationFinalStateVia)).Property(finalStateVia.ToString())
             ];
 
-            var operationInstanceArguments = isGeneric
+            var operationInstanceArguments = _isGeneric
                 ? [
                     New.Instance(_resourceClientProvider.Source.Type, This.Property("Client")),
                     .. armOperationArguments
@@ -183,7 +184,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 out var operationVariable);
             statements.Add(operationDeclaration);
 
-            var waitMethod = isGeneric
+            var waitMethod = _isGeneric
                 ? (_isAsync ? "WaitForCompletionAsync" : "WaitForCompletion")
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 

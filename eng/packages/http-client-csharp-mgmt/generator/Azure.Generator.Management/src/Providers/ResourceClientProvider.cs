@@ -261,9 +261,9 @@ namespace Azure.Generator.Management.Providers
                 }
                 else
                 {
-                    operationMethods.Add(BuildOperationMethod(method, convenienceMethod, false));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, method, convenienceMethod, false));
                     var asyncConvenienceMethod = _restClientProvider.GetConvenienceMethodByOperation(method.Operation, true);
-                    operationMethods.Add(BuildOperationMethod(method, asyncConvenienceMethod, true));
+                    operationMethods.Add(new ResourceOperationMethodProvider(this, method, asyncConvenienceMethod, true));
                 }
             }
 
@@ -278,16 +278,6 @@ namespace Azure.Generator.Management.Providers
                 new RemoveTagMethodProvider(this, true),
                 new RemoveTagMethodProvider(this, false)
             ];
-        }
-
-        protected MethodProvider BuildOperationMethod(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
-        {
-            return BuildOperationMethodCore(method, convenienceMethod, isAsync);
-        }
-
-        protected MethodProvider BuildOperationMethodCore(InputServiceMethod method, MethodProvider convenienceMethod, bool isAsync)
-        {
-            return new ResourceOperationMethodProvider(this, method, convenienceMethod, isAsync);
         }
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
