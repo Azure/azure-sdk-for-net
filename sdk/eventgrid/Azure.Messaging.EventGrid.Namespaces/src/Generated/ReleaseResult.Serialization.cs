@@ -13,7 +13,7 @@ using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary></summary>
+    /// <summary> The result of the Release operation. </summary>
     public partial class ReleaseResult : IJsonModel<ReleaseResult>
     {
         /// <param name="writer"> The JSON writer. </param>
