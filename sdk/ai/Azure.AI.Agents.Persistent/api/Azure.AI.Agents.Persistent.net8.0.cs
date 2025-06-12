@@ -2239,6 +2239,7 @@ namespace Azure.AI.Agents.Persistent
     public partial class SharepointGroundingToolParameters : System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.SharepointGroundingToolParameters>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Agents.Persistent.SharepointGroundingToolParameters>
     {
         public SharepointGroundingToolParameters() { }
+        public SharepointGroundingToolParameters(string connectionId) { }
         public System.Collections.Generic.IList<Azure.AI.Agents.Persistent.ToolConnection> ConnectionList { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Agents.Persistent.SharepointGroundingToolParameters System.ClientModel.Primitives.IJsonModel<Azure.AI.Agents.Persistent.SharepointGroundingToolParameters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
