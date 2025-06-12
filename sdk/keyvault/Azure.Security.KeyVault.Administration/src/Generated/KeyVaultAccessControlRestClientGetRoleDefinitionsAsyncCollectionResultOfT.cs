@@ -56,7 +56,7 @@ namespace Azure.Security.KeyVault.Administration
                     yield break;
                 }
                 RoleDefinitionListResult responseWithType = (RoleDefinitionListResult)response;
-                nextPage = responseWithType.NextLink;
+                nextPage = responseWithType.NextLink != null ? new Uri(responseWithType.NextLink) : null;
                 yield return Page<RoleDefinition>.FromValues((IReadOnlyList<RoleDefinition>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);

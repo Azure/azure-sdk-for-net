@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Role assignment properties with scope. </summary>
-    
+
     public partial class KeyVaultRoleAssignmentProperties
     { }
 }

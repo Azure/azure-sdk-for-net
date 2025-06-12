@@ -60,7 +60,7 @@ namespace Azure.Security.KeyVault.Administration
                 {
                     items.Add(BinaryData.FromObjectAsJson(item));
                 }
-                nextPage = responseWithType.NextLink;
+                nextPage = responseWithType.NextLink != null ? new Uri(responseWithType.NextLink) : null;
                 yield return Page<BinaryData>.FromValues(items, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);

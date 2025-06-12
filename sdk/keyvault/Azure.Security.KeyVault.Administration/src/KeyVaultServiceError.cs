@@ -7,7 +7,6 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    
     internal partial class KeyVaultServiceError
     {
         internal KeyVaultServiceError(string code, string message, KeyVaultServiceError innerError)

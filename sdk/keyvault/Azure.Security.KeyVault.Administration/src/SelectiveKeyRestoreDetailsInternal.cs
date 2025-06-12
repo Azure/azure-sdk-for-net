@@ -6,7 +6,7 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> Full restore operation. </summary>
-    
+
     internal partial class SelectiveKeyRestoreDetailsInternal
     {
         public SelectiveKeyRestoreDetailsInternal(RestoreDetailsInternal restoreDetails) :

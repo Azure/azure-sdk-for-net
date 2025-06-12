@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    
     public readonly partial struct KeyVaultRoleDefinitionType
     { }
 }

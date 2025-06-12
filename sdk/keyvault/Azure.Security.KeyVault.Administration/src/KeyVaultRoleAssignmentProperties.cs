@@ -5,7 +5,6 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    
     internal partial class KeyVaultRoleAssignmentPropertiesInternal
     { }
 }

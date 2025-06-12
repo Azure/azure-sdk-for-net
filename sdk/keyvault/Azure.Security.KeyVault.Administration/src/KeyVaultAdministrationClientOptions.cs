@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    
+
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";

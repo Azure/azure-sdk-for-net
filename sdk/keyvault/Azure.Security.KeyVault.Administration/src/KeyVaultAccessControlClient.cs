@@ -14,11 +14,12 @@ namespace Azure.Security.KeyVault.Administration
     /// The KeyVaultAccessControlClient provides synchronous and asynchronous methods to view and manage Role Based Access for the Azure Key Vault.
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
-    
+
     [CodeGenSuppress("Pipeline")]
     public partial class KeyVaultAccessControlClient
     {
         private readonly ClientDiagnostics _diagnostics;
+        private readonly KeyVaultAccessControlRestClient _restClient;
 
         /// <summary>
         /// Gets the vault URI.
@@ -69,6 +70,7 @@ namespace Azure.Security.KeyVault.Administration
             _tokenCredential = credential;
             _endpoint = vaultUri;
             _apiVersion = apiVersion;
+            _restClient = new KeyVaultAccessControlRestClient(vaultUri, credential);
         }
 
         /// <summary>
@@ -494,7 +496,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response<KeyVaultRoleAssignment> response = DeleteRoleAssignment(roleScope.ToString(), roleAssignmentName, cancellationToken);
+                Response<RoleAssignment> response = _restClient.DeleteRoleAssignment(roleScope.ToString(), roleAssignmentName, cancellationToken);
                 return response.GetRawResponse();
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
@@ -529,7 +531,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                Response<KeyVaultRoleAssignment> response = await DeleteRoleAssignmentAsync(roleScope.ToString(), roleAssignmentName, cancellationToken)
+                Response<RoleAssignment> response = await _restClient.DeleteRoleAssignmentAsync(roleScope.ToString(), roleAssignmentName, cancellationToken)
                 .ConfigureAwait(false);
                 return response.GetRawResponse();
             }
