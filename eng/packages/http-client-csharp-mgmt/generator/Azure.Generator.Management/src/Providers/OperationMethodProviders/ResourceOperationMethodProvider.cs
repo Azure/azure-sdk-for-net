@@ -151,7 +151,7 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
         private IReadOnlyList<MethodBodyStatement> BuildLroHandling(
             VariableExpression messageVariable,
             VariableExpression responseVariable,
-            ParameterProvider? cancellationTokenParameter)
+            ParameterProvider cancellationTokenParameter)
         {
             var statements = new List<MethodBodyStatement>();
 
@@ -189,8 +189,8 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
                 : (_isAsync ? "WaitForCompletionResponseAsync" : "WaitForCompletionResponse");
 
             var waitInvocation = _isAsync
-                ? operationVariable.Invoke(waitMethod, cancellationTokenParameter != null ? [cancellationTokenParameter] : [], null, _isAsync).Terminate()
-                : (cancellationTokenParameter is null ? operationVariable.Invoke(waitMethod) : operationVariable.Invoke(waitMethod, cancellationTokenParameter)).Terminate();
+                           ? operationVariable.Invoke(waitMethod, [cancellationTokenParameter], null, _isAsync).Terminate()
+                           : operationVariable.Invoke(waitMethod, cancellationTokenParameter).Terminate();
 
             var waitIfCompletedStatement = new IfStatement(
                 KnownAzureParameters.WaitUntil.Equal(
