@@ -105,13 +105,13 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
     <PackageReference Remove="System.Numerics.Vectors" />
     <PackageReference Remove="System.Text.Encodings.Web" />
     <PackageReference Remove="System.Text.Json" />
     <PackageReference Remove="System.Threading.Channels" />
     <PackageReference Remove="System.Threading.Tasks.Extensions" />
-    <PackageReference Remove="System.Memory" />
   </ItemGroup>
 
   <!-- Add Package Icon to DataPlane Packages -->
