@@ -107,18 +107,6 @@ namespace Azure.Communication.Chat
         public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Chat.ChatThreadProperties"/> class.
-        /// </summary>
-        /// <param name="id"> Chat message ID. </param>
-        /// <param name="topic"> Topic of the message content. </param>
-        /// <param name="createdOn"> Created on date time </param>
-        /// <param name="createdBy"> Created by </param>
-        /// <param name="deletedOn"> Deleted on date time </param>
-        /// <param name="metadata"> Property bag of chat thread metadata key - value pairs. </param>
-        /// <returns>A new <see cref="Chat.ChatThreadProperties"/> instance for mocking.</returns>
-        public static ChatThreadProperties ChatThreadProperties(string id, string topic, DateTimeOffset createdOn, CommunicationIdentifier createdBy, DateTimeOffset deletedOn, IDictionary<string, string> metadata) => new ChatThreadProperties(id, topic, createdOn, createdBy, deletedOn, metadata);
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="CreateChatThreadResult"/> class.
         /// </summary>
         /// <param name="chatThread"> Thread properties </param>
