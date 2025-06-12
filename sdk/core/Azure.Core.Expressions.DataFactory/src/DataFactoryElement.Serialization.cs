@@ -5,6 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.Json;
 
 namespace Azure.Core.Expressions.DataFactory
@@ -152,58 +153,6 @@ namespace Azure.Core.Expressions.DataFactory
                 case IJsonModel<T1> jsonModel:
                     jsonModel.Write(writer, options);
                     break;
-                case null:
-                    writer.WriteNullValue();
-                    break;
-                case IUtf8JsonSerializable serializable:
-                    serializable.Write(writer);
-                    break;
-                case byte[] bytes:
-                    writer.WriteBase64StringValue(bytes);
-                    break;
-                case BinaryData bytes:
-                    writer.WriteBase64StringValue(bytes);
-                    break;
-                case System.Text.Json.JsonElement json:
-                    json.WriteTo(writer);
-                    break;
-                case int i:
-                    writer.WriteNumberValue(i);
-                    break;
-                case decimal d:
-                    writer.WriteNumberValue(d);
-                    break;
-                case double d:
-                    if (double.IsNaN(d))
-                    {
-                        writer.WriteStringValue("NaN");
-                    }
-                    else
-                    {
-                        writer.WriteNumberValue(d);
-                    }
-                    break;
-                case float f:
-                    writer.WriteNumberValue(f);
-                    break;
-                case long l:
-                    writer.WriteNumberValue(l);
-                    break;
-                case string s:
-                    writer.WriteStringValue(s);
-                    break;
-                case bool b:
-                    writer.WriteBooleanValue(b);
-                    break;
-                case Guid g:
-                    writer.WriteStringValue(g);
-                    break;
-                case DateTimeOffset dateTimeOffset:
-                    writer.WriteStringValue(dateTimeOffset, "O");
-                    break;
-                case DateTime dateTime:
-                    writer.WriteStringValue(dateTime, "O");
-                    break;
                 case IEnumerable<KeyValuePair<string, object>> enumerable:
                     writer.WriteStartObject();
                     foreach (KeyValuePair<string, object> pair in enumerable)
@@ -221,8 +170,23 @@ namespace Azure.Core.Expressions.DataFactory
                     }
                     writer.WriteEndArray();
                     break;
-                case TimeSpan timeSpan:
-                    writer.WriteStringValue(timeSpan, "P");
+                case null:
+                case IUtf8JsonSerializable:
+                case byte[]:
+                case BinaryData:
+                case JsonElement:
+                case int:
+                case decimal:
+                case double:
+                case float:
+                case long:
+                case string:
+                case bool:
+                case Guid:
+                case DateTimeOffset:
+                case DateTime:
+                case TimeSpan:
+                    writer.WriteObjectValue(value!);
                     break;
 
                 default:
@@ -289,16 +253,6 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T>((T)(object)dictionary);
             }
 
-            if (typeof(T) == typeof(IList<string>) && json.ValueKind == JsonValueKind.Array)
-            {
-                var list = new List<string?>();
-                foreach (var item in json.EnumerateArray())
-                {
-                    list.Add(item.ValueKind == JsonValueKind.Null ? default : JsonSerializer.Deserialize<string?>(item.GetRawText()!));
-                }
-                return new DataFactoryElement<T>((T)(object)list);
-            }
-
             if (typeof(T) == typeof(DateTimeOffset) || typeof(T) == typeof(DateTimeOffset?))
             {
                 return new DataFactoryElement<T>((T)(object)json.GetDateTimeOffset("O"));
@@ -319,12 +273,27 @@ namespace Azure.Core.Expressions.DataFactory
                 return new DataFactoryElement<T>((T)(object)BinaryData.FromString(json.GetRawText()!));
             }
 
+            if (typeof(T).IsGenericType)
+            {
+                var methodInfo = GetGenericSerializationMethod(typeof(T).GenericTypeArguments[0]!, nameof(DataFactoryElementJsonConverter.DeserializeGenericList));
+                return (DataFactoryElement<T>)methodInfo!.Invoke(null, new object[] { json })!;
+            }
+
             // Handle primitive and other types
             var obj = json.GetObject();
             if (obj is not null)
                 value = (T)obj;
 
             return new DataFactoryElement<T>(value);
+        }
+
+        private static MethodInfo GetGenericSerializationMethod(Type typeToConvert, string methodName)
+        {
+            return typeof(DataFactoryElementJsonConverter)
+                .GetMethod(
+                    methodName,
+                    BindingFlags.Static | BindingFlags.NonPublic)!
+                .MakeGenericMethod(typeToConvert);
         }
     }
 }
