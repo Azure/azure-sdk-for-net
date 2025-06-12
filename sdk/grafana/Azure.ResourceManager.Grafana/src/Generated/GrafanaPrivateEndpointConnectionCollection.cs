@@ -74,23 +74,21 @@ namespace Azure.ResourceManager.Grafana
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="data"> The <see cref="GrafanaPrivateEndpointConnectionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/>, <paramref name="accept"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<GrafanaPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, string accept, GrafanaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual async Task<ArmOperation<GrafanaPrivateEndpointConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("GrafanaPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ApproveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, accept, data, cancellationToken).ConfigureAwait(false);
-                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, accept, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.ApproveAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -125,23 +123,21 @@ namespace Azure.ResourceManager.Grafana
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="privateEndpointConnectionName"> The private endpoint connection name of Azure Managed Grafana. </param>
-        /// <param name="accept"> The <see cref="string"/> to use. </param>
         /// <param name="data"> The <see cref="GrafanaPrivateEndpointConnectionData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/>, <paramref name="accept"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<GrafanaPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, string accept, GrafanaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> or <paramref name="data"/> is null. </exception>
+        public virtual ArmOperation<GrafanaPrivateEndpointConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string privateEndpointConnectionName, GrafanaPrivateEndpointConnectionData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
-            Argument.AssertNotNull(accept, nameof(accept));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics.CreateScope("GrafanaPrivateEndpointConnectionCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Approve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, accept, data, cancellationToken);
-                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, accept, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.Approve(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data, cancellationToken);
+                var operation = new GrafanaArmOperation<GrafanaPrivateEndpointConnectionResource>(new GrafanaPrivateEndpointConnectionOperationSource(Client), _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsClientDiagnostics, Pipeline, _grafanaPrivateEndpointConnectionPrivateEndpointConnectionsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

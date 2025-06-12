@@ -40,9 +40,8 @@ namespace Azure.ResourceManager.Grafana.Samples
 
             // invoke the operation
             string privateEndpointConnectionName = "myConnection";
-            string accept = null;
             GrafanaPrivateEndpointConnectionData data = new GrafanaPrivateEndpointConnectionData();
-            ArmOperation<GrafanaPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, accept, data);
+            ArmOperation<GrafanaPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
             GrafanaPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
