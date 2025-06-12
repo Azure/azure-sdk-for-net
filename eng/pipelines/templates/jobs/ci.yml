@@ -130,7 +130,12 @@ jobs:
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
             SDKType: ${{ parameters.SDKType }}
             BuildSnippets: ${{ parameters.BuildSnippets }}
-
+  - job: CorePerf
+    displayName: Run Core Perf Benchmarks
+    steps:
+      - template: /eng/pipelines/templates/steps/core-perf.yml
+        parameters:
+          CorePerfTestInputs: true
   # For some pipelines like mgmt which are tested in aggregate we want to limit the pipeline to no tests or
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:

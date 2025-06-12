@@ -1,9 +1,9 @@
 parameters:
-  CorePerfTestInputs: ''
+  CorePerfTestInputs: false
 
 steps:
 
-- ${{ if eq(parameters.CorePerfTestInputs, 'true') }}:
+- ${{ if eq(parameters.CorePerfTestInputs, true) }}:
   - task: Powershell@2
     displayName: Run Azure.Core Perf Benchmarks and compare Nuget and Local builds.
     inputs:
