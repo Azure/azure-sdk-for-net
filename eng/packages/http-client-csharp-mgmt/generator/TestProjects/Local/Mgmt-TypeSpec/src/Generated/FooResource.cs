@@ -281,10 +281,10 @@ namespace MgmtTypeSpec
         /// <summary> Update a Foo. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ArmOperation<FooResource> Update(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual ArmOperation<FooResource> Update(WaitUntil waitUntil, RequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -292,6 +292,11 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
                 HttpMessage message = _fooRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, content, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
@@ -303,7 +308,7 @@ namespace MgmtTypeSpec
                     OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletion();
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -317,10 +322,10 @@ namespace MgmtTypeSpec
         /// <summary> Update a Foo. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ArmOperation<FooResource>> UpdateAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
+        public virtual async Task<ArmOperation<FooResource>> UpdateAsync(WaitUntil waitUntil, RequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -328,6 +333,11 @@ namespace MgmtTypeSpec
             scope.Start();
             try
             {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                }
+                ;
                 HttpMessage message = _fooRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, content, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MgmtTypeSpecArmOperation<FooResource> operation = new MgmtTypeSpecArmOperation<FooResource>(
@@ -339,7 +349,7 @@ namespace MgmtTypeSpec
                     OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionAsync().ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }

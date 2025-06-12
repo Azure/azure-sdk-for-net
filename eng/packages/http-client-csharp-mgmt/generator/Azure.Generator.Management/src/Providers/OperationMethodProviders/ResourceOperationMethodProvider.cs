@@ -87,34 +87,20 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
         private TryExpression BuildTryExpression()
         {
-            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken)));
+            var cancellationTokenParameter = _convenienceMethod.Signature.Parameters.FirstOrDefault(p => p.Type.Equals(typeof(CancellationToken))) ?? KnownParameters.CancellationTokenParameter;
 
             var requestMethod = _resourceClientProvider.GetClientProvider().GetRequestMethodByOperation(_serviceMethod.Operation);
-            var tryStatements = new List<MethodBodyStatement>();
-            VariableExpression messageVariable;
-            VariableExpression responseVariable;
-
-            if (cancellationTokenParameter is null)
+            var tryStatements = new List<MethodBodyStatement>
             {
-                var contextParameter = _convenienceMethod.Signature.Parameters.Single(p => p.Type.Equals(typeof(RequestContext)));
+                ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable)
+            };
 
-                // Populate arguments for the REST client method call
-                var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextParameter, _convenienceMethod);
+            // Populate arguments for the REST client method call
+            var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _convenienceMethod);
 
-                tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out messageVariable));
+            tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out var messageVariable));
 
-                tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextParameter, out responseVariable));
-            }
-            else
-            {
-                tryStatements.Add(ResourceMethodSnippets.CreateRequestContext(cancellationTokenParameter, out var contextVariable));
-                // Populate arguments for the REST client method call
-                var arguments = _resourceClientProvider.PopulateArguments(requestMethod.Signature.Parameters, contextVariable, _convenienceMethod);
-
-                tryStatements.Add(ResourceMethodSnippets.CreateHttpMessage(_resourceClientProvider, requestMethod.Signature.Name, arguments, out messageVariable));
-
-                tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out responseVariable));
-            }
+            tryStatements.AddRange(BuildClientPipelineProcessing(messageVariable, contextVariable, out var responseVariable));
 
             if (_serviceMethod.IsLongRunningOperation())
             {
@@ -256,7 +242,11 @@ namespace Azure.Generator.Management.Providers.OperationMethodProviders
 
             foreach (var parameter in _convenienceMethod.Signature.Parameters)
             {
-                if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
+                if (parameter.Type.Equals(typeof(RequestContext)))
+                {
+                    result.Add(KnownParameters.CancellationTokenParameter);
+                }
+                else if (!_resourceClientProvider.ImplicitParameterNames.Contains(parameter.Name))
                 {
                     result.Add(parameter);
                 }

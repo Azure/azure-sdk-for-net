@@ -247,8 +247,8 @@ namespace Azure.Generator.Management.Providers
                     continue;
                 }
 
-                // Check if this is an update operation (PUT method for non-singleton resource)
-                var isUpdateOperation = method.Operation.HttpMethod == HttpMethod.Put.ToString() && !IsSingleton;
+                // Check if this is an update operation (PUT or Patch method for non-singleton resource)
+                var isUpdateOperation = (method.Operation.HttpMethod == HttpMethod.Put.ToString() || method.Operation.HttpMethod == HttpMethod.Patch.ToString()) && !IsSingleton;
 
                 if (isUpdateOperation)
                 {
