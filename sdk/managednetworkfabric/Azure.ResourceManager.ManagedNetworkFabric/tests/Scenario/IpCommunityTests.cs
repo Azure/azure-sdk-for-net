@@ -23,33 +23,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
         {
             TestContext.Out.WriteLine($"Entered into the IP Community tests....");
             TestContext.Out.WriteLine($"Provided IP CommunityName name : {TestEnvironment.IpCommunityName}");
-
-            ResourceIdentifier rgId = Azure.ResourceManager.Resources.ResourceGroupResource.CreateResourceIdentifier(
-                TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
-            ResourceGroupResource ResourceGroupResource = (await Client.GetResourceGroupResource(rgId).GetAsync()).Value;
-            ResourceIdentifier ipCommunityResourceId = NetworkFabricIPCommunityResource.CreateResourceIdentifier(
-                TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName, TestEnvironment.IpCommunityName);
-            TestContext.Out.WriteLine($"IpCommunityResourceId: {ipCommunityResourceId}");
-            // Get the collection of this IpCommunity
-            NetworkFabricIPCommunityCollection collection = ResourceGroupResource.GetNetworkFabricIPCommunities();
-
             TestContext.Out.WriteLine($"IpCommunity Test started.....");
+
+            // Get the collection
+            TestContext.Out.WriteLine($"Getting IP Community collection....");
+            NetworkFabricIPCommunityCollection collection = ResourceGroupResource.GetNetworkFabricIPCommunities();
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            var properties = new IPCommunityProperties
+            string ipCommunityName = TestEnvironment.IpCommunityName;
+            IPCommunityRule[] rules = new[]
+            {
+                new IPCommunityRule(CommunityActionType.Permit, 4155123341, new[] { "1:1" })
+                {
+                    WellKnownCommunities = { WellKnownCommunity.Internet }
+                }
+            };
+            IPCommunityProperties properties = new IPCommunityProperties(rules)
             {
                 Annotation = "annotation",
-                IPCommunityRules =
-                {
-                    new IPCommunityRule(CommunityActionType.Permit, 4155123341, new string[] { "1:1" })
-                    {
-                        WellKnownCommunities =
-                        {
-                            WellKnownCommunity.Internet
-                        },
-                    }
-                }
             };
             NetworkFabricIPCommunityData data = new NetworkFabricIPCommunityData(new AzureLocation(TestEnvironment.Location), properties)
             {
@@ -59,21 +51,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
             };
 
-            ArmOperation<NetworkFabricIPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.IpCommunityName, data);
-            NetworkFabricIPCommunityResource createResult = lro.Value;
-            NetworkFabricIPCommunityResource ipCommunity = Client.GetNetworkFabricIPCommunityResource(ipCommunityResourceId);
-            Assert.AreEqual(createResult.Data.Name, TestEnvironment.IpCommunityName);
+            // Create the resource
+            ArmOperation<NetworkFabricIPCommunityResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ipCommunityName, data);
+            NetworkFabricIPCommunityResource ipCommunity = lro.Value;
+            Assert.AreEqual(ipCommunityName, ipCommunity.Data.Name);
 
-            // Get
+            // Get the resource and verify
             TestContext.Out.WriteLine($"GET started.....");
-            NetworkFabricIPCommunityResource getResult = await ipCommunity.GetAsync();
-            TestContext.Out.WriteLine($"{getResult}");
-            Assert.AreEqual(getResult.Data.Name, TestEnvironment.IpCommunityName);
+            Response<NetworkFabricIPCommunityResource> response = await ipCommunity.GetAsync();
+            NetworkFabricIPCommunityResource getResult = response.Value;
+            Assert.AreEqual(ipCommunityName, getResult.Data.Name);
 
+            // List by resource group
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
-            var listByResourceGroup = new List<NetworkFabricIPCommunityResource>();
-            NetworkFabricIPCommunityCollection collectionOp = ResourceGroupResource.GetNetworkFabricIPCommunities();
-            await foreach (NetworkFabricIPCommunityResource item in collectionOp.GetAllAsync())
+            List<NetworkFabricIPCommunityResource> listByResourceGroup = new List<NetworkFabricIPCommunityResource>();
+            await foreach (NetworkFabricIPCommunityResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }
