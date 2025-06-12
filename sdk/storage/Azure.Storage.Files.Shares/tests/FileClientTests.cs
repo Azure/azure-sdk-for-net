@@ -818,6 +818,38 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task CreateAsync_FilePropertySemantics()
+        {
+            // Arrange
+            List<FilePropertySemantics?> filePropertySemanticsList = new List<FilePropertySemantics?>
+            {
+                null,
+                FilePropertySemantics.New,
+                FilePropertySemantics.Restore
+            };
+
+            foreach (FilePropertySemantics? filePropertySemantics in filePropertySemanticsList)
+            {
+                await using DisposingShare test = await GetTestShareAsync();
+                ShareFileClient fileClientClient = InstrumentClient(test.Share.GetRootDirectoryClient().GetFileClient(GetNewFileName()));
+
+                ShareFileCreateOptions options = new ShareFileCreateOptions
+                {
+                    PropertySemantics = filePropertySemantics
+                };
+
+                Response<ShareFileInfo> response;
+
+                // Act
+                response = await fileClientClient.CreateAsync(Constants.KB, options);
+
+                // Assert
+                // TODO
+            }
+        }
+
+        [RecordedTest]
         public async Task ExistsAsync_Exists()
         {
             // Arrange
