@@ -180,6 +180,7 @@ namespace Azure.Generator.Tests.Common
                 false,
                 false,
                 null,
+                null,
                 null);
         }
 

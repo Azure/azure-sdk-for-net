@@ -16,12 +16,13 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   # Save-Package-Properties.ps1
   $shouldAddDevVersion = Get-Variable -Name 'addDevVersion' -ValueOnly -ErrorAction 'Ignore'
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
-  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
+  Write-Host "dotnet msbuild /nologo /t:GetPackageInfo ""$ServiceProj"" /p:EnableCentralPackageVersions=False /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion -tl:off"
 
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
     "$ServiceProj" `
+    /p:EnableCentralPackageVersions=False `
     /p:ServiceDirectory=$serviceDirectory `
     /p:AddDevVersion=$shouldAddDevVersion `
     -tl:off
@@ -133,7 +134,8 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
       Write-Host "Failed calculating dependencies for '$TestDependsOnDependency'. Exit code $LASTEXITCODE."
       Write-Host "Dumping erroring build output."
       Write-Host (Get-Content -Raw $buildOutputPath)
-      continue
+
+      return @()
   }
 
   if (Test-Path $outputFilePath) {
