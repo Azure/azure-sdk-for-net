@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -65,11 +66,6 @@ namespace Azure.Security.KeyVault.Administration
                     new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _diagnostics = new ClientDiagnostics(options, true);
-            ClientDiagnostics = _diagnostics;
-            _pipeline = pipeline;
-            _tokenCredential = credential;
-            _endpoint = vaultUri;
-            _apiVersion = apiVersion;
             _restClient = new KeyVaultAccessControlRestClient(vaultUri, credential);
         }
 
@@ -86,7 +82,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return GetRoleDefinitions(scope: roleScope.ToString(), cancellationToken: cancellationToken);
+                return _restClient.GetRoleDefinitions(roleScope.ToString(), cancellationToken: cancellationToken).Select(item => new KeyVaultRoleDefinition(item));
             }
             catch (Exception ex)
             {
@@ -108,7 +104,7 @@ namespace Azure.Security.KeyVault.Administration
             scope.Start();
             try
             {
-                return GetRoleDefinitionsAsync(scope: roleScope.ToString(), cancellationToken: cancellationToken);
+                return _restClient.GetRoleDefinitionsAsync(roleScope.ToString(), cancellationToken: cancellationToken).Select(item => new KeyVaultRoleDefinition(item));
             }
             catch (Exception ex)
             {

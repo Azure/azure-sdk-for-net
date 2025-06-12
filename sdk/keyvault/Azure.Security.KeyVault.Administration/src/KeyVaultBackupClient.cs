@@ -152,8 +152,7 @@ namespace Azure.Security.KeyVault.Administration
                 var operation = await _restClient.FullRestoreOperationAsync(
                    WaitUntil.Started,
                     new RestoreOperationParameters(
-                        new SASTokenParameter(
-                            containerUriString, sasToken),
+                        new SASTokenParameter(containerUriString) { Token = sasToken },
                             folderName),
                     cancellationToken).ConfigureAwait(false);
 
@@ -196,8 +195,7 @@ namespace Azure.Security.KeyVault.Administration
                 var operation = _restClient.FullRestoreOperation(
                     WaitUntil.Started,
                     new RestoreOperationParameters(
-                        new SASTokenParameter(
-                            containerUriString, sasToken),
+                        new SASTokenParameter(containerUriString) { Token = sasToken },
                             folderName),
                     cancellationToken);
 
@@ -244,8 +242,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
-                            new SASTokenParameter(
-                                containerUriString, sasToken),
+                            new SASTokenParameter(containerUriString) { Token = sasToken },
                                 folderName),
                     cancellationToken).ConfigureAwait(false);
 
@@ -292,8 +289,7 @@ namespace Azure.Security.KeyVault.Administration
                     WaitUntil.Started,
                     keyName,
                     new SelectiveKeyRestoreOperationParameters(
-                            new SASTokenParameter(
-                                containerUriString, sasToken),
+                            new SASTokenParameter(containerUriString) { Token = sasToken },
                                 folderName),
                     cancellationToken);
 
