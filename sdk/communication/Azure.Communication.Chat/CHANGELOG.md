@@ -1,14 +1,13 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (2025-06-13)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+- Suport data retention policy.
+- Suport thread level and member level metadata.
 
 ### Other Changes
+- Retry on 409 and 413 responses.
 
 ## 1.3.1 (2024-09-19)
 
