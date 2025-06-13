@@ -143,7 +143,6 @@ namespace Azure.Communication.Chat
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.Communication.Chat.ChatThreadItem ChatThreadItem(string id, string topic, System.DateTimeOffset? deletedOn, System.DateTimeOffset? lastMessageReceivedOn) { throw null; }
         public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic, System.DateTimeOffset createdOn, Azure.Communication.CommunicationIdentifier createdBy, System.DateTimeOffset deletedOn) { throw null; }
-        public static Azure.Communication.Chat.ChatThreadProperties ChatThreadProperties(string id, string topic, System.DateTimeOffset createdOn, Azure.Communication.CommunicationIdentifier createdBy, System.DateTimeOffset deletedOn, System.Collections.Generic.IDictionary<string, string> metadata) { throw null; }
         public static Azure.Communication.Chat.CreateChatThreadResult CreateChatThreadResult(Azure.Communication.Chat.ChatThreadProperties chatThread, System.Collections.Generic.IEnumerable<Azure.Communication.Chat.ChatError> invalidParticipants) { throw null; }
         public static Azure.Communication.Chat.SendChatMessageResult SendChatMessageResult(string id) { throw null; }
     }
