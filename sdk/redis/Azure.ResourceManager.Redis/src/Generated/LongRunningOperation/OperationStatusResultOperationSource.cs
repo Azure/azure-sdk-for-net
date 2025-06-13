@@ -18,13 +18,13 @@ namespace Azure.ResourceManager.Redis
         OperationStatusResult IOperationSource<OperationStatusResult>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+            return ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(document.RootElement.GetRawText(), ModelSerializationExtensions.Options);
         }
 
         async ValueTask<OperationStatusResult> IOperationSource<OperationStatusResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+            return ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(document.RootElement.GetRawText(), ModelSerializationExtensions.Options);
         }
     }
 }

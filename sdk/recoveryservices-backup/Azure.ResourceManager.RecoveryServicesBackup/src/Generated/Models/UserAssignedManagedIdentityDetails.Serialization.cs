@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedIdentityProperties))
             {
                 writer.WritePropertyName("userAssignedIdentityProperties"u8);
-                JsonSerializer.Serialize(writer, UserAssignedIdentityProperties);
+                ((IJsonModel<UserAssignedIdentity>)UserAssignedIdentityProperties).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    userAssignedIdentityProperties = JsonSerializer.Deserialize<UserAssignedIdentity>(property.Value.GetRawText());
+                    userAssignedIdentityProperties = ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentity>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

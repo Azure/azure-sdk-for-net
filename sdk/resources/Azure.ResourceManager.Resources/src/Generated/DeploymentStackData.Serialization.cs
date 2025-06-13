@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ModelSerializationExtensions.JsonSerialize(writer, Error, ModelSerializationExtensions.Options);
             }
             if (Optional.IsDefined(Template))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in DetachedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Resources
                 writer.WriteStartArray();
                 foreach (var item in DeletedResources)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Resources
                             {
                                 continue;
                             }
-                            error = JsonSerializer.Deserialize<ResponseError>(property0.Value.GetRawText());
+                            error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("template"u8))
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             detachedResources = array;
                             continue;
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Resources
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             deletedResources = array;
                             continue;

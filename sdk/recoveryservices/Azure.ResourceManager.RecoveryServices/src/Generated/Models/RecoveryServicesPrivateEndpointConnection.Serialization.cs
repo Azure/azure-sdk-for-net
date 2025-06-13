@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))
