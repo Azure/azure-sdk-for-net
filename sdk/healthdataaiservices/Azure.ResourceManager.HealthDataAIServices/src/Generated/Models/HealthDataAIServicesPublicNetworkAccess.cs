@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.ResourceManager.HealthDataAIServices.Models
+namespace Microsoft.HealthDataAIServices.Models
 {
     /// <summary> State of the public network access. </summary>
     public enum HealthDataAIServicesPublicNetworkAccess
