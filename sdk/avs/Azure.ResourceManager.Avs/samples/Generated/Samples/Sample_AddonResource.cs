@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -219,7 +220,13 @@ namespace Azure.ResourceManager.Avs.Samples
             AddonResource addon = client.GetAddonResource(addonResourceId);
 
             // invoke the operation
-            AddonData data = new AddonData();
+            AddonData data = new AddonData
+            {
+                Properties = new AddonArcProperties
+                {
+                    VCenter = "subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg_test/providers/Microsoft.ConnectedVMwarevSphere/VCenters/test-vcenter",
+                },
+            };
             ArmOperation<AddonResource> lro = await addon.UpdateAsync(WaitUntil.Completed, data);
             AddonResource result = lro.Value;
 
@@ -252,7 +259,10 @@ namespace Azure.ResourceManager.Avs.Samples
             AddonResource addon = client.GetAddonResource(addonResourceId);
 
             // invoke the operation
-            AddonData data = new AddonData();
+            AddonData data = new AddonData
+            {
+                Properties = new AddonHcxProperties("VMware MaaS Cloud Provider (Enterprise)"),
+            };
             ArmOperation<AddonResource> lro = await addon.UpdateAsync(WaitUntil.Completed, data);
             AddonResource result = lro.Value;
 
@@ -285,7 +295,14 @@ namespace Azure.ResourceManager.Avs.Samples
             AddonResource addon = client.GetAddonResource(addonResourceId);
 
             // invoke the operation
-            AddonData data = new AddonData();
+            AddonData data = new AddonData
+            {
+                Properties = new AddonHcxProperties("VMware MaaS Cloud Provider (Enterprise)")
+                {
+                    ManagementNetwork = "10.3.1.0/24",
+                    UplinkNetwork = "10.3.2.0/24",
+                },
+            };
             ArmOperation<AddonResource> lro = await addon.UpdateAsync(WaitUntil.Completed, data);
             AddonResource result = lro.Value;
 
@@ -318,7 +335,13 @@ namespace Azure.ResourceManager.Avs.Samples
             AddonResource addon = client.GetAddonResource(addonResourceId);
 
             // invoke the operation
-            AddonData data = new AddonData();
+            AddonData data = new AddonData
+            {
+                Properties = new AddonSrmProperties
+                {
+                    LicenseKey = "41915178-A8FF-4A4D-B683-6D735AF5E3F5",
+                },
+            };
             ArmOperation<AddonResource> lro = await addon.UpdateAsync(WaitUntil.Completed, data);
             AddonResource result = lro.Value;
 
@@ -351,7 +374,10 @@ namespace Azure.ResourceManager.Avs.Samples
             AddonResource addon = client.GetAddonResource(addonResourceId);
 
             // invoke the operation
-            AddonData data = new AddonData();
+            AddonData data = new AddonData
+            {
+                Properties = new AddonVrProperties(1),
+            };
             ArmOperation<AddonResource> lro = await addon.UpdateAsync(WaitUntil.Completed, data);
             AddonResource result = lro.Value;
 

@@ -41,7 +41,13 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string clusterName = "cluster1";
-            ClusterData data = new ClusterData(null);
+            ClusterData data = new ClusterData(new AvsSku("AV20"))
+            {
+                Properties = new ClusterProperties
+                {
+                    ClusterSize = 3,
+                },
+            };
             ArmOperation<ClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             ClusterResource result = lro.Value;
 

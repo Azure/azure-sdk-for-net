@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -98,7 +99,13 @@ namespace Azure.ResourceManager.Avs.Samples
             DatastoreResource datastore = client.GetDatastoreResource(datastoreResourceId);
 
             // invoke the operation
-            DatastoreData data = new DatastoreData();
+            DatastoreData data = new DatastoreData
+            {
+                Properties = new DatastoreProperties
+                {
+                    NetAppVolumeId = new ResourceIdentifier("/subscriptions/11111111-1111-1111-1111-111111111111/resourceGroups/ResourceGroup1/providers/Microsoft.NetApp/netAppAccounts/NetAppAccount1/capacityPools/CapacityPool1/volumes/NFSVol1"),
+                },
+            };
             ArmOperation<DatastoreResource> lro = await datastore.UpdateAsync(WaitUntil.Completed, data);
             DatastoreResource result = lro.Value;
 

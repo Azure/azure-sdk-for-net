@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -41,7 +42,14 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string placementPolicyName = "policy1";
-            PlacementPolicyData data = new PlacementPolicyData();
+            PlacementPolicyData data = new PlacementPolicyData
+            {
+                Properties = new VmHostPlacementPolicyProperties(new string[] { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-128", "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/clusters/cluster1/virtualMachines/vm-256" }, new string[] { "fakehost22.nyc1.kubernetes.center", "fakehost23.nyc1.kubernetes.center", "fakehost24.nyc1.kubernetes.center" }, AffinityType.AntiAffinity)
+                {
+                    AffinityStrength = AffinityStrength.Must,
+                    AzureHybridBenefitType = AzureHybridBenefitType.SqlHost,
+                },
+            };
             ArmOperation<PlacementPolicyResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, placementPolicyName, data);
             PlacementPolicyResource result = lro.Value;
 

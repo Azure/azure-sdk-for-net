@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Avs.Models;
+using Azure.ResourceManager.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -123,7 +124,10 @@ namespace Azure.ResourceManager.Avs.Samples
             PrivateCloudResource privateCloud = client.GetPrivateCloudResource(privateCloudResourceId);
 
             // invoke the operation
-            PrivateCloudPatch patch = new PrivateCloudPatch();
+            PrivateCloudPatch patch = new PrivateCloudPatch
+            {
+                Identity = new ManagedServiceIdentity("None"),
+            };
             ArmOperation<PrivateCloudResource> lro = await privateCloud.UpdateAsync(WaitUntil.Completed, patch);
             PrivateCloudResource result = lro.Value;
 

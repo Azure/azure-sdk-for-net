@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -40,7 +41,25 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string scriptExecutionName = "addSsoServer";
-            ScriptExecutionData data = new ScriptExecutionData();
+            ScriptExecutionData data = new ScriptExecutionData
+            {
+                Properties = new ScriptExecutionProperties("P0Y0M0DT0H60M60S")
+                {
+                    ScriptCmdletId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/group1/providers/Microsoft.AVS/privateClouds/cloud1/scriptPackages/AVS.PowerCommands@1.0.0/scriptCmdlets/New-SsoExternalIdentitySource",
+                    Parameters = {new ScriptStringExecutionParameter("DomainName")
+{
+Value = "placeholderDomain.local",
+}, new ScriptStringExecutionParameter("BaseUserDN")
+{
+Value = "DC=placeholder, DC=placeholder",
+}},
+                    HiddenParameters = {new ScriptSecureStringExecutionParameter("Password")
+{
+SecureValue = "PlaceholderPassword",
+}},
+                    Retention = "P0Y0M60DT0H60M60S",
+                },
+            };
             ArmOperation<ScriptExecutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, scriptExecutionName, data);
             ScriptExecutionResource result = lro.Value;
 

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -95,7 +96,15 @@ namespace Azure.ResourceManager.Avs.Samples
             WorkloadNetworkDhcpResource workloadNetworkDhcp = client.GetWorkloadNetworkDhcpResource(workloadNetworkDhcpResourceId);
 
             // invoke the operation
-            WorkloadNetworkDhcpData data = new WorkloadNetworkDhcpData();
+            WorkloadNetworkDhcpData data = new WorkloadNetworkDhcpData
+            {
+                Properties = new WorkloadNetworkDhcpServer
+                {
+                    ServerAddress = "40.1.5.1/24",
+                    LeaseTime = 86400L,
+                    Revision = 1L,
+                },
+            };
             ArmOperation<WorkloadNetworkDhcpResource> lro = await workloadNetworkDhcp.UpdateAsync(WaitUntil.Completed, data);
             WorkloadNetworkDhcpResource result = lro.Value;
 

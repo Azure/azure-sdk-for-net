@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -40,7 +41,18 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string dnsServiceId = "dnsService1";
-            WorkloadNetworkDnsServiceData data = new WorkloadNetworkDnsServiceData();
+            WorkloadNetworkDnsServiceData data = new WorkloadNetworkDnsServiceData
+            {
+                Properties = new WorkloadNetworkDnsServiceProperties
+                {
+                    DisplayName = "dnsService1",
+                    DnsServiceIP = "5.5.5.5",
+                    DefaultDnsZone = "defaultDnsZone1",
+                    FqdnZones = { "fqdnZone1" },
+                    LogLevel = DnsServiceLogLevelEnum.INFO,
+                    Revision = 1L,
+                },
+            };
             ArmOperation<WorkloadNetworkDnsServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, dnsServiceId, data);
             WorkloadNetworkDnsServiceResource result = lro.Value;
 

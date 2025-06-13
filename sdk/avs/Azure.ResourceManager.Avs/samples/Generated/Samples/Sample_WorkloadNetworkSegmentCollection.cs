@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -40,7 +41,20 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string segmentId = "segment1";
-            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData();
+            WorkloadNetworkSegmentData data = new WorkloadNetworkSegmentData
+            {
+                Properties = new WorkloadNetworkSegmentProperties
+                {
+                    DisplayName = "segment1",
+                    ConnectedGateway = "/infra/tier-1s/gateway",
+                    Subnet = new WorkloadNetworkSegmentSubnet
+                    {
+                        DhcpRanges = { "40.20.0.0-40.20.0.1" },
+                        GatewayAddress = "40.20.20.20/16",
+                    },
+                    Revision = 1L,
+                },
+            };
             ArmOperation<WorkloadNetworkSegmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, segmentId, data);
             WorkloadNetworkSegmentResource result = lro.Value;
 

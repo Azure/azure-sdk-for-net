@@ -71,7 +71,10 @@ namespace Azure.ResourceManager.Avs.Samples
             VirtualMachineResource virtualMachine = client.GetVirtualMachineResource(virtualMachineResourceId);
 
             // invoke the operation
-            VirtualMachineRestrictMovement restrictMovement = new VirtualMachineRestrictMovement();
+            VirtualMachineRestrictMovement restrictMovement = new VirtualMachineRestrictMovement
+            {
+                RestrictMovement = VirtualMachineRestrictMovementState.Enabled,
+            };
             await virtualMachine.RestrictMovementAsync(WaitUntil.Completed, restrictMovement);
 
             Console.WriteLine("Succeeded");

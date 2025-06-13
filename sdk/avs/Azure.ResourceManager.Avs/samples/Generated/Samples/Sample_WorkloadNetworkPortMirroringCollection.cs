@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Avs.Models;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Avs.Samples
@@ -40,7 +41,17 @@ namespace Azure.ResourceManager.Avs.Samples
 
             // invoke the operation
             string portMirroringId = "portMirroring1";
-            WorkloadNetworkPortMirroringData data = new WorkloadNetworkPortMirroringData();
+            WorkloadNetworkPortMirroringData data = new WorkloadNetworkPortMirroringData
+            {
+                Properties = new WorkloadNetworkPortMirroringProperties
+                {
+                    DisplayName = "portMirroring1",
+                    Direction = PortMirroringDirectionEnum.BIDIRECTIONAL,
+                    Source = "vmGroup1",
+                    Destination = "vmGroup2",
+                    Revision = 1L,
+                },
+            };
             ArmOperation<WorkloadNetworkPortMirroringResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, portMirroringId, data);
             WorkloadNetworkPortMirroringResource result = lro.Value;
 

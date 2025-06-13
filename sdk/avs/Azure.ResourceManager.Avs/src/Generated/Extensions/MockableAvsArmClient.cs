@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Avs.Mocking
 
         /// <summary>
         /// Gets an object representing a <see cref="WorkloadNetworkResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="WorkloadNetworkResource.CreateResourceIdentifier(string,string,string)" /> to create a <see cref="WorkloadNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// You can use <see cref="WorkloadNetworkResource.CreateResourceIdentifier" /> to create a <see cref="WorkloadNetworkResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="WorkloadNetworkResource"/> object. </returns>
