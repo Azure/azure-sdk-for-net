@@ -1,5 +1,13 @@
 # Release History
 
+## 1.1.0 (2025-06-13)
+
+### Features Added
+
+- Class `QualityMeasureInference` added
+- Class `ScoringAndAssessmentInference` added
+- Class `GuidanceInference` added  
+
 ## 1.0.0 (2024-08-16)
 - GA release
 

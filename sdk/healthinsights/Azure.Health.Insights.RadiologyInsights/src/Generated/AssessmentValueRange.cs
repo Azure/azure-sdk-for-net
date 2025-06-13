@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.Health.Insights.RadiologyInsights
 {
-    /// <summary> Options regarding follow up recommendation inferences and finding inferences. </summary>
-    public partial class RadiologyInsightsInferenceOptions
+    /// <summary> A range of values. </summary>
+    public partial class AssessmentValueRange
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,38 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        public RadiologyInsightsInferenceOptions()
+        /// <summary> Initializes a new instance of <see cref="AssessmentValueRange"/>. </summary>
+        /// <param name="minimum"> The minimum value. </param>
+        /// <param name="maximum"> The maximum value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="minimum"/> or <paramref name="maximum"/> is null. </exception>
+        internal AssessmentValueRange(string minimum, string maximum)
         {
+            Argument.AssertNotNull(minimum, nameof(minimum));
+            Argument.AssertNotNull(maximum, nameof(maximum));
+
+            Minimum = minimum;
+            Maximum = maximum;
         }
 
-        /// <summary> Initializes a new instance of <see cref="RadiologyInsightsInferenceOptions"/>. </summary>
-        /// <param name="followupRecommendationOptions"> Follow-up recommendation options. </param>
-        /// <param name="findingOptions"> Finding options. </param>
-        /// <param name="guidanceOptions"> Guidance options. </param>
-        /// <param name="qualityMeasureOptions"> QualityMeasureOptions. </param>
+        /// <summary> Initializes a new instance of <see cref="AssessmentValueRange"/>. </summary>
+        /// <param name="minimum"> The minimum value. </param>
+        /// <param name="maximum"> The maximum value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RadiologyInsightsInferenceOptions(FollowupRecommendationOptions followupRecommendationOptions, FindingOptions findingOptions, GuidanceOptions guidanceOptions, QualityMeasureOptions qualityMeasureOptions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssessmentValueRange(string minimum, string maximum, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FollowupRecommendationOptions = followupRecommendationOptions;
-            FindingOptions = findingOptions;
-            GuidanceOptions = guidanceOptions;
-            QualityMeasureOptions = qualityMeasureOptions;
+            Minimum = minimum;
+            Maximum = maximum;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Follow-up recommendation options. </summary>
-        public FollowupRecommendationOptions FollowupRecommendationOptions { get; set; }
-        /// <summary> Finding options. </summary>
-        public FindingOptions FindingOptions { get; set; }
-        /// <summary> Guidance options. </summary>
-        public GuidanceOptions GuidanceOptions { get; set; }
-        /// <summary> QualityMeasureOptions. </summary>
-        public QualityMeasureOptions QualityMeasureOptions { get; set; }
+        /// <summary> Initializes a new instance of <see cref="AssessmentValueRange"/> for deserialization. </summary>
+        internal AssessmentValueRange()
+        {
+        }
+
+        /// <summary> The minimum value. </summary>
+        public string Minimum { get; }
+        /// <summary> The maximum value. </summary>
+        public string Maximum { get; }
     }
 }
