@@ -1325,6 +1325,7 @@ namespace Azure.Storage.Sas
         Execute = 128,
         ManageOwnership = 256,
         ManageAccessControl = 512,
+        Tag = 1024,
     }
     public partial class DataLakeSasBuilder
     {
@@ -1383,6 +1384,7 @@ namespace Azure.Storage.Sas
         Execute = 128,
         ManageOwnership = 256,
         ManageAccessControl = 512,
+        Tag = 1024,
     }
     public sealed partial class DataLakeSasQueryParameters : Azure.Storage.Sas.SasQueryParameters
     {
