@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class ClusterZoneList : IUtf8JsonSerializable, IJsonModel<ClusterZoneList>
+    public partial class ClusterZoneList : IUtf8JsonSerializable, IJsonModel<ClusterZoneList>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterZoneList>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IReadOnlyList<AvsClusterZone> zones = default;
+            IReadOnlyList<ClusterZone> zones = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    List<AvsClusterZone> array = new List<AvsClusterZone>();
+                    List<ClusterZone> array = new List<ClusterZone>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvsClusterZone.DeserializeAvsClusterZone(item, options));
+                        array.Add(ClusterZone.DeserializeClusterZone(item, options));
                     }
                     zones = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ClusterZoneList(zones ?? new ChangeTrackingList<AvsClusterZone>(), serializedAdditionalRawData);
+            return new ClusterZoneList(zones ?? new ChangeTrackingList<ClusterZone>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ClusterZoneList>.Write(ModelReaderWriterOptions options)

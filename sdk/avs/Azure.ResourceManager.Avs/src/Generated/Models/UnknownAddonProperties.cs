@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> Unknown version of AddonProperties. </summary>
-    internal partial class UnknownAddonProperties : AvsPrivateCloudAddonProperties
+    internal partial class UnknownAddonProperties : AddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAddonProperties"/>. </summary>
         /// <param name="addonType"> Addon type. </param>

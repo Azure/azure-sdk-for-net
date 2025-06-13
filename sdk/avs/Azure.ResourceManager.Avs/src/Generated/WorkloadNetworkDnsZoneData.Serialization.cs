@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Net;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Avs.Models;
@@ -38,59 +37,11 @@ namespace Azure.ResourceManager.Avs
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(DisplayName))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("displayName"u8);
-                writer.WriteStringValue(DisplayName);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsCollectionDefined(Domain))
-            {
-                writer.WritePropertyName("domain"u8);
-                writer.WriteStartArray();
-                foreach (var item in Domain)
-                {
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(DnsServerIPs))
-            {
-                writer.WritePropertyName("dnsServerIps"u8);
-                writer.WriteStartArray();
-                foreach (var item in DnsServerIPs)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item.ToString());
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(SourceIP))
-            {
-                writer.WritePropertyName("sourceIp"u8);
-                writer.WriteStringValue(SourceIP.ToString());
-            }
-            if (Optional.IsDefined(DnsServices))
-            {
-                writer.WritePropertyName("dnsServices"u8);
-                writer.WriteNumberValue(DnsServices.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsDefined(Revision))
-            {
-                writer.WritePropertyName("revision"u8);
-                writer.WriteNumberValue(Revision.Value);
-            }
-            writer.WriteEndObject();
         }
 
         WorkloadNetworkDnsZoneData IJsonModel<WorkloadNetworkDnsZoneData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -113,21 +64,24 @@ namespace Azure.ResourceManager.Avs
             {
                 return null;
             }
+            WorkloadNetworkDnsZoneProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string displayName = default;
-            IList<string> domain = default;
-            IList<IPAddress> dnsServerIPs = default;
-            IPAddress sourceIP = default;
-            long? dnsServices = default;
-            WorkloadNetworkDnsZoneProvisioningState? provisioningState = default;
-            long? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = WorkloadNetworkDnsZoneProperties.DeserializeWorkloadNetworkDnsZoneProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -152,94 +106,6 @@ namespace Azure.ResourceManager.Avs
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("displayName"u8))
-                        {
-                            displayName = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("domain"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<string> array = new List<string>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(item.GetString());
-                            }
-                            domain = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsServerIps"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<IPAddress> array = new List<IPAddress>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                if (item.ValueKind == JsonValueKind.Null)
-                                {
-                                    array.Add(null);
-                                }
-                                else
-                                {
-                                    array.Add(IPAddress.Parse(item.GetString()));
-                                }
-                            }
-                            dnsServerIPs = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("sourceIp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            sourceIP = IPAddress.Parse(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("dnsServices"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dnsServices = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new WorkloadNetworkDnsZoneProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("revision"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            revision = property0.Value.GetInt64();
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -251,13 +117,7 @@ namespace Azure.ResourceManager.Avs
                 name,
                 type,
                 systemData,
-                displayName,
-                domain ?? new ChangeTrackingList<string>(),
-                dnsServerIPs ?? new ChangeTrackingList<IPAddress>(),
-                sourceIP,
-                dnsServices,
-                provisioningState,
-                revision,
+                properties,
                 serializedAdditionalRawData);
         }
 

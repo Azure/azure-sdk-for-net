@@ -61,27 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The state of the ExpressRoute Circuit Authorization provisioning. </param>
-        /// <param name="expressRouteAuthorizationId"> The ID of the ExpressRoute Circuit Authorization. </param>
-        /// <param name="expressRouteAuthorizationKey"> The key of the ExpressRoute Circuit Authorization. </param>
-        /// <param name="expressRouteId"> The ID of the ExpressRoute Circuit. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProvisioningState? provisioningState, ResourceIdentifier expressRouteAuthorizationId, string expressRouteAuthorizationKey, ResourceIdentifier expressRouteId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExpressRouteAuthorizationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ExpressRouteAuthorizationProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            ExpressRouteAuthorizationId = expressRouteAuthorizationId;
-            ExpressRouteAuthorizationKey = expressRouteAuthorizationKey;
-            ExpressRouteId = expressRouteId;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The state of the ExpressRoute Circuit Authorization provisioning. </summary>
-        public ExpressRouteAuthorizationProvisioningState? ProvisioningState { get; }
-        /// <summary> The ID of the ExpressRoute Circuit Authorization. </summary>
-        public ResourceIdentifier ExpressRouteAuthorizationId { get; }
-        /// <summary> The key of the ExpressRoute Circuit Authorization. </summary>
-        public string ExpressRouteAuthorizationKey { get; }
-        /// <summary> The ID of the ExpressRoute Circuit. </summary>
-        public ResourceIdentifier ExpressRouteId { get; set; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public ExpressRouteAuthorizationProperties Properties { get; set; }
     }
 }

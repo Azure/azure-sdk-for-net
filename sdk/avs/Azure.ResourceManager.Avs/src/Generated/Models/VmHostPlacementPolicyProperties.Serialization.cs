@@ -39,11 +39,6 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WriteStartArray();
             foreach (var item in VmMembers)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
@@ -88,10 +83,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            IList<ResourceIdentifier> vmMembers = default;
+            IList<string> vmMembers = default;
             IList<string> hostMembers = default;
-            AvsPlacementPolicyAffinityType affinityType = default;
-            VmHostPlacementPolicyAffinityStrength? affinityStrength = default;
+            AffinityType affinityType = default;
+            AffinityStrength? affinityStrength = default;
             AzureHybridBenefitType? azureHybridBenefitType = default;
             PlacementPolicyType type = default;
             PlacementPolicyState? state = default;
@@ -103,17 +98,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 if (property.NameEquals("vmMembers"u8))
                 {
-                    List<ResourceIdentifier> array = new List<ResourceIdentifier>();
+                    List<string> array = new List<string>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(new ResourceIdentifier(item.GetString()));
-                        }
+                        array.Add(item.GetString());
                     }
                     vmMembers = array;
                     continue;
@@ -130,7 +118,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
                 if (property.NameEquals("affinityType"u8))
                 {
-                    affinityType = new AvsPlacementPolicyAffinityType(property.Value.GetString());
+                    affinityType = new AffinityType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("affinityStrength"u8))
@@ -139,7 +127,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    affinityStrength = new VmHostPlacementPolicyAffinityStrength(property.Value.GetString());
+                    affinityStrength = new AffinityStrength(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("azureHybridBenefitType"u8))

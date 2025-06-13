@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Avs
     /// A Class representing a HcxEnterpriseSite along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="HcxEnterpriseSiteResource"/>
     /// from an instance of <see cref="ArmClient"/> using the GetHcxEnterpriseSiteResource method.
-    /// Otherwise you can get one from its parent resource <see cref="AvsPrivateCloudResource"/> using the GetHcxEnterpriseSite method.
+    /// Otherwise you can get one from its parent resource <see cref="PrivateCloudResource"/> using the GetHcxEnterpriseSite method.
     /// </summary>
     public partial class HcxEnterpriseSiteResource : ArmResource
     {
@@ -97,11 +97,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_Get</description>
+        /// <description>HcxEnterpriseSite_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -137,11 +137,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_Get</description>
+        /// <description>HcxEnterpriseSite_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -177,11 +177,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_Delete</description>
+        /// <description>HcxEnterpriseSite_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -221,11 +221,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_Delete</description>
+        /// <description>HcxEnterpriseSite_Delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// <description>HcxEnterpriseSite_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -313,11 +313,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// <description>HcxEnterpriseSite_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

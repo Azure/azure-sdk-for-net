@@ -61,27 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="displayName"> Display name of the Public IP Block. </param>
-        /// <param name="numberOfPublicIPs"> Number of Public IPs requested. </param>
-        /// <param name="publicIPBlock"> CIDR Block of the Public IP Block. </param>
-        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkPublicIPData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, long? numberOfPublicIPs, string publicIPBlock, WorkloadNetworkPublicIPProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkPublicIPData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkPublicIPProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            DisplayName = displayName;
-            NumberOfPublicIPs = numberOfPublicIPs;
-            PublicIPBlock = publicIPBlock;
-            ProvisioningState = provisioningState;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Display name of the Public IP Block. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> Number of Public IPs requested. </summary>
-        public long? NumberOfPublicIPs { get; set; }
-        /// <summary> CIDR Block of the Public IP Block. </summary>
-        public string PublicIPBlock { get; }
-        /// <summary> The provisioning state. </summary>
-        public WorkloadNetworkPublicIPProvisioningState? ProvisioningState { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public WorkloadNetworkPublicIPProperties Properties { get; set; }
     }
 }
