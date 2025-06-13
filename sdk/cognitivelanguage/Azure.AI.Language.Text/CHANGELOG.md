@@ -4,6 +4,10 @@
 
 ### Features Added
 
+- Added Value Exclusion, synonyms, and new entity types to the detection of Personally Identifiable Information (PII).
+- Added support for analyze-text API Versions
+  - 2025-05-15-preview
+
 ### Breaking Changes
 
 ### Bugs Fixed
