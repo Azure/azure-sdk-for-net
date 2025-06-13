@@ -370,9 +370,10 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
-                var properties = new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId);
+                var properties = new RoleAssignmentProperties(roleDefinitionId, principalId);
 
-                return CreateRoleAssignment(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
+                var response = _restClient.CreateRoleAssignment(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken);
+                return Response.FromValue((KeyVaultRoleAssignment)(object)response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -404,10 +405,11 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var _name = (roleAssignmentName ?? Guid.NewGuid()).ToString();
-                var properties = new KeyVaultRoleAssignmentPropertiesInternal(roleDefinitionId, principalId);
+                var properties = new RoleAssignmentProperties(roleDefinitionId, principalId);
 
-                return await CreateRoleAssignmentAsync(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
+                var response = await _restClient.CreateRoleAssignmentAsync(roleScope.ToString(), _name, new RoleAssignmentCreateParameters(properties), cancellationToken)
                 .ConfigureAwait(false);
+                return Response.FromValue((KeyVaultRoleAssignment)(object)response.Value, response.GetRawResponse());
             }
             catch (Exception ex)
             {
