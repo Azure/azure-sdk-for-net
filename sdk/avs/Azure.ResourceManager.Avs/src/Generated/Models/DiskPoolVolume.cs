@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="targetId"> Azure resource ID of the iSCSI target. </param>
         /// <param name="lunName"> Name of the LUN to be used for datastore. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> or <paramref name="lunName"/> is null. </exception>
-        public DiskPoolVolume(ResourceIdentifier targetId, string lunName)
+        public DiskPoolVolume(string targetId, string lunName)
         {
             Argument.AssertNotNull(targetId, nameof(targetId));
             Argument.AssertNotNull(lunName, nameof(lunName));
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// </param>
         /// <param name="path"> Device path. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskPoolVolume(ResourceIdentifier targetId, string lunName, LunMountMode? mountOption, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskPoolVolume(string targetId, string lunName, MountOptionEnum? mountOption, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetId = targetId;
             LunName = lunName;
@@ -83,14 +82,14 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Azure resource ID of the iSCSI target. </summary>
-        public ResourceIdentifier TargetId { get; set; }
+        public string TargetId { get; set; }
         /// <summary> Name of the LUN to be used for datastore. </summary>
         public string LunName { get; set; }
         /// <summary>
         /// Mode that describes whether the LUN has to be mounted as a datastore or
         /// attached as a LUN
         /// </summary>
-        public LunMountMode? MountOption { get; set; }
+        public MountOptionEnum? MountOption { get; set; }
         /// <summary> Device path. </summary>
         public string Path { get; }
     }

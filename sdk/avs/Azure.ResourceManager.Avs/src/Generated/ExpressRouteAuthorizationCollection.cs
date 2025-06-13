@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Avs
 {
     /// <summary>
     /// A class representing a collection of <see cref="ExpressRouteAuthorizationResource"/> and their operations.
-    /// Each <see cref="ExpressRouteAuthorizationResource"/> in the collection will belong to the same instance of <see cref="AvsPrivateCloudResource"/>.
-    /// To get an <see cref="ExpressRouteAuthorizationCollection"/> instance call the GetExpressRouteAuthorizations method from an instance of <see cref="AvsPrivateCloudResource"/>.
+    /// Each <see cref="ExpressRouteAuthorizationResource"/> in the collection will belong to the same instance of <see cref="PrivateCloudResource"/>.
+    /// To get an <see cref="ExpressRouteAuthorizationCollection"/> instance call the GetExpressRouteAuthorizations method from an instance of <see cref="PrivateCloudResource"/>.
     /// </summary>
     public partial class ExpressRouteAuthorizationCollection : ArmCollection, IEnumerable<ExpressRouteAuthorizationResource>, IAsyncEnumerable<ExpressRouteAuthorizationResource>
     {
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.Avs
 
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != AvsPrivateCloudResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, AvsPrivateCloudResource.ResourceType), nameof(id));
+            if (id.ResourceType != PrivateCloudResource.ResourceType)
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, PrivateCloudResource.ResourceType), nameof(id));
         }
 
         /// <summary>
@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_CreateOrUpdate</description>
+        /// <description>ExpressRouteAuthorization_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -109,11 +109,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_CreateOrUpdate</description>
+        /// <description>ExpressRouteAuthorization_CreateOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -203,11 +203,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -248,11 +248,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_List</description>
+        /// <description>ExpressRouteAuthorization_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -278,11 +278,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_List</description>
+        /// <description>ExpressRouteAuthorization_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -351,11 +351,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -394,11 +394,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -439,11 +439,11 @@ namespace Azure.ResourceManager.Avs
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Authorizations_Get</description>
+        /// <description>ExpressRouteAuthorization_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

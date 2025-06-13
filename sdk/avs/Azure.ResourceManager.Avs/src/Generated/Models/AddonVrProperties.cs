@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of a vSphere Replication (VR) addon. </summary>
-    public partial class AddonVrProperties : AvsPrivateCloudAddonProperties
+    public partial class AddonVrProperties : AddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="AddonVrProperties"/>. </summary>
         /// <param name="vrsCount"> The vSphere Replication Server (VRS) count. </param>

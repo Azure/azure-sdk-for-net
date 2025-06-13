@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.Avs.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of AvsPrivateCloudResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of AvsPrivateCloudResources and their operations over a AvsPrivateCloudResource. </returns>
-        public virtual AvsPrivateCloudCollection GetAvsPrivateClouds()
+        /// <summary> Gets a collection of PrivateCloudResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of PrivateCloudResources and their operations over a PrivateCloudResource. </returns>
+        public virtual PrivateCloudCollection GetPrivateClouds()
         {
-            return GetCachedClient(client => new AvsPrivateCloudCollection(client, Id));
+            return GetCachedClient(client => new PrivateCloudCollection(client, Id));
         }
 
         /// <summary>
@@ -49,15 +49,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// <description><see cref="PrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AvsPrivateCloudResource>> GetAvsPrivateCloudAsync(string privateCloudName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateCloudResource>> GetPrivateCloudAsync(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return await GetAvsPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
+            return await GetPrivateClouds().GetAsync(privateCloudName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateClouds_Get</description>
+        /// <description>PrivateCloud_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-09-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AvsPrivateCloudResource"/></description>
+        /// <description><see cref="PrivateCloudResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Avs.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateCloudName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateCloudName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AvsPrivateCloudResource> GetAvsPrivateCloud(string privateCloudName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateCloudResource> GetPrivateCloud(string privateCloudName, CancellationToken cancellationToken = default)
         {
-            return GetAvsPrivateClouds().Get(privateCloudName, cancellationToken);
+            return GetPrivateClouds().Get(privateCloudName, cancellationToken);
         }
     }
 }

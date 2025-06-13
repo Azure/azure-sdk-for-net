@@ -53,15 +53,15 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="AdminCredentials"/>. </summary>
         /// <param name="nsxtUsername"> NSX-T Manager username. </param>
         /// <param name="nsxtPassword"> NSX-T Manager password. </param>
-        /// <param name="vCenterUsername"> vCenter admin username. </param>
-        /// <param name="vCenterPassword"> vCenter admin password. </param>
+        /// <param name="vcenterUsername"> vCenter admin username. </param>
+        /// <param name="vcenterPassword"> vCenter admin password. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vCenterUsername, string vCenterPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdminCredentials(string nsxtUsername, string nsxtPassword, string vcenterUsername, string vcenterPassword, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             NsxtUsername = nsxtUsername;
             NsxtPassword = nsxtPassword;
-            VCenterUsername = vCenterUsername;
-            VCenterPassword = vCenterPassword;
+            VcenterUsername = vcenterUsername;
+            VcenterPassword = vcenterPassword;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -70,8 +70,8 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> NSX-T Manager password. </summary>
         public string NsxtPassword { get; }
         /// <summary> vCenter admin username. </summary>
-        public string VCenterUsername { get; }
+        public string VcenterUsername { get; }
         /// <summary> vCenter admin password. </summary>
-        public string VCenterPassword { get; }
+        public string VcenterPassword { get; }
     }
 }

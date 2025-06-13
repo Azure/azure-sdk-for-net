@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkPortMirroringList"/>. </summary>
         /// <param name="value"> The WorkloadNetworkPortMirroring items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal WorkloadNetworkPortMirroringList(IEnumerable<WorkloadNetworkPortMirroringProfileData> value)
+        internal WorkloadNetworkPortMirroringList(IEnumerable<WorkloadNetworkPortMirroringData> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="value"> The WorkloadNetworkPortMirroring items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringProfileData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal WorkloadNetworkPortMirroringList(IReadOnlyList<WorkloadNetworkPortMirroringData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> The WorkloadNetworkPortMirroring items on this page. </summary>
-        public IReadOnlyList<WorkloadNetworkPortMirroringProfileData> Value { get; }
+        public IReadOnlyList<WorkloadNetworkPortMirroringData> Value { get; }
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }
     }

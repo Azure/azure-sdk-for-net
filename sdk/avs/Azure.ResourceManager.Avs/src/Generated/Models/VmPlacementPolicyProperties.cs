@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -19,28 +18,28 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmMembers"/> is null. </exception>
-        public VmPlacementPolicyProperties(IEnumerable<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType)
+        public VmPlacementPolicyProperties(IEnumerable<string> vmMembers, AffinityType affinityType)
         {
             Argument.AssertNotNull(vmMembers, nameof(vmMembers));
 
             VmMembers = vmMembers.ToList();
             AffinityType = affinityType;
-            PolicyType = PlacementPolicyType.VmVm;
+            Type = PlacementPolicyType.VmVm;
         }
 
         /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/>. </summary>
-        /// <param name="policyType"> Placement Policy type. </param>
+        /// <param name="type"> Placement Policy type. </param>
         /// <param name="state"> Whether the placement policy is enabled or disabled. </param>
         /// <param name="displayName"> Display name of the placement policy. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmMembers"> Virtual machine members list. </param>
         /// <param name="affinityType"> placement policy affinity type. </param>
-        internal VmPlacementPolicyProperties(PlacementPolicyType policyType, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ResourceIdentifier> vmMembers, AvsPlacementPolicyAffinityType affinityType) : base(policyType, state, displayName, provisioningState, serializedAdditionalRawData)
+        internal VmPlacementPolicyProperties(PlacementPolicyType type, PlacementPolicyState? state, string displayName, PlacementPolicyProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> vmMembers, AffinityType affinityType) : base(type, state, displayName, provisioningState, serializedAdditionalRawData)
         {
             VmMembers = vmMembers;
             AffinityType = affinityType;
-            PolicyType = policyType;
+            Type = type;
         }
 
         /// <summary> Initializes a new instance of <see cref="VmPlacementPolicyProperties"/> for deserialization. </summary>
@@ -49,8 +48,8 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Virtual machine members list. </summary>
-        public IList<ResourceIdentifier> VmMembers { get; }
+        public IList<string> VmMembers { get; }
         /// <summary> placement policy affinity type. </summary>
-        public AvsPlacementPolicyAffinityType AffinityType { get; set; }
+        public AffinityType AffinityType { get; set; }
     }
 }

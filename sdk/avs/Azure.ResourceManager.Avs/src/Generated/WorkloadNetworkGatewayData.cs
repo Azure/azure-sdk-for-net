@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Avs
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="WorkloadNetworkGatewayData"/>. </summary>
-        public WorkloadNetworkGatewayData()
+        internal WorkloadNetworkGatewayData()
         {
         }
 
@@ -61,23 +61,15 @@ namespace Azure.ResourceManager.Avs
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> The provisioning state of the resource. </param>
-        /// <param name="displayName"> Display name of the DHCP entity. </param>
-        /// <param name="path"> NSX Gateway Path. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkProvisioningState? provisioningState, string displayName, string path, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal WorkloadNetworkGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkloadNetworkGatewayProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
-            ProvisioningState = provisioningState;
-            DisplayName = displayName;
-            Path = path;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The provisioning state of the resource. </summary>
-        public WorkloadNetworkProvisioningState? ProvisioningState { get; }
-        /// <summary> Display name of the DHCP entity. </summary>
-        public string DisplayName { get; set; }
-        /// <summary> NSX Gateway Path. </summary>
-        public string Path { get; }
+        /// <summary> The resource-specific properties for this resource. </summary>
+        public WorkloadNetworkGatewayProperties Properties { get; }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary> The properties of a Site Recovery Manager (SRM) addon. </summary>
-    public partial class AddonSrmProperties : AvsPrivateCloudAddonProperties
+    public partial class AddonSrmProperties : AddonProperties
     {
         /// <summary> Initializes a new instance of <see cref="AddonSrmProperties"/>. </summary>
         public AddonSrmProperties()
