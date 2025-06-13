@@ -10,6 +10,7 @@
             SA1636;<!-- Some code was copied, we can't change the license header -->
             CS0618; <!-- Obsolete APIs -->
             CS1591; <!-- XML docs -->
+            SA1402; <!-- Webjobs sources package has files with multiple types -->
         </NoWarn>
         <InheritDocTrimLevel>internal</InheritDocTrimLevel>
     </PropertyGroup>
