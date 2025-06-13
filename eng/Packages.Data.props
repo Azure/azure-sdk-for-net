@@ -242,10 +242,10 @@
     <PackageReference Update="Microsoft.Azure.SignalR.Management" Version="1.29.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Protocols" Version="1.29.0" />
     <PackageReference Update="Microsoft.Azure.SignalR.Serverless.Protocols" Version="1.10.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.37" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.37" PrivateAssets="All"/>
-    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.37" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.0" />
+    <PackageReference Update="Microsoft.Azure.WebJobs" Version="3.0.41" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Sources" Version="3.0.41" PrivateAssets="All"/>
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Rpc" Version="3.0.41" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Host.Storage" Version="5.0.1" />
     <PackageReference Update="Microsoft.Spatial" Version="7.5.3" />
     <PackageReference Update="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
@@ -386,7 +386,8 @@
     <PackageReference Update="Microsoft.Azure.Storage.Queue" Version="11.1.7" />
     <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.3, 2.0.0)" />
     <PackageReference Update="Microsoft.Azure.WebJobs.Extensions" Version="5.0.0" />
-    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.2" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.2.0" />
+    <PackageReference Update="Microsoft.Azure.WebJobs.Logging.ApplicationInsights" Version="3.0.41" />
     <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Update="Microsoft.Data.SqlClient" Version="5.2.2" />

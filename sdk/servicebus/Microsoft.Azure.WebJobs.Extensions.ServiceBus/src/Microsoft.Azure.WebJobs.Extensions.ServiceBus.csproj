@@ -32,7 +32,7 @@
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared" />
-		<Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
+    <Compile Include="$(AzureCoreSharedSources)ValueStopwatch.cs" LinkBase="SharedSource" />
     <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="SharedSource\Azure.Core" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Administration\AdministrationClientConstants.cs" LinkBase="Shared" />
     <Compile Include="..\..\Azure.Messaging.ServiceBus\src\Constants.cs" LinkBase="Shared" />
