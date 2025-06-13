@@ -364,7 +364,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var restoreResult = await _restClient.RestoreStatusAsync(jobId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal(restoreResult.Value), restoreResult.GetRawResponse());
+                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal((RestoreDetailsInternal)(object)restoreResult.Value), restoreResult.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -387,7 +387,7 @@ namespace Azure.Security.KeyVault.Administration
             try
             {
                 var restoreResult = _restClient.RestoreStatus(jobId, cancellationToken);
-                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal(restoreResult.Value), restoreResult.GetRawResponse());
+                return Response.FromValue(new SelectiveKeyRestoreDetailsInternal((RestoreDetailsInternal)(object)restoreResult.Value), restoreResult.GetRawResponse());
             }
             catch (Exception ex)
             {
