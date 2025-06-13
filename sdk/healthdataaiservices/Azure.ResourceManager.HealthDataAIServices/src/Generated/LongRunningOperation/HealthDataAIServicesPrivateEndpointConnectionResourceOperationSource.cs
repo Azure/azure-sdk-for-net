@@ -6,31 +6,46 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager;
+using Microsoft.HealthDataAIServices.Models;
 
-namespace Azure.ResourceManager.HealthDataAIServices
+namespace Microsoft.HealthDataAIServices
 {
-    internal class HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource : IOperationSource<HealthDataAIServicesPrivateEndpointConnectionResource>
+    /// <summary></summary>
+    internal partial class HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource : IOperationSource<HealthDataAIServicesPrivateEndpointConnectionResourceResource>
     {
         private readonly ArmClient _client;
 
+        /// <summary></summary>
+        /// <param name="client"></param>
         internal HealthDataAIServicesPrivateEndpointConnectionResourceOperationSource(ArmClient client)
         {
             _client = client;
         }
 
-        HealthDataAIServicesPrivateEndpointConnectionResource IOperationSource<HealthDataAIServicesPrivateEndpointConnectionResource>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        HealthDataAIServicesPrivateEndpointConnectionResourceResource IOperationSource<HealthDataAIServicesPrivateEndpointConnectionResourceResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthDataAIServicesPrivateEndpointConnectionResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthDataAIServicesContext.Default);
-            return new HealthDataAIServicesPrivateEndpointConnectionResource(_client, data);
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            HealthDataAIServicesPrivateEndpointConnectionResourceData data = HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement, new ModelReaderWriterOptions("W"));
+            return new HealthDataAIServicesPrivateEndpointConnectionResourceResource(_client, data);
         }
 
-        async ValueTask<HealthDataAIServicesPrivateEndpointConnectionResource> IOperationSource<HealthDataAIServicesPrivateEndpointConnectionResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        async ValueTask<HealthDataAIServicesPrivateEndpointConnectionResourceResource> IOperationSource<HealthDataAIServicesPrivateEndpointConnectionResourceResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            var data = ModelReaderWriter.Read<HealthDataAIServicesPrivateEndpointConnectionResourceData>(response.Content, ModelReaderWriterOptions.Json, AzureResourceManagerHealthDataAIServicesContext.Default);
-            return await Task.FromResult(new HealthDataAIServicesPrivateEndpointConnectionResource(_client, data)).ConfigureAwait(false);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            HealthDataAIServicesPrivateEndpointConnectionResourceData data = HealthDataAIServicesPrivateEndpointConnectionResourceData.DeserializeHealthDataAIServicesPrivateEndpointConnectionResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return new HealthDataAIServicesPrivateEndpointConnectionResourceResource(_client, data);
         }
     }
 }
