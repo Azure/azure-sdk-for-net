@@ -312,7 +312,7 @@ namespace Azure.Generator.Providers
                 }
                 else
                 {
-                    return InvokeInitialCreateRequest();
+                    return InvokeCreateRequestForSingle();
                 }
             }
 
@@ -358,7 +358,7 @@ namespace Azure.Generator.Providers
             return _clientField.Invoke(_createRequestMethodName, arguments).As<HttpMessage>();
         }
 
-        private ScopedApi<HttpMessage> InvokeInitialCreateRequest()
+        private ScopedApi<HttpMessage> InvokeCreateRequestForSingle()
         {
             ValueExpression[] arguments = [.. _requestFields.Select(f => f.AsValueExpression)];
 
