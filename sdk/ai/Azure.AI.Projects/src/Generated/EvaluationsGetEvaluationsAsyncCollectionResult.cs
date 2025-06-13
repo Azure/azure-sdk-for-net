@@ -10,17 +10,17 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class EvaluationsGetCollectionResultOfT : CollectionResult<Evaluation>
+    internal partial class EvaluationsGetEvaluationsAsyncCollectionResult : AsyncCollectionResult
     {
         private readonly Evaluations _client;
         private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of EvaluationsGetCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EvaluationsGetEvaluationsAsyncCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Evaluations client used to send requests. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvaluationsGetCollectionResultOfT(Evaluations client, string clientRequestId, RequestOptions options)
+        public EvaluationsGetEvaluationsAsyncCollectionResult(Evaluations client, string clientRequestId, RequestOptions options)
         {
             _client = client;
             _clientRequestId = clientRequestId;
@@ -29,13 +29,13 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the raw pages of the collection. </summary>
         /// <returns> The raw pages of the collection. </returns>
-        public override IEnumerable<ClientResult> GetRawPages()
+        public override async IAsyncEnumerable<ClientResult> GetRawPagesAsync()
         {
-            PipelineMessage message = _client.CreateListRequest(_clientRequestId, _options);
+            PipelineMessage message = _client.CreateListEvaluationsRequest(_clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
-                ClientResult result = ClientResult.FromResponse(_client.Pipeline.ProcessMessage(message, _options));
+                ClientResult result = ClientResult.FromResponse(await _client.Pipeline.ProcessMessageAsync(message, _options).ConfigureAwait(false));
                 yield return result;
 
                 nextPageUri = ((PagedEvaluation)result).NextLink;
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextListRequest(nextPageUri, _clientRequestId, _options);
+                message = _client.CreateNextListEvaluationsRequest(nextPageUri, _clientRequestId, _options);
             }
         }
 
@@ -61,14 +61,6 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-        }
-
-        /// <summary> Gets the values from the specified page. </summary>
-        /// <param name="page"></param>
-        /// <returns> The values from the specified page. </returns>
-        protected override IEnumerable<Evaluation> GetValuesFromPage(ClientResult page)
-        {
-            return ((PagedEvaluation)page).Value;
         }
     }
 }

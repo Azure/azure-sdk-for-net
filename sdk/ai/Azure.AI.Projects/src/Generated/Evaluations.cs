@@ -50,11 +50,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual ClientResult Get(string name, string clientRequestId, RequestOptions options)
+        public virtual ClientResult GetEvaluation(string name, string clientRequestId, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetEvaluationRequest(name, clientRequestId, options);
             return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
         }
 
@@ -73,11 +73,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<ClientResult> GetAsync(string name, string clientRequestId, RequestOptions options)
+        public virtual async Task<ClientResult> GetEvaluationAsync(string name, string clientRequestId, RequestOptions options)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using PipelineMessage message = CreateGetRequest(name, clientRequestId, options);
+            using PipelineMessage message = CreateGetEvaluationRequest(name, clientRequestId, options);
             return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
         }
 
@@ -88,11 +88,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual ClientResult<Evaluation> Get(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual ClientResult<Evaluation> GetEvaluation(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = Get(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            ClientResult result = GetEvaluation(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
             return ClientResult.FromValue((Evaluation)result, result.GetRawResponse());
         }
 
@@ -103,11 +103,11 @@ namespace Azure.AI.Projects
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual async Task<ClientResult<Evaluation>> GetAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ClientResult<Evaluation>> GetEvaluationAsync(string name, string clientRequestId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            ClientResult result = await GetAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
+            ClientResult result = await GetEvaluationAsync(name, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
             return ClientResult.FromValue((Evaluation)result, result.GetRawResponse());
         }
 
@@ -123,9 +123,9 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual CollectionResult Get(string clientRequestId, RequestOptions options)
+        public virtual CollectionResult GetEvaluations(string clientRequestId, RequestOptions options)
         {
-            return new EvaluationsGetCollectionResult(this, clientRequestId, options);
+            return new EvaluationsGetEvaluationsCollectionResult(this, clientRequestId, options);
         }
 
         /// <summary>
@@ -140,27 +140,27 @@ namespace Azure.AI.Projects
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncCollectionResult GetAsync(string clientRequestId, RequestOptions options)
+        public virtual AsyncCollectionResult GetEvaluationsAsync(string clientRequestId, RequestOptions options)
         {
-            return new EvaluationsGetAsyncCollectionResult(this, clientRequestId, options);
+            return new EvaluationsGetEvaluationsAsyncCollectionResult(this, clientRequestId, options);
         }
 
         /// <summary> List evaluation runs. </summary>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual CollectionResult<Evaluation> Get(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual CollectionResult<Evaluation> GetEvaluations(string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationsGetCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluationsGetEvaluationsCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> List evaluation runs. </summary>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        public virtual AsyncCollectionResult<Evaluation> GetAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
+        public virtual AsyncCollectionResult<Evaluation> GetEvaluationsAsync(string clientRequestId = default, CancellationToken cancellationToken = default)
         {
-            return new EvaluationsGetAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
+            return new EvaluationsGetEvaluationsAsyncCollectionResultOfT(this, clientRequestId, cancellationToken.CanBeCanceled ? new RequestOptions { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary>

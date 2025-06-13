@@ -18,7 +18,7 @@ namespace Azure.AI.Projects
 
         private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
 
-        internal PipelineMessage CreateGetRequest(string name, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateGetEvaluationRequest(string name, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -39,7 +39,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateListRequest(string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateListEvaluationsRequest(string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
             return message;
         }
 
-        internal PipelineMessage CreateNextListRequest(Uri nextPage, string clientRequestId, RequestOptions options)
+        internal PipelineMessage CreateNextListEvaluationsRequest(Uri nextPage, string clientRequestId, RequestOptions options)
         {
             PipelineMessage message = Pipeline.CreateMessage();
             message.ResponseClassifier = PipelineMessageClassifier200;

@@ -10,17 +10,17 @@ using Azure.Core.Foundations;
 
 namespace Azure.AI.Projects
 {
-    internal partial class EvaluationsGetCollectionResult : CollectionResult
+    internal partial class EvaluationsGetEvaluationsCollectionResult : CollectionResult
     {
         private readonly Evaluations _client;
         private readonly string _clientRequestId;
         private readonly RequestOptions _options;
 
-        /// <summary> Initializes a new instance of EvaluationsGetCollectionResult, which is used to iterate over the pages of a collection. </summary>
+        /// <summary> Initializes a new instance of EvaluationsGetEvaluationsCollectionResult, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Evaluations client used to send requests. </param>
         /// <param name="clientRequestId"> An opaque, globally-unique, client-generated string identifier for the request. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        public EvaluationsGetCollectionResult(Evaluations client, string clientRequestId, RequestOptions options)
+        public EvaluationsGetEvaluationsCollectionResult(Evaluations client, string clientRequestId, RequestOptions options)
         {
             _client = client;
             _clientRequestId = clientRequestId;
@@ -31,7 +31,7 @@ namespace Azure.AI.Projects
         /// <returns> The raw pages of the collection. </returns>
         public override IEnumerable<ClientResult> GetRawPages()
         {
-            PipelineMessage message = _client.CreateListRequest(_clientRequestId, _options);
+            PipelineMessage message = _client.CreateListEvaluationsRequest(_clientRequestId, _options);
             Uri nextPageUri = null;
             while (true)
             {
@@ -43,7 +43,7 @@ namespace Azure.AI.Projects
                 {
                     yield break;
                 }
-                message = _client.CreateNextListRequest(nextPageUri, _clientRequestId, _options);
+                message = _client.CreateNextListEvaluationsRequest(nextPageUri, _clientRequestId, _options);
             }
         }
 
