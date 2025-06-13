@@ -15,9 +15,11 @@ namespace Azure.AI.Projects
         private readonly Uri _endpoint;
         private ServicePatterns _cachedServicePatterns;
         private Connections _cachedConnections;
+        private Evaluations _cachedEvaluations;
         private Datasets _cachedDatasets;
         private Indexes _cachedIndexes;
         private Deployments _cachedDeployments;
+        private RedTeams _cachedRedTeams;
 
         /// <summary> Initializes a new instance of AIProjectClient. </summary>
         /// <param name="endpoint"> Service endpoint. </param>
@@ -51,6 +53,12 @@ namespace Azure.AI.Projects
             return Volatile.Read(ref _cachedConnections) ?? Interlocked.CompareExchange(ref _cachedConnections, new Connections(Pipeline, _endpoint), null) ?? _cachedConnections;
         }
 
+        /// <summary> Initializes a new instance of Evaluations. </summary>
+        public virtual Evaluations GetEvaluationsClient()
+        {
+            return Volatile.Read(ref _cachedEvaluations) ?? Interlocked.CompareExchange(ref _cachedEvaluations, new Evaluations(Pipeline, _endpoint), null) ?? _cachedEvaluations;
+        }
+
         /// <summary> Initializes a new instance of Datasets. </summary>
         public virtual Datasets GetDatasetsClient()
         {
@@ -67,6 +75,12 @@ namespace Azure.AI.Projects
         public virtual Deployments GetDeploymentsClient()
         {
             return Volatile.Read(ref _cachedDeployments) ?? Interlocked.CompareExchange(ref _cachedDeployments, new Deployments(Pipeline, _endpoint), null) ?? _cachedDeployments;
+        }
+
+        /// <summary> Initializes a new instance of RedTeams. </summary>
+        public virtual RedTeams GetRedTeamsClient()
+        {
+            return Volatile.Read(ref _cachedRedTeams) ?? Interlocked.CompareExchange(ref _cachedRedTeams, new RedTeams(Pipeline, _endpoint), null) ?? _cachedRedTeams;
         }
     }
 }
