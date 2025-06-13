@@ -97,7 +97,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <EnableClientSdkAnalyzers Condition="'$(IsClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
+    <EnableClientSdkAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableClientSdkAnalyzers>
     <EnableMicrosoftCodeAnalysisNetAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableMicrosoftCodeAnalysisNetAnalyzers>
     <EnableStyleCopAnalyzers Condition="'$(EnableStyleCopAnalyzers)' == '' and '$(IsClientLibrary)' == 'true'">true</EnableStyleCopAnalyzers>
     <EnableBannedApiAnalyzers Condition="'$(IsShippingClientLibrary)' == 'true'">true</EnableBannedApiAnalyzers>
@@ -270,15 +270,6 @@
     <!-- Disable doc comments for test projects -->
     <DocumentationFile></DocumentationFile>
     <RunSettingsFilePath Condition="'$(AZURE_SKIP_DEFAULT_RUN_SETTINGS)' != 'true'">$(RepoEngPath)\nunit.runsettings</RunSettingsFilePath>
-    <!-- Suppress certain Azure SDK analyzer rules for test projects where they are less relevant -->
-    <NoWarn>
-      $(NoWarn);
-      AZC0100; <!-- ConfigureAwait(false) must be used - test code often doesn't need this -->
-      AZC0102; <!-- Do not use GetAwaiter().GetResult() - test code sometimes needs synchronous execution -->
-      AZC0110; <!-- Asynchronous method async parameter restrictions - test code has different patterns -->
-      AZC0012; <!-- Single word class names - test framework may have generic types -->
-      AZC0008; <!-- Client type should have ServiceVersion enum - test framework clients may not need this -->
-    </NoWarn>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsPerfProject)' == 'true' or '$(IsStressProject)' == 'true'">
