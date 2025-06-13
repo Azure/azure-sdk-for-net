@@ -219,7 +219,7 @@ public class BearerTokenPolicyTests : SyncAsyncTestBase
 
     private static void AssertHasAuthorization(PipelineMessage message, string expectedToken = "Bearer mock_token_value")
     {
-        Assert.True(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
+        Assert.IsTrue(message.Request.Headers.TryGetValue("Authorization", out var authHeader));
         Assert.AreEqual(expectedToken, authHeader);
     }
 
