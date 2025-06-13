@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
@@ -34,10 +32,5 @@ namespace _Type.Model.Inheritance.NestedDiscriminator
         protected override Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<SawShark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="sawShark"> The <see cref="SawShark"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(SawShark sawShark) => throw null;
-
-        public static explicit operator SawShark(Response result) => throw null;
     }
 }
