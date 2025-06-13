@@ -53,11 +53,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Initializes a new instance of <see cref="ContainerAppLogAnalyticsConfiguration"/>. </summary>
         /// <param name="customerId"> Log analytics customer id. </param>
         /// <param name="sharedKey"> Log analytics customer key. </param>
+        /// <param name="dynamicJsonColumns"> Boolean indicating whether to parse json string log into dynamic json columns. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppLogAnalyticsConfiguration(string customerId, string sharedKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppLogAnalyticsConfiguration(string customerId, string sharedKey, bool? dynamicJsonColumns, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CustomerId = customerId;
             SharedKey = sharedKey;
+            DynamicJsonColumns = dynamicJsonColumns;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -67,5 +69,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Log analytics customer key. </summary>
         [WirePath("sharedKey")]
         public string SharedKey { get; set; }
+        /// <summary> Boolean indicating whether to parse json string log into dynamic json columns. </summary>
+        [WirePath("dynamicJsonColumns")]
+        public bool? DynamicJsonColumns { get; set; }
     }
 }

@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Command = new ChangeTrackingList<string>();
             Args = new ChangeTrackingList<string>();
             Env = new ChangeTrackingList<ContainerAppEnvironmentVariable>();
+            Probes = new ChangeTrackingList<SessionProbe>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SessionContainer"/>. </summary>
@@ -60,8 +61,9 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="args"> Container start command arguments. </param>
         /// <param name="env"> Container environment variables. </param>
         /// <param name="resources"> Container resource requirements. </param>
+        /// <param name="probes"> List of probes for the container. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SessionContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, SessionContainerResources resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SessionContainer(string image, string name, IList<string> command, IList<string> args, IList<ContainerAppEnvironmentVariable> env, SessionContainerResources resources, IList<SessionProbe> probes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Image = image;
             Name = name;
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Args = args;
             Env = env;
             Resources = resources;
+            Probes = probes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,5 +93,8 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Container resource requirements. </summary>
         [WirePath("resources")]
         public SessionContainerResources Resources { get; set; }
+        /// <summary> List of probes for the container. </summary>
+        [WirePath("probes")]
+        public IList<SessionProbe> Probes { get; }
     }
 }
