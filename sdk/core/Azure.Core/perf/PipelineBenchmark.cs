@@ -10,79 +10,45 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
+using BenchmarkDotNet.Running;
+using Benchmarks.Nuget;
+using Benchmarks.Local;
 
 namespace Azure.Core.Perf;
 
-[SimpleJob(RuntimeMoniker.Net60)]
+[SimpleJob(RuntimeMoniker.Net80)]
+
 [MemoryDiagnoser]
 public class PipelineBenchmark
 {
-    // Azure.Core pipeline
-    private HttpPipeline _httpPipeline;
-
-    // System.ClientModel pipeline
-    private ClientPipeline _clientPipeline;
+    private Benchmarks.Local.PipelineScenario _localScenario;
+    private Benchmarks.Nuget.PipelineScenario _nugetScenario;
+    private HttpMessage _localMessage;
+    private HttpMessage _nugetMessage;
 
     [GlobalSetup]
     public void SetUp()
     {
-        ClientOptions clientOptions = new BenchmarkOptions
-        {
-            Transport = new HttpClientTransport(new HttpClient(new MockHttpMessageHandler()))
-        };
+        // Set up local scenario
+        _localScenario = new Benchmarks.Local.PipelineScenario();
+        _localMessage = _localScenario._pipeline.CreateMessage();
+        _localMessage.Request.Uri.Reset(new Uri("https://www.example.com"));
 
-        _httpPipeline = HttpPipelineBuilder.Build(clientOptions);
-
-        ClientPipelineOptions pipelineOptions = new()
-        {
-            Transport = new HttpClientPipelineTransport(new HttpClient(new MockHttpMessageHandler()))
-        };
-
-        _clientPipeline = ClientPipeline.Create(pipelineOptions);
+        // Set up NuGet scenario
+        _nugetScenario = new Benchmarks.Nuget.PipelineScenario();
+        _nugetMessage = _nugetScenario._pipeline.CreateMessage();
+        _nugetMessage.Request.Uri.Reset(new Uri("https://www.example.com"));
     }
 
     [Benchmark]
-    public async Task CreateAndSendAzureCoreMessage()
+    public async Task<Response> LocalPipeline()
     {
-        HttpMessage message = _httpPipeline.CreateMessage();
-        message.Request.Uri.Reset(new Uri("https://www.example.com"));
-        await _httpPipeline.SendAsync(message, CancellationToken.None);
+        return await _localScenario.SendAsync();
     }
 
-    [Benchmark]
-    public async Task CreateAndSendClientModelMessage()
+    [Benchmark(Baseline = true)]
+    public async Task<Response> NugetPipeline()
     {
-        PipelineMessage message = _clientPipeline.CreateMessage();
-        message.Request.Uri = new Uri("https://www.example.com");
-        await _clientPipeline.SendAsync(message);
+        return await _nugetScenario.SendAsync();
     }
-
-    #region Helpers
-
-    /// <summary>
-    /// Mock out the network to isolate the performance test to only
-    /// Core library pipeline code.
-    /// </summary>
-    private class MockHttpMessageHandler : HttpMessageHandler
-    {
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            HttpResponseMessage httpResponse = new()
-            {
-                StatusCode = HttpStatusCode.OK,
-                Content = new StringContent("Mock Content")
-            };
-
-            httpResponse.Headers.Add("MockHeader1", "Mock Header Value");
-            httpResponse.Headers.Add("MockHeader2", "Mock Header Value");
-
-            return Task.FromResult(httpResponse);
-        }
-    }
-
-    private class BenchmarkOptions : ClientOptions
-    {
-    }
-
-    #endregion
 }

@@ -10,11 +10,12 @@ using System.Text;
 using Azure.Core.Diagnostics;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Jobs;
+using Benchmarks.Local;
+using Benchmarks.Nuget;
 
 namespace Azure.Core.Perf
 {
-    [SimpleJob(RuntimeMoniker.Net462)]
-    [SimpleJob(RuntimeMoniker.Net60)]
+    [SimpleJob(RuntimeMoniker.Net80)]
     public class EventSourceBenchmark
     {
         private const string UriString = @"http://example.azure.com/some/rest/api?method=send&api-version=1";
@@ -22,138 +23,85 @@ namespace Azure.Core.Perf
         private static readonly string[] AllowedQueryParameters = { "api-version" };
         private static readonly HttpMessageSanitizer Sanitizer = new(AllowedHeaders, AllowedQueryParameters);
 
-        private AzureEventSourceListener _sourceListener;
-        private EventSource _eventSource;
-        private RawRequestUriBuilder _uri;
-        private HttpRequestMessage _message;
-        private int _iteration;
         private string _sanitizedUri;
         private byte[] _headersBytes;
+        private Benchmarks.Local.EventSourceScenario _localScenario;
+        private Benchmarks.Nuget.EventSourceScenario _nugetScenario;
 
         [GlobalSetup]
         public void SetUp()
         {
-            _sourceListener = new AzureEventSourceListener(_ => { }, EventLevel.LogAlways);
-            _eventSource = new EventSource();
-            _sourceListener.EnableEvents(_eventSource, EventLevel.LogAlways);
+            // Build URI and message
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(UriString, true);
 
-            _uri = new RawRequestUriBuilder();
-            _uri.AppendRaw(UriString, true);
+            var message = new HttpRequestMessage();
+            message.Headers.TryAddWithoutValidation("Date", "10/14/2020");
+            message.Headers.TryAddWithoutValidation("Custom-Header", "Value");
+            message.Headers.TryAddWithoutValidation("Header-To-Skip", "Skipped Value");
 
-            _message = new HttpRequestMessage();
-            _message.Headers.TryAddWithoutValidation("Date", "10/14/2020");
-            _message.Headers.TryAddWithoutValidation("Custom-Header", "Value");
-            _message.Headers.TryAddWithoutValidation("Header-To-Skip", "Skipped Value");
+            _sanitizedUri = Sanitizer.SanitizeUrl(uri.ToString());
+            _headersBytes = FormatHeaders(message);
 
-            _sanitizedUri = Sanitizer.SanitizeUrl(_uri.ToString());
-            _headersBytes = FormatHeaders();
+            _localScenario = new Benchmarks.Local.EventSourceScenario(_sanitizedUri, _headersBytes);
+            _nugetScenario = new Benchmarks.Nuget.EventSourceScenario(_sanitizedUri, _headersBytes);
         }
 
         [GlobalCleanup]
         public void CleanUp()
         {
-            _sourceListener.Dispose();
-            _eventSource.Dispose();
+            _localScenario.Dispose();
+            _nugetScenario.Dispose();
         }
 
-        [Benchmark(Baseline = true, Description = "Old implementation")]
-        public void OldImplementation_CallFormatting()
+        // Local benchmarks
+        [Benchmark]
+        public void Local_OldImplementation()
         {
-            _eventSource.RequestOld(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, FormatHeaders());
+            _localScenario.RunOld(_sanitizedUri, _headersBytes);
         }
 
-        [Benchmark(Description = "New implementation, includes reformatting")]
-        public void NewImplementation_CallFormatting()
+        [Benchmark]
+        public void Local_NewImplementation()
         {
-            _eventSource.RequestNew(Sanitizer.SanitizeUrl(_uri.ToString()), _iteration++, _iteration, FormatHeaders());
+            _localScenario.RunNew(_sanitizedUri, _headersBytes);
         }
 
-        [Benchmark(Description = "New implementation, no reformatting")]
-        public void NewImplementation_AfterFormatting()
+        [Benchmark]
+        public void Local_NewImplementation_AfterFormatting()
         {
-            _eventSource.RequestNew(_sanitizedUri, _iteration++, _iteration, _headersBytes);
+            _localScenario.RunNewPreformatted();
         }
 
-        private byte[] FormatHeaders()
+        // Nuget benchmarks
+        [Benchmark(Baseline = true)]
+        public void Nuget_OldImplementation()
+        {
+            _nugetScenario.RunOld(_sanitizedUri, _headersBytes);
+        }
+
+        [Benchmark]
+        public void Nuget_NewImplementation()
+        {
+            _nugetScenario.RunNew(_sanitizedUri, _headersBytes);
+        }
+
+        [Benchmark]
+        public void Nuget_NewImplementation_AfterFormatting()
+        {
+            _nugetScenario.RunNewPreformatted();
+        }
+
+        private byte[] FormatHeaders(HttpRequestMessage message)
         {
             var stringBuilder = new StringBuilder();
-            foreach (HttpHeader header in GetHeaders(_message.Headers))
+            foreach (var header in message.Headers)
             {
-                stringBuilder.Append(header.Name);
+                stringBuilder.Append(header.Key);
                 stringBuilder.Append(':');
-                string newValue = Sanitizer.SanitizeHeader(header.Name, header.Value);
-                stringBuilder.AppendLine(newValue);
+                stringBuilder.AppendLine(string.Join(",", header.Value));
             }
-
             return Encoding.UTF8.GetBytes(stringBuilder.ToString());
-        }
-
-        internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers)
-        {
-#if NET6_0_OR_GREATER
-            foreach (var (key, values) in headers.NonValidated)
-            {
-                yield return new HttpHeader(key, values.Count switch
-                {
-                    0 => string.Empty,
-                    1 => values.ToString(),
-                    _ => string.Join(",", values)
-                });
-            }
-#else
-            foreach (KeyValuePair<string, IEnumerable<string>> header in headers)
-            {
-                yield return new HttpHeader(header.Key, string.Join(",", header.Value));
-            }
-#endif
-        }
-
-        private class EventSource : AzureEventSource
-        {
-            public EventSource() : base("Azure-Core") { }
-
-            [Event(1, Level = EventLevel.Informational)]
-            public void RequestOld(string strParam, int intParam, double doubleParam, byte[] bytesParam)
-            {
-                WriteEvent(1, strParam, intParam, doubleParam, bytesParam);
-            }
-
-            [Event(2, Level = EventLevel.Informational)]
-            public void RequestNew(string strParam, int intParam, double doubleParam, byte[] bytesParam)
-            {
-                WriteEventNew(2, strParam, intParam, doubleParam, bytesParam);
-            }
-
-            [NonEvent]
-            private unsafe void WriteEventNew(int eventId, string arg0, int arg1, double arg2, byte[] arg3)
-            {
-                if (!IsEnabled())
-                {
-                    return;
-                }
-
-                arg0 ??= string.Empty;
-                fixed (char* arg0Ptr = arg0)
-                {
-                    EventData* data = stackalloc EventData[5];
-                    data[0].DataPointer = (IntPtr)arg0Ptr;
-                    data[0].Size = (arg0.Length + 1) * 2;
-                    data[1].DataPointer = (IntPtr)(&arg1);
-                    data[1].Size = 4;
-                    data[2].DataPointer = (IntPtr)(&arg2);
-                    data[2].Size = 8;
-
-                    var blobSize = arg3.Length;
-                    fixed (byte* blob = &arg3[0])
-                    {
-                        data[3].DataPointer = (IntPtr)(&blobSize);
-                        data[3].Size = 4;
-                        data[4].DataPointer = (IntPtr)blob;
-                        data[4].Size = blobSize;
-                        WriteEventCore(eventId, 4, data);
-                    }
-                }
-            }
         }
     }
 }
