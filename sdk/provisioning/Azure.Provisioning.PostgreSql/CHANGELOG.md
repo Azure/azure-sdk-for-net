@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a bug when we set the convenient property `PostgreSqlFlexibleServer.StorageSizeInGB`, everything in `PostgreSqlFlexibleServer.Storage` will be overridden. ([#50365](https://github.com/Azure/azure-sdk-for-net/issues/50365))
+
 ### Other Changes
 
 ## 1.0.0 (2024-10-25)

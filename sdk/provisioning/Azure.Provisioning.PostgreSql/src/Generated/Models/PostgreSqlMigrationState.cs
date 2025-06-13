@@ -34,4 +34,14 @@ public enum PostgreSqlMigrationState
     /// Succeeded.
     /// </summary>
     Succeeded,
+
+    /// <summary>
+    /// ValidationFailed.
+    /// </summary>
+    ValidationFailed,
+
+    /// <summary>
+    /// CleaningUp.
+    /// </summary>
+    CleaningUp,
 }

@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.Search;
 
@@ -101,16 +102,6 @@ public partial class SearchPrivateEndpointConnection : ProvisionableResource
     public static class ResourceVersions
     {
         /// <summary>
-        /// 2024-06-01-Preview.
-        /// </summary>
-        public static readonly string V2024_06_01_Preview = "2024-06-01-Preview";
-
-        /// <summary>
-        /// 2024-03-01-Preview.
-        /// </summary>
-        public static readonly string V2024_03_01_Preview = "2024-03-01-Preview";
-
-        /// <summary>
         /// 2023-11-01.
         /// </summary>
         public static readonly string V2023_11_01 = "2023-11-01";
@@ -119,21 +110,6 @@ public partial class SearchPrivateEndpointConnection : ProvisionableResource
         /// 2022-09-01.
         /// </summary>
         public static readonly string V2022_09_01 = "2022-09-01";
-
-        /// <summary>
-        /// 2021-06-06-Preview.
-        /// </summary>
-        public static readonly string V2021_06_06_Preview = "2021-06-06-Preview";
-
-        /// <summary>
-        /// 2021-04-01-Preview.
-        /// </summary>
-        public static readonly string V2021_04_01_Preview = "2021-04-01-Preview";
-
-        /// <summary>
-        /// 2020-08-01-Preview.
-        /// </summary>
-        public static readonly string V2020_08_01_Preview = "2020-08-01-Preview";
 
         /// <summary>
         /// 2020-08-01.
@@ -146,11 +122,6 @@ public partial class SearchPrivateEndpointConnection : ProvisionableResource
         public static readonly string V2020_03_13 = "2020-03-13";
 
         /// <summary>
-        /// 2019-10-01-Preview.
-        /// </summary>
-        public static readonly string V2019_10_01_Preview = "2019-10-01-Preview";
-
-        /// <summary>
         /// 2015-08-19.
         /// </summary>
         public static readonly string V2015_08_19 = "2015-08-19";
@@ -161,8 +132,51 @@ public partial class SearchPrivateEndpointConnection : ProvisionableResource
         public static readonly string V2015_02_28 = "2015-02-28";
 
         /// <summary>
+        /// 2025-02-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2025_02_01_Preview = "2025-02-01-Preview";
+
+        /// <summary>
+        /// 2024-06-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2024_06_01_Preview = "2024-06-01-Preview";
+
+        /// <summary>
+        /// 2024-03-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2024_03_01_Preview = "2024-03-01-Preview";
+
+        /// <summary>
+        /// 2021-06-06-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2021_06_06_Preview = "2021-06-06-Preview";
+
+        /// <summary>
+        /// 2021-04-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2021_04_01_Preview = "2021-04-01-Preview";
+
+        /// <summary>
+        /// 2020-08-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2020_08_01_Preview = "2020-08-01-Preview";
+
+        /// <summary>
+        /// 2019-10-01-Preview.
+        /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static readonly string V2019_10_01_Preview = "2019-10-01-Preview";
+
+        /// <summary>
         /// 2014-07-31-Preview.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static readonly string V2014_07_31_Preview = "2014-07-31-Preview";
     }
 

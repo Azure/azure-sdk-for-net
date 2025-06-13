@@ -28,6 +28,16 @@ public partial class SqlDedicatedGatewayServiceProperties : CosmosDBServicePrope
     private BicepValue<string>? _sqlDedicatedGatewayEndpoint;
 
     /// <summary>
+    /// DedicatedGatewayType for the service.
+    /// </summary>
+    public BicepValue<DedicatedGatewayType> DedicatedGatewayType 
+    {
+        get { Initialize(); return _dedicatedGatewayType!; }
+        set { Initialize(); _dedicatedGatewayType!.Assign(value); }
+    }
+    private BicepValue<DedicatedGatewayType>? _dedicatedGatewayType;
+
+    /// <summary>
     /// An array that contains all of the locations for the service.
     /// </summary>
     public BicepList<SqlDedicatedGatewayRegionalService> Locations 
@@ -52,6 +62,7 @@ public partial class SqlDedicatedGatewayServiceProperties : CosmosDBServicePrope
         base.DefineProvisionableProperties();
         DefineProperty<string>("serviceType", ["serviceType"], defaultValue: "SqlDedicatedGateway");
         _sqlDedicatedGatewayEndpoint = DefineProperty<string>("SqlDedicatedGatewayEndpoint", ["sqlDedicatedGatewayEndpoint"]);
+        _dedicatedGatewayType = DefineProperty<DedicatedGatewayType>("DedicatedGatewayType", ["dedicatedGatewayType"]);
         _locations = DefineListProperty<SqlDedicatedGatewayRegionalService>("Locations", ["locations"], isOutput: true);
     }
 }

@@ -223,6 +223,25 @@ public partial class RedisResource : ProvisionableResource
     private BicepValue<UpdateChannel>? _updateChannel;
 
     /// <summary>
+    /// Optional: Specifies how availability zones are allocated to the Redis
+    /// cache. &apos;Automatic&apos; enables zone redundancy and Azure will
+    /// automatically select zones based on regional availability and
+    /// capacity. &apos;UserDefined&apos; will select availability zones
+    /// passed in by you using the &apos;zones&apos; parameter.
+    /// &apos;NoZones&apos; will produce a non-zonal cache. If
+    /// &apos;zonalAllocationPolicy&apos; is not passed, it will be set to
+    /// &apos;UserDefined&apos; when zones are passed in, otherwise, it will
+    /// be set to &apos;Automatic&apos; in regions where zones are supported
+    /// and &apos;NoZones&apos; in regions where zones are not supported.
+    /// </summary>
+    public BicepValue<ZonalAllocationPolicy> ZonalAllocationPolicy 
+    {
+        get { Initialize(); return _zonalAllocationPolicy!; }
+        set { Initialize(); _zonalAllocationPolicy!.Assign(value); }
+    }
+    private BicepValue<ZonalAllocationPolicy>? _zonalAllocationPolicy;
+
+    /// <summary>
     /// A list of availability zones denoting where the resource needs to come
     /// from.
     /// </summary>
@@ -336,7 +355,7 @@ public partial class RedisResource : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the RedisResource.</param>
     public RedisResource(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-03-01")
+        : base(bicepIdentifier, "Microsoft.Cache/redis", resourceVersion ?? "2024-11-01")
     {
     }
 
@@ -363,6 +382,7 @@ public partial class RedisResource : ProvisionableResource
         _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _tenantSettings = DefineDictionaryProperty<string>("TenantSettings", ["properties", "tenantSettings"]);
         _updateChannel = DefineProperty<UpdateChannel>("UpdateChannel", ["properties", "updateChannel"]);
+        _zonalAllocationPolicy = DefineProperty<ZonalAllocationPolicy>("ZonalAllocationPolicy", ["properties", "zonalAllocationPolicy"]);
         _zones = DefineListProperty<string>("Zones", ["zones"]);
         _accessKeys = DefineModelProperty<RedisAccessKeys>("AccessKeys", ["properties", "accessKeys"], isOutput: true);
         _hostName = DefineProperty<string>("HostName", ["properties", "hostName"], isOutput: true);
@@ -381,6 +401,11 @@ public partial class RedisResource : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2024-11-01.
+        /// </summary>
+        public static readonly string V2024_11_01 = "2024-11-01";
+
         /// <summary>
         /// 2024-03-01.
         /// </summary>

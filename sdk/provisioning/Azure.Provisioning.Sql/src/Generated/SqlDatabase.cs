@@ -174,9 +174,10 @@ public partial class SqlDatabase : ProvisionableResource
     private BicepValue<FreeLimitExhaustionBehavior>? _freeLimitExhaustionBehavior;
 
     /// <summary>
-    /// The number of secondary replicas associated with the database that are
-    /// used to provide high availability. Not applicable to a Hyperscale
-    /// database within an elastic pool.
+    /// The number of secondary replicas associated with the Business Critical,
+    /// Premium, or Hyperscale edition database that are used to provide high
+    /// availability. Not applicable to a Hyperscale database within an
+    /// elastic pool.
     /// </summary>
     public BicepValue<int> HighAvailabilityReplicaCount 
     {
@@ -698,7 +699,7 @@ public partial class SqlDatabase : ProvisionableResource
     /// </param>
     /// <param name="resourceVersion">Version of the SqlDatabase.</param>
     public SqlDatabase(string bicepIdentifier, string? resourceVersion = default)
-        : base(bicepIdentifier, "Microsoft.Sql/servers/databases", resourceVersion ?? "2021-11-01")
+        : base(bicepIdentifier, "Microsoft.Sql/servers/databases", resourceVersion ?? "2023-08-01")
     {
     }
 
@@ -772,6 +773,11 @@ public partial class SqlDatabase : ProvisionableResource
     /// </summary>
     public static class ResourceVersions
     {
+        /// <summary>
+        /// 2023-08-01.
+        /// </summary>
+        public static readonly string V2023_08_01 = "2023-08-01";
+
         /// <summary>
         /// 2021-11-01.
         /// </summary>

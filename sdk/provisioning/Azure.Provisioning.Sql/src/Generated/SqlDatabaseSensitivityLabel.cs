@@ -27,6 +27,16 @@ public partial class SqlDatabaseSensitivityLabel : ProvisionableResource
     private BicepValue<string>? _name;
 
     /// <summary>
+    /// Gets or sets the client classification source.
+    /// </summary>
+    public BicepValue<ClientClassificationSource> ClientClassificationSource 
+    {
+        get { Initialize(); return _clientClassificationSource!; }
+        set { Initialize(); _clientClassificationSource!.Assign(value); }
+    }
+    private BicepValue<ClientClassificationSource>? _clientClassificationSource;
+
+    /// <summary>
     /// The information type.
     /// </summary>
     public BicepValue<string> InformationType 
@@ -162,6 +172,7 @@ public partial class SqlDatabaseSensitivityLabel : ProvisionableResource
     protected override void DefineProvisionableProperties()
     {
         _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _clientClassificationSource = DefineProperty<ClientClassificationSource>("ClientClassificationSource", ["properties", "clientClassificationSource"]);
         _informationType = DefineProperty<string>("InformationType", ["properties", "informationType"]);
         _informationTypeId = DefineProperty<string>("InformationTypeId", ["properties", "informationTypeId"]);
         _labelId = DefineProperty<string>("LabelId", ["properties", "labelId"]);

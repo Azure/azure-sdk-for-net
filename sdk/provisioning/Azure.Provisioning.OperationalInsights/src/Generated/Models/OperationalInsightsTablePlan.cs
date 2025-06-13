@@ -12,7 +12,7 @@ namespace Azure.Provisioning.OperationalInsights;
 public enum OperationalInsightsTablePlan
 {
     /// <summary>
-    /// Logs  that are adjusted to support high volume low value verbose logs.
+    /// Logs that are adjusted to support high volume low value verbose logs.
     /// </summary>
     Basic,
 

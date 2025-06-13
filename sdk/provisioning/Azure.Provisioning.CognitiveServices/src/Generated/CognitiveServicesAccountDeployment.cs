@@ -51,6 +51,16 @@ public partial class CognitiveServicesAccountDeployment : ProvisionableResource
     private CognitiveServicesSku? _sku;
 
     /// <summary>
+    /// Resource tags.
+    /// </summary>
+    public BicepDictionary<string> Tags 
+    {
+        get { Initialize(); return _tags!; }
+        set { Initialize(); _tags!.Assign(value); }
+    }
+    private BicepDictionary<string>? _tags;
+
+    /// <summary>
     /// Resource Etag.
     /// </summary>
     public BicepValue<ETag> ETag 
@@ -111,6 +121,7 @@ public partial class CognitiveServicesAccountDeployment : ProvisionableResource
         _name = DefineProperty<string>("Name", ["name"], isRequired: true);
         _properties = DefineModelProperty<CognitiveServicesAccountDeploymentProperties>("Properties", ["properties"]);
         _sku = DefineModelProperty<CognitiveServicesSku>("Sku", ["sku"]);
+        _tags = DefineDictionaryProperty<string>("Tags", ["tags"]);
         _eTag = DefineProperty<ETag>("ETag", ["etag"], isOutput: true);
         _id = DefineProperty<ResourceIdentifier>("Id", ["id"], isOutput: true);
         _systemData = DefineModelProperty<SystemData>("SystemData", ["systemData"], isOutput: true);

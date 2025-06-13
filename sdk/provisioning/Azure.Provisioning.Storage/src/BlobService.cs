@@ -7,7 +7,9 @@ using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
+#if EXPERIMENTAL_PROVISIONING
 using Azure.Storage.Blobs;
+#endif
 
 namespace Azure.Provisioning.Storage;
 
