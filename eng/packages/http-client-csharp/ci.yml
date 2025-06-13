@@ -46,6 +46,8 @@ variables:
 extends:
   template: /eng/common/pipelines/templates/archetype-typespec-emitter.yml
   parameters:
+    InitializationSteps:
+      - template: /eng/common/pipelines/templates/steps/install-dotnet.yml
     EmitterPackageJsonOutputPath: eng/http-client-csharp-emitter-package.json
     EmitterPackagePath: eng/packages/http-client-csharp
     SparseCheckoutPaths:

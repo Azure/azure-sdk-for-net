@@ -1,0 +1,28 @@
+parameters:
+  EnableNuGetCache: true
+  NuGetCacheKey: 'Build'
+  Container: false
+
+steps:
+  # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
+  - task: UseDotNet@2
+    displayName: 'Use .NET SDK'
+    retryCountOnTaskFailure: 3
+    inputs:
+      useGlobalJson: true
+      performMultiLevelLookup: true
+  - task: UseDotNet@2 # We need .NET 8 for the .NET 8 tests
+    displayName: 'Use .NET 8.0 SDK'
+    retryCountOnTaskFailure: 3
+    inputs:
+      # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
+      packageType: sdk
+      performMultiLevelLookup: true
+      version: "8.0.x"
+  - task: Cache@2
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'
+      path: $(NUGET_PACKAGES)
+    condition: and(succeeded(), ${{parameters.EnableNuGetCache}})
+    continueOnError: true
+    displayName: Cache NuGet packages
