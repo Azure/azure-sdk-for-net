@@ -179,7 +179,7 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual async Task<Response> GetRunAsync(string threadId, string runId, RequestContext context)
         {
-            using var scope = OpenTelemetryScope.StartCreateRun(threadId, runId, _endpoint);
+            using var scope = OpenTelemetryScope.StartGetRun(threadId, runId, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
@@ -221,10 +221,10 @@ namespace Azure.AI.Agents.Persistent
         /// <returns> The response returned from the service. </returns>
         public virtual Response GetRun(string threadId, string runId, RequestContext context)
         {
+            using var scope = OpenTelemetryScope.StartGetRun(threadId, runId, _endpoint);
             Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
             Argument.AssertNotNullOrEmpty(runId, nameof(runId));
 
-            using var scope = OpenTelemetryScope.StartGetRun(threadId, runId, _endpoint);
             try
             {
                 using HttpMessage message = CreateGetRunRequest(threadId, runId, context);

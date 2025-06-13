@@ -82,8 +82,16 @@ namespace Azure.AI.Agents.Persistent.Telemetry
 
         private int _hasEnded = 0;
         private readonly OpenTelemetryScopeType _scopeType;
-        // In your handler class:
+        private static void ReinitializeConfiguration()
+        {
+            s_traceContent = AppContextSwitchHelper.GetConfigValue(
+                TraceContentsSwitch,
+                TraceContentsEnvironmentVariable);
 
+            s_enableTelemetry = AppContextSwitchHelper.GetConfigValue(
+                EnableOpenTelemetrySwitch,
+                EnableOpenTelemetryEnvironmentVariable);
+        }
         /// <summary>
         /// Create the instance of OpenTelemetryScope for agent creation.
         /// This constructor logs request and starts the execution timer.
@@ -102,7 +110,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             var createAgentRequest = DeserializeCreateAgentRequest(content);
 
             string operationName = OperationNameValueCreateAgent + " " + createAgentRequest.Name;
-            var scope = new OpenTelemetryScope(operationName, endpoint);
+            var scope = new OpenTelemetryScope(operationName, endpoint, OperationNameValueCreateAgent);
             if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
             {
                 return null;
@@ -113,7 +121,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             scope.SetTagMaybe(GenAiRequestTemperatureKey, createAgentRequest.Temperature);
             scope.SetTagMaybe(GenAiRequestTopPKey, createAgentRequest.TopP);
 
-            object evnt = s_traceContent ? new { content = createAgentRequest.Instructions } : null;
+            object evnt = s_traceContent ? new { content = createAgentRequest.Instructions } : "";
             ActivityTagsCollection messageTags = new() {
                    { GenAiSystemKey, GenAiSystemValue},
                    { GenAiEventContent, evnt != null ? JsonSerializer.Serialize(evnt) : null  }
@@ -259,14 +267,13 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 return null;
             }
 
-            var createThreadAndRunRequest = DeserializeCreateThreadAndRunRequest(content);
-
             var scope = new OpenTelemetryScope(OperationNameValueStartThreadRun, endpoint);
             if (scope._activity?.IsAllDataRequested != true && !s_duration.Enabled)
             {
                 return null;
             }
 
+            var createThreadAndRunRequest = DeserializeCreateThreadAndRunRequest(content);
             var agentId = createThreadAndRunRequest.AssistantId;
             scope.SetTagMaybe(GenAiAgentIdKey, agentId);
 
@@ -449,7 +456,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             return SubmitToolOutputsToRunRequest.DeserializeSubmitToolOutputsToRunRequest(document.RootElement);
         }
 
-        private OpenTelemetryScope(string activityName, Uri endpoint)
+        private OpenTelemetryScope(string activityName, Uri endpoint, string operationName=null)
         {
             _scopeType = activityName switch
             {
@@ -463,6 +470,11 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 _ => OpenTelemetryScopeType.Unknown
             };
 
+            if (operationName == null)
+            {
+                operationName = activityName;
+            }
+
             _activity = s_agentSource.StartActivity(activityName, ActivityKind.Client);
 
             // suppress nested client activities from generated code.
@@ -472,7 +484,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
             _commonTags = new TagList()
             {
                 { GenAiSystemKey, GenAiSystemValue},
-                { GenAiOperationNameKey, activityName},
+                { GenAiOperationNameKey, operationName},
                 { ServerAddressKey, endpoint.Host }
             };
             // Only record port if it is different from 443.
@@ -544,6 +556,11 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 _response.AgentId = runResponse.Value.AssistantId;
                 _response.Model = runResponse.Value.Model;
                 _response.RunStatus = runResponse.Value.Status.ToString();
+                if (runResponse.Value.Usage != null)
+                {
+                    _response.CompletionTokens = (int)runResponse.Value.Usage.CompletionTokens;
+                    _response.PromptTokens = (int)runResponse.Value.Usage.PromptTokens;
+                }
             }
         }
 
@@ -821,8 +838,17 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 _activity?.SetTag(GenAiResponseModelKey, _response.Model);
             }
 
-            // report duration
-            s_duration.Record(_duration.Elapsed.TotalSeconds, finalTags);
+            if (_response.PromptTokens.HasValue)
+            {
+                finalTags.Add(GenAiUsageInputTokensKey, _response.PromptTokens);
+                _activity?.SetTag(GenAiUsageInputTokensKey, _response.PromptTokens);
+            }
+
+            if (_response.CompletionTokens.HasValue)
+            {
+                finalTags.Add(GenAiUsageOutputTokensKey, _response.CompletionTokens);
+                _activity?.SetTag(GenAiUsageOutputTokensKey, _response.CompletionTokens);
+            }
 
             SetTagMaybe(GenAiAgentIdKey, _response.AgentId);
             SetTagMaybe(GenAiThreadIdKey, _response.ThreadId);
@@ -836,7 +862,6 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 TagList input_tags = finalTags;
                 input_tags.Add(GenAiUsageInputTokensKey, "input");
                 s_tokens.Record(_response.PromptTokens.Value, input_tags);
-                _activity?.SetTag(GenAiUsageInputTokensKey, _response.PromptTokens);
             }
             // Record output tokens
             if (_response.CompletionTokens.HasValue)
@@ -844,7 +869,6 @@ namespace Azure.AI.Agents.Persistent.Telemetry
                 TagList output_tags = finalTags;
                 output_tags.Add(GenAiUsageOutputTokensKey, "output");
                 s_tokens.Record(_response.CompletionTokens.Value, output_tags);
-                _activity?.SetTag(GenAiUsageOutputTokensKey, _response.CompletionTokens);
             }
 
             if (_response.Messages != null)

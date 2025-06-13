@@ -18,8 +18,8 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         public string? RunStatus { get; set; }
         public string? Id { get; set; }
         public string?[]? FinishReasons { get; set; }
-        public int? CompletionTokens { get; set; }
-        public int? PromptTokens { get; set; }
+        public long? CompletionTokens { get; set; }
+        public long? PromptTokens { get; set; }
         public object[]? Choices { get; set; }
         public List<PersistentThreadMessage>? Messages { get; set; }
         public List<RunStep>? RunSteps { get; set; }

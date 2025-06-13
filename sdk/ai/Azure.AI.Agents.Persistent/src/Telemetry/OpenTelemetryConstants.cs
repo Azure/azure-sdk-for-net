@@ -40,7 +40,7 @@ namespace Azure.AI.Agents.Persistent.Telemetry
         public const string GenAiMessageIdKey = "gen_ai.message.id";
         public const string GenAiMessageStatusKey = "gen_ai.message.status";
         public const string GenAiRunIdKey = "gen_ai.thread.run.id";
-        public const string GenAiRunStatusKey = "gen_ai.run.status";
+        public const string GenAiRunStatusKey = "gen_ai.thread.run.status";
         public const string GenAiRunStepStatusKey = "gen_ai.run_step.status";
         public const string GenAiRunStepStartTimestampKey = "gen_ai.run_step.start.timestamp";
         public const string GenAiRunStepEndTimestampKey = "gen_ai.run_step.end.timestamp";
