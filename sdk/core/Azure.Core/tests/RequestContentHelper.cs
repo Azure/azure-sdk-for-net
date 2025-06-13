@@ -1,4 +1,4 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 #nullable enable
@@ -7,17 +7,17 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
-namespace Azure.Core
+namespace Azure.Core.Tests
 {
     internal static class RequestContentHelper
     {
-        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable) where T: notnull
+        public static RequestContent FromEnumerable<T>(IEnumerable<T> enumerable) where T : notnull
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                JsonSerializer.Serialize(content.JsonWriter, item);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -55,7 +55,7 @@ namespace Azure.Core
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                JsonSerializer.Serialize(content.JsonWriter, item.Value);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -91,7 +91,7 @@ namespace Azure.Core
         public static RequestContent FromObject(object value)
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(value);
+            JsonSerializer.Serialize(content.JsonWriter, value);
             return content;
         }
         public static RequestContent FromObject(BinaryData value)
