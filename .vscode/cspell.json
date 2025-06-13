@@ -1729,6 +1729,23 @@
       ]
     },
     {
+      "filename": "**/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/**",
+      "words": [
+        "Ceus",
+        "Tonnis",
+        "Hnpcc",
+        "Ascvd",
+        "Mednax",
+        "Cusick",
+        "Acrad",
+        "Kellgren",
+        "Frax",
+        "Birads",
+        "Agatston",
+        "Tyrer"
+      ]
+    },
+    {
       "filename": "**/sdk/iotoperations/Azure.ResourceManager.IotOperations/api/*.cs",
       "words": [
         "sasl",
