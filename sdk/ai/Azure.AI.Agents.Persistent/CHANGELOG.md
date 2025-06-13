@@ -10,6 +10,10 @@
 
 ### Other Changes
 
+### Sample updates
+- The Azure function sample was simplified.
+- Added samples for file search citation with streaming. 
+
 ## 1.1.0-beta.2 (2025-06-04)
 
 ### Bugs Fixed

@@ -58,14 +58,5 @@ namespace Azure.Generator.Management.Utilities
                 ? responseBodyCSharpType
                 : resourceClientCSharpType;
         }
-
-        public static MethodProvider GetCorrespondingRequestMethod(this InputServiceMethod serviceMethod, Providers.ResourceClientProvider resourceClientProvider)
-        {
-            var expectedMethodName = $"Create{serviceMethod.Operation.Name}Request";
-            return resourceClientProvider.GetClientProvider().RestClient.Methods
-                .Single(m => m.Signature.Name.Equals(
-                    expectedMethodName,
-                    StringComparison.OrdinalIgnoreCase));
-        }
     }
 }

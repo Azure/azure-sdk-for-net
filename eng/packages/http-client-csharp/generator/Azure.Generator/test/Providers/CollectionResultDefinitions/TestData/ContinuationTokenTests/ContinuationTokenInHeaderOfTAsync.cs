@@ -26,9 +26,10 @@ namespace Samples
         /// <param name="myToken"> myToken description. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="global::System.ArgumentNullException"> <paramref name="myToken"/> is null. </exception>
+        /// <exception cref="global::System.ArgumentException"> <paramref name="myToken"/> is an empty string, and was expected to be non-empty. </exception>
         public CatClientGetCatsAsyncCollectionResultOfT(global::Samples.CatClient client, string myToken, global::Azure.RequestContext context) : base((context?.CancellationToken ?? default))
         {
-            global::Samples.Argument.AssertNotNull(myToken, nameof(myToken));
+            global::Samples.Argument.AssertNotNullOrEmpty(myToken, nameof(myToken));
 
             _client = client;
             _myToken = myToken;
