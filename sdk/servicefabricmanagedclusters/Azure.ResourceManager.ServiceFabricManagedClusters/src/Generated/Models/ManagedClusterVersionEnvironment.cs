@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> The ManagedClusterVersionEnvironment. </summary>
+    /// <summary> The operating system of the cluster. The default means all. </summary>
     public readonly partial struct ManagedClusterVersionEnvironment : IEquatable<ManagedClusterVersionEnvironment>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         private const string WindowsValue = "Windows";
 
-        /// <summary> Windows. </summary>
+        /// <summary> Indicates os is Windows. </summary>
         public static ManagedClusterVersionEnvironment Windows { get; } = new ManagedClusterVersionEnvironment(WindowsValue);
         /// <summary> Determines if two <see cref="ManagedClusterVersionEnvironment"/> values are the same. </summary>
         public static bool operator ==(ManagedClusterVersionEnvironment left, ManagedClusterVersionEnvironment right) => left.Equals(right);

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="location"> The location. </param>
         public ServiceFabricManagedApplicationData(AzureLocation location) : base(location)
         {
-            Parameters = new ChangeTrackingDictionary<string, string>();
             ManagedIdentities = new ChangeTrackingList<ApplicationUserAssignedIdentityInfo>();
+            Parameters = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedApplicationData"/>. </summary>
@@ -66,25 +66,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
+        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="version">
         /// The version of the application type as defined in the application manifest.
         /// This name must be the full Arm Resource ID for the referenced application type version.
-        ///
         /// </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
-        /// <param name="managedIdentities"> List of user assigned identities for the application, each mapped to a friendly name. </param>
+        /// <param name="identity"> Describes the managed identities for an Azure resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, string version, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, IList<ApplicationUserAssignedIdentityInfo> managedIdentities, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ServiceFabricManagedApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IList<ApplicationUserAssignedIdentityInfo> managedIdentities, string provisioningState, string version, IDictionary<string, string> parameters, ApplicationUpgradePolicy upgradePolicy, ManagedServiceIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Identity = identity;
+            ManagedIdentities = managedIdentities;
             ProvisioningState = provisioningState;
             Version = version;
             Parameters = parameters;
             UpgradePolicy = upgradePolicy;
-            ManagedIdentities = managedIdentities;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -93,21 +92,20 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
         {
         }
 
-        /// <summary> Describes the managed identities for an Azure resource. </summary>
-        public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> List of user assigned identities for the application, each mapped to a friendly name. </summary>
+        public IList<ApplicationUserAssignedIdentityInfo> ManagedIdentities { get; }
         /// <summary> The current deployment or provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary>
         /// The version of the application type as defined in the application manifest.
         /// This name must be the full Arm Resource ID for the referenced application type version.
-        ///
         /// </summary>
         public string Version { get; set; }
         /// <summary> List of application parameters with overridden values from their default values specified in the application manifest. </summary>
         public IDictionary<string, string> Parameters { get; }
         /// <summary> Describes the policy for a monitored application upgrade. </summary>
         public ApplicationUpgradePolicy UpgradePolicy { get; set; }
-        /// <summary> List of user assigned identities for the application, each mapped to a friendly name. </summary>
-        public IList<ApplicationUserAssignedIdentityInfo> ManagedIdentities { get; }
+        /// <summary> Describes the managed identities for an Azure resource. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
     }
 }

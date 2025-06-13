@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary>
-    /// Node type capacity scale type.
-    ///
-    /// </summary>
+    /// <summary> Node type capacity scale type. </summary>
     public readonly partial struct NodeTypeSkuScaleType : IEquatable<NodeTypeSkuScaleType>
     {
         private readonly string _value;

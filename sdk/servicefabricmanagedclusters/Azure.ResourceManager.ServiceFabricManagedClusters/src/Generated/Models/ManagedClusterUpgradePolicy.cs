@@ -60,7 +60,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues.
         /// The timeout is reset at the start of each upgrade domain. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format.
         /// This value must be between 00:00:00 and 49710.06:28:15 (unsigned 32 bit integer for seconds)
-        ///
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedClusterUpgradePolicy(bool? forceRestart, ManagedClusterHealthPolicy healthPolicy, ManagedClusterUpgradeDeltaHealthPolicy deltaHealthPolicy, ManagedClusterMonitoringPolicy monitoringPolicy, string upgradeReplicaSetCheckTimeout, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -86,7 +85,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues.
         /// The timeout is reset at the start of each upgrade domain. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format.
         /// This value must be between 00:00:00 and 49710.06:28:15 (unsigned 32 bit integer for seconds)
-        ///
         /// </summary>
         public string UpgradeReplicaSetCheckTimeout { get; set; }
     }
