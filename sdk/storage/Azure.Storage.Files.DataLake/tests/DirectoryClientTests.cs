@@ -6043,7 +6043,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags()
         {
             // Arrange
@@ -6060,7 +6060,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTagsOAuth()
         {
             // Arrange
@@ -6078,7 +6078,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_Lease()
         {
             // Arrange
@@ -6104,7 +6104,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_LeaseFailed()
         {
             // Arrange
@@ -6125,7 +6125,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_LeaseFailed()
         {
             // Arrange
@@ -6147,8 +6147,8 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task GetSetTags_FileSas()
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetSetTags_DirectorySas()
         {
             // Arrange
             await using DisposingFileSystem test = await GetNewFileSystem();
@@ -6167,7 +6167,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSystemSas()
         {
             // Arrange
@@ -6190,7 +6190,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_AccountSas()
         {
             // Arrange
@@ -6211,7 +6211,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_DirectoryIdentitySas()
         {
             // Arrange
@@ -6237,7 +6237,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_FileSystemIdentitySas()
         {
             // Arrange
@@ -6266,7 +6266,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetTags_Error()
         {
             // Arrange
@@ -6280,7 +6280,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         }
 
         [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        //[ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task SetTags_Error()
         {
             // Arrange
