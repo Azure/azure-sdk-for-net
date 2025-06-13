@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added the following types for 3rd-party Authentication support: `AuthenticationTokenProvider`, `GetTokenOptions`, `AuthenticationToken`, `AuthenticationPolicy`, and `BearerTokenPolicy`.
+
 ### Breaking Changes
 
 ### Bugs Fixed
