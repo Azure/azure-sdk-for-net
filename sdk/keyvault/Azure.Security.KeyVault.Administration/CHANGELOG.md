@@ -1,14 +1,10 @@
 # Release History
 
-## 4.6.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 4.6.0 (2025-06-16)
 
 ### Other Changes
+
+- Service version is now `7.6`.
 
 ## 4.6.0-beta.1 (2025-04-08)
 
