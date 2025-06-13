@@ -3,9 +3,75 @@
  "name": "Type.Model.Empty",
  "apiVersions": [],
  "enums": [],
- "models": [
+ "constants": [
   {
    "$id": "2",
+   "kind": "constant",
+   "name": "putEmptyContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "4",
+   "kind": "constant",
+   "name": "getEmptyContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "5",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "6",
+   "kind": "constant",
+   "name": "postRoundTripEmptyContentType",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "7",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "constant",
+   "name": "postRoundTripEmptyContentType1",
+   "namespace": "",
+   "usage": "None",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "value": "application/json",
+   "decorators": []
+  }
+ ],
+ "models": [
+  {
+   "$id": "10",
    "kind": "model",
    "name": "EmptyInput",
    "namespace": "Type.Model.Empty",
@@ -16,7 +82,7 @@
    "properties": []
   },
   {
-   "$id": "3",
+   "$id": "11",
    "kind": "model",
    "name": "EmptyOutput",
    "namespace": "Type.Model.Empty",
@@ -27,7 +93,7 @@
    "properties": []
   },
   {
-   "$id": "4",
+   "$id": "12",
    "kind": "model",
    "name": "EmptyInputOutput",
    "namespace": "Type.Model.Empty",
@@ -40,41 +106,31 @@
  ],
  "clients": [
   {
-   "$id": "5",
+   "$id": "13",
    "kind": "client",
    "name": "EmptyClient",
    "namespace": "Type.Model.Empty",
    "doc": "Illustrates usage of empty model used in operation's parameters and responses.",
    "methods": [
     {
-     "$id": "6",
+     "$id": "14",
      "kind": "basic",
      "name": "putEmpty",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "7",
+      "$id": "15",
       "name": "putEmpty",
       "resourceName": "Empty",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "8",
+        "$id": "16",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "9",
-         "kind": "constant",
-         "valueType": {
-          "$id": "10",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "2"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -87,11 +143,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "11",
+        "$id": "17",
         "name": "input",
         "nameInRequest": "input",
         "type": {
-         "$ref": "2"
+         "$ref": "10"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -106,7 +162,7 @@
       ],
       "responses": [
        {
-        "$id": "12",
+        "$id": "18",
         "statusCodes": [
          204
         ],
@@ -128,11 +184,11 @@
      },
      "parameters": [
       {
-       "$id": "13",
+       "$id": "19",
        "name": "input",
        "nameInRequest": "input",
        "type": {
-        "$ref": "2"
+        "$ref": "10"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -145,12 +201,12 @@
        "skipUrlEncoding": false
       },
       {
-       "$id": "14",
+       "$id": "20",
        "name": "contentType",
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "9"
+        "$ref": "2"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -164,7 +220,7 @@
       }
      ],
      "response": {
-      "$id": "15"
+      "$id": "21"
      },
      "isOverride": false,
      "generateConvenient": true,
@@ -172,33 +228,23 @@
      "crossLanguageDefinitionId": "Type.Model.Empty.putEmpty"
     },
     {
-     "$id": "16",
+     "$id": "22",
      "kind": "basic",
      "name": "getEmpty",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "17",
+      "$id": "23",
       "name": "getEmpty",
       "resourceName": "Empty",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "18",
+        "$id": "24",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "19",
-         "kind": "constant",
-         "valueType": {
-          "$id": "20",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "4"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -213,12 +259,12 @@
       ],
       "responses": [
        {
-        "$id": "21",
+        "$id": "25",
         "statusCodes": [
          200
         ],
         "bodyType": {
-         "$ref": "3"
+         "$ref": "11"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -238,11 +284,11 @@
      },
      "parameters": [
       {
-       "$id": "22",
+       "$id": "26",
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "19"
+        "$ref": "4"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -256,9 +302,9 @@
       }
      ],
      "response": {
-      "$id": "23",
+      "$id": "27",
       "type": {
-       "$ref": "3"
+       "$ref": "11"
       }
      },
      "isOverride": false,
@@ -267,34 +313,24 @@
      "crossLanguageDefinitionId": "Type.Model.Empty.getEmpty"
     },
     {
-     "$id": "24",
+     "$id": "28",
      "kind": "basic",
      "name": "postRoundTripEmpty",
      "accessibility": "public",
      "apiVersions": [],
      "operation": {
-      "$id": "25",
+      "$id": "29",
       "name": "postRoundTripEmpty",
       "resourceName": "Empty",
       "accessibility": "public",
       "parameters": [
        {
-        "$id": "26",
+        "$id": "30",
         "name": "contentType",
         "nameInRequest": "Content-Type",
         "doc": "Body parameter's content type. Known values are application/json",
         "type": {
-         "$id": "27",
-         "kind": "constant",
-         "valueType": {
-          "$id": "28",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "6"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -307,21 +343,11 @@
         "skipUrlEncoding": false
        },
        {
-        "$id": "29",
+        "$id": "31",
         "name": "accept",
         "nameInRequest": "Accept",
         "type": {
-         "$id": "30",
-         "kind": "constant",
-         "valueType": {
-          "$id": "31",
-          "kind": "string",
-          "name": "string",
-          "crossLanguageDefinitionId": "TypeSpec.string",
-          "decorators": []
-         },
-         "value": "application/json",
-         "decorators": []
+         "$ref": "8"
         },
         "location": "Header",
         "isApiVersion": false,
@@ -338,7 +364,7 @@
         "name": "body",
         "nameInRequest": "body",
         "type": {
-         "$ref": "4"
+         "$ref": "12"
         },
         "location": "Body",
         "isApiVersion": false,
@@ -358,7 +384,7 @@
          200
         ],
         "bodyType": {
-         "$ref": "4"
+         "$ref": "12"
         },
         "headers": [],
         "isErrorResponse": false,
@@ -385,7 +411,7 @@
        "name": "body",
        "nameInRequest": "body",
        "type": {
-        "$ref": "4"
+        "$ref": "12"
        },
        "location": "Body",
        "isApiVersion": false,
@@ -403,7 +429,7 @@
        "nameInRequest": "contentType",
        "doc": "Body parameter's content type. Known values are application/json",
        "type": {
-        "$ref": "27"
+        "$ref": "6"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -420,7 +446,7 @@
        "name": "accept",
        "nameInRequest": "accept",
        "type": {
-        "$ref": "30"
+        "$ref": "8"
        },
        "location": "Header",
        "isApiVersion": false,
@@ -436,7 +462,7 @@
      "response": {
       "$id": "37",
       "type": {
-       "$ref": "4"
+       "$ref": "12"
       }
      },
      "isOverride": false,

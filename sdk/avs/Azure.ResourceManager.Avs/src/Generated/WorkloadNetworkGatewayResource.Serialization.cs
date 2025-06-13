@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Avs
 {
     public partial class WorkloadNetworkGatewayResource : IJsonModel<WorkloadNetworkGatewayData>
     {
+        private static WorkloadNetworkGatewayData s_dataDeserializationInstance;
+        private static WorkloadNetworkGatewayData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadNetworkGatewayData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkGatewayData>)Data).Write(writer, options);
 
-        WorkloadNetworkGatewayData IJsonModel<WorkloadNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkGatewayData>)Data).Create(ref reader, options);
+        WorkloadNetworkGatewayData IJsonModel<WorkloadNetworkGatewayData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadNetworkGatewayData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkloadNetworkGatewayData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadNetworkGatewayData>(Data, options, AzureResourceManagerAvsContext.Default);
 
         WorkloadNetworkGatewayData IPersistableModel<WorkloadNetworkGatewayData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadNetworkGatewayData>(data, options, AzureResourceManagerAvsContext.Default);
 
-        string IPersistableModel<WorkloadNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkGatewayData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadNetworkGatewayData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadNetworkGatewayData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

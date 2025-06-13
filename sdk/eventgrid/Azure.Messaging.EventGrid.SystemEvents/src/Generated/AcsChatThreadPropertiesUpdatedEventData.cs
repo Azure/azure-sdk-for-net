@@ -14,12 +14,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     public partial class AcsChatThreadPropertiesUpdatedEventData : AcsChatThreadEventInThreadBaseProperties
     {
         /// <summary> Initializes a new instance of <see cref="AcsChatThreadPropertiesUpdatedEventData"/>. </summary>
+        /// <param name="threadId"> The chat thread id. </param>
         /// <param name="editedByCommunicationIdentifier"> The communication identifier of the user who updated the thread properties. </param>
         /// <param name="properties"> The updated thread properties. </param>
         /// <param name="metadata"> The thread metadata. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="editedByCommunicationIdentifier"/>, <paramref name="properties"/> or <paramref name="metadata"/> is null. </exception>
-        internal AcsChatThreadPropertiesUpdatedEventData(CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties, IReadOnlyDictionary<string, string> metadata)
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="editedByCommunicationIdentifier"/>, <paramref name="properties"/> or <paramref name="metadata"/> is null. </exception>
+        internal AcsChatThreadPropertiesUpdatedEventData(string threadId, CommunicationIdentifierModel editedByCommunicationIdentifier, IReadOnlyDictionary<string, BinaryData> properties, IReadOnlyDictionary<string, string> metadata) : base(threadId)
         {
+            Argument.AssertNotNull(threadId, nameof(threadId));
             Argument.AssertNotNull(editedByCommunicationIdentifier, nameof(editedByCommunicationIdentifier));
             Argument.AssertNotNull(properties, nameof(properties));
             Argument.AssertNotNull(metadata, nameof(metadata));

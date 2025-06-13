@@ -4,11 +4,13 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Threading.Tasks;
-using Azure.AI.OpenAI;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 using OpenAI.Chat;
+using Azure.AI.OpenAI;
+using Azure.Core.Diagnostics;
 
 namespace Azure.AI.Projects.Tests;
 
@@ -18,16 +20,16 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
     [SyncOnly]
     public void AzureOpenAIChatCompletion()
     {
-        #region Snippet:AzureOpenAISync
+        #region Snippet:AI_Projects_AzureOpenAISync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
-        ChatClient chatClient = client.GetAzureOpenAIChatClient(modelDeploymentName);
+        AIProjectClient projectClient = new AIProjectClient(new Uri(endpoint), new DefaultAzureCredential());
+        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
 
         ChatCompletion result = chatClient.CompleteChat("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);
@@ -38,37 +40,19 @@ public class Sample_AzureOpenAI : SamplesBase<AIProjectsTestEnvironment>
     [AsyncOnly]
     public async Task AzureOpenAIChatCompletionAsync()
     {
-        #region Snippet:AzureOpenAIAsync
+        #region Snippet:AI_Projects_AzureOpenAIAsync
 #if SNIPPET
-        var connectionString = System.Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var endpoint = System.Environment.GetEnvironmentVariable("PROJECT_ENDPOINT");
         var modelDeploymentName = System.Environment.GetEnvironmentVariable("MODEL_DEPLOYMENT_NAME");
 #else
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var endpoint = TestEnvironment.PROJECTENDPOINT;
         var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
 #endif
-        AIProjectClient client = new AIProjectClient(connectionString);
-        ChatClient chatClient = client.GetAzureOpenAIChatClient(modelDeploymentName);
+        AIProjectClient projectClient = new(new Uri(endpoint), new DefaultAzureCredential());
+        ChatClient chatClient = projectClient.GetAzureOpenAIChatClient(deploymentName: modelDeploymentName, connectionName: null, apiVersion: null);
 
         ChatCompletion result = await chatClient.CompleteChatAsync("List all the rainbow colors");
         Console.WriteLine(result.Content[0].Text);
         #endregion
-    }
-
-    [Test]
-    public void ThrowsWhenNoConnection()
-    {
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        var modelDeploymentName = TestEnvironment.MODELDEPLOYMENTNAME;
-        AIProjectClient client = new AIProjectClient(connectionString);
-
-        var ex = Assert.Throws<InvalidOperationException>(() =>
-        {
-            ChatClient chatClient = client.GetAzureOpenAIChatClient("gpt-4o-mini");
-        });
-
-        Assert.AreEqual(
-            $"No connections found for '{ConnectionType.AzureOpenAI}'. At least one connection is required. Please add a new connection in the Azure AI Foundry portal by following the instructions here: https://aka.ms/azsdk/azure-ai-projects/how-to/connections-add",
-            ex.Message);
-        Console.WriteLine(ex.Message);
     }
 }

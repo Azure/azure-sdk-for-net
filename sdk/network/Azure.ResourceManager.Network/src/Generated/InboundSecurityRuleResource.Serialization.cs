@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Network
 {
     public partial class InboundSecurityRuleResource : IJsonModel<InboundSecurityRuleData>
     {
+        private static InboundSecurityRuleData s_dataDeserializationInstance;
+        private static InboundSecurityRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<InboundSecurityRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<InboundSecurityRuleData>)Data).Write(writer, options);
 
-        InboundSecurityRuleData IJsonModel<InboundSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InboundSecurityRuleData>)Data).Create(ref reader, options);
+        InboundSecurityRuleData IJsonModel<InboundSecurityRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<InboundSecurityRuleData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<InboundSecurityRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<InboundSecurityRuleData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
         InboundSecurityRuleData IPersistableModel<InboundSecurityRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<InboundSecurityRuleData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<InboundSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InboundSecurityRuleData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<InboundSecurityRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<InboundSecurityRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

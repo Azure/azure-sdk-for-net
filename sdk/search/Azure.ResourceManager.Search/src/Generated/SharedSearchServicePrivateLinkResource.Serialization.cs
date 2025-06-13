@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Search
 {
     public partial class SharedSearchServicePrivateLinkResource : IJsonModel<SharedSearchServicePrivateLinkResourceData>
     {
+        private static SharedSearchServicePrivateLinkResourceData s_dataDeserializationInstance;
+        private static SharedSearchServicePrivateLinkResourceData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<SharedSearchServicePrivateLinkResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<SharedSearchServicePrivateLinkResourceData>)Data).Write(writer, options);
 
-        SharedSearchServicePrivateLinkResourceData IJsonModel<SharedSearchServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SharedSearchServicePrivateLinkResourceData>)Data).Create(ref reader, options);
+        SharedSearchServicePrivateLinkResourceData IJsonModel<SharedSearchServicePrivateLinkResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<SharedSearchServicePrivateLinkResourceData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<SharedSearchServicePrivateLinkResourceData>(Data, options, AzureResourceManagerSearchContext.Default);
 
         SharedSearchServicePrivateLinkResourceData IPersistableModel<SharedSearchServicePrivateLinkResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<SharedSearchServicePrivateLinkResourceData>(data, options, AzureResourceManagerSearchContext.Default);
 
-        string IPersistableModel<SharedSearchServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SharedSearchServicePrivateLinkResourceData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<SharedSearchServicePrivateLinkResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<SharedSearchServicePrivateLinkResourceData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Batch
 {
     public partial class BatchAccountDetectorResource : IJsonModel<BatchAccountDetectorData>
     {
+        private static BatchAccountDetectorData s_dataDeserializationInstance;
+        private static BatchAccountDetectorData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<BatchAccountDetectorData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountDetectorData>)Data).Write(writer, options);
 
-        BatchAccountDetectorData IJsonModel<BatchAccountDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountDetectorData>)Data).Create(ref reader, options);
+        BatchAccountDetectorData IJsonModel<BatchAccountDetectorData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BatchAccountDetectorData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<BatchAccountDetectorData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<BatchAccountDetectorData>(Data, options, AzureResourceManagerBatchContext.Default);
 
         BatchAccountDetectorData IPersistableModel<BatchAccountDetectorData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<BatchAccountDetectorData>(data, options, AzureResourceManagerBatchContext.Default);
 
-        string IPersistableModel<BatchAccountDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchAccountDetectorData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<BatchAccountDetectorData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BatchAccountDetectorData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

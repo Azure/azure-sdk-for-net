@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.SecurityInsights
 {
     public partial class WorkspaceManagerGroupResource : IJsonModel<WorkspaceManagerGroupData>
     {
+        private static WorkspaceManagerGroupData s_dataDeserializationInstance;
+        private static WorkspaceManagerGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkspaceManagerGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerGroupData>)Data).Write(writer, options);
 
-        WorkspaceManagerGroupData IJsonModel<WorkspaceManagerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerGroupData>)Data).Create(ref reader, options);
+        WorkspaceManagerGroupData IJsonModel<WorkspaceManagerGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkspaceManagerGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkspaceManagerGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkspaceManagerGroupData>(Data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
         WorkspaceManagerGroupData IPersistableModel<WorkspaceManagerGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkspaceManagerGroupData>(data, options, AzureResourceManagerSecurityInsightsContext.Default);
 
-        string IPersistableModel<WorkspaceManagerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkspaceManagerGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkspaceManagerGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.DataBoxEdge
 {
     public partial class DataBoxEdgeStorageContainerResource : IJsonModel<DataBoxEdgeStorageContainerData>
     {
+        private static DataBoxEdgeStorageContainerData s_dataDeserializationInstance;
+        private static DataBoxEdgeStorageContainerData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<DataBoxEdgeStorageContainerData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageContainerData>)Data).Write(writer, options);
 
-        DataBoxEdgeStorageContainerData IJsonModel<DataBoxEdgeStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageContainerData>)Data).Create(ref reader, options);
+        DataBoxEdgeStorageContainerData IJsonModel<DataBoxEdgeStorageContainerData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<DataBoxEdgeStorageContainerData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<DataBoxEdgeStorageContainerData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DataBoxEdgeStorageContainerData>(Data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
         DataBoxEdgeStorageContainerData IPersistableModel<DataBoxEdgeStorageContainerData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DataBoxEdgeStorageContainerData>(data, options, AzureResourceManagerDataBoxEdgeContext.Default);
 
-        string IPersistableModel<DataBoxEdgeStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeStorageContainerData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<DataBoxEdgeStorageContainerData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<DataBoxEdgeStorageContainerData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

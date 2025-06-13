@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.ContainerInstance
 {
     public partial class ContainerGroupProfileRevisionResource : IJsonModel<ContainerGroupProfileData>
     {
+        private static ContainerGroupProfileData s_dataDeserializationInstance;
+        private static ContainerGroupProfileData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<ContainerGroupProfileData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ContainerGroupProfileData>)Data).Write(writer, options);
 
-        ContainerGroupProfileData IJsonModel<ContainerGroupProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerGroupProfileData>)Data).Create(ref reader, options);
+        ContainerGroupProfileData IJsonModel<ContainerGroupProfileData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ContainerGroupProfileData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<ContainerGroupProfileData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ContainerGroupProfileData>(Data, options, AzureResourceManagerContainerInstanceContext.Default);
 
         ContainerGroupProfileData IPersistableModel<ContainerGroupProfileData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ContainerGroupProfileData>(data, options, AzureResourceManagerContainerInstanceContext.Default);
 
-        string IPersistableModel<ContainerGroupProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerGroupProfileData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<ContainerGroupProfileData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ContainerGroupProfileData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

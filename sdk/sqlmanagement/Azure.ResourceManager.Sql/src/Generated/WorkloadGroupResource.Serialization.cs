@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Sql
 {
     public partial class WorkloadGroupResource : IJsonModel<WorkloadGroupData>
     {
+        private static WorkloadGroupData s_dataDeserializationInstance;
+        private static WorkloadGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<WorkloadGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadGroupData>)Data).Write(writer, options);
 
-        WorkloadGroupData IJsonModel<WorkloadGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadGroupData>)Data).Create(ref reader, options);
+        WorkloadGroupData IJsonModel<WorkloadGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<WorkloadGroupData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<WorkloadGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<WorkloadGroupData>(Data, options, AzureResourceManagerSqlContext.Default);
 
         WorkloadGroupData IPersistableModel<WorkloadGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<WorkloadGroupData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<WorkloadGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadGroupData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<WorkloadGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<WorkloadGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }

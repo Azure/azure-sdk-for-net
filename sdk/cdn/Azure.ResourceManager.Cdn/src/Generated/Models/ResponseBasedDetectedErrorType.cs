@@ -7,14 +7,26 @@
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    /// <summary> Type of response errors for real user requests for which origin will be deemed unhealthy. </summary>
+    /// <summary>
+    /// Type of response errors for real user requests for which origin will be deemed unhealthy
+    /// Serialized Name: ResponseBasedDetectedErrorTypes
+    /// </summary>
     public enum ResponseBasedDetectedErrorType
     {
-        /// <summary> None. </summary>
+        /// <summary>
+        /// None
+        /// Serialized Name: ResponseBasedDetectedErrorTypes.None
+        /// </summary>
         None,
-        /// <summary> TcpErrorsOnly. </summary>
+        /// <summary>
+        /// TcpErrorsOnly
+        /// Serialized Name: ResponseBasedDetectedErrorTypes.TcpErrorsOnly
+        /// </summary>
         TcpErrorsOnly,
-        /// <summary> TcpAndHttpErrors. </summary>
+        /// <summary>
+        /// TcpAndHttpErrors
+        /// Serialized Name: ResponseBasedDetectedErrorTypes.TcpAndHttpErrors
+        /// </summary>
         TcpAndHttpErrors
     }
 }

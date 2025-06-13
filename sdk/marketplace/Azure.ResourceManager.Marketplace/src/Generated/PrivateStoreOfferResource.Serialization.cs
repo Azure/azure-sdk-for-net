@@ -13,14 +13,17 @@ namespace Azure.ResourceManager.Marketplace
 {
     public partial class PrivateStoreOfferResource : IJsonModel<PrivateStoreOfferData>
     {
+        private static PrivateStoreOfferData s_dataDeserializationInstance;
+        private static PrivateStoreOfferData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+
         void IJsonModel<PrivateStoreOfferData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreOfferData>)Data).Write(writer, options);
 
-        PrivateStoreOfferData IJsonModel<PrivateStoreOfferData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreOfferData>)Data).Create(ref reader, options);
+        PrivateStoreOfferData IJsonModel<PrivateStoreOfferData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<PrivateStoreOfferData>)DataDeserializationInstance).Create(ref reader, options);
 
         BinaryData IPersistableModel<PrivateStoreOfferData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<PrivateStoreOfferData>(Data, options, AzureResourceManagerMarketplaceContext.Default);
 
         PrivateStoreOfferData IPersistableModel<PrivateStoreOfferData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<PrivateStoreOfferData>(data, options, AzureResourceManagerMarketplaceContext.Default);
 
-        string IPersistableModel<PrivateStoreOfferData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreOfferData>)Data).GetFormatFromOptions(options);
+        string IPersistableModel<PrivateStoreOfferData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<PrivateStoreOfferData>)DataDeserializationInstance).GetFormatFromOptions(options);
     }
 }
