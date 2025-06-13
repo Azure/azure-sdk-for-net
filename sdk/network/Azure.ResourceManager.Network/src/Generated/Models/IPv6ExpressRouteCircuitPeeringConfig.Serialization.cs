@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                JsonSerializer.Serialize(writer, RouteFilter);
+                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    routeFilter = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))

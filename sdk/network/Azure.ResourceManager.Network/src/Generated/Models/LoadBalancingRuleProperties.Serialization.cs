@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FrontendIPConfiguration))
             {
                 writer.WritePropertyName("frontendIPConfiguration"u8);
-                JsonSerializer.Serialize(writer, FrontendIPConfiguration);
+                ((IJsonModel<WritableSubResource>)FrontendIPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(BackendAddressPools))
             {
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in BackendAddressPools)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                JsonSerializer.Serialize(writer, Probe);
+                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
             }
             writer.WritePropertyName("protocol"u8);
             writer.WriteStringValue(Protocol.ToString());
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    frontendIPConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    frontendIPConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("backendAddressPool"u8))
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendAddressPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("backendAddressPools"u8))
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     backendAddressPools = array;
                     continue;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    probe = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    probe = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))

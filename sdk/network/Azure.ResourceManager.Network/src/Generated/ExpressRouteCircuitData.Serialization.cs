@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRoutePort))
             {
                 writer.WritePropertyName("expressRoutePort"u8);
-                JsonSerializer.Serialize(writer, ExpressRoutePort);
+                ((IJsonModel<WritableSubResource>)ExpressRoutePort).Write(writer, options);
             }
             if (Optional.IsDefined(BandwidthInGbps))
             {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRoutePort = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRoutePort = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("bandwidthInGbps"u8))

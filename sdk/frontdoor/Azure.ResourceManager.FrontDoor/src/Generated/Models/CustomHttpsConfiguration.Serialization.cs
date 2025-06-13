@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(Vault))
             {
                 writer.WritePropertyName("vault"u8);
-                JsonSerializer.Serialize(writer, Vault);
+                ((IJsonModel<WritableSubResource>)Vault).Write(writer, options);
             }
             if (Optional.IsDefined(SecretName))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            vault = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vault = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("secretName"u8))

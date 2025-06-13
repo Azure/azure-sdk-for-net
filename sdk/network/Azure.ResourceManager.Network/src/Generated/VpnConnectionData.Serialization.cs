@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RemoteVpnSite))
             {
                 writer.WritePropertyName("remoteVpnSite"u8);
-                JsonSerializer.Serialize(writer, RemoteVpnSite);
+                ((IJsonModel<WritableSubResource>)RemoteVpnSite).Write(writer, options);
             }
             if (Optional.IsDefined(RoutingWeight))
             {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            remoteVpnSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            remoteVpnSite = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"u8))

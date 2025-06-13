@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VpnSiteLink))
             {
                 writer.WritePropertyName("vpnSiteLink"u8);
-                JsonSerializer.Serialize(writer, VpnSiteLink);
+                ((IJsonModel<WritableSubResource>)VpnSiteLink).Write(writer, options);
             }
             if (Optional.IsDefined(RoutingWeight))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IngressNatRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in EgressNatRules)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnSiteLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vpnSiteLink = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("routingWeight"u8))
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             ingressNatRules = array;
                             continue;
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.Network
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             egressNatRules = array;
                             continue;

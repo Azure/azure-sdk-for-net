@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             if (Optional.IsDefined(DscpConfiguration))
             {
                 writer.WritePropertyName("dscpConfiguration"u8);
-                JsonSerializer.Serialize(writer, DscpConfiguration);
+                ((IJsonModel<WritableSubResource>)DscpConfiguration).Write(writer, options);
             }
             writer.WritePropertyName("ipConfigurations"u8);
             writer.WriteStartArray();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    dscpConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    dscpConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("ipConfigurations"u8))

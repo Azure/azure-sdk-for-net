@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
-                JsonSerializer.Serialize(writer, BackendPool);
+                ((IJsonModel<WritableSubResource>)BackendPool).Write(writer, options);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    backendPool = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    backendPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("@odata.type"u8))

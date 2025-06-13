@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                JsonSerializer.Serialize(writer, LoadBalancingSettings);
+                ((IJsonModel<WritableSubResource>)LoadBalancingSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                JsonSerializer.Serialize(writer, HealthProbeSettings);
+                ((IJsonModel<WritableSubResource>)HealthProbeSettings).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            loadBalancingSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadBalancingSettings = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("healthProbeSettings"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            healthProbeSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            healthProbeSettings = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))

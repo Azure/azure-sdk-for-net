@@ -7,7 +7,6 @@
 
 using System.Net;
 using System.Text.Json;
-using Azure.Maps.Common;
 
 namespace Azure.Maps.Geolocation
 {

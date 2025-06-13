@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendAddressPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                     }

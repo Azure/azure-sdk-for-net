@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(DdosProtectionPlan))
             {
                 writer.WritePropertyName("ddosProtectionPlan"u8);
-                JsonSerializer.Serialize(writer, DdosProtectionPlan);
+                ((IJsonModel<WritableSubResource>)DdosProtectionPlan).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ddosProtectionPlan = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    ddosProtectionPlan = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

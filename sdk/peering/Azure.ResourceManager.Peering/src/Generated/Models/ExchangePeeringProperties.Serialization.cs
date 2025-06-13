@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Peering.Models
             if (Optional.IsDefined(PeerAsn))
             {
                 writer.WritePropertyName("peerAsn"u8);
-                JsonSerializer.Serialize(writer, PeerAsn);
+                ((IJsonModel<WritableSubResource>)PeerAsn).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Peering.Models
                     {
                         continue;
                     }
-                    peerAsn = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    peerAsn = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         OperationStatusResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+                        value = ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(document.RootElement.GetRawText(), ModelSerializationExtensions.Options);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter
                     {
                         OperationStatusResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = JsonSerializer.Deserialize<OperationStatusResult>(document.RootElement.GetRawText());
+                        value = ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(document.RootElement.GetRawText(), ModelSerializationExtensions.Options);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {

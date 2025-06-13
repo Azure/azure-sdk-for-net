@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ModelSerializationExtensions.JsonSerialize(writer, item, ModelSerializationExtensions.Options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Text.Authoring
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ModelSerializationExtensions.JsonSerialize(writer, item, ModelSerializationExtensions.Options);
                 }
                 writer.WriteEndArray();
             }
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Text.Authoring
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     warnings = array;
                     continue;
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Text.Authoring
                     List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<ResponseError>(item.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     errors = array;
                     continue;

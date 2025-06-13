@@ -112,12 +112,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsDefined(FirewallPolicy))
             {
                 writer.WritePropertyName("firewallPolicy"u8);
-                JsonSerializer.Serialize(writer, FirewallPolicy);
+                ((IJsonModel<WritableSubResource>)FirewallPolicy).Write(writer, options);
             }
             if (Optional.IsDefined(HubIPAddresses))
             {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("firewallPolicy"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            firewallPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            firewallPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("hubIPAddresses"u8))

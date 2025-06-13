@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Container))
             {
                 writer.WritePropertyName("container"u8);
-                JsonSerializer.Serialize(writer, Container);
+                ((IJsonModel<WritableSubResource>)Container).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            container = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            container = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("ipConfigurations"u8))

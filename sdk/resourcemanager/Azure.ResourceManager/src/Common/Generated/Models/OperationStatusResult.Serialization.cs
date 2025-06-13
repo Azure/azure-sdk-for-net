@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ModelSerializationExtensions.JsonSerialize(writer, Error, ModelSerializationExtensions.Options);
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Models
                     List<OperationStatusResult> array = new List<OperationStatusResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(item.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     operations = array;
                     continue;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
             }

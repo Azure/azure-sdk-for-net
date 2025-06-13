@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(LastOperationError))
             {
                 writer.WritePropertyName("lastOperationError"u8);
-                JsonSerializer.Serialize(writer, LastOperationError);
+                ModelSerializationExtensions.JsonSerialize(writer, LastOperationError, ModelSerializationExtensions.Options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    lastOperationError = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    lastOperationError = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

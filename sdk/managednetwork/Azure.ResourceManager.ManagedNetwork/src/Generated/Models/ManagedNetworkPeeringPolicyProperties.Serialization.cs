@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             if (Optional.IsDefined(Hub))
             {
                 writer.WritePropertyName("hub"u8);
-                JsonSerializer.Serialize(writer, Hub);
+                ((IJsonModel<WritableSubResource>)Hub).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Spokes))
             {
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Spokes)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Mesh)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     {
                         continue;
                     }
-                    hub = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    hub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("spokes"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     spokes = array;
                     continue;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                     List<WritableSubResource> array = new List<WritableSubResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                        array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     mesh = array;
                     continue;

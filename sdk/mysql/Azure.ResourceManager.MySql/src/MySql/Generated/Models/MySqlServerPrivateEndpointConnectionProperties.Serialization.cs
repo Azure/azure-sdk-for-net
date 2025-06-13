@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MySql.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<WritableSubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    privateEndpoint = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("privateLinkServiceConnectionState"u8))

@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             if (Optional.IsDefined(WafSecurityPolicy))
             {
                 writer.WritePropertyName("wafSecurityPolicy"u8);
-                JsonSerializer.Serialize(writer, WafSecurityPolicy);
+                ((IJsonModel<WritableSubResource>)WafSecurityPolicy).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     {
                         continue;
                     }
-                    wafSecurityPolicy = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    wafSecurityPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

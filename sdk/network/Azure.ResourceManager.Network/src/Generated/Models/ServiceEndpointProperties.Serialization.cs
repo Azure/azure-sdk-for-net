@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkIdentifier))
             {
                 writer.WritePropertyName("networkIdentifier"u8);
-                JsonSerializer.Serialize(writer, NetworkIdentifier);
+                ((IJsonModel<WritableSubResource>)NetworkIdentifier).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Locations))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkIdentifier = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkIdentifier = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))

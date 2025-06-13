@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
-                JsonSerializer.Serialize(writer, Parent);
+                ((IJsonModel<SubResource>)Parent).Write(writer, options);
             }
             if (Optional.IsDefined(Permissions))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                             {
                                 continue;
                             }
-                            parent = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            parent = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("permissions"u8))

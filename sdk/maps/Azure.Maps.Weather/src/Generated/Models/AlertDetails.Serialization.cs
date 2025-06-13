@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
 {

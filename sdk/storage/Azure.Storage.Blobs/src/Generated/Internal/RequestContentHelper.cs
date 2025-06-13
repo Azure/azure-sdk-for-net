@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Storage.Blobs;
 
 namespace Azure.Storage.Common
 {

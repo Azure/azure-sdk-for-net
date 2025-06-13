@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.PrivateDns
             if (Optional.IsDefined(VirtualNetwork))
             {
                 writer.WritePropertyName("virtualNetwork"u8);
-                JsonSerializer.Serialize(writer, VirtualNetwork);
+                ((IJsonModel<WritableSubResource>)VirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(RegistrationEnabled))
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.PrivateDns
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.PrivateDns
                             {
                                 continue;
                             }
-                            virtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("registrationEnabled"u8))

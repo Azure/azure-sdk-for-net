@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(PacketCore))
             {
                 writer.WritePropertyName("packetCore"u8);
-                JsonSerializer.Serialize(writer, PacketCore);
+                ((IJsonModel<SubResource>)PacketCore).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    packetCore = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    packetCore = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

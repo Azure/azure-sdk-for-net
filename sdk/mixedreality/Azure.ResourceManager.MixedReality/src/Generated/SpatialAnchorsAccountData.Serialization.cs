@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.MixedReality
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                JsonSerializer.Serialize(writer, Plan);
+                ((IJsonModel<ManagedServiceIdentity>)Plan).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    plan = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    plan = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.MixedReality
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

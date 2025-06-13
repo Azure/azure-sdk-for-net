@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(MarketplaceSubscription))
             {
                 writer.WritePropertyName("marketplaceSubscription"u8);
-                JsonSerializer.Serialize(writer, MarketplaceSubscription);
+                ((IJsonModel<SubResource>)MarketplaceSubscription).Write(writer, options);
             }
             if (Optional.IsDefined(MarketplaceName))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    marketplaceSubscription = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    marketplaceSubscription = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("marketplaceName"u8))

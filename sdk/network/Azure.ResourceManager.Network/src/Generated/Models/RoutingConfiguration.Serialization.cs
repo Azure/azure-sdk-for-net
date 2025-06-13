@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(AssociatedRouteTable))
             {
                 writer.WritePropertyName("associatedRouteTable"u8);
-                JsonSerializer.Serialize(writer, AssociatedRouteTable);
+                ((IJsonModel<WritableSubResource>)AssociatedRouteTable).Write(writer, options);
             }
             if (Optional.IsDefined(PropagatedRouteTables))
             {
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(InboundRouteMap))
             {
                 writer.WritePropertyName("inboundRouteMap"u8);
-                JsonSerializer.Serialize(writer, InboundRouteMap);
+                ((IJsonModel<WritableSubResource>)InboundRouteMap).Write(writer, options);
             }
             if (Optional.IsDefined(OutboundRouteMap))
             {
                 writer.WritePropertyName("outboundRouteMap"u8);
-                JsonSerializer.Serialize(writer, OutboundRouteMap);
+                ((IJsonModel<WritableSubResource>)OutboundRouteMap).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    associatedRouteTable = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    associatedRouteTable = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("propagatedRouteTables"u8))
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    inboundRouteMap = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    inboundRouteMap = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("outboundRouteMap"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    outboundRouteMap = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    outboundRouteMap = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

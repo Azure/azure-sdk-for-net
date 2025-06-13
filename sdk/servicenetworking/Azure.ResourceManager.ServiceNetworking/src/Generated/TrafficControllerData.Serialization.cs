@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in Frontends)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WriteStartArray();
                 foreach (var item in SecurityPolicies)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             frontends = array;
                             continue;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             associations = array;
                             continue;
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                             List<SubResource> array = new List<SubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<SubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<SubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             securityPolicies = array;
                             continue;

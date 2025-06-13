@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
-                JsonSerializer.Serialize(writer, VirtualWan);
+                ((IJsonModel<WritableSubResource>)VirtualWan).Write(writer, options);
             }
             if (Optional.IsDefined(DeviceProperties))
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualWan = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualWan = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("deviceProperties"u8))

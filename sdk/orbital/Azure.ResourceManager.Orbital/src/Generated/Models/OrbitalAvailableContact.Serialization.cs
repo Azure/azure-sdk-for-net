@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Orbital.Models
             if (Optional.IsDefined(Spacecraft))
             {
                 writer.WritePropertyName("spacecraft"u8);
-                JsonSerializer.Serialize(writer, Spacecraft);
+                ((IJsonModel<WritableSubResource>)Spacecraft).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(GroundStationName))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Orbital.Models
                     {
                         continue;
                     }
-                    spacecraft = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    spacecraft = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("groundStationName"u8))

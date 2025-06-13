@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteCircuitPeering))
             {
                 writer.WritePropertyName("expressRouteCircuitPeering"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteCircuitPeering);
+                ((IJsonModel<WritableSubResource>)ExpressRouteCircuitPeering).Write(writer, options);
             }
             if (Optional.IsDefined(AuthorizationKey))
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteCircuitPeering = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            expressRouteCircuitPeering = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("authorizationKey"u8))

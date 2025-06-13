@@ -40,8 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ModelSerializationExtensions.JsonSerialize(writer, Identity, ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
             }
         }
 
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value.GetRawText(), ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
                     continue;
                 }
                 if (property.NameEquals("computeIdentityType"u8))

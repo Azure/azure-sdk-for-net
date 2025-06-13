@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
                 writer.WritePropertyName("remotePrivateEndpointConnection"u8);
-                JsonSerializer.Serialize(writer, RemotePrivateEndpointConnection);
+                ((IJsonModel<WritableSubResource>)RemotePrivateEndpointConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupConnectivityInformation))
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    remotePrivateEndpointConnection = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    remotePrivateEndpointConnection = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("groupConnectivityInformation"u8))

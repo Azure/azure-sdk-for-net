@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ModelSerializationExtensions.JsonSerialize(writer, Error, ModelSerializationExtensions.Options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStringValue(AuthorizationKey);
             }
             writer.WritePropertyName("virtualNetworkGateway1"u8);
-            JsonSerializer.Serialize(writer, VirtualNetworkGateway1);
+            ((IJsonModel<WritableSubResource>)VirtualNetworkGateway1).Write(writer, options);
             if (Optional.IsDefined(VirtualNetworkGateway2))
             {
                 writer.WritePropertyName("virtualNetworkGateway2"u8);
-                JsonSerializer.Serialize(writer, VirtualNetworkGateway2);
+                ((IJsonModel<WritableSubResource>)VirtualNetworkGateway2).Write(writer, options);
             }
             if (Optional.IsDefined(LocalNetworkGateway2))
             {
                 writer.WritePropertyName("localNetworkGateway2"u8);
-                JsonSerializer.Serialize(writer, LocalNetworkGateway2);
+                ((IJsonModel<WritableSubResource>)LocalNetworkGateway2).Write(writer, options);
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Peer))
             {
                 writer.WritePropertyName("peer"u8);
-                JsonSerializer.Serialize(writer, Peer);
+                ((IJsonModel<WritableSubResource>)Peer).Write(writer, options);
             }
             if (Optional.IsDefined(EnableBgp))
             {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Network.Models
                         }
                         if (property0.NameEquals("virtualNetworkGateway1"u8))
                         {
-                            virtualNetworkGateway1 = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetworkGateway1 = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkGateway2"u8))
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            virtualNetworkGateway2 = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetworkGateway2 = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("localNetworkGateway2"u8))
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            localNetworkGateway2 = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            localNetworkGateway2 = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("connectionType"u8))
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            peer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            peer = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("enableBgp"u8))

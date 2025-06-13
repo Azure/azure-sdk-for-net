@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(TargetVirtualNetwork))
             {
                 writer.WritePropertyName("targetVirtualNetwork"u8);
-                JsonSerializer.Serialize(writer, TargetVirtualNetwork);
+                ((IJsonModel<WritableSubResource>)TargetVirtualNetwork).Write(writer, options);
             }
             if (Optional.IsDefined(TargetSubnet))
             {
                 writer.WritePropertyName("targetSubnet"u8);
-                JsonSerializer.Serialize(writer, TargetSubnet);
+                ((IJsonModel<WritableSubResource>)TargetSubnet).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    targetVirtualNetwork = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    targetVirtualNetwork = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("targetSubnet"u8))
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    targetSubnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    targetSubnet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")
