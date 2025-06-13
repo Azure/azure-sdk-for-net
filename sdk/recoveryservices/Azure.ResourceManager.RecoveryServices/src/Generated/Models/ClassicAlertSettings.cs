@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
     /// <summary> Settings for classic alerts. </summary>
-    internal partial class ClassicAlertSettings
+    public partial class ClassicAlertSettings
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,14 +52,18 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="ClassicAlertSettings"/>. </summary>
         /// <param name="alertsForCriticalOperations"></param>
+        /// <param name="emailNotificationsForSiteRecovery"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ClassicAlertSettings(RecoveryServicesAlertsState? alertsForCriticalOperations, RecoveryServicesAlertsState? emailNotificationsForSiteRecovery, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AlertsForCriticalOperations = alertsForCriticalOperations;
+            EmailNotificationsForSiteRecovery = emailNotificationsForSiteRecovery;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the alerts for critical operations. </summary>
         public RecoveryServicesAlertsState? AlertsForCriticalOperations { get; set; }
+        /// <summary> Gets or sets the email notifications for site recovery. </summary>
+        public RecoveryServicesAlertsState? EmailNotificationsForSiteRecovery { get; set; }
     }
 }
