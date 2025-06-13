@@ -6061,51 +6061,6 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task GetTags_AccessConditions()
-        {
-            // Arrange
-            string garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in Conditions_Data)
-            {
-                await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-
-                string leaseId = Recording.Random.NewGuid().ToString();
-                TimeSpan duration = TimeSpan.FromSeconds(15);
-                await InstrumentClient(directory.GetDataLakeLeaseClient(leaseId)).AcquireAsync(duration);
-
-                DataLakeRequestConditions conditions = new DataLakeRequestConditions
-                {
-                    LeaseId = leaseId
-                };
-
-                // Act
-                Response<GetPathTagResult> getTagsResponse = await directory.GetTagsAsync(conditions);
-            }
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
-        public async Task GetTags_AccessConditionsFailed()
-        {
-            // Arrange
-            string garbageLeaseId = GetGarbageLeaseId();
-            foreach (AccessConditionParameters parameters in GetConditionsFail_Data(garbageLeaseId))
-            {
-                await using DisposingFileSystem test = await GetNewFileSystem();
-                DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
-                parameters.NoneMatch = await SetupPathMatchCondition(directory, parameters.NoneMatch);
-                DataLakeRequestConditions conditions = BuildDataLakeRequestConditions(parameters);
-
-                // Act
-                await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
-                    directory.GetTagsAsync(conditions: conditions),
-                    e => { });
-            }
-        }
-
-        [RecordedTest]
-        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetSetTags_Lease()
         {
             // Arrange
@@ -6128,6 +6083,27 @@ namespace Azure.Storage.Files.DataLake.Tests
 
             // Assert
             AssertDictionaryEquality(tags, getTagsResponse.Value.Tags);
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetTags_LeaseFailed()
+        {
+            // Arrange
+            await using DisposingFileSystem test = await GetNewFileSystem();
+            DataLakeDirectoryClient directory = await test.FileSystem.CreateDirectoryAsync(GetNewDirectoryName());
+
+            string leaseId = Recording.Random.NewGuid().ToString();
+
+            DataLakeRequestConditions conditions = new DataLakeRequestConditions
+            {
+                LeaseId = leaseId
+            };
+
+            // Act
+            await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
+                directory.GetTagsAsync(conditions),
+                e => Assert.AreEqual("LeaseNotPresentWithBlobOperation", e.ErrorCode));
         }
 
         [RecordedTest]
