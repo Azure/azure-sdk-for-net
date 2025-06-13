@@ -48,12 +48,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(PrivateLinkResource))
             {
                 writer.WritePropertyName("privateLinkResource"u8);
-                JsonSerializer.Serialize(writer, PrivateLinkResource);
+                ((IJsonModel<WritableSubResource>)PrivateLinkResource).Write(writer, options);
             }
             if (Optional.IsDefined(Profile))
             {
                 writer.WritePropertyName("profile"u8);
-                JsonSerializer.Serialize(writer, Profile);
+                ((IJsonModel<WritableSubResource>)Profile).Write(writer, options);
             }
             if (Optional.IsDefined(AccessMode))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            privateLinkResource = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            privateLinkResource = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("profile"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            profile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            profile = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("accessMode"u8))

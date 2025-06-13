@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
-                JsonSerializer.Serialize(writer, VirtualHub);
+                ((IJsonModel<WritableSubResource>)VirtualHub).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(P2SConnectionConfigurations))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(VpnServerConfiguration))
             {
                 writer.WritePropertyName("vpnServerConfiguration"u8);
-                JsonSerializer.Serialize(writer, VpnServerConfiguration);
+                ((IJsonModel<WritableSubResource>)VpnServerConfiguration).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            virtualHub = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualHub = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("p2SConnectionConfigurations"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            vpnServerConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            vpnServerConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("vpnClientConnectionHealth"u8))

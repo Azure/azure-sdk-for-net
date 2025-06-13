@@ -56,37 +56,37 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BackendAddressPool))
             {
                 writer.WritePropertyName("backendAddressPool"u8);
-                JsonSerializer.Serialize(writer, BackendAddressPool);
+                ((IJsonModel<WritableSubResource>)BackendAddressPool).Write(writer, options);
             }
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                JsonSerializer.Serialize(writer, BackendHttpSettings);
+                ((IJsonModel<WritableSubResource>)BackendHttpSettings).Write(writer, options);
             }
             if (Optional.IsDefined(HttpListener))
             {
                 writer.WritePropertyName("httpListener"u8);
-                JsonSerializer.Serialize(writer, HttpListener);
+                ((IJsonModel<WritableSubResource>)HttpListener).Write(writer, options);
             }
             if (Optional.IsDefined(UrlPathMap))
             {
                 writer.WritePropertyName("urlPathMap"u8);
-                JsonSerializer.Serialize(writer, UrlPathMap);
+                ((IJsonModel<WritableSubResource>)UrlPathMap).Write(writer, options);
             }
             if (Optional.IsDefined(RewriteRuleSet))
             {
                 writer.WritePropertyName("rewriteRuleSet"u8);
-                JsonSerializer.Serialize(writer, RewriteRuleSet);
+                ((IJsonModel<WritableSubResource>)RewriteRuleSet).Write(writer, options);
             }
             if (Optional.IsDefined(RedirectConfiguration))
             {
                 writer.WritePropertyName("redirectConfiguration"u8);
-                JsonSerializer.Serialize(writer, RedirectConfiguration);
+                ((IJsonModel<WritableSubResource>)RedirectConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(LoadDistributionPolicy))
             {
                 writer.WritePropertyName("loadDistributionPolicy"u8);
-                JsonSerializer.Serialize(writer, LoadDistributionPolicy);
+                ((IJsonModel<WritableSubResource>)LoadDistributionPolicy).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendAddressPool = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendAddressPool = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("backendHttpSettings"u8))
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            backendHttpSettings = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            backendHttpSettings = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("httpListener"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            httpListener = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            httpListener = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("urlPathMap"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            urlPathMap = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            urlPathMap = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("rewriteRuleSet"u8))
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            rewriteRuleSet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            rewriteRuleSet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("redirectConfiguration"u8))
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            redirectConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            redirectConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("loadDistributionPolicy"u8))
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            loadDistributionPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            loadDistributionPolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

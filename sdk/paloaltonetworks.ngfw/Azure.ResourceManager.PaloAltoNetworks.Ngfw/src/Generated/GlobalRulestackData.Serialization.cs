@@ -42,8 +42,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                JsonSerializer.Serialize(writer, Identity, serializeOptions);
+                ModelSerializationExtensions.JsonSerialize(writer, Identity, ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         continue;
                     }
                     var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText(), serializeOptions);
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value.GetRawText(), ModelSerializationExtensions.OptionsUseManagedServiceIdentityV3);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))

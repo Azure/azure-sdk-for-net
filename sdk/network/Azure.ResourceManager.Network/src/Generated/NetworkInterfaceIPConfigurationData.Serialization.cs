@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayLoadBalancer))
             {
                 writer.WritePropertyName("gatewayLoadBalancer"u8);
-                JsonSerializer.Serialize(writer, GatewayLoadBalancer);
+                ((IJsonModel<WritableSubResource>)GatewayLoadBalancer).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(VirtualNetworkTaps))
             {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            gatewayLoadBalancer = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            gatewayLoadBalancer = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("virtualNetworkTaps"u8))

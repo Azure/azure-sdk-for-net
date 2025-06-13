@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                JsonSerializer.Serialize(writer, IPConfiguration);
+                ((IJsonModel<WritableSubResource>)IPConfiguration).Write(writer, options);
             }
             if (Optional.IsDefined(IPAddress))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    ipConfiguration = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    ipConfiguration = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("ipAddress"u8))

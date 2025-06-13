@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Orbital
             if (Optional.IsDefined(ContactProfile))
             {
                 writer.WritePropertyName("contactProfile"u8);
-                JsonSerializer.Serialize(writer, ContactProfile);
+                ((IJsonModel<WritableSubResource>)ContactProfile).Write(writer, options);
             }
             writer.WriteEndObject();
         }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Orbital
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Orbital
                             {
                                 continue;
                             }
-                            contactProfile = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            contactProfile = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                     }

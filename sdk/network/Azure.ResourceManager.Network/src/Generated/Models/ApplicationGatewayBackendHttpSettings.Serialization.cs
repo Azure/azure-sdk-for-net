@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Probe))
             {
                 writer.WritePropertyName("probe"u8);
-                JsonSerializer.Serialize(writer, Probe);
+                ((IJsonModel<WritableSubResource>)Probe).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(AuthenticationCertificates))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthenticationCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedRootCertificates)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            probe = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            probe = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("authenticationCertificates"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             authenticationCertificates = array;
                             continue;
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             trustedRootCertificates = array;
                             continue;

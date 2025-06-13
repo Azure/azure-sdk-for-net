@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RouteFilter))
             {
                 writer.WritePropertyName("routeFilter"u8);
-                JsonSerializer.Serialize(writer, RouteFilter);
+                ((IJsonModel<WritableSubResource>)RouteFilter).Write(writer, options);
             }
             if (Optional.IsDefined(IPv6PeeringConfig))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExpressRouteConnection))
             {
                 writer.WritePropertyName("expressRouteConnection"u8);
-                JsonSerializer.Serialize(writer, ExpressRouteConnection);
+                ((IJsonModel<SubResource>)ExpressRouteConnection).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Connections))
             {
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            routeFilter = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            routeFilter = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("ipv6PeeringConfig"u8))
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            expressRouteConnection = JsonSerializer.Deserialize<SubResource>(property0.Value.GetRawText());
+                            expressRouteConnection = ModelSerializationExtensions.JsonDeserialize<SubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("connections"u8))

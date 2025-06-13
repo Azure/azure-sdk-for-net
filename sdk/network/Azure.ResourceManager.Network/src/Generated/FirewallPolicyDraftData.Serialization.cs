@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BasePolicy))
             {
                 writer.WritePropertyName("basePolicy"u8);
-                JsonSerializer.Serialize(writer, BasePolicy);
+                ((IJsonModel<WritableSubResource>)BasePolicy).Write(writer, options);
             }
             if (Optional.IsDefined(ThreatIntelMode))
             {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            basePolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            basePolicy = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("threatIntelMode"u8))

@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
-                JsonSerializer.Serialize(writer, WorkspaceId);
+                ((IJsonModel<WritableSubResource>)WorkspaceId).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    workspaceId = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    workspaceId = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

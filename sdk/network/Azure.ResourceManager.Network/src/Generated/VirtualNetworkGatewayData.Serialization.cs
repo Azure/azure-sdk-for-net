@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                JsonSerializer.Serialize(writer, ExtendedLocation);
+                ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                JsonSerializer.Serialize(writer, Identity);
+                ((IJsonModel<ManagedServiceIdentity>)Identity).Write(writer, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(GatewayDefaultSite))
             {
                 writer.WritePropertyName("gatewayDefaultSite"u8);
-                JsonSerializer.Serialize(writer, GatewayDefaultSite);
+                ((IJsonModel<WritableSubResource>)GatewayDefaultSite).Write(writer, options);
             }
             if (Optional.IsDefined(Sku))
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    extendedLocation = JsonSerializer.Deserialize<ExtendedLocation>(property.Value.GetRawText());
+                    extendedLocation = ModelSerializationExtensions.JsonDeserialize<ExtendedLocation>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("etag"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    identity = ModelSerializationExtensions.JsonDeserialize<ManagedServiceIdentity>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            gatewayDefaultSite = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            gatewayDefaultSite = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("sku"u8))

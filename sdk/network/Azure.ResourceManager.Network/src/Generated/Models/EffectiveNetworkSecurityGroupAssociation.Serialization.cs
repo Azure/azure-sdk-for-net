@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(NetworkManager))
             {
                 writer.WritePropertyName("networkManager"u8);
-                JsonSerializer.Serialize(writer, NetworkManager);
+                ((IJsonModel<WritableSubResource>)NetworkManager).Write(writer, options);
             }
             if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
-                JsonSerializer.Serialize(writer, Subnet);
+                ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             }
             if (Optional.IsDefined(NetworkInterface))
             {
                 writer.WritePropertyName("networkInterface"u8);
-                JsonSerializer.Serialize(writer, NetworkInterface);
+                ((IJsonModel<WritableSubResource>)NetworkInterface).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkManager = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkManager = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("subnet"u8))
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subnet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("networkInterface"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterface = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    networkInterface = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")
