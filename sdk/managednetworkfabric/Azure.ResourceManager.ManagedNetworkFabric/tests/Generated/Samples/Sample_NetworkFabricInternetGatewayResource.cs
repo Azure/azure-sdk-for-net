@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_InternetGatewaysGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGateways_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternetGateways_Get.json
             // this example is just showing the usage of "InternetGateways_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternetGatewayResource created on azure
             // for more information of creating NetworkFabricInternetGatewayResource, please refer to the document of NetworkFabricInternetGatewayResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string internetGatewayName = "example-internetGateway";
             ResourceIdentifier networkFabricInternetGatewayResourceId = NetworkFabricInternetGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, internetGatewayName);
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_InternetGatewaysUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/InternetGateways_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/InternetGateways_Update.json
             // this example is just showing the usage of "InternetGateways_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricInternetGatewayResource created on azure
             // for more information of creating NetworkFabricInternetGatewayResource, please refer to the document of NetworkFabricInternetGatewayResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string internetGatewayName = "example-internetGateway";
             ResourceIdentifier networkFabricInternetGatewayResourceId = NetworkFabricInternetGatewayResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, internetGatewayName);
@@ -69,11 +69,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricInternetGatewayPatch patch = new NetworkFabricInternetGatewayPatch
             {
-                InternetGatewayRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/example-internetGatewayRule"),
                 Tags =
 {
-["key81"] = "2345"
+["keyId"] = "KeyValue"
 },
+                InternetGatewayRuleId = new ResourceIdentifier("/subscriptions/xxxx-xxxx-xxxx-xxxx/providers/Microsoft.ManagedNetworkFabric/internetGatewayRules/example-internetGatewayRule"),
             };
             ArmOperation<NetworkFabricInternetGatewayResource> lro = await networkFabricInternetGateway.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricInternetGatewayResource result = lro.Value;

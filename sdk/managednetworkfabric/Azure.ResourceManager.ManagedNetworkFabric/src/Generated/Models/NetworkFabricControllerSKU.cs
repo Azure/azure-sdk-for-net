@@ -26,11 +26,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         private const string StandardValue = "Standard";
         private const string HighPerformanceValue = "HighPerformance";
 
-        /// <summary> Basic. </summary>
+        /// <summary> NfcSku-Basic. </summary>
         public static NetworkFabricControllerSKU Basic { get; } = new NetworkFabricControllerSKU(BasicValue);
-        /// <summary> Standard. </summary>
+        /// <summary> NfcSku-Standard. </summary>
         public static NetworkFabricControllerSKU Standard { get; } = new NetworkFabricControllerSKU(StandardValue);
-        /// <summary> HighPerformance. </summary>
+        /// <summary> NfcSku-HighPerformance. </summary>
         public static NetworkFabricControllerSKU HighPerformance { get; } = new NetworkFabricControllerSKU(HighPerformanceValue);
         /// <summary> Determines if two <see cref="NetworkFabricControllerSKU"/> values are the same. </summary>
         public static bool operator ==(NetworkFabricControllerSKU left, NetworkFabricControllerSKU right) => left.Equals(right);

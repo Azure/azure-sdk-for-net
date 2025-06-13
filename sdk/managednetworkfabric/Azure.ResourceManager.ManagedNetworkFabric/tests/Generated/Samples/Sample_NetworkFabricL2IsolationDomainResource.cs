@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_L2IsolationDomainsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L2IsolationDomains_Get.json
             // this example is just showing the usage of "L2IsolationDomains_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -30,9 +30,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l2IsolationDomainName = "example-l2Domain";
+            string l2IsolationDomainName = "example-l2domain";
             ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
             NetworkFabricL2IsolationDomainResource networkFabricL2IsolationDomain = client.GetNetworkFabricL2IsolationDomainResource(networkFabricL2IsolationDomainResourceId);
 
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_L2IsolationDomainsDeleteMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_Delete_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L2IsolationDomains_Delete.json
             // this example is just showing the usage of "L2IsolationDomains_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l2IsolationDomainName = "example-l2Domain";
+            string l2IsolationDomainName = "example-l2domain";
             ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
             NetworkFabricL2IsolationDomainResource networkFabricL2IsolationDomain = client.GetNetworkFabricL2IsolationDomainResource(networkFabricL2IsolationDomainResourceId);
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_L2IsolationDomainsUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_Update_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L2IsolationDomains_Update.json
             // this example is just showing the usage of "L2IsolationDomains_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -86,21 +86,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l2IsolationDomainName = "example-l2Domain";
+            string l2IsolationDomainName = "example-l2domain";
             ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
             NetworkFabricL2IsolationDomainResource networkFabricL2IsolationDomain = client.GetNetworkFabricL2IsolationDomainResource(networkFabricL2IsolationDomainResourceId);
 
             // invoke the operation
             NetworkFabricL2IsolationDomainPatch patch = new NetworkFabricL2IsolationDomainPatch
             {
-                Annotation = "annotation1",
-                Mtu = 6000,
                 Tags =
 {
-["keyID"] = "keyValue"
+["KeyId"] = "KeyValue"
 },
+                Properties = new L2IsolationDomainPatchProperties
+                {
+                    Annotation = "annotation1",
+                    Mtu = 6000,
+                    NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
+                },
             };
             ArmOperation<NetworkFabricL2IsolationDomainResource> lro = await networkFabricL2IsolationDomain.UpdateAsync(WaitUntil.Completed, patch);
             NetworkFabricL2IsolationDomainResource result = lro.Value;
@@ -114,9 +118,36 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CommitConfiguration_L2IsolationDomainsCommitConfigurationMaximumSetGen()
+        {
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L2IsolationDomains_CommitConfiguration.json
+            // this example is just showing the usage of "L2IsolationDomains_CommitConfiguration" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
+            // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
+            string resourceGroupName = "example-rg";
+            string l2IsolationDomainName = "example-l2domain";
+            ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
+            NetworkFabricL2IsolationDomainResource networkFabricL2IsolationDomain = client.GetNetworkFabricL2IsolationDomainResource(networkFabricL2IsolationDomainResourceId);
+
+            // invoke the operation
+            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricL2IsolationDomain.CommitConfigurationAsync(WaitUntil.Completed);
+            StateUpdateCommonPostActionResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpdateAdministrativeState_L2IsolationDomainsUpdateAdministrativeStateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_updateAdministrativeState_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L2IsolationDomains_UpdateAdministrativeState.json
             // this example is just showing the usage of "L2IsolationDomains_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,17 +157,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
-            string l2IsolationDomainName = "example-l2Domain";
+            string l2IsolationDomainName = "example-l2domain";
             ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
             NetworkFabricL2IsolationDomainResource networkFabricL2IsolationDomain = client.GetNetworkFabricL2IsolationDomainResource(networkFabricL2IsolationDomainResourceId);
 
             // invoke the operation
             UpdateAdministrativeStateContent content = new UpdateAdministrativeStateContent
             {
+                ResourceIds = { "" },
                 State = AdministrativeEnableState.Enable,
-                ResourceIds = { new ResourceIdentifier("") },
             };
             ArmOperation<DeviceUpdateCommonPostActionResult> lro = await networkFabricL2IsolationDomain.UpdateAdministrativeStateAsync(WaitUntil.Completed, content);
             DeviceUpdateCommonPostActionResult result = lro.Value;
@@ -148,7 +179,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task ValidateConfiguration_L2IsolationDomainsValidateConfigurationMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_ValidateConfiguration_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/L2IsolationDomains_ValidateConfiguration.json
             // this example is just showing the usage of "L2IsolationDomains_ValidateConfiguration" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,7 +189,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
             // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             string l2IsolationDomainName = "example-l2domain";
             ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
@@ -167,33 +198,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             ArmOperation<ValidateConfigurationResult> lro = await networkFabricL2IsolationDomain.ValidateConfigurationAsync(WaitUntil.Completed);
             ValidateConfigurationResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CommitConfiguration_L2IsolationDomainsCommitConfigurationMaximumSetGen()
-        {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/L2IsolationDomains_CommitConfiguration_MaximumSet_Gen.json
-            // this example is just showing the usage of "L2IsolationDomains_CommitConfiguration" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkFabricL2IsolationDomainResource created on azure
-            // for more information of creating NetworkFabricL2IsolationDomainResource, please refer to the document of NetworkFabricL2IsolationDomainResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
-            string resourceGroupName = "example-rg";
-            string l2IsolationDomainName = "example-l2domain";
-            ResourceIdentifier networkFabricL2IsolationDomainResourceId = NetworkFabricL2IsolationDomainResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, l2IsolationDomainName);
-            NetworkFabricL2IsolationDomainResource networkFabricL2IsolationDomain = client.GetNetworkFabricL2IsolationDomainResource(networkFabricL2IsolationDomainResourceId);
-
-            // invoke the operation
-            ArmOperation<StateUpdateCommonPostActionResult> lro = await networkFabricL2IsolationDomain.CommitConfigurationAsync(WaitUntil.Completed);
-            StateUpdateCommonPostActionResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }

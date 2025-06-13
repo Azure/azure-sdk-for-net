@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
+using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
@@ -21,7 +22,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_NetworkFabricsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Create_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Create.json
             // this example is just showing the usage of "NetworkFabrics_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -31,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -41,91 +42,109 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // invoke the operation
             string networkFabricName = "example-fabric";
-            NetworkFabricData data = new NetworkFabricData(
-                new AzureLocation("eastuseuap"),
+            NetworkFabricData data = new NetworkFabricData(new AzureLocation("eastuseuap"), new NetworkFabricProperties(
                 "M4-A400-A100-C16-aa",
                 new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabricControllers/example-fabricController"),
                 8,
                 "10.18.0.0/19",
                 29249L,
-                new TerminalServerConfiguration
+                new TerminalServerConfiguration("username", "xxx-xx-xx", "10.0.0.12/30", "40.0.0.14/30")
                 {
-                    PrimaryIPv4Prefix = "10.0.0.12/30",
-                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                    SecondaryIPv4Prefix = "20.0.0.13/30",
-                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
-                    Username = "username",
-                    Password = "xxxx",
                     SerialNumber = "123456",
+                    PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                    SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                 },
                 new ManagementNetworkConfigurationProperties(new VpnConfigurationProperties(PeeringOption.OptionA)
                 {
                     NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
-                    OptionBProperties = new OptionBProperties
+                    OptionBProperties = new VpnOptionBProperties
                     {
                         ImportRouteTargets = { "65046:10050" },
                         ExportRouteTargets = { "65046:10050" },
                         RouteTargets = new RouteTargetInformation
                         {
-                            ImportIPv4RouteTargets = { "65046:10039" },
-                            ImportIPv6RouteTargets = { "65046:10039" },
-                            ExportIPv4RouteTargets = { "65046:10039" },
-                            ExportIPv6RouteTargets = { "65046:10039" },
+                            ImportIPv4RouteTargets = { "65046:10050" },
+                            ImportIPv6RouteTargets = { "65046:10050" },
+                            ExportIPv4RouteTargets = { "65046:10050" },
+                            ExportIPv6RouteTargets = { "65046:10050" },
                         },
                     },
-                    OptionAProperties = new VpnConfigurationOptionAProperties
+                    OptionAProperties = new VpnOptionAProperties(3001, 1235L)
                     {
-                        PrimaryIPv4Prefix = "10.0.0.12/30",
-                        PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
-                        SecondaryIPv4Prefix = "20.0.0.13/30",
-                        SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                         Mtu = 1501,
-                        VlanId = 3001,
-                        PeerAsn = 1235L,
                         BfdConfiguration = new BfdConfiguration
                         {
                             IntervalInMilliSeconds = 300,
                             Multiplier = 10,
                         },
+                        PrimaryIPv4Prefix = "10.0.0.12/30",
+                        PrimaryIPv6Prefix = "4FFE:FFFF:0:CD30::a8/127",
+                        SecondaryIPv4Prefix = "20.0.0.13/30",
+                        SecondaryIPv6Prefix = "6FFE:FFFF:0:CD30::ac/127",
                     },
                 }, new VpnConfigurationProperties(PeeringOption.OptionA)
                 {
                     NetworkToNetworkInterconnectId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric/networkToNetworkInterconnects/example-nni"),
-                    OptionBProperties = new OptionBProperties
+                    OptionBProperties = new VpnOptionBProperties
                     {
                         ImportRouteTargets = { "65046:10050" },
                         ExportRouteTargets = { "65046:10050" },
                         RouteTargets = new RouteTargetInformation
                         {
-                            ImportIPv4RouteTargets = { "65046:10039" },
-                            ImportIPv6RouteTargets = { "65046:10039" },
-                            ExportIPv4RouteTargets = { "65046:10039" },
-                            ExportIPv6RouteTargets = { "65046:10039" },
+                            ImportIPv4RouteTargets = { "65046:10050" },
+                            ImportIPv6RouteTargets = { "65046:10050" },
+                            ExportIPv4RouteTargets = { "65046:10050" },
+                            ExportIPv6RouteTargets = { "65046:10050" },
                         },
                     },
-                    OptionAProperties = new VpnConfigurationOptionAProperties
+                    OptionAProperties = new VpnOptionAProperties(3000, 61234L)
                     {
-                        PrimaryIPv4Prefix = "10.0.0.14/30",
-                        PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
-                        SecondaryIPv4Prefix = "10.0.0.15/30",
-                        SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                         Mtu = 1500,
-                        VlanId = 3000,
-                        PeerAsn = 61234L,
                         BfdConfiguration = new BfdConfiguration
                         {
                             IntervalInMilliSeconds = 300,
                             Multiplier = 5,
                         },
+                        PrimaryIPv4Prefix = "10.0.0.14/30",
+                        PrimaryIPv6Prefix = "2FFE:FFFF:0:CD30::a7/126",
+                        SecondaryIPv4Prefix = "10.0.0.15/30",
+                        SecondaryIPv6Prefix = "2FFE:FFFF:0:CD30::ac/126",
                     },
                 }))
             {
                 Annotation = "annotation",
+                FabricVersion = "version1",
+                StorageAccountConfiguration = new StorageAccountConfiguration
+                {
+                    StorageAccountId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.Storage/storageAccounts/nfStorage"),
+                    StorageAccountIdentity = new IdentitySelector(ManagedServiceIdentitySelectorType.UserAssignedIdentity)
+                    {
+                        UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789abc/resourceGroups/myResourceGroup/providers/Microsoft.ManagedIdentity/userAssignedIdentities/my-id"),
+                    },
+                },
                 RackCount = 4,
                 IPv6Prefix = "3FFE:FFFF:0:CD40::/59",
+                HardwareAlertThreshold = 74,
+                ControlPlaneAcls = { new ResourceIdentifier("/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/accessControlLists/example-acl") },
+                TrustedIPPrefixes = { new ResourceIdentifier("/subscriptions/xxxxxx/resourceGroups/resourcegroupname/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/example-prefix") },
+                UniqueRdConfiguration = new UniqueRouteDistinguisherProperties
+                {
+                    UniqueRdConfigurationState = UniqueRouteDistinguisherConfigurationState.Enabled,
+                    NniDerivedUniqueRdConfigurationState = NNIDerivedUniqueRouteDistinguisherConfigurationState.Enabled,
+                },
+                StorageArrayCount = 1,
+            })
+            {
+                Identity = new ManagedServiceIdentity("None")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("key872")] = new UserAssignedIdentity()
+},
+                },
                 Tags =
 {
-["keyID"] = "keyValue"
+["keyId"] = "keyValue"
 },
             };
             ArmOperation<NetworkFabricResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, networkFabricName, data);
@@ -142,7 +161,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_NetworkFabricsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Get.json
             // this example is just showing the usage of "NetworkFabrics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -152,7 +171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -175,7 +194,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_NetworkFabricsListByResourceGroupMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_ListByResourceGroup_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_ListByResourceGroup.json
             // this example is just showing the usage of "NetworkFabrics_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -185,7 +204,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -210,7 +229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_NetworkFabricsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Get.json
             // this example is just showing the usage of "NetworkFabrics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -220,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -239,7 +258,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_NetworkFabricsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkFabrics_Get_MaximumSet_Gen.json
+            // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/preview/2024-06-15-preview/examples/NetworkFabrics_Get.json
             // this example is just showing the usage of "NetworkFabrics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -249,7 +268,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "1234ABCD-0A1B-1234-5678-123456ABCDEF";
+            string subscriptionId = "0000ABCD-0A0B-0000-0000-000000ABCDEF";
             string resourceGroupName = "example-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
