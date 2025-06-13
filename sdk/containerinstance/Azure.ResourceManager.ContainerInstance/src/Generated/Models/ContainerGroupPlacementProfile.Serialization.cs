@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    internal partial class PlacementProfile : IUtf8JsonSerializable, IJsonModel<PlacementProfile>
+    internal partial class ContainerGroupPlacementProfile : IUtf8JsonSerializable, IJsonModel<ContainerGroupPlacementProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PlacementProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupPlacementProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PlacementProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupPlacementProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupPlacementProfile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(FaultDomainCount))
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        PlacementProfile IJsonModel<PlacementProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerGroupPlacementProfile IJsonModel<ContainerGroupPlacementProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupPlacementProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePlacementProfile(document.RootElement, options);
+            return DeserializeContainerGroupPlacementProfile(document.RootElement, options);
         }
 
-        internal static PlacementProfile DeserializePlacementProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerGroupPlacementProfile DeserializeContainerGroupPlacementProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -96,38 +96,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PlacementProfile(faultDomainCount, serializedAdditionalRawData);
+            return new ContainerGroupPlacementProfile(faultDomainCount, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PlacementProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerGroupPlacementProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupPlacementProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PlacementProfile IPersistableModel<PlacementProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerGroupPlacementProfile IPersistableModel<ContainerGroupPlacementProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupPlacementProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePlacementProfile(document.RootElement, options);
+                        return DeserializeContainerGroupPlacementProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PlacementProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupPlacementProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PlacementProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupPlacementProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

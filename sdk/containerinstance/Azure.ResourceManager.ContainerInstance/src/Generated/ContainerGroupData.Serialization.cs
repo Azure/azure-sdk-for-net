@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.ContainerInstance
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(ContainerGroupProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
+                writer.WriteStringValue(ContainerGroupProvisioningState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(SecretReferences))
             {
@@ -209,8 +209,8 @@ namespace Azure.ResourceManager.ContainerInstance
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            string provisioningState = default;
-            IList<SecretReference> secretReferences = default;
+            ContainerGroupProvisioningState? provisioningState = default;
+            IList<ContainerGroupSecretReference> secretReferences = default;
             IList<ContainerInstanceContainer> containers = default;
             IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default;
             ContainerGroupRestartPolicy? restartPolicy = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ContainerInstance
             IList<DeploymentExtensionSpec> extensions = default;
             ConfidentialComputeProperties confidentialComputeProperties = default;
             ContainerGroupPriority? priority = default;
-            IdentityAcls identityAcls = default;
+            ContainerGroupIdentityAccessControlLevels identityAcls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -309,7 +309,11 @@ namespace Azure.ResourceManager.ContainerInstance
                     {
                         if (property0.NameEquals("provisioningState"u8))
                         {
-                            provisioningState = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            provisioningState = new ContainerGroupProvisioningState(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("secretReferences"u8))
@@ -318,10 +322,10 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            List<SecretReference> array = new List<SecretReference>();
+                            List<ContainerGroupSecretReference> array = new List<ContainerGroupSecretReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SecretReference.DeserializeSecretReference(item, options));
+                                array.Add(ContainerGroupSecretReference.DeserializeContainerGroupSecretReference(item, options));
                             }
                             secretReferences = array;
                             continue;
@@ -498,7 +502,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            identityAcls = IdentityAcls.DeserializeIdentityAcls(property0.Value, options);
+                            identityAcls = ContainerGroupIdentityAccessControlLevels.DeserializeContainerGroupIdentityAccessControlLevels(property0.Value, options);
                             continue;
                         }
                     }
@@ -519,7 +523,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 location,
                 identity,
                 provisioningState,
-                secretReferences ?? new ChangeTrackingList<SecretReference>(),
+                secretReferences ?? new ChangeTrackingList<ContainerGroupSecretReference>(),
                 containers,
                 imageRegistryCredentials ?? new ChangeTrackingList<ContainerGroupImageRegistryCredential>(),
                 restartPolicy,

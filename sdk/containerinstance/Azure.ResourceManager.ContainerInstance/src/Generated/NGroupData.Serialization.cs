@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.ContainerInstance
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            ElasticProfile elasticProfile = default;
-            PlacementProfile placementProfile = default;
+            ContainerGroupElasticProfile elasticProfile = default;
+            ContainerGroupPlacementProfile placementProfile = default;
             IList<ContainerGroupProfileStub> containerGroupProfiles = default;
             NGroupProvisioningState? provisioningState = default;
-            UpdateProfile updateProfile = default;
+            NGroupUpdateProfile updateProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            elasticProfile = ElasticProfile.DeserializeElasticProfile(property0.Value, options);
+                            elasticProfile = ContainerGroupElasticProfile.DeserializeContainerGroupElasticProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("placementProfile"u8))
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            placementProfile = PlacementProfile.DeserializePlacementProfile(property0.Value, options);
+                            placementProfile = ContainerGroupPlacementProfile.DeserializeContainerGroupPlacementProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("containerGroupProfiles"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.ContainerInstance
                             {
                                 continue;
                             }
-                            updateProfile = UpdateProfile.DeserializeUpdateProfile(property0.Value, options);
+                            updateProfile = NGroupUpdateProfile.DeserializeNGroupUpdateProfile(property0.Value, options);
                             continue;
                         }
                     }

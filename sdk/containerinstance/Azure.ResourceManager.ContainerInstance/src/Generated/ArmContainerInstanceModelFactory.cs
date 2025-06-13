@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmContainerInstanceModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ListResultContainerGroup"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
+        /// <param name="containerGroupProvisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="secretReferences"> The secret references that will be referenced within the container group. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
@@ -37,8 +37,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         ///
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
+        /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
         /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
         /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
         /// <param name="dnsConfig"> The DNS config information for a container group. </param>
@@ -50,11 +51,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="priority"> The priority of the container group. </param>
         /// <param name="identityAcls"> The access control levels of the identities. </param>
         /// <param name="zones"> The zones for the container group. </param>
-        /// <returns> A new <see cref="Models.ListResultContainerGroup"/> instance for mocking. </returns>
-        public static ListResultContainerGroup ListResultContainerGroup(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ContainerGroupProvisioningState? provisioningState = null, IEnumerable<SecretReference> secretReferences = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType osType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null, IdentityAcls identityAcls = null, IEnumerable<string> zones = null)
+        /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
+        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ContainerGroupProvisioningState? containerGroupProvisioningState = null, IEnumerable<ContainerGroupSecretReference> secretReferences = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null, ContainerGroupIdentityAccessControlLevels identityAcls = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
-            secretReferences ??= new List<SecretReference>();
+            secretReferences ??= new List<ContainerGroupSecretReference>();
             containers ??= new List<ContainerInstanceContainer>();
             imageRegistryCredentials ??= new List<ContainerGroupImageRegistryCredential>();
             volumes ??= new List<ContainerVolume>();
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             extensions ??= new List<DeploymentExtensionSpec>();
             zones ??= new List<string>();
 
-            return new ListResultContainerGroup(
+            return new ContainerGroupData(
                 id,
                 name,
                 resourceType,
@@ -71,14 +72,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 location,
                 identity,
-                provisioningState,
+                containerGroupProvisioningState,
                 secretReferences?.ToList(),
                 containers?.ToList(),
                 imageRegistryCredentials?.ToList(),
                 restartPolicy,
                 ipAddress,
-                osType,
+                containerGroupOSType,
                 volumes?.ToList(),
+                instanceView,
                 diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics, serializedAdditionalRawData: null) : null,
                 subnetIds?.ToList(),
                 dnsConfig,
@@ -226,6 +228,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceView"/>. </summary>
+        /// <param name="events"> The events of this container group. </param>
+        /// <param name="state"> The state of the container group. Only valid in response. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupInstanceView"/> instance for mocking. </returns>
+        public static ContainerGroupInstanceView ContainerGroupInstanceView(IEnumerable<ContainerEvent> events = null, string state = null)
+        {
+            events ??= new List<ContainerEvent>();
+
+            return new ContainerGroupInstanceView(events?.ToList(), state, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.InitContainerDefinitionContent"/>. </summary>
         /// <param name="name"> The name for the init container. </param>
         /// <param name="image"> The image of the init container. </param>
@@ -263,95 +276,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             events ??= new List<ContainerEvent>();
 
             return new InitContainerPropertiesDefinitionInstanceView(restartCount, currentState, previousState, events?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
-        /// <param name="secretReferences"> The secret references that will be referenced within the container group. </param>
-        /// <param name="containers"> The containers within the container group. </param>
-        /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
-        /// <param name="restartPolicy">
-        /// Restart policy for all containers within the container group.
-        /// - `Always` Always restart
-        /// - `OnFailure` Restart on failure
-        /// - `Never` Never restart
-        ///
-        /// </param>
-        /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
-        /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
-        /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
-        /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
-        /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
-        /// <param name="dnsConfig"> The DNS config information for a container group. </param>
-        /// <param name="sku"> The SKU for a container group. </param>
-        /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
-        /// <param name="initContainers"> The init containers for a container group. </param>
-        /// <param name="extensions"> extensions used by virtual kubelet. </param>
-        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
-        /// <param name="priority"> The priority of the container group. </param>
-        /// <param name="identityAcls"> The access control levels of the identities. </param>
-        /// <param name="zones"> The zones for the container group. </param>
-        /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
-        public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, string provisioningState = null, IEnumerable<SecretReference> secretReferences = null, IEnumerable<ContainerInstanceContainer> containers = null, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = null, ContainerGroupRestartPolicy? restartPolicy = null, ContainerGroupIPAddress ipAddress = null, ContainerInstanceOperatingSystemType containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = null, ContainerGroupInstanceView instanceView = null, ContainerGroupLogAnalytics diagnosticsLogAnalytics = null, IEnumerable<ContainerGroupSubnetId> subnetIds = null, ContainerGroupDnsConfiguration dnsConfig = null, ContainerGroupSku? sku = null, ContainerGroupEncryptionProperties encryptionProperties = null, IEnumerable<InitContainerDefinitionContent> initContainers = null, IEnumerable<DeploymentExtensionSpec> extensions = null, string confidentialComputeCcePolicy = null, ContainerGroupPriority? priority = null, IdentityAcls identityAcls = null, IEnumerable<string> zones = null)
-        {
-            tags ??= new Dictionary<string, string>();
-            secretReferences ??= new List<SecretReference>();
-            containers ??= new List<ContainerInstanceContainer>();
-            imageRegistryCredentials ??= new List<ContainerGroupImageRegistryCredential>();
-            volumes ??= new List<ContainerVolume>();
-            subnetIds ??= new List<ContainerGroupSubnetId>();
-            initContainers ??= new List<InitContainerDefinitionContent>();
-            extensions ??= new List<DeploymentExtensionSpec>();
-            zones ??= new List<string>();
-
-            return new ContainerGroupData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags,
-                location,
-                identity,
-                provisioningState,
-                secretReferences?.ToList(),
-                containers?.ToList(),
-                imageRegistryCredentials?.ToList(),
-                restartPolicy,
-                ipAddress,
-                containerGroupOSType,
-                volumes?.ToList(),
-                instanceView,
-                diagnosticsLogAnalytics != null ? new ContainerGroupDiagnostics(diagnosticsLogAnalytics, serializedAdditionalRawData: null) : null,
-                subnetIds?.ToList(),
-                dnsConfig,
-                sku,
-                encryptionProperties,
-                initContainers?.ToList(),
-                extensions?.ToList(),
-                confidentialComputeCcePolicy != null ? new ConfidentialComputeProperties(confidentialComputeCcePolicy, serializedAdditionalRawData: null) : null,
-                priority,
-                identityAcls,
-                zones?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerGroupInstanceView"/>. </summary>
-        /// <param name="events"> The events of this container group. </param>
-        /// <param name="state"> The state of the container group. Only valid in response. </param>
-        /// <returns> A new <see cref="Models.ContainerGroupInstanceView"/> instance for mocking. </returns>
-        public static ContainerGroupInstanceView ContainerGroupInstanceView(IEnumerable<ContainerEvent> events = null, string state = null)
-        {
-            events ??= new List<ContainerEvent>();
-
-            return new ContainerGroupInstanceView(events?.ToList(), state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceUsage"/>. </summary>
@@ -461,7 +385,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.NGroupData"/> instance for mocking. </returns>
-        public static NGroupData NGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ElasticProfile elasticProfile = null, int? placementFaultDomainCount = null, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = null, NGroupProvisioningState? provisioningState = null, UpdateProfile updateProfile = null, IEnumerable<string> zones = null)
+        public static NGroupData NGroupData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, ContainerGroupElasticProfile elasticProfile = null, int? placementFaultDomainCount = null, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = null, NGroupProvisioningState? provisioningState = null, NGroupUpdateProfile updateProfile = null, IEnumerable<string> zones = null)
         {
             tags ??= new Dictionary<string, string>();
             containerGroupProfiles ??= new List<ContainerGroupProfileStub>();
@@ -476,7 +400,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 location,
                 identity,
                 elasticProfile,
-                placementFaultDomainCount != null ? new PlacementProfile(placementFaultDomainCount, serializedAdditionalRawData: null) : null,
+                placementFaultDomainCount != null ? new ContainerGroupPlacementProfile(placementFaultDomainCount, serializedAdditionalRawData: null) : null,
                 containerGroupProfiles?.ToList(),
                 provisioningState,
                 updateProfile,
@@ -495,7 +419,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
         /// <returns> A new <see cref="Models.NGroupPatch"/> instance for mocking. </returns>
-        public static NGroupPatch NGroupPatch(SystemData systemData = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, IEnumerable<string> zones = null, ElasticProfile elasticProfile = null, int? placementFaultDomainCount = null, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = null, NGroupProvisioningState? provisioningState = null, UpdateProfile updateProfile = null)
+        public static NGroupPatch NGroupPatch(SystemData systemData = null, ManagedServiceIdentity identity = null, IDictionary<string, string> tags = null, IEnumerable<string> zones = null, ContainerGroupElasticProfile elasticProfile = null, int? placementFaultDomainCount = null, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = null, NGroupProvisioningState? provisioningState = null, NGroupUpdateProfile updateProfile = null)
         {
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
@@ -507,7 +431,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 tags,
                 zones?.ToList(),
                 elasticProfile,
-                placementFaultDomainCount != null ? new PlacementProfile(placementFaultDomainCount, serializedAdditionalRawData: null) : null,
+                placementFaultDomainCount != null ? new ContainerGroupPlacementProfile(placementFaultDomainCount, serializedAdditionalRawData: null) : null,
                 containerGroupProfiles?.ToList(),
                 provisioningState,
                 updateProfile,

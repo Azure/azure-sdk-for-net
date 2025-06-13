@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The FileShareProperties. </summary>
-    public partial class FileShareProperties
+    /// <summary> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </summary>
+    internal partial class ContainerGroupPlacementProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
-        public FileShareProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPlacementProfile"/>. </summary>
+        public ContainerGroupPlacementProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileShareProperties"/>. </summary>
-        /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
-        /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupPlacementProfile"/>. </summary>
+        /// <param name="faultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupPlacementProfile(int? faultDomainCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ShareAccessType = shareAccessType;
-            ShareAccessTier = shareAccessTier;
+            FaultDomainCount = faultDomainCount;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </summary>
-        public AzureFileShareAccessType? ShareAccessType { get; set; }
-        /// <summary> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </summary>
-        public AzureFileShareAccessTier? ShareAccessTier { get; set; }
+        /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
+        public int? FaultDomainCount { get; set; }
     }
 }

@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ListResultContainerGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ListResultContainerGroup> GetContainerGroupsAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerGroupResource> GetContainerGroupsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ListResultContainerGroup.DeserializeListResultContainerGroup(e), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ListResultContainerGroup"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ListResultContainerGroup> GetContainerGroups(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerGroupResource> GetContainerGroups(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ContainerGroupRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ContainerGroupRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ListResultContainerGroup.DeserializeListResultContainerGroup(e), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ContainerGroupResource(Client, ContainerGroupData.DeserializeContainerGroupData(e)), ContainerGroupClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetContainerGroups", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>

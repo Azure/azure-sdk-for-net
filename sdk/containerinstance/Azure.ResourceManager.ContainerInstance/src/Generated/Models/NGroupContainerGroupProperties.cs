@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public NGroupContainerGroupProperties()
         {
             SubnetIds = new ChangeTrackingList<ContainerGroupSubnetId>();
-            Volumes = new ChangeTrackingList<NGroupCGPropertyVolume>();
-            Containers = new ChangeTrackingList<NGroupCGPropertyContainer>();
+            Volumes = new ChangeTrackingList<NGroupContainerGroupPropertyVolume>();
+            Containers = new ChangeTrackingList<NGroupContainerGroupPropertyContainer>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupProperties"/>. </summary>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="volumes"> Contains information about the volumes that can be mounted by Containers in the Container Groups. </param>
         /// <param name="containers"> Contains information about Container which can be set while creating or updating the NGroups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupContainerGroupProperties(IList<ContainerGroupSubnetId> subnetIds, IList<NGroupCGPropertyVolume> volumes, IList<NGroupCGPropertyContainer> containers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupContainerGroupProperties(IList<ContainerGroupSubnetId> subnetIds, IList<NGroupContainerGroupPropertyVolume> volumes, IList<NGroupContainerGroupPropertyContainer> containers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SubnetIds = subnetIds;
             Volumes = volumes;
@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Contains information about Virtual Network Subnet ARM Resource. </summary>
         public IList<ContainerGroupSubnetId> SubnetIds { get; }
         /// <summary> Contains information about the volumes that can be mounted by Containers in the Container Groups. </summary>
-        public IList<NGroupCGPropertyVolume> Volumes { get; }
+        public IList<NGroupContainerGroupPropertyVolume> Volumes { get; }
         /// <summary> Contains information about Container which can be set while creating or updating the NGroups. </summary>
-        public IList<NGroupCGPropertyContainer> Containers { get; }
+        public IList<NGroupContainerGroupPropertyContainer> Containers { get; }
     }
 }

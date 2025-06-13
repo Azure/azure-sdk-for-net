@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupPatch(SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, IList<string> zones, ElasticProfile elasticProfile, PlacementProfile placementProfile, IList<ContainerGroupProfileStub> containerGroupProfiles, NGroupProvisioningState? provisioningState, UpdateProfile updateProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupPatch(SystemData systemData, ManagedServiceIdentity identity, IDictionary<string, string> tags, IList<string> zones, ContainerGroupElasticProfile elasticProfile, ContainerGroupPlacementProfile placementProfile, IList<ContainerGroupProfileStub> containerGroupProfiles, NGroupProvisioningState? provisioningState, NGroupUpdateProfile updateProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SystemData = systemData;
             Identity = identity;
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The zones for the NGroup. </summary>
         public IList<string> Zones { get; }
         /// <summary> The elastic profile. </summary>
-        public ElasticProfile ElasticProfile { get; set; }
+        public ContainerGroupElasticProfile ElasticProfile { get; set; }
         /// <summary> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </summary>
-        internal PlacementProfile PlacementProfile { get; set; }
+        internal ContainerGroupPlacementProfile PlacementProfile { get; set; }
         /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
         public int? PlacementFaultDomainCount
         {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             set
             {
                 if (PlacementProfile is null)
-                    PlacementProfile = new PlacementProfile();
+                    PlacementProfile = new ContainerGroupPlacementProfile();
                 PlacementProfile.FaultDomainCount = value;
             }
         }
@@ -108,6 +108,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public NGroupProvisioningState? ProvisioningState { get; }
         /// <summary> Used by the customer to specify the way to update the Container Groups in NGroup. </summary>
-        public UpdateProfile UpdateProfile { get; set; }
+        public NGroupUpdateProfile UpdateProfile { get; set; }
     }
 }

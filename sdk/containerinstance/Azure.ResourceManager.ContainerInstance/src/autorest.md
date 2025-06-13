@@ -18,7 +18,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 
-# mgmt-debug:
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -110,4 +110,57 @@ rename-mapping:
   SecurityContextCapabilitiesDefinition: ContainerSecurityContextCapabilitiesDefinition
   SecurityContextDefinition.privileged: IsPrivileged
   ContainerGroupProperties.properties.osType: ContainerGroupOsType
+  ContainerGroupProperties.properties.provisioningState: ContainerGroupProvisioningState
+  UpdateProfile: NGroupUpdateProfile
+  UpdateProfileRollingUpdateProfile: NGroupRollingUpdateProfile
+  SecretReference: ContainerGroupSecretReference
+  NetworkProfile: ContainerGroupNetworkProfile
+  ElasticProfile: ContainerGroupElasticProfile
+  PlacementProfile: ContainerGroupPlacementProfile
+  FileShare: ContainerGroupFileShare
+  FileShareProperties: ContainerGroupFileShareProperties
+  IdentityAcls: ContainerGroupIdentityAccessControlLevels
+  IdentityAccessLevel: ContainerGroupIdentityAccessLevel
+  IdentityAccessControl: ContainerGroupIdentityAccessControl
+  NGroupCGPropertyVolume: NGroupContainerGroupPropertyVolume
+  NGroupCGPropertyContainer: NGroupContainerGroupPropertyContainer
+
+directive:
+  # The list operation is expected to return the same data as the resource. However, starting from version 2024-05-01-preview, a new model was introduced for this list operation that caused a breaking change. This directive is used to mitigate the issue.
+  - from: containerInstance.json
+    where: $.definitions
+    transform: >
+      $.ContainerGroupProperties.properties.properties.properties.provisioningState['enum'] = [
+              "NotSpecified",
+              "Accepted",
+              "Pending",
+              "Updating",
+              "Creating",
+              "Repairing",
+              "Unhealthy",
+              "Failed",
+              "Canceled",
+              "Succeeded",
+              "Deleting",
+              "NotAccessible",
+              "PreProvisioned"
+            ];
+      $.ContainerGroupProperties.properties.properties.properties.provisioningState['x-ms-enum'] = {
+              "name": "ContainerGroupProvisioningState",
+              "modelAsString": true
+            };
+      $.ContainerGroupListResult.properties.value.items['$ref'] = "#/definitions/ContainerGroup";
+  # As Lro the 'Delete' operations should not return 200, however the service returns. This directive is used to mitigate the issue.
+  - from: containerInstance.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}']
+    transform: >
+      $.delete.responses['200'] = {
+            "description": "OK"
+          };
+  - from: containerInstance.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/ngroups/{ngroupsName}']
+    transform: >
+      $.delete.responses['200'] = {
+            "description": "OK"
+          };
 ```

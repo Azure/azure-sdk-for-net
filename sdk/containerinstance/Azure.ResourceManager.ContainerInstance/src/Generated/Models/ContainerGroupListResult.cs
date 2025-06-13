@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         internal ContainerGroupListResult()
         {
-            Value = new ChangeTrackingList<ListResultContainerGroup>();
+            Value = new ChangeTrackingList<ContainerGroupData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupListResult"/>. </summary>
         /// <param name="value"> The list of container groups. </param>
         /// <param name="nextLink"> The URI to fetch the next page of container groups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupListResult(IReadOnlyList<ListResultContainerGroup> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupListResult(IReadOnlyList<ContainerGroupData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> The list of container groups. </summary>
-        public IReadOnlyList<ListResultContainerGroup> Value { get; }
+        public IReadOnlyList<ContainerGroupData> Value { get; }
         /// <summary> The URI to fetch the next page of container groups. </summary>
         public string NextLink { get; }
     }

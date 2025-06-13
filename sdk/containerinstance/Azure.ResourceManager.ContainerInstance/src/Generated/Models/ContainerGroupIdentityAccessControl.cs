@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </summary>
-    internal partial class PlacementProfile
+    /// <summary> The access control for an identity. </summary>
+    public partial class ContainerGroupIdentityAccessControl
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,21 +46,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlacementProfile"/>. </summary>
-        public PlacementProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessControl"/>. </summary>
+        public ContainerGroupIdentityAccessControl()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlacementProfile"/>. </summary>
-        /// <param name="faultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessControl"/>. </summary>
+        /// <param name="access"> The access level of the identity. </param>
+        /// <param name="identity"> An identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementProfile(int? faultDomainCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupIdentityAccessControl(ContainerGroupIdentityAccessLevel? access, ResourceIdentifier identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            FaultDomainCount = faultDomainCount;
+            Access = access;
+            Identity = identity;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </summary>
-        public int? FaultDomainCount { get; set; }
+        /// <summary> The access level of the identity. </summary>
+        public ContainerGroupIdentityAccessLevel? Access { get; set; }
+        /// <summary> An identity. </summary>
+        public ResourceIdentifier Identity { get; set; }
     }
 }

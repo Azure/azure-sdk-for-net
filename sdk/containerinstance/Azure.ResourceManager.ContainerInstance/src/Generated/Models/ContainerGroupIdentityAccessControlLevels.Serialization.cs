@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class IdentityAcls : IUtf8JsonSerializable, IJsonModel<IdentityAcls>
+    public partial class ContainerGroupIdentityAccessControlLevels : IUtf8JsonSerializable, IJsonModel<ContainerGroupIdentityAccessControlLevels>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAcls>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupIdentityAccessControlLevels>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IdentityAcls>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupIdentityAccessControlLevels>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControlLevels>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityAcls)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControlLevels)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DefaultAccess))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        IdentityAcls IJsonModel<IdentityAcls>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerGroupIdentityAccessControlLevels IJsonModel<ContainerGroupIdentityAccessControlLevels>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControlLevels>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityAcls)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControlLevels)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentityAcls(document.RootElement, options);
+            return DeserializeContainerGroupIdentityAccessControlLevels(document.RootElement, options);
         }
 
-        internal static IdentityAcls DeserializeIdentityAcls(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerGroupIdentityAccessControlLevels DeserializeContainerGroupIdentityAccessControlLevels(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -86,8 +86,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IdentityAccessLevel? defaultAccess = default;
-            IList<IdentityAccessControl> acls = default;
+            ContainerGroupIdentityAccessLevel? defaultAccess = default;
+            IList<ContainerGroupIdentityAccessControl> acls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    defaultAccess = new IdentityAccessLevel(property.Value.GetString());
+                    defaultAccess = new ContainerGroupIdentityAccessLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("acls"u8))
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<IdentityAccessControl> array = new List<IdentityAccessControl>();
+                    List<ContainerGroupIdentityAccessControl> array = new List<ContainerGroupIdentityAccessControl>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IdentityAccessControl.DeserializeIdentityAccessControl(item, options));
+                        array.Add(ContainerGroupIdentityAccessControl.DeserializeContainerGroupIdentityAccessControl(item, options));
                     }
                     acls = array;
                     continue;
@@ -121,38 +121,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IdentityAcls(defaultAccess, acls ?? new ChangeTrackingList<IdentityAccessControl>(), serializedAdditionalRawData);
+            return new ContainerGroupIdentityAccessControlLevels(defaultAccess, acls ?? new ChangeTrackingList<ContainerGroupIdentityAccessControl>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IdentityAcls>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerGroupIdentityAccessControlLevels>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControlLevels>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityAcls)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControlLevels)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IdentityAcls IPersistableModel<IdentityAcls>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerGroupIdentityAccessControlLevels IPersistableModel<ContainerGroupIdentityAccessControlLevels>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAcls>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControlLevels>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIdentityAcls(document.RootElement, options);
+                        return DeserializeContainerGroupIdentityAccessControlLevels(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityAcls)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControlLevels)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IdentityAcls>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupIdentityAccessControlLevels>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

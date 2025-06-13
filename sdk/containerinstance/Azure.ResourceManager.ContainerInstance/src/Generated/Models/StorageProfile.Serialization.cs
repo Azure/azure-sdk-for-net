@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IList<FileShare> fileShares = default;
+            IList<ContainerGroupFileShare> fileShares = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<FileShare> array = new List<FileShare>();
+                    List<ContainerGroupFileShare> array = new List<ContainerGroupFileShare>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FileShare.DeserializeFileShare(item, options));
+                        array.Add(ContainerGroupFileShare.DeserializeContainerGroupFileShare(item, options));
                     }
                     fileShares = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new StorageProfile(fileShares ?? new ChangeTrackingList<FileShare>(), serializedAdditionalRawData);
+            return new StorageProfile(fileShares ?? new ChangeTrackingList<ContainerGroupFileShare>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StorageProfile>.Write(ModelReaderWriterOptions options)

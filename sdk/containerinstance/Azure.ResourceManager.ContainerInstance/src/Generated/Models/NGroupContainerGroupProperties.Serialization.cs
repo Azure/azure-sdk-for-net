@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             IList<ContainerGroupSubnetId> subnetIds = default;
-            IList<NGroupCGPropertyVolume> volumes = default;
-            IList<NGroupCGPropertyContainer> containers = default;
+            IList<NGroupContainerGroupPropertyVolume> volumes = default;
+            IList<NGroupContainerGroupPropertyContainer> containers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<NGroupCGPropertyVolume> array = new List<NGroupCGPropertyVolume>();
+                    List<NGroupContainerGroupPropertyVolume> array = new List<NGroupContainerGroupPropertyVolume>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NGroupCGPropertyVolume.DeserializeNGroupCGPropertyVolume(item, options));
+                        array.Add(NGroupContainerGroupPropertyVolume.DeserializeNGroupContainerGroupPropertyVolume(item, options));
                     }
                     volumes = array;
                     continue;
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    List<NGroupCGPropertyContainer> array = new List<NGroupCGPropertyContainer>();
+                    List<NGroupContainerGroupPropertyContainer> array = new List<NGroupContainerGroupPropertyContainer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NGroupCGPropertyContainer.DeserializeNGroupCGPropertyContainer(item, options));
+                        array.Add(NGroupContainerGroupPropertyContainer.DeserializeNGroupContainerGroupPropertyContainer(item, options));
                     }
                     containers = array;
                     continue;
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NGroupContainerGroupProperties(subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(), volumes ?? new ChangeTrackingList<NGroupCGPropertyVolume>(), containers ?? new ChangeTrackingList<NGroupCGPropertyContainer>(), serializedAdditionalRawData);
+            return new NGroupContainerGroupProperties(subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>(), volumes ?? new ChangeTrackingList<NGroupContainerGroupPropertyVolume>(), containers ?? new ChangeTrackingList<NGroupContainerGroupPropertyContainer>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NGroupContainerGroupProperties>.Write(ModelReaderWriterOptions options)

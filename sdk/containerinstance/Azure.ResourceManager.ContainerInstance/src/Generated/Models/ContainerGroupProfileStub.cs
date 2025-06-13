@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="storageProfile"> Storage profile for storage related settings of a container group profile. </param>
         /// <param name="containerGroupProperties"> Container Group properties which can be set while creating or updating the NGroups. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProfileStub(WritableSubResource resource, int? revision, NetworkProfile networkProfile, StorageProfile storageProfile, NGroupContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupProfileStub(WritableSubResource resource, int? revision, ContainerGroupNetworkProfile networkProfile, StorageProfile storageProfile, NGroupContainerGroupProperties containerGroupProperties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resource = resource;
             Revision = revision;
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The revision of the CG profile is an optional property. If customer does not to provide a revision then NGroups will pickup the latest revision of CGProfile. </summary>
         public int? Revision { get; set; }
         /// <summary> A network profile for network settings of a ContainerGroupProfile. </summary>
-        public NetworkProfile NetworkProfile { get; set; }
+        public ContainerGroupNetworkProfile NetworkProfile { get; set; }
         /// <summary> Storage profile for storage related settings of a container group profile. </summary>
         internal StorageProfile StorageProfile { get; set; }
         /// <summary> Gets the storage file shares. </summary>
-        public IList<FileShare> StorageFileShares
+        public IList<ContainerGroupFileShare> StorageFileShares
         {
             get
             {

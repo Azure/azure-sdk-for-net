@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class NetworkProfile : IUtf8JsonSerializable, IJsonModel<NetworkProfile>
+    public partial class ContainerGroupNetworkProfile : IUtf8JsonSerializable, IJsonModel<ContainerGroupNetworkProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupNetworkProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupNetworkProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupNetworkProfile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(LoadBalancer))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        NetworkProfile IJsonModel<NetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerGroupNetworkProfile IJsonModel<ContainerGroupNetworkProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNetworkProfile(document.RootElement, options);
+            return DeserializeContainerGroupNetworkProfile(document.RootElement, options);
         }
 
-        internal static NetworkProfile DeserializeNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerGroupNetworkProfile DeserializeContainerGroupNetworkProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NetworkProfile(loadBalancer, applicationGateway, serializedAdditionalRawData);
+            return new ContainerGroupNetworkProfile(loadBalancer, applicationGateway, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NetworkProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerGroupNetworkProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NetworkProfile IPersistableModel<NetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerGroupNetworkProfile IPersistableModel<ContainerGroupNetworkProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNetworkProfile(document.RootElement, options);
+                        return DeserializeContainerGroupNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupNetworkProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

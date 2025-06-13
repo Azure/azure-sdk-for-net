@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> Contains information about the volumes that can be mounted by Containers in the Container Groups. </summary>
-    public partial class NGroupCGPropertyVolume
+    /// <summary> File shares that can be mounted on container groups. </summary>
+    public partial class ContainerGroupFileShare
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,33 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyVolume"/>. </summary>
-        /// <param name="name"> The name of the volume. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public NGroupCGPropertyVolume(string name)
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShare"/>. </summary>
+        public ContainerGroupFileShare()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyVolume"/>. </summary>
-        /// <param name="name"> The name of the volume. </param>
-        /// <param name="azureFile"> The Azure File volume. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShare"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <param name="storageAccountName"></param>
+        /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupCGPropertyVolume(string name, ContainerInstanceAzureFileVolume azureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupFileShare(string name, string resourceGroupName, string storageAccountName, ContainerGroupFileShareProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            AzureFile = azureFile;
+            ResourceGroupName = resourceGroupName;
+            StorageAccountName = storageAccountName;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyVolume"/> for deserialization. </summary>
-        internal NGroupCGPropertyVolume()
-        {
-        }
-
-        /// <summary> The name of the volume. </summary>
+        /// <summary> Gets or sets the name. </summary>
         public string Name { get; set; }
-        /// <summary> The Azure File volume. </summary>
-        public ContainerInstanceAzureFileVolume AzureFile { get; set; }
+        /// <summary> Gets or sets the resource group name. </summary>
+        public string ResourceGroupName { get; set; }
+        /// <summary> Gets or sets the storage account name. </summary>
+        public string StorageAccountName { get; set; }
+        /// <summary> Gets or sets the properties. </summary>
+        public ContainerGroupFileShareProperties Properties { get; set; }
     }
 }

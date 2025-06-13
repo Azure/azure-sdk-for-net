@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         public StorageProfile()
         {
-            FileShares = new ChangeTrackingList<FileShare>();
+            FileShares = new ChangeTrackingList<ContainerGroupFileShare>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageProfile"/>. </summary>
         /// <param name="fileShares"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageProfile(IList<FileShare> fileShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StorageProfile(IList<ContainerGroupFileShare> fileShares, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileShares = fileShares;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the file shares. </summary>
-        public IList<FileShare> FileShares { get; }
+        public IList<ContainerGroupFileShare> FileShares { get; }
     }
 }

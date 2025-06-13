@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             WritableSubResource resource = default;
             int? revision = default;
-            NetworkProfile networkProfile = default;
+            ContainerGroupNetworkProfile networkProfile = default;
             StorageProfile storageProfile = default;
             NGroupContainerGroupProperties containerGroupProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    networkProfile = NetworkProfile.DeserializeNetworkProfile(property.Value, options);
+                    networkProfile = ContainerGroupNetworkProfile.DeserializeContainerGroupNetworkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageProfile"u8))

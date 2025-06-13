@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Describes the elastic profile of the NGroup. </summary>
-    public partial class ElasticProfile
+    public partial class ContainerGroupElasticProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ElasticProfile"/>. </summary>
-        public ElasticProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupElasticProfile"/>. </summary>
+        public ContainerGroupElasticProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ElasticProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupElasticProfile"/>. </summary>
         /// <param name="desiredCount"></param>
         /// <param name="maintainDesiredCount"> Flag that indicates whether desiredCount should be maintained when customer deletes SPECIFIC container groups (CGs) from the NGroups. In this case, new CGs will be created by NGroup to compensate for the specific deleted ones. </param>
         /// <param name="containerGroupNamingPolicy"> Container Groups are named on a generic guid based naming scheme/policy. Customer can modify naming policy to add prefix to CG names during scale out operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ElasticProfile(int? desiredCount, bool? maintainDesiredCount, ElasticProfileContainerGroupNamingPolicy containerGroupNamingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupElasticProfile(int? desiredCount, bool? maintainDesiredCount, ElasticProfileContainerGroupNamingPolicy containerGroupNamingPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DesiredCount = desiredCount;
             MaintainDesiredCount = maintainDesiredCount;

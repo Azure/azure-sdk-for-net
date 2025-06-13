@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> File shares that can be mounted on container groups. </summary>
-    public partial class FileShare
+    /// <summary> A network profile for network settings of a ContainerGroupProfile. Used to manage load balancer and application gateway backend pools, specifically updating the IP addresses of CGs within the backend pool. </summary>
+    public partial class ContainerGroupNetworkProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,36 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FileShare"/>. </summary>
-        public FileShare()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupNetworkProfile"/>. </summary>
+        public ContainerGroupNetworkProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FileShare"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="resourceGroupName"></param>
-        /// <param name="storageAccountName"></param>
-        /// <param name="properties"></param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupNetworkProfile"/>. </summary>
+        /// <param name="loadBalancer"> LoadBalancer the CG profile will use to interact with CGs in a backend pool. </param>
+        /// <param name="applicationGateway"> Application Gateway the CG profile will use to interact with CGs in a backend pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FileShare(string name, string resourceGroupName, string storageAccountName, FileShareProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupNetworkProfile(LoadBalancer loadBalancer, ApplicationGateway applicationGateway, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            ResourceGroupName = resourceGroupName;
-            StorageAccountName = storageAccountName;
-            Properties = properties;
+            LoadBalancer = loadBalancer;
+            ApplicationGateway = applicationGateway;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the name. </summary>
-        public string Name { get; set; }
-        /// <summary> Gets or sets the resource group name. </summary>
-        public string ResourceGroupName { get; set; }
-        /// <summary> Gets or sets the storage account name. </summary>
-        public string StorageAccountName { get; set; }
-        /// <summary> Gets or sets the properties. </summary>
-        public FileShareProperties Properties { get; set; }
+        /// <summary> LoadBalancer the CG profile will use to interact with CGs in a backend pool. </summary>
+        internal LoadBalancer LoadBalancer { get; set; }
+        /// <summary> List of Load Balancer Backend Address Pools. </summary>
+        public IList<LoadBalancerBackendAddressPool> LoadBalancerBackendAddressPools
+        {
+            get
+            {
+                if (LoadBalancer is null)
+                    LoadBalancer = new LoadBalancer();
+                return LoadBalancer.BackendAddressPools;
+            }
+        }
+
+        /// <summary> Application Gateway the CG profile will use to interact with CGs in a backend pool. </summary>
+        public ApplicationGateway ApplicationGateway { get; set; }
     }
 }

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
+        /// <param name="containerGroupProvisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="secretReferences"> The secret references that will be referenced within the container group. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <param name="identityAcls"> The access control levels of the identities. </param>
         /// <param name="zones"> The zones for the container group. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string provisioningState, IList<SecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, IdentityAcls identityAcls, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ContainerGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ContainerGroupProvisioningState? containerGroupProvisioningState, IList<ContainerGroupSecretReference> secretReferences, IList<ContainerInstanceContainer> containers, IList<ContainerGroupImageRegistryCredential> imageRegistryCredentials, ContainerGroupRestartPolicy? restartPolicy, ContainerGroupIPAddress ipAddress, ContainerInstanceOperatingSystemType containerGroupOSType, IList<ContainerVolume> volumes, ContainerGroupInstanceView instanceView, ContainerGroupDiagnostics diagnostics, IList<ContainerGroupSubnetId> subnetIds, ContainerGroupDnsConfiguration dnsConfig, ContainerGroupSku? sku, ContainerGroupEncryptionProperties encryptionProperties, IList<InitContainerDefinitionContent> initContainers, IList<DeploymentExtensionSpec> extensions, ConfidentialComputeProperties confidentialComputeProperties, ContainerGroupPriority? priority, ContainerGroupIdentityAccessControlLevels identityAcls, IList<string> zones, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
-            ProvisioningState = provisioningState;
+            ContainerGroupProvisioningState = containerGroupProvisioningState;
             SecretReferences = secretReferences;
             Containers = containers;
             ImageRegistryCredentials = imageRegistryCredentials;
@@ -121,9 +121,9 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The identity of the container group, if configured. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The provisioning state of the container group. This only appears in the response. </summary>
-        public string ProvisioningState { get; }
+        public ContainerGroupProvisioningState? ContainerGroupProvisioningState { get; }
         /// <summary> The secret references that will be referenced within the container group. </summary>
-        public IList<SecretReference> SecretReferences { get; }
+        public IList<ContainerGroupSecretReference> SecretReferences { get; }
         /// <summary> The containers within the container group. </summary>
         public IList<ContainerInstanceContainer> Containers { get; }
         /// <summary> The image registry credentials by which the container group is created from. </summary>
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <summary> The priority of the container group. </summary>
         public ContainerGroupPriority? Priority { get; set; }
         /// <summary> The access control levels of the identities. </summary>
-        public IdentityAcls IdentityAcls { get; set; }
+        public ContainerGroupIdentityAccessControlLevels IdentityAcls { get; set; }
         /// <summary> The zones for the container group. </summary>
         public IList<string> Zones { get; }
     }

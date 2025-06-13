@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> A secret reference. </summary>
-    public partial class SecretReference
+    public partial class ContainerGroupSecretReference
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SecretReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupSecretReference"/>. </summary>
         /// <param name="name"> The identifier of the secret reference. </param>
         /// <param name="identity"> The ARM resource id of the managed identity that has access to the secret in the key vault. </param>
         /// <param name="secretReferenceUri"> The URI to the secret in key vault. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="identity"/> or <paramref name="secretReferenceUri"/> is null. </exception>
-        public SecretReference(string name, ResourceIdentifier identity, Uri secretReferenceUri)
+        public ContainerGroupSecretReference(string name, ResourceIdentifier identity, Uri secretReferenceUri)
         {
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(identity, nameof(identity));
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             SecretReferenceUri = secretReferenceUri;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecretReference"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupSecretReference"/>. </summary>
         /// <param name="name"> The identifier of the secret reference. </param>
         /// <param name="identity"> The ARM resource id of the managed identity that has access to the secret in the key vault. </param>
         /// <param name="secretReferenceUri"> The URI to the secret in key vault. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecretReference(string name, ResourceIdentifier identity, Uri secretReferenceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupSecretReference(string name, ResourceIdentifier identity, Uri secretReferenceUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Identity = identity;
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecretReference"/> for deserialization. </summary>
-        internal SecretReference()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupSecretReference"/> for deserialization. </summary>
+        internal ContainerGroupSecretReference()
         {
         }
 

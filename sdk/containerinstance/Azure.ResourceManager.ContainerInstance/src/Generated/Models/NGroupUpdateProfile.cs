@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> Used by the customer to specify the way to update the Container Groups in NGroup. </summary>
-    public partial class UpdateProfile
+    public partial class NGroupUpdateProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateProfile"/>. </summary>
-        public UpdateProfile()
+        /// <summary> Initializes a new instance of <see cref="NGroupUpdateProfile"/>. </summary>
+        public NGroupUpdateProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NGroupUpdateProfile"/>. </summary>
         /// <param name="updateMode"></param>
         /// <param name="rollingUpdateProfile"> This profile allows the customers to customize the rolling update. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateProfile(NGroupUpdateMode? updateMode, UpdateProfileRollingUpdateProfile rollingUpdateProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupUpdateProfile(NGroupUpdateMode? updateMode, NGroupRollingUpdateProfile rollingUpdateProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UpdateMode = updateMode;
             RollingUpdateProfile = rollingUpdateProfile;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Gets or sets the update mode. </summary>
         public NGroupUpdateMode? UpdateMode { get; set; }
         /// <summary> This profile allows the customers to customize the rolling update. </summary>
-        public UpdateProfileRollingUpdateProfile RollingUpdateProfile { get; set; }
+        public NGroupRollingUpdateProfile RollingUpdateProfile { get; set; }
     }
 }

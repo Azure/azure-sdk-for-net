@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> Container properties that can be provided with NGroups object. </summary>
-    public partial class NGroupCGPropertyContainer
+    /// <summary> The ContainerGroupFileShareProperties. </summary>
+    public partial class ContainerGroupFileShareProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,35 +45,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyContainer"/>. </summary>
-        public NGroupCGPropertyContainer()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
+        public ContainerGroupFileShareProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NGroupCGPropertyContainer"/>. </summary>
-        /// <param name="name"> container name. </param>
-        /// <param name="properties"> container properties. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
+        /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
+        /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NGroupCGPropertyContainer(string name, NGroupCGPropertyContainerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupFileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Name = name;
-            Properties = properties;
+            ShareAccessType = shareAccessType;
+            ShareAccessTier = shareAccessTier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> container name. </summary>
-        public string Name { get; set; }
-        /// <summary> container properties. </summary>
-        internal NGroupCGPropertyContainerProperties Properties { get; set; }
-        /// <summary> Gets the n group cg property container volume mounts. </summary>
-        public IList<ContainerVolumeMount> NGroupCGPropertyContainerVolumeMounts
-        {
-            get
-            {
-                if (Properties is null)
-                    Properties = new NGroupCGPropertyContainerProperties();
-                return Properties.VolumeMounts;
-            }
-        }
+        /// <summary> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </summary>
+        public AzureFileShareAccessType? ShareAccessType { get; set; }
+        /// <summary> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </summary>
+        public AzureFileShareAccessTier? ShareAccessTier { get; set; }
     }
 }

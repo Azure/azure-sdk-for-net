@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The access control levels of the identities. </summary>
-    public partial class IdentityAcls
+    /// <summary> Container properties that can be provided with NGroups object. </summary>
+    public partial class NGroupContainerGroupPropertyContainer
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,26 +45,35 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAcls"/>. </summary>
-        public IdentityAcls()
+        /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupPropertyContainer"/>. </summary>
+        public NGroupContainerGroupPropertyContainer()
         {
-            Acls = new ChangeTrackingList<IdentityAccessControl>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAcls"/>. </summary>
-        /// <param name="defaultAccess"> The default access level. </param>
-        /// <param name="acls"> The access control levels for each identity. </param>
+        /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupPropertyContainer"/>. </summary>
+        /// <param name="name"> container name. </param>
+        /// <param name="properties"> container properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityAcls(IdentityAccessLevel? defaultAccess, IList<IdentityAccessControl> acls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupContainerGroupPropertyContainer(string name, NGroupCGPropertyContainerProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            DefaultAccess = defaultAccess;
-            Acls = acls;
+            Name = name;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The default access level. </summary>
-        public IdentityAccessLevel? DefaultAccess { get; set; }
-        /// <summary> The access control levels for each identity. </summary>
-        public IList<IdentityAccessControl> Acls { get; }
+        /// <summary> container name. </summary>
+        public string Name { get; set; }
+        /// <summary> container properties. </summary>
+        internal NGroupCGPropertyContainerProperties Properties { get; set; }
+        /// <summary> Gets the n group cg property container volume mounts. </summary>
+        public IList<ContainerVolumeMount> NGroupCGPropertyContainerVolumeMounts
+        {
+            get
+            {
+                if (Properties is null)
+                    Properties = new NGroupCGPropertyContainerProperties();
+                return Properties.VolumeMounts;
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
     /// <summary> This profile allows the customers to customize the rolling update. </summary>
-    public partial class UpdateProfileRollingUpdateProfile
+    public partial class NGroupRollingUpdateProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,18 +45,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UpdateProfileRollingUpdateProfile"/>. </summary>
-        public UpdateProfileRollingUpdateProfile()
+        /// <summary> Initializes a new instance of <see cref="NGroupRollingUpdateProfile"/>. </summary>
+        public NGroupRollingUpdateProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpdateProfileRollingUpdateProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="NGroupRollingUpdateProfile"/>. </summary>
         /// <param name="maxBatchPercent"> Maximum percentage of total Container Groups which can be updated simultaneously by rolling update in one batch. </param>
         /// <param name="maxUnhealthyPercent"> Maximum percentage of the updated Container Groups which can be in unhealthy state after each batch is updated. </param>
         /// <param name="pauseTimeBetweenBatches"> The wait time between batches after completing the one batch of the rolling update and starting the next batch. The time duration should be specified in ISO 8601 format for duration. </param>
         /// <param name="inPlaceUpdate"> Default is false. If set to true, the CGs will be updated in-place instead of creating new CG and deleting old ones. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UpdateProfileRollingUpdateProfile(int? maxBatchPercent, int? maxUnhealthyPercent, string pauseTimeBetweenBatches, bool? inPlaceUpdate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupRollingUpdateProfile(int? maxBatchPercent, int? maxUnhealthyPercent, string pauseTimeBetweenBatches, bool? inPlaceUpdate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MaxBatchPercent = maxBatchPercent;
             MaxUnhealthyPercent = maxUnhealthyPercent;

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class IdentityAccessControl : IUtf8JsonSerializable, IJsonModel<IdentityAccessControl>
+    public partial class ContainerGroupIdentityAccessControl : IUtf8JsonSerializable, IJsonModel<ContainerGroupIdentityAccessControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentityAccessControl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupIdentityAccessControl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IdentityAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupIdentityAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControl)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Access))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        IdentityAccessControl IJsonModel<IdentityAccessControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerGroupIdentityAccessControl IJsonModel<ContainerGroupIdentityAccessControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControl)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentityAccessControl(document.RootElement, options);
+            return DeserializeContainerGroupIdentityAccessControl(document.RootElement, options);
         }
 
-        internal static IdentityAccessControl DeserializeIdentityAccessControl(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerGroupIdentityAccessControl DeserializeContainerGroupIdentityAccessControl(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            IdentityAccessLevel? access = default;
+            ContainerGroupIdentityAccessLevel? access = default;
             ResourceIdentifier identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    access = new IdentityAccessLevel(property.Value.GetString());
+                    access = new ContainerGroupIdentityAccessLevel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IdentityAccessControl(access, identity, serializedAdditionalRawData);
+            return new ContainerGroupIdentityAccessControl(access, identity, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IdentityAccessControl>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerGroupIdentityAccessControl>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControl)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IdentityAccessControl IPersistableModel<IdentityAccessControl>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerGroupIdentityAccessControl IPersistableModel<ContainerGroupIdentityAccessControl>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupIdentityAccessControl>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeIdentityAccessControl(document.RootElement, options);
+                        return DeserializeContainerGroupIdentityAccessControl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityAccessControl)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupIdentityAccessControl)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IdentityAccessControl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupIdentityAccessControl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

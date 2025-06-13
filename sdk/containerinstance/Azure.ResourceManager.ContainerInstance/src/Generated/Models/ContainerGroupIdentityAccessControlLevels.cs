@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> A network profile for network settings of a ContainerGroupProfile. Used to manage load balancer and application gateway backend pools, specifically updating the IP addresses of CGs within the backend pool. </summary>
-    public partial class NetworkProfile
+    /// <summary> The access control levels of the identities. </summary>
+    public partial class ContainerGroupIdentityAccessControlLevels
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,36 +45,26 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
-        public NetworkProfile()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessControlLevels"/>. </summary>
+        public ContainerGroupIdentityAccessControlLevels()
         {
+            Acls = new ChangeTrackingList<ContainerGroupIdentityAccessControl>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkProfile"/>. </summary>
-        /// <param name="loadBalancer"> LoadBalancer the CG profile will use to interact with CGs in a backend pool. </param>
-        /// <param name="applicationGateway"> Application Gateway the CG profile will use to interact with CGs in a backend pool. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupIdentityAccessControlLevels"/>. </summary>
+        /// <param name="defaultAccess"> The default access level. </param>
+        /// <param name="acls"> The access control levels for each identity. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkProfile(LoadBalancer loadBalancer, ApplicationGateway applicationGateway, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupIdentityAccessControlLevels(ContainerGroupIdentityAccessLevel? defaultAccess, IList<ContainerGroupIdentityAccessControl> acls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LoadBalancer = loadBalancer;
-            ApplicationGateway = applicationGateway;
+            DefaultAccess = defaultAccess;
+            Acls = acls;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> LoadBalancer the CG profile will use to interact with CGs in a backend pool. </summary>
-        internal LoadBalancer LoadBalancer { get; set; }
-        /// <summary> List of Load Balancer Backend Address Pools. </summary>
-        public IList<LoadBalancerBackendAddressPool> LoadBalancerBackendAddressPools
-        {
-            get
-            {
-                if (LoadBalancer is null)
-                    LoadBalancer = new LoadBalancer();
-                return LoadBalancer.BackendAddressPools;
-            }
-        }
-
-        /// <summary> Application Gateway the CG profile will use to interact with CGs in a backend pool. </summary>
-        public ApplicationGateway ApplicationGateway { get; set; }
+        /// <summary> The default access level. </summary>
+        public ContainerGroupIdentityAccessLevel? DefaultAccess { get; set; }
+        /// <summary> The access control levels for each identity. </summary>
+        public IList<ContainerGroupIdentityAccessControl> Acls { get; }
     }
 }

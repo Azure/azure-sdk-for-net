@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The access control for an identity. </summary>
-    public partial class IdentityAccessControl
+    /// <summary> Contains information about the volumes that can be mounted by Containers in the Container Groups. </summary>
+    public partial class NGroupContainerGroupPropertyVolume
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,35 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessControl"/>. </summary>
-        public IdentityAccessControl()
+        /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupPropertyVolume"/>. </summary>
+        /// <param name="name"> The name of the volume. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
+        public NGroupContainerGroupPropertyVolume(string name)
         {
+            Argument.AssertNotNull(name, nameof(name));
+
+            Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentityAccessControl"/>. </summary>
-        /// <param name="access"> The access level of the identity. </param>
-        /// <param name="identity"> An identity. </param>
+        /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupPropertyVolume"/>. </summary>
+        /// <param name="name"> The name of the volume. </param>
+        /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentityAccessControl(IdentityAccessLevel? access, ResourceIdentifier identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NGroupContainerGroupPropertyVolume(string name, ContainerInstanceAzureFileVolume azureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Access = access;
-            Identity = identity;
+            Name = name;
+            AzureFile = azureFile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The access level of the identity. </summary>
-        public IdentityAccessLevel? Access { get; set; }
-        /// <summary> An identity. </summary>
-        public ResourceIdentifier Identity { get; set; }
+        /// <summary> Initializes a new instance of <see cref="NGroupContainerGroupPropertyVolume"/> for deserialization. </summary>
+        internal NGroupContainerGroupPropertyVolume()
+        {
+        }
+
+        /// <summary> The name of the volume. </summary>
+        public string Name { get; set; }
+        /// <summary> The Azure File volume. </summary>
+        public ContainerInstanceAzureFileVolume AzureFile { get; set; }
     }
 }

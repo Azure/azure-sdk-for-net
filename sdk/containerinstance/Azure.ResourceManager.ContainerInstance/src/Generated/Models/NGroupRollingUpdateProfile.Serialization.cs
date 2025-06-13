@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class UpdateProfileRollingUpdateProfile : IUtf8JsonSerializable, IJsonModel<UpdateProfileRollingUpdateProfile>
+    public partial class NGroupRollingUpdateProfile : IUtf8JsonSerializable, IJsonModel<NGroupRollingUpdateProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateProfileRollingUpdateProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NGroupRollingUpdateProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<UpdateProfileRollingUpdateProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NGroupRollingUpdateProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateProfileRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateProfileRollingUpdateProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NGroupRollingUpdateProfile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(MaxBatchPercent))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        UpdateProfileRollingUpdateProfile IJsonModel<UpdateProfileRollingUpdateProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NGroupRollingUpdateProfile IJsonModel<NGroupRollingUpdateProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateProfileRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateProfileRollingUpdateProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NGroupRollingUpdateProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpdateProfileRollingUpdateProfile(document.RootElement, options);
+            return DeserializeNGroupRollingUpdateProfile(document.RootElement, options);
         }
 
-        internal static UpdateProfileRollingUpdateProfile DeserializeUpdateProfileRollingUpdateProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NGroupRollingUpdateProfile DeserializeNGroupRollingUpdateProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -137,38 +137,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UpdateProfileRollingUpdateProfile(maxBatchPercent, maxUnhealthyPercent, pauseTimeBetweenBatches, inPlaceUpdate, serializedAdditionalRawData);
+            return new NGroupRollingUpdateProfile(maxBatchPercent, maxUnhealthyPercent, pauseTimeBetweenBatches, inPlaceUpdate, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<UpdateProfileRollingUpdateProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NGroupRollingUpdateProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateProfileRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateProfileRollingUpdateProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NGroupRollingUpdateProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        UpdateProfileRollingUpdateProfile IPersistableModel<UpdateProfileRollingUpdateProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NGroupRollingUpdateProfile IPersistableModel<NGroupRollingUpdateProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<UpdateProfileRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupRollingUpdateProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeUpdateProfileRollingUpdateProfile(document.RootElement, options);
+                        return DeserializeNGroupRollingUpdateProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateProfileRollingUpdateProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NGroupRollingUpdateProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<UpdateProfileRollingUpdateProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NGroupRollingUpdateProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

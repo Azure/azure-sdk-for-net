@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ElasticProfile : IUtf8JsonSerializable, IJsonModel<ElasticProfile>
+    public partial class ContainerGroupElasticProfile : IUtf8JsonSerializable, IJsonModel<ContainerGroupElasticProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerGroupElasticProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ElasticProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerGroupElasticProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupElasticProfile)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(DesiredCount))
@@ -66,19 +66,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        ElasticProfile IJsonModel<ElasticProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerGroupElasticProfile IJsonModel<ContainerGroupElasticProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupElasticProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeElasticProfile(document.RootElement, options);
+            return DeserializeContainerGroupElasticProfile(document.RootElement, options);
         }
 
-        internal static ElasticProfile DeserializeElasticProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerGroupElasticProfile DeserializeContainerGroupElasticProfile(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -126,38 +126,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticProfile(desiredCount, maintainDesiredCount, containerGroupNamingPolicy, serializedAdditionalRawData);
+            return new ContainerGroupElasticProfile(desiredCount, maintainDesiredCount, containerGroupNamingPolicy, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ElasticProfile>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerGroupElasticProfile>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupElasticProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ElasticProfile IPersistableModel<ElasticProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerGroupElasticProfile IPersistableModel<ContainerGroupElasticProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupElasticProfile>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeElasticProfile(document.RootElement, options);
+                        return DeserializeContainerGroupElasticProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupElasticProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ElasticProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerGroupElasticProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

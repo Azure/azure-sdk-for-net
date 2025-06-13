@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class NGroupCGPropertyVolume : IUtf8JsonSerializable, IJsonModel<NGroupCGPropertyVolume>
+    public partial class NGroupContainerGroupPropertyVolume : IUtf8JsonSerializable, IJsonModel<NGroupContainerGroupPropertyVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NGroupCGPropertyVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NGroupContainerGroupPropertyVolume>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<NGroupCGPropertyVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NGroupContainerGroupPropertyVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NGroupCGPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupContainerGroupPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NGroupCGPropertyVolume)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NGroupContainerGroupPropertyVolume)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("name"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
         }
 
-        NGroupCGPropertyVolume IJsonModel<NGroupCGPropertyVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NGroupContainerGroupPropertyVolume IJsonModel<NGroupContainerGroupPropertyVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NGroupCGPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupContainerGroupPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NGroupCGPropertyVolume)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NGroupContainerGroupPropertyVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNGroupCGPropertyVolume(document.RootElement, options);
+            return DeserializeNGroupContainerGroupPropertyVolume(document.RootElement, options);
         }
 
-        internal static NGroupCGPropertyVolume DeserializeNGroupCGPropertyVolume(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NGroupContainerGroupPropertyVolume DeserializeNGroupContainerGroupPropertyVolume(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new NGroupCGPropertyVolume(name, azureFile, serializedAdditionalRawData);
+            return new NGroupContainerGroupPropertyVolume(name, azureFile, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NGroupCGPropertyVolume>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NGroupContainerGroupPropertyVolume>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NGroupCGPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupContainerGroupPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerInstanceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NGroupCGPropertyVolume)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NGroupContainerGroupPropertyVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NGroupCGPropertyVolume IPersistableModel<NGroupCGPropertyVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NGroupContainerGroupPropertyVolume IPersistableModel<NGroupContainerGroupPropertyVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NGroupCGPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NGroupContainerGroupPropertyVolume>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNGroupCGPropertyVolume(document.RootElement, options);
+                        return DeserializeNGroupContainerGroupPropertyVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NGroupCGPropertyVolume)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NGroupContainerGroupPropertyVolume)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NGroupCGPropertyVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NGroupContainerGroupPropertyVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
