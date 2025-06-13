@@ -148,18 +148,18 @@
     <PackageReference Update="Azure.ResourceManager.ContainerService" Version="1.2.3" />
     <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.12" />
     <PackageReference Update="Azure.ResourceManager.EventGrid" Version="1.1.0" />
-    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.3.2" />
     <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.5" />
     <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0" />
-    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.3.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.PostgreSql" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.Redis" Version="1.5.0" />
     <PackageReference Update="Azure.ResourceManager.Resources" Version="1.9.1" />
     <PackageReference Update="Azure.ResourceManager.Search" Version="1.3.0-beta.5" />
     <PackageReference Update="Azure.ResourceManager.ServiceBus" Version="1.1.0" />
-    <PackageReference Update="Azure.ResourceManager.WebPubSub" Version="1.2.0-beta.2" />
+    <PackageReference Update="Azure.ResourceManager.WebPubSub" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.SignalR" Version="1.1.3" />
     <PackageReference Update="Azure.ResourceManager.Sql" Version="1.3.0" />
     <PackageReference Update="Azure.ResourceManager.Storage" Version="1.4.2" />
