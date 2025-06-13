@@ -3,8 +3,12 @@
 ## 12.2.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added support for preserving NFS properties and permissions in Share Files and Share Directories for Share-to-Share copy transfers.
+- Added support for preserving SMB properties and permissions in Share Directories for Share-to-Share copy transfers.
+- Added basic support for handling hard links and soft links in NFS Share-to-Share copy and Share-to-local download transfers.
 
 ### Breaking Changes
+- Added protocol validation for Share-to-Share copy transfers. Validation is enabled by default and will fail the transfer if there are no share-level permissions. To bypass this, please enable `SkipProtocolValidation`.
 
 ### Bugs Fixed
 

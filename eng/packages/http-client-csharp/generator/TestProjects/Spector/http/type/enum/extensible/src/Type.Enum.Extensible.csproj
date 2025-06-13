@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Type._Enum.Extensible client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Type._Enum.Extensible</AssemblyTitle>
+    <Description>This is the Type.Enum.Extensible client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Type.Enum.Extensible</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>_Type._Enum.Extensible</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

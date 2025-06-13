@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(SubscriptionValidationResponseConverter))]
     public partial class SubscriptionValidationResponse : IUtf8JsonSerializable, IJsonModel<SubscriptionValidationResponse>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionValidationResponse>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -137,6 +139,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class SubscriptionValidationResponseConverter : JsonConverter<SubscriptionValidationResponse>
+        {
+            public override void Write(Utf8JsonWriter writer, SubscriptionValidationResponse model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override SubscriptionValidationResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeSubscriptionValidationResponse(document.RootElement);
+            }
         }
     }
 }

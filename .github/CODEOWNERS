@@ -787,7 +787,7 @@
 # ServiceOwners:                                                   @sunilagarwal @lfittl-msft @sr-msft @niklarin
 
 # PRLabel: %Provisioning
-/sdk/provisioning/                                                 @ArthurMa1978 @ArcturusZhang
+/sdk/provisioning/                                                 @ArthurMa1978 @m-nash @ArcturusZhang
 
 # ServiceLabel: %Provisioning
 # AzureSdkOwners:                                                  @ArthurMa1978
@@ -961,6 +961,12 @@
 # -----------------------------------------------------------------
 # ServiceLabel: %Mgmt
 # AzureSdkOwners:                                                  @ArthurMa1978
+
+# PRLabel: %API Center
+/sdk/apicenter/Azure.ResourceManager.ApiCenter/                    @alexyaang @azaslonov
+
+# ServiceLabel: %API Center %Mgmt
+# ServiceOwners:                                                   @alexyaang @azaslonov
 
 # PRLabel: %ARM
 /sdk/resources/Azure.ResourceManager.*/                            @Azure/arm-sdk-owners

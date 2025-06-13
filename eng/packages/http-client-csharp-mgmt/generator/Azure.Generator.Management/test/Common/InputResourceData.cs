@@ -18,9 +18,9 @@ namespace Azure.Generator.Management.Tests.Common
                         usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json,
                         properties:
                         [
-                            InputFactory.Property("id", InputPrimitiveType.String),
-                            InputFactory.Property("type", InputPrimitiveType.String),
-                            InputFactory.Property("name", InputFactory.Primitive.String()),
+                            InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                            InputFactory.Property("name", InputFactory.Primitive.String(), isReadOnly: true),
                         ],
                         decorators: [new InputDecoratorInfo(KnownDecorators.ArmResourceInternal, null)]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the _Type._Array client library for developing .NET applications with rich experience.</Description>
-    <AssemblyTitle>SDK Code Generation _Type._Array</AssemblyTitle>
+    <Description>This is the Type.Array client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Type.Array</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>_Type._Array</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>

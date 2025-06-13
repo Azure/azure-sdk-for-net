@@ -18,6 +18,7 @@ using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Identity.Client;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 
@@ -837,6 +838,30 @@ namespace Azure.Identity.Tests
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
 
             Assert.That(ex.Message, Does.Contain(ImdsManagedIdentityProbeSource.NoResponseError));
+
+            await Task.CompletedTask;
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task ThrowsCredentialUnavailableWhenIMDSTimesOut()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var mockTransport = new MockTransport(req =>
+            {
+                throw new MsalServiceException(MsalError.ManagedIdentityRequestFailed, "Retry failed", new RequestFailedException("Operation timed out (169.254.169.254:80"));
+            });
+            var options = new TokenCredentialOptions() { IsChainedCredential = false, Transport = mockTransport };
+
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { IsForceRefreshEnabled = true, Options = options, Pipeline = CredentialPipeline.GetInstance(options, IsManagedIdentityCredential: true) })
+            ));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
+
+            Assert.That(ex.Message, Does.Contain(ManagedIdentityClient.MsiUnavailableError));
 
             await Task.CompletedTask;
         }

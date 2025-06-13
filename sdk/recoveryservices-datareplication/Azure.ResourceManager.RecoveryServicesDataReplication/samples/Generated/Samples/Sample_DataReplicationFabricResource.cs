@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             DataReplicationFabricPatch patch = new DataReplicationFabricPatch
             {
                 Tags = { },
-                Properties = new DataReplicationFabricProperties(null),
+                Properties = new DataReplicationFabricProperties(default),
             };
             ArmOperation<DataReplicationFabricResource> lro = await dataReplicationFabric.UpdateAsync(WaitUntil.Completed, patch);
             DataReplicationFabricResource result = lro.Value;

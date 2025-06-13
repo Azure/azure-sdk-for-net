@@ -9,10 +9,12 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
+    [JsonConverter(typeof(IotHubDeviceDisconnectedEventDataConverter))]
     public partial class IotHubDeviceDisconnectedEventData : IUtf8JsonSerializable, IJsonModel<IotHubDeviceDisconnectedEventData>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubDeviceDisconnectedEventData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
@@ -139,6 +141,20 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
             return content;
+        }
+
+        internal partial class IotHubDeviceDisconnectedEventDataConverter : JsonConverter<IotHubDeviceDisconnectedEventData>
+        {
+            public override void Write(Utf8JsonWriter writer, IotHubDeviceDisconnectedEventData model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            public override IotHubDeviceDisconnectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using var document = JsonDocument.ParseValue(ref reader);
+                return DeserializeIotHubDeviceDisconnectedEventData(document.RootElement);
+            }
         }
     }
 }
