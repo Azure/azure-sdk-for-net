@@ -1,12 +1,6 @@
 # Release History
 
-## 4.8.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 4.8.0 (2025-06-13)
 
 ### Other Changes
 
