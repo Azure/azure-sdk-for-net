@@ -93,7 +93,6 @@ namespace Azure.Security.KeyVault.Keys.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/50620")]
         public async Task ResolveSecretId()
         {
             SecretClient secretClient = GetSecretClient();
