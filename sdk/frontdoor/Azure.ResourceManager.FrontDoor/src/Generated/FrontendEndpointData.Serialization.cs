@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
+                ((IJsonModel<WritableSubResource>)WebApplicationFirewallPolicyLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.FrontDoor
                             {
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            webApplicationFirewallPolicyLink = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))

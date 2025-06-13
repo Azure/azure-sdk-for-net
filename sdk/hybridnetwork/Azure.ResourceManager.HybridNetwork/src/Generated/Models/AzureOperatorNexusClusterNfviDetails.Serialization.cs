@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(CustomLocationReference))
             {
                 writer.WritePropertyName("customLocationReference"u8);
-                JsonSerializer.Serialize(writer, CustomLocationReference);
+                ((IJsonModel<WritableSubResource>)CustomLocationReference).Write(writer, options);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    customLocationReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    customLocationReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))

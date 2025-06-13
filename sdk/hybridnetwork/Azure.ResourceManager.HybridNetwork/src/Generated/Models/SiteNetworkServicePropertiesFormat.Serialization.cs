@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(SiteReference))
             {
                 writer.WritePropertyName("siteReference"u8);
-                JsonSerializer.Serialize(writer, SiteReference);
+                ((IJsonModel<WritableSubResource>)SiteReference).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in DesiredStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 foreach (var item in LastStateConfigurationGroupValueReferences)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<WritableSubResource>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    siteReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    siteReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("publisherName"u8))
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     desiredStateConfigurationGroupValueReferences = dictionary;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     Dictionary<string, WritableSubResource> dictionary = new Dictionary<string, WritableSubResource>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     lastStateConfigurationGroupValueReferences = dictionary;
                     continue;

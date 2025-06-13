@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ArtifactStoreReference))
             {
                 writer.WritePropertyName("artifactStoreReference"u8);
-                JsonSerializer.Serialize(writer, ArtifactStoreReference);
+                ((IJsonModel<WritableSubResource>)ArtifactStoreReference).Write(writer, options);
             }
             if (Optional.IsDefined(ArtifactName))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactStoreReference = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    artifactStoreReference = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("artifactName"u8))

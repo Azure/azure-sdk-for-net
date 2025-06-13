@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(LastTriggerError))
             {
                 writer.WritePropertyName("lastTriggerError"u8);
-                JsonSerializer.Serialize(writer, LastTriggerError);
+                ModelSerializationExtensions.JsonSerialize(writer, LastTriggerError, ModelSerializationExtensions.Options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(LastTriggerUpgradeVersions))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    lastTriggerError = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    lastTriggerError = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("lastTriggerUpgradeVersions"u8))

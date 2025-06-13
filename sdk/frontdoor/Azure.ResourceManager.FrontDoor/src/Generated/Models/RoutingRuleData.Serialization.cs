@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    JsonSerializer.Serialize(writer, item);
+                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             if (Optional.IsDefined(RulesEngine))
             {
                 writer.WritePropertyName("rulesEngine"u8);
-                JsonSerializer.Serialize(writer, RulesEngine);
+                ((IJsonModel<WritableSubResource>)RulesEngine).Write(writer, options);
             }
             if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                JsonSerializer.Serialize(writer, WebApplicationFirewallPolicyLink);
+                ((IJsonModel<WritableSubResource>)WebApplicationFirewallPolicyLink).Write(writer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceState))
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             List<WritableSubResource> array = new List<WritableSubResource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(JsonSerializer.Deserialize<WritableSubResource>(item.GetRawText()));
+                                array.Add(ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(item.GetRawText(), ModelSerializationExtensions.Options));
                             }
                             frontendEndpoints = array;
                             continue;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            rulesEngine = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            rulesEngine = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("webApplicationFirewallPolicyLink"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                             {
                                 continue;
                             }
-                            webApplicationFirewallPolicyLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            webApplicationFirewallPolicyLink = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("resourceState"u8))

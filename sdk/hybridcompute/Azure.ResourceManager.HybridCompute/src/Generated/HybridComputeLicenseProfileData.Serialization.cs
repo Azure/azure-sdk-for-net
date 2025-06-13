@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                JsonSerializer.Serialize(writer, Error);
+                ModelSerializationExtensions.JsonSerialize(writer, Error, ModelSerializationExtensions.Options);
             }
             if (Optional.IsCollectionDefined(ProductFeatures))
             {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.HybridCompute
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.HybridCompute
                                     {
                                         continue;
                                     }
-                                    error = JsonSerializer.Deserialize<ResponseError>(property1.Value.GetRawText());
+                                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property1.Value.GetRawText(), ModelSerializationExtensions.Options);
                                     continue;
                                 }
                                 if (property1.NameEquals("productFeatures"u8))
