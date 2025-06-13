@@ -142,7 +142,7 @@
     <PackageReference Update="Azure.ResourceManager.Batch" Version="1.4.0" />
     <PackageReference Update="Azure.ResourceManager.CognitiveServices" Version="1.3.3" />
     <PackageReference Update="Azure.ResourceManager.CosmosDB" Version="1.4.0-beta.9" />
-    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.KeyVault" Version="1.2.3" />
     <PackageReference Update="Azure.ResourceManager.ManagedServiceIdentities" Version="1.2.3" />
     <PackageReference Update="Azure.ResourceManager.OperationalInsights" Version="1.2.2" />
@@ -323,7 +323,7 @@
     <PackageReference Update="Azure.ResourceManager.Kubernetes" Version="1.0.0-beta.3" />
     <PackageReference Update="Azure.ResourceManager.KubernetesConfiguration" Version="1.2.0-beta.1" />
     <PackageReference Update="Azure.ResourceManager.ExtendedLocations" Version="1.1.0-beta.1" />
-    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0-beta.1" />
+    <PackageReference Update="Azure.ResourceManager.EventHubs" Version="1.2.0" />
     <PackageReference Update="Azure.ResourceManager.ContainerRegistry" Version="1.3.0-beta.1" />
     <PackageReference Update="Azure.Search.Documents" Version="11.6.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.6.0" />
