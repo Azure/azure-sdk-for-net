@@ -8,6 +8,7 @@ using Azure.Core.TestFramework;
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 #endregion
 
 #region Snippet:Conversation_Identity_Namespace

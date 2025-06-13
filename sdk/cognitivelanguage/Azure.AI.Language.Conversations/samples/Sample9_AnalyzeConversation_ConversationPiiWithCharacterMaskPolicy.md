@@ -8,6 +8,7 @@ Start by importing the namespace for the `ConversationAnalysisClient` and relate
 using Azure.Core;
 using Azure.Core.Serialization;
 using Azure.AI.Language.Conversations;
+using Azure.AI.Language.Conversations.Models;
 ```
 
 To analyze an utterance, you need to first create a `ConversationAnalysisClient` using an endpoint and API key. These can be stored in an environment variable, configuration setting, or any way that works for your application.

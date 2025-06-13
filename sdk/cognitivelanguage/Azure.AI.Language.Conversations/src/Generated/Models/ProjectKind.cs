@@ -24,11 +24,14 @@ namespace Azure.AI.Language.Conversations.Models
 
         private const string ConversationValue = "Conversation";
         private const string OrchestrationValue = "Orchestration";
+        private const string ConversationalAIValue = "ConversationalAI";
 
         /// <summary> Conversation type. </summary>
         public static ProjectKind Conversation { get; } = new ProjectKind(ConversationValue);
         /// <summary> Orchestration type. </summary>
         public static ProjectKind Orchestration { get; } = new ProjectKind(OrchestrationValue);
+        /// <summary> Conversation type. </summary>
+        public static ProjectKind ConversationalAI { get; } = new ProjectKind(ConversationalAIValue);
         /// <summary> Determines if two <see cref="ProjectKind"/> values are the same. </summary>
         public static bool operator ==(ProjectKind left, ProjectKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ProjectKind"/> values are not the same. </summary>
