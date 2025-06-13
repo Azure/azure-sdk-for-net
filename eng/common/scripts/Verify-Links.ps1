@@ -85,7 +85,7 @@ param (
 
 Set-StrictMode -Version 3.0
 
-. logging.ps1
+. "$PSScriptRoot/logging.ps1"
 
 $ProgressPreference = "SilentlyContinue"; # Disable invoke-webrequest progress dialog
 
