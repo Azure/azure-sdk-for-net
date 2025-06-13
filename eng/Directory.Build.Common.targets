@@ -105,6 +105,7 @@
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
     <PackageReference Remove="System.Buffers" />
     <PackageReference Remove="System.Diagnostics.DiagnosticSource" />
+    <PackageReference Remove="System.Memory" />
     <PackageReference Remove="System.Net.Http" />
     <PackageReference Remove="System.Numerics.Vectors" />
     <PackageReference Remove="System.Text.Encodings.Web" />
