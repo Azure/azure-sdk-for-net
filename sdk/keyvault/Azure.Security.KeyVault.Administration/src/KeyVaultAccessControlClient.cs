@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// The KeyVaultAccessControlClient provides synchronous and asynchronous methods to view and manage Role Based Access for the Azure Key Vault.
     /// The client supports creating, listing, updating, and deleting <see cref="KeyVaultRoleAssignment"/> and <see cref="KeyVaultRoleDefinition" />.
     /// </summary>
-
+    [CodeGenType("KeyVaultAccessControlRestClient")]
     [CodeGenSuppress("Pipeline")]
     public partial class KeyVaultAccessControlClient
     {

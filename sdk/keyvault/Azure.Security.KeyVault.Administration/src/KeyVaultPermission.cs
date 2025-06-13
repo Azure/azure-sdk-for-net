@@ -5,6 +5,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
+    [CodeGenType("Permission")]
     public partial class KeyVaultPermission
     {
     }
