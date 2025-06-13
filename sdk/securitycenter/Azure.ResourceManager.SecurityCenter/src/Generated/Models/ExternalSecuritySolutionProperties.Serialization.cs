@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
-                JsonSerializer.Serialize(writer, Workspace);
+                ((IJsonModel<WritableSubResource>)Workspace).Write(writer, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    workspace = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    workspace = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));

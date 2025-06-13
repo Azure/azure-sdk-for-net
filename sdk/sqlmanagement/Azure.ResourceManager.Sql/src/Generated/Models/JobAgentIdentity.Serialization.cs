@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql.Models
                 foreach (var item in UserAssignedIdentities)
                 {
                     writer.WritePropertyName(item.Key);
-                    JsonSerializer.Serialize(writer, item.Value);
+                    ((IJsonModel<UserAssignedIdentity>)item.Value).Write(writer, options);
                 }
                 writer.WriteEndObject();
             }
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Sql.Models
                     Dictionary<string, UserAssignedIdentity> dictionary = new Dictionary<string, UserAssignedIdentity>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, JsonSerializer.Deserialize<UserAssignedIdentity>(property0.Value.GetRawText()));
+                        dictionary.Add(property0.Name, ModelSerializationExtensions.JsonDeserialize<UserAssignedIdentity>(property0.Value.GetRawText(), ModelSerializationExtensions.Options));
                     }
                     userAssignedIdentities = dictionary;
                     continue;
