@@ -27,7 +27,7 @@ dotnet add package Azure.AI.Language.Conversations
 - An [Azure subscription][azure_subscription]
 - An existing Azure Language Service Resource
 
-Though you can use this SDK to create and import conversation projects, [Language Studio][language_studio] is the preferred method for creating projects.
+Though you can use this SDK to create and import conversation projects, [Azure AI Foundry][azure_AI_foundry] is the preferred method for creating projects.
 
 ### Authenticate the client
 
@@ -923,7 +923,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
 [custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
-[language_studio]: https://language.cognitive.azure.com/
+[azure_AI_foundry]: https://ai.azure.com/
 [nuget]: https://www.nuget.org/
 
 [conversationanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/ConversationAnalysisClient.cs
