@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,15 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+### Sample updates
+- The Azure function sample was simplified.
+- Added samples for file search citation with streaming. 
+
+## 1.1.0-beta.2 (2025-06-04)
+
+### Bugs Fixed
+- Fixed uploading files with non ASCII symbols in names.
 
 ## 1.1.0-beta.1 (2025-05-21)
 

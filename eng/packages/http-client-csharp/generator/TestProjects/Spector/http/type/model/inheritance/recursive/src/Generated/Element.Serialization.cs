@@ -8,8 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
-using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive
 {
@@ -32,10 +30,5 @@ namespace _Type.Model.Inheritance.Recursive
         protected virtual Element PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Element>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
-
-        /// <param name="element"> The <see cref="Element"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Element element) => throw null;
-
-        public static explicit operator Element(Response result) => throw null;
     }
 }

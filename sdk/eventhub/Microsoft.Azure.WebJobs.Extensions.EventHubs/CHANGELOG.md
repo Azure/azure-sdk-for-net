@@ -1,10 +1,6 @@
 # Release History
 
-## 6.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 6.5.2 (2025-06-12)
 
 ### Bugs Fixed
 
@@ -12,7 +8,7 @@
 
 ### Other Changes
 
-- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.11, which contains several bug fixes. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.7.0, which contains several bug fixes and adds support for AOT. _(see: [commits](https://github.com/Azure/azure-amqp/commits/hotfix/))_
 
 ## 6.5.1 (2025-04-09)
 

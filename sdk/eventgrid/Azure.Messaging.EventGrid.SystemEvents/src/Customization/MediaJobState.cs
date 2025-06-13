@@ -1,9 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> The previous state of the Job. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public enum MediaJobState
     {
         /// <summary> The job was canceled. This is a final state for the job. </summary>

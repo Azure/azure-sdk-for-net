@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Details of JobOutput errors. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaJobError
     {
         /// <summary> Initializes a new instance of <see cref="MediaJobError"/>. </summary>

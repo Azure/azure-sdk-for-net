@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ComponentModel;
+
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Encoder connect event data. Schema of the data property of an EventGridEvent for a Microsoft.Media.LiveEventIncomingStreamReceived event. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class MediaLiveEventIncomingStreamReceivedEventData
     {
         /// <summary> Initializes a new instance of <see cref="MediaLiveEventIncomingStreamReceivedEventData"/>. </summary>
