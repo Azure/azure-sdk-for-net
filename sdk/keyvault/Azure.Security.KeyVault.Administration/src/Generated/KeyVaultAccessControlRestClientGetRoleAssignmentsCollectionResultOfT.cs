@@ -25,7 +25,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="client"> The KeyVaultAccessControlRestClient client used to send requests. </param>
         /// <param name="nextPage"> The url of the next page of responses. </param>
         /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use filter=atScope() to return all role assignments at or above the scope. Use filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scope"/> is an empty string, and was expected to be non-empty. </exception>
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Administration
                     yield break;
                 }
                 RoleAssignmentListResult responseWithType = (RoleAssignmentListResult)response;
-                nextPage = responseWithType.NextLink != null ? new Uri(responseWithType.NextLink) : null;
+                nextPage = responseWithType.NextLink;
                 yield return Page<RoleAssignment>.FromValues((IReadOnlyList<RoleAssignment>)responseWithType.Value, nextPage?.AbsoluteUri, response);
             }
             while (nextPage != null);

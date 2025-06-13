@@ -14,8 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary></summary>
-    public partial class KeyVaultAccessControlRestClient
+    internal partial class KeyVaultAccessControlRestClient
     {
         private readonly Uri _endpoint;
         /// <summary> A credential used to authenticate to the service. </summary>
@@ -25,14 +24,6 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Initializes a new instance of KeyVaultAccessControlRestClient for mocking. </summary>
         protected KeyVaultAccessControlRestClient()
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultAccessControlRestClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="credential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultAccessControlRestClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultAccessControlRestClientOptions())
         {
         }
 
@@ -634,7 +625,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use filter=atScope() to return all role assignments at or above the scope. Use filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -662,7 +653,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use filter=atScope() to return all role assignments at or above the scope. Use filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
@@ -683,7 +674,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Gets role assignments for a scope. </summary>
         /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use filter=atScope() to return all role assignments at or above the scope. Use filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual Pageable<RoleAssignment> GetRoleAssignments(string scope, string filter = default, CancellationToken cancellationToken = default)
@@ -693,7 +684,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Gets role assignments for a scope. </summary>
         /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use filter=atScope() to return all role assignments at or above the scope. Use filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         internal virtual AsyncPageable<RoleAssignment> GetRoleAssignmentsAsync(string scope, string filter = default, CancellationToken cancellationToken = default)

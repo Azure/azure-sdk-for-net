@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
 
         /// <summary> Initializes a new instance of KeyVaultAccessControlRestClientOptions. </summary>
         /// <param name="version"> The service version. </param>
-        internal KeyVaultAccessControlRestClientOptions(ServiceVersion version = LatestVersion)
+        public KeyVaultAccessControlRestClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
@@ -31,7 +31,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> Gets the Version. </summary>
         internal string Version { get; }
 
-        internal enum ServiceVersion
+        public enum ServiceVersion
         {
             /// <summary> The 7.5 API version. </summary>
             V7_5 = 1,

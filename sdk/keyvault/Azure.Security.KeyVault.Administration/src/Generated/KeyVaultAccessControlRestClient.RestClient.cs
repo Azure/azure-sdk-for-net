@@ -11,8 +11,7 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary></summary>
-    public partial class KeyVaultAccessControlRestClient
+    internal partial class KeyVaultAccessControlRestClient
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier201;
@@ -95,7 +94,7 @@ namespace Azure.Security.KeyVault.Administration
                 uri.AppendQuery("api-version", _apiVersion, true);
                 if (filter != null)
                 {
-                    uri.AppendQuery("filter", filter, true);
+                    uri.AppendQuery("$filter", filter, true);
                 }
                 request.Uri = uri;
                 request.Headers.SetValue("Accept", "application/json");
@@ -177,7 +176,7 @@ namespace Azure.Security.KeyVault.Administration
                 uri.AppendQuery("api-version", _apiVersion, true);
                 if (filter != null)
                 {
-                    uri.AppendQuery("filter", filter, true);
+                    uri.AppendQuery("$filter", filter, true);
                 }
                 request.Uri = uri;
                 request.Headers.SetValue("Accept", "application/json");
