@@ -14,11 +14,11 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ExecutionActivity : IUtf8JsonSerializable, IJsonModel<ExecutionActivity>
+    public partial class DatabricksJobActivity : IUtf8JsonSerializable, IJsonModel<DatabricksJobActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutionActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabricksJobActivity>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExecutionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DatabricksJobActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,23 +29,41 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksJobActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionActivity)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabricksJobActivity)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(LinkedServiceName))
+            writer.WritePropertyName("typeProperties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("jobId"u8);
+            JsonSerializer.Serialize(writer, JobId);
+            if (Optional.IsCollectionDefined(JobParameters))
             {
-                writer.WritePropertyName("linkedServiceName"u8);
-                JsonSerializer.Serialize(writer, LinkedServiceName);
+                writer.WritePropertyName("jobParameters"u8);
+                writer.WriteStartObject();
+                foreach (var item in JobParameters)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Policy))
-            {
-                writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy, options);
-            }
+            writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -60,19 +78,19 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
         }
 
-        ExecutionActivity IJsonModel<ExecutionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DatabricksJobActivity IJsonModel<DatabricksJobActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksJobActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutionActivity)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabricksJobActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecutionActivity(document.RootElement, options);
+            return DeserializeDatabricksJobActivity(document.RootElement, options);
         }
 
-        internal static ExecutionActivity DeserializeExecutionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DatabricksJobActivity DeserializeDatabricksJobActivity(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,48 +98,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
-            {
-                switch (discriminator.GetString())
-                {
-                    case "AzureDataExplorerCommand": return AzureDataExplorerCommandActivity.DeserializeAzureDataExplorerCommandActivity(element, options);
-                    case "AzureFunctionActivity": return AzureFunctionActivity.DeserializeAzureFunctionActivity(element, options);
-                    case "AzureMLBatchExecution": return AzureMLBatchExecutionActivity.DeserializeAzureMLBatchExecutionActivity(element, options);
-                    case "AzureMLExecutePipeline": return AzureMLExecutePipelineActivity.DeserializeAzureMLExecutePipelineActivity(element, options);
-                    case "AzureMLUpdateResource": return AzureMLUpdateResourceActivity.DeserializeAzureMLUpdateResourceActivity(element, options);
-                    case "Copy": return CopyActivity.DeserializeCopyActivity(element, options);
-                    case "Custom": return CustomActivity.DeserializeCustomActivity(element, options);
-                    case "DatabricksJob": return DatabricksJobActivity.DeserializeDatabricksJobActivity(element, options);
-                    case "DatabricksNotebook": return DatabricksNotebookActivity.DeserializeDatabricksNotebookActivity(element, options);
-                    case "DatabricksSparkJar": return DatabricksSparkJarActivity.DeserializeDatabricksSparkJarActivity(element, options);
-                    case "DatabricksSparkPython": return DatabricksSparkPythonActivity.DeserializeDatabricksSparkPythonActivity(element, options);
-                    case "DataLakeAnalyticsU-SQL": return DataLakeAnalyticsUsqlActivity.DeserializeDataLakeAnalyticsUsqlActivity(element, options);
-                    case "Delete": return DeleteActivity.DeserializeDeleteActivity(element, options);
-                    case "ExecuteDataFlow": return ExecuteDataFlowActivity.DeserializeExecuteDataFlowActivity(element, options);
-                    case "ExecuteSSISPackage": return ExecuteSsisPackageActivity.DeserializeExecuteSsisPackageActivity(element, options);
-                    case "GetMetadata": return GetDatasetMetadataActivity.DeserializeGetDatasetMetadataActivity(element, options);
-                    case "HDInsightHive": return HDInsightHiveActivity.DeserializeHDInsightHiveActivity(element, options);
-                    case "HDInsightMapReduce": return HDInsightMapReduceActivity.DeserializeHDInsightMapReduceActivity(element, options);
-                    case "HDInsightPig": return HDInsightPigActivity.DeserializeHDInsightPigActivity(element, options);
-                    case "HDInsightSpark": return HDInsightSparkActivity.DeserializeHDInsightSparkActivity(element, options);
-                    case "HDInsightStreaming": return HDInsightStreamingActivity.DeserializeHDInsightStreamingActivity(element, options);
-                    case "Lookup": return LookupActivity.DeserializeLookupActivity(element, options);
-                    case "Script": return DataFactoryScriptActivity.DeserializeDataFactoryScriptActivity(element, options);
-                    case "SparkJob": return SynapseSparkJobDefinitionActivity.DeserializeSynapseSparkJobDefinitionActivity(element, options);
-                    case "SqlServerStoredProcedure": return SqlServerStoredProcedureActivity.DeserializeSqlServerStoredProcedureActivity(element, options);
-                    case "SynapseNotebook": return SynapseNotebookActivity.DeserializeSynapseNotebookActivity(element, options);
-                    case "WebActivity": return WebActivity.DeserializeWebActivity(element, options);
-                }
-            }
             DataFactoryLinkedServiceReference linkedServiceName = default;
             PipelineActivityPolicy policy = default;
             string name = default;
-            string type = "Execution";
+            string type = default;
             string description = default;
             PipelineActivityState? state = default;
             ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
             IList<PipelineActivityDependency> dependsOn = default;
             IList<PipelineActivityUserProperty> userProperties = default;
+            DataFactoryElement<string> jobId = default;
+            IDictionary<string, BinaryData> jobParameters = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,10 +192,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                     userProperties = array;
                     continue;
                 }
+                if (property.NameEquals("typeProperties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("jobId"u8))
+                        {
+                            jobId = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("jobParameters"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, BinaryData.FromString(property1.Value.GetRawText()));
+                                }
+                            }
+                            jobParameters = dictionary;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExecutionActivity(
+            return new DatabricksJobActivity(
                 name,
                 type,
                 description,
@@ -218,38 +243,40 @@ namespace Azure.ResourceManager.DataFactory.Models
                 userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
                 additionalProperties,
                 linkedServiceName,
-                policy);
+                policy,
+                jobId,
+                jobParameters ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        BinaryData IPersistableModel<ExecutionActivity>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DatabricksJobActivity>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksJobActivity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionActivity)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabricksJobActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExecutionActivity IPersistableModel<ExecutionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DatabricksJobActivity IPersistableModel<DatabricksJobActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DatabricksJobActivity>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeExecutionActivity(document.RootElement, options);
+                        return DeserializeDatabricksJobActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutionActivity)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabricksJobActivity)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExecutionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DatabricksJobActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

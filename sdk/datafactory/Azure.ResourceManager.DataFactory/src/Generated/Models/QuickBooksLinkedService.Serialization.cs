@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("accessTokenSecret"u8);
                 JsonSerializer.Serialize(writer, AccessTokenSecret);
             }
+            if (Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                JsonSerializer.Serialize(writer, RefreshToken);
+            }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactorySecret consumerSecret = default;
             DataFactorySecret accessToken = default;
             DataFactorySecret accessTokenSecret = default;
+            DataFactorySecret refreshToken = default;
             DataFactoryElement<bool> useEncryptedEndpoints = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -275,6 +281,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                             accessTokenSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
+                        if (property0.NameEquals("refreshToken"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            refreshToken = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
+                            continue;
+                        }
                         if (property0.NameEquals("useEncryptedEndpoints"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -310,6 +325,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 consumerSecret,
                 accessToken,
                 accessTokenSecret,
+                refreshToken,
                 useEncryptedEndpoints,
                 encryptedCredential);
         }

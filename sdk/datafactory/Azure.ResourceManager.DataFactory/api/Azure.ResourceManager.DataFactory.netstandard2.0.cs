@@ -3455,6 +3455,18 @@ namespace Azure.ResourceManager.DataFactory.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.CustomSetupBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.CustomSetupBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DatabricksJobActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>
+    {
+        public DatabricksJobActivity(string name, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> jobId) : base (default(string)) { }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> JobId { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, System.BinaryData> JobParameters { get { throw null; } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatabricksJobActivity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DatabricksNotebookActivity : Azure.ResourceManager.DataFactory.Models.ExecutionActivity, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DatabricksNotebookActivity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.DatabricksNotebookActivity>
     {
         public DatabricksNotebookActivity(string name, Azure.Core.Expressions.DataFactory.DataFactoryElement<string> notebookPath) : base (default(string)) { }
@@ -3831,7 +3843,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.Core.Expressions.DataFactory.DataFactoryElement<string>> Operators { get { throw null; } }
         public Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2Type? V2Type { get { throw null; } set { } }
-        public string Value { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Value { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.DataFactoryExpressionV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -6678,6 +6690,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowHostNameCNMismatch { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowSelfSignedServerCert { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.HiveAuthenticationType AuthenticationType { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableServerCertificateValidation { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableSsl { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Host { get { throw null; } set { } }
@@ -6938,11 +6951,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowHostNameCNMismatch { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowSelfSignedServerCert { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.ImpalaAuthenticationType AuthenticationType { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableServerCertificateValidation { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableSsl { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Host { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactorySecret Password { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<int> Port { get { throw null; } set { } }
+        public Azure.ResourceManager.DataFactory.Models.ImpalaThriftTransportProtocol? ThriftTransportProtocol { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> TrustedCertPath { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Username { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> UseSystemTrustStore { get { throw null; } set { } }
@@ -6976,6 +6991,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         Azure.ResourceManager.DataFactory.Models.ImpalaSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ImpalaSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ImpalaSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ImpalaSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ImpalaThriftTransportProtocol
+    {
+        Binary = 0,
+        Http = 1,
     }
     public abstract partial class ImportSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.ImportSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DataFactory.Models.ImportSettings>
     {
@@ -9637,6 +9657,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactorySecret ConsumerSecret { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Endpoint { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactorySecret RefreshToken { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> UseEncryptedEndpoints { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DataFactory.Models.QuickBooksLinkedService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DataFactory.Models.QuickBooksLinkedService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -11479,6 +11500,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowHostNameCNMismatch { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> AllowSelfSignedServerCert { get { throw null; } set { } }
         public Azure.ResourceManager.DataFactory.Models.SparkAuthenticationType AuthenticationType { get { throw null; } set { } }
+        public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableServerCertificateValidation { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<bool> EnableSsl { get { throw null; } set { } }
         public string EncryptedCredential { get { throw null; } set { } }
         public Azure.Core.Expressions.DataFactory.DataFactoryElement<string> Host { get { throw null; } set { } }
