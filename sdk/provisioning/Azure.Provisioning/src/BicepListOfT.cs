@@ -89,6 +89,10 @@ public class BicepList<T> :
                 // can reference their members.
                 return _referenceFactory!(BicepSyntax.Index(_expression!, BicepSyntax.Value(index)));
             }
+            else if (_isOutput)
+            {
+                return BicepSyntax.Index(_self!.GetReference(), BicepSyntax.Value(index));
+            }
             else
             {
                 return _values[index];
