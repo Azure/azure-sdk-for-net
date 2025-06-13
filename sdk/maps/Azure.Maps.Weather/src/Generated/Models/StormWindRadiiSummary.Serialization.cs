@@ -60,7 +60,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    radiiGeometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    radiiGeometry = ModelSerializationExtensions.JsonDeserialize<GeoObject>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
             }

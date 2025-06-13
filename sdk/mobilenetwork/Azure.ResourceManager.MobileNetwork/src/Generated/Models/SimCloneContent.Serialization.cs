@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(TargetSimGroupId))
             {
                 writer.WritePropertyName("targetSimGroupId"u8);
-                JsonSerializer.Serialize(writer, TargetSimGroupId);
+                ((IJsonModel<SubResource>)TargetSimGroupId).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(Sims))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    targetSimGroupId = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    targetSimGroupId = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("sims"u8))

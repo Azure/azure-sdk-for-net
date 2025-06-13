@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (options.Format != "W" && Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                JsonSerializer.Serialize(writer, Operation);
+                ((IJsonModel<SubResource>)Operation).Write(writer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    operation = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    operation = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")

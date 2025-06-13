@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core.GeoJson;
-using Azure.Maps.Common;
 
 namespace Azure.Maps.Weather.Models
 {
@@ -81,7 +80,7 @@ namespace Azure.Maps.Weather.Models
                     {
                         continue;
                     }
-                    geometry = JsonSerializer.Deserialize<GeoObject>(property.Value.GetRawText());
+                    geometry = ModelSerializationExtensions.JsonDeserialize<GeoObject>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
             }

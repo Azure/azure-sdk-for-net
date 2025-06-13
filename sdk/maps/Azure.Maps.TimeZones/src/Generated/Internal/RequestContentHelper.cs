@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.TimeZones;
 
 namespace Azure.Maps.Common
 {
