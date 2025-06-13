@@ -5,6 +5,17 @@ parameters:
   Restore: false
   SetOverrideFile: true
 steps:
+  - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
+    - pwsh: |
+        $artifacts = '${{ convertToJson(parameters.Artifacts) }}' | ConvertFrom-Json
+
+        if (!$artifacts) {
+          Write-Host "No artifacts provided on a non-PR build where at least one package must be provided."
+          Write-Host "Check the ci.yml for the service directory `"${{ parameters.ServiceDirectory }}`" for an `"Artifacts`" parameter and ensure it is properly populated."
+          exit 1
+        }
+      displayName: 'Check for valid artifacts'
+
   # Package-Properties folder contains the package properties for all discovered packages that were either A) affected by the PR or
   # B) explicitly present in the service directory. This repo splits the builds into two categories: "mgmt" and "dataplane". While
   # a given directory may contain both, there will be a separate build definition to release the management packages. Due to this

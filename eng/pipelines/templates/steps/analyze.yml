@@ -34,10 +34,12 @@ steps:
       parameters:
         ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
+
   - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
     parameters:
       PackageInfo: '$(Build.ArtifactStagingDirectory)/PackageInfo'
       Artifacts: ${{ parameters.Artifacts }}
+      ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
   - template: /eng/common/pipelines/templates/steps/verify-samples.yml
     parameters:

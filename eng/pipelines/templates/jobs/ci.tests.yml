@@ -130,6 +130,7 @@ jobs:
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
             Restore: true
+            ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
         - pwsh: |
             if ("$(ProjectNames)" -like "*storage*") {
