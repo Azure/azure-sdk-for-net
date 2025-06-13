@@ -528,7 +528,7 @@ foreach ($url in $urls) {
   $pageUrisToCheck.Enqueue($uri);
 }
 
-LogGroupStart
+LogGroupStart "Link checking details"
 
 while ($pageUrisToCheck.Count -ne 0)
 {
