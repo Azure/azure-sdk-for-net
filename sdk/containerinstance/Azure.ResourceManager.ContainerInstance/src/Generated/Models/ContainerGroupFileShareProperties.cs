@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The standby pool profile reference. </summary>
-    public partial class StandbyPoolProfileDefinition
+    /// <summary> The ContainerGroupFileShareProperties. </summary>
+    public partial class ContainerGroupFileShareProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StandbyPoolProfileDefinition"/>. </summary>
-        public StandbyPoolProfileDefinition()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
+        public ContainerGroupFileShareProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StandbyPoolProfileDefinition"/>. </summary>
-        /// <param name="id"> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </param>
-        /// <param name="failContainerGroupCreateOnReuseFailure"> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShareProperties"/>. </summary>
+        /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
+        /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyPoolProfileDefinition(ResourceIdentifier id, bool? failContainerGroupCreateOnReuseFailure, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupFileShareProperties(AzureFileShareAccessType? shareAccessType, AzureFileShareAccessTier? shareAccessTier, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            FailContainerGroupCreateOnReuseFailure = failContainerGroupCreateOnReuseFailure;
+            ShareAccessType = shareAccessType;
+            ShareAccessTier = shareAccessTier;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </summary>
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </summary>
-        public bool? FailContainerGroupCreateOnReuseFailure { get; set; }
+        /// <summary> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </summary>
+        public AzureFileShareAccessType? ShareAccessType { get; set; }
+        /// <summary> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </summary>
+        public AzureFileShareAccessTier? ShareAccessTier { get; set; }
     }
 }
