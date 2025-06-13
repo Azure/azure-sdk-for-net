@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                JsonSerializer.Serialize(writer, PrivateEndpoint);
+                ((IJsonModel<SubResource>)PrivateEndpoint).Write(writer, options);
             }
             if (Optional.IsCollectionDefined(GroupIds))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     {
                         continue;
                     }
-                    privateEndpoint = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
+                    privateEndpoint = ModelSerializationExtensions.JsonDeserialize<SubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("groupIds"u8))

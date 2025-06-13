@@ -111,7 +111,7 @@ namespace Azure.DigitalTwins.Core
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
             }

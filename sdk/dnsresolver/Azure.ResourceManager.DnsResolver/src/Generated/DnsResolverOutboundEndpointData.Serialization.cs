@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DnsResolver
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet);
+            ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         continue;
                     }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    systemData = ModelSerializationExtensions.JsonDeserialize<SystemData>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DnsResolver
                     {
                         if (property0.NameEquals("subnet"u8))
                         {
-                            subnet = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            subnet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))

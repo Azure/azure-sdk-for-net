@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             if (Optional.IsDefined(VirtualNetworkLink))
             {
                 writer.WritePropertyName("virtualNetworkLink"u8);
-                JsonSerializer.Serialize(writer, VirtualNetworkLink);
+                ((IJsonModel<WritableSubResource>)VirtualNetworkLink).Write(writer, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                             {
                                 continue;
                             }
-                            virtualNetworkLink = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
+                            virtualNetworkLink = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property0.Value.GetRawText(), ModelSerializationExtensions.Options);
                             continue;
                         }
                     }

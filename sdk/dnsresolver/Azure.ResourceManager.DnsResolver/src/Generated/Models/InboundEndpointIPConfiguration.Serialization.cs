@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             }
 
             writer.WritePropertyName("subnet"u8);
-            JsonSerializer.Serialize(writer, Subnet);
+            ((IJsonModel<WritableSubResource>)Subnet).Write(writer, options);
             if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             {
                 if (property.NameEquals("subnet"u8))
                 {
-                    subnet = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
+                    subnet = ModelSerializationExtensions.JsonDeserialize<WritableSubResource>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (property.NameEquals("privateIpAddress"u8))

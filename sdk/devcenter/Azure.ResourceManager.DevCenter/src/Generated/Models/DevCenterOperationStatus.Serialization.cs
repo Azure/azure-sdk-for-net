@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         }
                         else
                         {
-                            array.Add(JsonSerializer.Deserialize<OperationStatusResult>(item.GetRawText()));
+                            array.Add(ModelSerializationExtensions.JsonDeserialize<OperationStatusResult>(item.GetRawText(), ModelSerializationExtensions.Options));
                         }
                     }
                     operations = array;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                     {
                         continue;
                     }
-                    error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
+                    error = ModelSerializationExtensions.JsonDeserialize<ResponseError>(property.Value.GetRawText(), ModelSerializationExtensions.Options);
                     continue;
                 }
                 if (options.Format != "W")
