@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    /// <summary> The ManagedGrafanaSku. </summary>
+    /// <summary> Represents the SKU of a resource. </summary>
     internal partial class ManagedGrafanaSku
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Grafana.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="ManagedGrafanaSku"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the SKU. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public ManagedGrafanaSku(string name)
         {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedGrafanaSku"/>. </summary>
-        /// <param name="name"></param>
+        /// <param name="name"> The name of the SKU. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ManagedGrafanaSku(string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Grafana.Models
         {
         }
 
-        /// <summary> Gets or sets the name. </summary>
+        /// <summary> The name of the SKU. </summary>
         public string Name { get; set; }
     }
 }
