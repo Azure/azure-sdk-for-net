@@ -306,7 +306,7 @@
     <PackageReference Update="Azure.Core" Version="1.46.2" />
     <PackageReference Update="Azure.Identity" Version="1.14.0" />
     <PackageReference Update="Azure.Messaging.EventGrid" Version="4.17.0" />
-    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.1" />
+    <PackageReference Update="Azure.Messaging.EventHubs.Processor" Version="5.12.2" />
     <PackageReference Update="Azure.Messaging.ServiceBus" Version="7.20.1" />
     <PackageReference Update="Azure.ResourceManager" Version="1.13.0" />
     <PackageReference Update="Azure.ResourceManager.Compute" Version="1.9.0" />
