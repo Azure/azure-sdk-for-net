@@ -15,6 +15,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             Versions.V75 => "7.5",
             Versions.V76Preview2 => "7.6-preview.2",
+            Versions.V76 => "7.6",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Versions value.")
         };
 
@@ -22,6 +23,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "7.5")) return Versions.V75;
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "7.6-preview.2")) return Versions.V76Preview2;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "7.6")) return Versions.V76;
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown Versions value.");
         }
     }

@@ -75,7 +75,7 @@ namespace Azure.Security.KeyVault.Administration
             RoleDefinitionProperties properties = new()
             {
                 RoleType = roleType,
-                RoleName = RoleName,
+                RoleName = string.IsNullOrEmpty(RoleName) ? RoleDefinitionName.ToString() : RoleName,
                 Description = Description,
             };
 
