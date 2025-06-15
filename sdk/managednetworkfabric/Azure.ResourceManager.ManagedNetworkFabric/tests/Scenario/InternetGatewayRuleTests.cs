@@ -29,15 +29,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             NetworkFabricInternetGatewayRuleCollection collection = resourceGroupResource.GetNetworkFabricInternetGatewayRules();
 
             // invoke the create operation
-            NetworkFabricInternetGatewayRuleData data =
-                new NetworkFabricInternetGatewayRuleData(new AzureLocation(TestEnvironment.Location), new InternetGatewayRules(InternetGatewayRuleAction.Allow, new string[] { "10.10.10.10" }))
+            var properties = new InternetGatewayRuleProperties(
+                new InternetGatewayRules(InternetGatewayRuleAction.Allow)
                 {
-                    Annotation = "annotationValue",
-                    Tags =
+                    AddressList = { "10.10.10.10" },
+                    Condition = RuleCondition.Or,
+                    DestinationAddressList = { "11.11.10.11" },
+                    SourceAddressList = { "10.10.10.10" },
+                    HeaderAddressList =
                     {
-                        ["keyID"] = "keyValue",
+                        new HeaderAddressProperties
+                        {
+                            HeaderName = "abcHeader",
+                            AddressList = { "10.10.10.10" }
+                        }
                     },
-                };
+                })
+            {
+                Annotation = "annotationValue",
+            };
+            NetworkFabricInternetGatewayRuleData data = new NetworkFabricInternetGatewayRuleData(new AzureLocation(TestEnvironment.Location), properties)
+            {
+                Tags =
+                {
+                    ["keyID"] = "keyValue",
+                },
+            };
             ArmOperation<NetworkFabricInternetGatewayRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternetGatewayRuleName, data);
             NetworkFabricInternetGatewayRuleResource result = lro.Value;
             NetworkFabricInternetGatewayRuleData resourceData = result.Data;

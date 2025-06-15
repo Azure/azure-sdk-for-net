@@ -38,8 +38,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(755)
+            var properties = new InternalNetworkProperties()
             {
+                VlanId = 755,
                 Annotation = "annotation",
                 Mtu = 1500,
                 ConnectedIPv4Subnets =
@@ -51,12 +52,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                 },
                 IsMonitoringEnabled = IsMonitoringEnabled.True,
                 Extension = StaticRouteConfigurationExtension.NoExtension,
-                BgpConfiguration = new InternalNetworkBgpConfiguration()
+                BgpConfiguration = new BgpConfiguration()
                 {
                     BfdConfiguration = new BfdConfiguration()
                     {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 5,
+                        IntervalInMilliSeconds = 350,
+                        Multiplier = 3,
                     },
                     DefaultRouteOriginate = NetworkFabricBooleanValue.True,
                     AllowAS = 10,
@@ -75,13 +76,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                     Annotation = "annotation",
                 },
-                StaticRouteConfiguration = new InternalNetworkStaticRouteConfiguration()
+                StaticRouteConfiguration = new StaticRouteConfiguration()
                 {
                     Extension = StaticRouteConfigurationExtension.NoExtension,
                     BfdConfiguration = new BfdConfiguration()
                     {
-                        IntervalInMilliSeconds = 300,
-                        Multiplier = 15,
+                        IntervalInMilliSeconds = 350,
+                        Multiplier = 3,
                     },
                     IPv4Routes =
                     {
@@ -89,6 +90,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                     },
                 },
             };
+
+            NetworkFabricInternalNetworkData data = new NetworkFabricInternalNetworkData(
+                internalNetworkResourceId,
+                TestEnvironment.InternalNetworkName,
+                NetworkFabricInternalNetworkResource.ResourceType,
+                null,
+                properties,
+                null
+            );
             ArmOperation<NetworkFabricInternalNetworkResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, TestEnvironment.InternalNetworkName, data);
             NetworkFabricInternalNetworkResource createResult = lro.Value;
             Assert.AreEqual(createResult.Data.Name, TestEnvironment.InternalNetworkName);

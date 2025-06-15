@@ -29,23 +29,32 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             TestContext.Out.WriteLine($"IpPrefixResourceId: {ipPrefixResourceId}");
 
             // Get the collection of this IpPrefix
-            NetworkFabricIPPrefixCollection collection = ResourceGroupResource.GetNetworkFabricIPPrefixes();
+            ResourceIdentifier resourceGroupId = ResourceGroupResource.CreateResourceIdentifier(TestEnvironment.SubscriptionId, TestEnvironment.ResourceGroupName);
+            ResourceGroupResource resourceGroup = Client.GetResourceGroupResource(resourceGroupId);
+            NetworkFabricIPPrefixCollection collection = resourceGroup.GetNetworkFabricIPPrefixes();
 
             TestContext.Out.WriteLine($"IpPrefix Test started.....");
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            NetworkFabricIPPrefixData data = new NetworkFabricIPPrefixData(new AzureLocation(TestEnvironment.Location))
+            var properties = new IPPrefixProperties
             {
                 Annotation = "annotation",
                 IPPrefixRules =
                 {
-                    new IPPrefixRule(CommunityActionType.Permit, 4155123341,"10.10.10.10/30")
+                    new IPPrefixRule(CommunityActionType.Permit, 4155123341, "10.10.10.10/30")
                     {
                         Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
                         SubnetMaskLength = "31",
                     }
-                },
+                }
+            };
+
+            NetworkFabricIPPrefixData data = new NetworkFabricIPPrefixData(
+                new AzureLocation(TestEnvironment.Location),
+                properties
+            )
+            {
                 Tags =
                 {
                     ["keyID"] = "KeyValue",
@@ -66,8 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // List
             TestContext.Out.WriteLine($"GET - List by Resource Group started.....");
             var listByResourceGroup = new List<NetworkFabricIPPrefixResource>();
-            NetworkFabricIPPrefixCollection collectionOp = ResourceGroupResource.GetNetworkFabricIPPrefixes();
-            await foreach (NetworkFabricIPPrefixResource item in collectionOp.GetAllAsync())
+            await foreach (NetworkFabricIPPrefixResource item in collection.GetAllAsync())
             {
                 listByResourceGroup.Add(item);
             }

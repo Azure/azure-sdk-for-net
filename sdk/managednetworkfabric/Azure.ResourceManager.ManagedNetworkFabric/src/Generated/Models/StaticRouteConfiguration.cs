@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="StaticRouteConfiguration"/>. </summary>
         public StaticRouteConfiguration()
@@ -56,12 +56,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
         /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal StaticRouteConfiguration(BfdConfiguration bfdConfiguration, IList<StaticRouteProperties> ipv4Routes, IList<StaticRouteProperties> ipv6Routes, StaticRouteConfigurationExtension? extension, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BfdConfiguration = bfdConfiguration;
             IPv4Routes = ipv4Routes;
             IPv6Routes = ipv6Routes;
+            Extension = extension;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,5 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public IList<StaticRouteProperties> IPv4Routes { get; }
         /// <summary> List of IPv6 Routes. </summary>
         public IList<StaticRouteProperties> IPv6Routes { get; }
+        /// <summary> Extension. Example: NoExtension | NPB. </summary>
+        public StaticRouteConfigurationExtension? Extension { get; set; }
     }
 }
