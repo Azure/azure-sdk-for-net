@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The container group profile list response that contains the container group profile properties. </summary>
+    /// <summary> The container group profile list response. </summary>
     internal partial class ContainerGroupProfileListResult
     {
         /// <summary>
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileListResult"/>. </summary>
-        /// <param name="value"> The list of container group profiles. </param>
-        /// <param name="nextLink"> The URI to fetch the next page of container group profiles. </param>
+        /// <param name="value"> The list of ContainerGroupProfiles under a subscription or resource group. </param>
+        /// <param name="nextLink"> The URI to fetch the next page of Container Group Profiles. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal ContainerGroupProfileListResult(IReadOnlyList<ContainerGroupProfileData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -62,9 +62,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The list of container group profiles. </summary>
+        /// <summary> The list of ContainerGroupProfiles under a subscription or resource group. </summary>
         public IReadOnlyList<ContainerGroupProfileData> Value { get; }
-        /// <summary> The URI to fetch the next page of container group profiles. </summary>
+        /// <summary> The URI to fetch the next page of Container Group Profiles. </summary>
         public string NextLink { get; }
     }
 }
