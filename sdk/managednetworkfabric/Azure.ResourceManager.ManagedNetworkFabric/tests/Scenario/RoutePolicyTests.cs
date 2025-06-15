@@ -36,28 +36,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
 
-            var properties = new RoutePolicyProperties()
+            var statement = new RoutePolicyStatementProperties(
+                7,
+                new StatementConditionProperties
+                {
+                    RoutePolicyConditionType = RoutePolicyConditionType.Or,
+                    IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
+                },
+                new StatementActionProperties(RoutePolicyActionType.Deny)
+                {
+                    LocalPreference = 20,
+                })
             {
-                NetworkFabricId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"),
+                Annotation = "annotation",
+            };
+
+            var properties = new RoutePolicyProperties(new[] { statement }, new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/networkFabrics/example-fabric"))
+            {
                 Annotation = "annotation",
                 DefaultAction = CommunityActionType.Permit,
-                Statements =
-                {
-                    new RoutePolicyStatementProperties(
-                        7,
-                        new StatementConditionProperties()
-                        {
-                            RoutePolicyConditionType = RoutePolicyConditionType.Or,
-                            IPPrefixId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourceGroups/example-rg/providers/Microsoft.ManagedNetworkFabric/ipPrefixes/nfa-tool-ts-GA-sdk-ipprefix"),
-                        },
-                        new StatementActionProperties(RoutePolicyActionType.Deny)
-                        {
-                            LocalPreference = 20,
-                        })
-                    {
-                        Annotation = "annotation",
-                    }
-                },
                 AddressFamilyType = AddressFamilyType.IPv4,
             };
 
