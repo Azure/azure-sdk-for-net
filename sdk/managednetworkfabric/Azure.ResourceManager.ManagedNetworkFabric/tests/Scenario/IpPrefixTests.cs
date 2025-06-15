@@ -37,17 +37,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            var properties = new IPPrefixProperties
+            var properties = new IPPrefixProperties(new IPPrefixRule[]
+            {
+                new IPPrefixRule(CommunityActionType.Permit, 4155123341, "10.10.10.10/30")
+                {
+                    Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
+                    SubnetMaskLength = "31",
+                }
+            })
             {
                 Annotation = "annotation",
-                IPPrefixRules =
-                {
-                    new IPPrefixRule(CommunityActionType.Permit, 4155123341, "10.10.10.10/30")
-                    {
-                        Condition = IPPrefixRuleCondition.GreaterThanOrEqualTo,
-                        SubnetMaskLength = "31",
-                    }
-                }
             };
 
             NetworkFabricIPPrefixData data = new NetworkFabricIPPrefixData(
