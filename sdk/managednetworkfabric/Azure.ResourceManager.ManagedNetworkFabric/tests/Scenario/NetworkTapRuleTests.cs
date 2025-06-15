@@ -33,100 +33,72 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
 
             // Create
             TestContext.Out.WriteLine($"PUT started.....");
-            var properties = new NetworkTapRuleProperties()
+            var properties = new NetworkTapRuleProperties(NetworkFabricConfigurationType.File)
             {
                 Annotation = "annotation",
-                ConfigurationType = NetworkFabricConfigurationType.File,
                 TapRulesUri = new Uri("https://microsoft.com/a"),
                 MatchConfigurations =
+                {
+                    new NetworkTapRuleMatchConfiguration
                     {
-                        new NetworkTapRuleMatchConfiguration()
+                        MatchConfigurationName = "config1",
+                        SequenceNumber = 10L,
+                        IPAddressType = NetworkFabricIPAddressType.IPv4,
+                        MatchConditions =
                         {
-                             MatchConfigurationName = "config1",
-                            SequenceNumber = 10,
-                            IPAddressType = NetworkFabricIPAddressType.IPv4,
-                            MatchConditions =
+                            new NetworkTapRuleMatchCondition
                             {
-                                new NetworkTapRuleMatchCondition()
+                                ProtocolTypes = { "TCP" },
+                                VlanMatchCondition = new VlanMatchCondition
                                 {
-                                    EncapsulationType = NetworkTapEncapsulationType.None,
-                                    PortCondition = new NetworkFabricPortCondition(Layer4Protocol.Tcp)
-                                    {
-                                        PortType = NetworkFabricPortType.SourcePort,
-                                        Ports =
-                                            {
-                                            "100"
-                                            },
-                                        PortGroupNames =
-                                            {
-                                            "example-portGroup1"
-                                            },
-                                    },
-                                    ProtocolTypes =
-                                        {
-                                        "TCP"
-                                        },
-                                    VlanMatchCondition = new VlanMatchCondition()
-                                    {
-                                        Vlans =
-                                            {
-                                            "10"
-                                            },
-                                        InnerVlans =
-                                            {
-                                            "11-20"
-                                            },
-                                        VlanGroupNames =
-                                            {
-                                            "exmaple-vlanGroup"
-                                            },
-                                    },
-                                    IPCondition = new IPMatchCondition()
-                                    {
-                                        SourceDestinationType = SourceDestinationType.SourceIP,
-                                        PrefixType = IPMatchConditionPrefixType.Prefix,
-                                        IPPrefixValues =
-                                            {
-                                            "10.10.10.10/20"
-                                            },
-                                        IPGroupNames =
-                                            {
-                                            "example-ipGroup"
-                                            },
-                                    },
-                                }
-                            },
-                            Actions =
+                                    Vlans = { "10" },
+                                    InnerVlans = { "11-20" },
+                                    VlanGroupNames = { "exmaple-vlanGroup" },
+                                },
+                                IPCondition = new IPMatchCondition
+                                {
+                                    SourceDestinationType = SourceDestinationType.SourceIP,
+                                    PrefixType = IPMatchConditionPrefixType.Prefix,
+                                    IPPrefixValues = { "10.10.10.10/20" },
+                                    IPGroupNames = { "example-ipGroup" },
+                                },
+                                EncapsulationType = NetworkTapEncapsulationType.None,
+                                PortCondition = new NetworkFabricPortCondition(Layer4Protocol.Tcp)
+                                {
+                                    PortType = NetworkFabricPortType.SourcePort,
+                                    Ports = { "100" },
+                                    PortGroupNames = { "example-portGroup1" },
+                                },
+                            }
+                        },
+                        Actions =
+                        {
+                            new NetworkTapRuleAction
                             {
-                                new NetworkTapRuleAction()
-                                {
-                                    TapRuleActionType = TapRuleActionType.Drop,
-                                    Truncate = "100",
-                                    IsTimestampEnabled = NetworkFabricBooleanValue.True,
-                                    DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup"),
-                                    MatchConfigurationName = "match1",
-                                }
-                            },
-                        }
-                    },
+                                TapRuleActionType = TapRuleActionType.Drop,
+                                Truncate = "100",
+                                IsTimestampEnabled = NetworkFabricBooleanValue.True,
+                                DestinationId = new ResourceIdentifier("/subscriptions/1234ABCD-0A1B-1234-5678-123456ABCDEF/resourcegroups/example-rg/providers/Microsoft.ManagedNetworkFabric/neighborGroups/example-neighborGroup"),
+                                MatchConfigurationName = "match1",
+                            }
+                        },
+                    }
+                },
                 DynamicMatchConfigurations =
+                {
+                    new CommonDynamicMatchConfiguration
                     {
-                        new CommonDynamicMatchConfiguration()
+                        IPGroups =
                         {
-                            IPGroups =
+                            new MatchConfigurationIPGroupProperties
                             {
-                                new MatchConfigurationIPGroupProperties()
-                                {
-                                    Name = "example-ipGroup1",
-                                    IPAddressType = NetworkFabricIPAddressType.IPv4,
-                                    IPPrefixes =
-                                        {
-                                        "10.10.10.10/30"
-                                        },
-                                }
-                            },
-                            VlanGroups =
-                            {
+                                Name = "example-ipGroup1",
+                                IPAddressType = NetworkFabricIPAddressType.IPv4,
+                                IPPrefixes = { "10.10.10.10/30" },
+                            }
+                        },
+                        VlanGroups =
+                        {
                                 new VlanGroupProperties()
                                 {
                                     Name = "exmaple-vlanGroup",
@@ -135,8 +107,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                         "10","100-200"
                                         },
                                 }
-                            },
-                            PortGroups =
+                        },
+                        PortGroups =
                             {
                                 new PortGroupProperties()
                                 {
@@ -155,8 +127,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Tests.Scenario
                                         },
                                 }
                             },
-                        }
-                    },
+                    }
+                },
                 PollingIntervalInSeconds = PollingIntervalInSecond.Thirty
             };
 
