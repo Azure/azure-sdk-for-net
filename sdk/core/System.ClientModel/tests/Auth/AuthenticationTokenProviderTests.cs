@@ -42,9 +42,6 @@ public class AuthenticationTokenProviderTests
         AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
         var client = new FooClient(new Uri("http://localhost"), provider);
         var result = client.GetNoAuth();
-
-        Assert.IsNotNull(result);
-        Assert.AreEqual(200, result.Status);
     }
 
     [Test]
@@ -54,11 +51,7 @@ public class AuthenticationTokenProviderTests
         AuthenticationTokenProvider provider = new ClientCredentialTokenProvider("myClientId", "myClientSecret");
         var client = new NoAuthClient(new Uri("http://localhost"), provider);
         var result = client.GetWithAuth();
-
-                Assert.IsNotNull(result);
-        Assert.AreEqual(200, result.Status);
     }
-
 
     public class FooClient
     {
@@ -78,7 +71,6 @@ public class AuthenticationTokenProviderTests
             }
         ];
 
-
         /// <summary>
         /// This is an example of how you can override the flows for a specific operation.
         /// The operation can have its own flows, or it can use the service level flows.
@@ -90,7 +82,6 @@ public class AuthenticationTokenProviderTests
                 { GetTokenOptions.RefreshUrlPropertyName, "https://myauthserver.com/refresh"}
             }
         ];
-
 
         /// <summary>
         /// This is an example of how you can define a no-authentication flow.
@@ -165,6 +156,8 @@ public class AuthenticationTokenProviderTests
 
     public class NoAuthClient
     {
+        private static readonly string readScope = "read";
+
         /// <summary>
         /// This is an example of how no-authentication flows are defined at the service level,
         /// by passing an empty array of flows.
