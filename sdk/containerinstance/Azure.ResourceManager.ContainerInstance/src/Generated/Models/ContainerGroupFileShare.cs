@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The container config map. </summary>
-    internal partial class ConfigMap
+    /// <summary> File shares that can be mounted on container groups. </summary>
+    public partial class ContainerGroupFileShare
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,22 +45,33 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConfigMap"/>. </summary>
-        public ConfigMap()
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShare"/>. </summary>
+        public ContainerGroupFileShare()
         {
-            KeyValuePairs = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfigMap"/>. </summary>
-        /// <param name="keyValuePairs"> The key value pairs dictionary in the config map. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerGroupFileShare"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="resourceGroupName"></param>
+        /// <param name="storageAccountName"></param>
+        /// <param name="properties"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConfigMap(IDictionary<string, string> keyValuePairs, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerGroupFileShare(string name, string resourceGroupName, string storageAccountName, ContainerGroupFileShareProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            KeyValuePairs = keyValuePairs;
+            Name = name;
+            ResourceGroupName = resourceGroupName;
+            StorageAccountName = storageAccountName;
+            Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The key value pairs dictionary in the config map. </summary>
-        public IDictionary<string, string> KeyValuePairs { get; }
+        /// <summary> Gets or sets the name. </summary>
+        public string Name { get; set; }
+        /// <summary> Gets or sets the resource group name. </summary>
+        public string ResourceGroupName { get; set; }
+        /// <summary> Gets or sets the storage account name. </summary>
+        public string StorageAccountName { get; set; }
+        /// <summary> Gets or sets the properties. </summary>
+        public ContainerGroupFileShareProperties Properties { get; set; }
     }
 }

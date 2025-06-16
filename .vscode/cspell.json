@@ -1610,8 +1610,9 @@
     {
       "filename": "**/sdk/containerinstance/**/*.cs",
       "words": [
-        "Noreuse",
-        "Unsecure"
+        "noreuse",
+        "ngroups",
+        "unsecure"
       ]
     },
     {

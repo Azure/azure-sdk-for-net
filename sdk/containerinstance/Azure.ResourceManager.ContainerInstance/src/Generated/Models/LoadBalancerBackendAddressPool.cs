@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    /// <summary> The container group profile reference. </summary>
-    public partial class ContainerGroupProfileReferenceDefinition
+    /// <summary> NGroups load balancer backend address pool. </summary>
+    public partial class LoadBalancerBackendAddressPool
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,25 +45,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileReferenceDefinition"/>. </summary>
-        public ContainerGroupProfileReferenceDefinition()
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPool"/>. </summary>
+        public LoadBalancerBackendAddressPool()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerGroupProfileReferenceDefinition"/>. </summary>
-        /// <param name="id"> The container group profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}'. </param>
-        /// <param name="revision"> The container group profile reference revision. </param>
+        /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressPool"/>. </summary>
+        /// <param name="resource"> The Load Balancer backend address pool ARM resource Id. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerGroupProfileReferenceDefinition(ResourceIdentifier id, int? revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadBalancerBackendAddressPool(string resource, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Revision = revision;
+            Resource = resource;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The container group profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}'. </summary>
-        public ResourceIdentifier Id { get; set; }
-        /// <summary> The container group profile reference revision. </summary>
-        public int? Revision { get; set; }
+        /// <summary> The Load Balancer backend address pool ARM resource Id. </summary>
+        public string Resource { get; set; }
     }
 }
